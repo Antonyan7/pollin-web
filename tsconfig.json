@@ -1,20 +1,81 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    /* Language and Environment */
+    "target": "es5", /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ], /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "jsx": "preserve", /* Specify what JSX code is generated. *//* Modules */
+    "module": "esnext", /* Specify what module code is generated. */
+    "moduleResolution": "node", /* Specify how TypeScript looks up a file from a given module specifier. */
+    "baseUrl": "./src", /* Specify the base directory to resolve non-relative module names. */
+    "paths": { /* Specify a set of entries that re-map imports to additional lookup locations. */
+      "@app-router": [
+        "app-router/*"
+      ],
+      "@assets/*": [
+        "assets/*"
+      ],
+      "@auth/*": [
+        "auth/*"
+      ],
+      "@components/*": [
+        "components/*"
+      ],
+      "@config/*": [
+        "config/*"
+      ],
+      "@constants": [
+        "constants"
+      ],
+      "@context": [
+        "context"
+      ],
+      "@graphql": [
+        "graphql"
+      ],
+      "@hooks/*": [
+        "hooks/*"
+      ],
+      "@layouts": [
+        "layouts"
+      ],
+      "@mocks": [
+        "__mocks__"
+      ],
+      "@types": [
+        "types"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@utils": [
+        "utils"
+      ],
+      "@views/*": [
+        "views/*"
+      ]
+    },
+    "resolveJsonModule": true, /* Enable importing .json files *//* Emit */
+    "noEmit": true /* Disable emitting files from a compilation. */,
+    /* Interop Constraints */
+    "isolatedModules": true, /* Ensure that each file can be safely transpiled without relying on other imports. */
+    "esModuleInterop": true, /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */
+    "forceConsistentCasingInFileNames": true, /* Ensure that casing is correct in imports. *//* Type Checking */
+    "strict": true, /* Enable all strict type-checking options. */
+    "noFallthroughCasesInSwitch": true, /* Enable error reporting for fallthrough cases in switch statements. *//* Completeness */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
     "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
     "incremental": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

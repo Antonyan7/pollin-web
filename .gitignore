@@ -2,8 +2,12 @@
 
 # dependencies
 /node_modules
+cypress/tools/node_modules
 /.pnp
 .pnp.js
+
+# IDE
+.idea
 
 # testing
 /coverage
@@ -23,13 +27,20 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
 
 # local env files
-.env*.local
+.env
+.env.local
+.env.e2e
+.env.development.local
+.env.test.local
+.env.production.local
 
 # vercel
 .vercel
+dist/
 
-# typescript
-*.tsbuildinfo
+#cypress
+/cypress/screenshots
+/cypress/videos
+
