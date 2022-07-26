@@ -44,3 +44,5 @@ dist/
 /cypress/screenshots
 /cypress/videos
 
+#linter
+.eslintcache
