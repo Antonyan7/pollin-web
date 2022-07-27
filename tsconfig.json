@@ -36,6 +36,12 @@
       "@utils/*": [
         "utils/*"
       ],
+      "@features/*": [
+        "redux/features/*"
+      ],
+      "@axios/*": [
+        "manager/*"
+      ]
     },
     "resolveJsonModule": true, /* Enable importing .json files *//* Emit */
     "noEmit": true /* Disable emitting files from a compilation. */,
