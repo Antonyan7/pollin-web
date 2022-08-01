@@ -5,6 +5,8 @@ import ThemeCustomization from 'themes';
 
 import store from '../redux/store';
 
+import '@assets/scss/style.scss';
+
 const Pollin = ({ Component, pageProps }: AppProps) => (
   <ThemeCustomization>
     <Provider store={store}>
