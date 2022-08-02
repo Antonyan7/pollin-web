@@ -1,21 +1,9 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { Divider, List, Typography } from '@mui/material';
-import { GenericCardProps } from 'types';
+import { NavGroupProps } from 'types';
 
 import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
-
-export interface NavGroupProps {
-  item: {
-    id?: string;
-    type?: string;
-    icon?: GenericCardProps['iconPrimary'];
-    children?: NavGroupProps['item'][];
-    title?: ReactNode | string;
-    caption?: ReactNode | string;
-    color?: 'primary' | 'secondary' | 'default' | undefined;
-  };
-}
 
 const NavGroup = ({ item }: NavGroupProps) => {
   const items = item.children?.map((menu) => {

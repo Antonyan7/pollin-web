@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { ChipProps, SnackbarOrigin } from '@mui/material';
 
 export interface GenericCardProps {
@@ -54,4 +54,16 @@ export interface DefaultRootStateProps {
 
 export interface ColorProps {
   readonly [key: string]: string;
+}
+
+export interface NavGroupProps {
+  item: {
+    id?: string;
+    type?: string;
+    icon?: GenericCardProps['iconPrimary'];
+    children?: NavGroupProps['item'][];
+    title?: ReactNode | string;
+    caption?: ReactNode | string;
+    color?: 'primary' | 'secondary' | 'default' | undefined;
+  };
 }

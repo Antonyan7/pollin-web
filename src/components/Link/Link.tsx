@@ -4,7 +4,7 @@ import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 
-import { NextLinkComposed } from '../index';
+import NextLinkComposed from '../NextLinkComposed/NextLinkComposed';
 
 const Anchor = styled('a')({});
 

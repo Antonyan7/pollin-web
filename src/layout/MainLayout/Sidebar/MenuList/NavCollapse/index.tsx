@@ -4,8 +4,8 @@ import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, Typography 
 import { useTheme } from '@mui/material/styles';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { NavGroupProps } from 'types';
 
-import { NavGroupProps } from '../NavGroup';
 import NavItem from '../NavItem';
 
 interface NavCollapseProps {
