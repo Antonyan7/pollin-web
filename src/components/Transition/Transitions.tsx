@@ -101,10 +101,4 @@ const Transitions = React.forwardRef(
   }
 );
 
-Transitions.defaultProps = {
-  type: 'grow',
-  position: 'top-left',
-  direction: 'up'
-};
-
 export default Transitions;

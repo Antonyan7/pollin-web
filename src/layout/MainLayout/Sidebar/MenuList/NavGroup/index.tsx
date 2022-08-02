@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Divider, List, Typography } from '@mui/material';
 import { GenericCardProps } from 'types';
 

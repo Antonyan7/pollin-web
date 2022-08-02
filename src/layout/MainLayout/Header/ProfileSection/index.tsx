@@ -1,31 +1,34 @@
-import { Avatar, Chip } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import React from 'react';
+import { Avatar, Chip, ChipProps } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
+
+const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
+  height: '48px',
+  alignItems: 'center',
+  borderRadius: '27px',
+  margin: '0px 15px',
+  transition: 'all .2s ease-in-out',
+  borderColor: theme.palette.primary.light,
+  backgroundColor: '#C4C4C4',
+  color: 'black',
+  '&:hover': {
+    background: '#7F8487',
+    '& svg': {
+      cursor: 'pointer'
+    }
+  },
+  '& .MuiChip-label': {
+    lineHeight: 0
+  }
+}));
 
 const ProfileSection = () => {
   const theme = useTheme();
 
   return (
-    <Chip
-      sx={{
-        height: '48px',
-        alignItems: 'center',
-        borderRadius: '27px',
-        margin: '0px 15px',
-        transition: 'all .2s ease-in-out',
-        borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
-        backgroundColor: '#C4C4C4',
-        color: 'black',
-        '&:hover': {
-          background: '#7F8487',
-          '& svg': {
-            cursor: 'pointer'
-          }
-        },
-        '& .MuiChip-label': {
-          lineHeight: 0
-        }
-      }}
+    <StyledChip
+      theme={theme}
       icon={
         <Avatar
           src=""

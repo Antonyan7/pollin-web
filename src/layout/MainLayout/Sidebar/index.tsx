@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import React, { memo, useMemo } from 'react';
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Box, Drawer, useMediaQuery } from '@mui/material';
@@ -50,7 +50,6 @@ const Sidebar = ({ window }: SidebarProps) => {
         <MenuList />
       </PerfectScrollbar>
     ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [matchUpMd]
   );
 

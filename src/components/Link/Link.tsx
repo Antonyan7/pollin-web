@@ -9,7 +9,10 @@ import { NextLinkComposed } from '../index';
 const Anchor = styled('a')({});
 
 const Link = React.forwardRef<HTMLAnchorElement, any>(
-  ({ activeClassName = 'active', as: linkAs, className: classNameProps, href, noLinkStyle, role, ...other }, ref) => {
+  (
+    { activeClassName = 'active', as: linkAs, className: classNameProps, href, noLinkStyle, role, ...other }: any,
+    ref
+  ) => {
     const router = useRouter();
     const pathname = typeof href === 'string' ? href : href.pathname;
     const className = clsx(classNameProps, {

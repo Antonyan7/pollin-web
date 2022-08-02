@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { ChipProps, SnackbarOrigin, SvgIconTypeMap } from '@mui/material';
-import { OverridableComponent } from '@mui/material/OverridableComponent';
+import { ChipProps, SnackbarOrigin } from '@mui/material';
 
 export interface GenericCardProps {
   title?: string;
@@ -15,12 +14,7 @@ export interface GenericCardProps {
 }
 
 export interface OverrideIcon {
-  overrideIcon:
-    | (OverridableComponent<SvgIconTypeMap<{}, 'svg'>> & {
-        muiName: string;
-      })
-    | React.ComponentClass<any>
-    | FunctionComponent<any>;
+  overrideIcon: React.ComponentClass<any> | FunctionComponent<any>;
 }
 
 export interface LinkTarget {

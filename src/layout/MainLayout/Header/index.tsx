@@ -1,21 +1,16 @@
-// material-ui
+import React from 'react';
 import { Avatar, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-// assets
 import { IconMenu2 } from '@tabler/icons';
-// redux
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
 
-// project imports
 import LogoSection from '../LogoSection';
 
 import CheckSection from './CheckSection';
 import NotificationSection from './NotificationSection';
 import ProfileSection from './ProfileSection';
 import SearchSection from './SearchSection';
-
-// ==============================|| MAIN NAVBAR / HEADER ||============================== //
 
 const Header = () => {
   const theme = useTheme();
@@ -42,11 +37,11 @@ const Header = () => {
             ...theme.typography.mediumAvatar,
             overflow: 'hidden',
             transition: 'all .2s ease-in-out',
-            background: theme.palette.mode === 'dark' ? theme.palette.dark.main : '#C4C4C4',
-            color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : 'black',
+            background: '#C4C4C4',
+            color: 'black',
             '&:hover': {
-              background: theme.palette.mode === 'dark' ? theme.palette.secondary.main : '#7F8487',
-              color: theme.palette.mode === 'dark' ? theme.palette.secondary.light : 'black'
+              background: '#7F8487',
+              color: 'black'
             }
           }}
           onClick={() => dispatch(openDrawer(!drawerOpen))}

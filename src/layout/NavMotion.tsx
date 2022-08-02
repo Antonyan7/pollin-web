@@ -1,8 +1,5 @@
-import { ReactElement } from 'react';
-// third-party
+import React, { ReactElement } from 'react';
 import { motion } from 'framer-motion';
-
-// ==============================|| ANIMATION FOR CONTENT ||============================== //
 
 const NavMotion = ({ children }: { children: ReactElement | ReactElement[] }) => {
   const motionVariants = {

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Avatar, Box, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
@@ -32,7 +32,7 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   [theme.breakpoints.down('md')]: {
     width: '100%',
     marginLeft: 4,
-    background: theme.palette.mode === 'dark' ? theme.palette.dark[800] : '#fff'
+    background: '#fff'
   }
 }));
 
@@ -78,7 +78,7 @@ const MobileSearch = ({ value, setValue, popupState }: Props) => {
               sx={{
                 ...theme.typography.commonAvatar,
                 ...theme.typography.mediumAvatar,
-                background: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.orange.light,
+                background: theme.palette.orange.light,
                 color: theme.palette.orange.dark,
                 '&:hover': {
                   background: theme.palette.orange.dark,
@@ -118,7 +118,7 @@ const SearchSection = () => {
                   <Transitions type="zoom" {...TransitionProps} sx={{ transformOrigin: 'center left' }}>
                     <Card
                       sx={{
-                        background: theme.palette.mode === 'dark' ? theme.palette.dark[900] : '#fff',
+                        background: '#fff',
                         [theme.breakpoints.down('sm')]: {
                           border: 0,
                           boxShadow: 'none'

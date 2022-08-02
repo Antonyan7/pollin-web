@@ -24,7 +24,6 @@ module.exports = {
     '@emotion/jsx-import': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/prefer-nullish-coalescing': 'error',
-    'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'import/no-cycle': 'off',
     curly: ['error', 'all'],

@@ -1,7 +1,6 @@
-// material-ui
+import React from 'react';
 import { Avatar, Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-// icons
 import { IconBell } from '@tabler/icons';
 
 const NotificationSection = () => {
@@ -22,8 +21,8 @@ const NotificationSection = () => {
           ...theme.typography.commonAvatar,
           ...theme.typography.mediumAvatar,
           border: '1px solid',
-          borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
-          background: theme.palette.mode === 'dark' ? theme.palette.dark.main : '#C4C4C4',
+          borderColor: theme.palette.primary.light,
+          background: '#C4C4C4',
           color: theme.palette.primary.dark,
           transition: 'all .2s ease-in-out',
           '&:hover': {

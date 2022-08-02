@@ -1,6 +1,16 @@
-import { forwardRef, ForwardRefExoticComponent, RefAttributes, useEffect } from 'react';
+import React, { forwardRef, ForwardRefExoticComponent, RefAttributes, useEffect } from 'react';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Avatar, Chip, ListItemButton, ListItemIcon, ListItemText, Typography, useMediaQuery } from '@mui/material';
+import {
+  Avatar,
+  Chip,
+  ListItemButton,
+  ListItemButtonProps,
+  ListItemIcon,
+  ListItemText,
+  styled,
+  Typography,
+  useMediaQuery
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { activeItem, openDrawer } from 'redux/slices/menu';
@@ -12,6 +22,15 @@ interface NavItemProps {
   item: NavItemType;
   level: number;
 }
+
+const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(() => ({
+  borderRadius: `8px`,
+  mb: 0.5,
+  alignItems: 'flex-start',
+  '&:hover': {
+    background: '#7F8487'
+  }
+}));
 
 const NavItem = ({ item, level }: NavItemProps) => {
   const theme = useTheme();
@@ -69,23 +88,13 @@ const NavItem = ({ item, level }: NavItemProps) => {
     if (currentIndex > -1) {
       dispatch(activeItem([item.id!]));
     }
-    // eslint-disable-next-line
-  }, []);
+  }, [item.id]);
 
   return (
-    <ListItemButton
+    <StyledListItemButton
+      theme={theme}
       {...listItemProps}
       disabled={item.disabled}
-      sx={{
-        borderRadius: `8px`,
-        mb: 0.5,
-        alignItems: 'flex-start',
-        py: level > 1 ? 1 : 1.25,
-        pl: `${level * 24}px`,
-        '&:hover': {
-          background: '#7F8487'
-        }
-      }}
       selected={openItem?.findIndex((id) => id === item.id) > -1}
       onClick={() => itemHandler(item.id!)}
     >
@@ -125,7 +134,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
           avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
         />
       )}
-    </ListItemButton>
+    </StyledListItemButton>
   );
 };
 
