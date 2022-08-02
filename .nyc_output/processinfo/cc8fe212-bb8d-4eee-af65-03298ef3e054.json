@@ -1,0 +1,17 @@
+{
+  "parent": "eb40000b-bb46-44f7-b092-02faf2d599b4",
+  "pid": 299363,
+  "argv": [
+    "/home/user/.nvm/versions/node/v14.19.2/bin/node",
+    "/home/user/Desktop/newCalendar/pollin-web-emr/node_modules/.bin/cypress",
+    "run"
+  ],
+  "execArgv": [],
+  "cwd": "/home/user/Desktop/newCalendar/pollin-web-emr",
+  "time": 1659183921746,
+  "ppid": 299362,
+  "coverageFilename": "/home/user/Desktop/newCalendar/pollin-web-emr/.nyc_output/cc8fe212-bb8d-4eee-af65-03298ef3e054.json",
+  "externalId": "",
+  "uuid": "cc8fe212-bb8d-4eee-af65-03298ef3e054",
+  "files": []
+}

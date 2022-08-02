@@ -1,0 +1,20 @@
+{
+  "parent": "cc8fe212-bb8d-4eee-af65-03298ef3e054",
+  "pid": 299581,
+  "argv": [
+    "/home/user/.nvm/versions/node/v14.19.2/bin/node",
+    "/home/user/.cache/Cypress/10.3.1/Cypress/resources/app/node_modules/@packages/server/lib/plugins/child/require_async_child.js",
+    "--projectRoot",
+    "/home/user/Desktop/newCalendar/pollin-web-emr",
+    "--file",
+    "/home/user/Desktop/newCalendar/pollin-web-emr/cypress.config.ts"
+  ],
+  "execArgv": [],
+  "cwd": "/home/user/Desktop/newCalendar/pollin-web-emr",
+  "time": 1659183923993,
+  "ppid": 299395,
+  "coverageFilename": "/home/user/Desktop/newCalendar/pollin-web-emr/.nyc_output/55a04ff7-def9-48df-ba67-582521158c45.json",
+  "externalId": "",
+  "uuid": "55a04ff7-def9-48df-ba67-582521158c45",
+  "files": ["/home/user/Desktop/newCalendar/pollin-web-emr/cypress.config.ts"]
+}

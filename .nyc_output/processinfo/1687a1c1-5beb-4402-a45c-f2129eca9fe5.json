@@ -1,0 +1,13 @@
+{
+  "parent": null,
+  "pid": 299237,
+  "argv": ["/home/user/.nvm/versions/node/v14.19.2/bin/node", "/usr/share/yarn/bin/yarn.js", "run", "cypress:run"],
+  "execArgv": [],
+  "cwd": "/home/user/Desktop/newCalendar/pollin-web-emr",
+  "time": 1659183916847,
+  "ppid": 299226,
+  "coverageFilename": "/home/user/Desktop/newCalendar/pollin-web-emr/.nyc_output/1687a1c1-5beb-4402-a45c-f2129eca9fe5.json",
+  "externalId": "",
+  "uuid": "1687a1c1-5beb-4402-a45c-f2129eca9fe5",
+  "files": []
+}

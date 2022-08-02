@@ -1,0 +1,42 @@
+// material-ui
+import { Avatar, Box } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
+// icons
+import { IconBell } from '@tabler/icons';
+
+const NotificationSection = () => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      sx={{
+        ml: 2,
+        [theme.breakpoints.down('md')]: {
+          ml: 1
+        }
+      }}
+    >
+      <Avatar
+        variant="rounded"
+        sx={{
+          ...theme.typography.commonAvatar,
+          ...theme.typography.mediumAvatar,
+          border: '1px solid',
+          borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.main : theme.palette.primary.light,
+          background: theme.palette.mode === 'dark' ? theme.palette.dark.main : '#C4C4C4',
+          color: theme.palette.primary.dark,
+          transition: 'all .2s ease-in-out',
+          '&:hover': {
+            background: '#7F8487'
+          }
+        }}
+        aria-haspopup="true"
+        color="inherit"
+      >
+        <IconBell stroke={1.5} size="1.3rem" color="black" />
+      </Avatar>
+    </Box>
+  );
+};
+
+export default NotificationSection;

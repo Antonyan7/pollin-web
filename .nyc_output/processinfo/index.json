@@ -1,0 +1,42 @@
+{
+  "processes": {
+    "1687a1c1-5beb-4402-a45c-f2129eca9fe5": { "parent": null, "children": ["82aef274-71b2-4081-83c9-aa175bea5951"] },
+    "1cdc4fd8-534f-4727-bfae-ced3ec7c8427": { "parent": "aef9805c-d1e0-484f-81c2-941c4f7cd53c", "children": [] },
+    "55a04ff7-def9-48df-ba67-582521158c45": { "parent": "cc8fe212-bb8d-4eee-af65-03298ef3e054", "children": [] },
+    "82aef274-71b2-4081-83c9-aa175bea5951": {
+      "parent": "1687a1c1-5beb-4402-a45c-f2129eca9fe5",
+      "children": ["eb40000b-bb46-44f7-b092-02faf2d599b4"]
+    },
+    "cc8fe212-bb8d-4eee-af65-03298ef3e054": {
+      "parent": "eb40000b-bb46-44f7-b092-02faf2d599b4",
+      "children": ["55a04ff7-def9-48df-ba67-582521158c45"]
+    },
+    "eb40000b-bb46-44f7-b092-02faf2d599b4": {
+      "parent": "82aef274-71b2-4081-83c9-aa175bea5951",
+      "children": ["cc8fe212-bb8d-4eee-af65-03298ef3e054"]
+    }
+  },
+  "files": {
+    "/home/user/Desktop/newCalendar/pollin-web-emr/next.config.js": ["1cdc4fd8-534f-4727-bfae-ced3ec7c8427"],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/pages/_document.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/webpack-runtime.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/pages/_app.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/pages/index.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/pages/_error.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/.next/server/pages/dashboard.js": [
+      "1cdc4fd8-534f-4727-bfae-ced3ec7c8427"
+    ],
+    "/home/user/Desktop/newCalendar/pollin-web-emr/cypress.config.ts": ["55a04ff7-def9-48df-ba67-582521158c45"]
+  },
+  "externalIds": {}
+}
