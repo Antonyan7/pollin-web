@@ -25,4 +25,4 @@ jobs:
       - uses: ./.github/actions/deploy-gae
         name: Deploy to GAE
         env:
-          dev_service_account: ${{ secrets.DEV_GCP_SERVICE_ACCOUNT }}
+          dev_service_account: ${{ secrets.DEV_GAE_DEPLOY_SA_KEY }}

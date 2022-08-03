@@ -42,6 +42,5 @@ jobs:
       - uses: ./.github/actions/ci-validation
         name: Validate Build
         env:
-          #TODO: Project Id should be changed
-          dev_project_id: fh-health-dev
+          dev_project_id: pollin-clinic-portal-dev
           dev_service_account: ${{ secrets.DEV_GCP_SERVICE_ACCOUNT }}
