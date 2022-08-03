@@ -3,13 +3,12 @@ inputs:
   node_version:
     description: 'Node version'
     required: false
-    default: v12.18.4
+    default: v16.13.0
 
 description:
 runs:
   using: 'composite'
   steps:
-
     - name: Define Deployment Variables
       run: |
         EVENT_NAME=${{ github.event_name }}

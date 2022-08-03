@@ -3,7 +3,7 @@ inputs:
   node_version:
     description: 'Node version'
     required: false
-    default: v12.22.1
+    default: v16.13.0
   pat_to_read_package:
     description: 'Pat to read Packages'
     required: true

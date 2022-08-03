@@ -35,7 +35,7 @@ jobs:
       - name: setup-nodejs
         uses: actions/setup-node@v1
         with:
-          node-version: 12.22.1
+          node-version: 16.13.0
           registry-url: https://npm.pkg.github.com/
           scope: '@OWNER'
 
