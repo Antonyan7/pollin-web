@@ -1,0 +1,20 @@
+.background-blocked {
+  background-image: url('../../images/calendar/slots/blockedSlot.svg');
+}
+
+.fc-timegrid-event-harness {
+  font-size: 17px;
+  line-height: 14px;
+}
+
+.fc-timegrid-event-harness {
+  .open-slot {
+    border: 2px dashed #b6b6b6;
+    display: block;
+    text-align: center;
+  }
+}
+
+.slot-border-radius {
+  border-radius: 5px;
+}
