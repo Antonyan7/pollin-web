@@ -18,7 +18,7 @@ runs:
 
         echo "::group::Define Deployment Variables"
         echo "Deploy to DEV"
-        echo "PROJECT_ID=fh-health-dev" > $GITHUB_ENV
+        echo "PROJECT_ID=pollin-clinic-portal-dev" > $GITHUB_ENV
         echo "ENV_SERVICE_ACCOUNT=dev_service_account" >> $GITHUB_ENV
         echo "PROMOTEFLAG=--promote" >> $GITHUB_ENV
 
