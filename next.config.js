@@ -4,4 +4,17 @@ const nextConfig = {
   swcMinify: true
 };
 
-module.exports = nextConfig;
+const withTM = require('next-transpile-modules')([
+  '@fullcalendar/react',
+  '@babel/preset-react',
+  '@fullcalendar/common',
+  '@fullcalendar/interaction',
+  '@fullcalendar/list',
+  '@fullcalendar/timegrid',
+  '@fullcalendar/timeline',
+  '@fullcalendar/daygrid'
+]);
+
+module.exports = withTM({
+  nextConfig
+});
