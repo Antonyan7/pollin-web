@@ -1,0 +1,51 @@
+name: 'Deploy to Google App Engine'
+inputs:
+  node_version:
+    description: 'Node version'
+    required: false
+    default: v16.13.0
+
+description:
+runs:
+  using: 'composite'
+  steps:
+    - name: Define Deployment Variables
+      run: |
+        EVENT_NAME=${{ github.event_name }}
+        EVENT_ACTION=${{ github.event.action }}
+        RELEASE_REF=refs/tags/release
+        PRERELEASE_REF=refs/tags/prerelease
+
+        echo "::group::Define Deployment Variables"
+        echo "Deploy to DEV"
+        echo "PROJECT_ID=pollin-clinic-portal-dev" > $GITHUB_ENV
+        echo "ENV_SERVICE_ACCOUNT=dev_service_account" >> $GITHUB_ENV
+        echo "PROMOTEFLAG=--promote" >> $GITHUB_ENV
+
+        echo "::endgroup::"
+      shell: bash
+
+    - name: Deploy to GAE
+      run: |
+        echo "::group::Auth with GCLOUD"
+        cat >> service-account.json << EOF
+        ${{ env[env.ENV_SERVICE_ACCOUNT] }}
+        EOF
+        echo "Deploying to: ${{ env.PROJECT_ID }}"
+        gcloud auth activate-service-account --key-file=./service-account.json --project=${{ env.PROJECT_ID }}
+        rm ./service-account.json
+        echo "::endgroup::"
+
+        echo "::group::Run Eslint"
+        yarn run lint
+        echo "::endgroup::"
+
+        echo "::group::Build"
+        yarn build
+        echo "::endgroup::"
+
+        echo "::group::Deploy to GAE"
+        gcloud app deploy ./dist --quiet ${{ env.PROMOTEFLAG }}
+        echo "::endgroup::"
+
+      shell: bash

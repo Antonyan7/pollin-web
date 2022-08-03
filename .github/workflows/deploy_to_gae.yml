@@ -1,0 +1,28 @@
+name: Deploy to GAE
+on:
+  push:
+    branches:
+      - master
+      - release/*
+  release:
+    types:
+      - prereleased
+      - released
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup-nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.0
+          registry-url: https://npm.pkg.github.com/
+          scope: '@OWNER'
+
+      - uses: ./.github/actions/deploy-gae
+        name: Deploy to GAE
+        env:
+          dev_service_account: ${{ secrets.DEV_GAE_DEPLOY_SA_KEY }}
