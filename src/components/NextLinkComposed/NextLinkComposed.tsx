@@ -13,7 +13,6 @@ interface NextLinkComposedProps {
   shallow: boolean | undefined;
   prefetch: boolean | undefined;
   locale: string;
-  other: any;
 }
 
 const NextLinkComposed = React.forwardRef(

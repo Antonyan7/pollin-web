@@ -2,6 +2,7 @@ import * as React from 'react';
 import MuiLink from '@mui/material/Link';
 import { styled } from '@mui/material/styles';
 import clsx from 'clsx';
+import { LinkProps as NextLinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
 import NextLinkComposed from '../NextLinkComposed/NextLinkComposed';
@@ -12,10 +13,9 @@ interface LinkProps {
   activeClassName: string;
   as: string;
   className: string;
-  href: any;
+  href: NextLinkProps['href'];
   noLinkStyle: string;
   role: string;
-  other: any;
 }
 
 const Link = React.forwardRef(
