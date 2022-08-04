@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { ChipProps, SnackbarOrigin } from '@mui/material';
+import { ChipProps, SnackbarOrigin, SvgIconProps } from '@mui/material';
 
 export interface GenericCardProps {
   title?: string;
@@ -8,13 +8,13 @@ export interface GenericCardProps {
   content?: string;
   image?: string;
   dateTime?: string;
-  iconPrimary?: OverrideIcon['overrideIcon'];
+  iconPrimary?: React.ComponentType<SvgIconProps>;
   color?: string;
   size?: string;
 }
 
 export interface OverrideIcon {
-  overrideIcon: React.ComponentClass<any> | FunctionComponent<any>;
+  overrideIcon: FunctionComponent;
 }
 
 export interface LinkTarget {
@@ -65,5 +65,6 @@ export interface NavGroupProps {
     title?: ReactNode | string;
     caption?: ReactNode | string;
     color?: 'primary' | 'secondary' | 'default' | undefined;
+    url?: string;
   };
 }

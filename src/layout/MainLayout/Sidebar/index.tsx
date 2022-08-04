@@ -3,7 +3,7 @@ import React, { memo, useMemo } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Box, Drawer, useMediaQuery } from '@mui/material';
 // material-ui
-import { useTheme } from '@mui/material/styles';
+import { styled, useTheme } from '@mui/material/styles';
 // redux
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
@@ -14,7 +14,17 @@ import LogoSection from '../LogoSection';
 // project imports
 import MenuList from './MenuList';
 
-// ==============================|| SIDEBAR DRAWER ||============================== //
+const StyledDrawer = styled(Drawer)(({ theme }) => ({
+  '& .MuiDrawer-paper': {
+    width: drawerWidth,
+    background: theme.palette.background.default,
+    color: theme.palette.text.primary,
+    borderRight: 'none',
+    [theme.breakpoints.up('md')]: {
+      top: '88px'
+    }
+  }
+}));
 
 interface SidebarProps {
   window?: Window;
@@ -61,29 +71,18 @@ const Sidebar = ({ window }: SidebarProps) => {
       sx={{ flexShrink: { md: 0 }, width: matchUpMd ? drawerWidth : 'auto' }}
       aria-label="mailbox folders"
     >
-      <Drawer
+      <StyledDrawer
         container={container}
         variant={matchUpMd ? 'persistent' : 'temporary'}
         anchor="left"
         open={drawerOpen}
         onClose={() => dispatch(openDrawer(!drawerOpen))}
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            background: theme.palette.background.default,
-            color: theme.palette.text.primary,
-            borderRight: 'none',
-            [theme.breakpoints.up('md')]: {
-              top: '88px'
-            }
-          }
-        }}
         ModalProps={{ keepMounted: true }}
         color="inherit"
       >
         {drawerOpen && logo}
         {drawerOpen && drawer}
-      </Drawer>
+      </StyledDrawer>
     </Box>
   );
 };

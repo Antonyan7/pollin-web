@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListProps, Typography } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { NavGroupProps } from 'types';
@@ -12,6 +12,31 @@ interface NavCollapseProps {
   menu: NavGroupProps['item'];
   level: number;
 }
+
+const StyledList = styled(List)<ListProps>(({ theme }) => ({
+  position: 'relative',
+  '&:after': {
+    content: "''",
+    position: 'absolute',
+    left: '32px',
+    top: 0,
+    height: '100%',
+    width: '1px',
+    opacity: 1,
+    background: theme.palette.primary.light
+  }
+}));
+
+const StyledListItemButton = styled(ListItemButton, { shouldForwardProp: (prop) => prop !== 'level' })<{
+  level: number;
+}>(({ level }) => ({
+  borderRadius: `8px`,
+  mb: 0.5,
+  alignItems: 'flex-start',
+  backgroundColor: level > 1 ? 'transparent' : 'inherit',
+  py: level > 1 ? 1 : 1.25,
+  pl: `${level * 24}px`
+}));
 
 const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   const theme = useTheme();
@@ -29,7 +54,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   useEffect(() => {
     const childrens = menu.children ? menu.children : [];
 
-    childrens.forEach((item: any) => {
+    childrens.forEach((item: NavGroupProps['item']) => {
       if (pathname && pathname.includes('product-details')) {
         if (item.url && item.url.includes('product-details')) {
           setOpen(true);
@@ -72,18 +97,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
 
   return (
     <>
-      <ListItemButton
-        sx={{
-          borderRadius: `8px`,
-          mb: 0.5,
-          alignItems: 'flex-start',
-          backgroundColor: level > 1 ? 'transparent !important' : 'inherit',
-          py: level > 1 ? 1 : 1.25,
-          pl: `${level * 24}px`
-        }}
-        selected={selected === menu.id}
-        onClick={handleClick}
-      >
+      <StyledListItemButton selected={selected === menu.id} onClick={handleClick} level={level}>
         <ListItemIcon sx={{ my: 'auto', minWidth: !menu.icon ? 18 : 36 }}>{menuIcon}</ListItemIcon>
         <ListItemText
           primary={
@@ -104,28 +118,12 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
         ) : (
           <IconChevronDown stroke={1.5} size="1rem" style={{ marginTop: 'auto', marginBottom: 'auto' }} />
         )}
-      </ListItemButton>
+      </StyledListItemButton>
       <Collapse in={open} timeout="auto" unmountOnExit>
         {open && (
-          <List
-            component="div"
-            disablePadding
-            sx={{
-              position: 'relative',
-              '&:after': {
-                content: "''",
-                position: 'absolute',
-                left: '32px',
-                top: 0,
-                height: '100%',
-                width: '1px',
-                opacity: 1,
-                background: theme.palette.primary.light
-              }
-            }}
-          >
+          <StyledList disablePadding theme={theme}>
             {menus}
-          </List>
+          </StyledList>
         )}
       </Collapse>
     </>

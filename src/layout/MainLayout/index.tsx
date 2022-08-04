@@ -1,12 +1,9 @@
 import React, { useMemo } from 'react';
 import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
-// material-ui
 import { useTheme } from '@mui/material/styles';
-// redux
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
 
-// project imports
 import Header from './Header';
 import Sidebar from './Sidebar';
 
@@ -18,7 +15,6 @@ const MainLayout = () => {
 
   React.useEffect(() => {
     dispatch(openDrawer(!matchDownMd));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchDownMd]);
 
   const header = useMemo(

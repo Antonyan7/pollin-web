@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { Avatar, Box, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
+import { Avatar, AvatarProps, Box, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
+import { hoverBackgroundDark, normalBackgroundDark } from 'themes/themeConstants';
 
 import Transitions from '../../../../components/Transition/Transitions';
 
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   zIndex: 1100,
   width: '99%',
-  top: '-55px !important',
+  top: '-55px',
   padding: '0 12px',
   [theme.breakpoints.down('sm')]: {
     padding: '0 10px'
@@ -23,8 +24,8 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   paddingLeft: 16,
   paddingRight: 16,
   '& input': {
-    background: 'transparent !important',
-    paddingLeft: '4px !important'
+    background: 'transparent',
+    paddingLeft: '4px'
   },
   [theme.breakpoints.down('lg')]: {
     width: 250
@@ -36,24 +37,34 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   }
 }));
 
-const HeaderAvatarStyle = styled(Avatar, { shouldForwardProp })(({ theme }) => ({
+const HeaderAvatarStyle = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  background: '#C4C4C4',
+  background: normalBackgroundDark,
   '&:hover': {
-    background: '#7F8487'
+    background: hoverBackgroundDark
+  }
+}));
+
+const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
+  ...theme.typography.commonAvatar,
+  ...theme.typography.mediumAvatar,
+  background: theme.palette.orange.light,
+  color: theme.palette.orange.dark,
+  '&:hover': {
+    background: theme.palette.orange.dark,
+    color: theme.palette.orange.light
   }
 }));
 
 interface Props {
   value: string;
   setValue: (value: string) => void;
-  popupState: any;
 }
 
-const MobileSearch = ({ value, setValue, popupState }: Props) => {
+const MobileSearch = ({ value, setValue }: Props) => {
   const theme = useTheme();
 
   return (
@@ -73,22 +84,9 @@ const MobileSearch = ({ value, setValue, popupState }: Props) => {
             <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
           </HeaderAvatarStyle>
           <Box sx={{ ml: 2 }}>
-            <Avatar
-              variant="rounded"
-              sx={{
-                ...theme.typography.commonAvatar,
-                ...theme.typography.mediumAvatar,
-                background: theme.palette.orange.light,
-                color: theme.palette.orange.dark,
-                '&:hover': {
-                  background: theme.palette.orange.dark,
-                  color: theme.palette.orange.light
-                }
-              }}
-              {...bindToggle(popupState)}
-            >
+            <StyledAvatar variant="rounded" theme={theme}>
               <IconX stroke={1.5} size="1.3rem" />
-            </Avatar>
+            </StyledAvatar>
           </Box>
         </InputAdornment>
       }
@@ -128,7 +126,7 @@ const SearchSection = () => {
                       <Box sx={{ p: 2 }}>
                         <Grid container alignItems="center" justifyContent="space-between">
                           <Grid item xs>
-                            <MobileSearch value={value} setValue={setValue} popupState={popupState} />
+                            <MobileSearch value={value} setValue={setValue} />
                           </Grid>
                         </Grid>
                       </Box>

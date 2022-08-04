@@ -11,7 +11,7 @@ interface TSProps {
   in?: boolean;
   type?: string;
   direction?: 'up' | 'right' | 'left' | 'down';
-  [others: string]: any;
+  [others: string]: unknown;
 }
 
 const Transitions = React.forwardRef(

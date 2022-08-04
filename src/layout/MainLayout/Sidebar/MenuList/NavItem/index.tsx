@@ -14,6 +14,7 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { activeItem, openDrawer } from 'redux/slices/menu';
+import { hoverBackgroundDark } from 'themes/themeConstants';
 import { LinkTarget, NavItemType } from 'types';
 
 import { Link } from '../../../../../components';
@@ -28,7 +29,7 @@ const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(() => (
   mb: 0.5,
   alignItems: 'flex-start',
   '&:hover': {
-    background: '#7F8487'
+    background: hoverBackgroundDark
   }
 }));
 

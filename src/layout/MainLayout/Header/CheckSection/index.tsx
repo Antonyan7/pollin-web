@@ -1,7 +1,21 @@
 import React from 'react';
-import { Avatar, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Avatar, AvatarProps, Box } from '@mui/material';
+import { styled, useTheme } from '@mui/material/styles';
 import { IconCheckbox } from '@tabler/icons';
+import { hoverBackgroundDark, normalBackgroundDark } from 'themes/themeConstants';
+
+const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
+  ...theme.typography.commonAvatar,
+  ...theme.typography.mediumAvatar,
+  border: '1px solid',
+  borderColor: theme.palette.primary.light,
+  background: normalBackgroundDark,
+  color: theme.palette.primary.dark,
+  transition: 'all .2s ease-in-out',
+  '&:hover': {
+    background: hoverBackgroundDark
+  }
+}));
 
 const CheckSection = () => {
   const theme = useTheme();
@@ -15,25 +29,9 @@ const CheckSection = () => {
         }
       }}
     >
-      <Avatar
-        variant="rounded"
-        sx={{
-          ...theme.typography.commonAvatar,
-          ...theme.typography.mediumAvatar,
-          border: '1px solid',
-          borderColor: theme.palette.primary.light,
-          background: '#C4C4C4',
-          color: theme.palette.primary.dark,
-          transition: 'all .2s ease-in-out',
-          '&:hover': {
-            background: '#7F8487'
-          }
-        }}
-        aria-haspopup="true"
-        color="inherit"
-      >
+      <StyledAvatar variant="rounded" theme={theme} aria-haspopup="true" color="inherit">
         <IconCheckbox stroke={1.5} size="1.3rem" color="black" />
-      </Avatar>
+      </StyledAvatar>
     </Box>
   );
 };

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Avatar, Chip, ChipProps } from '@mui/material';
+import { Avatar, AvatarProps, Chip, ChipProps } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
+import { hoverBackgroundDark, normalBackgroundDark } from 'themes/themeConstants';
 
 const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
   height: '48px',
@@ -10,10 +11,10 @@ const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
   margin: '0px 15px',
   transition: 'all .2s ease-in-out',
   borderColor: theme.palette.primary.light,
-  backgroundColor: '#C4C4C4',
+  backgroundColor: normalBackgroundDark,
   color: 'black',
   '&:hover': {
-    background: '#7F8487',
+    background: hoverBackgroundDark,
     '& svg': {
       cursor: 'pointer'
     }
@@ -23,24 +24,19 @@ const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
   }
 }));
 
+const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
+  ...theme.typography.mediumAvatar,
+  margin: '8px 0 8px 8px',
+  cursor: 'pointer'
+}));
+
 const ProfileSection = () => {
   const theme = useTheme();
 
   return (
     <StyledChip
       theme={theme}
-      icon={
-        <Avatar
-          src=""
-          sx={{
-            ...theme.typography.mediumAvatar,
-            margin: '8px 0 8px 8px !important',
-            cursor: 'pointer'
-          }}
-          aria-haspopup="true"
-          color="black"
-        />
-      }
+      icon={<StyledAvatar src="" theme={theme} aria-haspopup="true" color="black" />}
       label={<IconSettings stroke={1.5} size="1.5rem" color="black" />}
       variant="outlined"
       aria-haspopup="true"
