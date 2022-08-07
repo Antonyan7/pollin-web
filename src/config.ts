@@ -1,6 +1,8 @@
 // types
 import { ConfigProps } from 'types/config';
 
+export const DASHBOARD_PATH = '/';
+
 const config: ConfigProps = {
   fontFamily: `'Roboto', sans-serif`,
   borderRadius: 8,

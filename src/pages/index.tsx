@@ -1,12 +1,13 @@
 import React from 'react';
+import MainLayout from 'layout/MainLayout';
 import type { NextPage } from 'next';
-
-import Calendar from '../ui-component/calendar';
+import Calendar from 'ui-component/calendar';
 
 const Home: NextPage = () => (
-  <div>
+  <>
+    <MainLayout />
     <Calendar />
-  </div>
+  </>
 );
 
 export default Home;
