@@ -23,6 +23,7 @@ runs:
 
         echo "::group::Install yarn modules"
         yarn install --ignore-scripts
+        yarn add cypress
         echo "::endgroup::"
       shell: bash
 
@@ -46,3 +47,17 @@ runs:
         echo "PROMOTEFLAG=--promote" >> $GITHUB_ENV
         echo "::endgroup::"
       shell: bash
+
+    - name: Run Project and Cypress
+      run: |
+        echo "::group::Run Server and Tests"
+        yarn run cypress:run
+        echo "::endgroup::"
+      shell: bash  
+
+    - name: Show Coverage
+      run: |
+        echo "::group::Show Coverage"
+        yarn run coverage
+        echo "::endgroup::"
+      shell: bash    
