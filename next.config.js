@@ -18,5 +18,6 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withPlugins([withTM], {
-  nextConfig
+  nextConfig,
+  distDir: 'dist'
 });
