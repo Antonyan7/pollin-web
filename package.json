@@ -34,7 +34,7 @@
     "@mui/material": "^5.4.1",
     "@mui/styles": "^5.4.1",
     "@mui/system": "^5.4.1",
-    "@mui/utils": "^5.4.1",
+    "@mui/utils": "^5.9.3",
     "@mui/x-data-grid": "^5.5.0",
     "@reduxjs/toolkit": "^1.8.3",
     "@tabler/icons": "^1.78.1",
