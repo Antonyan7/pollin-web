@@ -14,8 +14,9 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { activeItem, openDrawer } from 'redux/slices/menu';
-import { hoverBackgroundDark } from 'themes/themeConstants';
 import { LinkTarget, NavItemType } from 'types';
+
+import cssVariables from '@assets/scss/_themes-vars.module.scss';
 
 import { Link } from '../../../../../components';
 
@@ -29,7 +30,7 @@ const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(() => (
   mb: 0.5,
   alignItems: 'flex-start',
   '&:hover': {
-    background: hoverBackgroundDark
+    background: cssVariables.hoverBackgroundDark
   }
 }));
 
@@ -99,12 +100,14 @@ const NavItem = ({ item, level }: NavItemProps) => {
       selected={openItem?.findIndex((id) => id === item.id) > -1}
       onClick={() => itemHandler(item.id!)}
     >
-      <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: 'black' }}>{itemIcon}</ListItemIcon>
+      <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: cssVariables.paperDark }}>
+        {itemIcon}
+      </ListItemIcon>
       <ListItemText
         primary={
           <Typography
             sx={{
-              color: 'black'
+              color: cssVariables.paperDark
             }}
             variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'}
           >
@@ -115,7 +118,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
           item.caption && (
             <Typography
               sx={{
-                color: 'black'
+                color: cssVariables.paperDark
               }}
               variant="caption"
               display="block"

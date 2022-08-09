@@ -2,18 +2,19 @@ import React from 'react';
 import { Avatar, AvatarProps, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconBell } from '@tabler/icons';
-import { hoverBackgroundDark, normalBackgroundDark } from 'themes/themeConstants';
+
+import cssVariables from 'assets/scss/_themes-vars.module.scss';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
   border: '1px solid',
   borderColor: theme.palette.primary.light,
-  background: normalBackgroundDark,
+  background: cssVariables.normalBackgroundDark,
   color: theme.palette.primary.dark,
   transition: 'all .2s ease-in-out',
   '&:hover': {
-    background: hoverBackgroundDark
+    background: cssVariables.hoverBackgroundDark
   }
 }));
 
@@ -30,7 +31,7 @@ const NotificationSection = () => {
       }}
     >
       <StyledAvatar variant="rounded" theme={theme} aria-haspopup="true" color="inherit">
-        <IconBell stroke={1.5} size="1.3rem" color="black" />
+        <IconBell stroke={1.5} size="1.3rem" color={cssVariables.paperDark} />
       </StyledAvatar>
     </Box>
   );

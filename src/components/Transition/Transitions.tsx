@@ -1,8 +1,5 @@
 import React, { ExoticComponent, ReactElement, Ref } from 'react';
-// material-ui
 import { Box, Collapse, Fade, Grow, Slide, Zoom } from '@mui/material';
-
-// ==============================|| TRANSITIONS ||============================== //
 
 interface TSProps {
   children?: ReactElement;

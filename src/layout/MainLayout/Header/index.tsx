@@ -4,7 +4,8 @@ import { styled, useTheme } from '@mui/material/styles';
 import { IconMenu2 } from '@tabler/icons';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
-import { hoverBackgroundDark, normalBackgroundDark } from 'themes/themeConstants';
+
+import cssVariables from '@assets/scss/_themes-vars.module.scss';
 
 import LogoSection from '../LogoSection';
 
@@ -18,10 +19,10 @@ const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  background: normalBackgroundDark,
+  background: cssVariables.normalBackgroundDark,
   color: 'black',
   '&:hover': {
-    background: hoverBackgroundDark,
+    background: cssVariables.hoverBackgroundDark,
     color: 'black'
   }
 }));

@@ -1,5 +1,6 @@
 // paper & background
 $paper: #ffffff;
+$paperDark: #000000;
 
 // primary
 $primaryLight: #e3f2fd;
@@ -75,11 +76,18 @@ $darkTextTitle: #d7dcec;
 $darkTextPrimary: #bdc8f0;
 $darkTextSecondary: #8492c4;
 
+//custom material
+$hoverBackgroundDark: #7f8487;
+$normalBackgroundDark: #c4c4c4;
+$commonBorderColor: #bdbdbd;
+$commonButtonBackgroundColor: #fafafa;
+
 // ==============================|| JAVASCRIPT ||============================== //
 
 :export {
   // paper & background
   paper: $paper;
+  paperDark: $paperDark;
 
   // primary
   primaryLight: $primaryLight;
@@ -154,4 +162,10 @@ $darkTextSecondary: #8492c4;
   darkSecondaryDark: $darkSecondaryDark;
   darkSecondary200: $darkSecondary200;
   darkSecondary800: $darkSecondary800;
+
+  //custom material
+  hoverBackgroundDark: $hoverBackgroundDark;
+  normalBackgroundDark: $normalBackgroundDark;
+  commonBorderColor: $commonBorderColor;
+  commonButtonBackgroundColor: $commonButtonBackgroundColor;
 }

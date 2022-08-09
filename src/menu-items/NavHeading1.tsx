@@ -1,4 +1,3 @@
-// assets
 import React from 'react';
 import { IconCirclePlus } from '@tabler/icons';
 import { OverrideIcon } from 'types';
@@ -26,7 +25,7 @@ const NavHeading1: NavHeading1Props = {
       id: 'Appointments',
       title: 'Appointments',
       type: 'item',
-      url: '/appointments',
+      url: '/nav1/appointments',
       icon: IconCirclePlus,
       breadcrumbs: false
     },

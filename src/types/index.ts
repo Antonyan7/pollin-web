@@ -1,5 +1,5 @@
-import React, { FunctionComponent, ReactNode } from 'react';
-import { ChipProps, SnackbarOrigin, SvgIconProps } from '@mui/material';
+import React, { FunctionComponent, ReactNode, SyntheticEvent } from 'react';
+import { ChipProps, SnackbarOrigin, SvgIconProps, Theme } from '@mui/material';
 
 export interface GenericCardProps {
   title?: string;
@@ -67,4 +67,14 @@ export interface NavGroupProps {
     color?: 'primary' | 'secondary' | 'default' | undefined;
     url?: string;
   };
+}
+
+export interface MainStyleProps {
+  theme: Theme;
+  open: boolean;
+}
+
+export interface AppointmentsModalProps {
+  openAppointmentsModal: boolean;
+  handleCloseAppointmentsModal: (e: SyntheticEvent) => void;
 }

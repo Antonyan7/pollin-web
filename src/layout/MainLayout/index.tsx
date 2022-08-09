@@ -1,13 +1,61 @@
-import React, { useMemo } from 'react';
-import { AppBar, Box, CssBaseline, Toolbar, useMediaQuery } from '@mui/material';
+import React, { PropsWithChildren, useMemo } from 'react';
+import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
+import { drawerWidth } from 'themes/themeConstants';
+
+import cssVariables from '@assets/scss/_themes-vars.module.scss';
+import { MainStyleProps } from '@types';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
 
-const MainLayout = () => {
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }: MainStyleProps) => ({
+  ...theme.typography.mainContent,
+  backgroundColor: cssVariables.grey200,
+  ...(!open && {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.shorter
+    }),
+    [theme.breakpoints.up('md')]: {
+      marginLeft: -(drawerWidth - 20),
+      width: `calc(100% - ${drawerWidth}px)`
+    },
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '20px',
+      width: `calc(100% - ${drawerWidth}px)`,
+      padding: '16px'
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '10px',
+      width: `calc(100% - ${drawerWidth}px)`,
+      padding: '16px',
+      marginRight: '10px'
+    }
+  }),
+  ...(open && {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.shorter
+    }),
+    marginLeft: 0,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    width: `calc(100% - ${drawerWidth}px)`,
+    [theme.breakpoints.down('md')]: {
+      marginLeft: '20px'
+    },
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '10px'
+    }
+  })
+}));
+
+const MainLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -42,14 +90,11 @@ const MainLayout = () => {
         {header}
       </AppBar>
 
-      {/* drawer */}
       <Sidebar />
 
-      {/* main content */}
-      {/* <Main theme={theme} open={drawerOpen}> */}
-      {/* breadcrumb */}
-      {/* {children} */}
-      {/* </Main> */}
+      <Main theme={theme} open={drawerOpen}>
+        {children}
+      </Main>
     </Box>
   );
 };

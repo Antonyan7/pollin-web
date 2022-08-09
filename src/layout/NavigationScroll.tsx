@@ -1,8 +1,6 @@
 import { useEffect } from 'react';
 import { ReactElement } from 'react-markdown/lib/react-markdown';
 
-// ==============================|| NAVIGATION SCROLL TO TOP ||============================== //
-
 const NavigationScroll = ({ children }: { children: ReactElement | null }) => {
   useEffect(() => {
     window.scrollTo({

@@ -1,13 +1,6 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import MainLayout from 'layout/MainLayout';
-import type { NextPage } from 'next';
-import Calendar from 'ui-component/calendar';
 
-const Home: NextPage = () => (
-  <>
-    <MainLayout />
-    <Calendar />
-  </>
-);
+const Main = ({ children }: PropsWithChildren) => <MainLayout>{children}</MainLayout>;
 
-export default Home;
+export default Main;
