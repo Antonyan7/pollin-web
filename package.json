@@ -4,10 +4,12 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "clear": "rm -rf .next && rm -rf dist",
+    "build": "npm run clear && next build && npm run copy:assets",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "prepare": "husky install",
+    "copy:assets": "mkdir dist && cp -R .next dist/.next && cp -R public dist/public && cp package.json dist && cp yarn.lock dist && cp app.yaml dist",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --write .",
     "test": "cypress run",
