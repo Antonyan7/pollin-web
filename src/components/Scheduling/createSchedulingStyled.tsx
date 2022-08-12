@@ -1,0 +1,58 @@
+import { styled } from '@mui/material/styles';
+
+const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
+  '.create-scheduling-template': {
+    backgroundColor: theme.palette.common.white,
+    border: '1px solid rgb(220, 225, 228)',
+    padding: '25px',
+
+    '.create-template': {
+      marginTop: '33px',
+      padding: '0 66px 70px 66px',
+      border: `1px solid ${theme.palette.grey[300]}`
+    },
+
+    '.create-template-box': {
+      display: 'grid',
+      gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
+      margin: ' 25px 0',
+
+      '.schedule-inputs': {
+        gridColumn: ' span 2 / span 2'
+      }
+    },
+
+    '.splitter-line': {
+      borderBottom: `1px solid ${theme.palette.grey['200']}`,
+      width: ' 100%',
+      height: ' 4px'
+    },
+
+    '.sub-title': {
+      fontSize: ' 18px',
+      lineHeight: ' 14px',
+      color: theme.palette.common.black,
+      margin: ' 20px 0'
+    },
+
+    '.week-days': {
+      display: ' flex',
+      justifyContent: ' space-between'
+    },
+
+    '.plus-icon': {
+      background: theme.palette.grey['700'],
+      color: theme.palette.common.white
+    },
+    '.dark-button': {
+      background: `${theme.palette.grey[700]}`
+    },
+    '.light-button': {
+      background: theme.palette.grey[100],
+      color: theme.palette.common.black,
+      border: `1px solid ${theme.palette.grey[300]}`
+    }
+  }
+}));
+
+export default CreateSchedulingTemplateStyled;

@@ -26,6 +26,7 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
     palette: {
       mode: navType,
       common: {
+        white: colors.paper,
         black: colors.darkPaper
       },
       primary: {
