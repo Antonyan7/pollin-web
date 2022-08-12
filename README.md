@@ -6,6 +6,14 @@ It's React JS project combined with Next.js.
 
 yarn install
 
+## Set environment variables:
+
+Some environment variables cannot be set by default in the project for security reasons.
+
+To get them:
+- Create a `.env.local` file in the Pollin Clinic Portal root folder.
+- Ask from teammates to get env-variables. 
+
 ## Development:
 
 yarn run dev
