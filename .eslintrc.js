@@ -33,7 +33,9 @@ module.exports = {
           ...airbnbRules['import/no-extraneous-dependencies'][1].devDependencies,
           'config/**/*',
           'src/utils/test/**/*',
-          'src/setupTests.ts'
+          'src/setupTests.ts',
+          'cypress/**/*',
+          'cypress.config.ts'
         ]
       }
     ],
