@@ -29,10 +29,11 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
     },
 
     '.sub-title': {
-      fontSize: ' 18px',
-      lineHeight: ' 14px',
+      width: '100%',
+      fontSize: '18px',
+      lineHeight: '14px',
       color: theme.palette.common.black,
-      margin: ' 20px 0'
+      margin: '20px 0'
     },
 
     '.week-days': {
@@ -43,6 +44,15 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
     '.plus-icon': {
       background: theme.palette.grey['700'],
       color: theme.palette.common.white
+    },
+    '.minus-icon': {
+      minWidth: '40px',
+      height: '40px',
+      fontSize: '12px',
+      borderRadius: '50%',
+      color: theme.palette.common.black,
+      border: `1px solid ${theme.palette.grey[400]}`,
+      padding: '5px'
     },
     '.dark-button': {
       background: `${theme.palette.grey[700]}`
