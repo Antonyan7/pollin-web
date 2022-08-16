@@ -19,28 +19,28 @@ interface NavHeading2Props {
 
 const NavHeading2: NavHeading2Props = {
   id: 'Nav_Heading_2',
-  title: <h3>Nav Heading 2</h3>,
+  title: <h3>Scheduling</h3>,
   type: 'group',
   children: [
     {
       id: 'head4',
-      title: 'head4',
+      title: 'Schedule Templates',
       type: 'item',
       url: '/head4',
       icon: IconCirclePlus,
       breadcrumbs: false
     },
     {
-      id: 'head5',
-      title: 'head5',
+      id: 'applySchedule',
+      title: 'Apply Schedule',
       type: 'item',
-      url: '/head5',
+      url: '/scheduling/apply-schedule',
       icon: IconCirclePlus,
       breadcrumbs: false
     },
     {
       id: 'head6',
-      title: 'head6',
+      title: 'Block Schedule',
       type: 'item',
       url: '/head6',
       icon: IconCirclePlus,
