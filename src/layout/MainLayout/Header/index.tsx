@@ -5,8 +5,6 @@ import { IconMenu2 } from '@tabler/icons';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
 
-import cssVariables from '@assets/scss/_themes-vars.module.scss';
-
 import LogoSection from '../LogoSection';
 
 import CheckSection from './CheckSection';
@@ -19,10 +17,10 @@ const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  background: cssVariables.normalBackgroundDark,
+  background: theme.palette.dark[200],
   color: 'black',
   '&:hover': {
-    background: cssVariables.hoverBackgroundDark,
+    background: theme.palette.dark[100],
     color: 'black'
   }
 }));

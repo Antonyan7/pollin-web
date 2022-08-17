@@ -1,15 +1,13 @@
 import React, { PropsWithChildren } from 'react';
 import { Box, styled, Theme, useTheme } from '@mui/material';
 
-import cssVariables from 'assets/scss/_themes-vars.module.scss';
-
 interface MainStyleProps {
   theme: Theme;
 }
 
 const Main = styled('main')(({ theme }: MainStyleProps) => ({
   ...theme.typography.mainContent,
-  backgroundColor: cssVariables.paper
+  backgroundColor: theme.palette.common.white
 }));
 
 const AppointmentsContent = ({ children }: PropsWithChildren) => {

@@ -16,8 +16,6 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { activeItem, openDrawer } from 'redux/slices/menu';
 import { LinkTarget, NavItemType } from 'types';
 
-import cssVariables from '@assets/scss/_themes-vars.module.scss';
-
 import { Link } from '../../../../../components';
 
 interface NavItemProps {
@@ -25,12 +23,12 @@ interface NavItemProps {
   level: number;
 }
 
-const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(() => ({
+const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(({ theme }) => ({
   borderRadius: `8px`,
   mb: 0.5,
   alignItems: 'flex-start',
   '&:hover': {
-    background: cssVariables.hoverBackgroundDark
+    background: theme.palette.dark[100]
   }
 }));
 
@@ -100,14 +98,14 @@ const NavItem = ({ item, level }: NavItemProps) => {
       selected={openItem?.findIndex((id) => id === item.id) > -1}
       onClick={() => itemHandler(item.id!)}
     >
-      <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: cssVariables.paperDark }}>
+      <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.common.black }}>
         {itemIcon}
       </ListItemIcon>
       <ListItemText
         primary={
           <Typography
             sx={{
-              color: cssVariables.paperDark
+              color: theme.palette.common.black
             }}
             variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'}
           >
@@ -118,7 +116,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
           item.caption && (
             <Typography
               sx={{
-                color: cssVariables.paperDark
+                color: theme.palette.common.black
               }}
               variant="caption"
               display="block"

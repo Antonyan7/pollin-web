@@ -13,14 +13,13 @@ import InfoAppointmentsModal from '@components/Appointments/InfoAppointmentsModa
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Divider, FormControl, MenuItem, Stack, styled, Typography } from '@mui/material';
+import { Box, Divider, FormControl, MenuItem, Stack, styled, Typography, useTheme } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
-
-import cssVariables from 'assets/scss/_themes-vars.module.scss';
+import Calendar from 'ui-component/calendar';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: '30px',
@@ -30,27 +29,28 @@ const MainHeader = styled(Box)<BoxProps>(() => ({
 }));
 
 const Appointments = () => {
+  const theme = useTheme();
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(new Date());
   const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [openEditAppointments, setOpenEditAppointments] = useState<boolean>(false);
   const [openInfoAppointments, setOpenInfoAppointments] = useState<boolean>(false);
 
-  const handleOpenAppointmentsModalEdit = () => {
+  const onOpenAppointmentsModalEdit = () => {
     setOpenEditAppointments(true);
   };
-  const handleCloseAppointmentsModalEdit = () => {
+  const onCloseAppointmentsModalEdit = () => {
     setOpenEditAppointments(false);
   };
-  const handleOpenAppointmentsModalAdd = () => {
+  const onOpenAppointmentsModalAdd = () => {
     setOpenAddAppointments(true);
   };
-  const handleCloseAppointmentsModalAdd = () => {
+  const onCloseAppointmentsModalAdd = () => {
     setOpenAddAppointments(false);
   };
-  const handleOpenAppointmentsModalInfo = () => {
+  const onOpenAppointmentsModalInfo = () => {
     setOpenInfoAppointments(true);
   };
-  const handleCloseAppointmentsModalInfo = () => {
+  const onCloseAppointmentsModalInfo = () => {
     setOpenInfoAppointments(false);
   };
 
@@ -65,8 +65,9 @@ const Appointments = () => {
           }}
         >
           <StyledButtonNewCalendar
+            theme={theme}
             variant="outlined"
-            endIcon={<OpenInNewIcon sx={{ color: cssVariables.paperDark }} />}
+            endIcon={<OpenInNewIcon sx={{ color: theme.palette.common.black }} />}
           >
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
               New Calendar
@@ -77,8 +78,11 @@ const Appointments = () => {
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth sx={{ marginLeft: '30px' }}>
-              <StyledInputLabel id="resource-label">Resource</StyledInputLabel>
+              <StyledInputLabel theme={theme} id="resource-label">
+                Resource
+              </StyledInputLabel>
               <StyledSelectButton
+                theme={theme}
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
@@ -91,10 +95,10 @@ const Appointments = () => {
             </FormControl>
           </Box>
           <Box sx={{ display: 'flex', gap: '20px' }}>
-            <StyledTodayButton variant="outlined" onClick={handleOpenAppointmentsModalEdit}>
+            <StyledTodayButton theme={theme} variant="outlined" onClick={onOpenAppointmentsModalEdit}>
               Today
             </StyledTodayButton>
-            <StyledTodayButton variant="outlined" onClick={handleOpenAppointmentsModalInfo}>
+            <StyledTodayButton theme={theme} variant="outlined" onClick={onOpenAppointmentsModalInfo}>
               Information
             </StyledTodayButton>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -111,28 +115,33 @@ const Appointments = () => {
             </LocalizationProvider>
           </Box>
           <StyledButtonNewCalendar
+            theme={theme}
             variant="outlined"
-            endIcon={<AddIcon sx={{ color: cssVariables.paperDark }} />}
-            onClick={handleOpenAppointmentsModalAdd}
+            endIcon={<AddIcon sx={{ color: theme.palette.common.black }} />}
+            onClick={onOpenAppointmentsModalAdd}
           >
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
-              Add Appointment
+              New Appointment
             </Typography>
           </StyledButtonNewCalendar>
           {/* //TODO For now they can be here for reviewing the code, Then they will be in the right place */}
           <AddAppointmentsModal
             openAppointmentsModal={openAddAppointments}
-            handleCloseAppointmentsModal={handleCloseAppointmentsModalAdd}
+            onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
+            setOpenAppointmentsModal={setOpenAddAppointments}
           />
           <EditAppointmentsModal
             openAppointmentsModal={openEditAppointments}
-            handleCloseAppointmentsModal={handleCloseAppointmentsModalEdit}
+            onCloseAppointmentsModal={onCloseAppointmentsModalEdit}
+            setOpenAppointmentsModal={setOpenEditAppointments}
           />
         </MainHeader>
         <InfoAppointmentsModal
           openAppointmentsModal={openInfoAppointments}
-          handleCloseAppointmentsModal={handleCloseAppointmentsModalInfo}
+          onCloseAppointmentsModal={onCloseAppointmentsModalInfo}
+          setOpenAppointmentsModal={setOpenInfoAppointments}
         />
+        <Calendar />
       </AppointmentsContent>
     </Box>
   );

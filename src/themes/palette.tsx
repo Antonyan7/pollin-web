@@ -78,6 +78,10 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
         light: colors.darkTextPrimary,
         main: colors.darkLevel1,
         dark: colors.darkLevel2,
+        100: colors.hoverBackgroundDark,
+        200: colors.normalBackgroundDark,
+        300: colors.commonBorderColor,
+        400: colors.commonButtonBackgroundColor,
         800: colors.darkBackground,
         900: colors.darkPaper
       },

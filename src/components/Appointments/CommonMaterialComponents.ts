@@ -10,86 +10,71 @@ import {
   TextareaAutosizeProps
 } from '@mui/material';
 
-import cssVariables from 'assets/scss/_themes-vars.module.scss';
-
-const StyledSelectButton = styled(Select)<SelectProps>(() => ({
-  color: cssVariables.paper,
+const StyledSelectButton = styled(Select)<SelectProps>(({ theme }) => ({
+  color: theme.palette.common.white,
   '.MuiOutlinedInput-notchedOutline': {
-    borderColor: cssVariables.commonBorderColor
+    borderColor: theme.palette.dark[300]
   },
   '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    borderColor: cssVariables.commonBorderColor
+    borderColor: theme.palette.dark[300]
   }
 }));
 
-const StyledInputLabel = styled(InputLabel)<InputLabelProps>(() => ({
-  color: cssVariables.paperDark,
+const StyledInputLabel = styled(InputLabel)<InputLabelProps>(({ theme }) => ({
+  color: theme.palette.common.black,
   '&.Mui-focused': {
-    color: cssVariables.paperDark
+    color: theme.palette.common.black
   }
 }));
 
-const StyledPatientButton = styled(Button)<ButtonProps>(() => ({
-  border: `1px solid ${cssVariables.commonBorderColor}`,
-  borderRadius: '7px',
-  color: 'black',
-  display: 'flex',
-  justifyContent: 'flex-start',
-  backgroundColor: cssVariables.commonButtonBackgroundColor,
-  '&:hover': {
-    backgroundColor: cssVariables.normalBackgroundDark,
-    border: `1px solid ${cssVariables.commonBorderColor}`
-  }
-}));
-
-const InternalButton = styled(Button)<ButtonProps>(() => ({
-  border: `1px solid ${cssVariables.commonBorderColor}`,
+const InternalButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  border: `1px solid ${theme.palette.dark[300]}`,
   borderRadius: '7px',
   color: 'black',
   display: 'flex',
   justifyContent: 'center',
-  backgroundColor: cssVariables.commonButtonBackgroundColor,
+  backgroundColor: theme.palette.dark[400],
   '&:hover': {
-    backgroundColor: cssVariables.normalBackgroundDark,
-    border: `1px solid ${cssVariables.commonBorderColor}`
+    backgroundColor: theme.palette.dark[200],
+    border: `1px solid ${theme.palette.dark[300]}`
   }
 }));
 
-const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>(() => ({
+const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>(({ theme }) => ({
   maxWidth: '100%',
   minWidth: '100%',
-  border: `1px solid ${cssVariables.commonBorderColor}`,
+  border: `1px solid ${theme.palette.dark[300]}`,
   borderRadius: '7px',
-  backgroundColor: cssVariables.commonButtonBackgroundColor,
+  backgroundColor: theme.palette.dark[400],
   maxHeight: '150px',
   minHeight: '50px',
   width: '100%',
   height: '200px'
 }));
 
-const StyledButtonNewCalendar = styled(Button)<ButtonProps>(() => ({
-  color: cssVariables.paperDark,
-  border: `1px solid ${cssVariables.commonBorderColor}`,
+const StyledButtonNewCalendar = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: theme.palette.common.black,
+  border: `1px solid ${theme.palette.dark[300]}`,
   borderRadius: '7px',
   padding: '15px 20px',
   display: 'flex',
   alignItems: 'center',
   '&:hover': {
-    backgroundColor: cssVariables.normalBackgroundDark,
-    color: cssVariables.paper,
-    border: `1px solid ${cssVariables.commonBorderColor}`
+    backgroundColor: theme.palette.dark[200],
+    color: theme.palette.common.white,
+    border: `1px solid ${theme.palette.dark[300]}`
   }
 }));
 
-const StyledTodayButton = styled(Button)<ButtonProps>(() => ({
+const StyledTodayButton = styled(Button)<ButtonProps>(({ theme }) => ({
   height: '100%',
   width: '70px',
-  border: `1px solid ${cssVariables.commonBorderColor}`,
+  border: `1px solid ${theme.palette.dark[300]}`,
   borderRadius: '7px',
-  color: cssVariables.paperDark,
+  color: theme.palette.common.black,
   '&:hover': {
-    backgroundColor: cssVariables.normalBackgroundDark,
-    border: `1px solid ${cssVariables.commonBorderColor}`
+    backgroundColor: theme.palette.dark[200],
+    border: `1px solid ${theme.palette.dark[300]}`
   }
 }));
 
@@ -97,7 +82,6 @@ export {
   InternalButton,
   StyledButtonNewCalendar,
   StyledInputLabel,
-  StyledPatientButton,
   StyledSelectButton,
   StyledTextareaAutosize,
   StyledTodayButton

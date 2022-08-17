@@ -3,19 +3,17 @@ import { Avatar, AvatarProps, Chip, ChipProps } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
 
-import cssVariables from 'assets/scss/_themes-vars.module.scss';
-
 const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
   height: '48px',
   alignItems: 'center',
   borderRadius: '27px',
   margin: '0px 15px',
   transition: 'all .2s ease-in-out',
-  borderColor: theme.palette.primary.light,
-  backgroundColor: cssVariables.normalBackgroundDark,
+  borderColor: theme.palette.dark[200],
+  backgroundColor: theme.palette.dark[200],
   color: 'black',
   '&:hover': {
-    background: cssVariables.hoverBackgroundDark,
+    background: theme.palette.dark[100],
     '& svg': {
       cursor: 'pointer'
     }
@@ -37,8 +35,8 @@ const ProfileSection = () => {
   return (
     <StyledChip
       theme={theme}
-      icon={<StyledAvatar src="" theme={theme} aria-haspopup="true" color={cssVariables.paperDark} />}
-      label={<IconSettings stroke={1.5} size="1.5rem" color={cssVariables.paperDark} />}
+      icon={<StyledAvatar src="" theme={theme} aria-haspopup="true" color={theme.palette.common.black} />}
+      label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.common.black} />}
       variant="outlined"
       aria-haspopup="true"
     />

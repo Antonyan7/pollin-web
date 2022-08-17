@@ -5,8 +5,6 @@ import { shouldForwardProp } from '@mui/system';
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
 
-import cssVariables from '@assets/scss/_themes-vars.module.scss';
-
 import Transitions from '../../../../components/Transition/Transitions';
 
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
@@ -34,7 +32,7 @@ const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme 
   [theme.breakpoints.down('md')]: {
     width: '100%',
     marginLeft: 4,
-    background: cssVariables.paper
+    background: theme.palette.common.white
   }
 }));
 
@@ -43,9 +41,9 @@ const HeaderAvatarStyle = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  backgroundColor: cssVariables.normalBackgroundDark,
+  backgroundColor: theme.palette.dark[200],
   '&:hover': {
-    backgroundColor: cssVariables.hoverBackgroundDark
+    backgroundColor: theme.palette.dark[100]
   }
 }));
 
@@ -117,7 +115,7 @@ const SearchSection = () => {
                   <Transitions type="zoom" {...TransitionProps} sx={{ transformOrigin: 'center left' }}>
                     <Card
                       sx={{
-                        background: cssVariables.paper,
+                        background: theme.palette.common.white,
                         [theme.breakpoints.down('sm')]: {
                           border: 0,
                           boxShadow: 'none'

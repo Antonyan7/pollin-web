@@ -5,7 +5,6 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { openDrawer } from 'redux/slices/menu';
 import { drawerWidth } from 'themes/themeConstants';
 
-import cssVariables from '@assets/scss/_themes-vars.module.scss';
 import { MainStyleProps } from '@types';
 
 import Header from './Header';
@@ -13,7 +12,7 @@ import Sidebar from './Sidebar';
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }: MainStyleProps) => ({
   ...theme.typography.mainContent,
-  backgroundColor: cssVariables.grey200,
+  backgroundColor: theme.palette.divider,
   ...(!open && {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

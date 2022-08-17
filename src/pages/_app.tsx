@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import Main from 'pages';
 import ThemeCustomization from 'themes';
 
-import NavigationScroll from '../components/Scroll/NavigationScroll';
+import { NavigationScroll } from '../components';
 import store from '../redux/store';
 
 import '@assets/scss/style.scss';

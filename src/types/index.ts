@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode, SyntheticEvent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import { ChipProps, SnackbarOrigin, SvgIconProps, Theme } from '@mui/material';
 
 export interface GenericCardProps {
@@ -72,9 +72,4 @@ export interface NavGroupProps {
 export interface MainStyleProps {
   theme: Theme;
   open: boolean;
-}
-
-export interface AppointmentsModalProps {
-  openAppointmentsModal: boolean;
-  handleCloseAppointmentsModal: (e: SyntheticEvent) => void;
 }

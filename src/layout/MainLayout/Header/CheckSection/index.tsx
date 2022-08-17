@@ -3,18 +3,16 @@ import { Avatar, AvatarProps, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconCheckbox } from '@tabler/icons';
 
-import cssVariables from 'assets/scss/_themes-vars.module.scss';
-
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
   border: '1px solid',
-  borderColor: theme.palette.primary.light,
-  background: cssVariables.normalBackgroundDark,
+  borderColor: theme.palette.dark[200],
+  background: theme.palette.dark[200],
   color: theme.palette.primary.dark,
   transition: 'all .2s ease-in-out',
   '&:hover': {
-    background: cssVariables.hoverBackgroundDark
+    background: theme.palette.dark[100]
   }
 }));
 
@@ -31,7 +29,7 @@ const CheckSection = () => {
       }}
     >
       <StyledAvatar variant="rounded" theme={theme} aria-haspopup="true" color="inherit">
-        <IconCheckbox stroke={1.5} size="1.3rem" color={cssVariables.paperDark} />
+        <IconCheckbox stroke={1.5} size="1.3rem" color={theme.palette.common.black} />
       </StyledAvatar>
     </Box>
   );

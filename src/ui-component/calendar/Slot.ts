@@ -8,7 +8,8 @@ export const CreateSlot = (
   start: string,
   end: string,
   description: string,
-  title: string
+  title: string,
+  slotId: string
 ): EventInput => {
   const BackgroundColors: Colors = {
     Default: '#18A0FB',
@@ -39,7 +40,7 @@ export const CreateSlot = (
   };
 
   return {
-    id: String(Math.random()),
+    id: slotId,
     classNames: ClassNames[type],
     allDay: false,
     color: BackgroundColors[type],
