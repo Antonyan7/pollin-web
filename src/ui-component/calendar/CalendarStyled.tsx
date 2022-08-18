@@ -17,7 +17,27 @@ const ExperimentalStyled = styled('div')(({ theme }) => ({
     '--fc-event-border-color': theme.palette.primary.dark,
     '--fc-now-indicator-color': theme.palette.error.main,
     color: theme.palette.text.primary,
-    fontFamily: theme.typography.fontFamily
+    fontFamily: theme.typography.fontFamily,
+    border: '1px solid',
+    borderColor: theme.palette.grey[200],
+    borderRadius: '7px',
+    marginTop: '30px',
+    padding: '30px'
+  },
+
+  // slot
+  '& .fc .fc-timegrid-slot': {
+    height: '40px'
+  },
+
+  // time
+  '& .fc .fc-timegrid-slot-label': {
+    padding: '5px 11px 21px 8px'
+  },
+
+  // slot lane
+  '& .fc .fc-timegrid-slot-lane': {
+    backgroundColor: theme.palette.common.white
   },
 
   // date text
@@ -32,7 +52,7 @@ const ExperimentalStyled = styled('div')(({ theme }) => ({
 
   // weekday
   '& .fc .fc-col-header-cell': {
-    backgroundColor: theme.palette.grey[50]
+    backgroundColor: theme.palette.grey[200]
   },
 
   '& .fc .fc-col-header-cell-cushion': {

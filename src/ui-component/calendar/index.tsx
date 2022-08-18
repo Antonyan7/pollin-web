@@ -2,27 +2,22 @@
 
 import React, { useRef, useState } from 'react';
 // The import order DOES MATTER here. If you change it, you'll get an error!
+import { AppointmentsModalTypes } from 'types/appointments';
+import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
+import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
+
 import FullCalendar, { EventClickArg } from '@fullcalendar/react';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
-
-import { Theme, useMediaQuery } from '@mui/material';
-import { AppointmentsModalTypes } from 'types/appointments';
-import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
-import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
 import CalendarStyled from './CalendarStyled';
-import Toolbar from './ToolBar';
+import { SlotTypes } from '../../types/calendar';
 import { CreateSlot } from './Slot';
-import { SlotTypes, DateValues } from '../../types/calendar';
 
 const Calendar = () => {
   const calendarRef = useRef<FullCalendar>(null);
-  const matchSm = useMediaQuery((theme: Theme) => theme.breakpoints.down('md'));
-  const [date, setDate] = useState(new Date());
-  const [view, setView] = useState(matchSm ? 'listWeek' : 'dayGridMonth');
   const [openAddAppointmentsModal, setOpenAddAppointmentsModal] = useState<boolean>(false);
   const [bookAppointmentDate, setBookAppointmentDate] = useState<Date | null>(null);
   const [openDetailsAppointmentsModal, setOpenDetailsAppointmentsModal] = useState<boolean>(false);
@@ -48,39 +43,6 @@ const Calendar = () => {
     CreateSlot(SlotTypes.placeholder, 'start', 'end', 'cancel', 'Title', 'slot4')
   ];
 
-  const handleViewChange = (newView: string) => {
-    const calendarEl = calendarRef.current;
-
-    if (calendarEl) {
-      const calendarApi = calendarEl.getApi();
-
-      calendarApi.changeView(newView);
-      setView(newView);
-    }
-  };
-
-  const handleDateChange = (type: string) => {
-    const calendarEl = calendarRef.current;
-
-    if (calendarEl) {
-      const calendarApi = calendarEl.getApi();
-
-      if (type === DateValues.next) {
-        calendarApi.next();
-      }
-
-      if (type === DateValues.prev) {
-        calendarApi.prev();
-      }
-
-      if (type === DateValues.today) {
-        calendarApi.today();
-      }
-
-      setDate(calendarApi.getDate());
-    }
-  };
-
   const onEventClick = (initialEventObject: EventClickArg) => {
     initialEventObject.jsEvent.preventDefault();
 
@@ -99,7 +61,6 @@ const Calendar = () => {
 
   return (
     <div>
-      <Toolbar date={date} view={view} onDateChange={handleDateChange} onChangeView={handleViewChange} />
       <CalendarStyled>
         <FullCalendar
           weekends
@@ -116,6 +77,14 @@ const Calendar = () => {
           height="auto"
           dateClick={handleDateClick}
           eventClick={onEventClick}
+          initialView="timeGridDay"
+          displayEventTime={false}
+          slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
+          allDaySlot={false}
+          slotMinTime="07:00:00"
+          slotMaxTime="18:10:00"
+          slotDuration="00:10"
+          slotLabelInterval="00:10"
           plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
         />
       </CalendarStyled>

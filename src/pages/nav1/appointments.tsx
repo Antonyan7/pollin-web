@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import AppointmentsHeader from '@components/Appointments/AppointmentsHeader';
@@ -13,13 +13,16 @@ import InfoAppointmentsModal from '@components/Appointments/InfoAppointmentsModa
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Divider, FormControl, MenuItem, Stack, styled, Typography, useTheme } from '@mui/material';
+import { Box, Divider, FormControl, MenuItem, Stack, styled, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import Calendar from 'ui-component/calendar';
+
+import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: '30px',
@@ -29,30 +32,32 @@ const MainHeader = styled(Box)<BoxProps>(() => ({
 }));
 
 const Appointments = () => {
-  const theme = useTheme();
   const [appointmentDate, setAppointmentDate] = useState<Date | null>(new Date());
   const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [openEditAppointments, setOpenEditAppointments] = useState<boolean>(false);
   const [openInfoAppointments, setOpenInfoAppointments] = useState<boolean>(false);
+  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
+  const theme = useTheme();
 
-  const onOpenAppointmentsModalEdit = () => {
+  const onOpenAppointmentsModalEdit = useCallback(() => {
     setOpenEditAppointments(true);
-  };
-  const onCloseAppointmentsModalEdit = () => {
+  }, []);
+
+  const onCloseAppointmentsModalEdit = useCallback(() => {
     setOpenEditAppointments(false);
-  };
-  const onOpenAppointmentsModalAdd = () => {
+  }, []);
+
+  const onOpenAppointmentsModalAdd = useCallback(() => {
     setOpenAddAppointments(true);
-  };
-  const onCloseAppointmentsModalAdd = () => {
+  }, []);
+
+  const onCloseAppointmentsModalAdd = useCallback(() => {
     setOpenAddAppointments(false);
-  };
-  const onOpenAppointmentsModalInfo = () => {
-    setOpenInfoAppointments(true);
-  };
-  const onCloseAppointmentsModalInfo = () => {
+  }, []);
+
+  const onCloseAppointmentsModalInfo = useCallback(() => {
     setOpenInfoAppointments(false);
-  };
+  }, []);
 
   return (
     <Box>
@@ -74,15 +79,19 @@ const Appointments = () => {
             </Typography>
           </StyledButtonNewCalendar>
         </header>
-        <Divider variant="fullWidth" sx={{ mt: 5 }} />
+        <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-28px', marginRight: '-24px' }} />
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
-            <FormControl fullWidth sx={{ marginLeft: '30px' }}>
+            <FormControl fullWidth>
               <StyledInputLabel theme={theme} id="resource-label">
                 Resource
               </StyledInputLabel>
               <StyledSelectButton
-                theme={theme}
+                sx={{
+                  '& div': {
+                    backgroundColor: 'white'
+                  }
+                }}
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
@@ -98,18 +107,42 @@ const Appointments = () => {
             <StyledTodayButton theme={theme} variant="outlined" onClick={onOpenAppointmentsModalEdit}>
               Today
             </StyledTodayButton>
-            <StyledTodayButton theme={theme} variant="outlined" onClick={onOpenAppointmentsModalInfo}>
-              Information
-            </StyledTodayButton>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
-                <MobileDateTimePicker
+                <DesktopDatePicker
+                  open={datePickerOpen}
+                  onOpen={() => setDatePickerOpen(true)}
+                  onClose={() => setDatePickerOpen(false)}
                   label="Date"
+                  inputFormat="MM/dd/yyyy"
                   value={appointmentDate}
                   onChange={(newValue) => {
                     setAppointmentDate(newValue);
                   }}
-                  renderInput={(params) => <TextField {...params} />}
+                  components={{
+                    /* TODO: Tigran Have Asked for this TODO, we need to check usage of this in future */
+                    OpenPickerIcon: CalendarIcon
+                  }}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      onClick={() => setDatePickerOpen(true)}
+                      sx={{
+                        width: '290px',
+                        '& > div': {
+                          padding: 0,
+                          backgroundColor: 'white'
+                        },
+                        '& > div > input': {
+                          backgroundColor: 'white',
+                          cursor: 'pointer'
+                        },
+                        '& > div > div > button': {
+                          marginRight: '11px'
+                        }
+                      }}
+                    />
+                  )}
                 />
               </Stack>
             </LocalizationProvider>
@@ -136,6 +169,7 @@ const Appointments = () => {
             setOpenAppointmentsModal={setOpenEditAppointments}
           />
         </MainHeader>
+        <Calendar />
         <InfoAppointmentsModal
           openAppointmentsModal={openInfoAppointments}
           onCloseAppointmentsModal={onCloseAppointmentsModalInfo}

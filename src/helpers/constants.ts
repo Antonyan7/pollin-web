@@ -9,4 +9,3 @@ export const enum DaysLabels {
   Sat = 'Sat',
   Sun = 'Sun'
 }
-
