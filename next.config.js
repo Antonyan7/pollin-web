@@ -18,5 +18,15 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withPlugins([withTM], {
-  nextConfig
+  nextConfig,
+  async rewrites() {
+    return {
+      fallback: [
+        {
+          source: '/api/:path*',
+          destination: `http://localhost:3001/:path*`
+        }
+      ]
+    };
+  }
 });
