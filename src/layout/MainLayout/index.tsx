@@ -1,9 +1,9 @@
-import React, { PropsWithChildren, useMemo } from 'react';
+import React, { PropsWithChildren, useEffect, useMemo } from 'react';
 import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { openDrawer } from 'redux/slices/menu';
+import { menuMiddleware, menuSelector } from 'redux/slices/menu';
 import { drawerWidth } from 'themes/themeConstants';
 
 import { MainStyleProps } from '@types';
@@ -59,10 +59,10 @@ const MainLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const { drawerOpen } = useAppSelector((state) => state.menu);
+  const drawerOpen = useAppSelector(menuSelector.drawerOpen);
 
-  React.useEffect(() => {
-    dispatch(openDrawer(!matchDownMd));
+  useEffect(() => {
+    dispatch(menuMiddleware.openDrawer(!matchDownMd));
   }, [matchDownMd]);
 
   const header = useMemo(

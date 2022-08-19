@@ -6,7 +6,7 @@ import { Box, Drawer, useMediaQuery } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 // redux
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { openDrawer } from 'redux/slices/menu';
+import { menuMiddleware, menuSelector } from 'redux/slices/menu';
 
 import { drawerWidth } from '../../../themes/themeConstants';
 import LogoSection from '../LogoSection';
@@ -34,7 +34,7 @@ const Sidebar = ({ window }: SidebarProps) => {
   const theme = useTheme();
   const matchUpMd = useMediaQuery(theme.breakpoints.up('md'));
 
-  const { drawerOpen } = useAppSelector((state) => state.menu);
+  const drawerOpen = useAppSelector(menuSelector.drawerOpen);
 
   const logo = useMemo(
     () => (
@@ -76,7 +76,7 @@ const Sidebar = ({ window }: SidebarProps) => {
         variant={matchUpMd ? 'persistent' : 'temporary'}
         anchor="left"
         open={drawerOpen}
-        onClose={() => dispatch(openDrawer(!drawerOpen))}
+        onClose={() => dispatch(menuMiddleware.openDrawer(!drawerOpen))}
         ModalProps={{ keepMounted: true }}
         color="inherit"
       >

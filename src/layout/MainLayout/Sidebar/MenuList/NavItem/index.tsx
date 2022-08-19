@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { activeItem, openDrawer } from 'redux/slices/menu';
+import { menuMiddleware, menuSelector } from 'redux/slices/menu';
 import { LinkTarget, NavItemType } from 'types';
 
 import { Link } from '../../../../../components';
@@ -36,7 +36,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const { openItem } = useAppSelector((state) => state.menu);
+  const openItem = useAppSelector(menuSelector.openItem);
 
   const Icon = item?.icon!;
   const itemIcon = item?.icon ? (
@@ -72,10 +72,10 @@ const NavItem = ({ item, level }: NavItemProps) => {
   }
 
   const itemHandler = (id: string) => {
-    dispatch(activeItem([id]));
+    dispatch(menuMiddleware.activeItem([id]));
 
     if (matchesSM) {
-      dispatch(openDrawer(false));
+      dispatch(menuMiddleware.openDrawer(false));
     }
   };
 
@@ -86,7 +86,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
       .findIndex((id) => id === item.id);
 
     if (currentIndex > -1) {
-      dispatch(activeItem([item.id!]));
+      dispatch(menuMiddleware.activeItem([item.id!]));
     }
   }, [item.id]);
 
