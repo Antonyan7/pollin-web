@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useMemo } from 'react';
+import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -76,6 +77,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
+      <RedirectionHandler />
       <AppBar
         enableColorOnDark
         position="fixed"
