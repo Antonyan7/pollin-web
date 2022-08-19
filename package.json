@@ -42,6 +42,7 @@
     "clsx": "^1.2.1",
     "csstype": "^3.1.0",
     "cypress": "^10.3.1",
+    "danger": "^11.1.1",
     "date-fns": "^2.29.1",
     "formik": "^2.2.9",
     "framer-motion": "^6.5.1",
@@ -57,8 +58,8 @@
     "redux": "^4.2.0",
     "sass": "^1.54.0",
     "start-server-and-test": "^1.14.0",
-    "yup": "^0.32.11",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.18.6",
