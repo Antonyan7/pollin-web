@@ -1,7 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import AppointmentsHeader from '@components/Appointments/AppointmentsHeader';
 import {
   StyledButtonNewCalendar,
   StyledInputLabel,
@@ -10,6 +9,7 @@ import {
 } from '@components/Appointments/CommonMaterialComponents';
 import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
 import InfoAppointmentsModal from '@components/Appointments/InfoAppointmentsModal';
+import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -61,7 +61,13 @@ const Appointments = () => {
 
   return (
     <Box>
-      <AppointmentsHeader />
+      <MainBreadcrumb
+        currentPage="Appointments"
+        navigation={{
+          basePath: '/',
+          items: [{ name: 'Appointments', path: '/nav1/appointments' }]
+        }}
+      />
       <AppointmentsContent>
         <header
           style={{
@@ -175,7 +181,6 @@ const Appointments = () => {
           onCloseAppointmentsModal={onCloseAppointmentsModalInfo}
           setOpenAppointmentsModal={setOpenInfoAppointments}
         />
-        <Calendar />
       </AppointmentsContent>
     </Box>
   );

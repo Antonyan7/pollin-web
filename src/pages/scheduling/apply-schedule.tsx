@@ -1,6 +1,6 @@
 import React from 'react';
+import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import ApplyScheduleForm from '@components/Scheduling/ApplyScheduleForm';
-import ApplyScheduleHeader from '@components/Scheduling/ApplyScheduleHeader';
 import { Box, useTheme } from '@mui/material';
 
 const ApplySchedule = () => {
@@ -8,8 +8,13 @@ const ApplySchedule = () => {
 
   return (
     <Box sx={{ padding: '20px', borderRadius: '5px', backgroundColor: theme.palette.background.paper }}>
-      {/* will be removed with breadcrumb */}
-      <ApplyScheduleHeader />
+      <MainBreadcrumb
+        currentPage="Apply Schedule"
+        navigation={{
+          basePath: '/',
+          items: [{ name: 'Apply Schedule', path: '/scheduling/apply-schedule' }]
+        }}
+      />
 
       <ApplyScheduleForm />
     </Box>
