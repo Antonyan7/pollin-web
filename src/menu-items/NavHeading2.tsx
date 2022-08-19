@@ -26,7 +26,7 @@ const NavHeading2: NavHeading2Props = {
       id: 'head4',
       title: 'Schedule Templates',
       type: 'item',
-      url: '/head4',
+      url: '/scheduling/create-template',
       icon: IconCirclePlus,
       breadcrumbs: false
     },

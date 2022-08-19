@@ -3,12 +3,22 @@ export interface IServiceTypes {
   title: string;
 }
 
-export interface ITemplate {
-  id: string;
+export interface ISingleTemplate {
+  id?: string;
   days: number[];
   startTime: string;
   endTime: string;
-  isServiceType: boolean;
+  periodType: string;
   serviceTypes: string[];
-  placeholder: string;
+  placeholderName: string;
+}
+
+export interface ITemplateGroup {
+  name: string;
+  timePeriods: ISingleTemplate[];
+}
+
+export enum ServiceTypeOrBlock {
+  ServiceType = 'ServiceType',
+  Block = 'Block'
 }
