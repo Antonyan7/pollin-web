@@ -88,18 +88,22 @@ const Calendar = () => {
           plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
         />
       </CalendarStyled>
-      <AddAppointmentsModal
-        openAppointmentsModal={openAddAppointmentsModal}
-        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Add)}
-        setOpenAppointmentsModal={setOpenAddAppointmentsModal}
-        bookAppointmentDate={bookAppointmentDate}
-      />
-      <DetailsAppointmentModal
-        openAppointmentsModal={openDetailsAppointmentsModal}
-        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Details)}
-        setOpenAppointmentsModal={setOpenDetailsAppointmentsModal}
-        appointmentSlotId={appointmentSlotId}
-      />
+      {openAddAppointmentsModal ? (
+        <AddAppointmentsModal
+          openAppointmentsModal={openAddAppointmentsModal}
+          onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Add)}
+          setOpenAppointmentsModal={setOpenAddAppointmentsModal}
+          bookAppointmentDate={bookAppointmentDate}
+        />
+      ) : null}
+      {openDetailsAppointmentsModal ? (
+        <DetailsAppointmentModal
+          openAppointmentsModal={openDetailsAppointmentsModal}
+          onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Details)}
+          setOpenAppointmentsModal={setOpenDetailsAppointmentsModal}
+          appointmentSlotId={appointmentSlotId}
+        />
+      ) : null}
     </div>
   );
 };

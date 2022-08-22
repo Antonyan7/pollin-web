@@ -1,12 +1,10 @@
 import { combineReducers } from 'redux';
 
 import appointmentsReducer from './slices/appointments';
-import { menuSlice } from './slices/menu';
-import redirectionReducer from './slices/redirection';
+import { viewsSlice } from './slices/views';
 
 const reducer = combineReducers({
-  redirection: redirectionReducer,
-  menu: menuSlice.reducer,
+  views: viewsSlice.reducer,
   appointments: appointmentsReducer
 });
 

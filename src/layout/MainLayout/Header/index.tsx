@@ -3,7 +3,7 @@ import { Avatar, AvatarProps, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconMenu2 } from '@tabler/icons';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { menuMiddleware, menuSelector } from 'redux/slices/menu';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
 import LogoSection from '../LogoSection';
 
@@ -27,7 +27,7 @@ const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
 
 const Header = () => {
   const theme = useTheme();
-  const drawerOpen = useAppSelector(menuSelector.drawerOpen);
+  const { drawerOpen } = useAppSelector(viewsSelector.menu);
 
   return (
     <>
@@ -45,7 +45,7 @@ const Header = () => {
         </Box>
         <StyledAvatar
           variant="rounded"
-          onClick={() => dispatch(menuMiddleware.openDrawer(!drawerOpen))}
+          onClick={() => dispatch(viewsMiddleware.openMenuDrawer(!drawerOpen))}
           color="inherit"
         >
           <IconMenu2 stroke={1.5} size="1.3rem" />

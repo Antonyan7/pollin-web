@@ -164,16 +164,20 @@ const Appointments = () => {
             </Typography>
           </StyledButtonNewCalendar>
           {/* //TODO For now they can be here for reviewing the code, Then they will be in the right place */}
-          <AddAppointmentsModal
-            openAppointmentsModal={openAddAppointments}
-            onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
-            setOpenAppointmentsModal={setOpenAddAppointments}
-          />
-          <EditAppointmentsModal
-            openAppointmentsModal={openEditAppointments}
-            onCloseAppointmentsModal={onCloseAppointmentsModalEdit}
-            setOpenAppointmentsModal={setOpenEditAppointments}
-          />
+          {openAddAppointments ? (
+            <AddAppointmentsModal
+              openAppointmentsModal={openAddAppointments}
+              onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
+              setOpenAppointmentsModal={setOpenAddAppointments}
+            />
+          ) : null}
+          {openEditAppointments ? (
+            <EditAppointmentsModal
+              openAppointmentsModal={openEditAppointments}
+              onCloseAppointmentsModal={onCloseAppointmentsModalEdit}
+              setOpenAppointmentsModal={setOpenEditAppointments}
+            />
+          ) : null}
         </MainHeader>
         <Calendar />
         <InfoAppointmentsModal

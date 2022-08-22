@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { setRedirection } from 'redux/slices/redirection';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
 const RedirectionHandler = () => {
-  const redirection = useAppSelector((state) => state.redirection);
+  const redirection = useAppSelector(viewsSelector.redirection);
   const router = useRouter();
 
   useEffect(() => {
     if (redirection.apply) {
       dispatch(
-        setRedirection({
+        viewsMiddleware.setRedirectionState({
           ...redirection,
           apply: false
         })

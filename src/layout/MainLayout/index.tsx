@@ -3,7 +3,7 @@ import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandle
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { menuMiddleware, menuSelector } from 'redux/slices/menu';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { drawerWidth } from 'themes/themeConstants';
 
 import { MainStyleProps } from '@types';
@@ -59,10 +59,10 @@ const MainLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const drawerOpen = useAppSelector(menuSelector.drawerOpen);
+  const { drawerOpen } = useAppSelector(viewsSelector.menu);
 
   useEffect(() => {
-    dispatch(menuMiddleware.openDrawer(!matchDownMd));
+    dispatch(viewsMiddleware.openMenuDrawer(!matchDownMd));
   }, [matchDownMd]);
 
   const header = useMemo(

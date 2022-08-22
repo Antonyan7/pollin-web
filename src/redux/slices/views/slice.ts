@@ -4,7 +4,7 @@ import actions from './actions';
 import { getInitialState } from './initialState';
 
 const slice = createSlice({
-  name: 'menu',
+  name: 'views',
   initialState: getInitialState(),
   reducers: actions
 });

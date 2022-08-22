@@ -13,7 +13,7 @@ import {
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { menuMiddleware, menuSelector } from 'redux/slices/menu';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { LinkTarget, NavItemType } from 'types';
 
 import { Link } from '../../../../../components';
@@ -36,7 +36,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const openItem = useAppSelector(menuSelector.openItem);
+  const { openItem } = useAppSelector(viewsSelector.menu);
 
   const Icon = item?.icon!;
   const itemIcon = item?.icon ? (
@@ -72,10 +72,10 @@ const NavItem = ({ item, level }: NavItemProps) => {
   }
 
   const itemHandler = (id: string) => {
-    dispatch(menuMiddleware.activeItem([id]));
+    dispatch(viewsMiddleware.activateMenuItem([id]));
 
     if (matchesSM) {
-      dispatch(menuMiddleware.openDrawer(false));
+      dispatch(viewsMiddleware.openMenuDrawer(false));
     }
   };
 
@@ -86,7 +86,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
       .findIndex((id) => id === item.id);
 
     if (currentIndex > -1) {
-      dispatch(menuMiddleware.activeItem([item.id!]));
+      dispatch(viewsMiddleware.activateMenuItem([item.id!]));
     }
   }, [item.id]);
 
