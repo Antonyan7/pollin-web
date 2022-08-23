@@ -6,6 +6,7 @@ import {
   Checkbox,
   FormControlLabel,
   Grid,
+  Modal,
   Radio,
   RadioGroup,
   TextField
@@ -24,6 +25,7 @@ import { dispatch } from '../../redux/hooks';
 import { createScheduleTemplate } from '../../redux/utils/schedule-template';
 import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types/create-schedule';
 import { MinusIconButton, PlusIconButton } from '../../ui-component/common/buttons';
+import ErrorModal from '../../ui-component/schedule-template/ErrorModal';
 
 const CreateTemplate = () => {
   const timePeriods: ISingleTemplate = useMemo(
@@ -47,6 +49,7 @@ const CreateTemplate = () => {
     [timePeriods]
   );
   const [createTemplateData, setCreateTemplateData] = useState<ITemplateGroup>(emptyTemplateData);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // TODO: update to not use mock data
   const [serviceTypes] = useState([
@@ -95,6 +98,14 @@ const CreateTemplate = () => {
     [createTemplateData]
   );
 
+  const onModalClose = useCallback(async () => {
+    setIsModalOpen(false);
+  }, []);
+
+  const onModalOpen = useCallback(async () => {
+    setIsModalOpen(true);
+  }, []);
+
   const onSaveClick = useCallback(async () => {
     try {
       // TODO: change after PCP-260
@@ -108,11 +119,10 @@ const CreateTemplate = () => {
           })
         })
       );
-
       // TODO: change the URL after PCP-190
       // redirectTo('/');
     } catch (err) {
-      // TODO: remove log after PCP-198
+      // TODO: change after requirements
       console.log(err);
     }
   }, [createTemplateData]);
@@ -274,11 +284,20 @@ const CreateTemplate = () => {
           <Button variant="contained" className="dark-button" size="large" type="submit">
             Save
           </Button>
-          <Button variant="outlined" className="light-button" size="large" sx={{ marginRight: '10px' }}>
+          <Button
+            onClick={onModalOpen}
+            variant="outlined"
+            className="light-button"
+            size="large"
+            sx={{ marginRight: '10px' }}
+          >
             Cancel
           </Button>
         </Grid>
       </form>
+      <Modal open={isModalOpen} onClose={onModalClose}>
+        <ErrorModal handleClose={onModalClose} />
+      </Modal>
     </div>
   );
 };
