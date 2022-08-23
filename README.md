@@ -11,8 +11,9 @@ yarn install
 Some environment variables cannot be set by default in the project for security reasons.
 
 To get them:
+
 - Create a `.env.local` file in the Pollin Clinic Portal root folder.
-- Ask from teammates to get env-variables. 
+- Ask from teammates to get env-variables.
 
 ## Development:
 
@@ -39,7 +40,6 @@ Prettier - Prettier is an opinionated code formatter.
 Eslint - ESLint is an open source project that helps you find and fix problems with your JavaScript code.
 
 Redux Toolkit (Thunk) - For state management is used Redux Thunk with Toolkit. It's a middleware that lets you call action creators that return a function instead of an action object.
-
 
 # Documentation
 

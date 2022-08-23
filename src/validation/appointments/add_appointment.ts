@@ -1,7 +1,6 @@
 import { AutocompleteInputChangeReason } from '@mui/material';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { object, string } from 'yup';
-
-import { generateErrorMessage } from '@utils/generateErrorMessage';
 
 export const validateInputChange = (_: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => {
   if (reason === 'reset') {

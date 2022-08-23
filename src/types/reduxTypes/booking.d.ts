@@ -1,5 +1,21 @@
 import { SlotTypes } from '../calendar';
 
+export interface CreateAppointmentProps {
+  appointmentTypeId: string;
+  patientId: string;
+  description?: string;
+  date: Date | string;
+}
+
+export interface AppointmentDetailsProps {
+  appointmentType: { id: string; title: string };
+  date: Date;
+  status: string;
+  description: string;
+  cancellationReason: string;
+  isVirtual: boolean;
+  patient: { id: string; name: string };
+}
 export interface BookingProps {
   appointments: IAppointment[];
   date: string;
@@ -7,6 +23,9 @@ export interface BookingProps {
   currentServiceProviderId: string;
   currentAppointmentId: string;
   error: string | null;
+  patientList: IPatientData[];
+  serviceTypes: IServiceType[];
+  appointmentDetails: AppointmentDetailsProps | null;
 }
 
 export interface IServiceProvider {
@@ -14,6 +33,12 @@ export interface IServiceProvider {
   title: string;
 }
 
+export interface IPatientData extends IServiceProvider {}
+export interface IServiceType {
+  id: string;
+  title: string;
+  isVirtual: boolean;
+}
 export interface IAppointment {
   id: string;
   isEditable: boolean;

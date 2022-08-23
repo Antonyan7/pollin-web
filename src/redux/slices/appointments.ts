@@ -6,7 +6,7 @@ const initialState: AppointmentsProps = {
   patientData: [],
   appointmentTypeData: [],
   appointments: [],
-  appointmentDetails: [],
+  appointmentDetails: null,
   error: []
 };
 
@@ -27,6 +27,9 @@ export const appointments = createSlice({
       state.error = [...state.error, action.payload];
     },
     fetchAppointmentDetails(state, action) {
+      state.appointmentDetails = action.payload;
+    },
+    updateAppointment(state, action) {
       state.appointmentDetails = action.payload;
     }
   }

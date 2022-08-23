@@ -1,6 +1,5 @@
 import { IAction, SliceReducers } from 'redux/store';
-
-import { BookingProps, IAppointment, IServiceProvider } from '../../../types/reduxTypes/booking';
+import { AppointmentDetailsProps, BookingProps, IAppointment, IServiceProvider } from 'types/reduxTypes/booking';
 
 const actions: SliceReducers<BookingProps> = {
   setAppointments(state, action: IAction<IAppointment[]>) {
@@ -20,6 +19,18 @@ const actions: SliceReducers<BookingProps> = {
   },
   setError(state, action: IAction<string>) {
     state.error = action.payload;
+  },
+  setPatientNames(state, action: IAction<{ id: string; title: string }[]>) {
+    state.patientList = action.payload;
+  },
+  setServiceTypes(state, action: IAction<{ id: string; title: string; isVirtual: boolean }[]>) {
+    state.serviceTypes = action.payload;
+  },
+  setAppointmentDetails(state, action: IAction<AppointmentDetailsProps | null>) {
+    state.appointmentDetails = action.payload;
+  },
+  updateAppointment(state, action: IAction<AppointmentDetailsProps | null>) {
+    state.appointmentDetails = action.payload;
   }
 };
 

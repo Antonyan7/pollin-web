@@ -3,6 +3,19 @@ export interface IServiceTypes {
   title: string;
 }
 
+export interface ServiceTypesProps {
+  title: string;
+  id: string;
+  isVirtual: boolean;
+}
+
+export interface OptionsReturnProps extends IServiceTypes, ServiceTypesProps {
+  title: string;
+  firstLetter: string;
+  id: string;
+  isVirtual: boolean;
+}
+
 export interface ISingleTemplate {
   id?: string;
   days: number[];

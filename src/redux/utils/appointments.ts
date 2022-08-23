@@ -11,36 +11,46 @@ import { appointments } from '../slices/appointments';
 // TODO environment should be changed after getting mock server ready.
 const environment = 'local';
 const mockPatientNames = [
-  { patientId: 'The Shawshank Redemption' },
-  { patientId: 'The Godfather' },
-  { patientId: 'The Godfather: Part II' },
-  { patientId: 'ABCD' },
-  { patientId: 'BACD' },
-  { patientId: 'CABD' },
-  { patientId: 'DABC' },
-  { patientId: 'The Dark Knight' }
-];
-const mockAppointmentTypes = [
-  { appointmentTypeId: 'The Shawshank Redemption' },
-  { appointmentTypeId: 'The Godfather' },
-  { appointmentTypeId: 'The Godfather: Part II' },
-  { appointmentTypeId: 'ABCD' },
-  { appointmentTypeId: 'BACD' },
-  { appointmentTypeId: 'CABD' },
-  { appointmentTypeId: 'DABC' },
-  { appointmentTypeId: 'The Dark Knight' }
-];
-const mockAppointmentDetails: AppointmentDetailsProps[] = [
   {
-    appointmentType: { id: 'slot1', title: 'IC - Initial Consultation (Virtual) [Duration: 30 minutes]' },
-    date: new Date(),
-    status: ['Cancelled'],
-    description: ['Lorem ipsum dolor sit amet, consectetur adipiscing elit'],
-    cancellationReason: 'Reason',
-    isVirtual: true,
-    patient: { id: '12345', name: 'Jane Doe' }
+    id: 'exPatientId1',
+    title: 'Anry'
+  },
+  {
+    id: 'exPatientId2',
+    title: 'Artur'
+  },
+  {
+    id: 'exPatientId3',
+    title: 'Abgar'
   }
 ];
+const mockAppointmentTypes = [
+  {
+    id: 'serviceType1',
+    title: 'ServiceType',
+    isVirtual: true
+  },
+  {
+    id: 'serviceType2',
+    title: 'Block',
+    isVirtual: false
+  }
+];
+const mockAppointmentDetails: AppointmentDetailsProps = {
+  appointmentType: {
+    id: 'serviceType1',
+    title: 'ServiceType'
+  },
+  date: new Date(),
+  status: 'Checked In/In Waiting',
+  description: 'Clinic Appointment Description',
+  cancellationReason: 'Reason Of the cancellation is the timing',
+  isVirtual: true,
+  patient: {
+    id: 'exPatientId1',
+    name: 'John'
+  }
+};
 
 export const getPatientNames = (name: string = '') => {
   let patientResponse: AppointmentsProps['patientData'];
@@ -74,7 +84,11 @@ export const getAppointmentTypes = () => {
       if (environment === 'local') {
         appointmentTypeResponse = mockAppointmentTypes;
       } else if (environment === 'prd') {
-        appointmentTypeResponse = (await axios.get('/appointment-type')).data;
+        appointmentTypeResponse = (
+          await axios.get(
+            `/${process.env.NEXT_PUBLIC_API_URL_APPOINTMENT}/${process.env.NEXT_PUBLIC_API_VERSION}/service-type`
+          )
+        ).data;
       }
 
       dispatch(appointments.actions.getAppointmentTypes(appointmentTypeResponse));
@@ -113,8 +127,31 @@ export const createNewAppointment = (appointmentDetails: CreateAppointmentProps)
   };
 };
 
+export const updateAppointmentData = (appointmentDetails: AppointmentDetailsProps) => {
+  let editedAppointmentResponse: AppointmentDetailsProps;
+
+  return async () => {
+    try {
+      if (environment === 'local') {
+        editedAppointmentResponse = appointmentDetails;
+      } else if (environment === 'prd') {
+        editedAppointmentResponse = (
+          await axios.put(
+            `/${process.env.NEXT_PUBLIC_API_URL_APPOINTMENT}/${process.env.NEXT_PUBLIC_API_VERSION}/appointment`,
+            appointmentDetails
+          )
+        ).data;
+      }
+
+      dispatch(appointments.actions.updateAppointment(editedAppointmentResponse));
+    } catch (e) {
+      dispatch(appointments.actions.hasError(e));
+    }
+  };
+};
+
 export const getAppointmentDetails = (appointmentId: string = '') => {
-  let detailsResponse: AppointmentDetailsProps[] = [];
+  let detailsResponse: AppointmentDetailsProps | null = null;
 
   // TODO till mock server will be ready.
   return async () => {

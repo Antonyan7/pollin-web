@@ -1,11 +1,13 @@
 import { SyntheticEvent } from 'react';
+import { DateRange } from '@fullcalendar/common';
 
 export interface AppointmentsModalProps {
   openAppointmentsModal: boolean;
   onCloseAppointmentsModal: (e: SyntheticEvent) => void;
   setOpenAppointmentsModal: React.Dispatch<React.SetStateAction<boolean>>;
-  bookAppointmentDate?: Date | null;
+  bookAppointmentDate?: DateRange | null;
   appointmentSlotId?: string;
+  setCancellationReason?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface ISlotList {
@@ -22,5 +24,6 @@ export enum AppointmentsModalTypes {
   Add = 'add',
   Edit = 'edit',
   Info = 'info',
-  Details = 'details'
+  Details = 'details',
+  Confirm = 'confirm'
 }

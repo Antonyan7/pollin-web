@@ -18,7 +18,7 @@ import { v4 } from 'uuid';
 
 import { toIsoString } from '@utils/dateUtils';
 
-import { createOptionsGroup, sortGroups } from '../../helpers/berryFunctions';
+import { createOptionsGroup } from '../../helpers/berryFunctions';
 import { weekDays } from '../../helpers/constants';
 import { dispatch } from '../../redux/hooks';
 import { createScheduleTemplate } from '../../redux/utils/schedule-template';
@@ -50,14 +50,17 @@ const CreateTemplate = () => {
 
   // TODO: update to not use mock data
   const [serviceTypes] = useState([
-    { title: 'f569f0a6-ed52-4218-ac4b-249341046f27', year: 1994 },
-    { title: 'f569f0g8-ed52-4218-ac4b-249341046f81', year: 1972 },
-    { title: 'The Godfather: Part II', year: 1974 },
-    { title: 'The Dark Knight', year: 2008 },
-    { title: '12 Angry Men', year: 1957 }
+    {
+      id: 'serviceType1',
+      title: 'ServiceType',
+      isVirtual: true
+    },
+    {
+      id: 'serviceType2',
+      title: 'Block',
+      isVirtual: false
+    }
   ]);
-
-  const optionsGroup = createOptionsGroup(serviceTypes);
 
   const updateInputValue = useCallback(
     (
@@ -242,7 +245,7 @@ const CreateTemplate = () => {
                 <Autocomplete
                   className="schedule-inputs"
                   multiple
-                  options={sortGroups(optionsGroup)}
+                  options={createOptionsGroup(serviceTypes)}
                   groupBy={(option) => option.firstLetter}
                   getOptionLabel={(option) => option.title}
                   onChange={(e, newValue) => updateInputValue('serviceTypes', renderScheduleInputs(newValue), index)}

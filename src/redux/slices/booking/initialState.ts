@@ -9,5 +9,8 @@ export const getInitialState = () =>
     serviceProviders: [],
     currentServiceProviderId: '',
     currentAppointmentId: '',
-    error: null
+    error: null,
+    patientList: [],
+    serviceTypes: [],
+    appointmentDetails: null
   } as BookingProps);

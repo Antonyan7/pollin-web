@@ -12,3 +12,23 @@ export interface IAppointmentListResponse {
 export interface IServiceProvidersListResponse {
   providers: IServiceProvider[];
 }
+
+export interface IPatientNamesResponseData {
+  patients: PatientNamesProps[];
+}
+
+export interface IAppointmentTypesData {
+  serviceTypes: AppointmentTypesProps[];
+}
+
+export interface ICreatedAppointmentData {
+  data: null;
+}
+
+export interface IUpdatedAppointmentData {
+  data: null;
+}
+
+export interface IAppointmentDetailsData {
+  appointment: AppointmentDetailsProps;
+}

@@ -153,7 +153,7 @@ const Appointments = () => {
                     OpenPickerIcon: CalendarIcon
                   }}
                   renderInput={(params) => (
-                    <StyledTextField {...params} onClick={() => setDatePickerOpen(true)} theme={theme} />
+                    <StyledTextField theme={theme} {...params} onClick={() => setDatePickerOpen(true)} />
                   )}
                 />
               </Stack>

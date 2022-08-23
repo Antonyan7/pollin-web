@@ -2,19 +2,19 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 // The import order DOES MATTER here. If you change it, you'll get an error!
-import { AppointmentsModalTypes } from 'types/appointments';
-import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
-import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
-
-import FullCalendar, { EventClickArg } from '@fullcalendar/react';
-import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import FullCalendar, { DateRange, DateSelectArg, EventClickArg } from '@fullcalendar/react';
+import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
+
+import { AppointmentsModalTypes } from 'types/appointments';
+import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
+import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
+import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
 import { addMinutesToTheTime } from '@utils/dateUtils';
 import CalendarStyled from './CalendarStyled';
-import { SlotTypes } from '../../types/calendar';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
@@ -25,8 +25,9 @@ const Calendar = (props: { calendarDate: string }) => {
   const { calendarDate } = props;
   const calendarRef = useRef<FullCalendar>(null);
   const [openAddAppointmentsModal, setOpenAddAppointmentsModal] = useState<boolean>(false);
-  const [bookAppointmentDate, setBookAppointmentDate] = useState<Date | null>(null);
+  const [bookAppointmentDate, setBookAppointmentDate] = useState<DateRange | null>(null);
   const [openDetailsAppointmentsModal, setOpenDetailsAppointmentsModal] = useState<boolean>(false);
+  const [openEditAppointmentsModal, setOpenEditAppointmentsModal] = useState<boolean>(false);
   const [appointmentSlotId, setAppointmentSlotId] = useState<string>('');
   const [slots, setSlots] = useState<ICalendarSlot[]>([]);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
@@ -40,6 +41,9 @@ const Calendar = (props: { calendarDate: string }) => {
       case AppointmentsModalTypes.Details:
         setOpenDetailsAppointmentsModal(false);
         break;
+      case AppointmentsModalTypes.Edit:
+        setOpenEditAppointmentsModal(false);
+        break;
       default:
         setOpenAddAppointmentsModal(true);
     }
@@ -48,17 +52,21 @@ const Calendar = (props: { calendarDate: string }) => {
   const onEventClick = (initialEventObject: EventClickArg) => {
     initialEventObject.jsEvent.preventDefault();
 
-    if (initialEventObject.event.title === SlotTypes.schedule) {
+    if (new Date(initialEventObject.event.startStr).getTime() < new Date().setHours(0, 0, 0, 0)) {
       setOpenDetailsAppointmentsModal(true);
-      setAppointmentSlotId(initialEventObject.event.id);
+    } else {
+      setOpenEditAppointmentsModal(true);
     }
+
+    setAppointmentSlotId(initialEventObject.event.id);
   };
 
-  const handleDateClick = (dateInfo: DateClickArg) => {
-    if (dateInfo.date) {
-      setOpenAddAppointmentsModal(true);
-      setBookAppointmentDate(dateInfo.date);
-    }
+  const onRangeSelect = (arg: DateSelectArg) => {
+    setBookAppointmentDate({
+      start: arg.start,
+      end: arg.end
+    });
+    setOpenAddAppointmentsModal(true);
   };
 
   useEffect(() => {
@@ -93,7 +101,7 @@ const Calendar = (props: { calendarDate: string }) => {
       )
     );
 
-    setSlots(calendarEvents);
+    setSlots(calendarEvents as ICalendarSlot[]);
   }, [appointments]);
 
   return (
@@ -119,7 +127,7 @@ const Calendar = (props: { calendarDate: string }) => {
           headerToolbar={false}
           allDayMaintainDuration
           height="auto"
-          dateClick={handleDateClick}
+          select={onRangeSelect}
           eventClick={onEventClick}
           initialDate={calendarDate}
           initialView="timeGridDay"
@@ -133,6 +141,12 @@ const Calendar = (props: { calendarDate: string }) => {
           plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
         />
       </CalendarStyled>
+      <EditAppointmentsModal
+        openAppointmentsModal={openEditAppointmentsModal}
+        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Edit)}
+        setOpenAppointmentsModal={setOpenEditAppointmentsModal}
+        appointmentSlotId={appointmentSlotId}
+      />
       <AddAppointmentsModal
         openAppointmentsModal={openAddAppointmentsModal}
         onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Add)}
