@@ -1,7 +1,7 @@
 import React from 'react';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
-import CreateSchedulingTemplateStyled from '@components/Scheduling/createSchedulingStyled';
-import CreateTemplate from '@components/Scheduling/createTemplate';
+import CreateSchedulingTemplateStyled from '@components/Scheduling/CreateSchedulingStyled';
+import CreateTemplate from '@components/Scheduling/CreateTemplate';
 
 const CreateSchedulingTemplate = () => (
   <CreateSchedulingTemplateStyled>

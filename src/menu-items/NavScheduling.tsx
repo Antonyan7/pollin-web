@@ -3,7 +3,7 @@ import React from 'react';
 import { IconCirclePlus } from '@tabler/icons';
 import { OverrideIcon } from 'types';
 
-interface NavHeading2Props {
+interface NavSchedulingProps {
   id: string;
   title: React.ReactNode | string;
   type: string;
@@ -17,36 +17,28 @@ interface NavHeading2Props {
   }[];
 }
 
-const NavHeading2: NavHeading2Props = {
-  id: 'Nav_Heading_2',
+const NavScheduling: NavSchedulingProps = {
+  id: 'Scheduling',
   title: <h3>Scheduling</h3>,
   type: 'group',
   children: [
     {
-      id: 'head4',
+      id: 'scheduleTemplates',
       title: 'Schedule Templates',
       type: 'item',
-      url: '/scheduling/create-template',
+      url: '/scheduling/schedule-template',
       icon: IconCirclePlus,
       breadcrumbs: false
     },
     {
-      id: 'applySchedule',
-      title: 'Apply Schedule',
-      type: 'item',
-      url: '/scheduling/apply-schedule',
-      icon: IconCirclePlus,
-      breadcrumbs: false
-    },
-    {
-      id: 'head6',
+      id: 'blockSchedule',
       title: 'Block Schedule',
       type: 'item',
-      url: '/head6',
+      url: '/scheduling/block-Schedule',
       icon: IconCirclePlus,
       breadcrumbs: false
     }
   ]
 };
 
-export default NavHeading2;
+export default NavScheduling;

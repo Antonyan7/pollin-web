@@ -1,5 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { ChipProps, SnackbarOrigin, SvgIconProps, Theme } from '@mui/material';
+import { ChipProps, SnackbarOrigin, SvgIconProps, TableCellProps, Theme } from '@mui/material';
 
 export interface GenericCardProps {
   title?: string;
@@ -13,6 +13,7 @@ export interface GenericCardProps {
   size?: string;
 }
 
+export type GetComparator = (o: ArrangementOrder, o1: string) => (a: KeyedObject, b: KeyedObject) => number;
 export interface OverrideIcon {
   overrideIcon: FunctionComponent;
 }
@@ -47,11 +48,33 @@ export interface SnackbarStateProps {
   close: boolean;
   actionButton: boolean;
 }
-
 export interface DefaultRootStateProps {
   user: any;
 }
+export interface EnhancedTableToolbarProps {
+  numSelected: number;
+}
 
+export interface KeyedObject {
+  [key: string]: string | number | KeyedObject | any;
+}
+export type ArrangementOrder = 'asc' | 'desc' | undefined;
+
+export interface EnhancedTableHeadProps extends TableCellProps {
+  onSelectAllClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  order: ArrangementOrder;
+  orderBy?: string;
+  numSelected: number;
+  rowCount: number;
+  onRequestSort: (e: React.SyntheticEvent, property: string) => void;
+}
+export interface HeadCell {
+  id: string;
+  numeric: boolean;
+  label: string;
+  disablePadding?: string | boolean | undefined;
+  align?: 'left' | 'right' | 'inherit' | 'center' | 'justify' | undefined;
+}
 export interface ColorProps {
   readonly [key: string]: string;
 }
