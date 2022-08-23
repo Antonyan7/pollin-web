@@ -44,6 +44,11 @@ runs:
         rm ./service-account.json
         echo "::endgroup::"
 
+        echo “::group::Add Application Environment Variables”
+        echo “Writing Environment Variables to: .env”
+        gcloud secrets versions access latest --secret=CLINIC_PORTAL_CRDENTIALS > .env
+        echo “::endgroup::”
+
         echo "::group::Run Eslint"
         yarn run lint
         echo "::endgroup::"
