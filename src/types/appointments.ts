@@ -7,6 +7,17 @@ export interface AppointmentsModalProps {
   bookAppointmentDate?: Date | null;
   appointmentSlotId?: string;
 }
+
+export interface ISlotList {
+  description: string;
+  id: string;
+  isEditable: boolean;
+  startTime: string;
+  timeUnits: number;
+  title: string;
+  type: string;
+}
+
 export enum AppointmentsModalTypes {
   Add = 'add',
   Edit = 'edit',

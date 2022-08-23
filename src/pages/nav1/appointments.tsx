@@ -13,16 +13,20 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Divider, FormControl, MenuItem, Stack, styled, Typography } from '@mui/material';
+import { Box, Divider, FormControl, MenuItem, SelectChangeEvent, Stack, styled, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { format } from 'date-fns';
 import Calendar from 'ui-component/calendar';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
+
+import { dispatch, useAppSelector } from '../../redux/hooks';
+import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: '30px',
@@ -32,11 +36,12 @@ const MainHeader = styled(Box)<BoxProps>(() => ({
 }));
 
 const Appointments = () => {
-  const [appointmentDate, setAppointmentDate] = useState<Date | null>(new Date());
   const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [openEditAppointments, setOpenEditAppointments] = useState<boolean>(false);
   const [openInfoAppointments, setOpenInfoAppointments] = useState<boolean>(false);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
+  const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
+  const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const theme = useTheme();
 
   const onOpenAppointmentsModalEdit = useCallback(() => {
@@ -57,6 +62,24 @@ const Appointments = () => {
 
   const onCloseAppointmentsModalInfo = useCallback(() => {
     setOpenInfoAppointments(false);
+  }, []);
+
+  const onDateDatePickerOpen = useCallback(() => {
+    setDatePickerOpen(true);
+  }, []);
+
+  const onDateDatePickerClose = useCallback(() => {
+    setDatePickerOpen(false);
+  }, []);
+
+  const onDateChange = useCallback((date: Date | null) => {
+    if (date) {
+      dispatch(bookingMiddleware.setDateValue(format(date, 'yyyy-MM-dd')));
+    }
+  }, []);
+
+  const onServiceProviderChange = useCallback((event: SelectChangeEvent<unknown>) => {
+    dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
 
   return (
@@ -102,10 +125,13 @@ const Appointments = () => {
                 id="demo-simple-select"
                 labelId="resource-label"
                 label="Resource"
+                onChange={onServiceProviderChange}
               >
-                <MenuItem value={10}>MenuItem1</MenuItem>
-                <MenuItem value={20}>MenuItem2</MenuItem>
-                <MenuItem value={30}>MenuItem3</MenuItem>
+                {serviceProviders.map((serviceProvider) => (
+                  <MenuItem key={`resource-${serviceProvider.id}`} value={serviceProvider.id}>
+                    {serviceProvider.title}
+                  </MenuItem>
+                ))}
               </StyledSelectButton>
             </FormControl>
           </Box>
@@ -117,14 +143,12 @@ const Appointments = () => {
               <Stack spacing={3}>
                 <DesktopDatePicker
                   open={datePickerOpen}
-                  onOpen={() => setDatePickerOpen(true)}
-                  onClose={() => setDatePickerOpen(false)}
+                  onOpen={onDateDatePickerOpen}
+                  onClose={onDateDatePickerClose}
                   label="Date"
                   inputFormat="MM/dd/yyyy"
-                  value={appointmentDate}
-                  onChange={(newValue) => {
-                    setAppointmentDate(newValue);
-                  }}
+                  value={calendarDate}
+                  onChange={(date: Date | null) => onDateChange(date)}
                   components={{
                     /* TODO: Tigran Have Asked for this TODO, we need to check usage of this in future */
                     OpenPickerIcon: CalendarIcon
@@ -164,22 +188,18 @@ const Appointments = () => {
             </Typography>
           </StyledButtonNewCalendar>
           {/* //TODO For now they can be here for reviewing the code, Then they will be in the right place */}
-          {openAddAppointments ? (
-            <AddAppointmentsModal
-              openAppointmentsModal={openAddAppointments}
-              onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
-              setOpenAppointmentsModal={setOpenAddAppointments}
-            />
-          ) : null}
-          {openEditAppointments ? (
-            <EditAppointmentsModal
-              openAppointmentsModal={openEditAppointments}
-              onCloseAppointmentsModal={onCloseAppointmentsModalEdit}
-              setOpenAppointmentsModal={setOpenEditAppointments}
-            />
-          ) : null}
+          <AddAppointmentsModal
+            openAppointmentsModal={openAddAppointments}
+            onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
+            setOpenAppointmentsModal={setOpenAddAppointments}
+          />
+          <EditAppointmentsModal
+            openAppointmentsModal={openEditAppointments}
+            onCloseAppointmentsModal={onCloseAppointmentsModalEdit}
+            setOpenAppointmentsModal={setOpenEditAppointments}
+          />
         </MainHeader>
-        <Calendar />
+        <Calendar calendarDate={calendarDate} />
         <InfoAppointmentsModal
           openAppointmentsModal={openInfoAppointments}
           onCloseAppointmentsModal={onCloseAppointmentsModalInfo}

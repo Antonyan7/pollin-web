@@ -1,7 +1,5 @@
-import { EventInput } from '@fullcalendar/common';
-import { set } from 'date-fns';
-
 import { Colors, SlotTypes, Styles } from '../../types/calendar';
+import { ICalendarSlot } from '../../types/reduxTypes/booking';
 
 export const CreateSlot = (
   type: SlotTypes,
@@ -10,33 +8,33 @@ export const CreateSlot = (
   description: string,
   title: string,
   slotId: string
-): EventInput => {
+): ICalendarSlot => {
   const BackgroundColors: Colors = {
-    Default: '#18A0FB',
-    BlockedOffTime: '',
-    Cancelled: 'white',
-    Placeholder: 'white'
+    AppointmentBooked: '#18A0FB',
+    BlockedSchedule: '',
+    AppointmentCancelled: 'white',
+    OpenSchedule: 'white'
   };
 
   const BorderColors: Colors = {
-    Default: '',
-    BlockedOffTime: 'white',
-    Cancelled: '#18A0FB',
-    Placeholder: '#B6B6B6'
+    AppointmentBooked: '',
+    BlockedSchedule: 'white',
+    AppointmentCancelled: '#18A0FB',
+    OpenSchedule: '#B6B6B6'
   };
 
   const TextColors: Colors = {
-    Default: 'white',
-    BlockedOffTime: '#111111',
-    Cancelled: '#18A0FB',
-    Placeholder: '#B9B9B9'
+    AppointmentBooked: 'white',
+    BlockedSchedule: '#111111',
+    AppointmentCancelled: '#18A0FB',
+    OpenSchedule: '#B9B9B9'
   };
 
   const ClassNames: Styles = {
-    Default: ['slot-border-radius', 'font-type'],
-    BlockedOffTime: ['background-blocked', 'slot-border-radius', 'font-type'],
-    Cancelled: ['slot-border-radius', 'font-type'],
-    Placeholder: ['open-slot', 'font-type']
+    AppointmentBooked: ['slot-border-radius', 'font-type'],
+    BlockedSchedule: ['background-blocked', 'slot-border-radius', 'font-type'],
+    AppointmentCancelled: ['slot-border-radius', 'font-type'],
+    OpenSchedule: ['open-slot', 'font-type']
   };
 
   return {
@@ -48,7 +46,7 @@ export const CreateSlot = (
     textColor: TextColors[type],
     description,
     title,
-    start: set(new Date(), { hours: 10, minutes: 30 }),
-    end: set(new Date(), { hours: 13, minutes: 30 })
+    start,
+    end
   };
 };

@@ -1,22 +1,17 @@
-export interface Colors {
-  Default: string;
-  BlockedOffTime: string;
-  Cancelled: string;
-  Placeholder: string;
-}
+export type Colors = Record<SlotTypes, string>;
 
 export interface Styles {
-  Default: string[];
-  BlockedOffTime: string[];
-  Cancelled: string[];
-  Placeholder: string[];
+  AppointmentBooked: string[];
+  BlockedSchedule: string[];
+  AppointmentCancelled: string[];
+  OpenSchedule: string[];
 }
 
 export enum SlotTypes {
-  default = 'Default',
-  blockedOffTime = 'BlockedOffTime',
-  canceled = 'Cancelled',
-  placeholder = 'Placeholder'
+  schedule = 'OpenSchedule',
+  block = 'BlockedSchedule',
+  appointment = 'AppointmentBooked',
+  canceled = 'AppointmentCancelled'
 }
 
 export enum DateValues {

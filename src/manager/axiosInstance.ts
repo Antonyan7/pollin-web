@@ -31,7 +31,7 @@ const Axios = (parameters: AxiosInstanceProps) => {
       'x-pollin-lang': 'en',
       'x-pollin-source': 'web',
       'x-pollin-firebase-app-check': 'web',
-      'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
+      'x-pollin-app-version': `1.0.0`,
       'x-pollin-id-token': 'web'
     };
 
