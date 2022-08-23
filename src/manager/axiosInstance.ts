@@ -1,6 +1,8 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { guid } from 'helpers/guid';
 
+import { AxiosInstanceProps } from './axios';
+
 const generateRequestId = () => guid();
 const getOrGenerateDeviceId = () => {
   const deviceId = localStorage.getItem('deviceId');
@@ -16,7 +18,7 @@ const getOrGenerateDeviceId = () => {
   return newDeviceId;
 };
 
-const Axios = (parameters: { token?: string; baseURL?: string }) => {
+const Axios = (parameters: AxiosInstanceProps) => {
   const { baseURL } = parameters;
   const axiosInstance = axios.create({ baseURL });
 
@@ -29,7 +31,7 @@ const Axios = (parameters: { token?: string; baseURL?: string }) => {
       'x-pollin-lang': 'en',
       'x-pollin-source': 'web',
       'x-pollin-firebase-app-check': 'web',
-      'x-pollin-app-version': '1.0.0',
+      'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
       'x-pollin-id-token': 'web'
     };
 

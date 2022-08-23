@@ -4,9 +4,11 @@ import Axios from './axiosInstance';
 
 const baseURL = process.env.NEXT_PUBLIC_SCHEDULE_SERVICE_URL;
 
+const axiosInstance = Axios({ baseURL });
+
 const schedulingManager = {
   createTemplate(data: ITemplateGroup) {
-    return Axios({ baseURL }).post('/clinic-scheduling/v1/templates', data);
+    return axiosInstance.post<any, void>('/clinic-scheduling/v1/templates', data);
   }
 };
 
