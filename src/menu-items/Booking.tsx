@@ -2,7 +2,7 @@ import React from 'react';
 import { IconCirclePlus } from '@tabler/icons';
 import { OverrideIcon } from 'types';
 
-interface NavHeading1Props {
+interface BookingProps {
   id: string;
   title: React.ReactNode | string;
   type: string;
@@ -16,36 +16,20 @@ interface NavHeading1Props {
   }[];
 }
 
-const NavHeading1: NavHeading1Props = {
-  id: 'Nav_Heading_1',
-  title: <h3>Nav Heading 1</h3>,
+const Booking: BookingProps = {
+  id: 'Booking',
+  title: <h3>Booking</h3>,
   type: 'group',
   children: [
     {
       id: 'Appointments',
       title: 'Appointments',
       type: 'item',
-      url: '/nav1/appointments',
-      icon: IconCirclePlus,
-      breadcrumbs: false
-    },
-    {
-      id: 'head2',
-      title: 'head2',
-      type: 'item',
-      url: '/head2',
-      icon: IconCirclePlus,
-      breadcrumbs: false
-    },
-    {
-      id: 'head3',
-      title: 'head3',
-      type: 'item',
-      url: '/head3',
+      url: '/booking/appointments',
       icon: IconCirclePlus,
       breadcrumbs: false
     }
   ]
 };
 
-export default NavHeading1;
+export default Booking;

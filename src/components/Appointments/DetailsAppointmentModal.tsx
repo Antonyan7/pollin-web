@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
+import { InternalButton, StyledBox } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, useTheme } from '@mui/material';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -38,35 +38,35 @@ const DetailsAppointmentModal = ({
               <CloseOutlined sx={{ color: theme.palette.common.black }} />
             </IconButton>
           </DialogTitle>
-          <Divider sx={{ padding: '10px 0px' }} />
+          <Divider sx={{ marginBottom: '10px' }} />
           <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <Box sx={{ textAlign: 'left', m: 1 }}>
+            <StyledBox>
               <strong>Appointment Type:</strong> {confirmedAppointmentDetails?.appointmentType?.title}
-            </Box>
-            <Box sx={{ textAlign: 'left', m: 1 }}>
+            </StyledBox>
+            <StyledBox>
               <strong>Patient:</strong> {confirmedAppointmentDetails?.patient?.name}
-            </Box>
-            <Box sx={{ textAlign: 'left', m: 1 }}>
+            </StyledBox>
+            <StyledBox>
               <strong>Description:</strong> {confirmedAppointmentDetails?.description}
-            </Box>
+            </StyledBox>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <Box sx={{ textAlign: 'left', m: 1, width: '50%' }}>
+              <StyledBox sx={{ width: '50%' }}>
                 <strong>Date:</strong>{' '}
                 {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedDate}
-              </Box>
-              <Box sx={{ textAlign: 'left', m: 1, width: '50%' }}>
+              </StyledBox>
+              <StyledBox sx={{ width: '50%' }}>
                 <strong>Start Time:</strong>{' '}
                 {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedTime}
-              </Box>
+              </StyledBox>
             </Box>
-            <Box sx={{ textAlign: 'left', m: 1 }}>
+            <StyledBox>
               <strong>Status:</strong> {confirmedAppointmentDetails?.status}
-            </Box>
-            <Box sx={{ textAlign: 'left', m: 1 }}>
+            </StyledBox>
+            <StyledBox>
               <strong>Reason for Cancellation:</strong> {confirmedAppointmentDetails?.cancellationReason}
-            </Box>
+            </StyledBox>
           </DialogContent>
-          <Divider sx={{ padding: '10px 0px' }} />
+          <Divider sx={{ marginTop: '10px' }} />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
             <InternalButton
               onClick={() => {

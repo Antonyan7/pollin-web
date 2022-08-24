@@ -49,11 +49,11 @@ const StyledTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
 }));
 
 const Appointments = () => {
+  const theme = useTheme();
   const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
-  const theme = useTheme();
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
     setOpenAddAppointments(true);
@@ -153,7 +153,7 @@ const Appointments = () => {
                     OpenPickerIcon: CalendarIcon
                   }}
                   renderInput={(params) => (
-                    <StyledTextField theme={theme} {...params} onClick={() => setDatePickerOpen(true)} />
+                    <StyledTextField {...params} onClick={() => setDatePickerOpen(true)} theme={theme} />
                   )}
                 />
               </Stack>

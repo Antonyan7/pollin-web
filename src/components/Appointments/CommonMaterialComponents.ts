@@ -1,4 +1,6 @@
 import {
+  Box,
+  BoxProps,
   Button,
   ButtonProps,
   InputLabel,
@@ -78,8 +80,14 @@ const StyledTodayButton = styled(Button)<ButtonProps>(({ theme }) => ({
   }
 }));
 
+const StyledBox = styled(Box)<BoxProps>(() => ({
+  textAlign: 'left',
+  marginBottom: '8px'
+}));
+
 export {
   InternalButton,
+  StyledBox,
   StyledButtonNewCalendar,
   StyledInputLabel,
   StyledSelectButton,
