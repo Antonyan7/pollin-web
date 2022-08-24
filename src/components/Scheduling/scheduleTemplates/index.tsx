@@ -20,6 +20,7 @@ import {
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { getComparator, stableSort } from 'helpers/tableSort';
+import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { ArrangementOrder, EnhancedTableHeadProps, HeadCell } from 'types';
@@ -144,6 +145,7 @@ const ScheduleTemplates = () => {
   const [page, setPage] = React.useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [rows, setRows] = React.useState<Row[]>([]);
+  const router = useRouter();
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
 
@@ -194,6 +196,10 @@ const ScheduleTemplates = () => {
     setSelected(newSelected);
   };
 
+  const handleNewTemplate = () => {
+    router.push('/scheduling/create-template');
+  };
+
   const handleChangePage = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
       setPage(newPage);
@@ -226,7 +232,7 @@ const ScheduleTemplates = () => {
               <Typography variant="h3">Schedule Templates</Typography>
             </Grid>
             <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
-              <Button variant="outlined" sx={{ color: 'black', border: '2px solid lightgrey' }}>
+              <Button variant="outlined" sx={{ color: 'black' }} onClick={handleNewTemplate}>
                 {' '}
                 New Template <AddIcon />
               </Button>
