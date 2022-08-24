@@ -49,11 +49,12 @@ const StyledTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
 }));
 
 const Appointments = () => {
-  const theme = useTheme();
   const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  const theme = useTheme();
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
     setOpenAddAppointments(true);
@@ -81,6 +82,10 @@ const Appointments = () => {
     dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
 
+  const onNewCalendarClick = useCallback(() => {
+    window.open(window.location.href, '_blank');
+  }, []);
+
   return (
     <Box>
       <MainBreadcrumb
@@ -101,6 +106,7 @@ const Appointments = () => {
             theme={theme}
             variant="outlined"
             endIcon={<OpenInNewIcon sx={{ color: theme.palette.common.black }} />}
+            onClick={onNewCalendarClick}
           >
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
               New Calendar
@@ -125,6 +131,7 @@ const Appointments = () => {
                 labelId="resource-label"
                 label="Resource"
                 onChange={onServiceProviderChange}
+                value={serviceProviderId}
               >
                 {serviceProviders.map((serviceProvider) => (
                   <MenuItem key={`resource-${serviceProvider.id}`} value={serviceProvider.id}>

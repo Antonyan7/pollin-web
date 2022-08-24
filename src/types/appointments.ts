@@ -10,16 +10,6 @@ export interface AppointmentsModalProps {
   setCancellationReason?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export interface ISlotList {
-  description: string;
-  id: string;
-  isEditable: boolean;
-  startTime: string;
-  timeUnits: number;
-  title: string;
-  type: string;
-}
-
 export enum AppointmentsModalTypes {
   Add = 'add',
   Edit = 'edit',

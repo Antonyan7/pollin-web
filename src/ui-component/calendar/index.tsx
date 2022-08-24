@@ -14,6 +14,7 @@ import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal'
 import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
 import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
 import { addMinutesToTheTime } from '@utils/dateUtils';
+import { useRouter } from 'next/router';
 import CalendarStyled from './CalendarStyled';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
@@ -32,6 +33,7 @@ const Calendar = (props: { calendarDate: string }) => {
   const [slots, setSlots] = useState<ICalendarSlot[]>([]);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const appointments = useAppSelector(bookingSelector.appointmentsList);
+  const router = useRouter();
 
   const onCloseAppointmentsModal = (appointmentModalType: AppointmentsModalTypes) => {
     switch (appointmentModalType) {
@@ -74,6 +76,21 @@ const Calendar = (props: { calendarDate: string }) => {
   }, []);
 
   useEffect(() => {
+    if (router.isReady) {
+      if (router.query.date) {
+        dispatch(bookingMiddleware.setDateValue(router.query?.date as string));
+      }
+
+      if (router.query.resource) {
+        dispatch(bookingMiddleware.applyResource(router.query?.resource as string));
+      }
+    }
+
+    // We are disabling this since linter is asking for router props date and resource include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  useEffect(() => {
     if (serviceProviderId) {
       dispatch(bookingMiddleware.getAppointments(serviceProviderId, calendarDate));
     }
@@ -87,6 +104,19 @@ const Calendar = (props: { calendarDate: string }) => {
         calendarApi.gotoDate(calendarDate);
       }
     }
+
+    if (calendarDate && serviceProviderId) {
+      const updateQueryParams = () => {
+        router.query.resource = serviceProviderId;
+        router.query.date = calendarDate;
+        router.push(router);
+      };
+
+      updateQueryParams();
+    }
+
+    // We are disabling this since linter is asking for router include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarDate, serviceProviderId]);
 
   useEffect(() => {
