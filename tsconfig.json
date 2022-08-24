@@ -18,6 +18,9 @@
       "@components/*": [
         "components/*"
       ],
+      "@ui-component/*": [
+        "ui-component/*"
+      ],
       "@config/*": [
         "config/*"
       ],

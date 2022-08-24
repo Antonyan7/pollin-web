@@ -27,7 +27,7 @@ import { ArrangementOrder, EnhancedTableHeadProps, HeadCell } from 'types';
 import MainCard from 'ui-component/cards/MainCard';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
-import ScheduleTempleteRow from './ScheduleTemplateRow';
+import ScheduleTemplateRow from './ScheduleTemplateRow';
 
 // table header options
 const headCells: HeadCell[] = [
@@ -179,7 +179,7 @@ const ScheduleTemplates = () => {
     setSelected([]);
   };
 
-  const handleClick = (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => {
+  const onClick = (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => {
     const selectedIndex = selected.indexOf(name);
     let newSelected: string[] = [];
 
@@ -264,10 +264,10 @@ const ScheduleTemplates = () => {
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
-                    <ScheduleTempleteRow
+                    <ScheduleTemplateRow
                       isItemSelected={isItemSelected}
                       row={row}
-                      handleClick={handleClick}
+                      onClick={onClick}
                       labelId={labelId}
                     />
                   );
