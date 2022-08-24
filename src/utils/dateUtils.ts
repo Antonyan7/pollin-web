@@ -7,3 +7,18 @@ export const addMinutesToTheTime = (date: string, minutes: number) => {
 
   return addMinutes(dateForFormatting, minutes);
 };
+
+export const linkDateAndTime = (date: Date | null, time: Date | null) => {
+  let result;
+
+  if (date && time) {
+    const isoTime = toIsoString(time);
+    const T = isoTime.indexOf('T');
+    const customizedTime = isoTime.slice(T);
+    const customizedDate = toIsoString(date).slice(0, T);
+
+    result = customizedDate + customizedTime;
+  }
+
+  return result;
+};

@@ -13,7 +13,7 @@ export interface AppointmentDetailsProps {
   status: string;
   description: string;
   cancellationReason: string;
-  isVirtual: boolean;
+  isVirtual?: boolean;
   patient: { id: string; name: string };
 }
 export interface BookingProps {
@@ -37,7 +37,7 @@ export interface IPatientData extends IServiceProvider {}
 export interface IServiceType {
   id: string;
   title: string;
-  isVirtual: boolean;
+  isVirtual?: boolean;
 }
 export interface IAppointment {
   id: string;

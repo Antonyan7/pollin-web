@@ -10,7 +10,7 @@ export interface AppointmentDetailsProps {
   status: string;
   description: string;
   cancellationReason: string;
-  isVirtual: boolean;
+  isVirtual?: boolean;
   patient: { id: string; name: string };
 }
 
@@ -22,12 +22,12 @@ export interface PatientNamesProps {
 export interface AppointmentTypesProps {
   id: string;
   title: string;
-  isVirtual: boolean;
+  isVirtual?: boolean;
 }
 
 export interface AppointmentsProps {
   patientData: { id: string; title: string }[];
-  appointmentTypeData: { id: string; title: string; isVirtual: boolean }[];
+  appointmentTypeData: { id: string; title: string; isVirtual?: boolean }[];
   appointments: CreateAppointmentProps[];
   appointmentDetails: AppointmentDetailsProps | null;
   error: Error[];
