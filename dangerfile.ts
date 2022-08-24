@@ -13,9 +13,9 @@ let errorCount = 0;
 const bigPRThreshold = 500;
 
 // Custom subsets of known files
-const modifiedAppFiles = modified.filter((filePath) => filePath.includes('src/') || filePath.includes('test/'));
+// const modifiedAppFiles = modified.filter((filePath) => filePath.includes('src/') || filePath.includes('test/'));
 // Check test exclusion (.only) is included
-const modifiedSpecFiles = modified.filter((filePath) => filePath.match(/-spec.(js|jsx|ts|tsx)$/gi));
+// const modifiedSpecFiles = modified.filter((filePath) => filePath.match(/-spec.(js|jsx|ts|tsx)$/gi));
 
 if (!noTicketNumber && !dependabotRequest) {
   if (!pr.title.match(/^(?:(\[PPM-\d+])|(\[PCP-\d+]))\s\w+/)) {
@@ -46,13 +46,13 @@ if (!noTicketNumber && !dependabotRequest) {
     markdown(`> (${errorCount}) : ${message} - <i>${idea}</i>`);
   }
 
-  const hasAppChanges = modifiedAppFiles.length > 0;
-  const hasTestChanges = modifiedSpecFiles.length > 0;
+  // const hasAppChanges = modifiedAppFiles.length > 0;
+  // const hasTestChanges = modifiedSpecFiles.length > 0;
 
-  if (hasAppChanges && !hasTestChanges) {
-    warn(`:exclamation: Missing Tests (${(errorCount += 1)})`);
-    markdown(
-      `> (${errorCount}) : there are app changes, but not tests. That's OK as long as you're refactoring existing code`
-    );
-  }
+  // if (hasAppChanges && !hasTestChanges) {
+  //   warn(`:exclamation: Missing Tests (${(errorCount += 1)})`);
+  //   markdown(
+  //     `> (${errorCount}) : there are app changes, but not tests. That's OK as long as you're refactoring existing code`
+  //   );
+  // }
 }
