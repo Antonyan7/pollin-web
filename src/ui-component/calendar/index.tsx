@@ -124,7 +124,7 @@ const Calendar = (props: { calendarDate: string }) => {
       CreateSlot(
         item.type,
         item.startTime,
-        addMinutesToTheTime(item.startTime, 10).toISOString(),
+        addMinutesToTheTime(item.startTime, item.timeUnits * 10).toISOString(),
         item.description,
         item.title,
         item.id
@@ -139,9 +139,7 @@ const Calendar = (props: { calendarDate: string }) => {
       <CalendarStyled>
         {serviceProviderId === '' ? (
           <StyledDisabledLayer>
-            <text>
-              Select a resource to view, book or modify <br /> appointments
-            </text>
+            Select a resource to view, book or modify <br /> appointments
           </StyledDisabledLayer>
         ) : null}
         <FullCalendar

@@ -8,10 +8,6 @@ const RedirectionHandler = () => {
   const router = useRouter();
 
   useEffect(() => {
-    console.warn({
-      appVersion: process.env.NEXT_PUBLIC_APP_VERSION
-    });
-
     if (redirection.apply) {
       dispatch(
         viewsMiddleware.setRedirectionState({

@@ -265,6 +265,7 @@ const ScheduleTemplates = () => {
 
                   return (
                     <ScheduleTemplateRow
+                      key={`template-${row.id}-${row.name}`}
                       isItemSelected={isItemSelected}
                       row={row}
                       onClick={onClick}

@@ -39,13 +39,13 @@ export default (props: { handleClose: () => void }) => {
           <Typography variant="body2" sx={{ mt: 2 }}>
             Please update the following time period(s):
           </Typography>
-          <Typography variant="body2" sx={{ mt: 2 }}>
-            <ul>
-              <li>
+          <ul>
+            <li>
+              <Typography variant="body2" sx={{ mt: 2 }}>
                 <b>Time Period 1, Time Period 2 & Time Period 3</b> are partially or completely overlapping
-              </li>
-            </ul>
-          </Typography>
+              </Typography>
+            </li>
+          </ul>
         </CardContent>
         <Divider />
         <CardActions>

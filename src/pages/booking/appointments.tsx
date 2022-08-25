@@ -86,13 +86,17 @@ const Appointments = () => {
     window.open(window.location.href, '_blank');
   }, []);
 
+  const onTodayClick = useCallback(() => {
+    dispatch(bookingMiddleware.setDateValue(format(new Date(), 'yyyy-MM-dd')));
+  }, []);
+
   return (
     <Box>
       <MainBreadcrumb
         currentPage="Appointments"
         navigation={{
           basePath: '/',
-          items: [{ name: 'Appointments', path: '/nav1/appointments' }]
+          items: [{ name: 'Appointments', path: '/booking/appointments' }]
         }}
       />
       <AppointmentsContent>
@@ -142,7 +146,7 @@ const Appointments = () => {
             </FormControl>
           </Box>
           <Box sx={{ display: 'flex', gap: '20px' }}>
-            <StyledTodayButton theme={theme} variant="outlined">
+            <StyledTodayButton theme={theme} variant="outlined" onClick={onTodayClick}>
               Today
             </StyledTodayButton>
             <LocalizationProvider dateAdapter={AdapterDateFns}>

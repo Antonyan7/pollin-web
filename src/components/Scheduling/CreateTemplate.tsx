@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useMemo, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import {
   Autocomplete,
   Box,
@@ -15,55 +15,42 @@ import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { useFormik } from 'formik';
+import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { v4 } from 'uuid';
 
 import { toIsoString } from '@utils/dateUtils';
 
 import { createOptionsGroup } from '../../helpers/berryFunctions';
 import { weekDays } from '../../helpers/constants';
-import { dispatch } from '../../redux/hooks';
-import { createScheduleTemplate } from '../../redux/utils/schedule-template';
+import { dispatch, useAppSelector } from '../../redux/hooks';
 import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types/create-schedule';
 import { MinusIconButton, PlusIconButton } from '../../ui-component/common/buttons';
 import ErrorModal from '../../ui-component/schedule-template/ErrorModal';
 
-const CreateTemplate = () => {
-  const timePeriods: ISingleTemplate = useMemo(
-    () => ({
-      id: v4(),
-      days: [],
-      startTime: toIsoString(new Date()),
-      endTime: toIsoString(new Date()),
-      periodType: ServiceTypeOrBlock.Block,
-      serviceTypes: [],
-      placeholderName: ''
-    }),
-    []
-  );
+const getDefaultTimePeriodState = (): ISingleTemplate => ({
+  id: v4(),
+  days: new Array<number>(),
+  startTime: toIsoString(new Date()),
+  endTime: toIsoString(new Date()),
+  periodType: ServiceTypeOrBlock.Block,
+  serviceTypes: new Array<string>(),
+  placeholderName: ''
+});
 
-  const emptyTemplateData: ITemplateGroup = useMemo(
-    () => ({
-      name: '',
-      timePeriods: [timePeriods]
-    }),
-    [timePeriods]
-  );
-  const [createTemplateData, setCreateTemplateData] = useState<ITemplateGroup>(emptyTemplateData);
+const getEmptyTemplateState = (): ITemplateGroup => ({
+  name: '',
+  timePeriods: [getDefaultTimePeriodState()]
+});
+
+const CreateTemplate = () => {
+  const [templateData, setTemplateData] = useState<ITemplateGroup>(getEmptyTemplateState());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // TODO: update to not use mock data
-  const [serviceTypes] = useState([
-    {
-      id: 'serviceType1',
-      title: 'ServiceType',
-      isVirtual: true
-    },
-    {
-      id: 'serviceType2',
-      title: 'Block',
-      isVirtual: false
-    }
-  ]);
+  const serviceTypes = useAppSelector(schedulingSelector.serviceTypes);
+
+  useEffect(() => {
+    dispatch(schedulingMiddleware.getServiceTypes());
+  }, []);
 
   const updateInputValue = useCallback(
     (
@@ -72,16 +59,18 @@ const CreateTemplate = () => {
       itemIndex: number,
       indexOfDay?: number
     ) => {
-      setCreateTemplateData({
-        ...createTemplateData,
-        timePeriods: createTemplateData.timePeriods.map((data, index) => {
-          if (index === itemIndex && indexOfDay) {
+      setTemplateData({
+        ...templateData,
+        timePeriods: templateData.timePeriods.map((data, index) => {
+          // updating days
+          if (index === itemIndex && indexOfDay !== undefined) {
             return {
               ...data,
               [input]: value ? [...data.days, indexOfDay] : data.days.filter((item) => item !== indexOfDay)
             };
           }
 
+          // updating other fields
           if (index === itemIndex) {
             return {
               ...data,
@@ -89,59 +78,52 @@ const CreateTemplate = () => {
             };
           }
 
+          // couldn't identify what to update
           return {
             ...data
           };
         })
       });
     },
-    [createTemplateData]
+    [templateData]
   );
 
-  const onModalClose = useCallback(async () => {
+  const onModalClose = useCallback(() => {
     setIsModalOpen(false);
   }, []);
 
-  const onModalOpen = useCallback(async () => {
+  const onModalOpen = useCallback(() => {
     setIsModalOpen(true);
   }, []);
 
-  const onSaveClick = useCallback(async () => {
-    try {
-      // TODO: change after PCP-260
-      await dispatch(
-        createScheduleTemplate({
-          ...createTemplateData,
-          timePeriods: createTemplateData.timePeriods.map((item) => {
-            const { id, ...rest } = item;
+  const onSaveClick = useCallback(() => {
+    const body = {
+      ...templateData,
+      timePeriods: templateData.timePeriods.map((item) => {
+        const { id, ...rest } = item;
 
-            return rest;
-          })
-        })
-      );
-      // TODO: change the URL after PCP-190
-      // redirectTo('/');
-    } catch (err) {
-      // TODO: change after requirements
-      console.log(err);
-    }
-  }, [createTemplateData]);
+        return rest;
+      })
+    };
+
+    dispatch(schedulingMiddleware.createScheduleTemplate(body));
+  }, [templateData]);
 
   const onPlusClick = useCallback(() => {
-    setCreateTemplateData({
-      ...createTemplateData,
-      timePeriods: [...createTemplateData.timePeriods, { ...timePeriods, id: v4() }]
+    setTemplateData({
+      ...templateData,
+      timePeriods: [...templateData.timePeriods, { ...getDefaultTimePeriodState(), id: v4() }]
     });
-  }, [timePeriods, createTemplateData]);
+  }, [templateData]);
 
   const onMinusClick = useCallback(
     (index: number) => {
-      const newTemplateData = [...createTemplateData.timePeriods];
+      const newTemplateData = [...templateData.timePeriods];
 
       newTemplateData.splice(index, 1);
-      setCreateTemplateData({ ...createTemplateData, timePeriods: newTemplateData });
+      setTemplateData({ ...templateData, timePeriods: newTemplateData });
     },
-    [createTemplateData]
+    [templateData]
   );
 
   const renderTitle = (index: number) =>
@@ -159,11 +141,11 @@ const CreateTemplate = () => {
   const renderScheduleInputs = (values: { title: string }[]) => values.map((item) => item.title);
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setCreateTemplateData({ ...createTemplateData, name: e.target.value });
+    setTemplateData({ ...templateData, name: e.target.value });
   };
 
   const createScheduleForm = useFormik({
-    initialValues: emptyTemplateData,
+    initialValues: getEmptyTemplateState(),
     onSubmit: () => onSaveClick()
   });
 
@@ -180,8 +162,9 @@ const CreateTemplate = () => {
           />
         </div>
         <div className="splitter-line" />
-        {createTemplateData.timePeriods.map((item, index) => (
-          <Box key={item.id}>
+        {/* TODO: create TimePeriod component for this - code is not maintainable */}
+        {templateData.timePeriods.map((item, index) => (
+          <Box key={`timePeriod-${item.id}`}>
             {renderTitle(index)}
             <div className="splitter-line" />
             <div className="create-template-box">
@@ -190,7 +173,7 @@ const CreateTemplate = () => {
                 {weekDays.map((day, indexOfDay) => (
                   <span key={day}>
                     <Checkbox
-                      key={day + 1}
+                      key={`${day}-${item.id}`}
                       onChange={(e) => {
                         updateInputValue('days', e.target.checked, index, indexOfDay);
                       }}
@@ -295,9 +278,11 @@ const CreateTemplate = () => {
           </Button>
         </Grid>
       </form>
-      <Modal open={isModalOpen} onClose={onModalClose}>
-        <ErrorModal handleClose={onModalClose} />
-      </Modal>
+      {isModalOpen ? (
+        <Modal open={isModalOpen} onClose={onModalClose}>
+          <ErrorModal handleClose={onModalClose} />
+        </Modal>
+      ) : null}
     </div>
   );
 };

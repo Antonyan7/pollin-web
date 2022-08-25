@@ -1,12 +1,19 @@
 import { IAction, SliceReducers } from 'redux/store';
-import { IServiceProvider } from 'types/reduxTypes/booking';
+import { IServiceProvider, IServiceType } from 'types/reduxTypes/booking';
 import { BlockSchedulingProps, SchedulingProps, SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
 
 const actions: SliceReducers<SchedulingProps> = {
   setError(state, action) {
     state.error = action.payload;
   },
-  getScheduleTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
+  setServiceTypes(state, action: IAction<IServiceType[]>) {
+    // state.serviceTypes = action.payload;
+    // TODO: remove this once we can get service types based on usage area
+    const filtered = action.payload.filter((item) => item.title !== 'Block');
+
+    state.serviceTypes = filtered;
+  },
+  setScheduleTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
     state.scheduleTemplates = action.payload;
   },
   setScheduleBlock(state, action: IAction<BlockSchedulingProps[]>) {

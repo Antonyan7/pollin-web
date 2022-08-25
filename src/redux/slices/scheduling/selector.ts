@@ -3,6 +3,7 @@ import { RootState } from 'redux/store';
 
 const selector = (state: RootState) => state.scheduleTemplates;
 
+const serviceTypes = createSelector([selector], (state) => state.serviceTypes);
 const scheduleTemplates = createSelector([selector], (state) => state.scheduleTemplates);
 const scheduleError = createSelector([selector], (state) => state.error);
 const scheduleBlocks = createSelector([selector], (state) => state.scheduleBlock);
@@ -10,6 +11,7 @@ const scheduleResources = createSelector([selector], (state) => state.scheduleRe
 
 export default {
   scheduleError,
+  serviceTypes,
   scheduleTemplates,
   scheduleBlocks,
   scheduleResources

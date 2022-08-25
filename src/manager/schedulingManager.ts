@@ -11,13 +11,13 @@ const axiosInstance = Axios({ baseURL });
 
 const schedulingManager = {
   createTemplate(data: ITemplateGroup) {
-    return axiosInstance.post<any, void>('/clinic-scheduling/v1/templates', data);
+    return axiosInstance.post<any, IAxiosResponse<void>>('/v1/templates', data);
   },
   getTemplatesList() {
-    return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/clinic-scheduling/v1/templates');
+    return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/v1/templates');
   },
   applyScheduleBlock(data: BlockSchedulingProps) {
-    return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/clinic-scheduling/v1/block/apply', data);
+    return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/v1/block/apply', data);
   }
 };
 

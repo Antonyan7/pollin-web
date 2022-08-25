@@ -1,4 +1,4 @@
-import { IServiceProvider } from './booking';
+import { IServiceProvider, IServiceType } from './booking';
 
 export interface SchedulingTemplateProps {
   id: string;
@@ -19,4 +19,5 @@ export interface SchedulingProps {
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];
   scheduleResources: IServiceProvider[];
+  serviceTypes: IServiceType[];
 }
