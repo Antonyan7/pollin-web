@@ -1,8 +1,6 @@
-import React from 'react';
-// assets
+import React, { useCallback } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-// material-ui
 import { Checkbox, IconButton, TableCell, TableRow, Typography } from '@mui/material';
 import { Row } from 'components/Scheduling/scheduleTemplates';
 import { useRouter } from 'next/router';
@@ -16,9 +14,12 @@ interface TableComponentProps {
 
 const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableComponentProps) => {
   const router = useRouter();
-  const onViewClick = () => {
-    router.push('/scheduling/view-schedule');
-  };
+  const onViewClick = useCallback(
+    (id: string) => {
+      router.push({ pathname: '/scheduling/view-schedule', query: { scheduleId: id } });
+    },
+    [router]
+  );
 
   return (
     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected}>
@@ -47,7 +48,7 @@ const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableCom
       <TableCell align="right">{row.lastSavedDay}</TableCell>
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
-        <IconButton onClick={onViewClick} color="primary" size="large">
+        <IconButton onClick={() => onViewClick(row.id)} color="primary" size="large">
           <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
         <IconButton color="secondary" size="large">

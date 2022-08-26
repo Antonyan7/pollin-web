@@ -7,13 +7,13 @@ export const CreateSlot = (
   end: string,
   description: string,
   title: string,
-  slotId: string
+  slotId?: string
 ): ICalendarSlot => {
   const BackgroundColors: Colors = {
     AppointmentBooked: '#18A0FB',
     BlockedSchedule: '',
     AppointmentCancelled: 'white',
-    OpenSchedule: 'white'
+    OpenSchedule: 'transparent'
   };
 
   const BorderColors: Colors = {
@@ -38,7 +38,7 @@ export const CreateSlot = (
   };
 
   return {
-    id: slotId,
+    ...(slotId ? { id: slotId } : {}),
     classNames: ClassNames[type],
     allDay: false,
     color: BackgroundColors[type],

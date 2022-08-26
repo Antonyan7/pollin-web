@@ -1,6 +1,11 @@
 import { IAction, SliceReducers } from 'redux/store';
 import { IServiceProvider, IServiceType } from 'types/reduxTypes/booking';
-import { BlockSchedulingProps, SchedulingProps, SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
+import {
+  BlockSchedulingProps,
+  SchedulingProps,
+  SchedulingTemplateProps,
+  SingleSchedulingProps
+} from 'types/reduxTypes/scheduling';
 
 const actions: SliceReducers<SchedulingProps> = {
   setError(state, action) {
@@ -15,6 +20,9 @@ const actions: SliceReducers<SchedulingProps> = {
   },
   setScheduleTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
     state.scheduleTemplates = action.payload;
+  },
+  setSingleScheduleTemplate(state, action: IAction<SingleSchedulingProps>) {
+    state.scheduleSingleTemplate = action.payload;
   },
   setScheduleBlock(state, action: IAction<BlockSchedulingProps[]>) {
     state.scheduleBlock = action.payload;

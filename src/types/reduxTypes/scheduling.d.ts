@@ -1,3 +1,5 @@
+import { ISingleTemplate } from '../create-schedule';
+
 import { IServiceProvider, IServiceType } from './booking';
 
 export interface SchedulingTemplateProps {
@@ -14,7 +16,12 @@ export interface BlockSchedulingProps {
   placeholderLabel: string;
   slots?: IServiceProvider[];
 }
+export interface SingleSchedulingProps {
+  name: string;
+  timePeriods: ISingleTemplate[];
+}
 export interface SchedulingProps {
+  scheduleSingleTemplate: SingleSchedulingProps;
   scheduleTemplates: SchedulingTemplateProps[];
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];

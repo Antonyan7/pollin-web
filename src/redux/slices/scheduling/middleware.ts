@@ -7,7 +7,7 @@ import { viewsMiddleware } from '../views';
 
 import slice from './slice';
 
-const { setScheduleTemplates, setError, setScheduleBlock, setServiceTypes } = slice.actions;
+const { setScheduleTemplates, setError, setScheduleBlock, setServiceTypes, setSingleScheduleTemplate } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
@@ -44,6 +44,16 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
   }
 };
 
+const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.scheduling.getSingleTemplate(templateId);
+
+    dispatch(setSingleScheduleTemplate(response.data.data));
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
 const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => async (dispatch: AppDispatch) => {
   try {
     await API.scheduling.createTemplate(createScheduleTemplateData);
@@ -63,5 +73,6 @@ export default {
   getServiceTypes,
   getSchedulingTemplates,
   applyScheduleBlock,
+  getSingleSchedule,
   createScheduleTemplate
 };

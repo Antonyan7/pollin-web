@@ -50,7 +50,7 @@ export interface IAppointment {
 }
 
 export interface ICalendarSlot {
-  id: string;
+  id?: string;
   title: string;
   allDay: boolean;
   borderColor: string;

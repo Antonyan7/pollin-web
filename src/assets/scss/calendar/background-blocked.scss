@@ -11,8 +11,12 @@
 .fc-timegrid-event-harness {
   .open-slot {
     border: 2px dashed #b6b6b6;
-    display: block;
     text-align: center;
+    .fc-event-title-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 

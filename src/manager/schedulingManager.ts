@@ -1,6 +1,6 @@
 import { ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
-import { BlockSchedulingProps, SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
+import { BlockSchedulingProps, SchedulingTemplateProps, SingleSchedulingProps } from 'types/reduxTypes/scheduling';
 
 import { IAxiosResponse } from './axios';
 import Axios from './axiosInstance';
@@ -15,6 +15,11 @@ const schedulingManager = {
   },
   getTemplatesList() {
     return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/v1/templates');
+  },
+  getSingleTemplate(templateId: string) {
+    return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>('/v1/templates', {
+      params: { templateId }
+    });
   },
   applyScheduleBlock(data: BlockSchedulingProps) {
     return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/v1/block/apply', data);

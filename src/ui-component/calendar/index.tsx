@@ -13,7 +13,7 @@ import { AppointmentsModalTypes } from 'types/appointments';
 import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
 import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
 import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
-import { addMinutesToTheTime } from '@utils/dateUtils';
+import { addMinutesToTime } from '@utils/dateUtils';
 import { useRouter } from 'next/router';
 import CalendarStyled from './CalendarStyled';
 import { dispatch, useAppSelector } from '../../redux/hooks';
@@ -124,7 +124,7 @@ const Calendar = (props: { calendarDate: string }) => {
       CreateSlot(
         item.type,
         item.startTime,
-        addMinutesToTheTime(item.startTime, item.timeUnits * 10).toISOString(),
+        addMinutesToTime(item.startTime, item.timeUnits * 10).toISOString(),
         item.description,
         item.title,
         item.id
