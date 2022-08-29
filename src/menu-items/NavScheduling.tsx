@@ -37,6 +37,14 @@ const NavScheduling: NavSchedulingProps = {
       url: '/scheduling/block-schedule',
       icon: IconCirclePlus,
       breadcrumbs: false
+    },
+    {
+      id: 'applySchedule',
+      title: 'Apply Schedule',
+      type: 'item',
+      url: '/scheduling/apply-schedule',
+      icon: IconCirclePlus,
+      breadcrumbs: false
     }
   ]
 };

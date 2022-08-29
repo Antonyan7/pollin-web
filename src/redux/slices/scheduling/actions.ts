@@ -14,12 +14,13 @@ const actions: SliceReducers<SchedulingProps> = {
   setServiceTypes(state, action: IAction<IServiceType[]>) {
     // state.serviceTypes = action.payload;
     // TODO: remove this once we can get service types based on usage area
-    const filtered = action.payload.filter((item) => item.title !== 'Block');
-
-    state.serviceTypes = filtered;
+    state.serviceTypes = action.payload.filter((item) => item.title !== 'Block');
   },
   setScheduleTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
     state.scheduleTemplates = action.payload;
+  },
+  setScheduleApplyTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
+    state.scheduleApplyTemplates = action.payload;
   },
   setSingleScheduleTemplate(state, action: IAction<SingleSchedulingProps>) {
     state.scheduleSingleTemplate = action.payload;
@@ -29,6 +30,9 @@ const actions: SliceReducers<SchedulingProps> = {
   },
   setScheduleBlockResources(state, action: IAction<IServiceProvider[]>) {
     state.scheduleResources = action.payload;
+  },
+  setApplyScheduleSuccess(state, action: IAction<boolean>) {
+    state.success = action.payload;
   }
 };
 

@@ -1,13 +1,20 @@
 import API from '@axios/API';
 import { AppDispatch } from 'redux/store';
-import { ITemplateGroup } from 'types/create-schedule';
+import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 
 import { viewsMiddleware } from '../views';
 
 import slice from './slice';
 
-const { setScheduleTemplates, setError, setScheduleBlock, setServiceTypes, setSingleScheduleTemplate } = slice.actions;
+const {
+  setScheduleTemplates,
+  setError,
+  setScheduleBlock,
+  setServiceTypes,
+  setSingleScheduleTemplate,
+  setApplyScheduleSuccess
+} = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
@@ -27,6 +34,20 @@ const getSchedulingTemplates = () => async (dispatch: AppDispatch) => {
   } catch (error) {
     dispatch(setError(error));
   }
+};
+
+export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispatch: AppDispatch) => {
+  try {
+    await API.scheduling.applyScheduleTemplate(data);
+    dispatch(setApplyScheduleSuccess(true));
+  } catch (error) {
+    dispatch(setError(error));
+    dispatch(setApplyScheduleSuccess(false));
+  }
+};
+
+export const resetSuccessStatusState = () => async (dispatch: AppDispatch) => {
+  dispatch(setApplyScheduleSuccess(false));
 };
 
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
@@ -73,6 +94,8 @@ export default {
   getServiceTypes,
   getSchedulingTemplates,
   applyScheduleBlock,
+  createScheduleTemplate,
+  applyScheduleTemplate,
   getSingleSchedule,
-  createScheduleTemplate
+  resetSuccessStatusState
 };

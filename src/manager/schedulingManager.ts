@@ -1,4 +1,4 @@
-import { ITemplateGroup } from 'types/create-schedule';
+import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
 import { BlockSchedulingProps, SchedulingTemplateProps, SingleSchedulingProps } from 'types/reduxTypes/scheduling';
 
@@ -23,6 +23,9 @@ const schedulingManager = {
   },
   applyScheduleBlock(data: BlockSchedulingProps) {
     return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/v1/block/apply', data);
+  },
+  applyScheduleTemplate(data: IApplyScheduleData) {
+    return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/v1/templates/apply', data);
   }
 };
 

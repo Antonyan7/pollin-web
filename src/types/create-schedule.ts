@@ -26,6 +26,15 @@ export interface ISingleTemplate {
   placeholderName: string;
 }
 
+export interface IApplyScheduleData {
+  resourceId: string;
+  templateId: string;
+  repeatWeeksCount: number;
+  startDate: Date | null | string;
+  endDate: Date | null | string;
+  applyDays: number[];
+}
+
 export interface ITemplateGroup {
   name: string;
   timePeriods: ISingleTemplate[];

@@ -9,6 +9,15 @@ export interface SchedulingTemplateProps {
   lastSavedDay: string;
   status: string;
 }
+
+export interface IScheduleApplyTemplate {
+  duration: string;
+  id: string;
+  lastSavedDay: string;
+  name: string;
+  status: string;
+}
+
 export interface BlockSchedulingProps {
   resourceId: string;
   startDate: string;
@@ -21,10 +30,12 @@ export interface SingleSchedulingProps {
   timePeriods: ISingleTemplate[];
 }
 export interface SchedulingProps {
+  scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
   scheduleTemplates: SchedulingTemplateProps[];
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];
   scheduleResources: IServiceProvider[];
   serviceTypes: IServiceType[];
+  success: boolean;
 }

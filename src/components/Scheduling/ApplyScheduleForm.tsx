@@ -1,4 +1,5 @@
-import React, { FormEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { AlertBanner } from '@components/Alert/Alert';
 import {
   Autocomplete,
   Button,
@@ -10,194 +11,176 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import { Box } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DaysLabels } from 'helpers/constants';
+import { format } from 'date-fns';
+import { repeatWeeksList, weekDays } from 'helpers/constants';
 
-export enum ScheduleTerms {
-  Resource = 'Resource',
-  ScheduleTemplate = 'Schedule Template',
-  Template = 'Template',
-  Repeats = 'Repeats',
-  Every = 'Every',
-  StartDate = 'Start Date',
-  EndDate = 'End Date'
-}
+import { dispatch, useAppSelector } from '../../redux/hooks';
+import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
+import { schedulingMiddleware, schedulingSelector } from '../../redux/slices/scheduling';
+import { IAppliedDay, IApplyScheduleDay, ScheduleTerms } from '../../types/apply-schedule';
+import { IApplyScheduleData, ISingleTemplate } from '../../types/create-schedule';
+import { IServiceProvider } from '../../types/reduxTypes/booking';
+import { SchedulingTemplateProps } from '../../types/reduxTypes/scheduling';
 
-interface ApplyScheduleEntity {
-  id: string;
-  name: string;
-}
-
-export interface Resource extends ApplyScheduleEntity {}
-export interface ScheduleTemplate extends ApplyScheduleEntity {}
-export interface RepeatWeeks extends ApplyScheduleEntity {}
-
-export interface AppliedDay {
-  dayNum: number;
-  dayLabel: DaysLabels;
-}
+const errorMessage = 'You have to fill all fields.';
 
 const ApplyScheduleForm = () => {
-  // TODO - remove when applied to mock-server
-  const resourceList: Resource[] = [
-    {
-      id: 'dvdvefn45thr',
-      name: 'Doctor 1'
-    },
-    {
-      id: 'scwweehtb',
-      name: 'Doctor 2'
-    },
-    {
-      id: 'e346587',
-      name: 'Doctor 3'
-    },
-    {
-      id: 'h78j9k7j6htbfh',
-      name: 'Doctor 4'
-    }
-  ];
-
-  // TODO - remove when applied to mock-server
-  const scheduleTemplateList: ScheduleTemplate[] = [
-    {
-      id: '134t5ytger',
-      name: 'Template 1'
-    },
-    {
-      id: 'brnydhfb',
-      name: 'Template 2'
-    },
-    {
-      id: 'hrgeg546j',
-      name: 'Template 3'
-    },
-    {
-      id: 'ergergerger',
-      name: 'Template 4'
-    },
-    {
-      id: '134t5ytger',
-      name: 'Template 5'
-    },
-    {
-      id: 'g65h65g76h',
-      name: 'Template 6'
-    },
-    {
-      id: 'yjrtdg4',
-      name: 'Template 7'
-    },
-    {
-      id: 'd3d2d334',
-      name: 'Template 8'
-    },
-
-    {
-      id: 'rfgthj86j',
-      name: 'Template 9'
-    },
-    {
-      id: 'tnynb6href',
-      name: 'Template 10'
-    },
-
-    {
-      id: 'erg34334defe',
-      name: 'Template 11'
-    },
-    {
-      id: 'ghuj97k8muj',
-      name: 'Template 12'
-    }
-  ];
-
-  // TODO - remove when applied to mock-server
-  const applyDaysList: AppliedDay[] = [
-    {
-      dayNum: 0,
-      dayLabel: DaysLabels.Mon
-    },
-    {
-      dayNum: 1,
-      dayLabel: DaysLabels.Tue
-    },
-    {
-      dayNum: 2,
-      dayLabel: DaysLabels.Wed
-    }
-  ];
-
-  // TODO - remove when applied to mock-server
-  const repeatWeeksList: RepeatWeeks[] = [
-    {
-      id: '345y4htgfet',
-      name: '1 Week'
-    },
-    {
-      id: 'c34ecvb6n9',
-      name: '2 Week'
-    },
-    {
-      id: '7j6h5b44wrvhy',
-      name: '3 Week'
-    },
-    {
-      id: 'cedxswdfvby09',
-      name: '4 Week'
-    },
-    {
-      id: 'c4g4efg5',
-      name: '5 Week'
-    }
-  ];
-
   const theme = useTheme();
 
-  const [resource, setResource] = useState<string>('');
-  const [scheduleTemplate, setScheduleTemplate] = useState<string>('');
+  const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
+  const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
+  const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
+  const scheduleApplySuccess = useAppSelector(schedulingSelector.scheduleApplySuccess);
+  const [resource, setResource] = useState<IServiceProvider>({
+    id: '',
+    title: ''
+  });
+  const [scheduleTemplate, setScheduleTemplate] = useState<SchedulingTemplateProps>({
+    id: '',
+    name: '',
+    duration: '',
+    lastSavedDay: '',
+    status: ''
+  });
   const [isAppliedDays, setIsAppliedDays] = useState<boolean>(false);
-  const [repeatWeeksCount, setRepeatWeeksCount] = useState<string>('');
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
+  const [repeatWeeks, setRepeatWeeks] = useState<IApplyScheduleDay>({ id: 0, name: '' });
+  const [startDate, setStartDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
+  const [endDate, setEndDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
+  const [applyDays, setApplyDays] = useState<number[]>([]);
+  const [errorAlert, setErrorAlert] = useState<boolean>(false);
+  const [applyDaysListRendering, setApplyDaysListRendering] = useState<IAppliedDay[]>([]);
+  const [successAlertOpen, setSuccessAlertOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    setIsAppliedDays(true);
-  }, []);
-
-  const handleSelectResource = (resourceItem: Resource | null) => {
-    if (resourceItem) {
-      setResource(resourceItem.id);
-    }
+  const resetFormValues = () => {
+    setScheduleTemplate({
+      id: '',
+      name: '',
+      duration: '',
+      lastSavedDay: '',
+      status: ''
+    });
+    setResource({
+      id: '',
+      title: ''
+    });
+    setRepeatWeeks({ id: 0, name: '' });
+    setIsAppliedDays(false);
+    setStartDate(format(new Date(), 'yyyy-MM-dd'));
+    setEndDate(format(new Date(), 'yyyy-MM-dd'));
   };
 
-  const handleSelectTemplate = (templateItem: ScheduleTemplate | null) => {
-    if (templateItem) {
-      setScheduleTemplate(templateItem.id);
-    }
-  };
-
-  const handleRepeatWeeks = (repeatWeeksItem: RepeatWeeks | null) => {
-    if (repeatWeeksItem) {
-      setRepeatWeeksCount(repeatWeeksItem.id);
-    }
-  };
-
-  const handleSubmitApply = (event: FormEvent) => {
+  const handleApplyClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const applyScheduleReq = {
-      resourceId: resource,
-      templateId: scheduleTemplate,
-      repeatWeeksCount
+    const applyScheduleTemplateData: IApplyScheduleData = {
+      resourceId: resource.id,
+      templateId: scheduleTemplate.id,
+      repeatWeeksCount: repeatWeeks.id,
+      applyDays,
+      startDate,
+      endDate
     };
 
-    // TODO - remove it when mock server will be applied
-    console.log(applyScheduleReq);
+    if (resource.id && scheduleTemplate.id && repeatWeeks && applyDays && startDate && endDate) {
+      dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
+    } else {
+      setErrorAlert(true);
+    }
   };
+
+  const handleSelectTemplate = (templateItem: SchedulingTemplateProps | null) => {
+    if (templateItem) {
+      dispatch(schedulingMiddleware.getSingleSchedule(templateItem.id));
+      setScheduleTemplate(templateItem);
+    }
+  };
+
+  const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
+    if (resourceItem) {
+      setResource(resourceItem);
+    }
+  };
+  const onRepeatWeeksUpdate = (repeatWeeksItem: IApplyScheduleDay | null) => {
+    if (repeatWeeksItem) {
+      setRepeatWeeks(repeatWeeksItem);
+    }
+  };
+
+  const onStartDateUpdate = (date: Date) => {
+    setStartDate(format(date, 'yyyy-MM-dd'));
+  };
+  const onEndDateUpdate = (date: Date) => {
+    setEndDate(format(date, 'yyyy-MM-dd'));
+  };
+  const onApplyDays = (e: ChangeEvent<HTMLInputElement>, day: IAppliedDay) => {
+    const tempApplyDays: number[] = [...applyDays];
+
+    if (e.target.checked) {
+      if (!tempApplyDays.includes(day.dayNum)) {
+        tempApplyDays.push(day.dayNum);
+      }
+    } else {
+      tempApplyDays.splice(tempApplyDays.indexOf(day.dayNum), 1);
+    }
+
+    setApplyDays(tempApplyDays);
+  };
+
+  const adjustApplyDays = () => {
+    // Logic For Comparing two or more timePeriods
+    let timePeriodsApplyDates: number[] = [];
+
+    if (scheduleApplyTemplates?.timePeriods) {
+      scheduleApplyTemplates?.timePeriods.forEach((item: ISingleTemplate) => {
+        timePeriodsApplyDates = [...timePeriodsApplyDates, ...item.days];
+      });
+    }
+
+    const uniqueTimePeriodsApplyDates = Array.from(new Set(timePeriodsApplyDates));
+
+    setApplyDays(uniqueTimePeriodsApplyDates);
+
+    // Logic For showing apply days checkboxes
+    let applyDaysToDisplay: IAppliedDay[] = [];
+
+    weekDays.forEach((item, index) => {
+      if (uniqueTimePeriodsApplyDates.includes(index)) {
+        applyDaysToDisplay = [
+          ...applyDaysToDisplay,
+          {
+            dayNum: index,
+            dayLabel: item
+          }
+        ];
+      }
+    });
+    setApplyDaysListRendering(applyDaysToDisplay);
+    setIsAppliedDays(true);
+  };
+
+  useEffect(() => {
+    dispatch(schedulingMiddleware.getSchedulingTemplates());
+    dispatch(bookingMiddleware.getServiceProviders());
+  }, []);
+
+  useEffect(() => {
+    adjustApplyDays();
+    // eslint-disable-next-line
+  }, [scheduleApplyTemplates]);
+
+  useEffect(() => {
+    if (scheduleApplySuccess) {
+      setSuccessAlertOpen(true);
+      resetFormValues();
+      dispatch(schedulingMiddleware.resetSuccessStatusState());
+    }
+  }, [scheduleApplySuccess]);
 
   return (
     <Box
@@ -210,7 +193,7 @@ const ApplyScheduleForm = () => {
         backgroundColor: theme.palette.background.paper
       }}
     >
-      <form onSubmit={handleSubmitApply}>
+      <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
             <Grid container alignItems="center">
@@ -220,11 +203,12 @@ const ApplyScheduleForm = () => {
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
                   <Autocomplete
-                    options={resourceList}
+                    options={serviceProviders}
                     onChange={(e, value) => {
-                      handleSelectResource(value);
+                      onSelectResourceUpdate(value);
                     }}
-                    getOptionLabel={(itemResource) => itemResource.name}
+                    value={{ id: resource.id, title: resource.title }}
+                    getOptionLabel={(itemResource) => itemResource.title}
                     renderInput={(params) => <TextField {...params} label={ScheduleTerms.Resource} />}
                   />
                 </FormControl>
@@ -240,8 +224,15 @@ const ApplyScheduleForm = () => {
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
                   <Autocomplete
-                    options={scheduleTemplateList}
-                    onChange={(e, value) => {
+                    value={{
+                      id: scheduleTemplate.id,
+                      name: scheduleTemplate.name,
+                      duration: scheduleTemplate.duration,
+                      lastSavedDay: scheduleTemplate.lastSavedDay,
+                      status: scheduleTemplate.status
+                    }}
+                    options={scheduleTemplates}
+                    onChange={(e, value: SchedulingTemplateProps | null) => {
                       handleSelectTemplate(value);
                     }}
                     getOptionLabel={(itemTemplate) => itemTemplate.name}
@@ -252,7 +243,7 @@ const ApplyScheduleForm = () => {
             </Grid>
           </Grid>
 
-          {isAppliedDays && applyDaysList.length ? (
+          {isAppliedDays && applyDaysListRendering.length ? (
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
@@ -260,7 +251,7 @@ const ApplyScheduleForm = () => {
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <Grid container spacing={2}>
-                    {applyDaysList.map((itemDay: AppliedDay) => (
+                    {applyDaysListRendering.map((day: IAppliedDay) => (
                       <Grid item>
                         <FormControlLabel
                           control={
@@ -270,9 +261,12 @@ const ApplyScheduleForm = () => {
                                 color: theme.palette.grey[800]
                               }}
                               sx={{ '& .MuiSvgIcon-root': { fontSize: 26 } }}
+                              onChange={(e) => {
+                                onApplyDays(e, day);
+                              }}
                             />
                           }
-                          label={itemDay.dayLabel}
+                          label={day.dayLabel}
                         />
                       </Grid>
                     ))}
@@ -294,8 +288,9 @@ const ApplyScheduleForm = () => {
                   <Autocomplete
                     options={repeatWeeksList}
                     onChange={(e, value) => {
-                      handleRepeatWeeks(value);
+                      onRepeatWeeksUpdate(value);
                     }}
+                    value={{ id: repeatWeeks.id, name: repeatWeeks.name }}
                     getOptionLabel={(itemRepeat) => itemRepeat.name}
                     renderInput={(params) => <TextField {...params} label={ScheduleTerms.Every} />}
                   />
@@ -316,8 +311,10 @@ const ApplyScheduleForm = () => {
                     inputFormat="MMM dd, yyyy"
                     value={startDate}
                     renderInput={(params) => <TextField fullWidth {...params} />}
-                    onChange={(newValue: Date | null) => {
-                      setStartDate(newValue);
+                    onChange={(date: Date | null) => {
+                      if (date) {
+                        onStartDateUpdate(date);
+                      }
                     }}
                   />
                 </LocalizationProvider>
@@ -337,14 +334,26 @@ const ApplyScheduleForm = () => {
                     inputFormat="MMM dd, yyyy"
                     value={endDate}
                     renderInput={(params) => <TextField fullWidth {...params} />}
-                    onChange={(newValue: Date | null) => {
-                      setEndDate(newValue);
+                    onChange={(date: Date | null) => {
+                      if (date) {
+                        onEndDateUpdate(date);
+                      }
                     }}
                   />
                 </LocalizationProvider>
               </Grid>
             </Grid>
           </Grid>
+          <Snackbar
+            open={successAlertOpen}
+            autoHideDuration={2000}
+            onClose={() => setSuccessAlertOpen(false)}
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+          >
+            <Alert variant="filled" severity="success">
+              Successfully Applied
+            </Alert>
+          </Snackbar>
 
           <Grid item xs={12}>
             <Grid container alignItems="center">
@@ -365,6 +374,12 @@ const ApplyScheduleForm = () => {
               </Grid>
             </Grid>
           </Grid>
+          <AlertBanner
+            visible={errorAlert}
+            errorDescription={errorMessage}
+            severityType="error"
+            setVisible={setErrorAlert}
+          />
         </Grid>
       </form>
     </Box>
