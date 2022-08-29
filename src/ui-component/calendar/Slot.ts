@@ -40,6 +40,7 @@ export const CreateSlot = (
   return {
     ...(slotId ? { id: slotId } : {}),
     classNames: ClassNames[type],
+    ...(type === SlotTypes.schedule ? { display: 'background' } : {}),
     allDay: false,
     color: BackgroundColors[type],
     borderColor: BorderColors[type],

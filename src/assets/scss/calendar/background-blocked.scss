@@ -8,8 +8,13 @@
   line-height: 14px;
 }
 
-.fc-timegrid-event-harness {
+.fc-timegrid-bg-harness {
   .open-slot {
+    margin-right: 20px;
+    margin-left: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     border: 2px dashed #b6b6b6;
     text-align: center;
     .fc-event-title-container {

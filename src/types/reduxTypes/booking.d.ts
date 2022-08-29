@@ -55,6 +55,7 @@ export interface ICalendarSlot {
   allDay: boolean;
   borderColor: string;
   classNames: string[];
+  display?: string;
   textColor: string;
   color: string;
   description: string;
