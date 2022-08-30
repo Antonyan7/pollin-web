@@ -7,12 +7,13 @@ import {
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
-  Box,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
   FormControl,
+  Grid,
   IconButton,
   MenuItem,
   SelectChangeEvent,
@@ -20,6 +21,7 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
+import { Stack } from '@mui/system';
 import { cancellationReason } from 'helpers/constants';
 
 import { AppointmentsModalProps } from '../../types/appointments';
@@ -44,67 +46,100 @@ const ConfirmAppointmentsModal = ({
   return (
     <Dialog open={openAppointmentsModal} onClose={onCloseAppointmentsModal}>
       {openAppointmentsModal && (
-        <Box sx={{ width: '500px' }}>
-          <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p>Confirm Cancellation</p>
-            <IconButton onClick={() => setOpenAppointmentsModal(false)}>
-              <CloseOutlined sx={{ color: theme.palette.common.black }} />
-            </IconButton>
+        <Grid sx={{ width: '500px' }}>
+          <DialogTitle>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Grid item>
+                <Typography
+                  sx={{
+                    fontSize: '1.25rem',
+                    fontWeight: 700
+                  }}
+                >
+                  Confirm Cancellation
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  onClick={() => {
+                    setOpenAppointmentsModal(false);
+                    setOpenOtherReasonField(false);
+                  }}
+                >
+                  <CloseOutlined sx={{ color: theme.palette.common.black }} />
+                </IconButton>
+              </Grid>
+            </Grid>
           </DialogTitle>
-          <Divider sx={{ padding: '10px 0px' }} />
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <Typography>Please confirm the reason for the cancellation.</Typography>
-            <FormControl>
-              <StyledInputLabel theme={theme} id="cancel-appointment-label">
-                Reason for Cancellation
-              </StyledInputLabel>
-              <StyledSelectButton
-                theme={theme}
-                IconComponent={KeyboardArrowDownIcon}
-                id="cancel-appointment-label"
-                labelId="cancel-appointment-label"
-                label="Reason for Cancellation"
-                onChange={onSelectButtonChange}
-              >
-                {cancellationReason.map((reasonItem) => (
-                  <MenuItem value={reasonItem} key={reasonItem.toString()}>
-                    {reasonItem}
-                  </MenuItem>
-                ))}
-              </StyledSelectButton>
-            </FormControl>
-            {openOtherReasonField && (
-              <Box>
-                <TextField
-                  fullWidth
-                  id="reason_for_cancellation"
-                  multiline
-                  name="reason_for_cancellation"
-                  rows={4}
-                  placeholder="Reason for Cancellation"
-                  onChange={(e) => setCancellationReason && setCancellationReason(e.target.value as string)}
-                />
-              </Box>
-            )}
+          <Divider />
+          <DialogContent sx={{ p: 3 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12} style={{ color: theme.palette.common.black }}>
+                <Typography sx={{ fontWeight: 400, fontSize: '16px', lineHeight: '20px' }}>
+                  Please confirm the reason for the cancellation.
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <StyledInputLabel theme={theme} id="cancel-appointment-label">
+                    Reason for Cancellation
+                  </StyledInputLabel>
+                  <StyledSelectButton
+                    theme={theme}
+                    IconComponent={KeyboardArrowDownIcon}
+                    id="cancel-appointment-label"
+                    labelId="cancel-appointment-label"
+                    label="Reason for Cancellation"
+                    onChange={onSelectButtonChange}
+                  >
+                    {cancellationReason.map((reasonItem) => (
+                      <MenuItem value={reasonItem} key={reasonItem.toString()}>
+                        {reasonItem}
+                      </MenuItem>
+                    ))}
+                  </StyledSelectButton>
+                </FormControl>
+              </Grid>
+              {openOtherReasonField && (
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    id="reason_for_cancellation"
+                    multiline
+                    name="reason_for_cancellation"
+                    rows={4}
+                    placeholder="Reason for Cancellation"
+                    onChange={(e) => setCancellationReason && setCancellationReason(e.target.value as string)}
+                  />
+                </Grid>
+              )}
+            </Grid>
           </DialogContent>
-          <Divider sx={{ padding: '10px 0px' }} />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <InternalButton
-              theme={theme}
-              onClick={() => {
-                setOpenAppointmentsModal(false);
-                setOpenOtherReasonField(false);
-              }}
-              sx={{
-                backgroundColor: theme.palette.dark[100],
-                color: theme.palette.common.white,
-                margin: '10px 15px'
-              }}
-            >
-              Confirm
-            </InternalButton>
-          </Box>
-        </Box>
+          <Divider />
+          <DialogActions sx={{ p: 3 }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
+                  <InternalButton
+                    theme={theme}
+                    onClick={() => {
+                      setOpenAppointmentsModal(false);
+                      setOpenOtherReasonField(false);
+                    }}
+                    sx={{
+                      backgroundColor: theme.palette.dark[100],
+                      color: theme.palette.common.white,
+                      width: '160px',
+                      height: '40px'
+                    }}
+                  >
+                    Confirm
+                  </InternalButton>
+                </Stack>
+              </Grid>
+            </Grid>
+          </DialogActions>
+        </Grid>
       )}
     </Dialog>
   );

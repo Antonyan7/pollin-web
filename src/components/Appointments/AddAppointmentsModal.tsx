@@ -4,11 +4,12 @@ import { roundUpTo } from '@constants';
 import DateRangeIcon from '@mui/icons-material/DateRange';
 import {
   Autocomplete,
-  Box,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
+  Grid,
   InputAdornment,
   Stack,
   TextField,
@@ -94,80 +95,94 @@ const AddAppointmentsModal = ({
 
   return (
     <FormikProvider value={addAppointmentForm}>
-      <Dialog open={openAppointmentsModal} onClose={customOnCloseAppointmentsModal}>
-        {openAppointmentsModal && (
-          <Box sx={{ width: '500px' }}>
-            <DialogTitle>Add Appointment</DialogTitle>
-            <Divider />
+      <Dialog
+        open={openAppointmentsModal}
+        onClose={customOnCloseAppointmentsModal}
+        maxWidth="sm"
+        fullWidth
+        sx={{ '& .MuiDialog-paper': { p: 0 } }}
+      >
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {openAppointmentsModal && (
             <form onSubmit={addAppointmentForm.handleSubmit}>
-              <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <Autocomplete
-                  id="appointmentTypeId"
-                  onChange={(_, value) => {
-                    addAppointmentForm.setFieldValue('appointmentTypeId', value?.id);
-                  }}
-                  onBlur={addAppointmentForm.handleBlur('appointmentTypeId')}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  options={createOptionsGroup(appointmentData)}
-                  groupBy={(option) => option.firstLetter}
-                  getOptionLabel={(option) => option.title}
-                  onInputChange={(event, value, reason) =>
-                    addAppointmentForm.setFieldValue('appointmentTypeId', validateInputChange(event, value, reason))
-                  }
-                  renderInput={(params: TextFieldProps) => (
-                    <TextField
-                      {...params}
-                      label="Appointment type"
-                      name="appointmentTypeId"
-                      required
-                      helperText={
-                        addAppointmentForm.touched.appointmentTypeId ? addAppointmentForm.errors.appointmentTypeId : ''
+              <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
+                Add Appointment
+              </DialogTitle>
+              <Divider />
+              <DialogContent sx={{ p: 3 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      id="appointmentTypeId"
+                      onChange={(_, value) => {
+                        addAppointmentForm.setFieldValue('appointmentTypeId', value?.id);
+                      }}
+                      onBlur={addAppointmentForm.handleBlur('appointmentTypeId')}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      options={createOptionsGroup(appointmentData)}
+                      groupBy={(option) => option.firstLetter}
+                      getOptionLabel={(option) => option.title}
+                      onInputChange={(event, value, reason) =>
+                        addAppointmentForm.setFieldValue('appointmentTypeId', validateInputChange(event, value, reason))
                       }
-                      error={
-                        Boolean(addAppointmentForm.errors.appointmentTypeId) &&
-                        addAppointmentForm.touched.appointmentTypeId
-                      }
+                      renderInput={(params: TextFieldProps) => (
+                        <TextField
+                          {...params}
+                          label="Appointment type"
+                          name="appointmentTypeId"
+                          required
+                          helperText={
+                            addAppointmentForm.touched.appointmentTypeId
+                              ? addAppointmentForm.errors.appointmentTypeId
+                              : ''
+                          }
+                          error={
+                            Boolean(addAppointmentForm.errors.appointmentTypeId) &&
+                            addAppointmentForm.touched.appointmentTypeId
+                          }
+                        />
+                      )}
                     />
-                  )}
-                />
-                <Autocomplete
-                  id="patientId"
-                  options={patientSelectedData}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  getOptionLabel={(option) => option.title}
-                  onChange={(_, value) => {
-                    addAppointmentForm.setFieldValue('patientId', value?.id);
-                  }}
-                  onBlur={addAppointmentForm.handleBlur('patientId')}
-                  onInputChange={(event, value, reason) => {
-                    addAppointmentForm.setFieldValue('patientId', validateInputChange(event, value, reason));
-                  }}
-                  renderInput={(params: TextFieldProps) => (
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      id="patientId"
+                      options={patientSelectedData}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      getOptionLabel={(option) => option.title}
+                      onChange={(_, value) => {
+                        addAppointmentForm.setFieldValue('patientId', value?.id);
+                      }}
+                      onBlur={addAppointmentForm.handleBlur('patientId')}
+                      onInputChange={(event, value, reason) => {
+                        addAppointmentForm.setFieldValue('patientId', validateInputChange(event, value, reason));
+                      }}
+                      renderInput={(params: TextFieldProps) => (
+                        <TextField
+                          {...params}
+                          label="Patient"
+                          name="patientId"
+                          required
+                          helperText={addAppointmentForm.touched.patientId ? addAppointmentForm.errors.patientId : ''}
+                          error={Boolean(addAppointmentForm.errors.patientId) && addAppointmentForm.touched.patientId}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
                     <TextField
-                      {...params}
-                      label="Patient"
-                      name="patientId"
-                      required
-                      helperText={addAppointmentForm.touched.patientId ? addAppointmentForm.errors.patientId : ''}
-                      error={Boolean(addAppointmentForm.errors.patientId) && addAppointmentForm.touched.patientId}
+                      fullWidth
+                      id="description"
+                      label="Description (optional)"
+                      multiline
+                      name="description"
+                      rows={4}
+                      placeholder="Description (optional)"
+                      value={addAppointmentForm.values.description}
+                      onChange={addAppointmentForm.handleChange}
                     />
-                  )}
-                />
-                <Box>
-                  <TextField
-                    fullWidth
-                    id="description"
-                    label="Description (optional)"
-                    multiline
-                    name="description"
-                    rows={4}
-                    placeholder="Description (optional)"
-                    value={addAppointmentForm.values.description}
-                    onChange={addAppointmentForm.handleChange}
-                  />
-                </Box>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack spacing={3}>
+                  </Grid>
+                  <Grid item xs={12}>
                     <MobileDateTimePicker
                       label="Date & Start Time"
                       value={addAppointmentForm.values.date}
@@ -175,6 +190,7 @@ const AddAppointmentsModal = ({
                       renderInput={(params: TextFieldProps) => (
                         <TextField
                           {...params}
+                          fullWidth
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
@@ -185,24 +201,30 @@ const AddAppointmentsModal = ({
                         />
                       )}
                     />
-                  </Stack>
-                </LocalizationProvider>
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
-                  <InternalButton theme={theme} type="button" onClick={closeAppointmentModal}>
-                    Cancel
-                  </InternalButton>
-                  <InternalButton
-                    theme={theme}
-                    type="submit"
-                    sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
-                  >
-                    Add
-                  </InternalButton>
-                </Box>
+                  </Grid>
+                </Grid>
               </DialogContent>
+              <DialogActions sx={{ p: 3 }}>
+                <Grid container justifyContent="flex-end" alignItems="center">
+                  <Grid item xs={12}>
+                    <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
+                      <InternalButton theme={theme} type="button" onClick={closeAppointmentModal}>
+                        Cancel
+                      </InternalButton>
+                      <InternalButton
+                        theme={theme}
+                        type="submit"
+                        sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
+                      >
+                        Add
+                      </InternalButton>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </DialogActions>
             </form>
-          </Box>
-        )}
+          )}
+        </LocalizationProvider>
       </Dialog>
     </FormikProvider>
   );

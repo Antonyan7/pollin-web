@@ -10,17 +10,19 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Autocomplete,
-  Box,
   Dialog,
+  DialogActions,
   DialogContent,
   DialogTitle,
   Divider,
   FormControl,
+  Grid,
   InputAdornment,
   MenuItem,
   Stack,
   TextField,
   TextFieldProps,
+  Tooltip,
   useTheme
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -130,81 +132,90 @@ const EditAppointmentsModal = ({
   return (
     <FormikProvider value={editAppointmentForm}>
       <Dialog open={openAppointmentsModal} onClose={onCloseAppointmentsModal}>
-        {openAppointmentsModal && (
-          <Box sx={{ width: '600px' }}>
-            <DialogTitle>Edit Appointment</DialogTitle>
-            <Divider />
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          {openAppointmentsModal && (
             <form onSubmit={editAppointmentForm.handleSubmit}>
-              <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <Autocomplete
-                  id="appointmentTypeId"
-                  onChange={(_, value) => {
-                    editAppointmentForm.setFieldValue('appointmentTypeId', value?.id);
-                  }}
-                  onBlur={editAppointmentForm.handleBlur('appointmentTypeId')}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  options={createOptionsGroup(serviceTypeData)}
-                  groupBy={(option) => option.firstLetter}
-                  getOptionLabel={(option) => option.title}
-                  onInputChange={(event, value, reason) =>
-                    editAppointmentForm.setFieldValue('appointmentTypeId', validateInputChange(event, value, reason))
-                  }
-                  renderInput={(params: TextFieldProps) => (
-                    <TextField
-                      {...params}
-                      label="Appointment type"
-                      name="appointmentTypeId"
-                      required
-                      helperText={
-                        editAppointmentForm.touched.appointmentTypeId
-                          ? editAppointmentForm.errors.appointmentTypeId
-                          : ''
+              <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
+                Edit Appointment
+              </DialogTitle>
+              <Divider />
+              <DialogContent sx={{ p: 3 }}>
+                <Grid container spacing={3}>
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      id="appointmentTypeId"
+                      onChange={(_, value) => {
+                        editAppointmentForm.setFieldValue('appointmentTypeId', value?.id);
+                      }}
+                      onBlur={editAppointmentForm.handleBlur('appointmentTypeId')}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      options={createOptionsGroup(serviceTypeData)}
+                      groupBy={(option) => option.firstLetter}
+                      getOptionLabel={(option) => option.title}
+                      onInputChange={(event, value, reason) =>
+                        editAppointmentForm.setFieldValue(
+                          'appointmentTypeId',
+                          validateInputChange(event, value, reason)
+                        )
                       }
-                      error={
-                        Boolean(editAppointmentForm.errors.appointmentTypeId) &&
-                        editAppointmentForm.touched.appointmentTypeId
-                      }
+                      renderInput={(params: TextFieldProps) => (
+                        <TextField
+                          {...params}
+                          label="Appointment type"
+                          name="appointmentTypeId"
+                          required
+                          helperText={
+                            editAppointmentForm.touched.appointmentTypeId
+                              ? editAppointmentForm.errors.appointmentTypeId
+                              : ''
+                          }
+                          error={
+                            Boolean(editAppointmentForm.errors.appointmentTypeId) &&
+                            editAppointmentForm.touched.appointmentTypeId
+                          }
+                        />
+                      )}
                     />
-                  )}
-                />
-                <Autocomplete
-                  id="patientId"
-                  options={patientSelectedData}
-                  isOptionEqualToValue={(option, value) => option.id === value.id}
-                  getOptionLabel={(option) => option.title}
-                  onChange={(_, value) => {
-                    editAppointmentForm.setFieldValue('patientId', value?.id);
-                  }}
-                  onBlur={editAppointmentForm.handleBlur('patientId')}
-                  onInputChange={(event, value, reason) => {
-                    editAppointmentForm.setFieldValue('patientId', validateInputChange(event, value, reason));
-                  }}
-                  renderInput={(params: TextFieldProps) => (
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Autocomplete
+                      id="patientId"
+                      options={patientSelectedData}
+                      isOptionEqualToValue={(option, value) => option.id === value.id}
+                      getOptionLabel={(option) => option.title}
+                      onChange={(_, value) => {
+                        editAppointmentForm.setFieldValue('patientId', value?.id);
+                      }}
+                      onBlur={editAppointmentForm.handleBlur('patientId')}
+                      onInputChange={(event, value, reason) => {
+                        editAppointmentForm.setFieldValue('patientId', validateInputChange(event, value, reason));
+                      }}
+                      renderInput={(params: TextFieldProps) => (
+                        <TextField
+                          {...params}
+                          label="Patient"
+                          name="patientId"
+                          required
+                          helperText={editAppointmentForm.touched.patientId ? editAppointmentForm.errors.patientId : ''}
+                          error={Boolean(editAppointmentForm.errors.patientId) && editAppointmentForm.touched.patientId}
+                        />
+                      )}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
                     <TextField
-                      {...params}
-                      label="Patient"
-                      name="patientId"
-                      required
-                      helperText={editAppointmentForm.touched.patientId ? editAppointmentForm.errors.patientId : ''}
-                      error={Boolean(editAppointmentForm.errors.patientId) && editAppointmentForm.touched.patientId}
+                      fullWidth
+                      id="description"
+                      label="Description (optional)"
+                      multiline
+                      name="description"
+                      rows={4}
+                      placeholder="Description (optional)"
+                      value={editAppointmentForm.values.description}
+                      onChange={editAppointmentForm.handleChange}
                     />
-                  )}
-                />
-                <Box>
-                  <TextField
-                    fullWidth
-                    id="description"
-                    label="Description (optional)"
-                    multiline
-                    name="description"
-                    rows={4}
-                    placeholder="Description (optional)"
-                    value={editAppointmentForm.values.description}
-                    onChange={editAppointmentForm.handleChange}
-                  />
-                </Box>
-                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <Stack spacing={3}>
+                  </Grid>
+                  <Grid item xs={12}>
                     <MobileDateTimePicker
                       label="Date & Start Time"
                       value={editAppointmentForm.values.date}
@@ -212,6 +223,7 @@ const EditAppointmentsModal = ({
                       renderInput={(params: TextFieldProps) => (
                         <TextField
                           {...params}
+                          fullWidth
                           InputProps={{
                             endAdornment: (
                               <InputAdornment position="end">
@@ -222,10 +234,12 @@ const EditAppointmentsModal = ({
                         />
                       )}
                     />
-                  </Stack>
-                </LocalizationProvider>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', gap: '10px' }}>
-                  <FormControl sx={{ width: editableAppointmentData?.isVirtual ? '50%' : '100%' }}>
+                  </Grid>
+                </Grid>
+              </DialogContent>
+              <Grid container spacing={3} style={{ padding: '0 24px' }}>
+                <Grid item xs={editableAppointmentData?.isVirtual ? 6 : 12}>
+                  <FormControl fullWidth>
                     <StyledInputLabel theme={theme} id="status-appointment-label">
                       Status
                     </StyledInputLabel>
@@ -246,39 +260,52 @@ const EditAppointmentsModal = ({
                       ))}
                     </StyledSelectButton>
                   </FormControl>
-                  {editableAppointmentData?.isVirtual ? (
+                </Grid>
+                {editableAppointmentData?.isVirtual ? (
+                  <Grid item xs={6}>
                     <InternalButton
                       theme={theme}
-                      sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white, width: '50%' }}
+                      sx={{
+                        backgroundColor: theme.palette.dark[100],
+                        color: theme.palette.common.white,
+                        width: '100%',
+                        height: '100%'
+                      }}
                     >
                       Join Virtual Appointment
                     </InternalButton>
-                  ) : null}
-                </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <DeleteIcon
-                      sx={{ color: theme.palette.grey[500], cursor: 'pointer' }}
-                      onClick={() => setOpenConfirmAppointmentsModal(true)}
-                    />
-                  </Box>
-                  <Box sx={{ display: 'flex', gap: '10px' }}>
-                    <InternalButton theme={theme} onClick={() => closeAppointmentsModal(AppointmentsModalTypes.Edit)}>
-                      Cancel
-                    </InternalButton>
-                    <InternalButton
-                      type="submit"
-                      theme={theme}
-                      sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
-                    >
-                      Save
-                    </InternalButton>
-                  </Box>
-                </Box>
-              </DialogContent>
+                  </Grid>
+                ) : null}
+              </Grid>
+              <DialogActions sx={{ p: 3 }}>
+                <Grid container justifyContent="space-between" alignItems="center">
+                  <Grid item>
+                    <Tooltip title="Delete Event">
+                      <DeleteIcon
+                        sx={{ color: theme.palette.grey[500], cursor: 'pointer' }}
+                        onClick={() => setOpenConfirmAppointmentsModal(true)}
+                      />
+                    </Tooltip>
+                  </Grid>
+                  <Grid item>
+                    <Stack direction="row" spacing={2} alignItems="center">
+                      <InternalButton theme={theme} onClick={() => closeAppointmentsModal(AppointmentsModalTypes.Edit)}>
+                        Cancel
+                      </InternalButton>
+                      <InternalButton
+                        type="submit"
+                        theme={theme}
+                        sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
+                      >
+                        Save
+                      </InternalButton>
+                    </Stack>
+                  </Grid>
+                </Grid>
+              </DialogActions>
             </form>
-          </Box>
-        )}
+          )}
+        </LocalizationProvider>
         <ConfirmAppointmentsModal
           openAppointmentsModal={openConfirmAppointmentsModal}
           setOpenAppointmentsModal={setOpenConfirmAppointmentsModal}

@@ -32,7 +32,7 @@ const StyledInputLabel = styled(InputLabel)<InputLabelProps>(({ theme }) => ({
 const InternalButton = styled(Button)<ButtonProps>(({ theme }) => ({
   border: `1px solid ${theme.palette.dark[300]}`,
   borderRadius: '7px',
-  color: 'black',
+  color: theme.palette.common.black,
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: theme.palette.dark[400],
