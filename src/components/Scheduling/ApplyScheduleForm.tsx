@@ -30,6 +30,8 @@ import { SchedulingTemplateProps } from '../../types/reduxTypes/scheduling';
 
 const errorMessage = 'You have to fill all fields.';
 
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const ApplyScheduleForm = () => {
   const theme = useTheme();
 

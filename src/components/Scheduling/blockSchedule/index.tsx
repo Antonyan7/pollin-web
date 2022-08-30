@@ -27,6 +27,9 @@ const initialValues = {
   endTime: null,
   placeholderLabel: ''
 };
+
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const BlockTemplates = () => {
   const theme = useTheme();
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);

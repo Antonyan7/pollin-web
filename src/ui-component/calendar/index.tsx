@@ -22,6 +22,8 @@ import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 import { IAppointment, ICalendarSlot } from '../../types/reduxTypes/booking';
 import { StyledDisabledLayer } from './StyledDisabledLayer';
 
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const Calendar = (props: { calendarDate: string }) => {
   const { calendarDate } = props;
   const calendarRef = useRef<FullCalendar>(null);

@@ -26,8 +26,8 @@ export default (props: { handleClose: () => void }) => {
         title="Error: Overlapping Service Types and Blocks"
         content={false}
         secondary={
-          <IconButton size="large">
-            <CloseIcon onClick={() => handleClose()} fontSize="small" />
+          <IconButton onClick={() => handleClose()} size="large">
+            <CloseIcon fontSize="small" />
           </IconButton>
         }
       >

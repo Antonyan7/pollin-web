@@ -137,7 +137,8 @@ const EnhancedTableHead = ({
 };
 
 // ==============================|| CUSTOMER LIST ||============================== //
-
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const ScheduleTemplates = () => {
   const [order, setOrder] = React.useState<ArrangementOrder>('asc');
   const [orderBy, setOrderBy] = React.useState<string>('calories');

@@ -39,6 +39,8 @@ import { AppointmentsModalProps, AppointmentsModalTypes } from '../../types/appo
 
 import ConfirmAppointmentsModal from './ConfirmAppointmentsModal';
 
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const EditAppointmentsModal = ({
   openAppointmentsModal,
   onCloseAppointmentsModal,

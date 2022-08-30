@@ -21,6 +21,7 @@ module.exports = {
     react: { version: 'detect' }
   },
   rules: {
+    'max-lines-per-function': ['error', 150],
     '@emotion/jsx-import': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/prefer-nullish-coalescing': 'error',

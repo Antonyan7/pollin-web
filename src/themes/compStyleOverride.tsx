@@ -1,6 +1,8 @@
 // project imports
 import { Theme } from '@mui/material/styles';
 
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 export default function componentStyleOverrides(theme: Theme, borderRadius: number, outlinedFilled: boolean) {
   const { mode } = theme.palette;
   const bgColor = mode === 'dark' ? theme.palette.dark[800] : theme.palette.grey[50];

@@ -26,6 +26,8 @@ import { AppointmentsModalProps } from 'types/appointments';
 import { AppointmentsProps, CreateAppointmentProps } from 'types/reduxTypes/appointments';
 import { addAppointmentsValidationSchema, validateInputChange } from 'validation/appointments/add_appointment';
 
+// TODO update component to contain 150 lines
+// eslint-disable-next-line max-lines-per-function
 const AddAppointmentsModal = ({
   openAppointmentsModal,
   onCloseAppointmentsModal,
