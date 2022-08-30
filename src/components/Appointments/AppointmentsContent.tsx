@@ -14,7 +14,7 @@ const AppointmentsContent = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ marginTop: '-50px' }}>
+    <Box sx={{ marginTop: '-68px' }}>
       <Main theme={theme}>{children}</Main>
     </Box>
   );
