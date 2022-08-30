@@ -1,8 +1,24 @@
-import { addMinutes, format, setDate, setHours, setMonth, setYear } from 'date-fns';
+import { addMinutes, format, isValid, setDate, setHours, setMonth, setYear } from 'date-fns';
 
 import { longWeekDays } from '../helpers/constants';
 
-export const toIsoString = (value: Date) => format(value, "yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+export const toIsoString = (value: Date) => {
+  if (isValid(value)) {
+    return format(value, "yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+  }
+
+  return '';
+};
+
+export const utcDate = (date: Date): Date => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDay();
+  const hour = date.getHours();
+  const min = date.getMinutes();
+
+  return new Date(Date.UTC(year, month, day, hour, min));
+};
 
 export const addMinutesToTime = (date: string, minutes: number) => {
   const dateForFormatting = new Date(date);
