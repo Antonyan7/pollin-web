@@ -74,17 +74,15 @@ const createAppointment = (appointmentValues: CreateAppointmentProps) => async (
   }
 };
 
-const getAppointmentDetails =
-  (appointmentId: string = 'exAppointmentId') =>
-  async (dispatch: AppDispatch) => {
-    try {
-      const response = await API.booking.takeAppointmentDetails(appointmentId);
+const getAppointmentDetails = (appointmentId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.booking.getAppointmentDetails(appointmentId);
 
-      dispatch(setAppointmentDetails(response.data.data.appointment));
-    } catch (error) {
-      dispatch(setError(error));
-    }
-  };
+    dispatch(setAppointmentDetails(response.data.data.appointment));
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
 
 const updateAppointmentDetails = (appointmentValues: AppointmentDetailsProps) => async (dispatch: AppDispatch) => {
   try {

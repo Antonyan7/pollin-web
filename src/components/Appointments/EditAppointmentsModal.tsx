@@ -46,7 +46,7 @@ import ConfirmAppointmentsModal from './ConfirmAppointmentsModal';
 const EditAppointmentsModal = ({
   openAppointmentsModal,
   onCloseAppointmentsModal,
-  appointmentSlotId = 'exAppointmentId',
+  appointmentSlotId,
   setOpenAppointmentsModal: setOpenEditAppointmentsModal
 }: AppointmentsModalProps) => {
   const theme = useTheme();
@@ -83,9 +83,7 @@ const EditAppointmentsModal = ({
   });
 
   useEffect(() => {
-    if (appointmentSlotId) {
-      dispatch(bookingMiddleware.getAppointmentDetails());
-    }
+    dispatch(bookingMiddleware.getAppointmentDetails(appointmentSlotId as string));
   }, [appointmentSlotId]);
 
   useEffect(() => {

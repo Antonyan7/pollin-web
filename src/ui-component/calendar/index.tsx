@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 // The import order DOES MATTER here. If you change it, you'll get an error!
 import FullCalendar, { DateRange, DateSelectArg, EventClickArg } from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -53,17 +53,27 @@ const Calendar = (props: { calendarDate: string }) => {
     }
   };
 
-  const onEventClick = (initialEventObject: EventClickArg) => {
-    initialEventObject.jsEvent.preventDefault();
+  const onEventClick = useCallback(
+    (initialEventObject: EventClickArg) => {
+      initialEventObject.jsEvent.preventDefault();
 
-    if (new Date(initialEventObject.event.startStr).getTime() < new Date().setHours(0, 0, 0, 0)) {
-      setOpenDetailsAppointmentsModal(true);
-    } else {
-      setOpenEditAppointmentsModal(true);
-    }
+      const { id } = initialEventObject.event;
+      const targetAppointment = appointments.find((appointment) => appointment.id === id);
 
-    setAppointmentSlotId(initialEventObject.event.id);
-  };
+      if (!targetAppointment?.isEditable) {
+        return;
+      }
+
+      if (new Date(initialEventObject.event.startStr).getTime() < new Date().setHours(0, 0, 0, 0)) {
+        setOpenDetailsAppointmentsModal(true);
+      } else {
+        setOpenEditAppointmentsModal(true);
+      }
+
+      setAppointmentSlotId(targetAppointment.id);
+    },
+    [appointments]
+  );
 
   const onRangeSelect = (arg: DateSelectArg) => {
     setBookAppointmentDate({

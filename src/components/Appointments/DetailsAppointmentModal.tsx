@@ -1,13 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { InternalButton, StyledBox } from '@components/Appointments/CommonMaterialComponents';
+import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
-import { Box, Dialog, DialogContent, DialogTitle, Divider, IconButton, useTheme } from '@mui/material';
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
+  Stack,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import Router from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { AppointmentsModalProps } from 'types/appointments';
 import { AppointmentDetailsProps } from 'types/reduxTypes/appointments';
+
+import DialogContentRow from '@ui-component/common/DialogContentRow';
 
 const DetailsAppointmentModal = ({
   openAppointmentsModal,
@@ -20,65 +33,91 @@ const DetailsAppointmentModal = ({
   const [confirmedAppointmentDetails, setConfirmedAppointmentDetails] = useState<AppointmentDetailsProps | null>(null);
 
   useEffect(() => {
-    if (appointmentSlotId) {
-      dispatch(bookingMiddleware.getAppointmentDetails());
-    }
+    dispatch(bookingMiddleware.getAppointmentDetails(appointmentSlotId as string));
   }, [appointmentSlotId]);
+
   useEffect(() => {
     setConfirmedAppointmentDetails(appointmentDetails);
   }, [appointmentDetails]);
 
   return (
-    <Dialog open={openAppointmentsModal} onClose={onCloseAppointmentsModal}>
+    <Dialog open={openAppointmentsModal} onClose={onCloseAppointmentsModal} fullWidth maxWidth="sm">
       {openAppointmentsModal && (
-        <Box sx={{ width: '600px' }}>
-          <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p>Appointment Details</p>
-            <IconButton onClick={() => setOpenAppointmentsModal(false)}>
-              <CloseOutlined sx={{ color: theme.palette.common.black }} />
-            </IconButton>
+        <Grid>
+          <DialogTitle>
+            <Grid container justifyContent="space-between" alignItems="center">
+              <Grid item>
+                <Typography
+                  sx={{
+                    fontSize: '1.25rem',
+                    fontWeight: 700
+                  }}
+                >
+                  Appointment Details
+                </Typography>
+              </Grid>
+              <Grid item>
+                <IconButton
+                  onClick={() => {
+                    setOpenAppointmentsModal(false);
+                  }}
+                >
+                  <CloseOutlined sx={{ color: theme.palette.common.black }} />
+                </IconButton>
+              </Grid>
+            </Grid>
           </DialogTitle>
-          <Divider sx={{ marginBottom: '10px' }} />
-          <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <StyledBox>
-              <strong>Appointment Type:</strong> {confirmedAppointmentDetails?.appointmentType?.title}
-            </StyledBox>
-            <StyledBox>
-              <strong>Patient:</strong> {confirmedAppointmentDetails?.patient?.name}
-            </StyledBox>
-            <StyledBox>
-              <strong>Description:</strong> {confirmedAppointmentDetails?.description}
-            </StyledBox>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-              <StyledBox sx={{ width: '50%' }}>
-                <strong>Date:</strong>{' '}
-                {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedDate}
-              </StyledBox>
-              <StyledBox sx={{ width: '50%' }}>
-                <strong>Start Time:</strong>{' '}
-                {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedTime}
-              </StyledBox>
-            </Box>
-            <StyledBox>
-              <strong>Status:</strong> {confirmedAppointmentDetails?.status}
-            </StyledBox>
-            <StyledBox>
-              <strong>Reason for Cancellation:</strong> {confirmedAppointmentDetails?.cancellationReason}
-            </StyledBox>
+          <Divider />
+          <DialogContent>
+            <Grid container spacing={3}>
+              <DialogContentRow
+                subtitle="Appointment Type:"
+                body={confirmedAppointmentDetails?.appointmentType?.title}
+              />
+              <DialogContentRow subtitle="Patient:" body={confirmedAppointmentDetails?.patient?.name} />
+              <DialogContentRow subtitle="Description:" body={confirmedAppointmentDetails?.description} />
+              <Grid item xs={6}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography variant="subtitle1">Date:</Typography>
+                  <Typography variant="body2">
+                    {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedDate}
+                  </Typography>
+                </Stack>
+              </Grid>
+              <Grid item xs={6}>
+                <Stack direction="row" spacing={1} alignItems="center">
+                  <Typography variant="subtitle1">Start Time:</Typography>
+                  <Typography variant="body2">
+                    {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedTime}
+                  </Typography>
+                </Stack>
+              </Grid>
+              <DialogContentRow subtitle="Status:" body={confirmedAppointmentDetails?.status} />
+              <DialogContentRow
+                subtitle="Reason for Cancellation:"
+                body={confirmedAppointmentDetails?.cancellationReason}
+              />
+            </Grid>
           </DialogContent>
-          <Divider sx={{ marginTop: '10px' }} />
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <InternalButton
-              onClick={() => {
-                Router.push('/patient-chart');
-              }}
-              theme={theme}
-              sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white, margin: '15px' }}
-            >
-              View Patient Profile
-            </InternalButton>
-          </Box>
-        </Box>
+          <Divider />
+          <DialogActions sx={{ p: 3 }}>
+            <Grid container>
+              <Grid item xs={12}>
+                <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
+                  <InternalButton
+                    onClick={() => {
+                      Router.push('/patient-chart');
+                    }}
+                    theme={theme}
+                    sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
+                  >
+                    View Patient Profile
+                  </InternalButton>
+                </Stack>
+              </Grid>
+            </Grid>
+          </DialogActions>
+        </Grid>
       )}
     </Dialog>
   );

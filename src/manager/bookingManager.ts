@@ -39,7 +39,7 @@ const bookingManager = {
       date: toIsoString(appointmentValues.date as Date)
     });
   },
-  takeAppointmentDetails(appointmentId: string = 'exAppointmentId') {
+  getAppointmentDetails(appointmentId: string) {
     return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsData>>(`/v1/appointment`, {
       params: { appointmentId }
     });
