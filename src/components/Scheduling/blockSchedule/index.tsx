@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
+import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, Button, Grid, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Autocomplete, Grid, styled, TextField, TextFieldProps, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -18,6 +19,14 @@ import { blockScheduleValidationSchema } from 'validation/scheduling/block_sched
 import { validateInputChange } from 'validation/validationHelpers';
 
 import { linkDateAndTime } from '@utils/dateUtils';
+
+const BlockScheduleForm = styled('form')(() => ({
+  marginTop: '60px',
+  height: '100vh',
+  display: 'grid',
+  flexDirection: 'column',
+  justifyContent: 'space-between'
+}));
 
 const initialValues = {
   resourceId: '',
@@ -67,7 +76,7 @@ const BlockTemplates = () => {
       <MainCard content={false}>
         <SubCard>
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <form onSubmit={blockScheduleForm.handleSubmit}>
+            <BlockScheduleForm onSubmit={blockScheduleForm.handleSubmit}>
               <Grid container spacing={4} columns={8} alignItems="center">
                 <Grid item xs={0.5} />
                 <Grid item xs={2}>
@@ -219,19 +228,21 @@ const BlockTemplates = () => {
                   />
                 </Grid>
               </Grid>
-              <br />
-              <Grid container justifyContent="flex-end">
-                <Grid item xs={2}>
-                  <Button
+              <Grid container spacing={4} columns={8} alignItems="flex-end">
+                <Grid item xs={0.5} />
+                <Grid item xs={0.5} />
+                <Grid item xs={2} />
+                <Grid item xs={4.5} display="grid" justifyContent="flex-end" alignItems="flex-end">
+                  <InternalButton
                     type="submit"
                     variant="outlined"
-                    sx={{ color: theme.palette.dark.dark, background: theme.palette.grey[500], padding: '5px' }}
+                    sx={{ width: '90px', background: theme.palette.grey[500] }}
                   >
                     Apply
-                  </Button>
+                  </InternalButton>
                 </Grid>
               </Grid>
-            </form>
+            </BlockScheduleForm>
           </LocalizationProvider>
         </SubCard>
       </MainCard>
