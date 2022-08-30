@@ -1,4 +1,4 @@
-import React, { forwardRef, ForwardRefExoticComponent, RefAttributes, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import {
   Avatar,
@@ -12,11 +12,10 @@ import {
   useMediaQuery
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import ListItemLink from 'components/Link/ListItemLink';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { LinkTarget, NavItemType } from 'types';
-
-import { Link } from '../../../../../components';
 
 interface NavItemProps {
   item: NavItemType;
@@ -57,20 +56,6 @@ const NavItem = ({ item, level }: NavItemProps) => {
     itemTarget = '_blank';
   }
 
-  let listItemProps: {
-    component: ForwardRefExoticComponent<RefAttributes<HTMLAnchorElement>> | string;
-    href?: string;
-    target?: LinkTarget['target'];
-  } = {
-    component: forwardRef((props, ref) => (
-      <Link style={{ color: 'black' }} ref={ref} {...props} href={`${item.url!}`} target={itemTarget} />
-    ))
-  };
-
-  if (item?.external) {
-    listItemProps = { component: 'a', href: item.url, target: itemTarget };
-  }
-
   const itemHandler = (id: string) => {
     dispatch(viewsMiddleware.activateMenuItem([id]));
 
@@ -91,52 +76,53 @@ const NavItem = ({ item, level }: NavItemProps) => {
   }, [item.id]);
 
   return (
-    <StyledListItemButton
-      theme={theme}
-      {...listItemProps}
-      disabled={item.disabled}
-      selected={openItem?.findIndex((id) => id === item.id) > -1}
-      onClick={() => itemHandler(item.id!)}
-    >
-      <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.common.black }}>
-        {itemIcon}
-      </ListItemIcon>
-      <ListItemText
-        primary={
-          <Typography
-            sx={{
-              color: theme.palette.common.black
-            }}
-            variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'}
-          >
-            {item.title}
-          </Typography>
-        }
-        secondary={
-          item.caption && (
+    <ListItemLink item={item} itemTarget={itemTarget}>
+      <StyledListItemButton
+        theme={theme}
+        disabled={item.disabled}
+        selected={openItem?.findIndex((id) => id === item.id) > -1}
+        onClick={() => itemHandler(item.id!)}
+      >
+        <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.common.black }}>
+          {itemIcon}
+        </ListItemIcon>
+        <ListItemText
+          primary={
             <Typography
               sx={{
                 color: theme.palette.common.black
               }}
-              variant="caption"
-              display="block"
-              gutterBottom
+              variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'}
             >
-              {item.caption}
+              {item.title}
             </Typography>
-          )
-        }
-      />
-      {item.chip && (
-        <Chip
-          color={item.chip.color}
-          variant={item.chip.variant}
-          size={item.chip.size}
-          label={item.chip.label}
-          avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
+          }
+          secondary={
+            item.caption && (
+              <Typography
+                sx={{
+                  color: theme.palette.common.black
+                }}
+                variant="caption"
+                display="block"
+                gutterBottom
+              >
+                {item.caption}
+              </Typography>
+            )
+          }
         />
-      )}
-    </StyledListItemButton>
+        {item.chip && (
+          <Chip
+            color={item.chip.color}
+            variant={item.chip.variant}
+            size={item.chip.size}
+            label={item.chip.label}
+            avatar={item.chip.avatar && <Avatar>{item.chip.avatar}</Avatar>}
+          />
+        )}
+      </StyledListItemButton>
+    </ListItemLink>
   );
 };
 
