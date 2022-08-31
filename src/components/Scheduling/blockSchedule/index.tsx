@@ -145,6 +145,7 @@ const BlockTemplates = () => {
                     label="Start Time"
                     value={blockScheduleForm.values.startTime}
                     onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
+                    minutesStep={10}
                     renderInput={(params) => (
                       <TextField
                         {...params}
@@ -191,6 +192,7 @@ const BlockTemplates = () => {
                     label="End Time"
                     value={blockScheduleForm.values.endTime}
                     onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
+                    minutesStep={10}
                     renderInput={(params) => (
                       <TextField
                         fullWidth
