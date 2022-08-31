@@ -1,23 +1,33 @@
-import { addMinutes, format, isValid, setDate, setHours, setMonth, setYear } from 'date-fns';
+import { addMinutes, isValid, setDate, setHours, setMonth, setYear } from 'date-fns';
+import { format, utcToZonedTime } from 'date-fns-tz';
 
 import { longWeekDays } from '../helpers/constants';
 
 export const toIsoString = (value: Date) => {
   if (isValid(value)) {
-    return format(value, "yyyy-MM-dd'T'HH:mm:ss'+00:00'");
+    return format(utcToZonedTime(new Date(value), 'Europe/London'), "yyyy-MM-dd'T'HH:mm:ss'+00:00'", {
+      timeZone: 'Europe/London'
+    });
   }
 
   return '';
 };
 
 export const utcDate = (date: Date): Date => {
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  const day = date.getDay();
-  const hour = date.getHours();
-  const min = date.getMinutes();
+  const year = date.getUTCFullYear();
+  const month = date.getUTCMonth();
+  const day = date.getUTCDay();
+  const hour = date.getUTCHours();
+  const min = date.getUTCMinutes();
+  const convertedDate = new Date();
 
-  return new Date(Date.UTC(year, month, day, hour, min));
+  convertedDate.setFullYear(year);
+  convertedDate.setMonth(month);
+  convertedDate.setDate(day);
+  convertedDate.setHours(hour);
+  convertedDate.setMinutes(min);
+
+  return convertedDate;
 };
 
 export const addMinutesToTime = (date: string, minutes: number) => {

@@ -7,7 +7,7 @@ import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
 import ErrorModal from '@ui-component/schedule-template/ErrorModal';
-import { toIsoString } from '@utils/dateUtils';
+import { toIsoString, utcDate } from '@utils/dateUtils';
 
 import { dispatch } from '../../redux/hooks';
 import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types/create-schedule';
@@ -80,6 +80,9 @@ const CreateTemplate = () => {
       ...templateData,
       timePeriods: templateData.timePeriods.map((item) => {
         const { id, ...rest } = item;
+
+        rest.startTime = toIsoString(utcDate(new Date(rest.startTime)));
+        rest.endTime = toIsoString(utcDate(new Date(rest.endTime)));
 
         return rest;
       })
