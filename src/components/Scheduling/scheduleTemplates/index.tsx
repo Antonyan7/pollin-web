@@ -5,9 +5,11 @@ import AddIcon from '@mui/icons-material/Add';
 import {
   Box,
   Button,
+  ButtonProps,
   CardContent,
   Checkbox,
   Grid,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -16,7 +18,8 @@ import {
   TablePagination,
   TableRow,
   TableSortLabel,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { getComparator, stableSort } from 'helpers/tableSort';
@@ -28,6 +31,18 @@ import MainCard from 'ui-component/cards/MainCard';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
 import ScheduleTemplateRow from './ScheduleTemplateRow';
+
+const StyledButtonNewTemplate = styled(Button)<ButtonProps>(({ theme }) => ({
+  color: theme.palette.common.black,
+  border: `1px solid ${theme.palette.dark[300]}`,
+  borderRadius: '7px',
+  padding: '15px 20px',
+  '&:hover': {
+    backgroundColor: theme.palette.dark[200],
+    color: theme.palette.common.white,
+    border: `1px solid ${theme.palette.dark[300]}`
+  }
+}));
 
 // table header options
 const headCells: HeadCell[] = [
@@ -147,6 +162,7 @@ const ScheduleTemplates = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [rows, setRows] = React.useState<Row[]>([]);
   const router = useRouter();
+  const theme = useTheme();
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
 
@@ -233,10 +249,16 @@ const ScheduleTemplates = () => {
               <Typography variant="h3">Schedule Templates</Typography>
             </Grid>
             <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
-              <Button variant="outlined" sx={{ color: 'black' }} onClick={handleNewTemplate}>
-                {' '}
-                New Template <AddIcon />
-              </Button>
+              <StyledButtonNewTemplate
+                theme={theme}
+                variant="outlined"
+                endIcon={<AddIcon sx={{ color: theme.palette.common.black }} />}
+                onClick={handleNewTemplate}
+              >
+                <Typography variant="h4" sx={{ marginRight: '10px' }}>
+                  New Template
+                </Typography>
+              </StyledButtonNewTemplate>
             </Grid>
           </Grid>
         </CardContent>
