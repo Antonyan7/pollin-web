@@ -7,15 +7,15 @@ const StyledChip = styled(Chip)<ChipProps>(({ theme }) => ({
   height: '48px',
   alignItems: 'center',
   borderRadius: '27px',
-  margin: '0px 15px',
   transition: 'all .2s ease-in-out',
-  borderColor: theme.palette.dark[200],
-  backgroundColor: theme.palette.dark[200],
-  color: 'black',
-  '&:hover': {
-    background: theme.palette.dark[100],
+  borderColor: theme.palette.primary.light,
+  backgroundColor: theme.palette.primary.light,
+  '&[aria-controls="menu-list-grow"], &:hover': {
+    borderColor: theme.palette.primary.main,
+    background: theme.palette.primary.main,
+    color: theme.palette.primary.light,
     '& svg': {
-      cursor: 'pointer'
+      stroke: theme.palette.primary.light
     }
   },
   '& .MuiChip-label': {
@@ -35,8 +35,8 @@ const ProfileSection = () => {
   return (
     <StyledChip
       theme={theme}
-      icon={<StyledAvatar src="" theme={theme} aria-haspopup="true" color={theme.palette.common.black} />}
-      label={<IconSettings stroke={1.5} size="1.5rem" color={theme.palette.common.black} />}
+      icon={<StyledAvatar src="" theme={theme} aria-haspopup="true" />}
+      label={<IconSettings stroke={1.5} size="1.5rem" />}
       variant="outlined"
       aria-haspopup="true"
     />

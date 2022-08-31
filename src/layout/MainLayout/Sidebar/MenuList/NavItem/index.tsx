@@ -4,7 +4,6 @@ import {
   Avatar,
   Chip,
   ListItemButton,
-  ListItemButtonProps,
   ListItemIcon,
   ListItemText,
   styled,
@@ -22,13 +21,15 @@ interface NavItemProps {
   level: number;
 }
 
-const StyledListItemButton = styled(ListItemButton)<ListItemButtonProps>(({ theme }) => ({
-  borderRadius: `8px`,
+const StyledListItemButton = styled(ListItemButton, { shouldForwardProp: (prop) => prop !== 'level' })<{
+  level: number;
+}>(({ level }) => ({
+  borderRadius: '8px',
   mb: 0.5,
   alignItems: 'flex-start',
-  '&:hover': {
-    background: theme.palette.dark[100]
-  }
+  backgroundColor: level > 1 ? 'transparent' : 'inherit',
+  py: level > 1 ? 1 : 1.25,
+  pl: `${level * 24}px`
 }));
 
 const NavItem = ({ item, level }: NavItemProps) => {
@@ -79,6 +80,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
     <ListItemLink item={item} itemTarget={itemTarget}>
       <StyledListItemButton
         theme={theme}
+        level={level}
         disabled={item.disabled}
         selected={openItem?.findIndex((id) => id === item.id) > -1}
         onClick={() => itemHandler(item.id!)}
@@ -88,25 +90,13 @@ const NavItem = ({ item, level }: NavItemProps) => {
         </ListItemIcon>
         <ListItemText
           primary={
-            <Typography
-              sx={{
-                color: theme.palette.common.black
-              }}
-              variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'}
-            >
+            <Typography variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'} color="inherit">
               {item.title}
             </Typography>
           }
           secondary={
             item.caption && (
-              <Typography
-                sx={{
-                  color: theme.palette.common.black
-                }}
-                variant="caption"
-                display="block"
-                gutterBottom
-              >
+              <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
                 {item.caption}
               </Typography>
             )

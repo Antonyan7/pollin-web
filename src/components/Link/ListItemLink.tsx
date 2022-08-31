@@ -17,7 +17,7 @@ const ListItemLink = forwardRef(
     return (
       <Link
         {...props}
-        style={{ color: theme.palette.common.black }}
+        sx={{ ...theme.typography.subMenuCaption, textDecoration: 'none' }}
         ref={ref}
         href={`${item.url!}`}
         target={itemTarget}

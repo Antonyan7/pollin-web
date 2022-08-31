@@ -6,13 +6,12 @@ import { IconBell } from '@tabler/icons';
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
-  border: '1px solid',
-  borderColor: theme.palette.dark[200],
-  background: theme.palette.dark[200],
-  color: theme.palette.primary.dark,
   transition: 'all .2s ease-in-out',
-  '&:hover': {
-    background: theme.palette.dark[100]
+  background: theme.palette.secondary.light,
+  color: theme.palette.secondary.dark,
+  '&[aria-controls="menu-list-grow"],&:hover': {
+    background: theme.palette.secondary.dark,
+    color: theme.palette.secondary.light
   }
 }));
 
@@ -23,13 +22,14 @@ const NotificationSection = () => {
     <Box
       sx={{
         ml: 2,
+        mr: 2,
         [theme.breakpoints.down('md')]: {
           ml: 1
         }
       }}
     >
-      <StyledAvatar variant="rounded" theme={theme} aria-haspopup="true" color="inherit">
-        <IconBell stroke={1.5} size="1.3rem" color={theme.palette.common.black} />
+      <StyledAvatar variant="rounded" theme={theme} aria-haspopup="true">
+        <IconBell stroke={1.5} size="1.3rem" />
       </StyledAvatar>
     </Box>
   );

@@ -41,9 +41,11 @@ const HeaderAvatarStyle = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  backgroundColor: theme.palette.dark[200],
+  backgroundColor: theme.palette.secondary.light,
+  color: theme.palette.secondary.dark,
   '&:hover': {
-    backgroundColor: theme.palette.dark[100]
+    backgroundColor: theme.palette.secondary.dark,
+    color: theme.palette.secondary.light
   }
 }));
 
@@ -151,7 +153,7 @@ const SearchSection = () => {
           endAdornment={
             <InputAdornment position="end">
               <HeaderAvatarStyle variant="rounded">
-                <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" color="black" />
+                <IconAdjustmentsHorizontal stroke={1.5} size="1.3rem" />
               </HeaderAvatarStyle>
             </InputAdornment>
           }

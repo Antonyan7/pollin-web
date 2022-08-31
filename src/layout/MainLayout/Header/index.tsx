@@ -17,11 +17,11 @@ const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.mediumAvatar,
   overflow: 'hidden',
   transition: 'all .2s ease-in-out',
-  background: theme.palette.dark[200],
-  color: 'black',
+  background: theme.palette.secondary.light,
+  color: theme.palette.secondary.dark,
   '&:hover': {
-    background: theme.palette.dark[100],
-    color: 'black'
+    background: theme.palette.secondary.dark,
+    color: theme.palette.secondary.light
   }
 }));
 

@@ -1,11 +1,13 @@
 import React from 'react';
-import { Divider, List, Typography } from '@mui/material';
+import { Divider, List, Typography, useTheme } from '@mui/material';
 import { NavGroupProps } from 'types';
 
 import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
 
 const NavGroup = ({ item }: NavGroupProps) => {
+  const theme = useTheme();
+
   const items = item.children?.map((menu) => {
     switch (menu.type) {
       case 'collapse':
@@ -26,10 +28,10 @@ const NavGroup = ({ item }: NavGroupProps) => {
       <List
         subheader={
           item.title && (
-            <Typography variant="caption" display="block" gutterBottom>
+            <Typography variant="caption" sx={{ ...theme.typography.menuCaption }} display="block" gutterBottom>
               {item.title}
               {item.caption && (
-                <Typography variant="caption" display="block" gutterBottom>
+                <Typography variant="caption" sx={{ ...theme.typography.subMenuCaption }} display="block" gutterBottom>
                   {item.caption}
                 </Typography>
               )}
