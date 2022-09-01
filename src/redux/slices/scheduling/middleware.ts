@@ -75,6 +75,16 @@ const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) 
   }
 };
 
+const deleteTemplate = (templateId: string[]) => async (dispatch: AppDispatch) => {
+  try {
+    await API.scheduling.deleteTemplate(templateId);
+
+    dispatch(getSchedulingTemplates());
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
 const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => async (dispatch: AppDispatch) => {
   try {
     await API.scheduling.createTemplate(createScheduleTemplateData);
@@ -97,5 +107,6 @@ export default {
   createScheduleTemplate,
   applyScheduleTemplate,
   getSingleSchedule,
-  resetSuccessStatusState
+  resetSuccessStatusState,
+  deleteTemplate
 };

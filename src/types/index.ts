@@ -53,6 +53,7 @@ export interface DefaultRootStateProps {
 }
 export interface EnhancedTableToolbarProps {
   numSelected: number;
+  selected: string[];
 }
 
 export interface KeyedObject {

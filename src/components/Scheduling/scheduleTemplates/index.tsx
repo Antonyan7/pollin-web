@@ -121,7 +121,7 @@ const EnhancedTableHead = ({
         </TableCell>
         {numSelected > 0 && (
           <TableCell padding="none" colSpan={6}>
-            <EnhancedTableToolbar numSelected={selected.length} />
+            <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
           </TableCell>
         )}
         {numSelected <= 0 &&
@@ -186,7 +186,7 @@ const ScheduleTemplates = () => {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelectedId = rows.map((n) => n.name);
+      const newSelectedId = rows.map((n) => n.id);
 
       setSelected(newSelectedId);
 
@@ -196,12 +196,12 @@ const ScheduleTemplates = () => {
     setSelected([]);
   };
 
-  const onClick = (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
+  const onClick = (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, id: string) => {
+    const selectedIndex = selected.indexOf(id);
     let newSelected: string[] = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
+      newSelected = newSelected.concat(selected, id);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selected.slice(1));
     } else if (selectedIndex === selected.length - 1) {
@@ -235,7 +235,7 @@ const ScheduleTemplates = () => {
     setPage(0);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
@@ -283,7 +283,7 @@ const ScheduleTemplates = () => {
                     return null;
                   }
 
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.id);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
@@ -291,7 +291,7 @@ const ScheduleTemplates = () => {
                       key={`template-${row.id}-${row.name}`}
                       isItemSelected={isItemSelected}
                       row={row}
-                      onClick={onClick}
+                      onClick={(e) => onClick(e, row.id)}
                       labelId={labelId}
                     />
                   );
