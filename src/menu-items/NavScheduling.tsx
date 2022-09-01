@@ -31,18 +31,18 @@ const NavScheduling: NavSchedulingProps = {
       breadcrumbs: false
     },
     {
-      id: 'blockSchedule',
-      title: 'Block Schedule',
-      type: 'item',
-      url: '/scheduling/block-schedule',
-      icon: IconCirclePlus,
-      breadcrumbs: false
-    },
-    {
       id: 'applySchedule',
       title: 'Apply Schedule',
       type: 'item',
       url: '/scheduling/apply-schedule',
+      icon: IconCirclePlus,
+      breadcrumbs: false
+    },
+    {
+      id: 'blockSchedule',
+      title: 'Block Schedule',
+      type: 'item',
+      url: '/scheduling/block-schedule',
       icon: IconCirclePlus,
       breadcrumbs: false
     }

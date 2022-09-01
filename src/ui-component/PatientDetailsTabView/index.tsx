@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from '@components/index';
-import { Tab, Tabs } from '@mui/material';
+import { Tab, Tabs, useTheme } from '@mui/material';
 
 const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
@@ -18,6 +18,7 @@ export const patientListTabLinks = [
 ];
 
 const PatientDetailsTabView = () => {
+  const theme = useTheme();
   const [value, setValue] = useState<number>(2);
   const handleChange = (_: React.SyntheticEvent<Element, Event>, newValue: number) => {
     setValue(newValue);
@@ -33,7 +34,8 @@ const PatientDetailsTabView = () => {
       variant="fullWidth"
       sx={{
         '& .MuiTabs-indicator': {
-          height: 3
+          height: 3,
+          backgroundColor: theme.palette.dark[200]
         }
       }}
     >
