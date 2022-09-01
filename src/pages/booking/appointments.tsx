@@ -26,7 +26,7 @@ import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 
-const MainHeader = styled(Box)<BoxProps>(() => ({
+export const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: '30px',
   display: 'flex',
   flexDirection: 'row',

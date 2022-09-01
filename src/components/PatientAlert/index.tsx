@@ -1,6 +1,6 @@
 import * as React from 'react';
 import InfoIcon from '@mui/icons-material/Info';
-import { Grid, ListItem, Typography , useTheme } from '@mui/material';
+import { Grid, ListItem, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import MuiTooltip from '@mui/material/Tooltip';
 
@@ -42,13 +42,13 @@ const PatientAlert = ({ info = data }: PatientAlertProps) => {
   return info ? (
     <MuiTooltip
       title={info.map((titleContent: IInfoProps) => (
-          <Grid item>
-            <Typography variant="caption" color={theme.palette.background.paper}>
-              {titleContent.title}
-            </Typography>
-            <ListItem sx={{ paddingTop: 0 }}>&#9679;{titleContent.messages.title}</ListItem>
-          </Grid>
-        ))}
+        <Grid item>
+          <Typography variant="caption" color={theme.palette.background.paper}>
+            {titleContent.title}
+          </Typography>
+          <ListItem sx={{ paddingTop: 0 }}>&#9679;{titleContent.messages.title}</ListItem>
+        </Grid>
+      ))}
     >
       <Button sx={{ m: 1 }}>
         <InfoIcon fontSize="large" />
