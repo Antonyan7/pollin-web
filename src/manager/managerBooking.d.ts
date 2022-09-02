@@ -1,4 +1,12 @@
-import { IAppointment, IServiceProvider } from '../types/reduxTypes/booking';
+import {
+  AppointmentDetailsProps,
+  IAppointment,
+  IPatientInfo,
+  IServiceProvider,
+  IServiceType
+} from '../types/reduxTypes/booking';
+
+import { IEmptyResponse } from './common';
 
 export interface IAppointmentListReqParams {
   resourceId: string;
@@ -14,21 +22,37 @@ export interface IServiceProvidersListResponse {
 }
 
 export interface IPatientNamesResponseData {
-  patients: PatientNamesProps[];
+  patients: IPatientInfo[];
 }
 
 export interface IAppointmentTypesData {
-  serviceTypes: AppointmentTypesProps[];
+  serviceTypes: IServiceType[];
 }
 
-export interface ICreatedAppointmentData {
-  data: null;
+export interface ICreatedAppointmentBody {
+  serviceTypeId: string;
+  patientId: string;
+  providerId?: string;
+  description?: string;
+  date: Date | string;
 }
 
-export interface IUpdatedAppointmentData {
-  data: null;
+export interface IEditAppointmentBody {
+  appointment: IAppointmentDetails;
+  serviceTypeId: string;
 }
 
-export interface IAppointmentDetailsData {
+export interface IAppointmentDetails {
+  id: string;
+  date: Date;
+  status: string;
+  description: string;
+  cancellationReason?: string;
+}
+export interface ICreatedAppointmentResponse extends IEmptyResponse {}
+
+export interface IUpdatedAppointmentResponse extends IEmptyResponse {}
+
+export interface IAppointmentDetailsResponse {
   appointment: AppointmentDetailsProps;
 }

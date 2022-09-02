@@ -23,4 +23,4 @@ const PickerDateIcon = () => {
   );
 };
 
-export { PickerDateIcon,PickerTimeIcon };
+export { PickerDateIcon, PickerTimeIcon };

@@ -28,9 +28,6 @@ const actions: SliceReducers<BookingProps> = {
   },
   setAppointmentDetails(state, action: IAction<AppointmentDetailsProps | null>) {
     state.appointmentDetails = action.payload;
-  },
-  updateAppointment(state, action: IAction<AppointmentDetailsProps | null>) {
-    state.appointmentDetails = action.payload;
   }
 };
 

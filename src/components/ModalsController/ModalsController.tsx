@@ -1,0 +1,21 @@
+import React from 'react';
+import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
+import ConfirmAppointmentsModal from '@components/Appointments/ConfirmAppointmentCancelModal';
+import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
+import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
+import { ModalName } from 'constants/modals';
+import { useAppSelector } from 'redux/hooks';
+import { viewsSelector } from 'redux/slices/views';
+
+export const ModalsController = () => {
+  const modalState = useAppSelector(viewsSelector.modal);
+
+  return modalState.name === ModalName.NONE ? null : (
+    <>
+      {modalState.name === ModalName.AddAppointmentsModal && <AddAppointmentsModal />}
+      {modalState.name === ModalName.EditAppointmentModal && <EditAppointmentsModal />}
+      {modalState.name === ModalName.ConfirmAppointmentCancelModal && <ConfirmAppointmentsModal />}
+      {modalState.name === ModalName.DetailsAppointmentModal && <DetailsAppointmentModal />}
+    </>
+  );
+};

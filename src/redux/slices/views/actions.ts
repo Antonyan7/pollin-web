@@ -1,5 +1,6 @@
+import { ModalName } from 'constants/modals';
 import { IAction, SliceReducers } from 'redux/store';
-import { RedirectionProps, ViewsProps } from 'types/reduxTypes/views';
+import { IOpenedModal, RedirectionProps, ViewsProps } from 'types/reduxTypes/views';
 
 const actions: SliceReducers<ViewsProps> = {
   setRedirection(state, action: IAction<RedirectionProps>) {
@@ -10,6 +11,9 @@ const actions: SliceReducers<ViewsProps> = {
   },
   setMenuOpenDrawer(state, action: IAction<boolean>) {
     state.menu.drawerOpen = action.payload;
+  },
+  updateModalState<P>(state: ViewsProps, action: IAction<IOpenedModal<P>>) {
+    state.modal = action.payload ? action.payload : { name: ModalName.NONE, props: {} };
   }
 };
 

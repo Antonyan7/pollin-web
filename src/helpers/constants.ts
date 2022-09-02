@@ -14,7 +14,7 @@ export const appointmentStatusData = [
   'Done'
 ];
 
-export const cancellationReason = [
+export const cancellationReasons = [
   'Personal Emergency',
   'Work Conflict',
   'Illness',

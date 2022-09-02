@@ -8,7 +8,7 @@ module.exports = {
   globals: {
     RequestInit: 'readonly'
   },
-  plugins: ['react', '@emotion', '@typescript-eslint', 'simple-import-sort'],
+  plugins: ['react', '@emotion', '@typescript-eslint', 'simple-import-sort', '@next/eslint-plugin-next'],
   extends: ['plugin:react/recommended', 'airbnb', 'airbnb-typescript', 'airbnb/hooks', 'prettier'],
   parser: '@typescript-eslint/parser',
   parserOptions: {

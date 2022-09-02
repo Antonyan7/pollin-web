@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import {
@@ -12,110 +12,95 @@ import {
   Stack,
   Typography
 } from '@mui/material';
+import { ModalName } from 'constants/modals';
 import { timeAdjuster } from 'helpers/timeAdjuster';
-import Router from 'next/router';
+import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { AppointmentsModalProps } from 'types/appointments';
-import { AppointmentDetailsProps } from 'types/reduxTypes/appointments';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 
-const DetailsAppointmentModal = ({
-  openAppointmentsModal,
-  onCloseAppointmentsModal,
-  setOpenAppointmentsModal,
-  appointmentSlotId
-}: AppointmentsModalProps) => {
-  const appointmentDetails = useAppSelector(bookingSelector.appointmentDetails);
-  const [confirmedAppointmentDetails, setConfirmedAppointmentDetails] = useState<AppointmentDetailsProps | null>(null);
+const DetailsAppointmentModal = () => {
+  const details = useAppSelector(bookingSelector.appointmentDetails);
+  const { appointmentId } = useAppSelector(viewsSelector.modal).props;
+  const router = useRouter();
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getAppointmentDetails(appointmentSlotId as string));
-  }, [appointmentSlotId]);
+    dispatch(bookingMiddleware.getAppointmentDetails(appointmentId));
+  }, [appointmentId]);
 
-  useEffect(() => {
-    setConfirmedAppointmentDetails(appointmentDetails);
-  }, [appointmentDetails]);
+  const onClose = useCallback(() => {
+    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+    dispatch(bookingMiddleware.clearAppointmentDetails());
+  }, []);
+
+  const onViewProfileClick = useCallback(() => {
+    onClose();
+    router.push(`/patient-emr/profile/${details?.patient.id}`);
+  }, [router, onClose, details]);
 
   return (
-    <Dialog open={openAppointmentsModal} onClose={onCloseAppointmentsModal} fullWidth maxWidth="sm">
-      {openAppointmentsModal && (
-        <Grid>
-          <DialogTitle>
-            <Grid container justifyContent="space-between" alignItems="center">
-              <Grid item>
-                <Typography
-                  sx={{
-                    fontSize: '1.25rem',
-                    fontWeight: 700
-                  }}
-                >
-                  Appointment Details
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+      <Grid>
+        <DialogTitle>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              <Typography
+                sx={{
+                  fontSize: '1.25rem',
+                  fontWeight: 700
+                }}
+              >
+                Appointment Details
+              </Typography>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={onClose}>
+                <CloseOutlined />
+              </IconButton>
+            </Grid>
+          </Grid>
+        </DialogTitle>
+        <Divider />
+        <DialogContent>
+          <Grid container spacing={3}>
+            <DialogContentRow subtitle="Appointment Type:" body={details?.serviceType?.title} />
+            <DialogContentRow subtitle="Patient:" body={details?.patient?.title} />
+            <DialogContentRow subtitle="Description:" body={details?.appointment.description} />
+            <Grid item xs={6}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography variant="subtitle1">Date:</Typography>
+                <Typography variant="body2">
+                  {details && timeAdjuster(details?.appointment.date)?.customizedDate}
                 </Typography>
-              </Grid>
-              <Grid item>
-                <IconButton
-                  onClick={() => {
-                    setOpenAppointmentsModal(false);
-                  }}
-                >
-                  <CloseOutlined />
-                </IconButton>
-              </Grid>
+              </Stack>
             </Grid>
-          </DialogTitle>
-          <Divider />
-          <DialogContent>
-            <Grid container spacing={3}>
-              <DialogContentRow
-                subtitle="Appointment Type:"
-                body={confirmedAppointmentDetails?.appointmentType?.title}
-              />
-              <DialogContentRow subtitle="Patient:" body={confirmedAppointmentDetails?.patient?.name} />
-              <DialogContentRow subtitle="Description:" body={confirmedAppointmentDetails?.description} />
-              <Grid item xs={6}>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography variant="subtitle1">Date:</Typography>
-                  <Typography variant="body2">
-                    {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedDate}
-                  </Typography>
-                </Stack>
-              </Grid>
-              <Grid item xs={6}>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  <Typography variant="subtitle1">Start Time:</Typography>
-                  <Typography variant="body2">
-                    {confirmedAppointmentDetails && timeAdjuster(confirmedAppointmentDetails?.date)?.customizedTime}
-                  </Typography>
-                </Stack>
-              </Grid>
-              <DialogContentRow subtitle="Status:" body={confirmedAppointmentDetails?.status} />
-              <DialogContentRow
-                subtitle="Reason for Cancellation:"
-                body={confirmedAppointmentDetails?.cancellationReason}
-              />
+            <Grid item xs={6}>
+              <Stack direction="row" spacing={1} alignItems="center">
+                <Typography variant="subtitle1">Start Time:</Typography>
+                <Typography variant="body2">
+                  {details && timeAdjuster(details?.appointment.date)?.customizedTime}
+                </Typography>
+              </Stack>
             </Grid>
-          </DialogContent>
-          <Divider />
-          <DialogActions sx={{ p: 3 }}>
-            <Grid container>
-              <Grid item xs={12}>
-                <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                  <StyledButton
-                    onClick={() => {
-                      Router.push('/patient-chart');
-                    }}
-                    variant="contained"
-                  >
-                    View Patient Profile
-                  </StyledButton>
-                </Stack>
-              </Grid>
+            <DialogContentRow subtitle="Status:" body={details?.appointment.status} />
+            <DialogContentRow subtitle="Reason for Cancellation:" body={details?.appointment.cancellationReason} />
+          </Grid>
+        </DialogContent>
+        <Divider />
+        <DialogActions sx={{ p: 3 }}>
+          <Grid container>
+            <Grid item xs={12}>
+              <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
+                <StyledButton onClick={onViewProfileClick} variant="contained">
+                  View Patient Profile
+                </StyledButton>
+              </Stack>
             </Grid>
-          </DialogActions>
-        </Grid>
-      )}
+          </Grid>
+        </DialogActions>
+      </Grid>
     </Dialog>
   );
 };

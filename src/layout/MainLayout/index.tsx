@@ -1,4 +1,5 @@
 import React, { PropsWithChildren, useEffect, useMemo } from 'react';
+import { ModalsController } from '@components/ModalsController/ModalsController';
 import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -83,7 +84,6 @@ const MainLayout = ({ children }: PropsWithChildren) => {
         color="inherit"
         elevation={0}
         sx={{
-          bgcolor: theme.palette.background.default,
           transition: drawerOpen ? theme.transitions.create('width') : 'none'
         }}
       >
@@ -95,6 +95,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
       <Main theme={theme} open={drawerOpen}>
         {children}
       </Main>
+      <ModalsController key="modals" />
     </Box>
   );
 };

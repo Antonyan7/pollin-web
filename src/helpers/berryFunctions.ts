@@ -1,14 +1,9 @@
-// TODO: update after implementing mock server
-import { OptionsReturnProps, ServiceTypesProps } from '../types/create-schedule';
+import { IUniqueItem } from 'types/reduxTypes/booking';
 
-export const createOptionsGroup = (serviceTypes: ServiceTypesProps[]): OptionsReturnProps[] =>
-  serviceTypes
-    .map((option) => {
-      const firstLetter = option.title[0].toUpperCase();
+import { OptionsReturnProps } from '../types/create-schedule';
 
-      return {
-        firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-        ...option
-      };
-    })
-    .sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter));
+export const createOptionsGroup = <T extends IUniqueItem>(items: T[]): OptionsReturnProps<T>[] =>
+  items.map((item) => ({
+    firstLetter: item.title[0].toUpperCase(),
+    item
+  }));

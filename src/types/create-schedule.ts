@@ -1,19 +1,8 @@
-export interface IServiceTypes {
-  firstLetter: string;
-  title: string;
-}
+import { IUniqueItem } from './reduxTypes/booking';
 
-export interface ServiceTypesProps {
-  title: string;
-  id: string;
-  isVirtual?: boolean;
-}
-
-export interface OptionsReturnProps extends IServiceTypes, ServiceTypesProps {
-  title: string;
+export interface OptionsReturnProps<T extends IUniqueItem> {
   firstLetter: string;
-  id: string;
-  isVirtual?: boolean;
+  item: T;
 }
 
 export interface ISingleTemplate {

@@ -1,17 +1,16 @@
-import { IAxiosResponse } from '@axios/axios';
+import { IAxiosResponse, IAxiosResponsePaginated } from '@axios/axios';
 import {
-  IAppointmentDetailsData,
+  IAppointmentDetailsResponse,
   IAppointmentListReqParams,
   IAppointmentListResponse,
   IAppointmentTypesData,
-  ICreatedAppointmentData,
+  ICreatedAppointmentBody,
+  ICreatedAppointmentResponse,
+  IEditAppointmentBody,
   IPatientNamesResponseData,
   IServiceProvidersListResponse,
-  IUpdatedAppointmentData
+  IUpdatedAppointmentResponse
 } from '@axios/managerBooking';
-import { AppointmentDetailsProps, CreateAppointmentProps } from 'types/reduxTypes/appointments';
-
-import { toIsoString } from '@utils/dateUtils';
 
 import Axios from './axiosInstance';
 
@@ -23,31 +22,29 @@ const bookingManager = {
     return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>('/v1/calendar/slot', { params });
   },
   getServiceProviders() {
-    return axiosInstance.get<any, IAxiosResponse<IServiceProvidersListResponse>>('/v1/provider');
+    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>('/v1/provider');
   },
-  getPatientNames(name: string = 'exPatientName') {
-    return axiosInstance.get<any, IAxiosResponse<IPatientNamesResponseData>>(`/v1/patient`, { params: { name } });
+  getPatientNames(name: string) {
+    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientNamesResponseData>>(`/v1/patient`, { name });
   },
   getServiceTypes() {
     return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`/v1/service-type`);
   },
-  makeAppointment(appointmentValues: CreateAppointmentProps) {
-    return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentData>>(`/v1/appointment`, {
-      appointmentTypeId: 'exAppointmentTypeId',
-      patientId: 'exPatientId1',
-      description: 'Appointment for checkup',
-      date: toIsoString(appointmentValues.date as Date)
+  createAppointment(appointmentValues: ICreatedAppointmentBody) {
+    return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentResponse>>(`/v1/appointment`, {
+      ...appointmentValues
     });
   },
   getAppointmentDetails(appointmentId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsData>>(`/v1/appointment`, {
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(`/v1/appointment`, {
       params: { appointmentId }
     });
   },
-  reformAppointmentValues(appointmentValues: AppointmentDetailsProps) {
-    return axiosInstance.put<any, IAxiosResponse<IUpdatedAppointmentData>>(`/v1/appointment`, {
-      appointment: appointmentValues
-    });
+  editAppointment(appointmentId: string, appointmentValues: IEditAppointmentBody) {
+    return axiosInstance.put<any, IAxiosResponse<IUpdatedAppointmentResponse>>(
+      `/v1/appointment/${appointmentId}`,
+      appointmentValues
+    );
   }
 };
 

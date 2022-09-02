@@ -2,19 +2,18 @@
 
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 // The import order DOES MATTER here. If you change it, you'll get an error!
-import FullCalendar, { DateRange, DateSelectArg, EventClickArg } from '@fullcalendar/react';
+import FullCalendar, { DateSelectArg, EventClickArg } from '@fullcalendar/react';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
 
-import { AppointmentsModalTypes } from 'types/appointments';
-import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
-import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
-import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
 import { addMinutesToTime } from '@utils/dateUtils';
 import { useRouter } from 'next/router';
+import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'constants/modals';
+import { SlotTypes } from 'types/calendar';
 import CalendarStyled from './CalendarStyled';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
@@ -27,31 +26,10 @@ import { StyledDisabledLayer } from './StyledDisabledLayer';
 const Calendar = (props: { calendarDate: string }) => {
   const { calendarDate } = props;
   const calendarRef = useRef<FullCalendar>(null);
-  const [openAddAppointmentsModal, setOpenAddAppointmentsModal] = useState<boolean>(false);
-  const [bookAppointmentDate, setBookAppointmentDate] = useState<DateRange | null>(null);
-  const [openDetailsAppointmentsModal, setOpenDetailsAppointmentsModal] = useState<boolean>(false);
-  const [openEditAppointmentsModal, setOpenEditAppointmentsModal] = useState<boolean>(false);
-  const [appointmentSlotId, setAppointmentSlotId] = useState<string>('');
   const [slots, setSlots] = useState<ICalendarSlot[]>([]);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const appointments = useAppSelector(bookingSelector.appointmentsList);
   const router = useRouter();
-
-  const onCloseAppointmentsModal = (appointmentModalType: AppointmentsModalTypes) => {
-    switch (appointmentModalType) {
-      case AppointmentsModalTypes.Add:
-        setOpenAddAppointmentsModal(false);
-        break;
-      case AppointmentsModalTypes.Details:
-        setOpenDetailsAppointmentsModal(false);
-        break;
-      case AppointmentsModalTypes.Edit:
-        setOpenEditAppointmentsModal(false);
-        break;
-      default:
-        setOpenAddAppointmentsModal(true);
-    }
-  };
 
   const onEventClick = useCallback(
     (initialEventObject: EventClickArg) => {
@@ -60,27 +38,37 @@ const Calendar = (props: { calendarDate: string }) => {
       const { id } = initialEventObject.event;
       const targetAppointment = appointments.find((appointment) => appointment.id === id);
 
-      if (!targetAppointment?.isEditable) {
+      const nonIntractableAppointments = [SlotTypes.block, SlotTypes.schedule];
+
+      if (nonIntractableAppointments.includes(targetAppointment?.type as SlotTypes)) {
         return;
       }
 
       if (new Date(initialEventObject.event.startStr).getTime() < new Date().setHours(0, 0, 0, 0)) {
-        setOpenDetailsAppointmentsModal(true);
+        dispatch(
+          viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
+        );
       } else {
-        setOpenEditAppointmentsModal(true);
+        dispatch(viewsMiddleware.setModalState({ name: ModalName.EditAppointmentModal, props: { appointmentId: id } }));
       }
-
-      setAppointmentSlotId(targetAppointment.id);
     },
     [appointments]
   );
 
   const onRangeSelect = (arg: DateSelectArg) => {
-    setBookAppointmentDate({
-      start: arg.start,
-      end: arg.end
-    });
-    setOpenAddAppointmentsModal(true);
+    if (new Date(arg.start).getTime() < new Date().setHours(0, 0, 0, 0)) {
+      return;
+    }
+
+    dispatch(
+      viewsMiddleware.setModalState({
+        name: ModalName.AddAppointmentsModal,
+        props: {
+          start: arg.start,
+          end: arg.end
+        }
+      })
+    );
   };
 
   useEffect(() => {
@@ -143,7 +131,7 @@ const Calendar = (props: { calendarDate: string }) => {
       )
     );
 
-    setSlots(calendarEvents as ICalendarSlot[]);
+    setSlots(calendarEvents);
   }, [appointments]);
 
   return (
@@ -181,24 +169,6 @@ const Calendar = (props: { calendarDate: string }) => {
           plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
         />
       </CalendarStyled>
-      <EditAppointmentsModal
-        openAppointmentsModal={openEditAppointmentsModal}
-        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Edit)}
-        setOpenAppointmentsModal={setOpenEditAppointmentsModal}
-        appointmentSlotId={appointmentSlotId}
-      />
-      <AddAppointmentsModal
-        openAppointmentsModal={openAddAppointmentsModal}
-        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Add)}
-        setOpenAppointmentsModal={setOpenAddAppointmentsModal}
-        bookAppointmentDate={bookAppointmentDate}
-      />
-      <DetailsAppointmentModal
-        openAppointmentsModal={openDetailsAppointmentsModal}
-        onCloseAppointmentsModal={() => onCloseAppointmentsModal(AppointmentsModalTypes.Details)}
-        setOpenAppointmentsModal={setOpenDetailsAppointmentsModal}
-        appointmentSlotId={appointmentSlotId}
-      />
     </div>
   );
 };

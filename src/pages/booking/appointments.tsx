@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
+import React, { useCallback, useMemo, useState } from 'react';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import { StyledButton, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -24,7 +23,9 @@ import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ModalName } from 'constants/modals';
 import { format } from 'date-fns';
+import { viewsMiddleware } from 'redux/slices/views';
 import Calendar from 'ui-component/calendar';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
@@ -40,19 +41,19 @@ export const MainHeader = styled(Box)<BoxProps>(() => ({
 }));
 
 const Appointments = () => {
-  const [openAddAppointments, setOpenAddAppointments] = useState<boolean>(false);
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const theme = useTheme();
 
-  const onOpenAppointmentsModalAdd = useCallback(() => {
-    setOpenAddAppointments(true);
-  }, []);
+  const isToday = useMemo(
+    () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
+    [calendarDate]
+  );
 
-  const onCloseAppointmentsModalAdd = useCallback(() => {
-    setOpenAddAppointments(false);
+  const onOpenAppointmentsModalAdd = useCallback(() => {
+    dispatch(viewsMiddleware.setModalState({ name: ModalName.AddAppointmentsModal, props: {} }));
   }, []);
 
   const onDateDatePickerOpen = useCallback(() => {
@@ -125,9 +126,9 @@ const Appointments = () => {
             </FormControl>
           </Box>
           <Box sx={{ display: 'flex', gap: '40px' }}>
-            <StyledButton theme={theme} variant="contained" onClick={onTodayClick}>
-              Today
-            </StyledButton>
+            <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>
+              <Typography variant="h4">Today</Typography>
+            </StyledButtonNew>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
@@ -139,7 +140,6 @@ const Appointments = () => {
                   value={calendarDate}
                   onChange={(date: Date | null) => onDateChange(date)}
                   components={{
-                    /* TODO: Tigran Have Asked for this TODO, we need to check usage of this in future */
                     OpenPickerIcon: CalendarIcon
                   }}
                   renderInput={(params) => (
@@ -149,21 +149,11 @@ const Appointments = () => {
               </Stack>
             </LocalizationProvider>
           </Box>
-          <StyledButtonNew
-            theme={theme}
-            variant="outlined"
-            endIcon={<AddIcon sx={{ color: theme.palette.primary.main }} />}
-            onClick={onOpenAppointmentsModalAdd}
-          >
+          <StyledButtonNew theme={theme} variant="outlined" endIcon={<AddIcon />} onClick={onOpenAppointmentsModalAdd}>
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
               New Appointment
             </Typography>
           </StyledButtonNew>
-          <AddAppointmentsModal
-            openAppointmentsModal={openAddAppointments}
-            onCloseAppointmentsModal={onCloseAppointmentsModalAdd}
-            setOpenAppointmentsModal={setOpenAddAppointments}
-          />
         </MainHeader>
         <Calendar calendarDate={calendarDate} />
       </AppointmentsContent>

@@ -1,8 +1,9 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Autocomplete, Box, Checkbox, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { IServiceType } from 'types/reduxTypes/booking';
 
 import { MinusIconButton } from '@ui-component/common/buttons';
 import { PickerTimeIcon } from '@ui-component/common/TimeDateIcons';
@@ -12,6 +13,8 @@ import { weekDays } from '../../../helpers/constants';
 import { useAppSelector } from '../../../redux/hooks';
 import { schedulingSelector } from '../../../redux/slices/scheduling';
 import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../../types/create-schedule';
+
+const renderScheduleInputs = (values: IServiceType[]) => values.map((item) => item.title);
 
 export const TimePeriods = (props: {
   singleTemplate: ISingleTemplate;
@@ -25,10 +28,11 @@ export const TimePeriods = (props: {
   templateData: ITemplateGroup;
   setTemplateData: (value: ITemplateGroup) => void;
 }) => {
-  const serviceTypes = useAppSelector(schedulingSelector.serviceTypes);
+  const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
   const { singleTemplate, index, updateInputValue, templateData, setTemplateData } = props;
 
-  const renderScheduleInputs = (values: { title: string }[]) => values.map((item) => item.title);
+  const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
+
   const onMinusClick = useCallback(
     (timePeriodIndex: number) => {
       const newTemplateData = [...templateData.timePeriods];
@@ -133,10 +137,12 @@ export const TimePeriods = (props: {
           <Autocomplete
             className="schedule-inputs"
             multiple
-            options={createOptionsGroup(serviceTypes)}
+            options={serviceTypeOptions}
             groupBy={(option) => option.firstLetter}
-            getOptionLabel={(option) => option.title}
-            onChange={(e, newValue) => updateInputValue('serviceTypes', renderScheduleInputs(newValue), index)}
+            getOptionLabel={(option) => option.item.title}
+            onChange={(e, newValues) =>
+              updateInputValue('serviceTypes', renderScheduleInputs(newValues.map((value) => value.item)), index)
+            }
             renderInput={(params) => <TextField {...params} label="Service Types" />}
           />
         </div>
