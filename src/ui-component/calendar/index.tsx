@@ -107,9 +107,9 @@ const Calendar = (props: { calendarDate: string }) => {
 
     if (calendarDate && serviceProviderId) {
       const updateQueryParams = () => {
-        router.query.resource = serviceProviderId;
-        router.query.date = calendarDate;
-        router.push(router);
+        router.push({
+          query: { resource: serviceProviderId, date: calendarDate }
+        });
       };
 
       updateQueryParams();
