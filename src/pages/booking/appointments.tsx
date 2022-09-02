@@ -1,19 +1,25 @@
 import React, { useCallback, useState } from 'react';
 import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import {
-  StyledButtonNewCalendar,
-  StyledInputLabel,
-  StyledSelectButton,
-  StyledTodayButton
-} from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { Box, Divider, FormControl, MenuItem, SelectChangeEvent, Stack, styled, Typography } from '@mui/material';
+import {
+  Box,
+  Divider,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  styled,
+  Typography
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import TextField, { TextFieldProps } from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -31,21 +37,6 @@ export const MainHeader = styled(Box)<BoxProps>(() => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between'
-}));
-
-const StyledTextField = styled(TextField)<TextFieldProps>(({ theme }) => ({
-  width: '290px',
-  '& > div': {
-    padding: 0,
-    backgroundColor: theme.palette.common.white
-  },
-  '& > div > input': {
-    backgroundColor: theme.palette.common.white,
-    cursor: 'pointer'
-  },
-  '& > div > div > button': {
-    marginRight: '11px'
-  }
 }));
 
 const Appointments = () => {
@@ -106,30 +97,18 @@ const Appointments = () => {
             justifyContent: 'flex-end'
           }}
         >
-          <StyledButtonNewCalendar
-            theme={theme}
-            variant="outlined"
-            endIcon={<OpenInNewIcon sx={{ color: theme.palette.common.black }} />}
-            onClick={onNewCalendarClick}
-          >
+          <StyledButtonNew theme={theme} variant="outlined" endIcon={<OpenInNewIcon />} onClick={onNewCalendarClick}>
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
               New Calendar
             </Typography>
-          </StyledButtonNewCalendar>
+          </StyledButtonNew>
         </header>
         <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-28px', marginRight: '-24px' }} />
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth>
-              <StyledInputLabel theme={theme} id="resource-label">
-                Resource
-              </StyledInputLabel>
-              <StyledSelectButton
-                sx={{
-                  '& div': {
-                    backgroundColor: 'white'
-                  }
-                }}
+              <InputLabel id="resource-label">Resource</InputLabel>
+              <Select
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
@@ -142,13 +121,13 @@ const Appointments = () => {
                     {serviceProvider.title}
                   </MenuItem>
                 ))}
-              </StyledSelectButton>
+              </Select>
             </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', gap: '20px' }}>
-            <StyledTodayButton theme={theme} variant="outlined" onClick={onTodayClick}>
+          <Box sx={{ display: 'flex', gap: '40px' }}>
+            <StyledButton theme={theme} variant="contained" onClick={onTodayClick}>
               Today
-            </StyledTodayButton>
+            </StyledButton>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
@@ -164,22 +143,22 @@ const Appointments = () => {
                     OpenPickerIcon: CalendarIcon
                   }}
                   renderInput={(params) => (
-                    <StyledTextField {...params} onClick={() => setDatePickerOpen(true)} theme={theme} />
+                    <TextField sx={{ width: '290px' }} {...params} onClick={() => setDatePickerOpen(true)} />
                   )}
                 />
               </Stack>
             </LocalizationProvider>
           </Box>
-          <StyledButtonNewCalendar
+          <StyledButtonNew
             theme={theme}
             variant="outlined"
-            endIcon={<AddIcon sx={{ color: theme.palette.common.black }} />}
+            endIcon={<AddIcon sx={{ color: theme.palette.primary.main }} />}
             onClick={onOpenAppointmentsModalAdd}
           >
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
               New Appointment
             </Typography>
-          </StyledButtonNewCalendar>
+          </StyledButtonNew>
           <AddAppointmentsModal
             openAppointmentsModal={openAddAppointments}
             onCloseAppointmentsModal={onCloseAppointmentsModalAdd}

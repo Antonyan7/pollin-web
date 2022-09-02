@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
+import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 // material-ui
 import {
   Box,
-  Button,
-  ButtonProps,
   CardContent,
   Checkbox,
   Grid,
-  styled,
   Table,
   TableBody,
   TableCell,
@@ -31,18 +29,6 @@ import MainCard from 'ui-component/cards/MainCard';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
 import ScheduleTemplateRow from './ScheduleTemplateRow';
-
-const StyledButtonNewTemplate = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.common.black,
-  border: `1px solid ${theme.palette.dark[300]}`,
-  borderRadius: '7px',
-  padding: '15px 20px',
-  '&:hover': {
-    backgroundColor: theme.palette.dark[200],
-    color: theme.palette.common.white,
-    border: `1px solid ${theme.palette.dark[300]}`
-  }
-}));
 
 // table header options
 const headCells: HeadCell[] = [
@@ -101,6 +87,7 @@ const EnhancedTableHead = ({
   onRequestSort,
   selected
 }: CustomerListEnhancedTableHeadProps) => {
+  const theme = useTheme();
   const createSortHandler = (property: string) => (event: React.SyntheticEvent<Element, Event>) => {
     onRequestSort(event, property);
   };
@@ -110,7 +97,7 @@ const EnhancedTableHead = ({
       <TableRow>
         <TableCell padding="checkbox" sx={{ pl: 3 }}>
           <Checkbox
-            color="primary"
+            sx={{ color: theme.palette.primary.main }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
@@ -244,21 +231,22 @@ const ScheduleTemplates = () => {
       {/* to do //add header compoenent */}
       <MainCard content={false}>
         <CardContent>
-          <Grid container justifyContent="space-between" alignItems="center" spacing={2}>
-            <Grid item xs={12} sm={6}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item xs={8}>
               <Typography variant="h3">Schedule Templates</Typography>
             </Grid>
-            <Grid item xs={12} sm={6} sx={{ textAlign: 'right' }}>
-              <StyledButtonNewTemplate
+            <Grid item xs={2} />
+            <Grid item xs={2}>
+              <StyledButtonNew
                 theme={theme}
                 variant="outlined"
-                endIcon={<AddIcon sx={{ color: theme.palette.common.black }} />}
+                endIcon={<AddIcon sx={{ color: theme.palette.primary.main }} />}
                 onClick={handleNewTemplate}
               >
                 <Typography variant="h4" sx={{ marginRight: '10px' }}>
                   New Template
                 </Typography>
-              </StyledButtonNewTemplate>
+              </StyledButtonNew>
             </Grid>
           </Grid>
         </CardContent>

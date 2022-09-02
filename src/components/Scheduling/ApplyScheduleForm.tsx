@@ -1,13 +1,16 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { AlertBanner } from '@components/Alert/Alert';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import EventIcon from '@mui/icons-material/Event';
 import {
   Autocomplete,
-  Button,
   Checkbox,
   FormControl,
   FormControlLabel,
   Grid,
+  InputAdornment,
   TextField,
+  TextFieldProps,
   Typography,
   useTheme
 } from '@mui/material';
@@ -312,7 +315,19 @@ const ApplyScheduleForm = () => {
                     label={ScheduleTerms.StartDate}
                     inputFormat="MMM dd, yyyy"
                     value={startDate}
-                    renderInput={(params) => <TextField fullWidth {...params} />}
+                    renderInput={(params: TextFieldProps) => (
+                      <TextField
+                        fullWidth
+                        {...params}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <EventIcon sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    )}
                     onChange={(date: Date | null) => {
                       if (date) {
                         onStartDateUpdate(date);
@@ -335,7 +350,19 @@ const ApplyScheduleForm = () => {
                     label={ScheduleTerms.EndDate}
                     inputFormat="MMM dd, yyyy"
                     value={endDate}
-                    renderInput={(params) => <TextField fullWidth {...params} />}
+                    renderInput={(params: TextFieldProps) => (
+                      <TextField
+                        fullWidth
+                        {...params}
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment position="end">
+                              <EventIcon sx={{ color: theme.palette.primary.main }} />
+                            </InputAdornment>
+                          )
+                        }}
+                      />
+                    )}
                     onChange={(date: Date | null) => {
                       if (date) {
                         onEndDateUpdate(date);
@@ -362,17 +389,16 @@ const ApplyScheduleForm = () => {
               <Grid item xs />
               <Grid item xs />
               <Grid item xs={4} lg={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Button
+                <StyledButton
                   type="submit"
                   variant="contained"
                   size="large"
                   style={{
-                    background: theme.palette.grey[400],
                     margin: '30px 0'
                   }}
                 >
                   Apply
-                </Button>
+                </StyledButton>
               </Grid>
             </Grid>
           </Grid>

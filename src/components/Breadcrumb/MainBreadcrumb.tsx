@@ -17,8 +17,7 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
         <Toolbar
           sx={{
             backgroundColor: theme.palette.common.white,
-            borderRadius: '7px',
-            border: `1px solid ${theme.palette.dark[200]}`
+            borderRadius: '7px'
           }}
         >
           <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
@@ -26,7 +25,7 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
           </Typography>
           <Box sx={{ display: 'flex', gap: '20px' }}>
             <Link href={navigation.basePath}>
-              <HomeIcon sx={{ color: theme.palette.common.black, cursor: 'pointer' }} />
+              <HomeIcon sx={{ color: theme.palette.secondary.main, cursor: 'pointer' }} />
             </Link>
             <ArrowForwardIosIcon sx={{ color: theme.palette.dark[200] }} />
             {navigation.items.map((page: IBreadcrumbNavigationItem, index: number) => (

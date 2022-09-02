@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
-import { Box, Button, Grid, Modal, TextField } from '@mui/material';
+import { Box, Grid, Modal, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import { v4 } from 'uuid';
@@ -133,18 +134,12 @@ const CreateTemplate = () => {
           <PlusIconButton onClick={onPlusClick} />
         </Box>
         <Grid container direction="row-reverse" sx={{ marginTop: '200px' }}>
-          <Button variant="contained" className="dark-button" size="large" type="submit">
+          <StyledButton variant="contained" size="large" type="submit">
             Save
-          </Button>
-          <Button
-            onClick={onModalOpenClose}
-            variant="outlined"
-            className="light-button"
-            size="large"
-            sx={{ marginRight: '10px' }}
-          >
+          </StyledButton>
+          <StyledButton onClick={onModalOpenClose} variant="contained" size="large" sx={{ marginRight: '10px' }}>
             Cancel
-          </Button>
+          </StyledButton>
         </Grid>
       </form>
       {isModalOpen ? (

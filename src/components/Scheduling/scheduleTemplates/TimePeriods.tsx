@@ -5,6 +5,7 @@ import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 
 import { MinusIconButton } from '@ui-component/common/buttons';
+import { PickerTimeIcon } from '@ui-component/common/TimeDateIcons';
 
 import { createOptionsGroup } from '../../../helpers/berryFunctions';
 import { weekDays } from '../../../helpers/constants';
@@ -84,7 +85,9 @@ export const TimePeriods = (props: {
                   updateInputValue('startTime', newTime.toISOString(), index);
                 }
               }}
-              renderInput={(params: MuiTextFieldPropsType) => <TextField sx={{ width: '100%' }} {...params} />}
+              renderInput={(params: MuiTextFieldPropsType) => (
+                <TextField fullWidth {...params} InputProps={{ endAdornment: <PickerTimeIcon /> }} />
+              )}
             />
           </LocalizationProvider>
         </div>
@@ -102,7 +105,9 @@ export const TimePeriods = (props: {
                   updateInputValue('endTime', date.toISOString(), index);
                 }
               }}
-              renderInput={(params: MuiTextFieldPropsType) => <TextField sx={{ width: '100%' }} {...params} />}
+              renderInput={(params: MuiTextFieldPropsType) => (
+                <TextField fullWidth {...params} InputProps={{ endAdornment: <PickerTimeIcon /> }} />
+              )}
             />
           </LocalizationProvider>
         </div>

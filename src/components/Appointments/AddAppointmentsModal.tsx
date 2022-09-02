@@ -1,7 +1,6 @@
 import React, { SyntheticEvent, useCallback, useEffect, useState } from 'react';
-import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { roundUpTo } from '@constants';
-import DateRangeIcon from '@mui/icons-material/DateRange';
 import {
   Autocomplete,
   Dialog,
@@ -10,7 +9,6 @@ import {
   DialogTitle,
   Divider,
   Grid,
-  InputAdornment,
   Stack,
   TextField,
   TextFieldProps,
@@ -26,6 +24,8 @@ import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { AppointmentsModalProps } from 'types/appointments';
 import { AppointmentsProps, CreateAppointmentProps } from 'types/reduxTypes/appointments';
 import { addAppointmentsValidationSchema, validateInputChange } from 'validation/appointments/add_appointment';
+
+import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
 
 // TODO update component to contain 150 lines
 // eslint-disable-next-line max-lines-per-function
@@ -192,11 +192,7 @@ const AddAppointmentsModal = ({
                           {...params}
                           fullWidth
                           InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <DateRangeIcon />
-                              </InputAdornment>
-                            )
+                            endAdornment: <PickerDateIcon />
                           }}
                         />
                       )}
@@ -208,16 +204,12 @@ const AddAppointmentsModal = ({
                 <Grid container justifyContent="flex-end" alignItems="center">
                   <Grid item xs={12}>
                     <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                      <InternalButton theme={theme} type="button" onClick={closeAppointmentModal}>
+                      <StyledButton theme={theme} variant="contained" type="button" onClick={closeAppointmentModal}>
                         Cancel
-                      </InternalButton>
-                      <InternalButton
-                        theme={theme}
-                        type="submit"
-                        sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
-                      >
+                      </StyledButton>
+                      <StyledButton theme={theme} type="submit" variant="contained">
                         Add
-                      </InternalButton>
+                      </StyledButton>
                     </Stack>
                   </Grid>
                 </Grid>

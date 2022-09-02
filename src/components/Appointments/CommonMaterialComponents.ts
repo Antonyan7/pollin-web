@@ -54,30 +54,16 @@ const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>((
   height: '200px'
 }));
 
-const StyledButtonNewCalendar = styled(Button)<ButtonProps>(({ theme }) => ({
-  color: theme.palette.common.black,
-  border: `1px solid ${theme.palette.dark[300]}`,
+const StyledButtonNew = styled(Button)<ButtonProps>(() => ({
   borderRadius: '7px',
   padding: '15px 20px',
   display: 'flex',
-  alignItems: 'center',
-  '&:hover': {
-    backgroundColor: theme.palette.dark[200],
-    color: theme.palette.common.white,
-    border: `1px solid ${theme.palette.dark[300]}`
-  }
+  alignItems: 'center'
 }));
 
-const StyledTodayButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  height: '100%',
-  width: '70px',
-  border: `1px solid ${theme.palette.dark[300]}`,
-  borderRadius: '7px',
-  color: theme.palette.common.black,
-  '&:hover': {
-    backgroundColor: theme.palette.dark[200],
-    border: `1px solid ${theme.palette.dark[300]}`
-  }
+const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
+  backgroundColor: theme.palette.primary.main,
+  borderRadius: '7px'
 }));
 
 const StyledBox = styled(Box)<BoxProps>(() => ({
@@ -88,9 +74,9 @@ const StyledBox = styled(Box)<BoxProps>(() => ({
 export {
   InternalButton,
   StyledBox,
-  StyledButtonNewCalendar,
+  StyledButton,
+  StyledButtonNew,
   StyledInputLabel,
   StyledSelectButton,
-  StyledTextareaAutosize,
-  StyledTodayButton
+  StyledTextareaAutosize
 };

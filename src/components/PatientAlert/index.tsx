@@ -51,7 +51,7 @@ const PatientAlert = ({ info = data }: PatientAlertProps) => {
       ))}
     >
       <Button sx={{ m: 1 }}>
-        <InfoIcon fontSize="large" />
+        <InfoIcon fontSize="large" sx={{ color: theme.palette.primary.main }} />
       </Button>
     </MuiTooltip>
   ) : null;

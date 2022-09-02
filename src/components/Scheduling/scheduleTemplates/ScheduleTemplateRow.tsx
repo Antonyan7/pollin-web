@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
-import { Checkbox, IconButton, TableCell, TableRow, Typography } from '@mui/material';
+import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { Row } from 'components/Scheduling/scheduleTemplates';
 import { useRouter } from 'next/router';
 
@@ -13,6 +13,7 @@ interface TableComponentProps {
 }
 
 const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableComponentProps) => {
+  const theme = useTheme();
   const router = useRouter();
   const onViewClick = useCallback(
     (id: string) => {
@@ -25,7 +26,7 @@ const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableCom
     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected}>
       <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => onClick(event, row.name)}>
         <Checkbox
-          color="primary"
+          sx={{ color: theme.palette.primary.main }}
           checked={isItemSelected}
           inputProps={{
             'aria-labelledby': labelId
@@ -48,10 +49,10 @@ const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableCom
       <TableCell align="right">{row.lastSavedDay}</TableCell>
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
-        <IconButton onClick={() => onViewClick(row.id)} color="primary" size="large">
+        <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
           <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
-        <IconButton color="secondary" size="large">
+        <IconButton sx={{ color: theme.palette.secondary.main }} size="large">
           <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
       </TableCell>

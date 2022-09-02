@@ -1,5 +1,5 @@
 import React from 'react';
-import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { Box, Dialog, DialogContent, DialogTitle, Divider, Typography, useTheme } from '@mui/material';
 
 import { AppointmentsModalProps } from '../../types/appointments';
@@ -24,12 +24,9 @@ const InfoAppointmentsModal = ({ openAppointmentsModal, onCloseAppointmentsModal
           </DialogContent>
           <Divider sx={{ padding: '10px 0px' }} />
           <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <InternalButton
-              theme={theme}
-              sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white, margin: '10px 15px' }}
-            >
+            <StyledButton theme={theme} variant="contained">
               Add
-            </InternalButton>
+            </StyledButton>
           </Box>
         </Box>
       )}

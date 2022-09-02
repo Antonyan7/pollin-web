@@ -37,7 +37,13 @@ const EnhancedTableToolbar = ({ numSelected, selected }: EnhancedTableToolbarPro
         <Tooltip title="Delete">
           <IconButton size="large">
             <RemoveTemplatesModal
-              buttonVal={<DeleteIcon fontSize="small" onClick={handleOpenClose} />}
+              buttonVal={
+                <DeleteIcon
+                  fontSize="medium"
+                  sx={{ color: (theme) => theme.palette.primary.main }}
+                  onClick={handleOpenClose}
+                />
+              }
               handleOpenClose={handleOpenClose}
               open={open}
               selected={selected}

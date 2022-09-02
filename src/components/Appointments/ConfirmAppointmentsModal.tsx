@@ -1,9 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import {
-  InternalButton,
-  StyledInputLabel,
-  StyledSelectButton
-} from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -15,11 +11,12 @@ import {
   FormControl,
   Grid,
   IconButton,
+  InputLabel,
   MenuItem,
+  Select,
   SelectChangeEvent,
   TextField,
-  Typography,
-  useTheme
+  Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { cancellationReason } from 'helpers/constants';
@@ -33,7 +30,6 @@ const ConfirmAppointmentsModal = ({
   setCancellationReason
 }: AppointmentsModalProps) => {
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
-  const theme = useTheme();
 
   const onSelectButtonChange = useCallback(
     (event: SelectChangeEvent<unknown>) =>
@@ -66,7 +62,7 @@ const ConfirmAppointmentsModal = ({
                     setOpenOtherReasonField(false);
                   }}
                 >
-                  <CloseOutlined sx={{ color: theme.palette.common.black }} />
+                  <CloseOutlined />
                 </IconButton>
               </Grid>
             </Grid>
@@ -74,18 +70,13 @@ const ConfirmAppointmentsModal = ({
           <Divider />
           <DialogContent sx={{ p: 3 }}>
             <Grid container spacing={3}>
-              <Grid item xs={12} style={{ color: theme.palette.common.black }}>
-                <Typography sx={{ fontWeight: 400, fontSize: '16px', lineHeight: '20px' }}>
-                  Please confirm the reason for the cancellation.
-                </Typography>
+              <Grid item xs={12}>
+                <Typography variant="h5">Please confirm the reason for the cancellation.</Typography>
               </Grid>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <StyledInputLabel theme={theme} id="cancel-appointment-label">
-                    Reason for Cancellation
-                  </StyledInputLabel>
-                  <StyledSelectButton
-                    theme={theme}
+                  <InputLabel id="cancel-appointment-label">Reason for Cancellation</InputLabel>
+                  <Select
                     IconComponent={KeyboardArrowDownIcon}
                     id="cancel-appointment-label"
                     labelId="cancel-appointment-label"
@@ -97,7 +88,7 @@ const ConfirmAppointmentsModal = ({
                         {reasonItem}
                       </MenuItem>
                     ))}
-                  </StyledSelectButton>
+                  </Select>
                 </FormControl>
               </Grid>
               {openOtherReasonField && (
@@ -120,21 +111,19 @@ const ConfirmAppointmentsModal = ({
             <Grid container>
               <Grid item xs={12}>
                 <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                  <InternalButton
-                    theme={theme}
+                  <StyledButton
+                    variant="contained"
                     onClick={() => {
                       setOpenAppointmentsModal(false);
                       setOpenOtherReasonField(false);
                     }}
                     sx={{
-                      backgroundColor: theme.palette.dark[100],
-                      color: theme.palette.common.white,
                       width: '160px',
                       height: '40px'
                     }}
                   >
                     Confirm
-                  </InternalButton>
+                  </StyledButton>
                 </Stack>
               </Grid>
             </Grid>

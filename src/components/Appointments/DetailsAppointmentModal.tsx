@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { InternalButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import {
   Dialog,
@@ -10,8 +10,7 @@ import {
   Grid,
   IconButton,
   Stack,
-  Typography,
-  useTheme
+  Typography
 } from '@mui/material';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import Router from 'next/router';
@@ -28,7 +27,6 @@ const DetailsAppointmentModal = ({
   setOpenAppointmentsModal,
   appointmentSlotId
 }: AppointmentsModalProps) => {
-  const theme = useTheme();
   const appointmentDetails = useAppSelector(bookingSelector.appointmentDetails);
   const [confirmedAppointmentDetails, setConfirmedAppointmentDetails] = useState<AppointmentDetailsProps | null>(null);
 
@@ -62,7 +60,7 @@ const DetailsAppointmentModal = ({
                     setOpenAppointmentsModal(false);
                   }}
                 >
-                  <CloseOutlined sx={{ color: theme.palette.common.black }} />
+                  <CloseOutlined />
                 </IconButton>
               </Grid>
             </Grid>
@@ -104,15 +102,14 @@ const DetailsAppointmentModal = ({
             <Grid container>
               <Grid item xs={12}>
                 <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                  <InternalButton
+                  <StyledButton
                     onClick={() => {
                       Router.push('/patient-chart');
                     }}
-                    theme={theme}
-                    sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
+                    variant="contained"
                   >
                     View Patient Profile
-                  </InternalButton>
+                  </StyledButton>
                 </Stack>
               </Grid>
             </Grid>

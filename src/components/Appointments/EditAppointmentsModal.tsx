@@ -1,11 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import {
-  InternalButton,
-  StyledInputLabel,
-  StyledSelectButton
-} from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { roundUpTo } from '@constants';
-import DateRangeIcon from '@mui/icons-material/DateRange';
 import DeleteIcon from '@mui/icons-material/Delete';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -17,12 +12,14 @@ import {
   Divider,
   FormControl,
   Grid,
-  InputAdornment,
+  InputLabel,
   MenuItem,
+  Select,
   Stack,
   TextField,
   TextFieldProps,
   Tooltip,
+  Typography,
   useTheme
 } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -36,6 +33,8 @@ import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { AppointmentDetailsProps, AppointmentsProps } from 'types/reduxTypes/appointments';
 import { validateInputChange } from 'validation/appointments/add_appointment';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
+
+import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
 
 import { AppointmentsModalProps, AppointmentsModalTypes } from '../../types/appointments';
 
@@ -223,11 +222,7 @@ const EditAppointmentsModal = ({
                           {...params}
                           fullWidth
                           InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <DateRangeIcon />
-                              </InputAdornment>
-                            )
+                            endAdornment: <PickerDateIcon />
                           }}
                         />
                       )}
@@ -238,11 +233,8 @@ const EditAppointmentsModal = ({
               <Grid container spacing={3} style={{ padding: '0 24px' }}>
                 <Grid item xs={editableAppointmentData?.isVirtual ? 6 : 12}>
                   <FormControl fullWidth>
-                    <StyledInputLabel theme={theme} id="status-appointment-label">
-                      Status
-                    </StyledInputLabel>
-                    <StyledSelectButton
-                      theme={theme}
+                    <InputLabel id="status-appointment-label">Status</InputLabel>
+                    <Select
                       IconComponent={KeyboardArrowDownIcon}
                       id="status-appointment-label"
                       labelId="status-appointment-label"
@@ -256,47 +248,51 @@ const EditAppointmentsModal = ({
                           {statusItem}
                         </MenuItem>
                       ))}
-                    </StyledSelectButton>
+                    </Select>
                   </FormControl>
                 </Grid>
                 {editableAppointmentData?.isVirtual ? (
                   <Grid item xs={6}>
-                    <InternalButton
+                    <StyledButton
                       theme={theme}
+                      variant="contained"
                       sx={{
-                        backgroundColor: theme.palette.dark[100],
-                        color: theme.palette.common.white,
                         width: '100%',
                         height: '100%'
                       }}
                     >
                       Join Virtual Appointment
-                    </InternalButton>
+                    </StyledButton>
                   </Grid>
                 ) : null}
               </Grid>
               <DialogActions sx={{ p: 3 }}>
                 <Grid container justifyContent="space-between" alignItems="center">
-                  <Grid item>
-                    <Tooltip title="Delete Event">
-                      <DeleteIcon
-                        sx={{ color: theme.palette.grey[500], cursor: 'pointer' }}
-                        onClick={() => setOpenConfirmAppointmentsModal(true)}
-                      />
-                    </Tooltip>
+                  <Grid container xs={5} item direction="row" alignItems="center">
+                    <Grid item>
+                      <Tooltip title="Delete Event">
+                        <DeleteIcon
+                          sx={{ cursor: 'pointer', color: theme.palette.primary.main }}
+                          fontSize="large"
+                          onClick={() => setOpenConfirmAppointmentsModal(true)}
+                        />
+                      </Tooltip>
+                    </Grid>
+                    <Grid item alignItems="center">
+                      <Typography variant="h5">Cancel Appointment</Typography>
+                    </Grid>
                   </Grid>
                   <Grid item>
                     <Stack direction="row" spacing={2} alignItems="center">
-                      <InternalButton theme={theme} onClick={() => closeAppointmentsModal(AppointmentsModalTypes.Edit)}>
-                        Cancel
-                      </InternalButton>
-                      <InternalButton
-                        type="submit"
-                        theme={theme}
-                        sx={{ backgroundColor: theme.palette.dark[100], color: theme.palette.common.white }}
+                      <StyledButton
+                        variant="contained"
+                        onClick={() => closeAppointmentsModal(AppointmentsModalTypes.Edit)}
                       >
+                        Cancel
+                      </StyledButton>
+                      <StyledButton type="submit" variant="contained">
                         Save
-                      </InternalButton>
+                      </StyledButton>
                     </Stack>
                   </Grid>
                 </Grid>
