@@ -7,10 +7,10 @@ const translationsFile = fs.readFileSync('./src/assets/localization/en.json');
 const translations = JSON.parse(translationsFile);
 const translationsFilePath = 'src/constants/translations.ts';
 
-const toUpperCase = (line: string): string => line.toUpperCase().replace(/-/g, '_');
+const toUpperCase = (line: string): string => line.toUpperCase().replace(/\./g, '_');
 
 const generateEnumLine = (key: string): void => {
-  shell.ShellString(`${toUpperCase(key)} = "${key}",\n`).toEnd(translationsFilePath);
+  shell.ShellString(` ${toUpperCase(key)} = "${key}",\n`).toEnd(translationsFilePath);
 };
 
 const generateTranslationsEnum = (): void => {
