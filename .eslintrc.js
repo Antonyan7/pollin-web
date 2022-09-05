@@ -37,6 +37,7 @@ module.exports = {
           'src/setupTests.ts',
           'cypress/**/*',
           'cypress.config.ts',
+          'scripts/**/*',
           'dangerfile.ts'
         ]
       }
