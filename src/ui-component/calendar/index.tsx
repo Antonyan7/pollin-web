@@ -14,6 +14,8 @@ import { useRouter } from 'next/router';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'constants/modals';
 import { SlotTypes } from 'types/calendar';
+import { useTranslation } from 'react-i18next';
+import { Translation } from 'constants/translations';
 import CalendarStyled from './CalendarStyled';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
@@ -30,6 +32,7 @@ const Calendar = (props: { calendarDate: string }) => {
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const appointments = useAppSelector(bookingSelector.appointmentsList);
   const router = useRouter();
+  const [t] = useTranslation();
 
   const onEventClick = useCallback(
     (initialEventObject: EventClickArg) => {
@@ -138,9 +141,7 @@ const Calendar = (props: { calendarDate: string }) => {
     <div style={{ position: 'relative' }}>
       <CalendarStyled>
         {serviceProviderId === '' ? (
-          <StyledDisabledLayer>
-            Select a resource to view, book or modify <br /> appointments
-          </StyledDisabledLayer>
+          <StyledDisabledLayer>{t(Translation.PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED)}</StyledDisabledLayer>
         ) : null}
         <FullCalendar
           weekends

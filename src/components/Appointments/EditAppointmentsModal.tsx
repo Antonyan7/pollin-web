@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IEditAppointmentBody } from '@axios/managerBooking';
 import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/Appointments/CommonMaterialComponents';
 import { roundUpTo } from '@constants';
@@ -23,6 +24,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { ModalName } from 'constants/modals';
+import { Translation } from 'constants/translations';
 import { FormikProvider, useFormik } from 'formik';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { appointmentStatusData } from 'helpers/constants';
@@ -74,7 +76,7 @@ const EditAppointmentsModal = () => {
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
 
   const { appointmentId }: IEditAppointmentModalProps = useAppSelector(viewsSelector.modal).props;
-
+  const [t] = useTranslation();
   const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
 
   const onClose = useCallback(() => {
@@ -153,7 +155,7 @@ const EditAppointmentsModal = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <form onSubmit={editAppointmentForm.handleSubmit}>
             <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
-              Edit Appointment
+              {t(Translation.MODAL_APPOINTMENTS_EDIT_TITLE)}
             </DialogTitle>
             <Divider />
             <DialogContent sx={{ p: 3 }}>
@@ -176,7 +178,7 @@ const EditAppointmentsModal = () => {
                     renderInput={(params: TextFieldProps) => (
                       <TextField
                         {...params}
-                        label="Appointment type"
+                        label={t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_SERVICE_TYPE)}
                         name="serviceType"
                         required
                         helperText={
@@ -200,7 +202,7 @@ const EditAppointmentsModal = () => {
                     renderInput={(params: TextFieldProps) => (
                       <TextField
                         {...params}
-                        label="Patient"
+                        label={t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_PATIENT)}
                         name="patientId"
                         required
                         helperText={editAppointmentForm.touched.patientId ? editAppointmentForm.errors.patientId : ''}
@@ -213,18 +215,18 @@ const EditAppointmentsModal = () => {
                   <TextField
                     fullWidth
                     id="description"
-                    label="Description (optional)"
+                    label={t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION)}
                     multiline
                     name="description"
                     rows={4}
-                    placeholder="Description (optional)"
+                    placeholder={t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION)}
                     value={editAppointmentForm.values.description}
                     onChange={editAppointmentForm.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <MobileDateTimePicker
-                    label="Date & Start Time"
+                    label={t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER)}
                     value={editAppointmentForm.values.date}
                     onChange={(date: Date | null) => mobileDateTimeChange(date)}
                     renderInput={(params: TextFieldProps) => (
@@ -248,7 +250,7 @@ const EditAppointmentsModal = () => {
                     IconComponent={KeyboardArrowDownIcon}
                     id="status-appointment-label"
                     labelId="status-appointment-label"
-                    label="Status"
+                    label={t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS)}
                     name="status"
                     defaultValue={editAppointmentForm.values.status}
                     onChange={editAppointmentForm.handleChange}
@@ -271,7 +273,7 @@ const EditAppointmentsModal = () => {
                     }}
                     onClick={onClose}
                   >
-                    Join Virtual Appointment
+                    {t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_JOIN)}
                   </StyledButton>
                 </Grid>
               ) : null}
@@ -279,17 +281,17 @@ const EditAppointmentsModal = () => {
             <DialogActions sx={{ p: 3 }}>
               <Grid container justifyContent="space-between" alignItems="center">
                 <Grid item>
-                  <Tooltip title="Delete Event">
+                  <Tooltip title={t(Translation.MODAL_APPOINTMENTS_EDIT_ICON_DELETE)}>
                     <DeleteIcon sx={{ cursor: 'pointer' }} onClick={onRemoveClick} />
                   </Tooltip>
                 </Grid>
                 <Grid item>
                   <Stack direction="row" spacing={2} alignItems="center">
                     <StyledButton variant="contained" onClick={onClose}>
-                      Cancel
+                      {t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL)}
                     </StyledButton>
                     <StyledButton type="submit" variant="contained" onClick={onSave}>
-                      Save
+                      {t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE)}
                     </StyledButton>
                   </Stack>
                 </Grid>

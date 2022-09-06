@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyledInputLabel } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -20,6 +21,7 @@ import {
 } from '@mui/material';
 import { Stack } from '@mui/system';
 import { ModalName } from 'constants/modals';
+import { Translation } from 'constants/translations';
 import { cancellationReasons } from 'helpers/constants';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
@@ -29,6 +31,7 @@ const ConfirmAppointmentsModal = () => {
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
   const [cancellationReason, setCancellationReason] = useState<string>('');
   const { appointmentId } = useAppSelector(viewsSelector.modal).props;
+  const [t] = useTranslation();
 
   const onSelectButtonChange = useCallback((event: SelectChangeEvent<unknown>) => {
     const value: string = event.target.value as string;
@@ -71,7 +74,7 @@ const ConfirmAppointmentsModal = () => {
                   fontWeight: 700
                 }}
               >
-                Confirm Cancellation
+                {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TITLE)}
               </Typography>
             </Grid>
             <Grid item>
@@ -85,16 +88,18 @@ const ConfirmAppointmentsModal = () => {
         <DialogContent sx={{ p: 3 }}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Typography>Please confirm the reason for the cancellation.</Typography>
+              <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <StyledInputLabel id="cancel-appointment-label">Reason for Cancellation</StyledInputLabel>
+                <StyledInputLabel id="cancel-appointment-label">
+                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                </StyledInputLabel>
                 <Select
                   IconComponent={KeyboardArrowDownIcon}
                   id="cancel-appointment-label"
                   labelId="cancel-appointment-label"
-                  label="Reason for Cancellation"
+                  label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
                   onChange={onSelectButtonChange}
                 >
                   {cancellationReasons.map((reasonItem) => (
@@ -113,7 +118,7 @@ const ConfirmAppointmentsModal = () => {
                   multiline
                   name="reason_for_cancellation"
                   rows={4}
-                  placeholder="Reason for Cancellation"
+                  placeholder={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON)}
                   onChange={onReasonChange}
                 />
               </Grid>
@@ -132,7 +137,7 @@ const ConfirmAppointmentsModal = () => {
                     height: '40px'
                   }}
                 >
-                  Confirm
+                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM)}
                 </Button>
               </Stack>
             </Grid>

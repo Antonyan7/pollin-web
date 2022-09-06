@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { roundUpTo } from '@constants';
@@ -19,6 +20,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { ModalName } from 'constants/modals';
+import { Translation } from 'constants/translations';
 import { FormikProvider, useFormik } from 'formik';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -41,7 +43,7 @@ const AddAppointmentsModal = () => {
   const patientList = useAppSelector(bookingSelector.patientList);
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
   const bookAppointmentDate: DateSelectArg = useAppSelector(viewsSelector.modal).props;
-
+  const [t] = useTranslation();
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
   }, []);
@@ -81,7 +83,7 @@ const AddAppointmentsModal = () => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <form onSubmit={addAppointmentForm.handleSubmit}>
             <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
-              Add Appointment
+              {t(Translation.MODAL_APPOINTMENTS_ADD_TITLE)}
             </DialogTitle>
             <Divider />
             <DialogContent sx={{ p: 3 }}>
@@ -103,7 +105,7 @@ const AddAppointmentsModal = () => {
                     renderInput={(params: TextFieldProps) => (
                       <TextField
                         {...params}
-                        label="Appointment type"
+                        label={t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE)}
                         name="serviceTypeId"
                         required
                         helperText={
@@ -132,7 +134,7 @@ const AddAppointmentsModal = () => {
                     renderInput={(params: TextFieldProps) => (
                       <TextField
                         {...params}
-                        label="Patient"
+                        label={t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT)}
                         name="patientId"
                         required
                         helperText={addAppointmentForm.touched.patientId ? addAppointmentForm.errors.patientId : ''}
@@ -145,18 +147,18 @@ const AddAppointmentsModal = () => {
                   <TextField
                     fullWidth
                     id="description"
-                    label="Description (optional)"
+                    label={t(Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION)}
                     multiline
                     name="description"
                     rows={4}
-                    placeholder="Description (optional)"
+                    placeholder={t(Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION)}
                     value={addAppointmentForm.values.description}
                     onChange={addAppointmentForm.handleChange}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <MobileDateTimePicker
-                    label="Date & Start Time"
+                    label={t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER)}
                     value={addAppointmentForm.values.date}
                     onChange={(date: Date | null) => mobileDateTimeChange(date)}
                     renderInput={(params: TextFieldProps) => (
@@ -177,10 +179,10 @@ const AddAppointmentsModal = () => {
                 <Grid item xs={12}>
                   <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                     <StyledButton type="button" variant="contained" onClick={onClose}>
-                      Cancel
+                      {t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_CANCEL)}
                     </StyledButton>
                     <StyledButton variant="contained" type="submit">
-                      Add
+                      {t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)}
                     </StyledButton>
                   </Stack>
                 </Grid>

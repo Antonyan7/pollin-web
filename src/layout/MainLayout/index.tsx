@@ -14,6 +14,7 @@ import Sidebar from './Sidebar';
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }: MainStyleProps) => ({
   ...theme.typography.mainContent,
+  whiteSpace: 'pre-line',
   ...(!open && {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,

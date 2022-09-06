@@ -1,4 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
@@ -24,6 +25,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ModalName } from 'constants/modals';
+import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
 import { viewsMiddleware } from 'redux/slices/views';
@@ -48,6 +50,7 @@ const Appointments = () => {
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const theme = useTheme();
+  const [t] = useTranslation();
 
   const isToday = useMemo(
     () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
@@ -87,10 +90,10 @@ const Appointments = () => {
   return (
     <Box>
       <MainBreadcrumb
-        currentPage="Appointments"
+        currentPage={t(Translation.PAGE_APPOINTMENTS_TITLE)}
         navigation={{
           basePath: '/',
-          items: [{ name: 'Appointments', path: '/booking/appointments' }]
+          items: [{ name: `${t(Translation.PAGE_APPOINTMENTS_TITLE)}`, path: '/booking/appointments' }]
         }}
       />
       <AppointmentsContent>
@@ -102,7 +105,7 @@ const Appointments = () => {
         >
           <StyledButtonNew theme={theme} variant="outlined" endIcon={<OpenInNewIcon />} onClick={onNewCalendarClick}>
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
-              New Calendar
+              {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR)}
             </Typography>
           </StyledButtonNew>
         </header>
@@ -110,12 +113,12 @@ const Appointments = () => {
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth>
-              <InputLabel id="resource-label">Resource</InputLabel>
+              <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RECOURCE)}</InputLabel>
               <Select
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
-                label="Resource"
+                label={t(Translation.PAGE_APPOINTMENTS_SELECT_RECOURCE)}
                 onChange={onServiceProviderChange}
                 value={serviceProviderId}
               >
@@ -129,7 +132,7 @@ const Appointments = () => {
           </Box>
           <Box sx={{ display: 'flex', gap: '40px' }}>
             <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>
-              <Typography variant="h4">Today</Typography>
+              <Typography variant="h4">{t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}</Typography>
             </StyledButtonNew>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
@@ -137,7 +140,7 @@ const Appointments = () => {
                   open={datePickerOpen}
                   onOpen={onDateDatePickerOpen}
                   onClose={onDateDatePickerClose}
-                  label="Date"
+                  label={t(Translation.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER)}
                   inputFormat="MM/dd/yyyy"
                   value={calendarDate}
                   onChange={(date: Date | null) => onDateChange(date)}
@@ -153,7 +156,7 @@ const Appointments = () => {
           </Box>
           <StyledButtonNew theme={theme} variant="outlined" endIcon={<AddIcon />} onClick={onOpenAppointmentsModalAdd}>
             <Typography variant="h4" sx={{ marginRight: '10px' }}>
-              New Appointment
+              {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)}
             </Typography>
           </StyledButtonNew>
         </MainHeader>

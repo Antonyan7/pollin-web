@@ -1,7 +1,44 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
 
 export enum Translation {
-  TEST = 'test'
+  PAGE_APPOINTMENTS_TITLE = 'page.appointments.title',
+  PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR = 'page.appointments.button.new.calendar',
+  PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT = 'page.appointments.button.new.appointment',
+  PAGE_APPOINTMENTS_SELECT_RECOURCE = 'page.appointments.select.recource',
+  PAGE_APPOINTMENTS_BUTTON_TODAY = 'page.appointments.button.today',
+  PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER = 'page.appointments.desktop.date.picker',
+  PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED = 'page.appointments.calendar.title.disabled',
+  MODAL_APPOINTMENTS_ADD_TITLE = 'modal.appointments.add.title',
+  MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE = 'modal.appointments.add.select.service.type',
+  MODAL_APPOINTMENTS_ADD_SELECT_PATIENT = 'modal.appointments.add.select.patient',
+  MODAL_APPOINTMENTS_ADD_DESCRIPTION = 'modal.appointments.add.description',
+  MODAL_APPOINTMENTS_ADD_TIME_PICKER = 'modal.appointments.add.time.picker',
+  MODAL_APPOINTMENTS_ADD_BUTTON_CANCEL = 'modal.appointments.add.button.cancel',
+  MODAL_APPOINTMENTS_ADD_BUTTON_ADD = 'modal.appointments.add.button.add',
+  MODAL_APPOINTMENTS_DETAILS_TITLE = 'modal.appointments.details.title',
+  MODAL_APPOINTMENTS_DETAILS_APPOINTMENT_TYPE = 'modal.appointments.details.appointment.type',
+  MODAL_APPOINTMENTS_DETAILS_PATIENT = 'modal.appointments.details.patient',
+  MODAL_APPOINTMENTS_DETAILS_DESCRIPTION = 'modal.appointments.details.description',
+  MODAL_APPOINTMENTS_DETAILS_DATE = 'modal.appointments.details.date',
+  MODAL_APPOINTMENTS_DETAILS_START_TIME = 'modal.appointments.details.start.time',
+  MODAL_APPOINTMENTS_DETAILS_STATUS = 'modal.appointments.details.status',
+  MODAL_APPOINTMENTS_DETAILS_REASON = 'modal.appointments.details.reason',
+  MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW = 'modal.appointments.details.button.view',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_TITLE = 'modal.appointments.confirm.cancel.title',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION = 'modal.appointments.confirm.cancel.description',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON = 'modal.appointments.confirm.cancel.select.reason',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON = 'modal.appointments.confirm.cancel.text.reason',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM = 'modal.appointments.confirm.cancel.button.confirm',
+  MODAL_APPOINTMENTS_EDIT_TITLE = 'modal.appointments.edit.title',
+  MODAL_APPOINTMENTS_EDIT_SELECT_SERVICE_TYPE = 'modal.appointments.edit.select.service.type',
+  MODAL_APPOINTMENTS_EDIT_SELECT_PATIENT = 'modal.appointments.edit.select.patient',
+  MODAL_APPOINTMENTS_EDIT_DESCRIPTION = 'modal.appointments.edit.description',
+  MODAL_APPOINTMENTS_EDIT_TIME_PICKER = 'modal.appointments.edit.time.picker',
+  MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS = 'modal.appointments.edit.button.status',
+  MODAL_APPOINTMENTS_EDIT_BUTTON_JOIN = 'modal.appointments.edit.button.join',
+  MODAL_APPOINTMENTS_EDIT_ICON_DELETE = 'modal.appointments.edit.icon.delete',
+  MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL = 'modal.appointments.edit.button.cancel',
+  MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE = 'modal.appointments.edit.button.save'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import {
@@ -13,6 +14,7 @@ import {
   Typography
 } from '@mui/material';
 import { ModalName } from 'constants/modals';
+import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -25,6 +27,7 @@ const DetailsAppointmentModal = () => {
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const { appointmentId } = useAppSelector(viewsSelector.modal).props;
   const router = useRouter();
+  const [t] = useTranslation();
 
   useEffect(() => {
     dispatch(bookingMiddleware.getAppointmentDetails(appointmentId));
@@ -52,7 +55,7 @@ const DetailsAppointmentModal = () => {
                   fontWeight: 700
                 }}
               >
-                Appointment Details
+                {t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)}
               </Typography>
             </Grid>
             <Grid item>
@@ -65,12 +68,21 @@ const DetailsAppointmentModal = () => {
         <Divider />
         <DialogContent>
           <Grid container spacing={3}>
-            <DialogContentRow subtitle="Appointment Type:" body={details?.serviceType?.title} />
-            <DialogContentRow subtitle="Patient:" body={details?.patient?.title} />
-            <DialogContentRow subtitle="Description:" body={details?.appointment.description} />
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_APPOINTMENT_TYPE)}
+              body={details?.serviceType?.title}
+            />
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_PATIENT)}
+              body={details?.patient?.title}
+            />
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DESCRIPTION)}
+              body={details?.appointment.description}
+            />
             <Grid item xs={6}>
               <Stack direction="row" spacing={1} alignItems="center">
-                <Typography variant="subtitle1">Date:</Typography>
+                <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE)}</Typography>
                 <Typography variant="body2">
                   {details && timeAdjuster(details?.appointment.date)?.customizedDate}
                 </Typography>
@@ -78,14 +90,20 @@ const DetailsAppointmentModal = () => {
             </Grid>
             <Grid item xs={6}>
               <Stack direction="row" spacing={1} alignItems="center">
-                <Typography variant="subtitle1">Start Time:</Typography>
+                <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_START_TIME)}</Typography>
                 <Typography variant="body2">
                   {details && timeAdjuster(details?.appointment.date)?.customizedTime}
                 </Typography>
               </Stack>
             </Grid>
-            <DialogContentRow subtitle="Status:" body={details?.appointment.status} />
-            <DialogContentRow subtitle="Reason for Cancellation:" body={details?.appointment.cancellationReason} />
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}
+              body={details?.appointment.status}
+            />
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_REASON)}
+              body={details?.appointment.cancellationReason}
+            />
           </Grid>
         </DialogContent>
         <Divider />
@@ -94,7 +112,7 @@ const DetailsAppointmentModal = () => {
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                 <StyledButton onClick={onViewProfileClick} variant="contained">
-                  View Patient Profile
+                  {t(Translation.MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW)}
                 </StyledButton>
               </Stack>
             </Grid>
