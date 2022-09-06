@@ -28,4 +28,4 @@ const generateTranslationsEnum = (): void => {
 
 generateTranslationsEnum();
 
-shell.exec(` eslint --fix ${translationsFilePath}`);
+shell.exec(`prettier --write ${translationsFilePath}`);

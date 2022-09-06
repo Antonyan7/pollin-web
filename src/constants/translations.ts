@@ -38,7 +38,15 @@ export enum Translation {
   MODAL_APPOINTMENTS_EDIT_BUTTON_JOIN = 'modal.appointments.edit.button.join',
   MODAL_APPOINTMENTS_EDIT_ICON_DELETE = 'modal.appointments.edit.icon.delete',
   MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL = 'modal.appointments.edit.button.cancel',
-  MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE = 'modal.appointments.edit.button.save'
+  MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE = 'modal.appointments.edit.button.save',
+  PAGE_BLOCK_SCHEDULE_TITLE = 'page.block.schedule.title',
+  PAGE_BLOCK_SCHEDULE_SELECT_RESOURCE = 'page.block.schedule.select.resource',
+  PAGE_BLOCK_SCHEDULE_DATE_PICKER_START = 'page.block.schedule.date.picker.start',
+  PAGE_BLOCK_SCHEDULE_TIME_PICKER_START = 'page.block.schedule.time.picker.start',
+  PAGE_BLOCK_SCHEDULE_DATE_PICKER_END = 'page.block.schedule.date.picker.end',
+  PAGE_BLOCK_SCHEDULE_TIME_PICKER_END = 'page.block.schedule.time.picker.end',
+  PAGE_BLOCK_SCHEDULE_PLACEHOLDER = 'page.block.schedule.placeholder',
+  PAGE_BLOCK_SCHEDULE_BUTTON_APPLY = 'page.block.schedule.button.apply'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

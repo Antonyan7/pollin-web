@@ -36,5 +36,13 @@
   "modal.appointments.edit.button.join": "Join Virtual Appointment",
   "modal.appointments.edit.icon.delete": "Delete Event",
   "modal.appointments.edit.button.cancel": "Cancel",
-  "modal.appointments.edit.button.save": "Save"
+  "modal.appointments.edit.button.save": "Save",
+  "page.block.schedule.title": "Block Schedule",
+  "page.block.schedule.select.resource": "Resource",
+  "page.block.schedule.date.picker.start": "Start Date",
+  "page.block.schedule.time.picker.start": "Start Time",
+  "page.block.schedule.date.picker.end": "End Date",
+  "page.block.schedule.time.picker.end": "End Time",
+  "page.block.schedule.placeholder": "Placeholder Label",
+  "page.block.schedule.button.apply": "Apply"
 }
