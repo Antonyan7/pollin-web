@@ -16,9 +16,8 @@ const schedulingManager = {
   getTemplatesList() {
     return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/v1/templates');
   },
-  // TODO check when have doc
   deleteTemplate(data: string[]) {
-    return axiosInstance.post<any, IAxiosResponse<void>>('/v1/templates/delete', data);
+    return axiosInstance.delete<any, IAxiosResponse<void>>('/v1/templates/delete', { data });
   },
   getSingleTemplate(templateId: string) {
     return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>('/v1/templates', {
