@@ -2,7 +2,7 @@ name: Danger Validations
 
 on:
   pull_request:
-    types: [ opened, edited, reopened, synchronize]
+    types: [opened, edited, reopened, synchronize]
 
 jobs:
   danger:
@@ -14,5 +14,5 @@ jobs:
       - uses: danger/danger-js@9.1.6
         name: Danger
         env:
-          DANGER_DISABLE_TRANSPILATION: "true"
+          DANGER_DISABLE_TRANSPILATION: 'true'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

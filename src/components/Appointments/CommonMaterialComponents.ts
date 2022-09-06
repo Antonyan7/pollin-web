@@ -71,8 +71,17 @@ const StyledBox = styled(Box)<BoxProps>(() => ({
   marginBottom: '8px'
 }));
 
+const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
+  borderRadius: '7px',
+  border: '1px solid #dce1e4',
+  padding: '0 4rem',
+  paddingTop: '2.813rem',
+  backgroundColor: theme.palette.background.paper
+}));
+
 export {
   InternalButton,
+  ScheduleBoxWrapper,
   StyledBox,
   StyledButton,
   StyledButtonNew,

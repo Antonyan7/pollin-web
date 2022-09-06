@@ -1,7 +1,8 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { AlertBanner } from '@components/Alert/Alert';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import EventIcon from '@mui/icons-material/Event';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Autocomplete,
   Checkbox,
@@ -16,7 +17,6 @@ import {
 } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { Box } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -188,16 +188,7 @@ const ApplyScheduleForm = () => {
   }, [scheduleApplySuccess]);
 
   return (
-    <Box
-      sx={{
-        marginTop: '35px',
-        borderRadius: '7px',
-        border: '1px solid #dce1e4',
-        padding: '0 4rem',
-        paddingTop: '2.813rem',
-        backgroundColor: theme.palette.background.paper
-      }}
-    >
+    <ScheduleBoxWrapper>
       <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
@@ -208,6 +199,7 @@ const ApplyScheduleForm = () => {
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
                   <Autocomplete
+                    popupIcon={<KeyboardArrowDownIcon />}
                     options={serviceProviders}
                     onChange={(e, value) => {
                       onSelectResourceUpdate(value);
@@ -229,6 +221,7 @@ const ApplyScheduleForm = () => {
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
                   <Autocomplete
+                    popupIcon={<KeyboardArrowDownIcon />}
                     value={{
                       id: scheduleTemplate.id,
                       name: scheduleTemplate.name,
@@ -291,6 +284,7 @@ const ApplyScheduleForm = () => {
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
                   <Autocomplete
+                    popupIcon={<KeyboardArrowDownIcon />}
                     options={repeatWeeksList}
                     onChange={(e, value) => {
                       onRepeatWeeksUpdate(value);
@@ -410,7 +404,7 @@ const ApplyScheduleForm = () => {
           />
         </Grid>
       </form>
-    </Box>
+    </ScheduleBoxWrapper>
   );
 };
 

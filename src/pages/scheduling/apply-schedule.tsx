@@ -1,13 +1,10 @@
 import React from 'react';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import ApplyScheduleForm from '@components/Scheduling/ApplyScheduleForm';
-import { Box, useTheme } from '@mui/material';
+import { Box } from '@mui/material';
 
-const ApplySchedule = () => {
-  const theme = useTheme();
-
-  return (
-    <Box sx={{ padding: '20px', borderRadius: '5px', backgroundColor: theme.palette.background.paper }}>
+const ApplySchedule = () => (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <MainBreadcrumb
         currentPage="Apply Schedule"
         navigation={{
@@ -19,6 +16,5 @@ const ApplySchedule = () => {
       <ApplyScheduleForm />
     </Box>
   );
-};
 
 export default ApplySchedule;

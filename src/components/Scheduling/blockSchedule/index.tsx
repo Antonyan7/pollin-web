@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, Grid, styled, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Autocomplete, FormControl, Grid, TextField, TextFieldProps, Typography } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,17 +12,10 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
-import MainCard from 'ui-component/cards/MainCard';
-import SubCard from 'ui-component/cards/SubCard';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 import { validateInputChange } from 'validation/validationHelpers';
 
 import { linkDateAndTime } from '@utils/dateUtils';
-
-const BlockScheduleForm = styled('form')(() => ({
-  height: '50vh',
-  display: 'grid'
-}));
 
 const initialValues = {
   resourceId: '',
@@ -66,180 +59,206 @@ const BlockTemplates = () => {
   };
 
   return (
-    <>
-      {/* TODO add header compoenent */}
-      <MainCard content={false}>
-        <SubCard>
-          <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <BlockScheduleForm onSubmit={blockScheduleForm.handleSubmit}>
-              <Grid container spacing={4} columns={8} alignItems="center">
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <ScheduleBoxWrapper>
+        <form onSubmit={blockScheduleForm.handleSubmit}>
+          <Grid container spacing={4}>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
                   <Typography>Resource</Typography>
                 </Grid>
-                <Grid item xs={5}>
-                  <Autocomplete
-                    id="resourceId"
-                    options={optionsGroup}
-                    onChange={(_, value) => {
-                      blockScheduleForm.setFieldValue('resourceId', value?.item.id);
-                    }}
-                    isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-                    getOptionLabel={(option) => option.item.title}
-                    groupBy={(option) => option.firstLetter}
-                    onBlur={blockScheduleForm.handleBlur('resourceId')}
-                    onInputChange={(event, value, reason) =>
-                      blockScheduleForm.setFieldValue('resourceId', validateInputChange(event, value, reason))
-                    }
-                    renderInput={(params: TextFieldProps) => (
-                      <TextField
-                        {...params}
-                        label="Resource"
-                        name="resourceId"
-                        required
-                        helperText={blockScheduleForm.touched.resourceId ? blockScheduleForm.errors.resourceId : ''}
-                        error={Boolean(blockScheduleForm.errors.resourceId) && blockScheduleForm.touched.resourceId}
-                      />
-                    )}
-                    popupIcon={<KeyboardArrowDownIcon />}
-                  />
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <Autocomplete
+                      id="resourceId"
+                      options={optionsGroup}
+                      onChange={(_, value) => {
+                        blockScheduleForm.setFieldValue('resourceId', value?.item.id);
+                      }}
+                      isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+                      getOptionLabel={(option) => option.item.title}
+                      groupBy={(option) => option.firstLetter}
+                      onBlur={blockScheduleForm.handleBlur('resourceId')}
+                      onInputChange={(event, value, reason) =>
+                        blockScheduleForm.setFieldValue('resourceId', validateInputChange(event, value, reason))
+                      }
+                      renderInput={(params: TextFieldProps) => (
+                        <TextField
+                          {...params}
+                          label="Resource"
+                          name="resourceId"
+                          required
+                          helperText={blockScheduleForm.touched.resourceId ? blockScheduleForm.errors.resourceId : ''}
+                          error={Boolean(blockScheduleForm.errors.resourceId) && blockScheduleForm.touched.resourceId}
+                        />
+                      )}
+                      popupIcon={<KeyboardArrowDownIcon />}
+                    />
+                  </FormControl>
                 </Grid>
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
                   <Typography>Start Date</Typography>
                 </Grid>
-                <Grid item xs={5}>
-                  <DesktopDatePicker
-                    label="Start Date"
-                    inputFormat="MM/dd/yyyy"
-                    value={blockScheduleForm.values.startDate}
-                    onChange={(value): void => {
-                      blockScheduleForm.setFieldValue('startDate', value);
-                    }}
-                    renderInput={(params) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        name="startDate"
-                        id="startDate"
-                        onBlur={blockScheduleForm.handleBlur('startDate')}
-                        helperText={blockScheduleForm.touched.startDate ? blockScheduleForm.errors.startDate : ''}
-                        error={Boolean(blockScheduleForm.errors.startDate) && blockScheduleForm.touched.startDate}
-                      />
-                    )}
-                  />
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <DesktopDatePicker
+                      label="Start Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={blockScheduleForm.values.startDate}
+                      onChange={(value): void => {
+                        blockScheduleForm.setFieldValue('startDate', value);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          {...params}
+                          name="startDate"
+                          id="startDate"
+                          onBlur={blockScheduleForm.handleBlur('startDate')}
+                          helperText={blockScheduleForm.touched.startDate ? blockScheduleForm.errors.startDate : ''}
+                          error={Boolean(blockScheduleForm.errors.startDate) && blockScheduleForm.touched.startDate}
+                        />
+                      )}
+                    />
+                  </FormControl>
                 </Grid>
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
                   <Typography>Start Time</Typography>
                 </Grid>
-                <Grid item xs={5}>
-                  <TimePicker
-                    label="Start Time"
-                    value={blockScheduleForm.values.startTime}
-                    onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
-                    minutesStep={10}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        name="startTime"
-                        id="startTime"
-                        onBlur={blockScheduleForm.handleBlur('startTime')}
-                        helperText={blockScheduleForm.touched.startTime ? blockScheduleForm.errors.startTime : ''}
-                        error={Boolean(blockScheduleForm.errors.startTime) && blockScheduleForm.touched.startTime}
-                        fullWidth
-                      />
-                    )}
-                  />
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <TimePicker
+                      label="Start Time"
+                      value={blockScheduleForm.values.startTime}
+                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
+                      minutesStep={10}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          name="startTime"
+                          id="startTime"
+                          onBlur={blockScheduleForm.handleBlur('startTime')}
+                          helperText={blockScheduleForm.touched.startTime ? blockScheduleForm.errors.startTime : ''}
+                          error={Boolean(blockScheduleForm.errors.startTime) && blockScheduleForm.touched.startTime}
+                          fullWidth
+                        />
+                      )}
+                    />
+                  </FormControl>
                 </Grid>
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
                   <Typography>End Date</Typography>
                 </Grid>
-                <Grid item xs={5}>
-                  <DesktopDatePicker
-                    label="End Date"
-                    inputFormat="MM/dd/yyyy"
-                    value={blockScheduleForm.values.endDate}
-                    onChange={(date: Date | null) => desktopDateTimeChange(date, 'endDate')}
-                    renderInput={(params) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        onBlur={blockScheduleForm.handleBlur('endDate')}
-                        helperText={blockScheduleForm.touched.endDate ? blockScheduleForm.errors.endDate : ''}
-                        error={Boolean(blockScheduleForm.errors.endDate) && blockScheduleForm.touched.endDate}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
-                  {' '}
-                  <Typography>End Time</Typography>{' '}
-                </Grid>
-                <Grid item xs={5}>
-                  <TimePicker
-                    label="End Time"
-                    value={blockScheduleForm.values.endTime}
-                    onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
-                    minutesStep={10}
-                    renderInput={(params) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        name="endTime"
-                        id="endTime"
-                        onBlur={blockScheduleForm.handleBlur('endTime')}
-                        helperText={blockScheduleForm.touched.endTime ? blockScheduleForm.errors.endTime : ''}
-                        error={Boolean(blockScheduleForm.errors.endTime) && blockScheduleForm.touched.endTime}
-                      />
-                    )}
-                  />
-                </Grid>
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2}>
-                  {' '}
-                  <Typography>Placeholder Label</Typography>{' '}
-                </Grid>
-                <Grid item xs={5}>
-                  <TextField
-                    id="placeholderLabel"
-                    name="placeholderLabel"
-                    fullWidth
-                    onBlur={blockScheduleForm.handleBlur('placeholderLabel')}
-                    helperText={
-                      blockScheduleForm.touched.placeholderLabel ? blockScheduleForm.errors.placeholderLabel : ''
-                    }
-                    error={
-                      Boolean(blockScheduleForm.errors.placeholderLabel) && blockScheduleForm.touched.placeholderLabel
-                    }
-                    label="Placeholder Label"
-                    value={blockScheduleForm.values.placeholderLabel}
-                    onChange={blockScheduleForm.handleChange}
-                  />
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <DesktopDatePicker
+                      label="End Date"
+                      inputFormat="MM/dd/yyyy"
+                      value={blockScheduleForm.values.endDate}
+                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'endDate')}
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          {...params}
+                          onBlur={blockScheduleForm.handleBlur('endDate')}
+                          helperText={blockScheduleForm.touched.endDate ? blockScheduleForm.errors.endDate : ''}
+                          error={Boolean(blockScheduleForm.errors.endDate) && blockScheduleForm.touched.endDate}
+                        />
+                      )}
+                    />
+                  </FormControl>
                 </Grid>
               </Grid>
-              <Grid container spacing={4} columns={8} alignItems="flex-end">
-                <Grid item xs={0.5} />
-                <Grid item xs={0.5} />
-                <Grid item xs={2} />
-                <Grid item xs={4.5} display="grid" justifyContent="flex-end" alignItems="flex-end">
-                  <StyledButton type="submit" variant="contained" sx={{ width: '90px' }}>
-                    Apply
-                  </StyledButton>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
+                  <Typography>End Time</Typography>
+                </Grid>
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <TimePicker
+                      label="End Time"
+                      value={blockScheduleForm.values.endTime}
+                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
+                      minutesStep={10}
+                      renderInput={(params) => (
+                        <TextField
+                          fullWidth
+                          {...params}
+                          name="endTime"
+                          id="endTime"
+                          onBlur={blockScheduleForm.handleBlur('endTime')}
+                          helperText={blockScheduleForm.touched.endTime ? blockScheduleForm.errors.endTime : ''}
+                          error={Boolean(blockScheduleForm.errors.endTime) && blockScheduleForm.touched.endTime}
+                        />
+                      )}
+                    />
+                  </FormControl>
                 </Grid>
               </Grid>
-            </BlockScheduleForm>
-          </LocalizationProvider>
-        </SubCard>
-      </MainCard>
-    </>
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container alignItems="center">
+                <Grid item xs={12} lg={4}>
+                  <Typography>Placeholder Label</Typography>
+                </Grid>
+                <Grid item xs={12} lg={8}>
+                  <FormControl fullWidth>
+                    <TextField
+                      id="placeholderLabel"
+                      name="placeholderLabel"
+                      fullWidth
+                      onBlur={blockScheduleForm.handleBlur('placeholderLabel')}
+                      helperText={
+                        blockScheduleForm.touched.placeholderLabel ? blockScheduleForm.errors.placeholderLabel : ''
+                      }
+                      error={
+                        Boolean(blockScheduleForm.errors.placeholderLabel) && blockScheduleForm.touched.placeholderLabel
+                      }
+                      label="Placeholder Label"
+                      value={blockScheduleForm.values.placeholderLabel}
+                      onChange={blockScheduleForm.handleChange}
+                    />
+                  </FormControl>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container alignItems="center">
+              <Grid item xs />
+              <Grid item xs />
+              <Grid item xs={4} lg={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <StyledButton
+                  type="submit"
+                  variant="contained"
+                  size="large"
+                  style={{
+                    margin: '30px 0'
+                  }}
+                >
+                  Apply
+                </StyledButton>
+              </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      </ScheduleBoxWrapper>
+    </LocalizationProvider>
   );
 };
 

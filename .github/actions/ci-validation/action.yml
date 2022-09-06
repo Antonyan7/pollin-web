@@ -53,11 +53,11 @@ runs:
         echo "::group::Run Server and Tests"
         yarn run cypress:run
         echo "::endgroup::"
-      shell: bash  
+      shell: bash
 
     - name: Show Coverage
       run: |
         echo "::group::Show Coverage"
         yarn run coverage
         echo "::endgroup::"
-      shell: bash    
+      shell: bash
