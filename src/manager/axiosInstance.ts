@@ -20,7 +20,7 @@ const getOrGenerateDeviceId = () => {
 
 const Axios = (parameters: AxiosInstanceProps) => {
   const { baseURL } = parameters;
-  const axiosInstance = axios.create({ baseURL });
+  const axiosInstance = axios.create({ baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}${baseURL}` });
 
   axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
     const requestConfig = config;

@@ -8,7 +8,7 @@ yarn install
 
 ## Set environment variables:
 
-Some environment variables cannot be set by default in the project for security reasons.
+Environment variables cannot be set by default in the project for security reasons.
 
 To get them:
 
@@ -16,7 +16,8 @@ To get them:
 - use `gcloud auth login` to sign in to your account
 - use `gcloud config set project pollin-clinic-portal-dev` to set the project
 - navigate to project root in terminal
-- use `gcloud secrets versions access latest --secret=CLINIC_PORTAL_DEV_CRDENTIALS > .env` to download secrets as `.env` to use in local
+- [LOCAL_MOCK] - use `gcloud secrets versions access latest --secret=CLINIC_PORTAL_MOCK_ENVIRONMENT_CRDENTIALS > .env` to download secrets as `.env` to use in local
+- [DEV_SERVER] - use `gcloud secrets versions access latest --secret=CLINIC_PORTAL_DEV_ENVIRONMENT_CRDENTIALS > .env` to download secrets as `.env` to use in local
 
 if receive error `gcloud.secrets.versions.access` then please ask your manager to give you an access to this resource.
 
