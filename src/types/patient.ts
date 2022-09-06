@@ -49,6 +49,7 @@ export interface IHeadCell {
   label: string;
   align: 'center' | 'left' | 'right' | 'inherit' | 'justify' | undefined;
   paddingLeft: string | number;
+  isSortable: boolean;
 }
 
 export enum CycleStatuses {

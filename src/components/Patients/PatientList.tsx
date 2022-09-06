@@ -15,9 +15,9 @@ const PatientList = () => {
   const [rows] = useState<IPatient[]>([]);
   const [rowsPerPage, setRowsPerPage] = React.useState<number>(25);
   const [searchValue, setSearchValue] = useState<string>('');
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESCENDING);
+  const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
   const [filters, setFilters] = useState<any[]>([]);
-  const [sortOrder] = useState<SortOrder>(SortOrder.ASCENDING);
-  const [sortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
   const [page, setPage] = React.useState<number>(0);
   const headCells = headCellsListMockData;
   const emptyRows = useMemo(
@@ -58,7 +58,13 @@ const PatientList = () => {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <PatientListHeadCell headCell={headCell} />
+                <PatientListHeadCell
+                  headCell={headCell}
+                  sortOrder={sortOrder}
+                  setSortOrder={setSortOrder}
+                  sortField={sortField}
+                  setSortField={setSortField}
+                />
               ))}
             </TableRow>
           </TableHead>
