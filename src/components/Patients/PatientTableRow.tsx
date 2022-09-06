@@ -7,7 +7,7 @@ import Chip from '@ui-component/patient/Chip';
 
 import alertIcon from '../../assets/images/patient/icons/alertIcon.svg';
 import avatarIconPatient from '../../assets/images/patient/icons/avatarIconPatient.svg';
-import { CycleStatuses, IPatient } from '../../types/patient';
+import { IPatient } from '../../types/patient';
 
 interface IPatientTableRow {
   row: IPatient;
@@ -36,15 +36,13 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
       </TableCell>
       <TableCell component="th" id={labelId} scope="row">
         <Typography variant="subtitle1" sx={{ color: 'grey.900' }}>
-          {row.title}
+          {row.name}
         </Typography>
-        <Typography variant="caption">
-          {row.age} {' |'} {row.gender} {' |'} {row.partnerCount} Partner(s)
-        </Typography>
+        <Typography variant="caption">{row.subString}</Typography>
       </TableCell>
       <TableCell>{row.doctor}</TableCell>
       <TableCell align="center">
-        {row.alerts ? (
+        {row.alertsCount ? (
           <Badge badgeContent={row.alertsCount} color="error">
             <Image src={alertIcon} />
           </Badge>
@@ -54,9 +52,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
       </TableCell>
       <TableCell align="center">{row.dateOfBirth}</TableCell>
       <TableCell align="center">
-        {row.cycleStatus === CycleStatuses.notActive && (
-          <Chip label={CycleStatuses.notActive} size="small" chipColor="notActive" />
-        )}
+        <Chip label={row.cycleStatus} size="small" chipColor="notActive" />
       </TableCell>
     </TableRow>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Autocomplete, Divider, InputAdornment, OutlinedInput, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -36,8 +36,27 @@ const filterResults = [
   { name: 'Filter 4', id: 4 }
 ];
 
-const PatientFilters = () => {
+interface PatientFiltersProps {
+  setSearchValue: (value: string) => void;
+  setFiltersChange: (value: any) => void;
+}
+
+const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
   const theme = useTheme();
+
+  const onSearchChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchValue(event.target.value);
+    },
+    [setSearchValue]
+  );
+
+  const onFiltersChange = useCallback(
+    (event: React.ChangeEvent<{}>, value: any) => {
+      setFiltersChange(value);
+    },
+    [setFiltersChange]
+  );
 
   return (
     <>
@@ -53,6 +72,7 @@ const PatientFilters = () => {
         <OutlinedInputStyle
           id="input-search-patients"
           placeholder="Search Patients"
+          onChange={onSearchChange}
           startAdornment={
             <InputAdornment position="start">
               <IconSearch stroke={2} size="1.2rem" color={theme.palette.grey[500]} />
@@ -61,6 +81,7 @@ const PatientFilters = () => {
         />
         <Autocomplete
           fullWidth
+          onChange={onFiltersChange}
           options={filterResults}
           getOptionLabel={(option) => option.name}
           popupIcon={<KeyboardArrowDownIcon />}
