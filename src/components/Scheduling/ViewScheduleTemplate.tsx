@@ -1,10 +1,11 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 
-import Calendar from '@ui-component/weekly-calendar';
+const DynamicCalendar = dynamic(() => import('@ui-component/weekly-calendar'));
 
 const ViewScheduleTemplate = () => (
   <div className="view-scheduling-calendar">
-    <Calendar calendarDate={new Date().toISOString()} />
+    <DynamicCalendar calendarDate={new Date().toISOString()} />
   </div>
 );
 

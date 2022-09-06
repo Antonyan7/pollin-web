@@ -25,13 +25,15 @@ import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ModalName } from 'constants/modals';
 import { format } from 'date-fns';
+import dynamic from 'next/dynamic';
 import { viewsMiddleware } from 'redux/slices/views';
-import Calendar from 'ui-component/calendar';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
+
+const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
 export const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: '30px',
@@ -155,7 +157,7 @@ const Appointments = () => {
             </Typography>
           </StyledButtonNew>
         </MainHeader>
-        <Calendar calendarDate={calendarDate} />
+        <DynamicCalendar calendarDate={calendarDate} />
       </AppointmentsContent>
     </Box>
   );
