@@ -161,6 +161,16 @@ const AddAppointmentsModal = () => {
                     label={t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER)}
                     value={addAppointmentForm.values.date}
                     onChange={(date: Date | null) => mobileDateTimeChange(date)}
+                    minutesStep={10}
+                    DialogProps={{
+                      sx: {
+                        '& > div > div > div > div > div + div + div > div > div > div': {
+                          '& .Mui-disabled': {
+                            display: 'none'
+                          }
+                        }
+                      }
+                    }}
                     renderInput={(params: TextFieldProps) => (
                       <TextField
                         {...params}

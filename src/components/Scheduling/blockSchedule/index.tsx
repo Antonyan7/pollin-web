@@ -144,6 +144,15 @@ const BlockTemplates = () => {
                       value={blockScheduleForm.values.startTime}
                       onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
                       minutesStep={10}
+                      PopperProps={{
+                        sx: {
+                          '& > div > div > div > div > div + div > div': {
+                            '& .Mui-disabled': {
+                              display: 'none'
+                            }
+                          }
+                        }
+                      }}
                       renderInput={(params) => (
                         <TextField
                           {...params}
@@ -198,6 +207,15 @@ const BlockTemplates = () => {
                       value={blockScheduleForm.values.endTime}
                       onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
                       minutesStep={10}
+                      PopperProps={{
+                        sx: {
+                          '& > div > div > div > div > div + div > div': {
+                            '& .Mui-disabled': {
+                              display: 'none'
+                            }
+                          }
+                        }
+                      }}
                       renderInput={(params) => (
                         <TextField
                           fullWidth
