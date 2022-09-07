@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
@@ -13,6 +14,7 @@ import {
   styled,
   Typography
 } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { dispatch } from 'redux/hooks';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import MainCard from 'ui-component/cards/MainCard';
@@ -37,6 +39,8 @@ const StyledMainCard = styled(Button)<SelectProps>(() => ({
 }));
 
 const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: React.Ref<HTMLDivElement>) => {
+  const [t] = useTranslation();
+
   const handleConfirm = () => {
     dispatch(schedulingMiddleware.deleteTemplate(selected));
     handleOpenClose?.();
@@ -46,7 +50,7 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
     <div ref={ref} tabIndex={-1}>
       <StyledMainCard>
         <MainCard
-          title="Confirm Template Deletion"
+          title={t(Translation.MODAL_SCHEDULING_DELETION_TITLE)}
           content={false}
           secondary={
             <IconButton onClick={handleOpenClose} size="large">
@@ -55,16 +59,16 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
           }
         >
           <CardContent>
-            <Typography variant="body1">Are you sure you want to delete the selected template(s)?</Typography>
+            <Typography variant="body1">{t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_MAIN)}</Typography>
             <Typography variant="body2" sx={{ mt: 2 }}>
-              Please note that this action is permanent and cannot be undone.
+              {t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_FOOTNOTE)}
             </Typography>
           </CardContent>
           <Divider />
           <CardActions>
             <Grid container justifyContent="flex-end">
               <Button variant="contained" type="button" onClick={handleConfirm}>
-                Confirm
+                {t(Translation.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)}
               </Button>
             </Grid>
           </CardActions>

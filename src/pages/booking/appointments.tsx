@@ -113,12 +113,12 @@ const Appointments = () => {
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth>
-              <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RECOURCE)}</InputLabel>
+              <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}</InputLabel>
               <Select
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
-                label={t(Translation.PAGE_APPOINTMENTS_SELECT_RECOURCE)}
+                label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
                 onChange={onServiceProviderChange}
                 value={serviceProviderId}
               >

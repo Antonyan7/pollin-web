@@ -69,7 +69,7 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_SELECT_RESOURCE)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_RESOURCE)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
@@ -89,7 +89,7 @@ const BlockTemplates = () => {
                       renderInput={(params: TextFieldProps) => (
                         <TextField
                           {...params}
-                          label={t(Translation.PAGE_BLOCK_SCHEDULE_SELECT_RESOURCE)}
+                          label={t(Translation.PAGE_SCHEDULING_BLOCK_RESOURCE)}
                           name="resourceId"
                           required
                           helperText={blockScheduleForm.touched.resourceId ? blockScheduleForm.errors.resourceId : ''}
@@ -105,12 +105,12 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_DATE_PICKER_START)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
                     <DesktopDatePicker
-                      label={t(Translation.PAGE_BLOCK_SCHEDULE_DATE_PICKER_START)}
+                      label={t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)}
                       inputFormat="MM/dd/yyyy"
                       value={blockScheduleForm.values.startDate}
                       onChange={(value): void => {
@@ -135,12 +135,12 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_TIME_PICKER_START)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_TIME_START)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
                     <TimePicker
-                      label={t(Translation.PAGE_BLOCK_SCHEDULE_TIME_PICKER_START)}
+                      label={t(Translation.PAGE_SCHEDULING_BLOCK_TIME_START)}
                       value={blockScheduleForm.values.startTime}
                       onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
                       minutesStep={10}
@@ -163,12 +163,12 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_DATE_PICKER_END)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
                     <DesktopDatePicker
-                      label={t(Translation.PAGE_BLOCK_SCHEDULE_DATE_PICKER_END)}
+                      label={t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)}
                       inputFormat="MM/dd/yyyy"
                       value={blockScheduleForm.values.endDate}
                       onChange={(date: Date | null) => desktopDateTimeChange(date, 'endDate')}
@@ -189,12 +189,12 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_TIME_PICKER_END)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_TIME_END)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
                     <TimePicker
-                      label={t(Translation.PAGE_BLOCK_SCHEDULE_TIME_PICKER_END)}
+                      label={t(Translation.PAGE_SCHEDULING_BLOCK_TIME_END)}
                       value={blockScheduleForm.values.endTime}
                       onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
                       minutesStep={10}
@@ -217,7 +217,7 @@ const BlockTemplates = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_BLOCK_SCHEDULE_PLACEHOLDER)}</Typography>
+                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <FormControl fullWidth>
@@ -232,7 +232,7 @@ const BlockTemplates = () => {
                       error={
                         Boolean(blockScheduleForm.errors.placeholderLabel) && blockScheduleForm.touched.placeholderLabel
                       }
-                      label={t(Translation.PAGE_BLOCK_SCHEDULE_PLACEHOLDER)}
+                      label={t(Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER)}
                       value={blockScheduleForm.values.placeholderLabel}
                       onChange={blockScheduleForm.handleChange}
                     />
@@ -254,7 +254,7 @@ const BlockTemplates = () => {
                     margin: '30px 0'
                   }}
                 >
-                  {t(Translation.PAGE_BLOCK_SCHEDULE_BUTTON_APPLY)}
+                  {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
                 </StyledButton>
               </Grid>
             </Grid>

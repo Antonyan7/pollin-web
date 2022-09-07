@@ -1,4 +1,5 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertBanner } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import EventIcon from '@mui/icons-material/Event';
@@ -20,23 +21,23 @@ import Snackbar from '@mui/material/Snackbar';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { repeatWeeksList, weekDays } from 'helpers/constants';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from '../../redux/slices/scheduling';
-import { IAppliedDay, IApplyScheduleDay, ScheduleTerms } from '../../types/apply-schedule';
+import { IAppliedDay, IApplyScheduleDay } from '../../types/apply-schedule';
 import { IApplyScheduleData, ISingleTemplate } from '../../types/create-schedule';
 import { IServiceProvider } from '../../types/reduxTypes/booking';
 import { SchedulingTemplateProps } from '../../types/reduxTypes/scheduling';
-
-const errorMessage = 'You have to fill all fields.';
 
 // TODO update component to contain 150 lines
 // eslint-disable-next-line max-lines-per-function
 const ApplyScheduleForm = () => {
   const theme = useTheme();
+  const [t] = useTranslation();
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
   const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
@@ -194,7 +195,7 @@ const ApplyScheduleForm = () => {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={12} lg={4}>
-                <Typography variant="body1">{ScheduleTerms.Resource}</Typography>
+                <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}</Typography>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
@@ -206,7 +207,9 @@ const ApplyScheduleForm = () => {
                     }}
                     value={{ id: resource.id, title: resource.title }}
                     getOptionLabel={(itemResource) => itemResource.title}
-                    renderInput={(params) => <TextField {...params} label={ScheduleTerms.Resource} />}
+                    renderInput={(params) => (
+                      <TextField {...params} label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)} />
+                    )}
                   />
                 </FormControl>
               </Grid>
@@ -216,7 +219,7 @@ const ApplyScheduleForm = () => {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={12} lg={4}>
-                <Typography variant="body1">{ScheduleTerms.ScheduleTemplate}</Typography>
+                <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}</Typography>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
@@ -234,7 +237,9 @@ const ApplyScheduleForm = () => {
                       handleSelectTemplate(value);
                     }}
                     getOptionLabel={(itemTemplate) => itemTemplate.name}
-                    renderInput={(params) => <TextField {...params} label={ScheduleTerms.Template} />}
+                    renderInput={(params) => (
+                      <TextField {...params} label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)} />
+                    )}
                   />
                 </FormControl>
               </Grid>
@@ -245,7 +250,7 @@ const ApplyScheduleForm = () => {
             <Grid item xs={12}>
               <Grid container alignItems="center">
                 <Grid item xs={12} lg={4}>
-                  <Typography variant="body1">Apply Day(s)</Typography>
+                  <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_APPLIED_DAYS)}</Typography>
                 </Grid>
                 <Grid item xs={12} lg={8}>
                   <Grid container spacing={2}>
@@ -279,7 +284,7 @@ const ApplyScheduleForm = () => {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={12} lg={4}>
-                <Typography variant="body1">{ScheduleTerms.Repeats}</Typography>
+                <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_REPEATS)}</Typography>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <FormControl fullWidth>
@@ -291,7 +296,9 @@ const ApplyScheduleForm = () => {
                     }}
                     value={{ id: repeatWeeks.id, name: repeatWeeks.name }}
                     getOptionLabel={(itemRepeat) => itemRepeat.name}
-                    renderInput={(params) => <TextField {...params} label={ScheduleTerms.Every} />}
+                    renderInput={(params) => (
+                      <TextField {...params} label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)} />
+                    )}
                   />
                 </FormControl>
               </Grid>
@@ -301,12 +308,12 @@ const ApplyScheduleForm = () => {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={12} lg={4}>
-                <Typography variant="body1">{ScheduleTerms.StartDate}</Typography>
+                <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}</Typography>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
-                    label={ScheduleTerms.StartDate}
+                    label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
                     inputFormat="MMM dd, yyyy"
                     value={startDate}
                     renderInput={(params: TextFieldProps) => (
@@ -336,12 +343,12 @@ const ApplyScheduleForm = () => {
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs={12} lg={4}>
-                <Typography variant="body1">{ScheduleTerms.EndDate}</Typography>
+                <Typography variant="body1">{t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}</Typography>
               </Grid>
               <Grid item xs={12} lg={8}>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                   <DesktopDatePicker
-                    label={ScheduleTerms.EndDate}
+                    label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
                     inputFormat="MMM dd, yyyy"
                     value={endDate}
                     renderInput={(params: TextFieldProps) => (
@@ -374,7 +381,7 @@ const ApplyScheduleForm = () => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
           >
             <Alert variant="filled" severity="success">
-              Successfully Applied
+              {t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)}
             </Alert>
           </Snackbar>
 
@@ -391,14 +398,14 @@ const ApplyScheduleForm = () => {
                     margin: '30px 0'
                   }}
                 >
-                  Apply
+                  {t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)}
                 </StyledButton>
               </Grid>
             </Grid>
           </Grid>
           <AlertBanner
             visible={errorAlert}
-            errorDescription={errorMessage}
+            errorDescription={t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)}
             severityType="error"
             setVisible={setErrorAlert}
           />

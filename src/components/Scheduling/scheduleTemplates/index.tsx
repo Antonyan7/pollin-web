@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
@@ -20,6 +21,7 @@ import {
   useTheme
 } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { Translation } from 'constants/translations';
 import { getComparator, stableSort } from 'helpers/tableSort';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -35,31 +37,31 @@ const headCells: HeadCell[] = [
   {
     id: 'name',
     numeric: false,
-    label: 'Name',
+    label: Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_NAME,
     align: 'left'
   },
   {
     id: 'duration',
     numeric: true,
-    label: 'Duration',
+    label: Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_DURATION,
     align: 'left'
   },
   {
     id: 'lastSavedOn',
     numeric: true,
-    label: 'Last Saved On',
+    label: Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_LAST,
     align: 'right'
   },
   {
     id: 'status',
     numeric: true,
-    label: 'Status',
+    label: Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_STATUS,
     align: 'center'
   },
   {
     id: 'action',
     numeric: false,
-    label: 'Action',
+    label: Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_ACTION,
     align: 'center'
   }
 ];
@@ -88,6 +90,7 @@ const EnhancedTableHead = ({
   selected
 }: CustomerListEnhancedTableHeadProps) => {
   const theme = useTheme();
+  const [t] = useTranslation();
   const createSortHandler = (property: string) => (event: React.SyntheticEvent<Element, Event>) => {
     onRequestSort(event, property);
   };
@@ -124,7 +127,7 @@ const EnhancedTableHead = ({
                 direction={orderBy === headCell.id ? order : 'asc'}
                 onClick={createSortHandler(headCell.id)}
               >
-                {headCell.label}
+                {t(headCell.label)}
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
@@ -150,6 +153,7 @@ const ScheduleTemplates = () => {
   const [rows, setRows] = React.useState<Row[]>([]);
   const router = useRouter();
   const theme = useTheme();
+  const [t] = useTranslation();
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
 
@@ -233,7 +237,7 @@ const ScheduleTemplates = () => {
         <CardContent>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={8}>
-              <Typography variant="h3">Schedule Templates</Typography>
+              <Typography variant="h3">{t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE)}</Typography>
             </Grid>
             <Grid item xs={2} />
             <Grid item xs={2}>
@@ -244,7 +248,7 @@ const ScheduleTemplates = () => {
                 onClick={handleNewTemplate}
               >
                 <Typography variant="h4" sx={{ marginRight: '10px' }}>
-                  New Template
+                  {t(Translation.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE)}
                 </Typography>
               </StyledButtonNew>
             </Grid>

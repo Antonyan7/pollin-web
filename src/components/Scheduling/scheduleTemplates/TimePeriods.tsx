@@ -1,8 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Autocomplete, Box, Checkbox, FormControlLabel, Radio, RadioGroup, TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { Translation } from 'constants/translations';
 import { IServiceType } from 'types/reduxTypes/booking';
 
 import { MinusIconButton } from '@ui-component/common/buttons';
@@ -16,6 +18,7 @@ import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../../ty
 
 const renderScheduleInputs = (values: IServiceType[]) => values.map((item) => item.title);
 
+// eslint-disable-next-line max-lines-per-function
 export const TimePeriods = (props: {
   singleTemplate: ISingleTemplate;
   index: number;
@@ -30,6 +33,7 @@ export const TimePeriods = (props: {
 }) => {
   const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
   const { singleTemplate, index, updateInputValue, templateData, setTemplateData } = props;
+  const [t] = useTranslation();
 
   const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
 
@@ -45,11 +49,15 @@ export const TimePeriods = (props: {
   const renderTitle = (timePeriodNumber: number) =>
     !index ? (
       <Box>
-        <h3 className="sub-title">Time Period {timePeriodNumber + 1}</h3>
+        <h3 className="sub-title">
+          {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_TIME_PERIOD)} {timePeriodNumber + 1}
+        </h3>
       </Box>
     ) : (
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <h3 className="sub-title">Time Period {timePeriodNumber + 1}</h3>
+        <h3 className="sub-title">
+          {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_TIME_PERIOD)} {timePeriodNumber + 1}
+        </h3>
         <MinusIconButton onClick={() => onMinusClick(timePeriodNumber)} />
       </Box>
     );
@@ -77,11 +85,11 @@ export const TimePeriods = (props: {
         </span>
       </div>
       <div className="create-template-box">
-        <p>Start Time</p>
+        <p>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}</p>
         <div className="schedule-inputs">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
-              label="Start Time"
+              label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}
               ampm={false}
               value={singleTemplate.startTime}
               onChange={(newTime: Date | null) => {
@@ -97,11 +105,11 @@ export const TimePeriods = (props: {
         </div>
       </div>
       <div className="create-template-box">
-        <p>End Time</p>
+        <p>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}</p>
         <div className="schedule-inputs">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
-              label="End Time"
+              label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}
               ampm={false}
               value={singleTemplate.endTime}
               onChange={(date: Date | null) => {
@@ -117,7 +125,7 @@ export const TimePeriods = (props: {
         </div>
       </div>
       <div className="create-template-box">
-        <p>Service Type or Block</p>
+        <p>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PERIOD_TYPE)}</p>
         <RadioGroup
           className="schedule-inputs"
           row
@@ -127,13 +135,21 @@ export const TimePeriods = (props: {
             updateInputValue('periodType', e.target.value, index);
           }}
         >
-          <FormControlLabel value={ServiceTypeOrBlock.ServiceType} control={<Radio />} label="Service Type" />
-          <FormControlLabel value={ServiceTypeOrBlock.Block} control={<Radio />} label="Block" />
+          <FormControlLabel
+            value={ServiceTypeOrBlock.ServiceType}
+            control={<Radio />}
+            label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPE)}
+          />
+          <FormControlLabel
+            value={ServiceTypeOrBlock.Block}
+            control={<Radio />}
+            label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK)}
+          />
         </RadioGroup>
       </div>
       {singleTemplate.periodType === ServiceTypeOrBlock.ServiceType && (
         <div className="create-template-box">
-          <p>Service Types</p>
+          <p>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)}</p>
           <Autocomplete
             className="schedule-inputs"
             multiple
@@ -148,13 +164,13 @@ export const TimePeriods = (props: {
         </div>
       )}
       <div className="create-template-box">
-        <p>Placeholder Label</p>
+        <p>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}</p>
         <TextField
           className="schedule-inputs"
           fullWidth
           id="outlined-email-address"
           value={singleTemplate.placeholderName}
-          placeholder="Placeholder Label"
+          placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}
           onChange={(e) => updateInputValue('placeholderName', e.target.value, index)}
         />
       </div>

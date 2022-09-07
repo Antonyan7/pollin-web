@@ -11,10 +11,10 @@ const BlockSchedule = () => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
       <MainBreadcrumb
-        currentPage={t(Translation.PAGE_BLOCK_SCHEDULE_TITLE)}
+        currentPage={t(Translation.PAGE_SCHEDULING_BLOCK_TITLE)}
         navigation={{
           basePath: '/',
-          items: [{ name: `${t(Translation.PAGE_BLOCK_SCHEDULE_TITLE)}`, path: '/scheduling/block-schedule' }]
+          items: [{ name: t(Translation.PAGE_SCHEDULING_BLOCK_TITLE), path: '/scheduling/block-schedule' }]
         }}
       />
       <BlockScheduleComponent />

@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
 import { Box, Grid, Modal, TextField } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { useFormik } from 'formik';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import { v4 } from 'uuid';
@@ -31,6 +33,7 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 const CreateTemplate = () => {
   const [templateData, setTemplateData] = useState<ITemplateGroup>(getEmptyTemplateState());
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [t] = useTranslation();
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
@@ -135,10 +138,10 @@ const CreateTemplate = () => {
         </Box>
         <Grid container direction="row-reverse" sx={{ marginTop: '200px' }}>
           <StyledButton variant="contained" size="large" type="submit">
-            Save
+            {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
           </StyledButton>
           <StyledButton onClick={onModalOpenClose} variant="contained" size="large" sx={{ marginRight: '10px' }}>
-            Cancel
+            {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
           </StyledButton>
         </Grid>
       </form>
