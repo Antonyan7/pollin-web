@@ -2,7 +2,7 @@ import { IPatientsReqBody } from 'types/patient';
 
 import { IAxiosResponse } from './axios';
 import Axios from './axiosInstance';
-import { IAlertDetailsResponse, IPatientList } from './managerPatient';
+import { IAlertDetailsResponse, IPatientList, IPatientsFiltersResponse } from './managerPatientEmr';
 
 const baseURL = process.env.NEXT_PUBLIC_PATIENT_EMR_SERVICE_URL;
 
@@ -16,6 +16,9 @@ const patientEmrManager = {
   },
   getPatientsList(data: IPatientsReqBody) {
     return axiosInstance.post<any, IAxiosResponse<IPatientList>>('/v1/patients/search', data);
+  },
+  getPatientSearchFilters() {
+    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>('/v1/patients/search/filters');
   }
 };
 

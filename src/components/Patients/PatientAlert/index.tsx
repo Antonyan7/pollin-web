@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertDetailsProps } from '@axios/managerPatient';
+import { AlertDetailsProps } from '@axios/managerPatientEmr';
 import InfoIcon from '@mui/icons-material/Info';
 import { Badge, Grid, ListItem, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';

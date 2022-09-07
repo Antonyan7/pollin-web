@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
@@ -71,8 +72,8 @@ const PatientList = () => {
           <TableBody>
             {patientsList.patients
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row: IPatient, index) => (
-                <PatientTableRow row={row} index={index} />
+              .map((row: IPatientListData, index) => (
+                <PatientTableRow row={row} index={index} key={row.id} />
               ))}
             {emptyRows > 0 && (
               <TableRow

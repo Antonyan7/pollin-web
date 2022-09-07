@@ -1,12 +1,11 @@
 import React from 'react';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, CardActions, CardContent, Divider, Grid, IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { CardActions, CardContent, Divider, Grid, IconButton, Typography } from '@mui/material';
 import MainCard from 'ui-component/common/MainCard';
 
 export default (props: { handleClose: () => void }) => {
   const { handleClose } = props;
-  const theme = useTheme();
 
   const getModalStyle = () => {
     const top = 50;
@@ -50,14 +49,9 @@ export default (props: { handleClose: () => void }) => {
         <Divider />
         <CardActions>
           <Grid container justifyContent="flex-end">
-            <Button
-              sx={{ background: `${theme.palette.grey[700]}` }}
-              variant="contained"
-              type="button"
-              onClick={() => handleClose()}
-            >
+            <StyledButton variant="contained" type="button" onClick={() => handleClose()}>
               Ok
-            </Button>
+            </StyledButton>
           </Grid>
         </CardActions>
       </MainCard>

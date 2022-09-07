@@ -5,7 +5,7 @@ import { IPatientsReqBody } from '../../../types/patient';
 
 import slice from './slice';
 
-const { setPatientsList, setError, setPatientAlertDetails } = slice.actions;
+const { setPatientsList, setError, setPatientSearchFilters, setPatientAlertDetails } = slice.actions;
 
 const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch: AppDispatch) => {
   try {
@@ -17,17 +17,28 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
   }
 };
 
+const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getPatientSearchFilters();
+
+    dispatch(setPatientSearchFilters(response.data.data.filters));
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
 const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.patients.getPatientAlertDetails(alertId);
 
-    dispatch(setPatientAlertDetails(response.data.alerts));
+    dispatch(setPatientAlertDetails(response.data.data.alerts));
   } catch (error) {
     dispatch(setError(error));
   }
 };
 
 export default {
-  getPatientAlertDetails,
-  getPatientsList
+  getPatientsList,
+  getPatientSearchFilters,
+  getPatientAlertDetails
 };

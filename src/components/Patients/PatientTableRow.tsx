@@ -1,4 +1,5 @@
 import React from 'react';
+import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientAlert from '@components/Patients/PatientAlert';
 import { TableCell, TableRow, Typography } from '@mui/material';
 import Image from 'next/image';
@@ -7,10 +8,9 @@ import { useRouter } from 'next/router';
 import Chip from '@ui-component/patient/Chip';
 
 import avatarIconPatient from '../../assets/images/patient/icons/avatarIconPatient.svg';
-import { IPatient } from '../../types/patient';
 
 interface IPatientTableRow {
-  row: IPatient;
+  row: IPatientListData;
   index: number;
 }
 

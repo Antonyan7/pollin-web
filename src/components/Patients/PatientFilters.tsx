@@ -1,9 +1,12 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Divider, InputAdornment, OutlinedInput, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
-import { IconSearch } from '@tabler/icons';
+import { reformatedFilterResults } from 'helpers/patientFilters';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 
 import { MainHeader } from '../../pages/booking/appointments';
 
@@ -29,33 +32,24 @@ const OutlinedInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme
   }
 }));
 
-const filterResults = [
-  { name: 'Filter 1', id: 1 },
-  { name: 'Filter 2', id: 2 },
-  { name: 'Filter 3', id: 3 },
-  { name: 'Filter 4', id: 4 }
-];
-
 interface PatientFiltersProps {
   setSearchValue: (value: string) => void;
-  setFiltersChange: (value: any) => void;
+  setFiltersChange?: (value: any) => void;
 }
 
-const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
+const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
   const theme = useTheme();
+  const filtersList = useAppSelector(patientsSelector.filtersList);
+
+  useEffect(() => {
+    dispatch(patientsMiddleware.getPatientSearchFilters());
+  }, []);
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
     },
     [setSearchValue]
-  );
-
-  const onFiltersChange = useCallback(
-    (event: React.ChangeEvent<{}>, value: any) => {
-      setFiltersChange(value);
-    },
-    [setFiltersChange]
   );
 
   return (
@@ -75,15 +69,18 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           onChange={onSearchChange}
           startAdornment={
             <InputAdornment position="start">
-              <IconSearch stroke={2} size="1.2rem" color={theme.palette.grey[500]} />
+              <SearchIcon sx={{ color: theme.palette.primary.main }} />
             </InputAdornment>
           }
         />
         <Autocomplete
+          id="patientFilterId"
           fullWidth
-          onChange={onFiltersChange}
-          options={filterResults}
-          getOptionLabel={(option) => option.name}
+          multiple
+          options={reformatedFilterResults(filtersList)}
+          groupBy={(option) => option.options.titleName}
+          getOptionLabel={(option) => option.options.title as string}
+          isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInput={(params) => <TextField {...params} label="Filter Results" />}
         />

@@ -7,18 +7,17 @@ export interface AlertDetailsProps {
 }
 
 export interface IAlertDetailsResponse {
-  data: {
-    alerts: AlertDetailsProps[];
-  };
+  alerts: AlertDetailsProps[];
 }
 export interface IPatientListData {
   id: string;
   name: string;
   subString: string;
   doctorAssigned: string;
-  alerts?: IPatientDataAlert;
+  alertsCount: number;
   dateOfBirth: string;
   cycleStatus: string;
+  doctor: string;
 }
 
 export interface IPatientList {
@@ -41,6 +40,32 @@ export interface BlockSchedulingProps {
 
 export interface IPatientsProps {
   error: Error | null;
+  searchFilters: IFilterCategory[];
   patientsList: IPatientList;
   patientAlertDetails: AlertDetailsProps[];
+}
+
+export interface IOptionsProps {
+  title?: string;
+  type: string;
+  id: string;
+  titleName: string;
+}
+
+export interface GroupedByTitlesProps {
+  options: IOptionsProps;
+}
+
+export interface IPatientsFilterOption {
+  type: PatientListFilterType;
+  id: string;
+}
+export interface IFilterCategory {
+  id: string;
+  type: PatientListFilterType;
+  title: string;
+  options: IPatientsFilterOption[];
+}
+export interface IPatientsFiltersResponse {
+  filters: IFilterCategory[];
 }
