@@ -7,10 +7,10 @@ import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { IPatient, IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
-import { IPatient, IPatientsReqBody, PatientListField, SortOrder } from '../../types/patient';
 
 import { PatientListHeadCell } from './PatientListHeadCell';
 
@@ -20,7 +20,7 @@ const PatientList = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESCENDING);
   const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
-  const [filters, setFilters] = useState<any[]>([]);
+  const [filters, setFilters] = useState<IPatientsFilterOption[]>([]);
   const [page, setPage] = React.useState<number>(0);
   const { t } = useTranslation();
 
@@ -69,6 +69,7 @@ const PatientList = () => {
                   setSortOrder={setSortOrder}
                   sortField={sortField}
                   setSortField={setSortField}
+                  key={headCell.id}
                 />
               ))}
             </TableRow>

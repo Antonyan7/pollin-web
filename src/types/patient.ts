@@ -39,7 +39,7 @@ export enum PatientListFilterType {
 }
 
 export interface IPatientsFilterOption {
-  type: PatientListFilterType;
+  type: PatientListFilterType | string;
   id: string;
 }
 
@@ -47,7 +47,7 @@ export interface IPatientsReqBody {
   searchString?: string;
   sortByField?: PatientListField;
   sortOrder?: SortOrder;
-  filters?: string[];
+  filters?: IPatientsFilterOption[];
   page: number;
 }
 

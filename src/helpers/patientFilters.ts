@@ -18,4 +18,31 @@ const reformatedFilterResults = (filterCategory: IFilterCategory[]) =>
     return initialGroupedTitles;
   }, []);
 
-export { reformatedFilterResults };
+const filterByUniqueCategory = (filterResult: GroupedByTitlesProps[]) => {
+  filterResult = filterResult.reduce(
+    (initialFilteredResults: GroupedByTitlesProps[], nextFilteredResult: GroupedByTitlesProps) => {
+      const isTitleNamesEqual = !initialFilteredResults.some((filteredResult: GroupedByTitlesProps, index: number) => {
+        if (nextFilteredResult.options.titleName === filteredResult.options.titleName) {
+          const filteredIndex = initialFilteredResults.indexOf(filteredResult);
+
+          if (filteredIndex !== -1) {
+            initialFilteredResults[index] = nextFilteredResult;
+          }
+        }
+
+        return nextFilteredResult.options.titleName === filteredResult.options.titleName;
+      });
+
+      if (isTitleNamesEqual) {
+        initialFilteredResults.push(nextFilteredResult);
+      }
+
+      return initialFilteredResults;
+    },
+    []
+  );
+
+  return filterResult;
+};
+
+export { filterByUniqueCategory, reformatedFilterResults };

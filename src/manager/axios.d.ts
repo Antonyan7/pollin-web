@@ -28,8 +28,6 @@ interface IResponseStatus {
 
 interface IData<T> extends IResponseStatus {
   data: T;
-  // TODO fix when integrate BE
-  [x: string]: any;
 }
 
 interface IPagination {

@@ -1,14 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Divider, InputAdornment, OutlinedInput, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
-import { reformatedFilterResults } from 'helpers/patientFilters';
+import { filterByUniqueCategory, reformatedFilterResults } from 'helpers/patientFilters';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { IPatientsFilterOption } from 'types/patient';
 
 import { MainHeader } from '../../pages/booking/appointments';
 
@@ -36,11 +38,12 @@ const OutlinedInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme
 
 interface PatientFiltersProps {
   setSearchValue: (value: string) => void;
-  setFiltersChange?: (value: any) => void;
+  setFiltersChange: (value: any) => void;
 }
 
-const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
+const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
   const theme = useTheme();
+  const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const filtersList = useAppSelector(patientsSelector.filtersList);
 
   useEffect(() => {
@@ -55,6 +58,24 @@ const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
     },
     [setSearchValue]
   );
+
+  const onAutoCompleteChange = (value: GroupedByTitlesProps[]) => {
+    const filteredResult = filterByUniqueCategory(value);
+
+    setSelectedFilterResults(filteredResult);
+
+    const filteredResultOptions: IPatientsFilterOption[] = [];
+
+    filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
+      const filterOption = {
+        type: titleProps.options.titleName.toLowerCase(),
+        id: titleProps.options.id
+      };
+
+      filteredResultOptions.push(filterOption);
+    });
+    setFiltersChange(filteredResultOptions);
+  };
 
   return (
     <>
@@ -85,6 +106,10 @@ const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
           groupBy={(option) => option.options.titleName}
           getOptionLabel={(option) => option.options.title as string}
           isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
+          value={selectedFilterResults}
+          onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
+            onAutoCompleteChange(selectedOption);
+          }}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
         />
