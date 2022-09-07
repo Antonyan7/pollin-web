@@ -8,8 +8,15 @@ export interface IPatient {
   doctor: string;
   alerts: boolean;
   alertsCount: number;
+  alertInfo?: AlertInfo[];
   dateOfBirth: string;
   cycleStatus: CycleStatuses;
+}
+interface AlertInfo {
+  title: string;
+  messages: {
+    title: string;
+  };
 }
 
 export enum SortOrder {

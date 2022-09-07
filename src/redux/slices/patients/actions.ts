@@ -1,6 +1,5 @@
+import { AlertDetailsProps, IPatientList, IPatientsProps } from 'manager/managerPatient.d';
 import { IAction, SliceReducers } from 'redux/store';
-
-import { IPatientList, IPatientsProps } from '../../../types/reduxTypes/patients';
 
 const actions: SliceReducers<IPatientsProps> = {
   setError(state, action) {
@@ -8,6 +7,9 @@ const actions: SliceReducers<IPatientsProps> = {
   },
   setPatientsList(state, action: IAction<IPatientList>) {
     state.patientsList = action.payload;
+  },
+  setPatientAlertDetails(state, action: IAction<AlertDetailsProps[]>) {
+    state.patientAlertDetails = action.payload;
   }
 };
 

@@ -5,8 +5,8 @@ import schedulingManager from './schedulingManager';
 
 const API = {
   scheduling: schedulingManager,
-  patients: patientEmrManager,
-  booking: bookingManager
+  booking: bookingManager,
+  patients: patientEmrManager
 };
 
 export default API;

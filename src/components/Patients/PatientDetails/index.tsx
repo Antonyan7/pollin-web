@@ -5,18 +5,19 @@ import MainCard from '@ui-component/cards/MainCard';
 import PatientDetailsTabView from '@ui-component/PatientDetailsTabView';
 
 interface PatientDetailsProps {
-  patientName: string;
+  patientName?: string;
+  id?: string;
 }
 
-const PatientDetails = ({ patientName }: PatientDetailsProps) => (
+const PatientDetails = ({ patientName, id }: PatientDetailsProps) => (
   <>
     <MainBreadcrumb
       currentPage="Patient Details"
       navigation={{
         basePath: '/',
         items: [
-          { name: 'Patient List', path: '/patientEMR/patient-list' },
-          { name: patientName, path: `/patientEMR/patient-list/${patientName}` }
+          { name: 'Patient List/EMR', path: '/patient-emr/list' },
+          { name: patientName, path: `/patient-emr/list/${id}` }
         ]
       }}
     />
