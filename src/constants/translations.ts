@@ -1,6 +1,12 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
 
 export enum Translation {
+  PAGE_PATIENT_LIST_TITLE = 'page.patient.list.title',
+  PAGE_PATIENT_LIST_FIELD_SEARCH = 'page.patient.list.field.search',
+  PAGE_PATIENT_LIST_FIELD_FILTERS = 'page.patient.list.field.filters',
+  PAGE_PATIENT_LIST_ALERT_COUNT = 'page.patient.list.alert.count',
+  COMMON_PAGINATION_ROWS_COUNT = 'common.pagination.rows.count',
+  CYCLE_STATUS_NOT_ACTIVE = 'cycle.status.not.active',
   PAGE_APPOINTMENTS_TITLE = 'page.appointments.title',
   PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR = 'page.appointments.button.new.calendar',
   PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT = 'page.appointments.button.new.appointment',

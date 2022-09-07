@@ -1,4 +1,10 @@
 {
+  "page.patient.list.title": "Patient List",
+  "page.patient.list.field.search": "Search Patients",
+  "page.patient.list.field.filters": "Filter Results",
+  "page.patient.list.alert.count": "None",
+  "common.pagination.rows.count": "Rows per page",
+  "cycle.status.not.active": "Not active",
   "page.appointments.title": "Appointments",
   "page.appointments.button.new.calendar": "New Calendar",
   "page.appointments.button.new.appointment": "New Appointment",

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { AlertDetailsProps } from '@axios/managerPatientEmr';
 import InfoIcon from '@mui/icons-material/Info';
 import { Badge, Grid, ListItem, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import MuiTooltip from '@mui/material/Tooltip';
+import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -15,6 +17,7 @@ interface PatientAlertProps {
 
 const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
   const theme = useTheme();
+  const { t } = useTranslation();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
   const onOpen = debounce(() => dispatch(patientsMiddleware.getPatientAlertDetails(rowId)), 500);
 
@@ -39,7 +42,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
       </Button>
     </MuiTooltip>
   ) : (
-    <Typography>None</Typography>
+    <Typography>{t(Translation.PAGE_PATIENT_LIST_ALERT_COUNT)}</Typography>
   );
 };
 

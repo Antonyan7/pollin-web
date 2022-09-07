@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { Translation } from 'constants/translations';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
@@ -20,6 +22,8 @@ const PatientList = () => {
   const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
   const [filters, setFilters] = useState<any[]>([]);
   const [page, setPage] = React.useState<number>(0);
+  const { t } = useTranslation();
+
   const headCells = headCellsListMockData;
   const emptyRows = useMemo(
     () => (page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0),
@@ -89,6 +93,7 @@ const PatientList = () => {
       </TableContainer>
 
       <TablePagination
+        labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
         rowsPerPageOptions={[25, 40, 100]}
         component="div"
         count={rows.length}

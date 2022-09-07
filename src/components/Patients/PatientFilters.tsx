@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Divider, InputAdornment, OutlinedInput, TextField, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
+import { Translation } from 'constants/translations';
 import { reformatedFilterResults } from 'helpers/patientFilters';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -45,6 +47,8 @@ const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
     dispatch(patientsMiddleware.getPatientSearchFilters());
   }, []);
 
+  const { t } = useTranslation();
+
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
@@ -59,13 +63,13 @@ const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
           display: 'flex'
         }}
       >
-        <Typography variant="h3">Patient List</Typography>
+        <Typography variant="h3">{t(Translation.PAGE_PATIENT_LIST_TITLE)}</Typography>
       </header>
       <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-64px', marginRight: '-64px' }} />
       <MainHeader>
         <OutlinedInputStyle
           id="input-search-patients"
-          placeholder="Search Patients"
+          placeholder={`${t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH)}`}
           onChange={onSearchChange}
           startAdornment={
             <InputAdornment position="start">
@@ -82,7 +86,7 @@ const PatientFilters = ({ setSearchValue }: PatientFiltersProps) => {
           getOptionLabel={(option) => option.options.title as string}
           isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
           popupIcon={<KeyboardArrowDownIcon />}
-          renderInput={(params) => <TextField {...params} label="Filter Results" />}
+          renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
         />
       </MainHeader>
     </>

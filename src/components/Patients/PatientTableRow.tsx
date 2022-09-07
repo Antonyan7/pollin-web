@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientAlert from '@components/Patients/PatientAlert';
 import { TableCell, TableRow, Typography } from '@mui/material';
+import { Translation } from 'constants/translations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
@@ -17,7 +19,7 @@ interface IPatientTableRow {
 const PatientTableRow = ({ row, index }: IPatientTableRow) => {
   const labelId = `enhanced-table-checkbox-${index}`;
   const router = useRouter();
-
+  const { t } = useTranslation();
   const onRowClick = (id: string) => {
     router.push({ pathname: '/patient-emr/patient-details', query: { patientId: id } });
   };
@@ -46,7 +48,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
       </TableCell>
       <TableCell align="center">{row.dateOfBirth}</TableCell>
       <TableCell align="center">
-        <Chip label={row.cycleStatus} size="small" chipColor="notActive" />
+        <Chip label={t(Translation.CYCLE_STATUS_NOT_ACTIVE)} size="small" chipColor="notActive" />
       </TableCell>
     </TableRow>
   );
