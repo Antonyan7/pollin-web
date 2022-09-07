@@ -149,7 +149,6 @@ const ScheduleTemplates = () => {
   const [orderBy, setOrderBy] = React.useState<string>('calories');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState<number>(5);
   const [rows, setRows] = React.useState<Row[]>([]);
   const router = useRouter();
   const theme = useTheme();
@@ -158,11 +157,11 @@ const ScheduleTemplates = () => {
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
 
   useEffect(() => {
-    dispatch(schedulingMiddleware.getSchedulingTemplates());
-  }, []);
+    dispatch(schedulingMiddleware.getSchedulingTemplates(page + 1));
+  }, [page]);
 
   useEffect(() => {
-    setRows(scheduleTemplates);
+    setRows(scheduleTemplates.templates);
   }, [scheduleTemplates]);
 
   const handleRequestSort = useCallback(
@@ -215,20 +214,9 @@ const ScheduleTemplates = () => {
     []
   );
 
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | undefined,
-    itemCount: number
-  ) => {
-    if (event?.target.value) {
-      setRowsPerPage(parseInt(event?.target.value, itemCount));
-    }
-
-    setPage(0);
-  };
-
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
-  const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+  const emptyRows = page > 0 ? Math.max(0, (1 + page) * tableRowCount - scheduleTemplates.totalItems) : 0;
 
   return (
     <>
@@ -263,31 +251,29 @@ const ScheduleTemplates = () => {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={scheduleTemplates.totalItems}
               selected={selected}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  /** Make sure no display bugs if row isn't an OrderData object */
-                  if (typeof row === 'number') {
-                    return null;
-                  }
+              {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+                /** Make sure no display bugs if row isn't an OrderData object */
+                if (typeof row === 'number') {
+                  return null;
+                }
 
-                  const isItemSelected = isSelected(row.id);
-                  const labelId = `enhanced-table-checkbox-${index}`;
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-                  return (
-                    <ScheduleTemplateRow
-                      key={`template-${row.id}-${row.name}`}
-                      isItemSelected={isItemSelected}
-                      row={row}
-                      onClick={(e) => onClick(e, row.id)}
-                      labelId={labelId}
-                    />
-                  );
-                })}
+                return (
+                  <ScheduleTemplateRow
+                    key={`template-${row.id}-${row.name}`}
+                    isItemSelected={isItemSelected}
+                    row={row}
+                    onClick={(e) => onClick(e, row.id)}
+                    labelId={labelId}
+                  />
+                );
+              })}
               {emptyRows > 0 && (
                 <TableRow
                   style={{
@@ -303,13 +289,12 @@ const ScheduleTemplates = () => {
 
         {/* table pagination */}
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[10]}
           component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
+          count={scheduleTemplates.totalItems}
+          rowsPerPage={tableRowCount}
           page={page}
           onPageChange={handleChangePage}
-          onRowsPerPageChange={(e) => handleChangeRowsPerPage(e, tableRowCount)}
         />
       </MainCard>
     </>

@@ -171,7 +171,7 @@ const ApplyScheduleForm = () => {
   };
 
   useEffect(() => {
-    dispatch(schedulingMiddleware.getSchedulingTemplates());
+    dispatch(schedulingMiddleware.getSchedulingTemplates(1));
     dispatch(bookingMiddleware.getServiceProviders());
   }, []);
 
@@ -232,7 +232,7 @@ const ApplyScheduleForm = () => {
                       lastSavedDay: scheduleTemplate.lastSavedDay,
                       status: scheduleTemplate.status
                     }}
-                    options={scheduleTemplates}
+                    options={scheduleTemplates.templates}
                     onChange={(e, value: SchedulingTemplateProps | null) => {
                       handleSelectTemplate(value);
                     }}

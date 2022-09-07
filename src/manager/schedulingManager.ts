@@ -13,8 +13,10 @@ const schedulingManager = {
   createTemplate(data: ITemplateGroup) {
     return axiosInstance.post<any, IAxiosResponse<void>>('/v1/templates', data);
   },
-  getTemplatesList() {
-    return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/v1/templates');
+  getTemplatesList(pageSize: number) {
+    return axiosInstance.get<any, IAxiosResponse<SchedulingTemplateProps[]>>('/v1/templates', {
+      params: { page: pageSize }
+    });
   },
   deleteTemplate(data: string[]) {
     return axiosInstance.delete<any, IAxiosResponse<void>>('/v1/templates/delete', { data });

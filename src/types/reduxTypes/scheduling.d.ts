@@ -9,6 +9,11 @@ export interface SchedulingTemplateProps {
   lastSavedDay: string;
   status: string;
 }
+interface IPagination {
+  pageSize: number;
+  currentPage: number;
+  totalItems: number;
+}
 
 export interface IScheduleApplyTemplate {
   duration: string;
@@ -32,7 +37,7 @@ export interface SingleSchedulingProps {
 export interface SchedulingProps {
   scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
-  scheduleTemplates: SchedulingTemplateProps[];
+  scheduleTemplates: SchedulingTemplateProps[] | IPagination;
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];
   scheduleResources: IServiceProvider[];

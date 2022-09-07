@@ -26,9 +26,9 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getSchedulingTemplates = () => async (dispatch: AppDispatch) => {
+const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.scheduling.getTemplatesList();
+    const response = await API.scheduling.getTemplatesList(pageSize);
 
     dispatch(setScheduleTemplates(response.data.data));
   } catch (error) {
@@ -79,7 +79,7 @@ const deleteTemplate = (templateId: string[]) => async (dispatch: AppDispatch) =
   try {
     await API.scheduling.deleteTemplate(templateId);
 
-    dispatch(getSchedulingTemplates());
+    dispatch(getSchedulingTemplates(1));
   } catch (error) {
     dispatch(setError(error));
   }
