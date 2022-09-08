@@ -1,7 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true
+  swcMinify: true,
+  // TODO fix by adding custom loader https://nextjs.org/docs/messages/export-image-api
+  experimental: {
+    images: {
+      unoptimized: true
+    }
+  }
 };
 
 const withPlugins = require('next-compose-plugins');
@@ -18,7 +24,7 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withPlugins([withTM], {
-  nextConfig,
+  ...nextConfig,
   async rewrites() {
     return {
       fallback: [

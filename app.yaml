@@ -2,10 +2,18 @@ env: standard
 runtime: nodejs16
 service: default
 
-handlers:
-  - url: /public
-    static_dir: public
+automatic_scaling:
+  max_instances: 2
 
+handlers:
+  # All paths with extension to static file
+  - url: /(.*\..+)$
+    secure: always
+    static_files: out/\1
+    upload: out/(.*\..+)$
+
+  # All paths routes to index page
   - url: /.*
     secure: always
-    script: auto
+    static_files: out/index.html
+    upload: out/index.html
