@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformatedFilterResults } from 'helpers/patientFilters';
+import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { IPatientsFilterOption } from 'types/patient';
@@ -37,8 +38,8 @@ const OutlinedInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme
 }));
 
 interface PatientFiltersProps {
-  setSearchValue: (value: string) => void;
-  setFiltersChange: (value: any) => void;
+  setSearchValue: React.Dispatch<SetStateAction<string>>;
+  setFiltersChange: React.Dispatch<SetStateAction<IPatientsFilterOption[]>>;
 }
 
 const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
@@ -54,28 +55,33 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchValue(event.target.value);
+      const debouncedCallback = debounce(() => setSearchValue(event.target.value), 1000);
+
+      debouncedCallback();
     },
     [setSearchValue]
   );
 
-  const onAutoCompleteChange = (value: GroupedByTitlesProps[]) => {
-    const filteredResult = filterByUniqueCategory(value);
+  const onAutoCompleteChange = useCallback(
+    (value: GroupedByTitlesProps[]) => {
+      const filteredResult = filterByUniqueCategory(value);
 
-    setSelectedFilterResults(filteredResult);
+      setSelectedFilterResults(filteredResult);
 
-    const filteredResultOptions: IPatientsFilterOption[] = [];
+      const filteredResultOptions: IPatientsFilterOption[] = [];
 
-    filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
-      const filterOption = {
-        type: titleProps.options.titleName.toLowerCase(),
-        id: titleProps.options.id
-      };
+      filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
+        const filterOption = {
+          type: titleProps.options.titleName.toLowerCase(),
+          id: titleProps.options.id
+        };
 
-      filteredResultOptions.push(filterOption);
-    });
-    setFiltersChange(filteredResultOptions);
-  };
+        filteredResultOptions.push(filterOption);
+      });
+      setFiltersChange(filteredResultOptions);
+    },
+    [setFiltersChange]
+  );
 
   return (
     <>
