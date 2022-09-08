@@ -1,8 +1,9 @@
 import { IPatientsReqBody } from 'types/patient';
+import { IPatientList } from 'types/reduxTypes/patient-emr';
 
 import { IAxiosResponse } from './axios';
 import Axios from './axiosInstance';
-import { IAlertDetailsResponse, IPatientList, IPatientsFiltersResponse } from './managerPatientEmr';
+import { IAlertDetailsResponse, IPatientsFiltersResponse } from './managerPatientEmr';
 
 const baseURL = process.env.NEXT_PUBLIC_PATIENT_EMR_SERVICE_URL;
 

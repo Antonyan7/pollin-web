@@ -9,11 +9,6 @@ export interface SchedulingTemplateProps {
   lastSavedDay: string;
   status: string;
 }
-interface IPagination {
-  pageSize: number;
-  currentPage: number;
-  totalItems: number;
-}
 
 export interface IScheduleApplyTemplate {
   duration: string;

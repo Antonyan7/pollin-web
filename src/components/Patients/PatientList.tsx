@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
@@ -8,6 +7,7 @@ import PatientTableRow from '@components/Patients/PatientTableRow';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { IPatient, IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
+import { IPatientListData } from 'types/reduxTypes/patient-emr';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';

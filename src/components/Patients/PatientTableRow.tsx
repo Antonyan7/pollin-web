@@ -1,11 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientListData } from '@axios/managerPatientEmr';
 import PatientAlert from '@components/Patients/PatientAlert';
 import { TableCell, TableRow, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { IPatientListData } from 'types/reduxTypes/patient-emr';
 
 import Chip from '@ui-component/patient/Chip';
 

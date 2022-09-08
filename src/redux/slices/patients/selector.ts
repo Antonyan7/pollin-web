@@ -3,10 +3,10 @@ import { RootState } from 'redux/store';
 
 const selector = (state: RootState) => state.patients;
 
-const patientsList = createSelector([selector], (state) => state.patientsList);
+const patientsList = createSelector([selector], (state) => state.patientsList.list);
 const patientsErrors = createSelector([selector], (state) => state.error);
-const filtersList = createSelector([selector], (state) => state.searchFilters);
-const patientAlertDetails = createSelector([selector], (state) => state.patientAlertDetails);
+const filtersList = createSelector([selector], (state) => state.patientsList.searchFilters);
+const patientAlertDetails = createSelector([selector], (state) => state.patientsList.patientAlertDetails);
 
 export default {
   patientsList,
