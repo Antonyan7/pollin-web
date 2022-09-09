@@ -1,7 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import FullCalendar from '@fullcalendar/react';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -23,7 +23,6 @@ const Calendar = (props: { calendarDate: string }) => {
   const router = useRouter();
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
-  const [schedules, setSchedules] = useState<ICalendarSlot[]>([]);
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
 
   const onDateChangeToday = () => {
@@ -58,19 +57,13 @@ const Calendar = (props: { calendarDate: string }) => {
     }
   };
 
-  useEffect(() => {
-    const { scheduleId } = router.query;
-
-    if (scheduleId && typeof scheduleId === 'string') {
-      dispatch(schedulingMiddleware.getSingleSchedule(scheduleId));
-    }
-  }, [router.query]);
-
-  useEffect(() => {
+  const schedules = useMemo(() => {
     const calendarEvents: ICalendarSlot[] = [];
 
     scheduleSingleTemplate.timePeriods.forEach((item: ISingleTemplate, index: number) => {
-      if (getWeekDay(item.startTime) === getWeekDay(date)) {
+      const isDaysContainingWeekDay = item.days.includes(getWeekDay(date));
+
+      if (isDaysContainingWeekDay) {
         calendarEvents.push(
           CreateSlot(
             item.periodType === ServiceTypeOrBlock.ServiceType ? SlotTypes.schedule : SlotTypes.block,
@@ -83,8 +76,17 @@ const Calendar = (props: { calendarDate: string }) => {
         );
       }
     });
-    setSchedules(calendarEvents);
+
+    return calendarEvents;
   }, [date, scheduleSingleTemplate.timePeriods]);
+
+  useEffect(() => {
+    const { scheduleId } = router.query;
+
+    if (scheduleId && typeof scheduleId === 'string') {
+      dispatch(schedulingMiddleware.getSingleSchedule(scheduleId));
+    }
+  }, [router.query]);
 
   return (
     <div style={{ position: 'relative' }}>

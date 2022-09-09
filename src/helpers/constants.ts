@@ -21,15 +21,6 @@ export const cancellationReasons = [
   'No longer require this appointment',
   'Other: please provide details'
 ];
-export const enum DaysLabels {
-  Mon = 'Mon',
-  Tue = 'Tue',
-  Wed = 'Wed',
-  Thu = 'Thu',
-  Fri = 'Fri',
-  Sat = 'Sat',
-  Sun = 'Sun'
-}
 
 export const repeatWeeksList: IApplyScheduleDay[] = [
   {
