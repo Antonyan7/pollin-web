@@ -22,9 +22,7 @@ const schedulingManager = {
     return axiosInstance.delete<any, IAxiosResponse<void>>('/v1/templates/delete', { data });
   },
   getSingleTemplate(templateId: string) {
-    return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>('/v1/templates', {
-      params: { templateId }
-    });
+    return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>(`/v1/templates/${templateId}`);
   },
   applyScheduleBlock(data: BlockSchedulingProps) {
     return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>('/v1/block/apply', data);
