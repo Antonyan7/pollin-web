@@ -12,37 +12,39 @@ import {
   IUpdatedAppointmentResponse
 } from '@axios/managerBooking';
 
-import Axios from './axiosInstance';
+import { Axios } from './axiosInstance';
 
-const baseURL = process.env.NEXT_PUBLIC_BOOKING_SERVICE_URL;
+const baseURL = '/clinic-booking/v1';
 
-const axiosInstance = Axios({ baseURL });
+const axiosInstance = Axios();
 const bookingManager = {
   getAppointments(params: IAppointmentListReqParams) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>('/v1/calendar/slot', { params });
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>(`${baseURL  }/v1/calendar/slot`, { params });
   },
   getServiceProviders() {
-    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>('/v1/provider');
+    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>(`${baseURL  }/v1/provider`);
   },
   getPatientNames(name: string) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientNamesResponseData>>(`/v1/patient`, { name });
+    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientNamesResponseData>>(`${baseURL  }/v1/patient`, {
+      name
+    });
   },
   getServiceTypes() {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`/v1/service-type`);
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`${baseURL  }/v1/service-type`);
   },
   createAppointment(appointmentValues: ICreatedAppointmentBody) {
-    return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentResponse>>(`/v1/appointment`, {
+    return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentResponse>>(`${baseURL  }/v1/appointment`, {
       ...appointmentValues
     });
   },
   getAppointmentDetails(appointmentId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(`/v1/appointment`, {
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(`${baseURL  }/v1/appointment`, {
       params: { appointmentId }
     });
   },
   editAppointment(appointmentId: string, appointmentValues: IEditAppointmentBody) {
     return axiosInstance.put<any, IAxiosResponse<IUpdatedAppointmentResponse>>(
-      `/v1/appointment/${appointmentId}`,
+      `${baseURL  }/v1/appointment/${appointmentId}`,
       appointmentValues
     );
   }

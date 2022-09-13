@@ -1,10 +1,5 @@
 import { AxiosRequestConfig, AxiosResponseHeaders } from 'axios';
 
-export interface AxiosInstanceProps {
-  token?: string;
-  baseURL?: string;
-}
-
 export interface IAxiosResponse<T = any, D = any> {
   data: IData<T>;
   status: IResponseStatus;

@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { guid } from 'helpers/guid';
 
-import { AxiosInstanceProps } from './axios';
+import { FirebaseManager } from './firebase';
 
 const generateRequestId = () => guid();
 const getOrGenerateDeviceId = () => {
@@ -18,27 +18,41 @@ const getOrGenerateDeviceId = () => {
   return newDeviceId;
 };
 
-const Axios = (parameters: AxiosInstanceProps) => {
-  const { baseURL } = parameters;
-  const axiosInstance = axios.create({ baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}${baseURL}` });
+class RequestManager {
+  private static instance: AxiosInstance;
 
-  axiosInstance.interceptors.request.use((config: AxiosRequestConfig) => {
-    const requestConfig = config;
+  static getCreateInstance(): AxiosInstance {
+    if (RequestManager.instance) {
+      return RequestManager.instance;
+    }
 
-    requestConfig.headers = {
-      'x-pollin-device-id': getOrGenerateDeviceId(),
-      'x-pollin-request-id': generateRequestId(),
-      'x-pollin-lang': 'en',
-      'x-pollin-source': 'web',
-      'x-pollin-firebase-app-check': 'web',
-      'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
-      'x-pollin-id-token': 'web'
-    };
+    console.debug('Initiate data access level');
 
-    return requestConfig;
-  });
+    const axiosInstance = axios.create({ baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}` });
 
-  return axiosInstance;
-};
+    FirebaseManager.initiate();
+    axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
+      const requestConfig = config;
 
-export default Axios;
+      const captchaToken = await FirebaseManager.getToken();
+
+      requestConfig.headers = {
+        'x-pollin-device-id': getOrGenerateDeviceId(),
+        'x-pollin-request-id': generateRequestId(),
+        'x-pollin-lang': 'en',
+        'x-pollin-source': 'web',
+        'x-pollin-firebase-app-check': captchaToken,
+        'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
+        'x-pollin-id-token': 'web'
+      };
+
+      return requestConfig;
+    });
+
+    RequestManager.instance = axiosInstance;
+
+    return axiosInstance;
+  }
+}
+
+export const Axios = () => RequestManager.getCreateInstance();
