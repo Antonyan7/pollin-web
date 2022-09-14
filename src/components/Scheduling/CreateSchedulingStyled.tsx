@@ -2,10 +2,6 @@ import { styled } from '@mui/material/styles';
 
 const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
   '.create-scheduling-template': {
-    backgroundColor: theme.palette.common.white,
-    border: '1px solid rgb(220, 225, 228)',
-    padding: '25px',
-
     '.create-template': {
       marginTop: '33px',
       padding: '0 66px 70px 66px',
@@ -20,12 +16,6 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
       '.schedule-inputs': {
         gridColumn: ' span 2 / span 2'
       }
-    },
-
-    '.splitter-line': {
-      borderBottom: `1px solid ${theme.palette.grey['200']}`,
-      width: ' 100%',
-      height: ' 4px'
     },
 
     '.sub-title': {

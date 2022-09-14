@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
-import { Box, Grid, Modal, TextField } from '@mui/material';
+import { Divider, Grid, Modal, TextField, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useFormik } from 'formik';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
@@ -112,37 +112,55 @@ const CreateTemplate = () => {
   });
 
   return (
-    <div className="create-template">
+    <ScheduleBoxWrapper sx={{ padding: '45px 24px 0px' }}>
       <form onSubmit={createScheduleForm.handleSubmit}>
-        <div className="create-template-box">
-          <p>Name of Template</p>
-          <TextField
-            onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e)}
-            className="schedule-inputs"
-            fullWidth
-            placeholder="Name of Template"
-          />
-        </div>
-        <div className="splitter-line" />
-        {templateData.timePeriods.map((item, index) => (
-          <TimePeriods
-            singleTemplate={item}
-            index={index}
-            updateInputValue={updateInputValue}
-            setTemplateData={setTemplateData}
-            templateData={templateData}
-          />
-        ))}
-        <Box sx={{ marginTop: '30px' }}>
-          <PlusIconButton onClick={onPlusClick} />
-        </Box>
-        <Grid container direction="row-reverse" sx={{ marginTop: '200px' }}>
-          <StyledButton variant="contained" size="large" type="submit">
-            {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
-          </StyledButton>
-          <StyledButton onClick={onModalOpenClose} variant="contained" size="large" sx={{ marginRight: '10px' }}>
-            {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
-          </StyledButton>
+        <Grid container spacing={4}>
+          <Grid item xs={12}>
+            <Grid container alignItems="center">
+              <Grid item xs={12} lg={4}>
+                <Typography>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}</Typography>
+              </Grid>
+              <Grid item xs={12} lg={8}>
+                <TextField
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e)}
+                  className="schedule-inputs"
+                  fullWidth
+                  placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
+                />
+              </Grid>
+            </Grid>
+            <Grid item xs={12}>
+              <Divider sx={{ margin: '24px 0px 12px' }} />
+              {templateData.timePeriods.map((item, index) => (
+                <>
+                  <Divider
+                    sx={{ margin: '24px 0px 12px', display: templateData.timePeriods.length ? 'none' : 'block' }}
+                  />
+                  <TimePeriods
+                    singleTemplate={item}
+                    index={index}
+                    updateInputValue={updateInputValue}
+                    setTemplateData={setTemplateData}
+                    templateData={templateData}
+                  />
+                  <Divider sx={{ margin: '12px 0px' }} />
+                </>
+              ))}
+            </Grid>
+            <Grid item xs={12}>
+              <PlusIconButton onClick={onPlusClick} />
+            </Grid>
+            <Grid item xs={12}>
+              <Grid container direction="row-reverse" sx={{ margin: '50px 0px 50px 0px' }}>
+                <StyledButton variant="contained" size="large" type="submit">
+                  {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
+                </StyledButton>
+                <StyledButton onClick={onModalOpenClose} variant="contained" size="large" sx={{ marginRight: '10px' }}>
+                  {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
+                </StyledButton>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </form>
       {isModalOpen ? (
@@ -150,7 +168,7 @@ const CreateTemplate = () => {
           <ErrorModal handleClose={onModalOpenClose} />
         </Modal>
       ) : null}
-    </div>
+    </ScheduleBoxWrapper>
   );
 };
 
