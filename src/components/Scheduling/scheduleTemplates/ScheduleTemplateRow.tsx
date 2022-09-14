@@ -3,6 +3,7 @@ import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { Row } from 'components/Scheduling/scheduleTemplates';
+import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 
 interface TableComponentProps {
@@ -46,7 +47,7 @@ const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableCom
         </Typography>
       </TableCell>
       <TableCell>{row.duration}</TableCell>
-      <TableCell align="right">{row.lastSavedDay}</TableCell>
+      <TableCell align="right">{timeAdjuster(new Date(row.lastSavedDay)).customizedDate}</TableCell>
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
         <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
