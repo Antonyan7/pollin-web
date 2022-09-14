@@ -8,8 +8,8 @@ export interface OptionsReturnProps<T extends IUniqueItem> {
 export interface ISingleTemplate {
   id?: string;
   days: number[];
-  startTime: string;
-  endTime: string;
+  startTime: string | null;
+  endTime: string | null;
   periodType: string;
   serviceTypes: string[];
   placeholderName: string;

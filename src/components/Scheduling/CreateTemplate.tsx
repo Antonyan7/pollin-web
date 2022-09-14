@@ -18,8 +18,8 @@ import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
   days: new Array<number>(),
-  startTime: toIsoString(new Date()),
-  endTime: toIsoString(new Date()),
+  startTime: null,
+  endTime: null,
   periodType: ServiceTypeOrBlock.Block,
   serviceTypes: new Array<string>(),
   placeholderName: ''
@@ -85,8 +85,10 @@ const CreateTemplate = () => {
       timePeriods: templateData.timePeriods.map((item) => {
         const { id, ...rest } = item;
 
-        rest.startTime = toIsoString(utcDate(new Date(rest.startTime)));
-        rest.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+        if (rest.startTime && rest.endTime) {
+          rest.startTime = toIsoString(utcDate(new Date(rest.startTime)));
+          rest.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+        }
 
         return rest;
       })

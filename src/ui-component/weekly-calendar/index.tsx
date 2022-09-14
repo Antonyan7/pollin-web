@@ -68,8 +68,8 @@ const Calendar = (props: { calendarDate: string }) => {
           CreateSlot(
             item.periodType === ServiceTypeOrBlock.ServiceType ? SlotTypes.schedule : SlotTypes.block,
             // TODO: remove changeHours function after actual server implementation
-            changeHours(changeDate(item.startTime, date), index ? 8 : 10),
-            changeHours(changeDate(item.endTime, date), index ? 8 : 10),
+            changeHours(changeDate(item.startTime as string, date), index ? 8 : 10),
+            changeHours(changeDate(item.endTime as string, date), index ? 8 : 10),
             item.periodType,
             item.placeholderName
           )
