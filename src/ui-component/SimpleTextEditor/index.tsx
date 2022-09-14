@@ -2,14 +2,11 @@ import React from 'react';
 import ReactQuill from 'react-quill';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { Grid, GridProps, styled, useTheme } from '@mui/material';
+import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCard from '@ui-component/cards/SubCard';
 
 import 'react-quill/dist/quill.snow.css';
-
-interface EncountersEditorProps {
-  editorValue: string;
-}
 
 const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
   '& .quill': {
@@ -32,7 +29,7 @@ const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
   }
 }));
 
-const SimpleTextEditor = ({ editorValue }: EncountersEditorProps) => {
+const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
   const theme = useTheme();
 
   return (
@@ -44,7 +41,7 @@ const SimpleTextEditor = ({ editorValue }: EncountersEditorProps) => {
             Cancel
           </StyledButton>
           <StyledButton type="button" variant="contained">
-            Save
+            {mode === SimpleEditorMode.Add ? 'Save' : 'Update'}
           </StyledButton>
         </Grid>
       </SubCard>

@@ -1,3 +1,5 @@
+import { SetStateAction } from 'react';
+
 export interface IPatient {
   id: string;
   name: string;
@@ -61,4 +63,15 @@ export interface IHeadCell {
 
 export enum CycleStatuses {
   notActive = 'Not Active'
+}
+
+export enum SimpleEditorMode {
+  Add = 'add',
+  Edit = 'edit'
+}
+
+export interface SimpleEditorProps {
+  editorValue: string;
+  setEditorValue: React.Dispatch<SetStateAction<string>>;
+  mode: string;
 }
