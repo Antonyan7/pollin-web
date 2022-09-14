@@ -5,7 +5,7 @@ interface MainStyleProps {
   theme: Theme;
 }
 
-const Main = styled('main')(({ theme }: MainStyleProps) => ({
+export const Main = styled('main')(({ theme }: MainStyleProps) => ({
   ...theme.typography.mainContent,
   backgroundColor: theme.palette.common.white
 }));

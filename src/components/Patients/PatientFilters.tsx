@@ -24,7 +24,7 @@ import { IPatientsFilterOption } from 'types/patient';
 
 import { MainHeader } from '../../pages/booking/appointments';
 
-const OutlinedInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
+export const StyledOutlinedInput = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 500,
   height: 53,
   marginBottom: 20,
@@ -104,7 +104,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
       </header>
       <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-64px', marginRight: '-64px' }} />
       <MainHeader>
-        <OutlinedInputStyle
+        <StyledOutlinedInput
           id="input-search-patients"
           placeholder={`${t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH)}`}
           onChange={onSearchChange}

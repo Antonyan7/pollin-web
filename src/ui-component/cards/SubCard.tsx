@@ -50,10 +50,26 @@ const SubCard = React.forwardRef(
       >
         {/* card header and action */}
         {!darkTitle && title && (
-          <CardHeader sx={{ p: 2.5 }} title={<Typography variant="h5">{title}</Typography>} action={secondary} />
+          <CardHeader
+            sx={{ p: 2.5 }}
+            title={
+              <Typography fontSize="21px" fontWeight="400">
+                {title}
+              </Typography>
+            }
+            action={secondary}
+          />
         )}
         {darkTitle && title && (
-          <CardHeader sx={{ p: 2.5 }} title={<Typography variant="h4">{title}</Typography>} action={secondary} />
+          <CardHeader
+            sx={{ p: 2.5 }}
+            title={
+              <Typography fontSize="21px" fontWeight="400">
+                {title}
+              </Typography>
+            }
+            action={secondary}
+          />
         )}
 
         {/* content & header divider */}

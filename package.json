@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@emotion/cache": "^11.10.1",
-    "@emotion/react": "^11.10.0",
+    "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.0",
     "@fullcalendar/common": "^5.11.3",
     "@fullcalendar/daygrid": "^5.10.1",
