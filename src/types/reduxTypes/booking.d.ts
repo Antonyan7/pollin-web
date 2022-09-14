@@ -13,6 +13,7 @@ export interface BookingProps {
   date: string;
   serviceProviders: IServiceProvider[];
   currentServiceProviderId: string;
+  isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
   patientList: IPatientInfo[];

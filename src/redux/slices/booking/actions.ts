@@ -17,6 +17,9 @@ const actions: SliceReducers<BookingProps> = {
   setCurrentAppointmentId(state, action: IAction<string>) {
     state.currentAppointmentId = action.payload;
   },
+  setCalendarLoadingState(state, action: IAction<boolean>) {
+    state.isCalendarLoading = action.payload;
+  },
   setError(state, action: IAction<string>) {
     state.error = action.payload;
   },

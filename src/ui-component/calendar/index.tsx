@@ -16,6 +16,8 @@ import { ModalName } from 'constants/modals';
 import { SlotTypes } from 'types/calendar';
 import { useTranslation } from 'react-i18next';
 import { Translation } from 'constants/translations';
+import { CircularProgress } from '@mui/material';
+import { Box } from '@mui/system';
 import CalendarStyled from './CalendarStyled';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
@@ -31,9 +33,17 @@ const Calendar = (props: { calendarDate: string }) => {
   const [slots, setSlots] = useState<ICalendarSlot[]>([]);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const appointments = useAppSelector(bookingSelector.appointmentsList);
+  const isCalendarLoading = useAppSelector(bookingSelector.isCalendarLoading);
   const router = useRouter();
   const [t] = useTranslation();
-
+  const loadingSx = {
+    display: 'grid',
+    position: 'absolute',
+    top: '10%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 300
+  };
   const onEventClick = useCallback(
     (initialEventObject: EventClickArg) => {
       initialEventObject.jsEvent.preventDefault();
@@ -139,6 +149,12 @@ const Calendar = (props: { calendarDate: string }) => {
 
   return (
     <div style={{ position: 'relative' }}>
+      {isCalendarLoading && (
+        <Box sx={loadingSx}>
+          <CircularProgress sx={{ margin: 'auto' }} size={70} />
+          <span style={{ marginTop: '20px' }}>{t(Translation.PAGE_APPOINTMENTS_LOADING)}</span>
+        </Box>
+      )}
       <CalendarStyled>
         {serviceProviderId === '' ? (
           <StyledDisabledLayer>{t(Translation.PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED)}</StyledDisabledLayer>

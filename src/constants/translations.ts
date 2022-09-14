@@ -8,6 +8,7 @@ export enum Translation {
   COMMON_PAGINATION_ROWS_COUNT = 'common.pagination.rows.count',
   CYCLE_STATUS_NOT_ACTIVE = 'cycle.status.not.active',
   PAGE_APPOINTMENTS_TITLE = 'page.appointments.title',
+  PAGE_APPOINTMENTS_LOADING = 'page.appointments.loading',
   PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR = 'page.appointments.button.new.calendar',
   PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT = 'page.appointments.button.new.appointment',
   PAGE_APPOINTMENTS_SELECT_RESOURCE = 'page.appointments.select.resource',

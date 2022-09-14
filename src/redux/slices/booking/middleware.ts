@@ -12,6 +12,7 @@ const {
   setDate,
   setAppointments,
   setCurrentServiceProviderId,
+  setCalendarLoadingState,
   setPatientNames,
   setServiceTypes,
   setAppointmentDetails
@@ -29,10 +30,14 @@ const getServiceProviders = () => async (dispatch: AppDispatch) => {
 
 const getAppointments = (resourceId: string, date: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setCalendarLoadingState(true));
+
     const response = await API.booking.getAppointments({ resourceId, date });
 
     dispatch(setAppointments(response.data.data.slots));
+    dispatch(setCalendarLoadingState(false));
   } catch (error) {
+    dispatch(setCalendarLoadingState(false));
     dispatch(setError(error));
   }
 };

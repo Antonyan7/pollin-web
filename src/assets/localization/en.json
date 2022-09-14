@@ -6,6 +6,7 @@
   "common.pagination.rows.count": "Rows per page",
   "cycle.status.not.active": "Not active",
   "page.appointments.title": "Appointments",
+  "page.appointments.loading": "Loading Calendar",
   "page.appointments.button.new.calendar": "New Calendar",
   "page.appointments.button.new.appointment": "New Appointment",
   "page.appointments.select.resource": "Resource",
