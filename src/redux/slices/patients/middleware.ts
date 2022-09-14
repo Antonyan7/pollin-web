@@ -5,25 +5,40 @@ import { IPatientsReqBody } from '../../../types/patient';
 
 import slice from './slice';
 
-const { setPatientsList, setError, setPatientSearchFilters, setPatientAlertDetails } = slice.actions;
+const {
+  setPatientsList,
+  setError,
+  setPatientSearchFilters,
+  setPatientAlertDetails,
+  setPatientsLoadingState,
+  setPatientsFiltersLoadingState
+} = slice.actions;
 
 const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setPatientsLoadingState(true));
+
     const response = await API.patients.getPatientsList(patientsListData);
 
     dispatch(setPatientsList(response.data.data));
+    dispatch(setPatientsLoadingState(false));
   } catch (error) {
+    dispatch(setPatientsLoadingState(false));
     dispatch(setError(error));
   }
 };
 
 const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setPatientsFiltersLoadingState(true));
+
     const response = await API.patients.getPatientSearchFilters();
 
     dispatch(setPatientSearchFilters(response.data.data.filters));
+    dispatch(setPatientsFiltersLoadingState(false));
   } catch (error) {
     dispatch(setError(error));
+    dispatch(setPatientsFiltersLoadingState(false));
   }
 };
 

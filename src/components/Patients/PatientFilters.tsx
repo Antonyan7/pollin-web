@@ -3,9 +3,18 @@ import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Divider, InputAdornment, OutlinedInput, TextField, Typography, useTheme } from '@mui/material';
+import {
+  Autocomplete,
+  CircularProgress,
+  Divider,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { shouldForwardProp } from '@mui/system';
+import { Box, shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformatedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
@@ -46,6 +55,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
   const theme = useTheme();
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const filtersList = useAppSelector(patientsSelector.filtersList);
+  const isFiltersLoading = useAppSelector(patientsSelector.isPatientsFiltersLoading);
 
   useEffect(() => {
     dispatch(patientsMiddleware.getPatientSearchFilters());
@@ -108,6 +118,12 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           id="patientFilterId"
           fullWidth
           multiple
+          loading={isFiltersLoading}
+          loadingText={
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <CircularProgress size={20} />
+            </Box>
+          }
           options={reformatedFilterResults(filtersList)}
           groupBy={(option) => option.options.titleName}
           getOptionLabel={(option) => option.options.title as string}

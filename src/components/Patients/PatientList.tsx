@@ -4,7 +4,17 @@ import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import {
+  Box,
+  CircularProgress,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TablePagination,
+  TableRow
+} from '@mui/material';
 import { Translation } from 'constants/translations';
 import { IPatient, IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 import { IPatientListData } from 'types/reduxTypes/patient-emr';
@@ -30,6 +40,7 @@ const PatientList = () => {
     [page, rowsPerPage, rows.length]
   );
   const patientsList = useAppSelector(patientsSelector.patientsList);
+  const isPatientListLoading = useAppSelector(patientsSelector.isPatientsListLoading);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -60,36 +71,46 @@ const PatientList = () => {
       <PatientFilters setSearchValue={setSearchValue} setFiltersChange={setFilters} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-          <TableHead>
-            <TableRow>
-              {headCells.map((headCell) => (
-                <PatientListHeadCell
-                  headCell={headCell}
-                  sortOrder={sortOrder}
-                  setSortOrder={setSortOrder}
-                  sortField={sortField}
-                  setSortField={setSortField}
-                  key={headCell.id}
-                />
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {patientsList.patients
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row: IPatientListData, index) => (
-                <PatientTableRow row={row} index={index} key={row.id} />
-              ))}
-            {emptyRows > 0 && (
-              <TableRow
-                style={{
-                  height: 53 * emptyRows
-                }}
-              >
-                <TableCell colSpan={6} />
-              </TableRow>
-            )}
-          </TableBody>
+          {isPatientListLoading ? (
+            <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center' }}>
+              <p style={{ margin: 'auto' }}>
+                <CircularProgress />
+              </p>
+            </Box>
+          ) : (
+            <>
+              <TableHead>
+                <TableRow>
+                  {headCells.map((headCell) => (
+                    <PatientListHeadCell
+                      headCell={headCell}
+                      sortOrder={sortOrder}
+                      setSortOrder={setSortOrder}
+                      sortField={sortField}
+                      setSortField={setSortField}
+                      key={headCell.id}
+                    />
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {patientsList.patients
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row: IPatientListData, index) => (
+                    <PatientTableRow row={row} index={index} key={row.id} />
+                  ))}
+                {emptyRows > 0 && (
+                  <TableRow
+                    style={{
+                      height: 53 * emptyRows
+                    }}
+                  >
+                    <TableCell colSpan={6} />
+                  </TableRow>
+                )}
+              </TableBody>
+            </>
+          )}
         </Table>
       </TableContainer>
 

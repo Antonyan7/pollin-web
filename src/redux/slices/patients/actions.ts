@@ -13,6 +13,12 @@ const actions: SliceReducers<PatientEmrProps> = {
   },
   setPatientAlertDetails(state, action: IAction<AlertDetailsProps[]>) {
     state.patientsList.patientAlertDetails = action.payload;
+  },
+  setPatientsLoadingState(state, action: IAction<boolean>) {
+    state.isPatientsListLoading = action.payload;
+  },
+  setPatientsFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isPatientsFiltersLoading = action.payload;
   }
 };
 

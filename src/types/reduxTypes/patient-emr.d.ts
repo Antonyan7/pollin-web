@@ -3,6 +3,8 @@ import { IPagination } from '@axios/axios';
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
   encounters: IEncountersProps;
+  isPatientsListLoading: boolean;
+  isPatientsFiltersLoading: boolean;
   error: Error | null;
 }
 
