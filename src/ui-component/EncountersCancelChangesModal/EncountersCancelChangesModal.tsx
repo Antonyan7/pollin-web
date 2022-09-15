@@ -39,7 +39,7 @@ const EncountersCancelChangesModal = () => {
         <DialogTitle sx={{ p: 4 }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Typography variant="h3">{t(Translation.PAGE_PATIENT_ENCOUNTERS_CANCEL_CHANGES_MODAL_TITLE)}</Typography>
+              <Typography variant="h3">{t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_TITLE)}</Typography>
             </Grid>
             <Grid item>
               <IconButton onClick={onClose}>
@@ -52,9 +52,7 @@ const EncountersCancelChangesModal = () => {
         <DialogContent sx={{ p: 4 }}>
           <Grid container direction="column" spacing={3} sx={{ whiteSpace: 'pre-line' }}>
             <Grid item>
-              <StyledTypography theme={theme}>
-                {t(Translation.PAGE_PATIENT_ENCOUNTERS_CANCEL_CHANGES_MODAL_SUBTITLE)}
-              </StyledTypography>
+              <StyledTypography theme={theme}>{t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE)}</StyledTypography>
             </Grid>
           </Grid>
         </DialogContent>

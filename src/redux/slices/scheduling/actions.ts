@@ -31,6 +31,9 @@ const actions: SliceReducers<SchedulingProps> = {
   setScheduleBlockResources(state, action: IAction<IServiceProvider[]>) {
     state.scheduleResources = action.payload;
   },
+  setSchedulingListLoadingStatus(state, action: IAction<boolean>) {
+    state.schedulingListLoadingStatus = action.payload;
+  },
   setApplyScheduleSuccess(state, action: IAction<boolean>) {
     state.success = action.payload;
   }

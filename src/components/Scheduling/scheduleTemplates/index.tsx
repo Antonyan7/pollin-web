@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
-// material-ui
 import {
   Box,
   CardContent,
   Checkbox,
+  CircularProgress,
   Grid,
   Table,
   TableBody,
@@ -155,6 +155,7 @@ const ScheduleTemplates = () => {
   const [t] = useTranslation();
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
+  const isScheduleTemplatesLoading = useAppSelector(schedulingSelector.scheduleListLoadingStatus);
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(page + 1));
@@ -242,7 +243,6 @@ const ScheduleTemplates = () => {
             </Grid>
           </Grid>
         </CardContent>
-        {/* table */}
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
             <EnhancedTableHead
@@ -286,7 +286,14 @@ const ScheduleTemplates = () => {
             </TableBody>
           </Table>
         </TableContainer>
-
+        {isScheduleTemplatesLoading && (
+          <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
+            <p style={{ margin: 'auto' }}>
+              <CircularProgress />
+            </p>
+            <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
+          </Box>
+        )}
         {/* table pagination */}
         <TablePagination
           rowsPerPageOptions={[10]}

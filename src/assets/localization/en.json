@@ -21,6 +21,7 @@
   "page.scheduling.templates.table.header.duration": "Duration",
   "page.scheduling.templates.table.header.last": "Last Saved On",
   "page.scheduling.templates.table.header.status": "Status",
+  "page.scheduling.templates.table.loading": "Loading Templates",
   "page.scheduling.templates.table.header.action": "Action",
   "page.scheduling.view.title": "View Schedule",
   "page.scheduling.create.templates.title": "Create Schedule Templates",

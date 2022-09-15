@@ -32,6 +32,7 @@ export interface SingleSchedulingProps {
 export interface SchedulingProps {
   scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
+  schedulingListLoadingStatus: boolean;
   scheduleTemplates: SchedulingTemplateProps[] | IPagination;
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];

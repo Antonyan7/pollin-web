@@ -11,6 +11,7 @@ const {
   setScheduleTemplates,
   setError,
   setScheduleBlock,
+  setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
   setApplyScheduleSuccess
@@ -28,11 +29,15 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
 
 const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setSchedulingListLoadingStatus(true));
+
     const response = await API.scheduling.getTemplatesList(pageSize);
 
     dispatch(setScheduleTemplates(response.data.data));
+    dispatch(setSchedulingListLoadingStatus(false));
   } catch (error) {
     dispatch(setError(error));
+    dispatch(setSchedulingListLoadingStatus(false));
   }
 };
 

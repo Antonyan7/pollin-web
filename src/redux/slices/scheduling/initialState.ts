@@ -3,6 +3,7 @@ export const getInitialState = () => ({
   scheduleApplyTemplates: [],
   error: null,
   scheduleSingleTemplate: { name: '', timePeriods: [] },
+  schedulingListLoadingStatus: false,
   scheduleBlock: [],
   scheduleResources: [],
   serviceTypes: [],
