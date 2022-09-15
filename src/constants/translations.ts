@@ -5,6 +5,8 @@ export enum Translation {
   PAGE_PATIENT_LIST_FIELD_SEARCH = 'page.patient.list.field.search',
   PAGE_PATIENT_LIST_FIELD_FILTERS = 'page.patient.list.field.filters',
   PAGE_PATIENT_LIST_ALERT_COUNT = 'page.patient.list.alert.count',
+  PAGE_PATIENT_ENCOUNTERS_CANCEL_CHANGES_MODAL_TITLE = 'page.patient.encounters.modal.title',
+  PAGE_PATIENT_ENCOUNTERS_CANCEL_CHANGES_MODAL_SUBTITLE = 'page.patient.encounters.modal.subtitle',
   COMMON_PAGINATION_ROWS_COUNT = 'common.pagination.rows.count',
   CYCLE_STATUS_NOT_ACTIVE = 'cycle.status.not.active',
   PAGE_APPOINTMENTS_TITLE = 'page.appointments.title',

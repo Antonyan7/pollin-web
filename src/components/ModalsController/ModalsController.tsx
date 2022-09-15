@@ -7,6 +7,8 @@ import { ModalName } from 'constants/modals';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 
+import EncountersCancelChangesModal from '@ui-component/EncountersCancelChangesModal/EncountersCancelChangesModal';
+
 export const ModalsController = () => {
   const modalState = useAppSelector(viewsSelector.modal);
 
@@ -16,6 +18,7 @@ export const ModalsController = () => {
       {modalState.name === ModalName.EditAppointmentModal && <EditAppointmentsModal />}
       {modalState.name === ModalName.ConfirmAppointmentCancelModal && <ConfirmAppointmentsModal />}
       {modalState.name === ModalName.DetailsAppointmentModal && <DetailsAppointmentModal />}
+      {modalState.name === ModalName.EncountersCancelChangesModal && <EncountersCancelChangesModal />}
     </>
   );
 };

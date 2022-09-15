@@ -3,6 +3,8 @@
   "page.patient.list.field.search": "Search Patients",
   "page.patient.list.field.filters": "Filter Results",
   "page.patient.list.alert.count": "None",
+  "page.patient.encounters.modal.title": "Cancel Encounter Creation",
+  "page.patient.encounters.modal.subtitle": "Are you sure you want to cancel? \n \n Any changes made will be lost.",
   "common.pagination.rows.count": "Rows per page",
   "cycle.status.not.active": "Not active",
   "page.appointments.title": "Appointments",

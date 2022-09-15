@@ -3,5 +3,6 @@ export enum ModalName {
   AddAppointmentsModal = 'AddAppointmentsModal',
   EditAppointmentModal = 'EditAppointmentModal',
   ConfirmAppointmentCancelModal = 'ConfirmAppointmentCancelModal',
-  DetailsAppointmentModal = 'DetailsAppointmentModal'
+  DetailsAppointmentModal = 'DetailsAppointmentModal',
+  EncountersCancelChangesModal = 'EncountersCancelChangesModal'
 }
