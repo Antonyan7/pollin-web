@@ -7,7 +7,6 @@ interface ToolbarProps {
   date: number | Date;
   onClickNext: () => void;
   onClickPrev: () => void;
-  onClickToday: () => void;
   sx?: GridProps['sx'];
 }
 

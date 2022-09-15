@@ -19,6 +19,9 @@ const actions: SliceReducers<SchedulingProps> = {
   setScheduleTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
     state.scheduleTemplates = action.payload;
   },
+  setCalendarLoadingState(state, action: IAction<boolean>) {
+    state.scheduleCalendarLoading = action.payload;
+  },
   setScheduleApplyTemplates(state, action: IAction<SchedulingTemplateProps[]>) {
     state.scheduleApplyTemplates = action.payload;
   },

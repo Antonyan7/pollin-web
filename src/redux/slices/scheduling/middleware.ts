@@ -14,6 +14,7 @@ const {
   setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
+  setCalendarLoadingState,
   setApplyScheduleSuccess
 } = slice.actions;
 
@@ -72,11 +73,15 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
 
 const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setCalendarLoadingState(true));
+
     const response = await API.scheduling.getSingleTemplate(templateId);
 
     dispatch(setSingleScheduleTemplate(response.data.data));
+    dispatch(setCalendarLoadingState(false));
   } catch (error) {
     dispatch(setError(error));
+    dispatch(setCalendarLoadingState(false));
   }
 };
 

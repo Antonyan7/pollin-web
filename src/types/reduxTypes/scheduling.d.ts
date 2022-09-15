@@ -36,6 +36,7 @@ export interface SchedulingProps {
   scheduleTemplates: SchedulingTemplateProps[] | IPagination;
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];
+  scheduleCalendarLoading: boolean;
   scheduleResources: IServiceProvider[];
   serviceTypes: IServiceType[];
   success: boolean;

@@ -12,6 +12,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
 import { changeDate, changeHours, getWeekDay } from '@utils/dateUtils';
+import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
 import CalendarStyled from '../calendar/CalendarStyled';
 import Toolbar from './ToolBar';
 import { SlotTypes } from '../../types/calendar';
@@ -24,17 +25,8 @@ const Calendar = (props: { calendarDate: string }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
+  const scheduleCalendarLoading = useAppSelector(schedulingSelector.scheduleCalendarLoading);
 
-  const onDateChangeToday = () => {
-    const calendarEl = calendarRef.current;
-
-    if (calendarEl) {
-      const calendarApi = calendarEl.getApi();
-
-      calendarApi.today();
-      setDate(calendarApi.getDate());
-    }
-  };
   const onDatePrevClick = () => {
     const calendarEl = calendarRef.current;
 
@@ -90,13 +82,9 @@ const Calendar = (props: { calendarDate: string }) => {
 
   return (
     <div style={{ position: 'relative' }}>
+      {scheduleCalendarLoading && <CalendarLoading />}
       <CalendarStyled>
-        <Toolbar
-          date={date}
-          onClickNext={onDateNextClick}
-          onClickPrev={onDatePrevClick}
-          onClickToday={onDateChangeToday}
-        />
+        <Toolbar date={date} onClickNext={onDateNextClick} onClickPrev={onDatePrevClick} />
         <FullCalendar
           weekends
           ref={calendarRef}
