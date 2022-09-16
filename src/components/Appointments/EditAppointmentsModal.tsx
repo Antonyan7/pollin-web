@@ -60,7 +60,6 @@ interface IFormValues {
 
 const mergeAppointmentDetails = (details: AppointmentDetailsProps, values: IFormValues): IEditAppointmentBody => ({
   appointment: {
-    id: details.appointment.id,
     date: values.date,
     status: values.status,
     description: values.description

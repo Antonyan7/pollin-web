@@ -1,6 +1,9 @@
 import { IAppointmentDetails } from '@axios/managerBooking';
+import { AlertDetailsProps } from '@axios/managerPatientEmr';
 
 import { SlotTypes } from '../calendar';
+
+import { IPatientList } from './patient-emr';
 
 export interface AppointmentDetailsProps {
   appointment: IAppointmentDetails;
@@ -16,9 +19,10 @@ export interface BookingProps {
   isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
-  patientList: IPatientInfo[];
+  patientList: IPatientList;
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
+  patientAlerts: AlertDetailsProps;
 }
 
 export interface IUniqueItem {

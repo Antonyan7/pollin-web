@@ -19,9 +19,10 @@ interface IPatientTableRow {
 const PatientTableRow = ({ row, index }: IPatientTableRow) => {
   const labelId = `enhanced-table-checkbox-${index}`;
   const router = useRouter();
-  const { t } = useTranslation();
+  const [t] = useTranslation();
+
   const onRowClick = (id: string) => {
-    router.push({ pathname: '/patient-emr/patient-details', query: { patientId: id } });
+    router.push(`/patient-emr/details/${id}`);
   };
 
   return (

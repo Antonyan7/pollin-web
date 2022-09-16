@@ -5,7 +5,7 @@ import NavPatients from './NavPatients';
 import NavScheduling from './NavScheduling';
 
 const menuItems: { items: NavItemType[] } = {
-  items: [NavPatients, Booking, NavScheduling]
+  items: [Booking, NavScheduling, NavPatients]
 };
 
 export default menuItems;

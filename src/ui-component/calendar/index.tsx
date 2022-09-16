@@ -77,7 +77,7 @@ const Calendar = (props: { calendarDate: string }) => {
   };
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceProviders());
+    dispatch(bookingMiddleware.getServiceProviders(1));
   }, []);
 
   useEffect(() => {

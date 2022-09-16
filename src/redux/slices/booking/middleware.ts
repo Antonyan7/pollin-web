@@ -1,6 +1,7 @@
 import API from '@axios/API';
 import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/managerBooking';
 import store, { AppDispatch } from 'redux/store';
+import { IPatientsReqBody } from 'types/patient';
 
 import { toIsoString } from '@utils/dateUtils';
 
@@ -13,14 +14,15 @@ const {
   setAppointments,
   setCurrentServiceProviderId,
   setCalendarLoadingState,
-  setPatientNames,
+  setPatientsList,
   setServiceTypes,
-  setAppointmentDetails
+  setAppointmentDetails,
+  setPatientAlerts
 } = slice.actions;
 
-const getServiceProviders = () => async (dispatch: AppDispatch) => {
+const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.booking.getServiceProviders();
+    const response = await API.booking.getServiceProviders({ page });
 
     dispatch(setServiceProviders(response.data.data.providers));
   } catch (error) {
@@ -37,6 +39,7 @@ const getAppointments = (resourceId: string, date: string) => async (dispatch: A
     dispatch(setAppointments(response.data.data.slots));
     dispatch(setCalendarLoadingState(false));
   } catch (error) {
+    dispatch(setAppointments([]));
     dispatch(setCalendarLoadingState(false));
     dispatch(setError(error));
   }
@@ -50,12 +53,33 @@ const applyResource = (value: string) => (dispatch: AppDispatch) => {
   dispatch(setCurrentServiceProviderId(value));
 };
 
-const getPatientNames = (name: string) => async (dispatch: AppDispatch) => {
-  try {
-    const response = await API.booking.getPatientNames(name);
+const getPatientsList = (patientsListData: IPatientsReqBody | null) => async (dispatch: AppDispatch) => {
+  if (!patientsListData) {
+    dispatch(
+      setPatientsList({
+        patients: [],
+        currentPage: 0,
+        totalItems: 0,
+        pageSize: 0
+      })
+    );
 
-    dispatch(setPatientNames(response.data.data.patients));
+    return;
+  }
+
+  try {
+    const response = await API.patients.getPatientsList(patientsListData);
+
+    dispatch(setPatientsList(response.data.data));
   } catch (error) {
+    dispatch(
+      setPatientsList({
+        patients: [],
+        currentPage: 0,
+        totalItems: 0,
+        pageSize: 0
+      })
+    );
     dispatch(setError(error));
   }
 };
@@ -105,15 +129,43 @@ const editAppointment =
     }
   };
 
+const getPatientAlerts = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    if (patientId) {
+      const response = await API.patients.getPatientAlertDetails(patientId);
+
+      dispatch(setPatientAlerts(response.data.data));
+    } else {
+      dispatch(setPatientAlerts([]));
+    }
+  } catch (error) {
+    dispatch(setPatientAlerts([]));
+  }
+};
+
+const cancelAppointment = (appointmentId: string, cancellationReason: string) => async (dispatch: AppDispatch) => {
+  try {
+    await API.booking.cancelAppointment(appointmentId, {
+      appointment: {
+        cancellationReason
+      }
+    });
+  } catch (error) {
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getServiceProviders,
   setDateValue,
   getAppointments,
+  cancelAppointment,
   applyResource,
-  getPatientNames,
+  getPatientsList,
   getServiceTypes,
   createAppointment,
   getAppointmentDetails,
   editAppointment,
-  clearAppointmentDetails
+  clearAppointmentDetails,
+  getPatientAlerts
 };

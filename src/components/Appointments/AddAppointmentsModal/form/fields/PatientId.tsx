@@ -9,7 +9,8 @@ import { validateInputChange } from 'validation/validationHelpers';
 
 const PatientId = () => {
   const { handleBlur, setFieldValue, touched, errors }: FormikValues = useFormikContext();
-  const patientList = useAppSelector(bookingSelector.patientList);
+  const patientsList = useAppSelector(bookingSelector.patientList);
+  const { patients } = patientsList;
   const [t] = useTranslation();
 
   const patientIdFieldName = 'patientId';
@@ -21,9 +22,9 @@ const PatientId = () => {
     <Grid item xs={12}>
       <Autocomplete
         id={patientIdFieldName}
-        options={patientList}
+        options={patients}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => option.name}
         onChange={(_, value) => setFieldValue(patientIdFieldName, value?.id)}
         onBlur={() => handleBlur(patientIdFieldName)}
         onInputChange={(event, value, reason) =>

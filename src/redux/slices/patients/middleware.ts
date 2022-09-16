@@ -10,9 +10,22 @@ const {
   setError,
   setPatientSearchFilters,
   setPatientAlertDetails,
+  setCurrentPatientId,
   setPatientsLoadingState,
   setPatientsFiltersLoadingState
 } = slice.actions;
+
+const cleanPatientList = () => async (dispatch: AppDispatch) => {
+  dispatch(
+    setPatientsList({
+      patients: [],
+      currentPage: 0,
+      totalItems: 0,
+      pageSize: 0
+    })
+  );
+  dispatch(setPatientsLoadingState(false));
+};
 
 const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch: AppDispatch) => {
   try {
@@ -23,7 +36,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
     dispatch(setPatientsList(response.data.data));
     dispatch(setPatientsLoadingState(false));
   } catch (error) {
-    dispatch(setPatientsLoadingState(false));
+    dispatch(cleanPatientList());
     dispatch(setError(error));
   }
 };
@@ -52,8 +65,14 @@ const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch
   }
 };
 
+const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setCurrentPatientId(patientId));
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
-  getPatientAlertDetails
+  getPatientAlertDetails,
+  setCurrentPatient,
+  cleanPatientList
 };

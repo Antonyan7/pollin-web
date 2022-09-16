@@ -48,15 +48,9 @@ const ConfirmAppointmentsModal = () => {
   const onConfirm = useCallback(() => {
     setOpenOtherReasonField(false);
     dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-    console.warn({ cancellationReason });
-    // TODO: new endpoint will be added in the future
-    // dispatch(
-    //   bookingMiddleware.cancelAppointment(appointmentId, {
-    //     cancellationReason,
-    //   })
-    // );
+    dispatch(bookingMiddleware.cancelAppointment(appointmentId, cancellationReason));
     dispatch(bookingMiddleware.clearAppointmentDetails());
-  }, [cancellationReason]);
+  }, [appointmentId, cancellationReason]);
 
   const onReasonChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setCancellationReason(event.target.value);

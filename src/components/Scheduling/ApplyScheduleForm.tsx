@@ -172,7 +172,7 @@ const ApplyScheduleForm = () => {
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(1));
-    dispatch(bookingMiddleware.getServiceProviders());
+    dispatch(bookingMiddleware.getServiceProviders(1));
   }, []);
 
   useEffect(() => {

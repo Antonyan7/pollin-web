@@ -14,6 +14,9 @@ const actions: SliceReducers<PatientEmrProps> = {
   setPatientAlertDetails(state, action: IAction<AlertDetailsProps[]>) {
     state.patientsList.patientAlertDetails = action.payload;
   },
+  setCurrentPatientId(state, action: IAction<string>) {
+    state.patientsList.currentPatientId = action.payload;
+  },
   setPatientsLoadingState(state, action: IAction<boolean>) {
     state.isPatientsListLoading = action.payload;
   },

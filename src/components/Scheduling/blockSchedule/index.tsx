@@ -35,7 +35,7 @@ const BlockTemplates = () => {
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceProviders());
+    dispatch(bookingMiddleware.getServiceProviders(1));
   }, []);
 
   const optionsGroup = createOptionsGroup(scheduleResources);

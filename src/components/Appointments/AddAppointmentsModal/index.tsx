@@ -22,19 +22,19 @@ const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreatedAppointm
 const AddAppointmentsModal = () => {
   const bookAppointmentDateStartTime: Date = useAppSelector(viewsSelector.modal).props?.start;
   const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-  const { createAppointment, getServiceTypes } = bookingMiddleware;
   const addAppointmentsFormProperties = useFormik({
     initialValues: getInitialValues(bookAppointmentDateStartTime),
     validationSchema: addAppointmentsValidationSchema,
     onSubmit: (values) => {
-      dispatch(createAppointment(values));
+      dispatch(bookingMiddleware.createAppointment(values));
       onClose();
     }
   });
 
   useEffect(() => {
-    dispatch(getServiceTypes());
-  }, [getServiceTypes]);
+    dispatch(bookingMiddleware.getServiceTypes());
+    dispatch(bookingMiddleware.getPatientsList({ page: 1 }));
+  }, []);
 
   return (
     <FormikProvider value={addAppointmentsFormProperties}>

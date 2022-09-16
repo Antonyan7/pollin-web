@@ -1,5 +1,6 @@
 import { IAction, SliceReducers } from 'redux/store';
 import { AppointmentDetailsProps, BookingProps, IAppointment, IServiceProvider } from 'types/reduxTypes/booking';
+import { AlertDetailsProps, IPatientList } from 'types/reduxTypes/patient-emr';
 
 const actions: SliceReducers<BookingProps> = {
   setAppointments(state, action: IAction<IAppointment[]>) {
@@ -23,7 +24,7 @@ const actions: SliceReducers<BookingProps> = {
   setError(state, action: IAction<string>) {
     state.error = action.payload;
   },
-  setPatientNames(state, action: IAction<{ id: string; title: string }[]>) {
+  setPatientsList(state, action: IAction<IPatientList>) {
     state.patientList = action.payload;
   },
   setServiceTypes(state, action: IAction<{ id: string; title: string; isVirtual: boolean }[]>) {
@@ -31,6 +32,9 @@ const actions: SliceReducers<BookingProps> = {
   },
   setAppointmentDetails(state, action: IAction<AppointmentDetailsProps | null>) {
     state.appointmentDetails = action.payload;
+  },
+  setPatientAlerts(state, action: IAction<AlertDetailsProps[] | null>) {
+    state.patientAlerts = action.payload;
   }
 };
 

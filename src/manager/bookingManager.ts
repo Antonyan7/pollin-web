@@ -4,11 +4,12 @@ import {
   IAppointmentListReqParams,
   IAppointmentListResponse,
   IAppointmentTypesData,
+  ICancelAppointmentReqBody,
   ICreatedAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
-  IPatientNamesResponseData,
   IServiceProvidersListResponse,
+  IServiceProvidersReqParams,
   IUpdatedAppointmentResponse
 } from '@axios/managerBooking';
 
@@ -22,12 +23,9 @@ const bookingManager: RequestManagerType = {
   getAppointments(params: IAppointmentListReqParams) {
     return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>(`${baseURL}/v1/calendar/slot`, { params });
   },
-  getServiceProviders() {
-    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>(`${baseURL}/v1/provider`);
-  },
-  getPatientNames(name: string) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientNamesResponseData>>(`${baseURL}/v1/patient`, {
-      name
+  getServiceProviders(params: IServiceProvidersReqParams) {
+    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>(`${baseURL}/v1/provider`, {
+      params
     });
   },
   getServiceTypes() {
@@ -48,6 +46,9 @@ const bookingManager: RequestManagerType = {
       `${baseURL}/v1/appointment/${appointmentId}`,
       appointmentValues
     );
+  },
+  cancelAppointment(appointmentId: string, body: ICancelAppointmentReqBody) {
+    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
   }
 };
 

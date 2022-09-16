@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
@@ -49,15 +49,8 @@ const Appointments = () => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
-  const [isSelectedResourceEmpty, setSelectedResource] = useState<boolean>(true);
   const theme = useTheme();
   const [t] = useTranslation();
-
-  useEffect(() => {
-    if (serviceProviderId) {
-      setSelectedResource(false);
-    }
-  }, [serviceProviderId]);
 
   const isToday = useMemo(
     () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
@@ -162,7 +155,7 @@ const Appointments = () => {
             </LocalizationProvider>
           </Box>
           <StyledButtonNew
-            disabled={isSelectedResourceEmpty}
+            disabled={!serviceProviderId}
             theme={theme}
             variant="outlined"
             endIcon={<AddIcon />}
@@ -170,7 +163,7 @@ const Appointments = () => {
           >
             <Typography
               variant="h4"
-              sx={{ marginRight: '10px', color: isSelectedResourceEmpty ? theme.palette.grey[300] : 'initial' }}
+              sx={{ marginRight: '10px', color: !serviceProviderId ? theme.palette.grey[300] : 'initial' }}
             >
               {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)}
             </Typography>

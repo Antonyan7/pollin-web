@@ -288,9 +288,7 @@ const ScheduleTemplates = () => {
         </TableContainer>
         {isScheduleTemplatesLoading && (
           <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-            <p style={{ margin: 'auto' }}>
-              <CircularProgress />
-            </p>
+            <CircularProgress sx={{ margin: 'auto' }} />
             <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
           </Box>
         )}
