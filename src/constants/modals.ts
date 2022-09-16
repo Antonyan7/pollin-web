@@ -4,5 +4,6 @@ export enum ModalName {
   EditAppointmentModal = 'EditAppointmentModal',
   ConfirmAppointmentCancelModal = 'ConfirmAppointmentCancelModal',
   DetailsAppointmentModal = 'DetailsAppointmentModal',
-  EncountersCancelChangesModal = 'EncountersCancelChangesModal'
+  EncountersCancelChangesModal = 'EncountersCancelChangesModal',
+  DevTools = 'DevTools'
 }

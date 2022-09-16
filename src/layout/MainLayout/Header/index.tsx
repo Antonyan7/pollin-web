@@ -8,6 +8,7 @@ import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import LogoSection from '../LogoSection';
 
 import CheckSection from './CheckSection';
+import DevSection from './DevSection';
 import NotificationSection from './NotificationSection';
 import ProfileSection from './ProfileSection';
 import SearchSection from './SearchSection';
@@ -55,7 +56,7 @@ const Header = () => {
       <SearchSection />
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
-
+      {process.env.NEXT_PUBLIC_ENVIRONMENT === 'dev' ? <DevSection /> : null}
       <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
         <CheckSection />
       </Box>

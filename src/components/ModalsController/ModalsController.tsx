@@ -3,6 +3,7 @@ import AddAppointmentsModal from '@components/Appointments/AddAppointmentsModal'
 import ConfirmAppointmentsModal from '@components/Appointments/ConfirmAppointmentCancelModal';
 import DetailsAppointmentModal from '@components/Appointments/DetailsAppointmentModal';
 import EditAppointmentsModal from '@components/Appointments/EditAppointmentsModal';
+import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import { ModalName } from 'constants/modals';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
@@ -19,6 +20,7 @@ export const ModalsController = () => {
       {modalState.name === ModalName.ConfirmAppointmentCancelModal && <ConfirmAppointmentsModal />}
       {modalState.name === ModalName.DetailsAppointmentModal && <DetailsAppointmentModal />}
       {modalState.name === ModalName.EncountersCancelChangesModal && <EncountersCancelChangesModal />}
+      {modalState.name === ModalName.DevTools && <DevToolsModal />}
     </>
   );
 };

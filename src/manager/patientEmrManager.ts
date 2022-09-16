@@ -1,7 +1,7 @@
 import { IPatientsReqBody } from 'types/patient';
 import { IPatientList } from 'types/reduxTypes/patient-emr';
 
-import { IAxiosResponse } from './axios';
+import { IAxiosResponse, RequestManagerType } from './axios';
 import { Axios } from './axiosInstance';
 import { IAlertDetailsResponse, IPatientsFiltersResponse } from './managerPatientEmr';
 
@@ -9,7 +9,8 @@ const baseURL = '/clinic-patient-emr';
 
 const axiosInstance = Axios();
 
-const patientEmrManager = {
+const patientEmrManager: RequestManagerType = {
+  axiosInstance,
   getPatientAlertDetails(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<IAlertDetailsResponse>>(`${baseURL}/v1/patients/alerts`, {
       params: { patientId }

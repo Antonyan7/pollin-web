@@ -34,3 +34,11 @@ interface IPagination {
 interface IPaginatedData<T extends IPagination> extends IResponseStatus {
   data: T;
 }
+
+export interface RequestManagerType {
+  axiosInstance: AxiosInstance;
+  [key: string]: (...args: any[]) => Promise<any>;
+}
+export interface ApiType {
+  [key: string]: RequestManagerType;
+}
