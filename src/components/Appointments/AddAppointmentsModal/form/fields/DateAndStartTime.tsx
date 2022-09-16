@@ -14,7 +14,7 @@ const DateAndStartTime: React.FC = () => {
   const { values, setFieldValue }: FormikValues = useFormikContext();
   const [t] = useTranslation();
 
-  const initialDate: DateAndStartTimeType = values.date;
+  const initialDate: DateAndStartTimeType = new Date(Math.ceil(values.date.getTime() / roundUpTo) * roundUpTo);
   const dateFieldName = 'date';
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) => {
