@@ -25,6 +25,9 @@ const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
       '& .ql-editor': {
         minHeight: 125
       }
+    },
+    '& .ql-tooltip': {
+      transform: 'translateX(35%)'
     }
   }
 }));

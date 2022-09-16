@@ -73,5 +73,5 @@ export enum SimpleEditorMode {
 export interface SimpleEditorProps {
   editorValue: string;
   setEditorValue: React.Dispatch<SetStateAction<string>>;
-  mode: string;
+  mode: SimpleEditorMode;
 }
