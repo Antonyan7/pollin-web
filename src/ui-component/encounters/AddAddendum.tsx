@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, Typography } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
-import SubCard from './cards/SubCard';
+import SubCard from '../cards/SubCard';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
 const AddAddendum = () => {
   const [editorValue, setEditorValue] = useState<string>('Encounter Note');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
+  const [t] = useTranslation();
 
   return (
     <SubCard
@@ -27,7 +30,7 @@ const AddAddendum = () => {
                 fontSize="21px"
                 fontWeight="400"
               >
-                Add Addendum
+                {t(Translation.PAGE_ENCOUNTERS_ADD_ADDENDUM)}
               </Typography>
             </Grid>
           </Grid>
@@ -40,15 +43,17 @@ const AddAddendum = () => {
       <Grid container spacing={3}>
         <Grid item container xs={12} spacing={2} direction="column">
           <Grid item>
-            <Typography variant="subtitle2">Encounter Type</Typography>
+            <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
           </Grid>
           <Grid item>
+            {/* //TODO this is just an example, so no need to put here any translation */}
             <Typography variant="subtitle1">Consultation - In Clinic</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle2">Note</Typography>
+            <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
           </Grid>
           <Grid item>
+            {/* //TODO this is just an example, so no need to put here any translation */}
             <Typography variant="subtitle1">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus dolorum maiores inventore quibusdam
               magnam illum fuga similique voluptate officiis ullam error quam nemo culpa ducimus natus, exercitationem

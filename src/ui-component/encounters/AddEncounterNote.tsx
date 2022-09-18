@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Grid, Typography } from '@mui/material';
+import { FormControl, Grid, InputLabel, Select, Typography } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
@@ -8,9 +10,10 @@ import SubCard from 'ui-component/cards/SubCard';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
-const EditEncounterRecord = () => {
-  const [editorValue, setEditorValue] = useState<string>('Some text');
+const AddEncounterNote = () => {
+  const [editorValue, setEditorValue] = useState<string>('Encounter Note');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
+  const [t] = useTranslation();
 
   return (
     <SubCard
@@ -26,7 +29,7 @@ const EditEncounterRecord = () => {
                 fontSize="21px"
                 fontWeight="400"
               >
-                Edit Encounter Note
+                {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
               </Typography>
             </Grid>
           </Grid>
@@ -37,18 +40,20 @@ const EditEncounterRecord = () => {
       }
     >
       <Grid container spacing={3}>
-        <Grid item container xs={6} spacing={2} direction="column">
-          <Grid item>
-            <Typography variant="subtitle2">Encounter Type</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1">Consultation - In Clinic</Typography>
-          </Grid>
+        <Grid item xs={6}>
+          <FormControl fullWidth>
+            <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
+            <Select
+              labelId="encounter-label"
+              id="encounter-type"
+              label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+            />
+          </FormControl>
         </Grid>
-        <NoteEditor editorValue={editorValue} setEditorValue={setEditorValue} mode={SimpleEditorMode.Edit} />
+        <NoteEditor editorValue={editorValue} setEditorValue={setEditorValue} mode={SimpleEditorMode.Add} />
       </Grid>
     </SubCard>
   );
 };
 
-export default EditEncounterRecord;
+export default AddEncounterNote;
