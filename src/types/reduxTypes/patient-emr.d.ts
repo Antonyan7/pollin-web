@@ -16,7 +16,6 @@ interface IPatientsProps {
 }
 
 export interface IFilterCategory {
-  id: string;
   type: PatientListFilterType;
   title: string;
   options: IPatientsFilterOption[];
