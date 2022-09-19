@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  sentry: {
+    disableServerWebpackPlugin: true,
+    disableClientWebpackPlugin: true
+  },
   // TODO fix by adding custom loader https://nextjs.org/docs/messages/export-image-api
   experimental: {
     images: {
@@ -9,8 +13,12 @@ const nextConfig = {
     }
   }
 };
+const SentryWebpackPluginOptions = {
+  silent: true
+};
 
 const withPlugins = require('next-compose-plugins');
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const withTM = require('next-transpile-modules')([
   '@emotion/react',
@@ -24,16 +32,18 @@ const withTM = require('next-transpile-modules')([
   '@fullcalendar/daygrid'
 ]);
 
-module.exports = withPlugins([withTM], {
-  ...nextConfig,
-  async rewrites() {
-    return {
-      fallback: [
-        {
-          source: '/api/:path*',
-          destination: `http://localhost:8080/:path*`
-        }
-      ]
-    };
-  }
-});
+module.exports = withSentryConfig(
+  withPlugins([withTM, SentryWebpackPluginOptions], {
+    ...nextConfig,
+    async rewrites() {
+      return {
+        fallback: [
+          {
+            source: '/api/:path*',
+            destination: `http://localhost:8080/:path*`
+          }
+        ]
+      };
+    }
+  })
+);

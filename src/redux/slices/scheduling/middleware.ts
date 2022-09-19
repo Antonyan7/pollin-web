@@ -1,4 +1,5 @@
 import API from '@axios/API';
+import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
@@ -25,6 +26,7 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
 
     dispatch(setServiceTypes(response.data.data.serviceTypes));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -38,6 +40,7 @@ const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatc
     dispatch(setScheduleTemplates(response.data.data));
     dispatch(setSchedulingListLoadingStatus(false));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
     dispatch(setSchedulingListLoadingStatus(false));
   }
@@ -48,6 +51,7 @@ export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispat
     await API.scheduling.applyScheduleTemplate(data);
     dispatch(setApplyScheduleSuccess(true));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
     dispatch(setApplyScheduleSuccess(false));
   }
@@ -73,6 +77,7 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
     dispatch(setBlockScheduleSuccess(true));
     dispatch(setScheduleBlock(response.data.data));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setBlockScheduleSuccess(false));
     dispatch(setError(error));
   }
@@ -87,6 +92,7 @@ const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) 
     dispatch(setSingleScheduleTemplate(response.data.data));
     dispatch(setCalendarLoadingState(false));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
     dispatch(setCalendarLoadingState(false));
   }
@@ -98,6 +104,7 @@ const deleteTemplate = (templateId: string[]) => async (dispatch: AppDispatch) =
 
     dispatch(getSchedulingTemplates(1));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -113,6 +120,7 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
       })
     );
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };

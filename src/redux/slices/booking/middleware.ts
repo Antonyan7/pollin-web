@@ -1,5 +1,6 @@
 import API from '@axios/API';
 import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/managerBooking';
+import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IPatientsReqBody } from 'types/patient';
 
@@ -26,6 +27,7 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
 
     dispatch(setServiceProviders(response.data.data.providers));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -41,6 +43,7 @@ const getAppointments = (resourceId: string, date: string) => async (dispatch: A
   } catch (error) {
     dispatch(setAppointments([]));
     dispatch(setCalendarLoadingState(false));
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -72,6 +75,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody | null) => async (di
 
     dispatch(setPatientsList(response.data.data));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(
       setPatientsList({
         patients: [],
@@ -90,6 +94,7 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
 
     dispatch(setServiceTypes(response.data.data.serviceTypes));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -102,6 +107,7 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
     appointmentValues.date = toIsoString(appointmentValues.date as Date);
     await API.booking.createAppointment(appointmentValues);
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -112,6 +118,7 @@ const getAppointmentDetails = (appointmentId: string) => async (dispatch: AppDis
 
     dispatch(setAppointmentDetails(response.data.data));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };
@@ -125,6 +132,7 @@ const editAppointment =
     try {
       await API.booking.editAppointment(appointmentId, appointmentValues);
     } catch (error) {
+      Sentry.captureException(error);
       dispatch(setError(error));
     }
   };

@@ -1,4 +1,5 @@
 import API from '@axios/API';
+import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 
 import { IPatientsReqBody } from '../../../types/patient';
@@ -36,6 +37,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
     dispatch(setPatientsList(response.data.data));
     dispatch(setPatientsLoadingState(false));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(cleanPatientList());
     dispatch(setError(error));
   }
@@ -50,6 +52,7 @@ const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setPatientSearchFilters(response.data.data.filters));
     dispatch(setPatientsFiltersLoadingState(false));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
     dispatch(setPatientsFiltersLoadingState(false));
   }
@@ -61,6 +64,7 @@ const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch
 
     dispatch(setPatientAlertDetails(response.data.data.alerts));
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   }
 };

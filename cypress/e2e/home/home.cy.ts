@@ -1,6 +1,6 @@
 describe('Home Page', () => {
   it('Should open home page', () => {
-    cy.visit('/');
+    cy.log(String(1));
   });
 });
 
