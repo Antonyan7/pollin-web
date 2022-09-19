@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Autocomplete, FormControl, Grid, TextField, TextFieldProps, Typography } from '@mui/material';
@@ -12,7 +13,9 @@ import { useFormik } from 'formik';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { schedulingMiddleware } from 'redux/slices/scheduling';
+import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
+import { resetBlockSuccessStatusState } from 'redux/slices/scheduling/middleware';
+import { viewsMiddleware } from 'redux/slices/views';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 import { validateInputChange } from 'validation/validationHelpers';
@@ -33,10 +36,28 @@ const initialValues = {
 const BlockTemplates = () => {
   const [t] = useTranslation();
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
+  const scheduleBlockSuccess = useAppSelector(schedulingSelector.scheduleBlockSuccess);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceProviders(1));
   }, []);
+
+  useEffect(() => {
+    if (scheduleBlockSuccess) {
+      dispatch(
+        viewsMiddleware.setAlertPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS)
+          }
+        })
+      );
+    }
+
+    dispatch(resetBlockSuccessStatusState());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scheduleBlockSuccess]);
 
   const optionsGroup = createOptionsGroup(scheduleResources);
 
@@ -51,8 +72,10 @@ const BlockTemplates = () => {
         placeholderLabel: values.placeholderLabel
       };
 
-      dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
-      resetForm();
+      if (values.startDate && values.endDate && values.placeholderLabel && sendingBlockValues.resourceId) {
+        dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
+        resetForm();
+      }
     }
   });
   const desktopDateTimeChange = (date: Date | null, fieldName: string) => {

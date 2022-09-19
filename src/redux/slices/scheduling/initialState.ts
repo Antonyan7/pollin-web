@@ -8,5 +8,6 @@ export const getInitialState = () => ({
   scheduleCalendarLoading: false,
   scheduleResources: [],
   serviceTypes: [],
-  success: false
+  applySuccess: false,
+  blockSuccess: false
 });

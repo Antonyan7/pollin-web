@@ -39,5 +39,6 @@ export interface SchedulingProps {
   scheduleCalendarLoading: boolean;
   scheduleResources: IServiceProvider[];
   serviceTypes: IServiceType[];
-  success: boolean;
+  applySuccess: boolean;
+  blockSuccess: boolean;
 }

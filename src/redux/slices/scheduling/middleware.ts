@@ -14,8 +14,9 @@ const {
   setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
-  setCalendarLoadingState,
-  setApplyScheduleSuccess
+  setApplyScheduleSuccess,
+  setBlockScheduleSuccess,
+  setCalendarLoadingState
 } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
@@ -56,6 +57,10 @@ export const resetSuccessStatusState = () => async (dispatch: AppDispatch) => {
   dispatch(setApplyScheduleSuccess(false));
 };
 
+export const resetBlockSuccessStatusState = () => async (dispatch: AppDispatch) => {
+  dispatch(setBlockScheduleSuccess(false));
+};
+
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.scheduling.applyScheduleBlock({
@@ -65,8 +70,10 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
       placeholderLabel: applyBlockScheduleData.placeholderLabel
     });
 
+    dispatch(setBlockScheduleSuccess(true));
     dispatch(setScheduleBlock(response.data.data));
   } catch (error) {
+    dispatch(setBlockScheduleSuccess(false));
     dispatch(setError(error));
   }
 };
@@ -118,5 +125,6 @@ export default {
   applyScheduleTemplate,
   getSingleSchedule,
   resetSuccessStatusState,
+  resetBlockSuccessStatusState,
   deleteTemplate
 };

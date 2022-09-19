@@ -14,5 +14,9 @@ export const getInitialState = (): ViewsProps => ({
   modal: {
     name: ModalName.NONE,
     props: {}
+  },
+  alertPopUp: {
+    open: false,
+    props: {}
   }
 });

@@ -4,6 +4,7 @@ export interface ViewsProps {
   redirection: RedirectionProps;
   menu: MenuProps;
   modal: IOpenedModal;
+  alertPopUp: IOpenedAlert;
 }
 
 export interface RedirectionProps {
@@ -19,5 +20,10 @@ export interface MenuProps {
 
 export interface IOpenedModal<P> {
   name: ModalName;
+  props: P;
+}
+
+export interface IOpenedAlert<P> {
+  open: boolean;
   props: P;
 }

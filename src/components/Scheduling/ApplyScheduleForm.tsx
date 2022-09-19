@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AlertBanner } from '@components/Alert/Alert';
+import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import EventIcon from '@mui/icons-material/Event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -16,14 +16,13 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { repeatWeeksList, weekDays } from 'helpers/constants';
+import { viewsMiddleware } from 'redux/slices/views';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
@@ -59,9 +58,7 @@ const ApplyScheduleForm = () => {
   const [startDate, setStartDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
   const [endDate, setEndDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
   const [applyDays, setApplyDays] = useState<number[]>([]);
-  const [errorAlert, setErrorAlert] = useState<boolean>(false);
   const [applyDaysListRendering, setApplyDaysListRendering] = useState<IAppliedDay[]>([]);
-  const [successAlertOpen, setSuccessAlertOpen] = useState<boolean>(false);
 
   const resetFormValues = () => {
     setScheduleTemplate({
@@ -96,7 +93,15 @@ const ApplyScheduleForm = () => {
     if (resource.id && scheduleTemplate.id && repeatWeeks && applyDays && startDate && endDate) {
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
     } else {
-      setErrorAlert(true);
+      dispatch(
+        viewsMiddleware.setAlertPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
+          }
+        })
+      );
     }
   };
 
@@ -182,10 +187,19 @@ const ApplyScheduleForm = () => {
 
   useEffect(() => {
     if (scheduleApplySuccess) {
-      setSuccessAlertOpen(true);
+      dispatch(
+        viewsMiddleware.setAlertPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)
+          }
+        })
+      );
       resetFormValues();
       dispatch(schedulingMiddleware.resetSuccessStatusState());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleApplySuccess]);
 
   return (
@@ -374,17 +388,6 @@ const ApplyScheduleForm = () => {
               </Grid>
             </Grid>
           </Grid>
-          <Snackbar
-            open={successAlertOpen}
-            autoHideDuration={2000}
-            onClose={() => setSuccessAlertOpen(false)}
-            anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-          >
-            <Alert variant="filled" severity="success">
-              {t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)}
-            </Alert>
-          </Snackbar>
-
           <Grid item xs={12}>
             <Grid container alignItems="center">
               <Grid item xs />
@@ -403,12 +406,6 @@ const ApplyScheduleForm = () => {
               </Grid>
             </Grid>
           </Grid>
-          <AlertBanner
-            visible={errorAlert}
-            errorDescription={t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)}
-            severityType="error"
-            setVisible={setErrorAlert}
-          />
         </Grid>
       </form>
     </ScheduleBoxWrapper>

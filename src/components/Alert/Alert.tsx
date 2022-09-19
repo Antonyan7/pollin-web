@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import Alert, { AlertColor } from '@mui/material/Alert';
+import React, { useCallback, useEffect, useState } from 'react';
+import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Snackbar from '@mui/material/Snackbar';
 import { makeStyles } from '@mui/styles';
-
-interface AlertProps {
-  visible: boolean;
-  errorDescription: string;
-  severityType: AlertColor;
-  setVisible: (isVisible: boolean) => void;
-}
+import capitalizer from 'helpers/capitalizer';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
 export enum SeveritiesType {
   success = 'success',
@@ -30,51 +26,39 @@ const useStyles = makeStyles({
   }
 });
 
-export const AlertBanner = React.forwardRef(({ visible, errorDescription, severityType, setVisible }: AlertProps) => {
+export const AlertBanner = React.forwardRef(() => {
   const classes = useStyles();
+  const alertPopUp = useAppSelector(viewsSelector.alertPopUp);
   const [alertTitle, setAlertTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
 
   useEffect(() => {
-    switch (severityType) {
-      case SeveritiesType.error:
-        setAlertTitle('Error');
-        setDescription(errorDescription);
-        break;
-      case SeveritiesType.success:
-        setAlertTitle('Success');
-        setDescription(errorDescription);
-        break;
-      case SeveritiesType.info:
-        setAlertTitle('Info');
-        setDescription(errorDescription);
-        break;
-      case SeveritiesType.warning:
-        setAlertTitle('Warning');
-        setDescription(errorDescription);
-        break;
-      default:
-        setAlertTitle('Error');
-        setDescription(errorDescription);
-        break;
-    }
-  }, [severityType, errorDescription]);
+    if (alertPopUp.props.severityType) {
+      const capitalizedAlertTitle = capitalizer(alertPopUp.props.severityType);
 
-  const handleClose = () => {
-    setVisible(false);
-  };
+      setAlertTitle(capitalizedAlertTitle);
+    }
+  }, [alertPopUp.props.severityType]);
+
+  const onClose = useCallback(() => {
+    dispatch(
+      viewsMiddleware.setAlertPopUpState({
+        open: false,
+        props: {}
+      })
+    );
+  }, []);
 
   return (
     <Snackbar
-      open={visible}
-      autoHideDuration={1500}
-      onClose={handleClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      open={alertPopUp.open}
+      autoHideDuration={2000}
+      onClose={onClose}
+      anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       className={classes.snackbar}
     >
-      <Alert variant="filled" severity={severityType} className={classes.alertBanner}>
+      <Alert variant="filled" severity={alertPopUp.props.severityType} className={classes.alertBanner}>
         <AlertTitle>{alertTitle}</AlertTitle>
-        {description}
+        {alertPopUp.props.description}
       </Alert>
     </Snackbar>
   );
