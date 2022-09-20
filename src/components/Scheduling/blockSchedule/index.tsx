@@ -2,40 +2,64 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, FormControl, Grid, TextField, TextFieldProps, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { Translation } from 'constants/translations';
-import { useFormik } from 'formik';
-import { createOptionsGroup } from 'helpers/berryFunctions';
+import { FormikProvider, useFormik } from 'formik';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { resetBlockSuccessStatusState } from 'redux/slices/scheduling/middleware';
 import { viewsMiddleware } from 'redux/slices/views';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
-import { validateInputChange } from 'validation/validationHelpers';
 
 import { linkDateAndTime } from '@utils/dateUtils';
 
-const initialValues = {
-  resourceId: '',
-  startDate: null,
-  startTime: null,
-  endDate: null,
-  endTime: null,
-  placeholderLabel: ''
-};
+import AutoCompleteTextField from './fields/AutoCompleteTextField';
+import DateField from './fields/DateField';
+import TextInputField from './fields/TextInputField';
+import TimeField from './fields/TimeField';
+import BlockScheduleFormRow from './form/BlockScheduleFormRow';
+import { IFieldRowProps } from './form/IFieldRowProps';
+import { initialValues } from './form/initialValues';
 
-// TODO update component to contain 150 lines
-// eslint-disable-next-line max-lines-per-function
+const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowProps> })[] = [
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_RESOURCE,
+    fieldName: 'resourceId',
+    Component: AutoCompleteTextField
+  },
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_START,
+    fieldName: 'startDate',
+    Component: DateField
+  },
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_TIME_START,
+    fieldName: 'startTime',
+    Component: TimeField
+  },
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_END,
+    fieldName: 'endDate',
+    Component: DateField
+  },
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_TIME_END,
+    fieldName: 'endTime',
+    Component: TimeField
+  },
+  {
+    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
+    fieldName: 'placeholderLabel',
+    Component: TextInputField
+  }
+];
+
 const BlockTemplates = () => {
   const [t] = useTranslation();
-  const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
   const scheduleBlockSuccess = useAppSelector(schedulingSelector.scheduleBlockSuccess);
 
   useEffect(() => {
@@ -59,8 +83,6 @@ const BlockTemplates = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleBlockSuccess]);
 
-  const optionsGroup = createOptionsGroup(scheduleResources);
-
   const blockScheduleForm = useFormik({
     initialValues,
     validationSchema: blockScheduleValidationSchema,
@@ -78,231 +100,41 @@ const BlockTemplates = () => {
       }
     }
   });
-  const desktopDateTimeChange = (date: Date | null, fieldName: string) => {
-    if (date && fieldName) {
-      blockScheduleForm.setFieldValue(fieldName, date);
-    }
-  };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <ScheduleBoxWrapper>
-        <form onSubmit={blockScheduleForm.handleSubmit}>
-          <Grid container spacing={4}>
-            <Grid item xs={12}>
-              <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_RESOURCE)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <Autocomplete
-                      id="resourceId"
-                      options={optionsGroup}
-                      onChange={(_, value) => {
-                        blockScheduleForm.setFieldValue('resourceId', value?.item.id);
-                      }}
-                      isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-                      getOptionLabel={(option) => option.item.title}
-                      groupBy={(option) => option.firstLetter}
-                      onBlur={blockScheduleForm.handleBlur('resourceId')}
-                      onInputChange={(event, value, reason) =>
-                        blockScheduleForm.setFieldValue('resourceId', validateInputChange(event, value, reason))
-                      }
-                      renderInput={(params: TextFieldProps) => (
-                        <TextField
-                          {...params}
-                          label={t(Translation.PAGE_SCHEDULING_BLOCK_RESOURCE)}
-                          name="resourceId"
-                          required
-                          helperText={blockScheduleForm.touched.resourceId ? blockScheduleForm.errors.resourceId : ''}
-                          error={Boolean(blockScheduleForm.errors.resourceId) && blockScheduleForm.touched.resourceId}
-                        />
-                      )}
-                      popupIcon={<KeyboardArrowDownIcon />}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
+    <FormikProvider value={blockScheduleForm}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ScheduleBoxWrapper>
+          <form onSubmit={blockScheduleForm.handleSubmit}>
+            <Grid container spacing={4}>
+              {fieldRows.map(({ Component, fieldLabel, fieldName }) => (
+                <BlockScheduleFormRow title={t(fieldLabel)}>
+                  <Component fieldLabel={t(fieldLabel)} fieldName={fieldName} />
+                </BlockScheduleFormRow>
+              ))}
             </Grid>
             <Grid item xs={12}>
               <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <DesktopDatePicker
-                      label={t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)}
-                      inputFormat="MM/dd/yyyy"
-                      value={blockScheduleForm.values.startDate}
-                      onChange={(value): void => {
-                        blockScheduleForm.setFieldValue('startDate', value);
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          fullWidth
-                          {...params}
-                          name="startDate"
-                          id="startDate"
-                          onBlur={blockScheduleForm.handleBlur('startDate')}
-                          helperText={blockScheduleForm.touched.startDate ? blockScheduleForm.errors.startDate : ''}
-                          error={Boolean(blockScheduleForm.errors.startDate) && blockScheduleForm.touched.startDate}
-                        />
-                      )}
-                    />
-                  </FormControl>
+                <Grid item xs />
+                <Grid item xs />
+                <Grid item xs={4} lg={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                  <StyledButton
+                    type="submit"
+                    variant="contained"
+                    size="large"
+                    style={{
+                      margin: '30px 0'
+                    }}
+                  >
+                    {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
+                  </StyledButton>
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_TIME_START)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <TimePicker
-                      label={t(Translation.PAGE_SCHEDULING_BLOCK_TIME_START)}
-                      value={blockScheduleForm.values.startTime}
-                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'startTime')}
-                      minutesStep={10}
-                      PopperProps={{
-                        sx: {
-                          '& > div > div > div > div > div + div > div': {
-                            '& .Mui-disabled': {
-                              display: 'none'
-                            }
-                          }
-                        }
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          name="startTime"
-                          id="startTime"
-                          onBlur={blockScheduleForm.handleBlur('startTime')}
-                          helperText={blockScheduleForm.touched.startTime ? blockScheduleForm.errors.startTime : ''}
-                          error={Boolean(blockScheduleForm.errors.startTime) && blockScheduleForm.touched.startTime}
-                          fullWidth
-                        />
-                      )}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <DesktopDatePicker
-                      label={t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)}
-                      inputFormat="MM/dd/yyyy"
-                      value={blockScheduleForm.values.endDate}
-                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'endDate')}
-                      renderInput={(params) => (
-                        <TextField
-                          fullWidth
-                          {...params}
-                          onBlur={blockScheduleForm.handleBlur('endDate')}
-                          helperText={blockScheduleForm.touched.endDate ? blockScheduleForm.errors.endDate : ''}
-                          error={Boolean(blockScheduleForm.errors.endDate) && blockScheduleForm.touched.endDate}
-                        />
-                      )}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_TIME_END)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <TimePicker
-                      label={t(Translation.PAGE_SCHEDULING_BLOCK_TIME_END)}
-                      value={blockScheduleForm.values.endTime}
-                      onChange={(date: Date | null) => desktopDateTimeChange(date, 'endTime')}
-                      minutesStep={10}
-                      PopperProps={{
-                        sx: {
-                          '& > div > div > div > div > div + div > div': {
-                            '& .Mui-disabled': {
-                              display: 'none'
-                            }
-                          }
-                        }
-                      }}
-                      renderInput={(params) => (
-                        <TextField
-                          fullWidth
-                          {...params}
-                          name="endTime"
-                          id="endTime"
-                          onBlur={blockScheduleForm.handleBlur('endTime')}
-                          helperText={blockScheduleForm.touched.endTime ? blockScheduleForm.errors.endTime : ''}
-                          error={Boolean(blockScheduleForm.errors.endTime) && blockScheduleForm.touched.endTime}
-                        />
-                      )}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container alignItems="center">
-                <Grid item xs={12} lg={4}>
-                  <Typography>{t(Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER)}</Typography>
-                </Grid>
-                <Grid item xs={12} lg={8}>
-                  <FormControl fullWidth>
-                    <TextField
-                      id="placeholderLabel"
-                      name="placeholderLabel"
-                      fullWidth
-                      onBlur={blockScheduleForm.handleBlur('placeholderLabel')}
-                      helperText={
-                        blockScheduleForm.touched.placeholderLabel ? blockScheduleForm.errors.placeholderLabel : ''
-                      }
-                      error={
-                        Boolean(blockScheduleForm.errors.placeholderLabel) && blockScheduleForm.touched.placeholderLabel
-                      }
-                      label={t(Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER)}
-                      value={blockScheduleForm.values.placeholderLabel}
-                      onChange={blockScheduleForm.handleChange}
-                    />
-                  </FormControl>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container alignItems="center">
-              <Grid item xs />
-              <Grid item xs />
-              <Grid item xs={4} lg={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <StyledButton
-                  type="submit"
-                  variant="contained"
-                  size="large"
-                  style={{
-                    margin: '30px 0'
-                  }}
-                >
-                  {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
-                </StyledButton>
-              </Grid>
-            </Grid>
-          </Grid>
-        </form>
-      </ScheduleBoxWrapper>
-    </LocalizationProvider>
+          </form>
+        </ScheduleBoxWrapper>
+      </LocalizationProvider>
+    </FormikProvider>
   );
 };
 
