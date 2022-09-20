@@ -4,6 +4,7 @@ import { ModalsController } from '@components/ModalsController/ModalsController'
 import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { drawerWidth } from 'themes/themeConstants';
@@ -60,12 +61,20 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
 const MainLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('lg'));
-
+  const router = useRouter();
   const { drawerOpen } = useAppSelector(viewsSelector.menu);
 
   useEffect(() => {
     dispatch(viewsMiddleware.openMenuDrawer(!matchDownMd));
   }, [matchDownMd]);
+
+  // investigate the reason of the issue and fix the reason
+  useEffect(() => {
+    if (router.asPath !== router.pathname) {
+      router.push(router.asPath);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const header = useMemo(
     () => (
