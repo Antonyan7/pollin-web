@@ -24,10 +24,10 @@ import { patientsMiddleware, patientsSelector } from '../../redux/slices/patient
 import { PatientListHeadCell } from './PatientListHeadCell';
 
 const PatientList = () => {
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState(' ');
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.DESCENDING);
   const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
-  const [filters, setFilters] = useState<IPatientsFilterOption[]>([]);
+  const [filters, setFilters] = useState<IPatientsFilterOption[]>([{ type: 'doctor', id: 'doctor1' }]);
   const [page, setPage] = React.useState(0);
   const [t] = useTranslation();
 

@@ -8,7 +8,7 @@ import Image from 'next/image';
 import plusIcon from '@assets/images/patient/icons/plusIcon.svg';
 import EncounterFilters from '@ui-component/encounters/EncounterFilters';
 
-const EncounterNotesHeader = () => {
+const EncounterNotesHeader = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
 
@@ -38,7 +38,7 @@ const EncounterNotesHeader = () => {
           {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
         </Button>
       </header>
-      <EncounterFilters />
+      <EncounterFilters page={page} />
     </Box>
   );
 };

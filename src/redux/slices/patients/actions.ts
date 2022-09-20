@@ -1,5 +1,11 @@
 import { IAction, SliceReducers } from 'redux/store';
-import { AlertDetailsProps, IFilterCategory, IPatientList, PatientEmrProps } from 'types/reduxTypes/patient-emr';
+import {
+  AlertDetailsProps,
+  IEncounterList,
+  IFilterCategory,
+  IPatientList,
+  PatientEmrProps
+} from 'types/reduxTypes/patient-emr';
 
 const actions: SliceReducers<PatientEmrProps> = {
   setError(state, action) {
@@ -22,6 +28,12 @@ const actions: SliceReducers<PatientEmrProps> = {
   },
   setPatientsFiltersLoadingState(state, action: IAction<boolean>) {
     state.isPatientsFiltersLoading = action.payload;
+  },
+  setEncountersLoadingState(state, action: IAction<boolean>) {
+    state.isEncountersListLoading = action.payload;
+  },
+  setEncountersList(state, action: IAction<IEncounterList>) {
+    state.encounters.list = action.payload;
   }
 };
 

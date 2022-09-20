@@ -8,6 +8,7 @@ export const getInitialState = (): PatientEmrProps => ({
     currentPatientId: ''
   },
   isPatientsListLoading: false,
+  isEncountersListLoading: false,
   isPatientsFiltersLoading: false,
   encounters: {
     list: { encounters: [], pageSize: 0, currentPage: 0, totalItems: 0 }

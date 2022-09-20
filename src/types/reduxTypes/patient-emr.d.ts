@@ -4,6 +4,7 @@ export interface PatientEmrProps {
   patientsList: IPatientsProps;
   encounters: IEncountersProps;
   isPatientsListLoading: boolean;
+  isEncountersListLoading: boolean;
   isPatientsFiltersLoading: boolean;
   error: Error | null;
 }
@@ -53,8 +54,8 @@ export interface IEncounterListItem {
   id: string;
   title: string;
   date: string;
-  content: string;
-  addendums: IAddendum[];
+  contentPreview: string;
+  author: string;
 }
 
 export interface IAddendum {

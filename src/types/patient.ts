@@ -40,6 +40,14 @@ export enum PatientListFilterType {
   ALERTS = 'alerts'
 }
 
+export enum EncounterFilterTypes {
+  doctor = 'doctor',
+  alerts = 'alerts',
+  cycleStatus = 'cycle-status',
+  author = 'author',
+  encounterType = 'encounterType'
+}
+
 export interface IPatientsFilterOption {
   type: PatientListFilterType | string;
   id: string;
@@ -51,6 +59,12 @@ export interface IPatientsReqBody {
   sortOrder?: SortOrder;
   filters?: IPatientsFilterOption[];
   page: number;
+}
+
+export interface IEncountersReqBody {
+  page: number;
+  searchString?: string;
+  filters?: IPatientsFilterOption[];
 }
 
 export interface IHeadCell {

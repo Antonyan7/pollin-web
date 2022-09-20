@@ -2,7 +2,7 @@ import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 
-import { IPatientsReqBody } from '../../../types/patient';
+import { IEncountersReqBody, IPatientsReqBody } from '../../../types/patient';
 
 import slice from './slice';
 
@@ -13,7 +13,9 @@ const {
   setPatientAlertDetails,
   setCurrentPatientId,
   setPatientsLoadingState,
-  setPatientsFiltersLoadingState
+  setPatientsFiltersLoadingState,
+  setEncountersLoadingState,
+  setEncountersList
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -73,10 +75,26 @@ const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) =
   dispatch(setCurrentPatientId(patientId));
 };
 
+const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setEncountersLoadingState(true));
+
+    const response = await API.patients.getEncounterList(encounterListData);
+
+    dispatch(setEncountersList(response.data.data));
+    dispatch(setEncountersLoadingState(false));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(cleanPatientList());
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
   getPatientAlertDetails,
   setCurrentPatient,
-  cleanPatientList
+  cleanPatientList,
+  getEncounterList
 };

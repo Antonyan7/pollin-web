@@ -10,7 +10,7 @@ const NothingFoundEncounters = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
+    <Box sx={{ textAlign: 'center', marginTop: '150px' }}>
       <Typography
         sx={{
           color: theme.palette.common.black,

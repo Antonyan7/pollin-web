@@ -1,4 +1,4 @@
-import { IPatientsReqBody } from 'types/patient';
+import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
 import { IPatientList } from 'types/reduxTypes/patient-emr';
 
 import { IAxiosResponse, RequestManagerType } from './axios';
@@ -17,10 +17,13 @@ const patientEmrManager: RequestManagerType = {
     });
   },
   getPatientsList(data: IPatientsReqBody) {
-    return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/patients/search`, data);
+    return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/patient/search`, data);
+  },
+  getEncounterList(data: IEncountersReqBody) {
+    return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/encounters/list`, data);
   },
   getPatientSearchFilters() {
-    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filters`);
+    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patient/search/filters`);
   }
 };
 
