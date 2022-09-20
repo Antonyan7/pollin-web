@@ -26,7 +26,7 @@ const DevSection = () => {
   const onClick = useCallback(() => {
     dispatch(
       viewsMiddleware.setModalState({
-        name: ModalName.DevTools,
+        name: ModalName.DevToolsModal,
         props: null
       })
     );

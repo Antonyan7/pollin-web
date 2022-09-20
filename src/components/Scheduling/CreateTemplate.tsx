@@ -1,15 +1,16 @@
-import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
-import { Divider, Grid, Modal, TextField, Typography } from '@mui/material';
+import { Divider, Grid, TextField, Typography } from '@mui/material';
+import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useFormik } from 'formik';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
+import { viewsMiddleware } from 'redux/slices/views';
 import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
-import ErrorModal from '@ui-component/schedule-template/ErrorModal';
 import { toIsoString, utcDate } from '@utils/dateUtils';
 
 import { dispatch } from '../../redux/hooks';
@@ -32,54 +33,17 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 
 const CreateTemplate = () => {
   const [templateData, setTemplateData] = useState<ITemplateGroup>(getEmptyTemplateState());
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [t] = useTranslation();
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
   }, []);
 
-  const updateInputValue = useCallback(
-    (
-      input: keyof ISingleTemplate,
-      value: string | undefined | boolean | string[],
-      itemIndex: number,
-      indexOfDay?: number
-    ) => {
-      setTemplateData({
-        ...templateData,
-        timePeriods: templateData.timePeriods.map((data, index) => {
-          // updating days
-          if (index === itemIndex && indexOfDay !== undefined) {
-            return {
-              ...data,
-              [input]: value ? [...data.days, indexOfDay] : data.days.filter((item) => item !== indexOfDay)
-            };
-          }
+  const onOpenModalClick = () => {
+    dispatch(viewsMiddleware.setModalState({ name: ModalName.CreateTemplateModal, props: {} }));
+  };
 
-          // updating other fields
-          if (index === itemIndex) {
-            return {
-              ...data,
-              [input]: value
-            };
-          }
-
-          // couldn't identify what to update
-          return {
-            ...data
-          };
-        })
-      });
-    },
-    [templateData]
-  );
-
-  const onModalOpenClose = useCallback(() => {
-    setIsModalOpen(!isModalOpen);
-  }, [isModalOpen]);
-
-  const onSaveClick = useCallback(() => {
+  const handleSaveClick = () => {
     const body = {
       ...templateData,
       timePeriods: templateData.timePeriods.map((item) => {
@@ -95,14 +59,14 @@ const CreateTemplate = () => {
     };
 
     dispatch(schedulingMiddleware.createScheduleTemplate(body));
-  }, [templateData]);
+  };
 
-  const onPlusClick = useCallback(() => {
+  const onPlusClick = () => {
     setTemplateData({
       ...templateData,
       timePeriods: [...templateData.timePeriods, { ...getDefaultTimePeriodState(), id: v4() }]
     });
-  }, [templateData]);
+  };
 
   const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setTemplateData({ ...templateData, name: e.target.value });
@@ -110,7 +74,7 @@ const CreateTemplate = () => {
 
   const createScheduleForm = useFormik({
     initialValues: getEmptyTemplateState(),
-    onSubmit: () => onSaveClick()
+    onSubmit: () => handleSaveClick()
   });
 
   return (
@@ -133,21 +97,8 @@ const CreateTemplate = () => {
             </Grid>
             <Grid item xs={12}>
               <Divider sx={{ margin: '24px 0px 12px' }} />
-              {templateData.timePeriods.map((item, index) => (
-                <>
-                  <Divider
-                    sx={{ margin: '24px 0px 12px', display: templateData.timePeriods.length ? 'none' : 'block' }}
-                  />
-                  <TimePeriods
-                    singleTemplate={item}
-                    index={index}
-                    updateInputValue={updateInputValue}
-                    setTemplateData={setTemplateData}
-                    templateData={templateData}
-                  />
-                  <Divider sx={{ margin: '12px 0px' }} />
-                </>
-              ))}
+              <TimePeriods timePeriods={templateData.timePeriods} setTemplateData={setTemplateData} />
+              <Divider sx={{ margin: '12px 0px' }} />
             </Grid>
             <Grid item xs={12}>
               <PlusIconButton onClick={onPlusClick} />
@@ -157,7 +108,7 @@ const CreateTemplate = () => {
                 <StyledButton variant="contained" size="large" type="submit">
                   {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
                 </StyledButton>
-                <StyledButton onClick={onModalOpenClose} variant="contained" size="large" sx={{ marginRight: '10px' }}>
+                <StyledButton onClick={onOpenModalClick} variant="contained" size="large" sx={{ marginRight: '10px' }}>
                   {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
                 </StyledButton>
               </Grid>
@@ -165,11 +116,6 @@ const CreateTemplate = () => {
           </Grid>
         </Grid>
       </form>
-      {isModalOpen ? (
-        <Modal open={isModalOpen} onClose={onModalOpenClose}>
-          <ErrorModal handleClose={onModalOpenClose} />
-        </Modal>
-      ) : null}
     </ScheduleBoxWrapper>
   );
 };
