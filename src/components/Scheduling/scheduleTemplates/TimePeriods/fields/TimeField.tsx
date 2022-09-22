@@ -5,8 +5,6 @@ import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { ISingleTemplate } from 'types/create-schedule';
 
-import { PickerTimeIcon } from '@ui-component/common/TimeDateIcons';
-
 import { TimePeriodsFieldProps } from './TimePeriodsFieldProps';
 
 interface ITimeFieldProps extends TimePeriodsFieldProps {
@@ -30,9 +28,7 @@ const TimeField = ({ index, singleTemplate, updateInputValue, fieldLabel, fieldN
           ampm={false}
           value={singleTemplate[fieldName]}
           onChange={onTimeFieldChange}
-          renderInput={(params: MuiTextFieldPropsType) => (
-            <TextField fullWidth {...params} InputProps={{ endAdornment: <PickerTimeIcon /> }} />
-          )}
+          renderInput={(params: MuiTextFieldPropsType) => <TextField fullWidth {...params} />}
         />
       </LocalizationProvider>
     </div>

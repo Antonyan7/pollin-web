@@ -2,7 +2,6 @@ import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import EventIcon from '@mui/icons-material/Event';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Autocomplete,
@@ -10,7 +9,6 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputAdornment,
   TextField,
   TextFieldProps,
   Typography,
@@ -330,19 +328,7 @@ const ApplyScheduleForm = () => {
                     label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
                     inputFormat="MMM dd, yyyy"
                     value={startDate}
-                    renderInput={(params: TextFieldProps) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <EventIcon sx={{ color: theme.palette.primary.main }} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    )}
+                    renderInput={(params: TextFieldProps) => <TextField fullWidth {...params} />}
                     onChange={(date: Date | null) => {
                       if (date) {
                         onStartDateUpdate(date);
@@ -365,19 +351,7 @@ const ApplyScheduleForm = () => {
                     label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
                     inputFormat="MMM dd, yyyy"
                     value={endDate}
-                    renderInput={(params: TextFieldProps) => (
-                      <TextField
-                        fullWidth
-                        {...params}
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position="end">
-                              <EventIcon sx={{ color: theme.palette.primary.main }} />
-                            </InputAdornment>
-                          )
-                        }}
-                      />
-                    )}
+                    renderInput={(params: TextFieldProps) => <TextField fullWidth {...params} />}
                     onChange={(date: Date | null) => {
                       if (date) {
                         onEndDateUpdate(date);
