@@ -12,8 +12,7 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
 import { changeDate, changeHours, getWeekDay } from '@utils/dateUtils';
-import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
-import CalendarStyled from '../calendar/CalendarStyled';
+import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 import Toolbar from './ToolBar';
 import { SlotTypes } from '../../types/calendar';
 import { ISingleTemplate, ServiceTypeOrBlock } from '../../types/create-schedule';
@@ -25,7 +24,7 @@ const Calendar = (props: { calendarDate: string }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  const scheduleCalendarLoading = useAppSelector(schedulingSelector.scheduleCalendarLoading);
+  // const scheduleCalendarLoading = useAppSelector(schedulingSelector.scheduleCalendarLoading);
 
   const onDatePrevClick = () => {
     const calendarEl = calendarRef.current;
@@ -82,8 +81,7 @@ const Calendar = (props: { calendarDate: string }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      {scheduleCalendarLoading && <CalendarLoading />}
-      <CalendarStyled>
+      <FullCalendarWrapper>
         <Toolbar date={date} onClickNext={onDateNextClick} onClickPrev={onDatePrevClick} />
         <FullCalendar
           weekends
@@ -106,7 +104,7 @@ const Calendar = (props: { calendarDate: string }) => {
           slotLabelInterval="00:10"
           plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
         />
-      </CalendarStyled>
+      </FullCalendarWrapper>
     </div>
   );
 };

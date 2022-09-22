@@ -1,7 +1,7 @@
 // material-ui
 import { styled } from '@mui/material/styles';
 
-const ExperimentalStyled = styled('div')(({ theme }) => ({
+const CalendarWrapper = styled('div')(({ theme }) => ({
   // hide license message
   '& .fc-license-message': {
     display: 'none'
@@ -113,4 +113,4 @@ const ExperimentalStyled = styled('div')(({ theme }) => ({
   }
 }));
 
-export default ExperimentalStyled;
+export default CalendarWrapper;
