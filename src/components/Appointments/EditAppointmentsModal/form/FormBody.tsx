@@ -8,15 +8,15 @@ import ServiceType from './fields/ServiceType';
 import StatusAppointmentLabel from './fields/StatusAppointmentLabel';
 
 const FormBody = () => (
-    <DialogContent sx={{ p: 3 }}>
-      <Grid container spacing={3}>
-        <ServiceType />
-        <PatientId />
-        <DateAndStartTime />
-        <AppointmentDescription />
-        <StatusAppointmentLabel />
-      </Grid>
-    </DialogContent>
-  );
+  <DialogContent sx={{ p: 3 }}>
+    <Grid container spacing={3}>
+      <ServiceType />
+      <PatientId />
+      <DateAndStartTime />
+      <AppointmentDescription />
+      <StatusAppointmentLabel />
+    </Grid>
+  </DialogContent>
+);
 
 export default FormBody;
