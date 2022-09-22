@@ -1,6 +1,7 @@
 import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
+import { ICreateEncounterNoteProps, IUpdateEncounterNoteProps } from 'types/reduxTypes/patient-emr';
 
 import { IEncountersReqBody, IPatientsReqBody } from '../../../types/patient';
 
@@ -75,6 +76,28 @@ const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) =
   dispatch(setCurrentPatientId(patientId));
 };
 
+export const createEncounterNote = (data: ICreateEncounterNoteProps) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPatientsLoadingState(true));
+    await API.patients.createEncounterNote(data);
+  } catch (error) {
+    dispatch(setError(error));
+  } finally {
+    dispatch(setPatientsLoadingState(false));
+  }
+};
+
+export const updateEncounterNote = (data: IUpdateEncounterNoteProps) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPatientsLoadingState(true));
+    await API.patients.updateEncounterNote(data);
+  } catch (error) {
+    dispatch(setError(error));
+  } finally {
+    dispatch(setPatientsLoadingState(false));
+  }
+};
+
 const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setEncountersLoadingState(true));
@@ -96,5 +119,7 @@ export default {
   getPatientAlertDetails,
   setCurrentPatient,
   cleanPatientList,
+  createEncounterNote,
+  updateEncounterNote,
   getEncounterList
 };

@@ -64,3 +64,13 @@ export interface IAddendum {
   date: string;
   content: string;
 }
+interface IEncounterNoteProps {
+  patientId: string;
+  encountersTypeId: string;
+  content: string;
+}
+
+interface IEncountersProps {}
+
+export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}
+export interface IUpdateEncounterNoteProps extends IEncounterNoteProps {}

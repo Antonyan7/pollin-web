@@ -3,7 +3,14 @@ import { IPatientList } from 'types/reduxTypes/patient-emr';
 
 import { IAxiosResponse, RequestManagerType } from './axios';
 import { Axios } from './axiosInstance';
-import { IAlertDetailsResponse, IPatientsFiltersResponse } from './managerPatientEmr';
+import {
+  IAlertDetailsResponse,
+  ICreateEncounterNoteRequest,
+  ICreateEncounterNoteResponse,
+  IPatientsFiltersResponse,
+  IUpdateEncounterNoteRequest,
+  IUpdateEncounterNoteResponse
+} from './managerPatientEmr';
 
 const baseURL = '/clinic-patient-emr';
 
@@ -23,7 +30,13 @@ const patientEmrManager: RequestManagerType = {
     return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/encounters/list`, data);
   },
   getPatientSearchFilters() {
-    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patient/search/filters`);
+    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filters`);
+  },
+  createEncounterNote(data: ICreateEncounterNoteRequest) {
+    return axiosInstance.post<any, IAxiosResponse<ICreateEncounterNoteResponse>>(`${baseURL}/v1/encounter`, data);
+  },
+  updateEncounterNote(data: IUpdateEncounterNoteRequest) {
+    return axiosInstance.put<any, IAxiosResponse<IUpdateEncounterNoteResponse>>(`${baseURL}/v1/encounter`, data);
   }
 };
 

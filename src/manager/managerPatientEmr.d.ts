@@ -37,3 +37,21 @@ export interface IPatientsFilterOption {
 export interface IPatientsFiltersResponse {
   filters: IFilterCategory[];
 }
+
+interface IEncounterNoteRequest {
+  patientId: string;
+  encountersTypeId: string;
+  content: string;
+}
+
+interface IEncounterNoteResponse {
+  code: string;
+  message?: string;
+  title?: string;
+}
+
+export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
+export interface IUpdateEncounterNoteRequest extends IEncounterNoteRequest {}
+
+export interface ICreateEncounterNoteResponse extends IEncounterNoteResponse {}
+export interface IUpdateEncounterNoteResponse extends IEncounterNoteResponse {}
