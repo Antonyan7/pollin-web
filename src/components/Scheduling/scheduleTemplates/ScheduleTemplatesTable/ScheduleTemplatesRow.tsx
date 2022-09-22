@@ -2,18 +2,19 @@ import React, { useCallback } from 'react';
 import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
 import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
 import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
-import { Row } from 'components/Scheduling/scheduleTemplates';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 
+import { ITableRow } from './Table';
+
 interface TableComponentProps {
   isItemSelected: boolean;
-  row: Row;
+  row: ITableRow;
   onClick: (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => void;
   labelId: string;
 }
 
-const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableComponentProps) => {
+const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableComponentProps) => {
   const theme = useTheme();
   const router = useRouter();
   const onViewClick = useCallback(
@@ -61,4 +62,4 @@ const ScheduleTemplateRow = ({ isItemSelected, row, onClick, labelId }: TableCom
   );
 };
 
-export default ScheduleTemplateRow;
+export default ScheduleTemplatesRow;
