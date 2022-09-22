@@ -5,7 +5,6 @@ export const CreateSlot = (
   type: SlotTypes,
   start: string,
   end: string,
-  description: string,
   title: string,
   slotId?: string
 ): ICalendarSlot => {
@@ -45,7 +44,6 @@ export const CreateSlot = (
     color: BackgroundColors[type],
     borderColor: BorderColors[type],
     textColor: TextColors[type],
-    description,
     title,
     start,
     end

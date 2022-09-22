@@ -5,7 +5,7 @@ import { BookingProps } from '../../../types/reduxTypes/booking';
 export const getInitialState = (): BookingProps => ({
   appointments: [],
   date: format(new Date(), 'yyyy-MM-dd'),
-  serviceProviders: [],
+  serviceProviders: { providers: [], pageSize: 10, currentPage: 0, totalItems: 0 },
   isCalendarLoading: false,
   currentServiceProviderId: '',
   currentAppointmentId: '',

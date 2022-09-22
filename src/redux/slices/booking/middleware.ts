@@ -3,6 +3,7 @@ import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/managerBoo
 import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IPatientsReqBody } from 'types/patient';
+import { IServiceProviders } from 'types/reduxTypes/booking';
 
 import { toIsoString } from '@utils/dateUtils';
 
@@ -24,8 +25,14 @@ const {
 const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.booking.getServiceProviders({ page });
+    const data: IServiceProviders = {
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize,
+      providers: response.data.data.providers
+    };
 
-    dispatch(setServiceProviders(response.data.data.providers));
+    dispatch(setServiceProviders(data));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

@@ -12,7 +12,7 @@ import { initialValues } from '../form/initialValues';
 
 const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
-  const optionsGroup = createOptionsGroup(scheduleResources);
+  const optionsGroup = createOptionsGroup(scheduleResources.providers);
   const { setFieldValue, touched, errors, handleBlur } = useFormikContext<typeof initialValues>();
 
   return (

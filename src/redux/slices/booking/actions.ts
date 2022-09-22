@@ -1,5 +1,5 @@
 import { IAction, SliceReducers } from 'redux/store';
-import { AppointmentDetailsProps, BookingProps, IAppointment, IServiceProvider } from 'types/reduxTypes/booking';
+import { AppointmentDetailsProps, BookingProps, IAppointment, IServiceProviders } from 'types/reduxTypes/booking';
 import { AlertDetailsProps, IPatientList } from 'types/reduxTypes/patient-emr';
 
 const actions: SliceReducers<BookingProps> = {
@@ -9,7 +9,7 @@ const actions: SliceReducers<BookingProps> = {
   setDate(state, action: IAction<string>) {
     state.date = action.payload;
   },
-  setServiceProviders(state, action: IAction<IServiceProvider[]>) {
+  setServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders = action.payload;
   },
   setCurrentServiceProviderId(state, action: IAction<string>) {

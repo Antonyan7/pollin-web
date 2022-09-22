@@ -1,3 +1,5 @@
+import { IPagination } from '@axios/axios';
+
 import { ISingleTemplate } from '../create-schedule';
 
 import { IServiceProvider, IServiceType } from './booking';
@@ -33,7 +35,7 @@ export interface SchedulingProps {
   scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
   schedulingListLoadingStatus: boolean;
-  scheduleTemplates: SchedulingTemplateProps[] | IPagination;
+  scheduleTemplates: IScheduleTemplatesList;
   error: Error | null;
   scheduleBlock: BlockSchedulingProps[];
   scheduleCalendarLoading: boolean;
@@ -41,4 +43,8 @@ export interface SchedulingProps {
   serviceTypes: IServiceType[];
   applySuccess: boolean;
   blockSuccess: boolean;
+}
+
+export interface IScheduleTemplatesList extends IPagination {
+  templates: SchedulingTemplateProps[];
 }

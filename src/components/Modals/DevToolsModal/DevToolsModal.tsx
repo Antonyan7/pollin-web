@@ -18,7 +18,7 @@ import { ModalName } from 'constants/modals';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 
-const getBaseURL = () => API.booking.axiosInstance.defaults.baseURL;
+const getBaseURL = () => API.booking.axiosInstance.defaults.baseURL ?? '';
 
 const DevToolsModal = () => {
   const [server, setServer] = React.useState<string>(getBaseURL());

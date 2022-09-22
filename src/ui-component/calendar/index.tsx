@@ -130,7 +130,6 @@ const Calendar = (props: { calendarDate: string }) => {
         item.type,
         item.startTime,
         addMinutesToTime(item.startTime, item.timeUnits * 10).toISOString(),
-        item.description,
         item.title,
         item.id
       )

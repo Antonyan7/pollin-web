@@ -1,24 +1,26 @@
 import { AxiosRequestConfig, AxiosResponseHeaders } from 'axios';
 
-export interface IAxiosResponse<T = any, D = any> {
+export interface IAxiosResponse<T> {
   data: IData<T>;
   status: IResponseStatus;
   statusText: string;
   headers: AxiosResponseHeaders;
-  config: AxiosRequestConfig<D>;
+  config: AxiosRequestConfig<any>;
   request?: any;
 }
 export interface IAxiosResponsePaginated<T> {
   data: IPaginatedData<T>;
-  status: IResponseStatus;
+  status: number;
   statusText: string;
   headers: AxiosResponseHeaders;
-  config: AxiosRequestConfig<D>;
-  request?: any;
+  config: AxiosRequestConfig<any>;
+  request?: XMLHttpRequest;
 }
 
 interface IResponseStatus {
   code: string;
+  message?: string;
+  title?: string;
 }
 
 interface IData<T> extends IResponseStatus {
@@ -31,14 +33,4 @@ interface IPagination {
   totalItems: number;
 }
 
-interface IPaginatedData<T extends IPagination> extends IResponseStatus {
-  data: T;
-}
-
-export interface RequestManagerType {
-  axiosInstance: AxiosInstance;
-  [key: string]: (...args: any[]) => Promise<any>;
-}
-export interface ApiType {
-  [key: string]: RequestManagerType;
-}
+interface IPaginatedData<T> extends IData<T>, IPagination {}

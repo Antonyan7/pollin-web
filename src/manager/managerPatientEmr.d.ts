@@ -1,6 +1,6 @@
 import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/booking';
-import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+import { AlertDetailsProps, IEncounterListItem, IPatientListData } from 'types/reduxTypes/patient-emr';
 
 export interface IAlertDetailsResponse {
   alerts: AlertDetailsProps[];
@@ -36,6 +36,13 @@ export interface IPatientsFilterOption {
 
 export interface IPatientsFiltersResponse {
   filters: IFilterCategory[];
+}
+export interface IPatientsListResponse {
+  patients: IPatientListData[];
+}
+
+export interface IPatientEncountersListResponse {
+  encounters: IEncounterListItem[];
 }
 
 interface IEncounterNoteRequest {

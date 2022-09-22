@@ -1,7 +1,12 @@
 import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
-import { ICreateEncounterNoteProps, IUpdateEncounterNoteProps } from 'types/reduxTypes/patient-emr';
+import {
+  ICreateEncounterNoteProps,
+  IEncounterList,
+  IPatientList,
+  IUpdateEncounterNoteProps
+} from 'types/reduxTypes/patient-emr';
 
 import { IEncountersReqBody, IPatientsReqBody } from '../../../types/patient';
 
@@ -36,8 +41,14 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
     dispatch(setPatientsLoadingState(true));
 
     const response = await API.patients.getPatientsList(patientsListData);
+    const data: IPatientList = {
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize,
+      patients: response.data.data.patients
+    };
 
-    dispatch(setPatientsList(response.data.data));
+    dispatch(setPatientsList(data));
     dispatch(setPatientsLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);
@@ -103,8 +114,14 @@ const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispa
     dispatch(setEncountersLoadingState(true));
 
     const response = await API.patients.getEncounterList(encounterListData);
+    const data: IEncounterList = {
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize,
+      encounters: response.data.data.encounters
+    };
 
-    dispatch(setEncountersList(response.data.data));
+    dispatch(setEncountersList(data));
     dispatch(setEncountersLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);

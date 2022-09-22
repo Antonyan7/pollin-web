@@ -1,13 +1,14 @@
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IPatientList } from 'types/reduxTypes/patient-emr';
 
-import { IAxiosResponse, RequestManagerType } from './axios';
+import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
 import { Axios } from './axiosInstance';
 import {
   IAlertDetailsResponse,
   ICreateEncounterNoteRequest,
   ICreateEncounterNoteResponse,
+  IPatientEncountersListResponse,
   IPatientsFiltersResponse,
+  IPatientsListResponse,
   IUpdateEncounterNoteRequest,
   IUpdateEncounterNoteResponse
 } from './managerPatientEmr';
@@ -16,7 +17,7 @@ const baseURL = '/clinic-patient-emr';
 
 const axiosInstance = Axios();
 
-const patientEmrManager: RequestManagerType = {
+const patientEmrManager = {
   axiosInstance,
   getPatientAlertDetails(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<IAlertDetailsResponse>>(`${baseURL}/v1/patients/alerts`, {
@@ -24,10 +25,16 @@ const patientEmrManager: RequestManagerType = {
     });
   },
   getPatientsList(data: IPatientsReqBody) {
-    return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/patient/search`, data);
+    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientsListResponse>>(
+      `${baseURL}/v1/patients/search`,
+      data
+    );
   },
   getEncounterList(data: IEncountersReqBody) {
-    return axiosInstance.post<any, IAxiosResponse<IPatientList>>(`${baseURL}/v1/encounters/list`, data);
+    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientEncountersListResponse>>(
+      `${baseURL}/v1/encounters/list`,
+      data
+    );
   },
   getPatientSearchFilters() {
     return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filters`);

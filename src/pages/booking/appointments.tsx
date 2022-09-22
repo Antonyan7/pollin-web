@@ -122,7 +122,7 @@ const Appointments = () => {
                 onChange={onServiceProviderChange}
                 value={serviceProviderId}
               >
-                {serviceProviders.map((serviceProvider) => (
+                {serviceProviders.providers.map((serviceProvider) => (
                   <MenuItem key={`resource-${serviceProvider.id}`} value={serviceProvider.id}>
                     {serviceProvider.title}
                   </MenuItem>

@@ -6,7 +6,6 @@ import {
   IServiceType
 } from '../types/reduxTypes/booking';
 
-import { IPagination } from './axios';
 import { IEmptyResponse } from './common';
 
 export interface IAppointmentListReqParams {
@@ -21,7 +20,7 @@ export interface IAppointmentListResponse {
   slots: IAppointment[];
 }
 
-export interface IServiceProvidersListResponse extends IPagination {
+export interface IServiceProvidersListResponse {
   providers: IServiceProvider[];
 }
 
@@ -47,6 +46,7 @@ export interface IEditAppointmentBody {
 }
 
 export interface IEditAppointmentsDetails {
+  id: string;
   date: Date;
   status: string;
   description: string;

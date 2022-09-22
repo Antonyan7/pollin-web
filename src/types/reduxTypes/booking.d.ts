@@ -1,3 +1,4 @@
+import { IPagination } from '@axios/axios';
 import { IAppointmentDetails } from '@axios/managerBooking';
 import { AlertDetailsProps } from '@axios/managerPatientEmr';
 
@@ -14,7 +15,7 @@ export interface AppointmentDetailsProps {
 export interface BookingProps {
   appointments: IAppointment[];
   date: string;
-  serviceProviders: IServiceProvider[];
+  serviceProviders: IServiceProviders;
   currentServiceProviderId: string;
   isCalendarLoading: boolean;
   currentAppointmentId: string;
@@ -30,6 +31,9 @@ export interface IUniqueItem {
   title: string;
 }
 
+export interface IServiceProviders extends IPagination {
+  providers: IServiceProvider[];
+}
 export interface IServiceProvider extends IUniqueItem {}
 
 export interface IPatientInfo extends IUniqueItem {}
@@ -39,12 +43,11 @@ export interface IServiceType extends IUniqueItem {
 
 export interface IAppointment {
   id: string;
-  isEditable: boolean;
+  type: SlotTypes;
   startTime: string;
   timeUnits: number;
   title: string;
-  description: string;
-  type: SlotTypes;
+  isEditable: boolean;
 }
 
 export interface ICalendarSlot {
@@ -56,7 +59,6 @@ export interface ICalendarSlot {
   display?: string;
   textColor: string;
   color: string;
-  description: string;
   end: string;
   start: string;
 }

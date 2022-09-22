@@ -2,7 +2,7 @@ import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
-import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
+import { BlockSchedulingProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
 
 import { viewsMiddleware } from '../views';
 
@@ -36,8 +36,14 @@ const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatc
     dispatch(setSchedulingListLoadingStatus(true));
 
     const response = await API.scheduling.getTemplatesList(pageSize);
+    const data: IScheduleTemplatesList = {
+      totalItems: response.data.totalItems,
+      pageSize: response.data.pageSize,
+      currentPage: response.data.currentPage,
+      templates: response.data.data.templates
+    };
 
-    dispatch(setScheduleTemplates(response.data.data));
+    dispatch(setScheduleTemplates(data));
     dispatch(setSchedulingListLoadingStatus(false));
   } catch (error) {
     Sentry.captureException(error);

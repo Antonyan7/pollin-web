@@ -215,7 +215,7 @@ const ApplyScheduleForm = () => {
                 <FormControl fullWidth>
                   <Autocomplete
                     popupIcon={<KeyboardArrowDownIcon />}
-                    options={serviceProviders}
+                    options={serviceProviders.providers}
                     onChange={(e, value) => {
                       onSelectResourceUpdate(value);
                     }}

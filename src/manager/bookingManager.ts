@@ -1,4 +1,4 @@
-import { IAxiosResponse, IAxiosResponsePaginated, RequestManagerType } from '@axios/axios';
+import { IAxiosResponse, IAxiosResponsePaginated } from '@axios/axios';
 import {
   IAppointmentDetailsResponse,
   IAppointmentListReqParams,
@@ -18,7 +18,7 @@ import { Axios } from './axiosInstance';
 const baseURL = '/clinic-booking';
 
 const axiosInstance = Axios();
-const bookingManager: RequestManagerType = {
+const bookingManager = {
   axiosInstance,
   getAppointments(params: IAppointmentListReqParams) {
     return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>(`${baseURL}/v1/calendar/slot`, { params });
