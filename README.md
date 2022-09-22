@@ -51,3 +51,6 @@ Redux Toolkit (Thunk) - For state management is used Redux Thunk with Toolkit. I
 
 1. [Development Polcies](https://docs.google.com/document/d/1Iez6mYaCN5FO3Ehfb8MgCPe1MiSL_LRpLI5lj_3VFDg/edit#heading=h.e77667m46viu)
 1. [API Rules](https://github.com/OPN-Technologies/pollin-tech-docs/blob/master/APIRequirements/GeneralAPIRules.md)
+
+# Application URLs
+1. DEV: https://pollin-clinic-portal-dev.nn.r.appspot.com/
