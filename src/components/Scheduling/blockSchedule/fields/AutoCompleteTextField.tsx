@@ -32,7 +32,6 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           {...params}
           label={fieldLabel}
           name={fieldName}
-          required
           helperText={touched[fieldName] ? errors[fieldName] : ''}
           error={Boolean(errors[fieldName]) && touched[fieldName]}
         />
