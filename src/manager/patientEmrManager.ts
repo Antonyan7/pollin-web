@@ -4,13 +4,13 @@ import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
 import { Axios } from './axiosInstance';
 import {
   IAlertDetailsResponse,
+  ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
-  ICreateEncounterNoteResponse,
   IPatientEncountersListResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
-  IUpdateEncounterNoteRequest,
-  IUpdateEncounterNoteResponse
+  IUpdateEncounterAddendumRequest,
+  IUpdateEncounterNoteRequest
 } from './managerPatientEmr';
 
 const baseURL = '/clinic-patient-emr';
@@ -40,10 +40,16 @@ const patientEmrManager = {
     return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {
-    return axiosInstance.post<any, IAxiosResponse<ICreateEncounterNoteResponse>>(`${baseURL}/v1/encounters`, data);
+    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);
   },
   updateEncounterNote(data: IUpdateEncounterNoteRequest) {
-    return axiosInstance.put<any, IAxiosResponse<IUpdateEncounterNoteResponse>>(`${baseURL}/v1/encounters`, data);
+    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);
+  },
+  createEncounterAddendum(data: ICreateEncounterAddendumRequest) {
+    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);
+  },
+  updateEncounterAddendum(data: IUpdateEncounterAddendumRequest) {
+    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);
   }
 };
 

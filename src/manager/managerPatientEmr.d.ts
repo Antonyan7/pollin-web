@@ -51,14 +51,13 @@ interface IEncounterNoteRequest {
   content: string;
 }
 
-interface IEncounterNoteResponse {
-  code: string;
-  message?: string;
-  title?: string;
+interface IEncounterAddendumRequest {
+  encounterId: string;
+  content: string;
 }
 
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
 export interface IUpdateEncounterNoteRequest extends IEncounterNoteRequest {}
 
-export interface ICreateEncounterNoteResponse extends IEncounterNoteResponse {}
-export interface IUpdateEncounterNoteResponse extends IEncounterNoteResponse {}
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
+export interface IUpdateEncounterAddendumRequest extends IEncounterAddendumRequest {}
