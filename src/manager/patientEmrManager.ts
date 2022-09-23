@@ -37,13 +37,13 @@ const patientEmrManager = {
     );
   },
   getPatientSearchFilters() {
-    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filters`);
+    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {
-    return axiosInstance.post<any, IAxiosResponse<ICreateEncounterNoteResponse>>(`${baseURL}/v1/encounter`, data);
+    return axiosInstance.post<any, IAxiosResponse<ICreateEncounterNoteResponse>>(`${baseURL}/v1/encounters`, data);
   },
   updateEncounterNote(data: IUpdateEncounterNoteRequest) {
-    return axiosInstance.put<any, IAxiosResponse<IUpdateEncounterNoteResponse>>(`${baseURL}/v1/encounter`, data);
+    return axiosInstance.put<any, IAxiosResponse<IUpdateEncounterNoteResponse>>(`${baseURL}/v1/encounters`, data);
   }
 };
 
