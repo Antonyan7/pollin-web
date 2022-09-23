@@ -26,6 +26,9 @@ const schedulingManager = {
   getSingleTemplate(templateId: string) {
     return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>(`${baseURL}/v1/templates/${templateId}`);
   },
+  updateSingleTemplate(templateId: string, data: ITemplateGroup) {
+    return axiosInstance.put<any, IAxiosResponse<SingleSchedulingProps>>(`${baseURL}/v1/templates/${templateId}`, data);
+  },
   applyScheduleBlock(data: BlockSchedulingProps) {
     return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>(`${baseURL}/v1/block/apply`, data);
   },
