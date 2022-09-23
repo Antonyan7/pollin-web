@@ -117,7 +117,7 @@ const BlockTemplates = () => {
               <Grid container alignItems="center">
                 <Grid item xs />
                 <Grid item xs />
-                <Grid item xs={4} lg={2} sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+                <Grid item container xs={4} lg={2} justifyContent="flex-end">
                   <StyledButton
                     type="submit"
                     variant="contained"

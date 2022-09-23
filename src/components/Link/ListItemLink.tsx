@@ -1,7 +1,6 @@
 import React, { ForwardedRef, forwardRef, PropsWithChildren } from 'react';
 import { useTheme } from '@mui/material';
-
-import { LinkTarget, NavItemType } from '@types';
+import { LinkTarget, NavItemType } from 'types';
 
 import Link from './Link';
 

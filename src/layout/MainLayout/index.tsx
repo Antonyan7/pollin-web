@@ -8,8 +8,7 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { drawerWidth } from 'themes/themeConstants';
-
-import { MainStyleProps } from '@types';
+import { MainStyleProps } from 'types';
 
 import Header from './Header';
 import Sidebar from './Sidebar';
