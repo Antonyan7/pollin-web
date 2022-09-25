@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { IconChevronRight } from '@tabler/icons';
+import { useRouter } from 'next/router';
 
 import SubCard from '@ui-component/cards/SubCard';
 
@@ -10,9 +11,14 @@ import { IEncounterListItem } from '../../types/reduxTypes/patient-emr';
 
 const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEncounterListItem) => {
   const theme = useTheme();
+  const router = useRouter();
+
+  const onEncounterClick = () => {
+    router.push(`/encounters/details/${id}`);
+  };
 
   return (
-    <div style={{ backgroundColor: theme.palette.background.paper }} key={id}>
+    <Box onClick={onEncounterClick} sx={{ backgroundColor: theme.palette.background.paper, cursor: 'pointer' }}>
       <Grid sx={{ marginBottom: '25px' }} item lg={8} xs={12}>
         <Grid container direction="column" spacing={gridSpacing}>
           <Grid item xs={12}>
@@ -43,7 +49,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
           </Grid>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 

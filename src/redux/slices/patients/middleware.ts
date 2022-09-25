@@ -9,6 +9,7 @@ import {
 } from 'types/reduxTypes/patient-emr';
 
 import { IEncountersReqBody, IPatientsReqBody } from '../../../types/patient';
+import { sortOrderTransformer } from '../../data-transformers/sortOrderTransformer';
 
 import slice from './slice';
 
@@ -40,7 +41,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
   try {
     dispatch(setPatientsLoadingState(true));
 
-    const response = await API.patients.getPatientsList(patientsListData);
+    const response = await API.patients.getPatientsList(sortOrderTransformer(patientsListData));
     const data: IPatientList = {
       totalItems: response.data.totalItems,
       currentPage: response.data.currentPage,

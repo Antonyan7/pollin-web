@@ -22,16 +22,16 @@ interface AlertInfo {
 }
 
 export enum SortOrder {
-  ASCENDING = 'asc',
-  DESCENDING = 'desc'
+  Asc = 'asc',
+  Desc = 'desc'
 }
 
 export enum PatientListField {
-  NAME = 'name',
-  DOCTOR = 'doctor',
-  ALERT = 'alert',
-  DATE_OF_BIRTH = 'dateOfBirth',
-  CYCLE_STATUS = 'cycleStatus'
+  NAME = 'Name',
+  DOCTOR = 'Doctor',
+  ALERT = 'Alert',
+  DATE_OF_BIRTH = 'DateOfBirth',
+  CYCLE_STATUS = 'CycleStatus'
 }
 
 export enum PatientListFilterType {
@@ -41,11 +41,11 @@ export enum PatientListFilterType {
 }
 
 export enum EncounterFilterTypes {
-  doctor = 'doctor',
-  alerts = 'alerts',
-  cycleStatus = 'cycle-status',
-  author = 'author',
-  encounterType = 'encounterType'
+  doctor = 'Doctor',
+  alert = 'Alert',
+  cycleStatus = 'CycleStatus',
+  author = 'Author',
+  encounterType = 'EncounterType'
 }
 
 export interface IPatientsFilterOption {

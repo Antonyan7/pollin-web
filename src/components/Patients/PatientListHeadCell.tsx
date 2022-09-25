@@ -20,7 +20,7 @@ export const PatientListHeadCell = ({
   const onSort = useCallback(
     (field: PatientListField) => {
       setSortField(field);
-      setSortOrder(sortOrder === SortOrder.ASCENDING ? SortOrder.DESCENDING : SortOrder.ASCENDING);
+      setSortOrder(sortOrder === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc);
     },
     [setSortField, setSortOrder, sortOrder]
   );
@@ -29,7 +29,7 @@ export const PatientListHeadCell = ({
     <TableCell key={headCell.id} align={headCell.align}>
       {headCell.isSortable ? (
         <TableSortLabel
-          direction={sortField === headCell.id ? sortOrder : SortOrder.ASCENDING}
+          direction={sortField === headCell.id ? sortOrder : SortOrder.Asc}
           active={sortField === headCell.id}
           sx={{
             paddingLeft: headCell.paddingLeft

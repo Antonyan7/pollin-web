@@ -91,13 +91,13 @@ const ScheduleTemplatesHead = ({
             >
               <TableSortLabel
                 active={orderBy === headCell.id}
-                direction={orderBy === headCell.id ? order : SortOrder.ASCENDING}
+                direction={orderBy === headCell.id ? order : SortOrder.Asc}
                 onClick={handleSort(headCell.id)}
               >
                 {t(headCell.label)}
                 {orderBy === headCell.id ? (
                   <Box component="span" sx={visuallyHidden}>
-                    {order === SortOrder.DESCENDING ? 'sorted descending' : 'sorted ascending'}
+                    {order === SortOrder.Desc ? 'sorted descending' : 'sorted ascending'}
                   </Box>
                 ) : null}
               </TableSortLabel>
