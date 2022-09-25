@@ -3,6 +3,7 @@ import { TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { MAX_SELECTABLE_DATE_TIME,MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { ISingleTemplate } from 'types/create-schedule';
 
 import { TimePeriodsFieldProps } from './TimePeriodsFieldProps';
@@ -26,6 +27,8 @@ const TimeField = ({ index, singleTemplate, updateInputValue, fieldLabel, fieldN
         <TimePicker
           label={fieldLabel}
           ampm={false}
+          minTime={MIN_SELECTABLE_DATE_TIME}
+          maxTime={MAX_SELECTABLE_DATE_TIME}
           value={singleTemplate[fieldName]}
           onChange={onTimeFieldChange}
           renderInput={(params: MuiTextFieldPropsType) => <TextField fullWidth {...params} />}

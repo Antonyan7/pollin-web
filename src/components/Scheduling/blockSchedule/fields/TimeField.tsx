@@ -1,6 +1,7 @@
 import React from 'react';
 import { TextField } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { useFormikContext } from 'formik';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
@@ -14,6 +15,8 @@ const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       label={fieldLabel}
       value={values[fieldName]}
       onChange={(date: Date | null) => date && setFieldValue(fieldName, date)}
+      minTime={MIN_SELECTABLE_DATE_TIME}
+      maxTime={MAX_SELECTABLE_DATE_TIME}
       minutesStep={10}
       PopperProps={{
         sx: {

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { roundUpTo } from '@constants';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { FormikValues, useFormikContext } from 'formik';
 
@@ -29,6 +30,8 @@ const DateAndStartTime: React.FC = () => {
     <Grid item xs={12}>
       <MobileDateTimePicker
         label={dateAndStartTimeLabel}
+        minTime={MIN_SELECTABLE_DATE_TIME}
+        maxTime={MAX_SELECTABLE_DATE_TIME}
         value={initialDate}
         onChange={(date: Date | null) => mobileDateTimeChange(date)}
         renderInput={(params: TextFieldProps) => (
