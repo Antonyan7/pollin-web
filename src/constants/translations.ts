@@ -68,6 +68,7 @@ export enum Translation {
   PAGE_ENCOUNTERS_EDIT_ENCOUNTER_NOTE = 'page.encounters.edit.encounter.note',
   PAGE_ENCOUNTERS_ADD_ADDENDUM = 'page.encounters.add.addendum',
   PAGE_ENCOUNTERS_ADDENDUM_NOTE = 'page.encounters.addendum.note',
+  MODAL_CANCEL = 'modal.cancel',
   MODAL_APPOINTMENTS_ADD_TITLE = 'modal.appointments.add.title',
   MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE = 'modal.appointments.add.select.service.type',
   MODAL_APPOINTMENTS_ADD_SELECT_PATIENT = 'modal.appointments.add.select.patient',

@@ -66,6 +66,7 @@
   "page.encounters.edit.encounter.note": "Edit Encounter Note",
   "page.encounters.add.addendum": "Add Addendum",
   "page.encounters.addendum.note": "Note",
+  "modal.cancel": "Cancel",
   "modal.appointments.add.title": " Add Appointment",
   "modal.appointments.add.select.service.type": "Appointment type",
   "modal.appointments.add.select.patient": "Patient",
