@@ -8,9 +8,10 @@ import { IServiceProvider } from 'types/reduxTypes/booking';
 interface Props {
   setResource: React.Dispatch<React.SetStateAction<IServiceProvider>>;
   label: string;
+  resource: IServiceProvider;
 }
 
-const ResourceField = ({ setResource, label }: Props) => {
+const ResourceField = ({ setResource, label, resource }: Props) => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
 
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
@@ -22,6 +23,7 @@ const ResourceField = ({ setResource, label }: Props) => {
   return (
     <FormControl fullWidth>
       <Autocomplete
+        inputValue={resource.title}
         popupIcon={<KeyboardArrowDownIcon />}
         onChange={(e, value) => {
           onSelectResourceUpdate(value);

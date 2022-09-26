@@ -7,9 +7,10 @@ import { IApplyScheduleDay } from 'types/apply-schedule';
 interface Props {
   setRepeatWeeks: (value: React.SetStateAction<IApplyScheduleDay>) => void;
   label: string;
+  repeatWeeks: IApplyScheduleDay;
 }
 
-const RepeatsField = ({ setRepeatWeeks, label }: Props) => {
+const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
   const onRepeatWeeksUpdate = (repeatWeeksItem: IApplyScheduleDay | null) => {
     if (repeatWeeksItem) {
       setRepeatWeeks(repeatWeeksItem);
@@ -19,6 +20,7 @@ const RepeatsField = ({ setRepeatWeeks, label }: Props) => {
   return (
     <FormControl fullWidth>
       <Autocomplete
+        inputValue={repeatWeeks.name}
         popupIcon={<KeyboardArrowDownIcon />}
         options={repeatWeeksList}
         onChange={(e, value) => {

@@ -53,7 +53,6 @@ const getApplyDaysToDisplay = (uniqueTimePeriodsApplyDates: number[]): IAppliedD
 
 const ApplyScheduleForm = () => {
   const [t] = useTranslation();
-
   const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const scheduleApplyStatus = useAppSelector(schedulingSelector.scheduleApplyStatus);
   const [resource, setResource] = useState<IServiceProvider>({ ...defaultResource });
@@ -73,7 +72,6 @@ const ApplyScheduleForm = () => {
     setStartDate(format(new Date(), 'yyyy-MM-dd'));
     setEndDate(format(new Date(), 'yyyy-MM-dd'));
   };
-
   const handleApplyClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -90,7 +88,7 @@ const ApplyScheduleForm = () => {
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
     } else {
       dispatch(
-        viewsMiddleware.setAlertPopUpState({
+        viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,
@@ -119,7 +117,7 @@ const ApplyScheduleForm = () => {
   useEffect(() => {
     if (scheduleApplyStatus.success) {
       dispatch(
-        viewsMiddleware.setAlertPopUpState({
+        viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.success,
@@ -128,10 +126,9 @@ const ApplyScheduleForm = () => {
         })
       );
       resetFormValues();
-      dispatch(schedulingMiddleware.resetApplyStatusState());
     } else if (scheduleApplyStatus.fail) {
       dispatch(
-        viewsMiddleware.setAlertPopUpState({
+        viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,
@@ -139,8 +136,9 @@ const ApplyScheduleForm = () => {
           }
         })
       );
-      dispatch(schedulingMiddleware.resetApplyStatusState());
     }
+
+    dispatch(schedulingMiddleware.resetApplyStatusState());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleApplyStatus.success, scheduleApplyStatus.fail]);
 
@@ -149,10 +147,15 @@ const ApplyScheduleForm = () => {
       <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
         <Grid container spacing={4}>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}>
-            <ResourceField setResource={setResource} label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)} />
+            <ResourceField
+              setResource={setResource}
+              resource={resource}
+              label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}
+            />
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}>
             <ScheduleTemplateField
+              scheduleTemplate={scheduleTemplate}
               setScheduleTemplate={setScheduleTemplate}
               label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}
             />
@@ -168,7 +171,11 @@ const ApplyScheduleForm = () => {
           )}
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_REPEATS)}>
             <FormControl fullWidth>
-              <RepeatsField setRepeatWeeks={setRepeatWeeks} label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)} />
+              <RepeatsField
+                repeatWeeks={repeatWeeks}
+                setRepeatWeeks={setRepeatWeeks}
+                label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)}
+              />
             </FormControl>
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}>
@@ -186,7 +193,8 @@ const ApplyScheduleForm = () => {
             />
           </ApplyScheduleFormRow>
           <Grid item xs={12}>
-            <ActionsField submitButtonText={t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)} />
+            {' '}
+            <ActionsField submitButtonText={t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)} />{' '}
           </Grid>
         </Grid>
       </form>

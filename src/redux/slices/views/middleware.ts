@@ -5,7 +5,8 @@ import { IOpenedAlert } from '../../../types/reduxTypes/views.d';
 
 import slice from './slice';
 
-const { setRedirection, setMenuActiveItem, setMenuOpenDrawer, updateModalState, updateAlertState } = slice.actions;
+const { setRedirection, setMenuActiveItem, setMenuOpenDrawer, updateModalState, updateToastNotificationState } =
+  slice.actions;
 
 const setRedirectionState = (value: RedirectionProps) => (dispatch: AppDispatch) => {
   dispatch(setRedirection(value));
@@ -25,10 +26,10 @@ const setModalState =
     dispatch(updateModalState(value));
   };
 
-const setAlertPopUpState =
+const setToastNotificationPopUpState =
   <P>(value: IOpenedAlert<P>) =>
   (dispatch: AppDispatch) => {
-    dispatch(updateAlertState(value));
+    dispatch(updateToastNotificationState(value));
   };
 
-export default { setRedirectionState, activateMenuItem, openMenuDrawer, setModalState, setAlertPopUpState };
+export default { setRedirectionState, activateMenuItem, openMenuDrawer, setModalState, setToastNotificationPopUpState };

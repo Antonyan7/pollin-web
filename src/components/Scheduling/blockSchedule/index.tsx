@@ -68,7 +68,7 @@ const BlockTemplates = () => {
   useEffect(() => {
     if (scheduleBlockStatus.success) {
       dispatch(
-        viewsMiddleware.setAlertPopUpState({
+        viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.success,
@@ -79,7 +79,7 @@ const BlockTemplates = () => {
       dispatch(schedulingMiddleware.resetBlockStatusState());
     } else if (scheduleBlockStatus.fail) {
       dispatch(
-        viewsMiddleware.setAlertPopUpState({
+        viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,

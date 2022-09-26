@@ -36,7 +36,7 @@ export const ToastNotification = React.forwardRef(() => {
 
   const onClose = useCallback(() => {
     dispatch(
-      viewsMiddleware.setAlertPopUpState({
+      viewsMiddleware.setToastNotificationPopUpState({
         open: false,
         props: {}
       })

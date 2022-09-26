@@ -8,9 +8,10 @@ import { SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
 interface Props {
   setScheduleTemplate: (value: React.SetStateAction<SchedulingTemplateProps>) => void;
   label: string;
+  scheduleTemplate: SchedulingTemplateProps;
 }
 
-const ScheduleTemplateField = ({ setScheduleTemplate, label }: Props) => {
+const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }: Props) => {
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
 
   const handleSelectTemplate = (templateItem: SchedulingTemplateProps | null) => {
@@ -23,6 +24,7 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label }: Props) => {
   return (
     <FormControl fullWidth>
       <Autocomplete
+        inputValue={scheduleTemplate.name}
         popupIcon={<KeyboardArrowDownIcon />}
         options={scheduleTemplates.templates}
         onChange={(e, value: SchedulingTemplateProps | null) => {

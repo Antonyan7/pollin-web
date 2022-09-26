@@ -106,7 +106,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
         {children}
       </Main>
       <ModalsController key="modals" />
-      <ToastNotificationsController key="alerts" />
+      <ToastNotificationsController key="toasts" />
     </Box>
   );
 };
