@@ -8,8 +8,8 @@ const scheduleTemplates = createSelector([selector], (state) => state.scheduleTe
 const scheduleSingleTemplate = createSelector([selector], (state) => state.scheduleSingleTemplate);
 const scheduleListLoadingStatus = createSelector([selector], (state) => state.schedulingListLoadingStatus);
 const scheduleError = createSelector([selector], (state) => state.error);
-const scheduleApplySuccess = createSelector([selector], (state) => state.applySuccess);
-const scheduleBlockSuccess = createSelector([selector], (state) => state.blockSuccess);
+const scheduleApplyStatus = createSelector([selector], (state) => state.applyScheduleStateStatus);
+const scheduleBlockStatus = createSelector([selector], (state) => state.blockScheduleStateStatus);
 const scheduleCalendarLoading = createSelector([selector], (state) => state.scheduleCalendarLoading);
 const scheduleBlocks = createSelector([selector], (state) => state.scheduleBlock);
 const scheduleResources = createSelector([selector], (state) => state.scheduleResources);
@@ -22,7 +22,7 @@ export default {
   scheduleListLoadingStatus,
   scheduleBlocks,
   scheduleResources,
-  scheduleApplySuccess,
-  scheduleBlockSuccess,
+  scheduleApplyStatus,
+  scheduleBlockStatus,
   scheduleCalendarLoading
 };

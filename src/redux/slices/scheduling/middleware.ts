@@ -15,8 +15,8 @@ const {
   setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
-  setApplyScheduleSuccess,
-  setBlockScheduleSuccess,
+  setApplyScheduleState,
+  setBlockScheduleState,
   setCalendarLoadingState
 } = slice.actions;
 
@@ -55,20 +55,40 @@ const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatc
 export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispatch: AppDispatch) => {
   try {
     await API.scheduling.applyScheduleTemplate(data);
-    dispatch(setApplyScheduleSuccess(true));
+    dispatch(
+      setApplyScheduleState({
+        success: true,
+        fail: false
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
-    dispatch(setApplyScheduleSuccess(false));
+    dispatch(
+      setApplyScheduleState({
+        success: false,
+        fail: true
+      })
+    );
   }
 };
 
-export const resetSuccessStatusState = () => async (dispatch: AppDispatch) => {
-  dispatch(setApplyScheduleSuccess(false));
+export const resetApplyStatusState = () => async (dispatch: AppDispatch) => {
+  dispatch(
+    setApplyScheduleState({
+      success: false,
+      fail: false
+    })
+  );
 };
 
-export const resetBlockSuccessStatusState = () => async (dispatch: AppDispatch) => {
-  dispatch(setBlockScheduleSuccess(false));
+export const resetBlockStatusState = () => async (dispatch: AppDispatch) => {
+  dispatch(
+    setBlockScheduleState({
+      success: false,
+      fail: false
+    })
+  );
 };
 
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
@@ -80,11 +100,21 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
       placeholderLabel: applyBlockScheduleData.placeholderLabel
     });
 
-    dispatch(setBlockScheduleSuccess(true));
+    dispatch(
+      setBlockScheduleState({
+        success: true,
+        fail: false
+      })
+    );
     dispatch(setScheduleBlock(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setBlockScheduleSuccess(false));
+    dispatch(
+      setBlockScheduleState({
+        success: false,
+        fail: true
+      })
+    );
     dispatch(setError(error));
   }
 };
@@ -138,7 +168,7 @@ export default {
   createScheduleTemplate,
   applyScheduleTemplate,
   getSingleSchedule,
-  resetSuccessStatusState,
-  resetBlockSuccessStatusState,
+  resetApplyStatusState,
+  resetBlockStatusState,
   deleteTemplate
 };

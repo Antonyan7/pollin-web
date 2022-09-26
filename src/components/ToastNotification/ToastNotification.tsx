@@ -1,9 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import { makeStyles } from '@mui/styles';
-import capitalizer from 'helpers/capitalizer';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
@@ -16,28 +16,23 @@ export enum SeveritiesType {
 
 const useStyles = makeStyles({
   snackbar: {
-    width: '250px',
+    width: '30wv',
     '@media (min-width: 780px)': {
-      width: '500px'
+      width: '40wv'
     }
   },
   alertBanner: {
-    width: '100%'
+    width: '100%',
+    fontSize: '14px',
+    '& .MuiAlert-icon': {
+      fontSize: 30
+    }
   }
 });
 
-export const AlertBanner = React.forwardRef(() => {
+export const ToastNotification = React.forwardRef(() => {
   const classes = useStyles();
-  const alertPopUp = useAppSelector(viewsSelector.alertPopUp);
-  const [alertTitle, setAlertTitle] = useState<string>('');
-
-  useEffect(() => {
-    if (alertPopUp.props.severityType) {
-      const capitalizedAlertTitle = capitalizer(alertPopUp.props.severityType);
-
-      setAlertTitle(capitalizedAlertTitle);
-    }
-  }, [alertPopUp.props.severityType]);
+  const toastNotificationPopUp = useAppSelector(viewsSelector.toastNotificationPopUp);
 
   const onClose = useCallback(() => {
     dispatch(
@@ -50,15 +45,23 @@ export const AlertBanner = React.forwardRef(() => {
 
   return (
     <Snackbar
-      open={alertPopUp.open}
+      open={toastNotificationPopUp.open}
       autoHideDuration={2000}
       onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       className={classes.snackbar}
     >
-      <Alert variant="filled" severity={alertPopUp.props.severityType} className={classes.alertBanner}>
-        <AlertTitle>{alertTitle}</AlertTitle>
-        {alertPopUp.props.description}
+      <Alert
+        variant="filled"
+        severity={toastNotificationPopUp.props.severityType}
+        className={classes.alertBanner}
+        action={
+          <IconButton aria-label="close" color="inherit" size="large" onClick={onClose}>
+            <CloseIcon fontSize="inherit" />
+          </IconButton>
+        }
+      >
+        {toastNotificationPopUp.props.description}
       </Alert>
     </Snackbar>
   );

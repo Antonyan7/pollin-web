@@ -4,7 +4,7 @@ export interface ViewsProps {
   redirection: RedirectionProps;
   menu: MenuProps;
   modal: IOpenedModal;
-  alertPopUp: IOpenedAlert;
+  toastNotificationPopUp: IOpenedAlert;
 }
 
 export interface RedirectionProps {

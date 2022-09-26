@@ -59,6 +59,7 @@ export enum Translation {
   PAGE_SCHEDULING_APPLY_ALERT_SUCCESS = 'page.scheduling.apply.alert.success',
   PAGE_SCHEDULING_APPLY_ALERT_ERROR = 'page.scheduling.apply.alert.error',
   PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS = 'page.scheduling.block.alert.message.success',
+  PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL = 'page.scheduling.block.alert.message.fail',
   PAGE_ENCOUNTERS_LIST_SEARCH = 'page.encounters.list.search',
   PAGE_ENCOUNTERS_LIST_TITLE = 'page.encounters.list.title',
   PAGE_ENCOUNTERS_NOTHING_FOUND = 'page.encounters.nothing.found',

@@ -4,6 +4,7 @@ import {
   BlockSchedulingProps,
   IScheduleTemplatesList,
   SchedulingProps,
+  SchedulingStateStatusProps,
   SchedulingTemplateProps,
   SingleSchedulingProps
 } from 'types/reduxTypes/scheduling';
@@ -38,11 +39,11 @@ const actions: SliceReducers<SchedulingProps> = {
   setSchedulingListLoadingStatus(state, action: IAction<boolean>) {
     state.schedulingListLoadingStatus = action.payload;
   },
-  setApplyScheduleSuccess(state, action: IAction<boolean>) {
-    state.applySuccess = action.payload;
+  setApplyScheduleState(state, action: IAction<SchedulingStateStatusProps>) {
+    state.applyScheduleStateStatus = action.payload;
   },
-  setBlockScheduleSuccess(state, action: IAction<boolean>) {
-    state.blockSuccess = action.payload;
+  setBlockScheduleState(state, action: IAction<SchedulingStateStatusProps>) {
+    state.blockScheduleStateStatus = action.payload;
   }
 };
 

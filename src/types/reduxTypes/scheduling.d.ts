@@ -31,6 +31,11 @@ export interface SingleSchedulingProps {
   name: string;
   timePeriods: ISingleTemplate[];
 }
+
+export interface SchedulingStateStatusProps {
+  success: boolean;
+  fail: boolean;
+}
 export interface SchedulingProps {
   scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
@@ -41,8 +46,8 @@ export interface SchedulingProps {
   scheduleCalendarLoading: boolean;
   scheduleResources: IServiceProvider[];
   serviceTypes: IServiceType[];
-  applySuccess: boolean;
-  blockSuccess: boolean;
+  applyScheduleStateStatus: SchedulingStateStatusProps;
+  blockScheduleStateStatus: SchedulingStateStatusProps;
 }
 
 export interface IScheduleTemplatesList extends IPagination {

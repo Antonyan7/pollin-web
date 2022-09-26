@@ -1,7 +1,7 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
+import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
 import { FormControl, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
@@ -55,7 +55,7 @@ const ApplyScheduleForm = () => {
   const [t] = useTranslation();
 
   const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  const scheduleApplySuccess = useAppSelector(schedulingSelector.scheduleApplySuccess);
+  const scheduleApplyStatus = useAppSelector(schedulingSelector.scheduleApplyStatus);
   const [resource, setResource] = useState<IServiceProvider>({ ...defaultResource });
   const [scheduleTemplate, setScheduleTemplate] = useState<SchedulingTemplateProps>({ ...defaultScheduleTemplate });
   const [isAppliedDays, setIsAppliedDays] = useState<boolean>(false);
@@ -98,6 +98,7 @@ const ApplyScheduleForm = () => {
           }
         })
       );
+      dispatch(schedulingMiddleware.resetApplyStatusState());
     }
   };
 
@@ -116,7 +117,7 @@ const ApplyScheduleForm = () => {
   }, [scheduleApplyTemplates]);
 
   useEffect(() => {
-    if (scheduleApplySuccess) {
+    if (scheduleApplyStatus.success) {
       dispatch(
         viewsMiddleware.setAlertPopUpState({
           open: true,
@@ -127,10 +128,21 @@ const ApplyScheduleForm = () => {
         })
       );
       resetFormValues();
-      dispatch(schedulingMiddleware.resetSuccessStatusState());
+      dispatch(schedulingMiddleware.resetApplyStatusState());
+    } else if (scheduleApplyStatus.fail) {
+      dispatch(
+        viewsMiddleware.setAlertPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
+          }
+        })
+      );
+      dispatch(schedulingMiddleware.resetApplyStatusState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleApplySuccess]);
+  }, [scheduleApplyStatus.success, scheduleApplyStatus.fail]);
 
   return (
     <ScheduleBoxWrapper>

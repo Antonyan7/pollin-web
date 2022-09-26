@@ -18,7 +18,7 @@ const actions: SliceReducers<ViewsProps> = {
     state.modal = action.payload ? action.payload : { name: ModalName.NONE, props: {} };
   },
   updateAlertState<P>(state: ViewsProps, action: IAction<IOpenedAlert<P>>) {
-    state.alertPopUp = action.payload ? action.payload : { open: false, props: {} };
+    state.toastNotificationPopUp = action.payload ? action.payload : { open: false, props: {} };
   }
 };
 

@@ -15,7 +15,7 @@ export const getInitialState = (): ViewsProps => ({
     name: ModalName.NONE,
     props: {}
   },
-  alertPopUp: {
+  toastNotificationPopUp: {
     open: false,
     props: {}
   }

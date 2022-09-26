@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useMemo } from 'react';
-import { AlertsController } from '@components/ModalsController/AlertsController';
 import { ModalsController } from '@components/ModalsController/ModalsController';
+import { ToastNotificationsController } from '@components/ModalsController/ToastNotificationsController';
 import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -106,7 +106,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
         {children}
       </Main>
       <ModalsController key="modals" />
-      <AlertsController key="alerts" />
+      <ToastNotificationsController key="alerts" />
     </Box>
   );
 };

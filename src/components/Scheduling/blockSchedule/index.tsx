@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SeveritiesType } from '@components/Alert/Alert';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
 import { Grid } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,7 +10,6 @@ import { FormikProvider, useFormik } from 'formik';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { resetBlockSuccessStatusState } from 'redux/slices/scheduling/middleware';
 import { viewsMiddleware } from 'redux/slices/views';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
@@ -60,14 +59,14 @@ const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowPro
 
 const BlockTemplates = () => {
   const [t] = useTranslation();
-  const scheduleBlockSuccess = useAppSelector(schedulingSelector.scheduleBlockSuccess);
+  const scheduleBlockStatus = useAppSelector(schedulingSelector.scheduleBlockStatus);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceProviders(1));
   }, []);
 
   useEffect(() => {
-    if (scheduleBlockSuccess) {
+    if (scheduleBlockStatus.success) {
       dispatch(
         viewsMiddleware.setAlertPopUpState({
           open: true,
@@ -77,11 +76,21 @@ const BlockTemplates = () => {
           }
         })
       );
+      dispatch(schedulingMiddleware.resetBlockStatusState());
+    } else if (scheduleBlockStatus.fail) {
+      dispatch(
+        viewsMiddleware.setAlertPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL)
+          }
+        })
+      );
+      dispatch(schedulingMiddleware.resetBlockStatusState());
     }
-
-    dispatch(resetBlockSuccessStatusState());
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleBlockSuccess]);
+  }, [scheduleBlockStatus.success, scheduleBlockStatus.fail]);
 
   const blockScheduleForm = useFormik({
     initialValues,
@@ -96,6 +105,7 @@ const BlockTemplates = () => {
 
       if (values.startDate && values.endDate && values.placeholderLabel && sendingBlockValues.resourceId) {
         dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
+        // after removing formik from here, put this resetForm function in the useEffect when the request succeeded.
         resetForm();
       }
     }
