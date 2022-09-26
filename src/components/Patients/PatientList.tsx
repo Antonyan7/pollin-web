@@ -15,13 +15,7 @@ import {
   TableRow
 } from '@mui/material';
 import { Translation } from 'constants/translations';
-import {
-  EncounterFilterTypes,
-  IPatientsFilterOption,
-  IPatientsReqBody,
-  PatientListField,
-  SortOrder
-} from 'types/patient';
+import { IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 import { IPatientListData } from 'types/reduxTypes/patient-emr';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
@@ -30,12 +24,10 @@ import { patientsMiddleware, patientsSelector } from '../../redux/slices/patient
 import { PatientListHeadCell } from './PatientListHeadCell';
 
 const PatientList = () => {
-  const [searchValue, setSearchValue] = useState(' ');
+  const [searchValue, setSearchValue] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
   const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
-  const [filters, setFilters] = useState<IPatientsFilterOption[]>([
-    { type: EncounterFilterTypes.doctor, id: 'doctor1' }
-  ]);
+  const [filters, setFilters] = useState<IPatientsFilterOption[]>([]);
   const [page, setPage] = React.useState(0);
   const [t] = useTranslation();
 

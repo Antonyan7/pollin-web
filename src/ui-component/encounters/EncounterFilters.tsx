@@ -11,7 +11,7 @@ import { Translation } from '../../constants/translations';
 import { MainHeader } from '../../pages/booking/appointments';
 import { dispatch } from '../../redux/hooks';
 import { patientsMiddleware } from '../../redux/slices/patients';
-import { EncounterFilterTypes, IPatientsReqBody } from '../../types/patient';
+import { IEncountersReqBody } from '../../types/patient';
 
 const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();
@@ -25,10 +25,10 @@ const EncounterFilters = ({ page }: { page: number }) => {
   ];
 
   const onEncounterSearchChange = () => {
-    const data: IPatientsReqBody = {
+    const data: IEncountersReqBody = {
       page: page + 1,
       searchString: searchValue,
-      filters: [{ type: EncounterFilterTypes.doctor, id: 'doctor1' }]
+      filters: []
     };
 
     // TODO: Refactor this logic.
@@ -44,10 +44,10 @@ const EncounterFilters = ({ page }: { page: number }) => {
   };
 
   useEffect(() => {
-    const data: IPatientsReqBody = {
+    const data: IEncountersReqBody = {
       page: page + 1,
       searchString: '',
-      filters: [{ type: EncounterFilterTypes.doctor, id: 'doctor1' }]
+      filters: []
     };
 
     // TODO: Refactor this logic once we will decide the problem with mock server

@@ -52,11 +52,15 @@ export interface IPatientsFilterOption {
   type: PatientListFilterType | string;
   id: string;
 }
+export interface IEncountersFilterOption {
+  type: EncounterFilterTypes | string;
+  id: string;
+}
 
 export interface IPatientsReqBody {
-  searchString?: string;
-  sortByField?: PatientListField;
-  sortOrder?: SortOrder;
+  searchString: string;
+  sortByField: PatientListField;
+  sortOrder: SortOrder;
   filters?: IPatientsFilterOption[];
   page: number;
 }
@@ -64,7 +68,7 @@ export interface IPatientsReqBody {
 export interface IEncountersReqBody {
   page: number;
   searchString?: string;
-  filters?: IPatientsFilterOption[];
+  filters?: IEncountersFilterOption[];
 }
 
 export interface IHeadCell {

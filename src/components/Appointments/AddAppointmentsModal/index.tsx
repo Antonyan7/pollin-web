@@ -33,7 +33,8 @@ const AddAppointmentsModal = () => {
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());
-    dispatch(bookingMiddleware.getPatientsList({ page: 1 }));
+    // TODO: must support dropdown pagination
+    dispatch(bookingMiddleware.getPatients({ name: '', page: 1 }));
   }, []);
 
   return (

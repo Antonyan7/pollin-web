@@ -1,6 +1,12 @@
 import { IAction, SliceReducers } from 'redux/store';
-import { AppointmentDetailsProps, BookingProps, IAppointment, IServiceProviders } from 'types/reduxTypes/booking';
-import { AlertDetailsProps, IPatientList } from 'types/reduxTypes/patient-emr';
+import {
+  AppointmentDetailsProps,
+  BookingProps,
+  IAppointment,
+  IPatientList,
+  IServiceProviders
+} from 'types/reduxTypes/booking';
+import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
 const actions: SliceReducers<BookingProps> = {
   setAppointments(state, action: IAction<IAppointment[]>) {

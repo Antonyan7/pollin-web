@@ -2,6 +2,20 @@ import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/booking';
 import { AlertDetailsProps, IEncounterListItem, IPatientListData } from 'types/reduxTypes/patient-emr';
 
+export interface IGetPatientsRequestBody {
+  name: string;
+  page?: number;
+}
+
+export interface IGetPatientsResponse {
+  patients: IPatientsData[];
+}
+
+export interface IPatientsData {
+  id: string;
+  title: string;
+}
+
 export interface IAlertDetailsResponse {
   alerts: AlertDetailsProps[];
 }

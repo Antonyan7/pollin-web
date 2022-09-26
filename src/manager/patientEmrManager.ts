@@ -6,6 +6,8 @@ import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
+  IGetPatientsRequestBody,
+  IGetPatientsResponse,
   IPatientEncountersListResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
@@ -23,6 +25,9 @@ const patientEmrManager = {
     return axiosInstance.get<any, IAxiosResponse<IAlertDetailsResponse>>(`${baseURL}/v1/patients/alerts`, {
       params: { patientId }
     });
+  },
+  getPatients(data: IGetPatientsRequestBody) {
+    return axiosInstance.post<any, IAxiosResponsePaginated<IGetPatientsResponse>>(`${baseURL}/v1/patients`, data);
   },
   getPatientsList(data: IPatientsReqBody) {
     return axiosInstance.post<any, IAxiosResponsePaginated<IPatientsListResponse>>(

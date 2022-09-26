@@ -20,7 +20,7 @@ const FormActions: React.FC = () => {
 
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-    dispatch(bookingMiddleware.getPatientsList(null));
+    dispatch(bookingMiddleware.getPatients(null));
     dispatch(bookingMiddleware.getPatientAlerts(''));
   }, []);
 

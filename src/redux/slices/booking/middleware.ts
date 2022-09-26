@@ -1,8 +1,8 @@
 import API from '@axios/API';
 import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/managerBooking';
+import { IGetPatientsRequestBody } from '@axios/managerPatientEmr';
 import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
-import { IPatientsReqBody } from 'types/patient';
 import { IServiceProviders } from 'types/reduxTypes/booking';
 
 import { toIsoString } from '@utils/dateUtils';
@@ -63,7 +63,7 @@ const applyResource = (value: string) => (dispatch: AppDispatch) => {
   dispatch(setCurrentServiceProviderId(value));
 };
 
-const getPatientsList = (patientsListData: IPatientsReqBody | null) => async (dispatch: AppDispatch) => {
+const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async (dispatch: AppDispatch) => {
   if (!patientsListData) {
     dispatch(
       setPatientsList({
@@ -78,7 +78,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody | null) => async (di
   }
 
   try {
-    const response = await API.patients.getPatientsList(patientsListData);
+    const response = await API.patients.getPatients(patientsListData);
 
     dispatch(setPatientsList(response.data.data));
   } catch (error) {
@@ -176,7 +176,7 @@ export default {
   getAppointments,
   cancelAppointment,
   applyResource,
-  getPatientsList,
+  getPatients,
   getServiceTypes,
   createAppointment,
   getAppointmentDetails,

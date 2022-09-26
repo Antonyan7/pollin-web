@@ -1,10 +1,10 @@
 import { IPagination } from '@axios/axios';
 import { IAppointmentDetails } from '@axios/managerBooking';
-import { AlertDetailsProps } from '@axios/managerPatientEmr';
+import { AlertDetailsProps, IGetPatientsResponse } from '@axios/managerPatientEmr';
 
 import { SlotTypes } from '../calendar';
 
-import { IPatientList } from './patient-emr';
+export interface IPatientList extends IPagination, IGetPatientsResponse {}
 
 export interface AppointmentDetailsProps {
   appointment: IAppointmentDetails;
