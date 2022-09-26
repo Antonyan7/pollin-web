@@ -10,6 +10,8 @@ import { toIsoString } from '@utils/dateUtils';
 import slice from './slice';
 
 const {
+  updateServiceProviders,
+  setIsServiceProvidersLoading,
   setServiceProviders,
   setError,
   setDate,
@@ -33,6 +35,26 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
     };
 
     dispatch(setServiceProviders(data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsServiceProvidersLoading(true));
+
+    const response = await API.booking.getServiceProviders({ page });
+    const data: IServiceProviders = {
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize,
+      providers: response.data.data.providers
+    };
+
+    dispatch(updateServiceProviders(data));
+    dispatch(setIsServiceProvidersLoading(false));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -171,6 +193,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
 };
 
 export default {
+  getNewServiceProviders,
   getServiceProviders,
   setDateValue,
   getAppointments,

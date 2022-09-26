@@ -15,6 +15,12 @@ const actions: SliceReducers<BookingProps> = {
   setDate(state, action: IAction<string>) {
     state.date = action.payload;
   },
+  updateServiceProviders(state, action: IAction<IServiceProviders>) {
+    state.serviceProviders.providers = [...state.serviceProviders.providers, ...action.payload.providers];
+  },
+  setIsServiceProvidersLoading(state, action: IAction<boolean>) {
+    state.isServiceProvidersLoading = action.payload;
+  },
   setServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders = action.payload;
   },

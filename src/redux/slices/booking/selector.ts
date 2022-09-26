@@ -11,8 +11,10 @@ export const serviceProviderId = createSelector([selector], (state) => state.cur
 export const patientList = createSelector([selector], (state) => state.patientList);
 export const serviceTypes = createSelector([selector], (state) => state.serviceTypes);
 export const appointmentDetails = createSelector([selector], (state) => state.appointmentDetails);
+export const isServiceProvidersLoading = createSelector([selector], (state) => state.isServiceProvidersLoading);
 
 export default {
+  isServiceProvidersLoading,
   appointmentsList,
   serviceProvidersList,
   calendarDate,

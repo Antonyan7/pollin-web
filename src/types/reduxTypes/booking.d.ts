@@ -16,6 +16,7 @@ export interface BookingProps {
   appointments: IAppointment[];
   date: string;
   serviceProviders: IServiceProviders;
+  isServiceProvidersLoading: boolean;
   currentServiceProviderId: string;
   isCalendarLoading: boolean;
   currentAppointmentId: string;

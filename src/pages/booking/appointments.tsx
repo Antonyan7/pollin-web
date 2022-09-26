@@ -1,13 +1,13 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import {
   Box,
+  CircularProgress,
   Divider,
   FormControl,
   InputLabel,
@@ -31,6 +31,7 @@ import dynamic from 'next/dynamic';
 import { viewsMiddleware } from 'redux/slices/views';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
+import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
@@ -49,8 +50,11 @@ const Appointments = () => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
   const theme = useTheme();
   const [t] = useTranslation();
+  const serviceProviderSelectRef = useRef(null);
+  const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
 
   const isToday = useMemo(
     () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
@@ -79,13 +83,20 @@ const Appointments = () => {
     dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
 
-  const onNewCalendarClick = useCallback(() => {
-    window.open(window.location.href, '_blank');
-  }, []);
-
   const onTodayClick = useCallback(() => {
     dispatch(bookingMiddleware.setDateValue(format(new Date(), 'yyyy-MM-dd')));
   }, []);
+
+  const onServiceProviderScroll = (event: UIEvent) => {
+    const eventTarget = event.target as HTMLDivElement;
+
+    if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
+      if (serviceProviders.pageSize * serviceProviderCurrentPage <= serviceProviders.totalItems) {
+        setServiceProviderCurrentPage(serviceProviderCurrentPage + 1);
+        dispatch(bookingMiddleware.getNewServiceProviders(serviceProviderCurrentPage));
+      }
+    }
+  };
 
   return (
     <Box>
@@ -97,24 +108,20 @@ const Appointments = () => {
         }}
       />
       <AppointmentsContent>
-        <header
-          style={{
-            display: 'flex',
-            justifyContent: 'flex-end'
-          }}
-        >
-          <StyledButtonNew theme={theme} variant="outlined" endIcon={<OpenInNewIcon />} onClick={onNewCalendarClick}>
-            <Typography variant="h4" sx={{ marginRight: '10px' }}>
-              {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR)}
-            </Typography>
-          </StyledButtonNew>
-        </header>
+        <AppointmentsHeader />
         <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-28px', marginRight: '-24px' }} />
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth>
               <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}</InputLabel>
               <Select
+                MenuProps={{
+                  style: { maxHeight: 250 },
+                  PaperProps: {
+                    onScroll: (event) => onServiceProviderScroll(event as unknown as UIEvent)
+                  }
+                }}
+                ref={serviceProviderSelectRef}
                 IconComponent={KeyboardArrowDownIcon}
                 id="demo-simple-select"
                 labelId="resource-label"
@@ -127,6 +134,11 @@ const Appointments = () => {
                     {serviceProvider.title}
                   </MenuItem>
                 ))}
+                {isServiceProvidersLoading ? (
+                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                    <CircularProgress size={20} />
+                  </Box>
+                ) : null}
               </Select>
             </FormControl>
           </Box>
