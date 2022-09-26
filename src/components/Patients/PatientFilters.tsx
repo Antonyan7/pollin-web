@@ -3,16 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  Autocomplete,
-  CircularProgress,
-  Divider,
-  InputAdornment,
-  OutlinedInput,
-  TextField,
-  Typography,
-  useTheme
-} from '@mui/material';
+import { Autocomplete, CircularProgress, InputAdornment, OutlinedInput, TextField, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box, shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
@@ -21,8 +12,6 @@ import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { IPatientsFilterOption } from 'types/patient';
-
-import { MainHeader } from '../../pages/booking/appointments';
 
 export const StyledOutlinedInput = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 500,
@@ -94,49 +83,39 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
   );
 
   return (
-    <>
-      <header
-        style={{
-          display: 'flex'
+    <Box display="flex">
+      <StyledOutlinedInput
+        id="input-search-patients"
+        placeholder={t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH)}
+        onChange={onSearchChange}
+        startAdornment={
+          <InputAdornment position="start">
+            <SearchIcon sx={{ color: theme.palette.primary.main }} />
+          </InputAdornment>
+        }
+      />
+      <Autocomplete
+        id="patientFilterId"
+        fullWidth
+        multiple
+        loading={isFiltersLoading}
+        loadingText={
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CircularProgress size={20} />
+          </Box>
+        }
+        options={reformatedFilterResults(filtersList)}
+        groupBy={(option) => option.options.titleName}
+        getOptionLabel={(option) => option.options.title as string}
+        isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
+        value={selectedFilterResults}
+        onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
+          onAutoCompleteChange(selectedOption);
         }}
-      >
-        <Typography variant="h3">{t(Translation.PAGE_PATIENT_LIST_TITLE)}</Typography>
-      </header>
-      <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-64px', marginRight: '-64px' }} />
-      <MainHeader>
-        <StyledOutlinedInput
-          id="input-search-patients"
-          placeholder={`${t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH)}`}
-          onChange={onSearchChange}
-          startAdornment={
-            <InputAdornment position="start">
-              <SearchIcon sx={{ color: theme.palette.primary.main }} />
-            </InputAdornment>
-          }
-        />
-        <Autocomplete
-          id="patientFilterId"
-          fullWidth
-          multiple
-          loading={isFiltersLoading}
-          loadingText={
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <CircularProgress size={20} />
-            </Box>
-          }
-          options={reformatedFilterResults(filtersList)}
-          groupBy={(option) => option.options.titleName}
-          getOptionLabel={(option) => option.options.title as string}
-          isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
-          value={selectedFilterResults}
-          onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
-            onAutoCompleteChange(selectedOption);
-          }}
-          popupIcon={<KeyboardArrowDownIcon />}
-          renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
-        />
-      </MainHeader>
-    </>
+        popupIcon={<KeyboardArrowDownIcon />}
+        renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
+      />
+    </Box>
   );
 };
 
