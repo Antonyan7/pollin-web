@@ -25,7 +25,7 @@ const TimePeriodsTitle = ({ timePeriodNumber, setTemplateData }: ITimePeriodsTit
   };
 
   return (
-    <Box sx={timePeriodNumber ? { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } : {}}>
+    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <h3 className="sub-title">
         {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_TIME_PERIOD)} {timePeriodNumber + 1}
       </h3>

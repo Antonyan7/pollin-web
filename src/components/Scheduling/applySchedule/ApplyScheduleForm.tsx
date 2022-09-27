@@ -145,7 +145,7 @@ const ApplyScheduleForm = () => {
   return (
     <ScheduleBoxWrapper>
       <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
-        <Grid container spacing={4}>
+        <Grid container spacing={3}>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}>
             <ResourceField
               setResource={setResource}

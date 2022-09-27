@@ -2,28 +2,22 @@ import { styled } from '@mui/material/styles';
 
 const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
   '.create-scheduling-template': {
-    '.create-template': {
-      marginTop: '33px',
-      padding: '0 66px 70px 66px',
-      border: `1px solid ${theme.palette.grey[300]}`
-    },
-
+    marginTop: theme.spacing(3),
     '.create-template-box': {
       display: 'grid',
-      gridTemplateColumns: ' repeat(3, minmax(0, 1fr))',
-      margin: ' 25px 0',
+      gridTemplateColumns: ' repeat(4, minmax(0, 1fr))',
+      margin: `${theme.spacing(3)} 0`,
+      gridGap: theme.spacing(3),
 
       '.schedule-inputs': {
-        gridColumn: ' span 2 / span 2'
+        gridColumn: ' span 3 / span 3'
       }
     },
 
     '.sub-title': {
       width: '100%',
       fontSize: '18px',
-      lineHeight: '14px',
-      color: theme.palette.common.black,
-      margin: '20px 0'
+      color: theme.palette.common.black
     },
 
     '.week-days': {
@@ -36,12 +30,11 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
       color: theme.palette.common.white
     },
     '.minus-icon': {
-      minWidth: '40px',
-      height: '40px',
-      fontSize: '12px',
+      minWidth: theme.spacing(7),
+      height: theme.spacing(7),
       borderRadius: '50%',
-      color: theme.palette.common.black,
-      border: `1px solid ${theme.palette.grey[400]}`,
+      color: theme.palette.secondary.main,
+      border: `1px solid ${theme.palette.secondary.main}`,
       padding: '5px'
     },
     '.dark-button': {

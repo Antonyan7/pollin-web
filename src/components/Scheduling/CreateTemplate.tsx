@@ -78,41 +78,46 @@ const CreateTemplate = () => {
   });
 
   return (
-    <ScheduleBoxWrapper sx={{ padding: '45px 24px 0px' }}>
+    <ScheduleBoxWrapper>
       <form onSubmit={createScheduleForm.handleSubmit}>
-        <Grid container spacing={4}>
+        <Grid container spacing={3} alignItems="center">
+          <Grid item xs={12} lg={3}>
+            <Typography>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}</Typography>
+          </Grid>
+          <Grid item xs={12} lg={9}>
+            <TextField
+              onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e)}
+              className="schedule-inputs"
+              fullWidth
+              placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
+            />
+          </Grid>
           <Grid item xs={12}>
-            <Grid container alignItems="center">
-              <Grid item xs={12} lg={4}>
-                <Typography>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}</Typography>
-              </Grid>
-              <Grid item xs={12} lg={8}>
-                <TextField
-                  onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e)}
-                  className="schedule-inputs"
-                  fullWidth
-                  placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
-                />
-              </Grid>
-            </Grid>
-            <Grid item xs={12}>
-              <Divider sx={{ margin: '24px 0px 12px' }} />
-              <TimePeriods timePeriods={templateData.timePeriods} setTemplateData={setTemplateData} />
-              <Divider sx={{ margin: '12px 0px' }} />
-            </Grid>
-            <Grid item xs={12}>
-              <PlusIconButton onClick={onPlusClick} />
-            </Grid>
-            <Grid item xs={12}>
-              <Grid container direction="row-reverse" sx={{ margin: '50px 0px 50px 0px' }}>
-                <StyledButton variant="contained" size="large" type="submit">
-                  {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
-                </StyledButton>
-                <StyledButton onClick={onOpenModalClick} variant="contained" size="large" sx={{ marginRight: '10px' }}>
-                  {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
-                </StyledButton>
-              </Grid>
-            </Grid>
+            <Divider />
+            <TimePeriods timePeriods={templateData.timePeriods} setTemplateData={setTemplateData} />
+          </Grid>
+          <Grid item xs={12}>
+            <PlusIconButton onClick={onPlusClick} />
+          </Grid>
+          <Grid item xs={12} display="flex">
+            <StyledButton
+              color="secondary"
+              onClick={onOpenModalClick}
+              variant="outlined"
+              size="large"
+              sx={{ marginRight: 2, marginLeft: 'auto' }}
+            >
+              {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
+            </StyledButton>
+            <StyledButton
+              color="secondary"
+              variant="contained"
+              size="large"
+              type="submit"
+              sx={{ paddingLeft: 5, paddingRight: 5 }}
+            >
+              {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
+            </StyledButton>
           </Grid>
         </Grid>
       </form>

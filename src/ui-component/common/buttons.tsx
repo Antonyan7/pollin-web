@@ -9,7 +9,7 @@ export const PlusIconButton = (props: { onClick: () => void }) => {
   return (
     <Grid container direction="row-reverse">
       <Grid item>
-        <Fab size="small" color="primary" onClick={onClick}>
+        <Fab color="secondary" onClick={onClick}>
           <AddRoundedIcon fontSize="medium" />
         </Fab>
       </Grid>

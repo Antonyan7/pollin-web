@@ -61,8 +61,7 @@ const StyledButtonNew = styled(Button)<ButtonProps>(() => ({
   alignItems: 'center'
 }));
 
-const StyledButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  backgroundColor: theme.palette.primary.main,
+const StyledButton = styled(Button)<ButtonProps>(() => ({
   borderRadius: '7px'
 }));
 
@@ -73,9 +72,7 @@ const StyledBox = styled(Box)<BoxProps>(() => ({
 
 const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   borderRadius: '7px',
-  border: '1px solid #dce1e4',
-  padding: '0 4rem',
-  paddingTop: '2.813rem',
+  padding: theme.spacing(3),
   backgroundColor: theme.palette.background.paper
 }));
 

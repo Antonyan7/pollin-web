@@ -63,12 +63,10 @@ export const TimePeriods = ({ timePeriods, setTemplateData }: ITimePeriodsProps)
     <>
       {timePeriods.map((singleTemplate, index) => (
         <React.Fragment key={`${singleTemplate?.id ?? index}`}>
-          <Divider sx={{ margin: '24px 0px 12px', display: timePeriods.length ? 'none' : 'block' }} />
           <CreateSchedulingTemplateStyled>
             <div className="create-scheduling-template">
               <Box key={`timePeriod-${singleTemplate.id}`}>
                 <TimePeriodsTitle timePeriodNumber={index} setTemplateData={setTemplateData} />
-                <div className="splitter-line" />
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT)}>
                   <WeekDaysField index={index} singleTemplate={singleTemplate} updateInputValue={updateInputValue} />
                 </TimePeriodsRow>
@@ -105,12 +103,10 @@ export const TimePeriods = ({ timePeriods, setTemplateData }: ITimePeriodsProps)
                     singleTemplate={singleTemplate}
                   />
                 </TimePeriodsRow>
-                <div className="splitter-line" />
+                <Divider />
               </Box>
             </div>
           </CreateSchedulingTemplateStyled>
-
-          <Divider sx={{ margin: '12px 0px' }} />
         </React.Fragment>
       ))}
     </>
