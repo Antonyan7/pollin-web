@@ -1,27 +1,36 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { roundUpTo } from '@constants';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { FormikValues, useFormikContext } from 'formik';
 
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
 
 type DateAndStartTimeType = Date | null;
 
 const DateAndStartTime: React.FC = () => {
-  const { values, setFieldValue }: FormikValues = useFormikContext();
+  const { getValues, control } = useFormContext<ICreatedAppointmentBody>();
   const [t] = useTranslation();
-
-  const initialDate: DateAndStartTimeType = new Date(Math.ceil(values.date.getTime() / roundUpTo) * roundUpTo);
+  const initialDate: DateAndStartTimeType = new Date(
+    Math.ceil(new Date(getValues('date')).getTime() / roundUpTo) * roundUpTo
+  );
   const dateFieldName = 'date';
 
-  const mobileDateTimeChange = (date: DateAndStartTimeType) => {
-    const roundedTime = date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : undefined;
+  const {
+    field: { onChange, ...fieldProps }
+  } = useController({
+    control,
+    name: dateFieldName
+  });
 
-    setFieldValue(dateFieldName, roundedTime);
+  const mobileDateTimeChange = (date: DateAndStartTimeType) => {
+    const roundedTime = date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : null;
+
+    return roundedTime;
   };
 
   return (
@@ -31,7 +40,7 @@ const DateAndStartTime: React.FC = () => {
         maxTime={MAX_SELECTABLE_DATE_TIME}
         label={t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER)}
         value={initialDate}
-        onChange={(newDate: DateAndStartTimeType) => mobileDateTimeChange(newDate)}
+        onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
         minutesStep={10}
         DialogProps={{
           sx: {
@@ -44,6 +53,7 @@ const DateAndStartTime: React.FC = () => {
         }}
         renderInput={(params: TextFieldProps) => (
           <TextField
+            {...fieldProps}
             {...params}
             fullWidth
             InputProps={{

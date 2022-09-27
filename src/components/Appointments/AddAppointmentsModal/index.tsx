@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ModalName } from 'constants/modals';
-import { FormikProvider, useFormik } from 'formik';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
@@ -22,13 +23,9 @@ const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreatedAppointm
 const AddAppointmentsModal = () => {
   const bookAppointmentDateStartTime: Date = useAppSelector(viewsSelector.modal).props?.start;
   const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-  const addAppointmentsFormProperties = useFormik({
-    initialValues: getInitialValues(bookAppointmentDateStartTime),
-    validationSchema: addAppointmentsValidationSchema,
-    onSubmit: (values) => {
-      dispatch(bookingMiddleware.createAppointment(values));
-      onClose();
-    }
+  const methods = useForm<ICreatedAppointmentBody>({
+    defaultValues: getInitialValues(bookAppointmentDateStartTime),
+    resolver: yupResolver(addAppointmentsValidationSchema)
   });
 
   useEffect(() => {
@@ -38,13 +35,13 @@ const AddAppointmentsModal = () => {
   }, []);
 
   return (
-    <FormikProvider value={addAppointmentsFormProperties}>
+    <FormProvider {...methods}>
       <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <AddAppointmentsModalForm />
         </LocalizationProvider>
       </Dialog>
-    </FormikProvider>
+    </FormProvider>
   );
 };
 
