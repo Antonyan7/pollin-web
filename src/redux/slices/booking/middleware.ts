@@ -19,10 +19,22 @@ const {
   setCurrentServiceProviderId,
   setCalendarLoadingState,
   setPatientsList,
+  updatePatientsList,
   setServiceTypes,
   setAppointmentDetails,
   setPatientAlerts
 } = slice.actions;
+
+const resetPatientData = (dispatch: AppDispatch) => {
+  dispatch(
+    setPatientsList({
+      patients: [],
+      currentPage: 0,
+      totalItems: 0,
+      pageSize: 0
+    })
+  );
+};
 
 const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   try {
@@ -87,14 +99,7 @@ const applyResource = (value: string) => (dispatch: AppDispatch) => {
 
 const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async (dispatch: AppDispatch) => {
   if (!patientsListData) {
-    dispatch(
-      setPatientsList({
-        patients: [],
-        currentPage: 0,
-        totalItems: 0,
-        pageSize: 0
-      })
-    );
+    resetPatientData(dispatch);
 
     return;
   }
@@ -102,17 +107,42 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
   try {
     const response = await API.patients.getPatients(patientsListData);
 
-    dispatch(setPatientsList(response.data.data));
-  } catch (error) {
-    Sentry.captureException(error);
     dispatch(
       setPatientsList({
-        patients: [],
-        currentPage: 0,
-        totalItems: 0,
-        pageSize: 0
+        patients: response.data.data,
+        currentPage: response.data.currentPage,
+        totalItems: response.data.totalItems,
+        pageSize: response.data.pageSize
       })
     );
+  } catch (error) {
+    Sentry.captureException(error);
+    resetPatientData(dispatch);
+    dispatch(setError(error));
+  }
+};
+
+const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => async (dispatch: AppDispatch) => {
+  if (!patientsListData) {
+    resetPatientData(dispatch);
+
+    return;
+  }
+
+  try {
+    const response = await API.patients.getPatients(patientsListData);
+
+    dispatch(
+      updatePatientsList({
+        patients: response.data.data,
+        currentPage: response.data.currentPage,
+        totalItems: response.data.totalItems,
+        pageSize: response.data.pageSize
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    resetPatientData(dispatch);
     dispatch(setError(error));
   }
 };
@@ -200,6 +230,7 @@ export default {
   cancelAppointment,
   applyResource,
   getPatients,
+  getNewPatients,
   getServiceTypes,
   createAppointment,
   getAppointmentDetails,

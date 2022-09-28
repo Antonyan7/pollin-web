@@ -39,6 +39,9 @@ const actions: SliceReducers<BookingProps> = {
   setPatientsList(state, action: IAction<IPatientList>) {
     state.patientList = action.payload;
   },
+  updatePatientsList(state, action: IAction<IPatientList>) {
+    state.patientList.patients.patients = [...state.patientList.patients.patients, ...action.payload.patients.patients];
+  },
   setServiceTypes(state, action: IAction<{ id: string; title: string; isVirtual: boolean }[]>) {
     state.serviceTypes = action.payload;
   },

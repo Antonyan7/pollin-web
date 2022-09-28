@@ -1,4 +1,5 @@
 import { IPagination } from '@axios/axios';
+import { IGetPatientsResponse } from '@axios/managerPatientEmr';
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
@@ -34,6 +35,13 @@ export interface IPatientListData {
   dateOfBirth: string;
   cycleStatus: string;
   doctor: string;
+}
+
+export interface IPatientsResponse {
+  patients: IGetPatientsResponse;
+  pageSize: number;
+  currentPage: number;
+  totalItems: number;
 }
 
 export interface AlertDetailsMessagesProps {

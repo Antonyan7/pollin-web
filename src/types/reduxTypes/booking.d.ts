@@ -1,10 +1,12 @@
 import { IPagination } from '@axios/axios';
 import { IAppointmentDetails } from '@axios/managerBooking';
-import { AlertDetailsProps, IGetPatientsResponse } from '@axios/managerPatientEmr';
+import { AlertDetailsProps } from '@axios/managerPatientEmr';
+
+import { IPatientsResponse } from '@types/reduxTypes/patient-emr';
 
 import { SlotTypes } from '../calendar';
 
-export interface IPatientList extends IPagination, IGetPatientsResponse {}
+export interface IPatientList extends IPagination, IPatientsResponse {}
 
 export interface AppointmentDetailsProps {
   appointment: IAppointmentDetails;
@@ -21,7 +23,7 @@ export interface BookingProps {
   isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
-  patientList: IPatientList;
+  patientList: IPatientsResponse;
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps;

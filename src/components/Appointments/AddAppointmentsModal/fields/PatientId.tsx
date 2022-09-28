@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
@@ -31,10 +31,50 @@ const PatientId = () => {
   const patientIdHelperText = (touchedFields[patientIdFieldName] ? errors[patientIdFieldName]?.message : '') ?? '';
   const isPatientIdError = !!errors[patientIdFieldName]?.message && touchedFields[patientIdFieldName];
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT);
+  const [patientsListCurrentPage, setPatientsListCurrentPage] = useState<number>(2);
+  const [position, setPosition] = useState<number>(0);
+  const [patientsListRef, setPatientListRef] = useState<{ current: HTMLDivElement | null }>({ current: null });
+
+  const mounted = useRef<boolean>(false);
+
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else if (position && patientsListRef.current) {
+      patientsListRef.current.scrollTop = position - patientsListRef.current.offsetHeight;
+    }
+  });
 
   const {
     field: { onBlur, onChange, ...fieldProps }
   } = useController({ name: patientIdFieldName, control });
+
+  const onPatientListScroll = (event: UIEvent) => {
+    const eventTarget = event.target as HTMLDivElement;
+
+    const isScrollBottom = eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight;
+    const isPageEnd = patientsList.pageSize * patientsListCurrentPage <= patientsList.totalItems;
+
+    if (isScrollBottom) {
+      if (isPageEnd) {
+        setPatientsListCurrentPage(patientsListCurrentPage + 1);
+
+        const getNewPatientsRequestObj = {
+          name: '',
+          page: patientsListCurrentPage
+        };
+
+        dispatch(bookingMiddleware.getNewPatients(getNewPatientsRequestObj));
+
+        const scrollPosition = eventTarget.scrollTop + eventTarget.clientHeight;
+
+        setPosition(scrollPosition);
+        setPatientListRef({
+          current: eventTarget
+        });
+      }
+    }
+  };
 
   useEffect(() => {
     if (control._formValues.patientId) {
@@ -61,9 +101,14 @@ const PatientId = () => {
     <>
       <Grid item xs={12}>
         <Autocomplete
+          ListboxProps={{
+            style: { maxHeight: 250 },
+            onScroll: (event) => {
+              onPatientListScroll(event as unknown as UIEvent);
+            }
+          }}
           id={patientIdFieldName}
-          options={patients}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
+          options={patients.patients}
           getOptionLabel={(option) => option.title}
           onChange={(_, value) => onChange(value?.id)}
           onBlur={onBlur}
