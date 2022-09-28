@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
 interface PatientAlertProps {
   rowId: string;
@@ -29,8 +29,8 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
           <Typography variant="caption" color={theme.palette.background.paper}>
             {titleContent.title}
           </Typography>
-          {titleContent.messages.map((message: string) => (
-            <ListItem sx={{ paddingTop: 0 }}>&#9679;{message}</ListItem>
+          {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
+            <ListItem sx={{ paddingTop: 0 }}>&#9679;{message.title}</ListItem>
           ))}
         </Grid>
       ))}

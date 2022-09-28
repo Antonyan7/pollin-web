@@ -166,7 +166,7 @@ const editAppointment =
     }
   };
 
-const getPatientAlerts = (patientId: string) => async (dispatch: AppDispatch) => {
+const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) => {
   try {
     if (patientId) {
       const response = await API.patients.getPatientAlertDetails(patientId);

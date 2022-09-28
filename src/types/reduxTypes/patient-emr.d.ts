@@ -36,10 +36,14 @@ export interface IPatientListData {
   doctor: string;
 }
 
+export interface AlertDetailsMessagesProps {
+  title: string;
+}
+
 export interface AlertDetailsProps {
   id: string;
   title: string;
-  messages: string[];
+  messages: AlertDetailsMessagesProps[];
 }
 
 interface IEncountersProps {
