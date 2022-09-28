@@ -9,7 +9,7 @@ const ApplySchedule = () => {
   const [t] = useTranslation();
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '20px', borderRadius: '5px' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px', borderRadius: '5px' }}>
       <MainBreadcrumb
         currentPage={t(Translation.PAGE_SCHEDULING_APPLY_TITLE)}
         navigation={{

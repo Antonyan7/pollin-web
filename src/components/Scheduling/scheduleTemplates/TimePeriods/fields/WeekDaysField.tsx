@@ -17,7 +17,7 @@ const WeekDaysField = ({ index, singleTemplate, updateInputValue }: IWeekdaysFie
       updateInputValue('days', e.target.checked, index, indexOfDay);
 
   return (
-    <span className="week-days schedule-inputs">
+    <span className="week-days schedule-inputs schedule-days-checkbox">
       {weekDays.map((day, indexOfDay) => (
         <span key={day}>
           <Checkbox

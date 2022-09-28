@@ -11,6 +11,9 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
 
       '.schedule-inputs': {
         gridColumn: ' span 3 / span 3'
+      },
+      '.schedule-days-checkbox': {
+        maxWidth: 520
       }
     },
 

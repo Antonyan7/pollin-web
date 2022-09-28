@@ -26,7 +26,7 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
 
   return (
     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected}>
-      <TableCell padding="checkbox" sx={{ pl: 3 }} onClick={(event) => onClick(event, row.name)}>
+      <TableCell padding="checkbox" onClick={(event) => onClick(event, row.name)}>
         <Checkbox
           sx={{ color: theme.palette.primary.main }}
           checked={isItemSelected}

@@ -65,7 +65,7 @@ const ScheduleTemplatesHead = ({
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox" sx={{ pl: 3 }}>
+        <TableCell padding="checkbox">
           <Checkbox
             sx={{ color: theme.palette.primary.main }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
