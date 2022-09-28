@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { SetStateAction, useEffect, useRef,useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
@@ -11,11 +11,15 @@ import { validateInputChange } from 'validation/validationHelpers';
 
 import DuplicatePatientPopup from '@ui-component/patient/DuplicatePatientPopup';
 
+interface PatientIdFieldProps {
+  setDisableActionButton: React.Dispatch<SetStateAction<boolean>>;
+}
+
 enum OpenModalReason {
   DuplicateName = 'Duplicate Name'
 }
 
-const PatientId = () => {
+const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   const [openDuplicateAlertPopUp, setOpenDuplicateAlertPopUp] = useState<boolean>(false);
   const {
     control,
@@ -93,9 +97,10 @@ const PatientId = () => {
         dispatch(bookingMiddleware.getPatientAlerts());
       } else {
         setOpenDuplicateAlertPopUp(false);
+        setDisableActionButton(false);
       }
     }
-  }, [patientAlerts.alerts]);
+  }, [patientAlerts.alerts, setDisableActionButton]);
 
   return (
     <>

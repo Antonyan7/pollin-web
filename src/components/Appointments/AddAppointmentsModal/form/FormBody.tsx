@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { DialogContent, Grid } from '@mui/material';
 
 import AppointmentDescription from '../fields/AppointmentDescription';
@@ -6,11 +6,15 @@ import DateAndStartTime from '../fields/DateAndStartTime';
 import PatientId from '../fields/PatientId';
 import ServiceType from '../fields/ServiceType';
 
-const FormBody: React.FC = () => (
+export interface FormBodyProps {
+  setDisableActionButton: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const FormBody = ({ setDisableActionButton }: FormBodyProps) => (
   <DialogContent sx={{ p: 3 }}>
     <Grid container spacing={3}>
       <ServiceType />
-      <PatientId />
+      <PatientId setDisableActionButton={setDisableActionButton} />
       <AppointmentDescription />
       <DateAndStartTime />
     </Grid>

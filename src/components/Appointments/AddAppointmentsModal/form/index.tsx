@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { SetStateAction } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { ModalName } from 'constants/modals';
@@ -10,7 +10,15 @@ import FormActions from './FormActions';
 import FormBody from './FormBody';
 import FormHeader from './FormHeader';
 
-const AddAppointmentsModalForm = () => {
+export interface AddAppointmentsModalFormProps {
+  isActionButtonDisabled: boolean;
+  setDisableActionButton: React.Dispatch<SetStateAction<boolean>>;
+}
+
+const AddAppointmentsModalForm = ({
+  isActionButtonDisabled,
+  setDisableActionButton
+}: AddAppointmentsModalFormProps) => {
   const { handleSubmit } = useFormContext<ICreatedAppointmentBody>();
 
   const onClose = () => {
@@ -34,8 +42,8 @@ const AddAppointmentsModalForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader />
-      <FormBody />
-      <FormActions />
+      <FormBody setDisableActionButton={setDisableActionButton} />
+      <FormActions isActionButtonDisabled={isActionButtonDisabled} />
     </form>
   );
 };

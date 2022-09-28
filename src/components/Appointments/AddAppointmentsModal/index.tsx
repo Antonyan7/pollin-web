@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,6 +27,7 @@ const AddAppointmentsModal = () => {
     defaultValues: getInitialValues(bookAppointmentDateStartTime),
     resolver: yupResolver(addAppointmentsValidationSchema)
   });
+  const [isActionButtonDisabled, setDisableActionButton] = useState<boolean>(true);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());
@@ -38,7 +39,10 @@ const AddAppointmentsModal = () => {
     <FormProvider {...methods}>
       <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <AddAppointmentsModalForm />
+          <AddAppointmentsModalForm
+            isActionButtonDisabled={isActionButtonDisabled}
+            setDisableActionButton={setDisableActionButton}
+          />
         </LocalizationProvider>
       </Dialog>
     </FormProvider>

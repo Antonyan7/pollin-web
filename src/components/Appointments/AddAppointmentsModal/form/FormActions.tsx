@@ -8,7 +8,11 @@ import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 
-const FormActions: React.FC = () => {
+interface FormActionsProps {
+  isActionButtonDisabled: boolean;
+}
+
+const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
   const [t] = useTranslation();
 
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_CANCEL);
@@ -28,7 +32,7 @@ const FormActions: React.FC = () => {
             <StyledButton type="button" variant="contained" onClick={onClose}>
               {cancelButtonLabel}
             </StyledButton>
-            <StyledButton variant="contained" type="submit">
+            <StyledButton variant="contained" type="submit" disabled={isActionButtonDisabled}>
               {addButtonLabel}
             </StyledButton>
           </Stack>
