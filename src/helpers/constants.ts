@@ -53,4 +53,6 @@ export const repeatWeeksList: IApplyScheduleDay[] = [
   }
 ];
 
+export const ESTTimezone = '-04:00';
+
 export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];

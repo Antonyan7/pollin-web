@@ -11,7 +11,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
-import { toIsoString, utcDate } from '@utils/dateUtils';
+import { changeDate } from '@utils/dateUtils';
 
 import { dispatch } from '../../redux/hooks';
 import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types/create-schedule';
@@ -50,8 +50,8 @@ const CreateTemplate = () => {
         const { id, ...rest } = item;
 
         if (rest.startTime && rest.endTime) {
-          rest.startTime = toIsoString(utcDate(new Date(rest.startTime)));
-          rest.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+          rest.startTime = changeDate(new Date(rest.startTime).toISOString(), new Date(1970, 0, 1));
+          rest.endTime = changeDate(new Date(rest.endTime).toISOString(), new Date(1970, 0, 1));
         }
 
         return rest;

@@ -1,13 +1,21 @@
 import { addMinutes, isValid, setDate, setHours, setMonth, setYear } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 
-import { longWeekDays } from '../helpers/constants';
+import { ESTTimezone, longWeekDays } from '../helpers/constants';
 
 export const toIsoString = (value: Date) => {
   if (isValid(value)) {
     return format(utcToZonedTime(new Date(value), 'Europe/London'), "yyyy-MM-dd'T'HH:mm:ss'+00:00'", {
       timeZone: 'Europe/London'
     });
+  }
+
+  return '';
+};
+
+export const toESTIsoString = (value: Date) => {
+  if (isValid(value)) {
+    return format(value, `yyyy-MM-dd'T'HH:mm:ss${ESTTimezone}`);
   }
 
   return '';
@@ -53,7 +61,7 @@ export const changeDate = (oldDate: string, newDate: Date) => {
   const monthDate = setMonth(yearDate, newDate.getMonth());
   const date = setDate(monthDate, newDate.getDate());
 
-  return toIsoString(date);
+  return toESTIsoString(date);
 };
 
 export const changeHours = (oldDate: string, newHour: number) => {
