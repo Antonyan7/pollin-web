@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import {
+  Box,
   Button,
   CardActions,
   CardContent,
@@ -30,7 +31,7 @@ interface SimpleModalProps {
   selected: string[];
 }
 
-const StyledMainCard = styled(Button)<SelectProps>(() => ({
+const StyledMainCard = styled(Box)<SelectProps>(() => ({
   textAlign: 'left',
   position: 'absolute',
   top: '50%',
@@ -67,7 +68,7 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
           <Divider />
           <CardActions>
             <Grid container justifyContent="flex-end">
-              <Button variant="contained" type="button" onClick={handleConfirm}>
+              <Button variant="contained" color="secondary" type="button" onClick={handleConfirm} sx={{ px: 4 }}>
                 {t(Translation.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)}
               </Button>
             </Grid>
