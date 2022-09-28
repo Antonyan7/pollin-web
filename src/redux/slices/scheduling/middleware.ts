@@ -134,6 +134,19 @@ const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) 
   }
 };
 
+const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setCalendarLoadingState(true));
+    await API.scheduling.updateSingleTemplate(templateId, data);
+
+    dispatch(setCalendarLoadingState(false));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+    dispatch(setCalendarLoadingState(false));
+  }
+};
+
 const deleteTemplate = (templateId: string[]) => async (dispatch: AppDispatch) => {
   try {
     await API.scheduling.deleteTemplate(templateId);
@@ -168,6 +181,7 @@ export default {
   createScheduleTemplate,
   applyScheduleTemplate,
   getSingleSchedule,
+  updateSingleSchedule,
   resetApplyStatusState,
   resetBlockStatusState,
   deleteTemplate

@@ -30,6 +30,7 @@ export enum Translation {
   PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_ACTION = 'page.scheduling.templates.table.header.action',
   PAGE_SCHEDULING_VIEW_TITLE = 'page.scheduling.view.title',
   PAGE_SCHEDULING_CREATE_TEMPLATES_TITLE = 'page.scheduling.create.templates.title',
+  PAGE_SCHEDULING_EDIT_TEMPLATES_TITLE = 'page.scheduling.edit.templates.title',
   PAGE_SCHEDULING_CREATE_TEMPLATES_NAME = 'page.scheduling.create.templates.name',
   PAGE_SCHEDULING_CREATE_TEMPLATES_TIME_PERIOD = 'page.scheduling.create.templates.time.period',
   PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT = 'page.scheduling.create.templates.select',

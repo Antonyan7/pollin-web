@@ -24,6 +24,13 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
     [router]
   );
 
+  const onEditClick = useCallback(
+    (id: string) => {
+      router.push({ pathname: '/scheduling/edit-template', query: { scheduleId: id } });
+    },
+    [router]
+  );
+
   return (
     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected}>
       <TableCell padding="checkbox" onClick={(event) => onClick(event, row.name)}>
@@ -54,7 +61,7 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
         <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
           <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
-        <IconButton sx={{ color: theme.palette.secondary.main }} size="large">
+        <IconButton sx={{ color: theme.palette.secondary.main }} size="large" onClick={() => onEditClick(row.id)}>
           <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
       </TableCell>
