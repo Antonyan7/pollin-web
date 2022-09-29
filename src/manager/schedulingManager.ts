@@ -1,6 +1,6 @@
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
-import { BlockSchedulingProps, SingleSchedulingProps } from 'types/reduxTypes/scheduling';
+import { BlockSchedulingProps, DeleteScheduleTemplateProps, SingleSchedulingProps } from 'types/reduxTypes/scheduling';
 
 import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
 import { Axios } from './axiosInstance';
@@ -20,8 +20,8 @@ const schedulingManager = {
       params: { page: pageSize }
     });
   },
-  deleteTemplate(data: string[]) {
-    return axiosInstance.delete<any, IAxiosResponse<void>>(`${baseURL}/v1/templates/delete`, { data });
+  deleteTemplate(data: DeleteScheduleTemplateProps) {
+    return axiosInstance.delete<any, IAxiosResponse<void>>(`${baseURL}/v1/templates`, { data });
   },
   getSingleTemplate(templateId: string) {
     return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>(`${baseURL}/v1/templates/${templateId}`);

@@ -42,7 +42,7 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
   const [t] = useTranslation();
 
   const handleConfirm = () => {
-    dispatch(schedulingMiddleware.deleteTemplate(selected));
+    dispatch(schedulingMiddleware.deleteTemplate({ templateIds: selected }));
     handleOpenClose?.();
   };
 

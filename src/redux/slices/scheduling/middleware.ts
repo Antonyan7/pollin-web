@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
-import { BlockSchedulingProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
+import { BlockSchedulingProps, DeleteScheduleTemplateProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
 
 import { viewsMiddleware } from '../views';
 
@@ -160,7 +160,7 @@ const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async
   }
 };
 
-const deleteTemplate = (templateId: string[]) => async (dispatch: AppDispatch) => {
+const deleteTemplate = (templateId: DeleteScheduleTemplateProps) => async (dispatch: AppDispatch) => {
   try {
     await API.scheduling.deleteTemplate(templateId);
 

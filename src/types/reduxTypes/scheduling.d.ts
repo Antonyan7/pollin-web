@@ -27,9 +27,14 @@ export interface BlockSchedulingProps {
   placeholderLabel: string;
   slots?: IServiceProvider[];
 }
+
 export interface SingleSchedulingProps {
   name: string;
   timePeriods: ISingleTemplate[];
+}
+
+export interface DeleteScheduleTemplateProps {
+  templateIds: string[];
 }
 
 export interface SchedulingStateStatusProps {
