@@ -5,6 +5,7 @@ import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
 import { BlockSchedulingProps, DeleteScheduleTemplateProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
 
+import { ModalName } from '../../../constants/modals';
 import { viewsMiddleware } from '../views';
 
 import slice from './slice';
@@ -173,14 +174,24 @@ const deleteTemplate = (templateId: DeleteScheduleTemplateProps) => async (dispa
 
 const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => async (dispatch: AppDispatch) => {
   try {
-    await API.scheduling.createTemplate(createScheduleTemplateData);
-    dispatch(
-      viewsMiddleware.setRedirectionState({
-        path: '/scheduling/schedule-template',
-        params: '',
-        apply: true
-      })
-    );
+    const response = await API.scheduling.createTemplate(createScheduleTemplateData);
+
+    if (response.data.status.code === 'succeed') {
+      dispatch(
+        viewsMiddleware.setRedirectionState({
+          path: '/scheduling/schedule-template',
+          params: '',
+          apply: true
+        })
+      );
+    } else {
+      dispatch(
+        viewsMiddleware.setModalState({
+          name: ModalName.CreateTemplateModal,
+          props: { title: response.data.data.title, message: response.data.data.message }
+        })
+      );
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

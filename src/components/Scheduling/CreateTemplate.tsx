@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useFormik } from 'formik';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
@@ -39,8 +38,14 @@ const CreateTemplate = () => {
     dispatch(schedulingMiddleware.getServiceTypes());
   }, []);
 
-  const onOpenModalClick = () => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.CreateTemplateModal, props: {} }));
+  const onCancelClick = () => {
+    dispatch(
+      viewsMiddleware.setRedirectionState({
+        path: '/scheduling/schedule-template',
+        params: '',
+        apply: true
+      })
+    );
   };
 
   const handleSaveClick = () => {
@@ -102,7 +107,7 @@ const CreateTemplate = () => {
           <Grid item xs={12} display="flex">
             <StyledButton
               color="secondary"
-              onClick={onOpenModalClick}
+              onClick={onCancelClick}
               variant="outlined"
               size="large"
               sx={{ marginRight: 2, marginLeft: 'auto' }}

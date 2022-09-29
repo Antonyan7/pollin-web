@@ -4,7 +4,7 @@ import { BlockSchedulingProps, DeleteScheduleTemplateProps, SingleSchedulingProp
 
 import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
 import { Axios } from './axiosInstance';
-import { IScheduleTemplatesListResponse } from './managerScheduling';
+import { IScheduleTemplatesCreateResponse, IScheduleTemplatesListResponse } from './managerScheduling';
 
 const baseURL = '/clinic-scheduling';
 
@@ -13,7 +13,7 @@ const axiosInstance = Axios();
 const schedulingManager = {
   axiosInstance,
   createTemplate(data: ITemplateGroup) {
-    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/templates`, data);
+    return axiosInstance.post<any, IAxiosResponse<IScheduleTemplatesCreateResponse>>(`${baseURL}/v1/templates`, data);
   },
   getTemplatesList(pageSize: number) {
     return axiosInstance.get<any, IAxiosResponsePaginated<IScheduleTemplatesListResponse>>(`${baseURL}/v1/templates`, {

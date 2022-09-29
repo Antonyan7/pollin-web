@@ -25,6 +25,7 @@ interface IResponseStatus {
 
 interface IData<T> extends IResponseStatus {
   data: T;
+  status: IResponseStatus;
 }
 
 interface IPagination {
