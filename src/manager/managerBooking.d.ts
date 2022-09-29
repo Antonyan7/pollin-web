@@ -37,7 +37,7 @@ export interface ICreatedAppointmentBody {
   patientId: string;
   providerId?: string;
   description?: string;
-  date: Date | string;
+  date: Date | string | null;
 }
 
 export interface IEditAppointmentBody {

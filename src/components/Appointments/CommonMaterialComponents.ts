@@ -65,6 +65,11 @@ const StyledButton = styled(Button)<ButtonProps>(() => ({
   borderRadius: '7px'
 }));
 
+const StyledAddButton = styled(Button)<ButtonProps>(() => ({
+  borderRadius: '7px',
+  width: '130px'
+}));
+
 const StyledBox = styled(Box)<BoxProps>(() => ({
   textAlign: 'left',
   marginBottom: '8px'
@@ -79,6 +84,7 @@ const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 export {
   InternalButton,
   ScheduleBoxWrapper,
+  StyledAddButton,
   StyledBox,
   StyledButton,
   StyledButtonNew,

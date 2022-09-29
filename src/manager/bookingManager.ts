@@ -37,9 +37,9 @@ const bookingManager = {
     });
   },
   getAppointmentDetails(appointmentId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(`${baseURL}/v1/appointment`, {
-      params: { appointmentId }
-    });
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(
+      `${baseURL}/v1/appointment/${appointmentId}`
+    );
   },
   editAppointment(appointmentId: string, appointmentValues: IEditAppointmentBody) {
     return axiosInstance.put<any, IAxiosResponse<IUpdatedAppointmentResponse>>(

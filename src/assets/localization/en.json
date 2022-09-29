@@ -73,7 +73,7 @@
   "page.encounters.addendum.note": "Note",
   "modal.cancel": "Cancel",
   "modal.appointments.add.title": " Add Appointment",
-  "modal.appointments.add.select.service.type": "Appointment type",
+  "modal.appointments.add.select.service.type": "Appointment Type",
   "modal.appointments.add.select.patient": "Patient",
   "modal.appointments.add.description": "Description (optional)",
   "modal.appointments.add.time.picker": "Date & Start Time",

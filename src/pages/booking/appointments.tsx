@@ -160,7 +160,15 @@ const Appointments = () => {
                     OpenPickerIcon: CalendarIcon
                   }}
                   renderInput={(params) => (
-                    <TextField sx={{ width: '290px' }} {...params} onClick={() => setDatePickerOpen(true)} />
+                    <TextField
+                      disabled
+                      sx={{ width: '290px' }}
+                      {...params}
+                      onClick={() => setDatePickerOpen(true)}
+                      onKeyDown={(event) => {
+                        event.preventDefault();
+                      }}
+                    />
                   )}
                 />
               </Stack>

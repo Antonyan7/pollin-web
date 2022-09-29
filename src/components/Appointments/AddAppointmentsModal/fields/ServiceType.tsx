@@ -49,7 +49,6 @@ const ServiceType = () => {
             name={serviceTypeIdFieldName}
             helperText={serviceTypeIdHelperText}
             error={isServiceTypeError}
-            required
           />
         )}
       />

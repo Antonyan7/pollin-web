@@ -14,8 +14,8 @@ const useOnRangeSelect = () => {
       viewsMiddleware.setModalState({
         name: ModalName.AddAppointmentsModal,
         props: {
-          start: arg.start,
-          end: arg.end
+          start: arg.startStr,
+          end: arg.endStr
         }
       })
     );

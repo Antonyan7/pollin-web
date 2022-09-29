@@ -5,7 +5,7 @@ import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IServiceProviders } from 'types/reduxTypes/booking';
 
-import { toIsoString } from '@utils/dateUtils';
+import { toESTIsoString } from '@utils/dateUtils';
 
 import slice from './slice';
 
@@ -163,7 +163,7 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
     const providerId = store.getState().booking.currentServiceProviderId;
 
     appointmentValues.providerId = providerId;
-    appointmentValues.date = toIsoString(appointmentValues.date as Date);
+    appointmentValues.date = toESTIsoString(appointmentValues.date as Date);
     await API.booking.createAppointment(appointmentValues);
   } catch (error) {
     Sentry.captureException(error);

@@ -17,7 +17,7 @@ const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreatedAppointm
   serviceTypeId: '',
   patientId: '',
   description: '',
-  date: bookAppointmentDateStartTime ? new Date(bookAppointmentDateStartTime) : new Date()
+  date: bookAppointmentDateStartTime ? new Date(bookAppointmentDateStartTime) : null
 });
 
 const AddAppointmentsModal = () => {

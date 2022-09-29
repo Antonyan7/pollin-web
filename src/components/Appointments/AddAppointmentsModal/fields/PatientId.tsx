@@ -1,4 +1,4 @@
-import React, { SetStateAction, useEffect, useRef,useState } from 'react';
+import React, { SetStateAction, useEffect, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
@@ -128,7 +128,6 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
               name={patientIdFieldName}
               helperText={patientIdHelperText}
               error={isPatientIdError}
-              required
             />
           )}
         />
