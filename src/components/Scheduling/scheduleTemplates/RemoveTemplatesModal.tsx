@@ -25,7 +25,6 @@ interface BodyProps extends CardProps {
   selected: string[];
 }
 interface SimpleModalProps {
-  buttonVal: React.ReactNode;
   handleOpenClose: () => void;
   open: boolean;
   selected: string[];
@@ -79,9 +78,8 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
   );
 });
 
-const RemoveTemplatesModal = ({ buttonVal, handleOpenClose, open, selected }: SimpleModalProps) => (
+const RemoveTemplatesModal = ({ handleOpenClose, open, selected }: SimpleModalProps) => (
   <Grid container justifyContent="flex-end">
-    {buttonVal}
     <Modal
       open={open}
       onClose={handleOpenClose}

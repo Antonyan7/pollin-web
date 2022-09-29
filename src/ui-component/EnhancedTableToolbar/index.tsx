@@ -12,45 +12,41 @@ const EnhancedTableToolbar = ({ numSelected, selected }: EnhancedTableToolbarPro
   }, [open]);
 
   return (
-    <Toolbar
-      sx={{
-        p: 0,
-        pl: 1,
-        pr: 1,
-        ...(numSelected > 0 && {
-          color: (theme) => theme.palette.secondary.main
-        })
-      }}
-    >
-      {numSelected > 0 ? (
-        <Typography color="inherit" variant="h4">
-          {numSelected} Selected
-        </Typography>
-      ) : (
-        <Typography variant="h6" id="tableTitle">
-          Nutrition
-        </Typography>
-      )}
-      <Box sx={{ flexGrow: 1 }} />
-      {numSelected > 0 && (
-        <Tooltip title="Delete">
-          <IconButton size="large">
-            <RemoveTemplatesModal
-              buttonVal={
-                <DeleteIcon
-                  fontSize="medium"
-                  sx={{ color: (theme) => theme.palette.primary.main }}
-                  onClick={handleOpenClose}
-                />
-              }
-              handleOpenClose={handleOpenClose}
-              open={open}
-              selected={selected}
-            />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
+    <>
+      <Toolbar
+        sx={{
+          p: 0,
+          pl: 1,
+          pr: 1,
+          ...(numSelected > 0 && {
+            color: (theme) => theme.palette.secondary.main
+          })
+        }}
+      >
+        {numSelected > 0 ? (
+          <Typography color="inherit" variant="h4">
+            {numSelected} Selected
+          </Typography>
+        ) : (
+          <Typography variant="h6" id="tableTitle">
+            Nutrition
+          </Typography>
+        )}
+        <Box sx={{ flexGrow: 1 }} />
+        {numSelected > 0 && (
+          <Tooltip title="Delete">
+            <IconButton size="large">
+              <DeleteIcon
+                fontSize="medium"
+                sx={{ color: (theme) => theme.palette.primary.main }}
+                onClick={handleOpenClose}
+              />
+            </IconButton>
+          </Tooltip>
+        )}
+      </Toolbar>
+      <RemoveTemplatesModal handleOpenClose={handleOpenClose} open={open} selected={selected} />
+    </>
   );
 };
 
