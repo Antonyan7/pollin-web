@@ -107,7 +107,7 @@ export const resetBlockStatusState = () => async (dispatch: AppDispatch) => {
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.scheduling.applyScheduleBlock({
-      resourceId: 'providerId2',
+      resourceId: applyBlockScheduleData.resourceId,
       startDate: applyBlockScheduleData.startDate,
       endDate: applyBlockScheduleData.endDate,
       placeholderLabel: applyBlockScheduleData.placeholderLabel

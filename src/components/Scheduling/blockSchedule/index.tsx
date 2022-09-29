@@ -97,7 +97,7 @@ const BlockTemplates = () => {
     validationSchema: blockScheduleValidationSchema,
     onSubmit: (values, { resetForm }) => {
       const sendingBlockValues = {
-        resourceId: 'roviderId2',
+        resourceId: values.resourceId,
         startDate: linkDateAndTime(values.startDate, values.startTime),
         endDate: linkDateAndTime(values.endDate, values.endTime),
         placeholderLabel: values.placeholderLabel
