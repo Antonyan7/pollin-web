@@ -2,6 +2,7 @@ import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
+import { IServiceType } from 'types/reduxTypes/booking';
 import { BlockSchedulingProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
 
 import { viewsMiddleware } from '../views';
@@ -24,7 +25,19 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
     const response = await API.booking.getServiceTypes();
 
-    dispatch(setServiceTypes(response.data.data.serviceTypes));
+    const serviceTypes = response.data.data.serviceTypes.sort((a: IServiceType, b: IServiceType) => {
+      if (a.title < b.title) {
+        return -1;
+      }
+
+      if (a.title > b.title) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

@@ -21,7 +21,7 @@ const getDefaultTimePeriodState = (): ISingleTemplate => ({
   days: new Array<number>(),
   startTime: null,
   endTime: null,
-  periodType: ServiceTypeOrBlock.Block,
+  periodType: ServiceTypeOrBlock.ServiceType,
   serviceTypes: new Array<string>(),
   placeholderName: ''
 });
