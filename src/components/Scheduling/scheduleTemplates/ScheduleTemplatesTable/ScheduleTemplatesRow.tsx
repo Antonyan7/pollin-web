@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import EditTwoToneIcon from '@mui/icons-material/EditTwoTone';
-import VisibilityTwoToneIcon from '@mui/icons-material/VisibilityTwoTone';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
@@ -58,11 +58,11 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
       <TableCell align="right">{timeAdjuster(new Date(row.lastSavedDay)).customizedDate}</TableCell>
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
-        <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
-          <VisibilityTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+        <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary[800] }} size="large">
+          <VisibilityOutlinedIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
-        <IconButton sx={{ color: theme.palette.secondary.main }} size="large" onClick={() => onEditClick(row.id)}>
-          <EditTwoToneIcon sx={{ fontSize: '1.3rem' }} />
+        <IconButton sx={{ color: theme.palette.primary[800] }} size="large" onClick={() => onEditClick(row.id)}>
+          <EditOutlinedIcon sx={{ fontSize: '1.3rem' }} />
         </IconButton>
       </TableCell>
     </TableRow>
