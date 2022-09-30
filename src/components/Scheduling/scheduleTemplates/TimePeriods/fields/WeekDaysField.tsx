@@ -1,20 +1,23 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { Checkbox, CheckboxProps } from '@mui/material';
-import { ISingleTemplate } from 'types/create-schedule';
+import { weekDays } from 'helpers/constants';
+import { ISingleTemplate, ITemplateGroup } from 'types/create-schedule';
 
-import { weekDays } from '../../../../../helpers/constants';
-
-import { TimePeriodsFieldProps } from './TimePeriodsFieldProps';
-
-interface IWeekdaysFieldProps extends TimePeriodsFieldProps {
+interface IWeekdaysFieldProps {
+  index: number;
   singleTemplate: ISingleTemplate;
 }
 
-const WeekDaysField = ({ index, singleTemplate, updateInputValue }: IWeekdaysFieldProps) => {
+const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
+  const { control } = useFormContext<ITemplateGroup>();
+  const {
+    field: { onChange, value }
+  } = useController({ name: `timePeriods.${index}.days`, control });
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
     (e) =>
-      updateInputValue('days', e.target.checked, index, indexOfDay);
+      onChange(e.target.checked ? [...value, indexOfDay] : value.filter((item) => item !== indexOfDay));
 
   return (
     <span className="week-days schedule-inputs schedule-days-checkbox">
@@ -24,7 +27,7 @@ const WeekDaysField = ({ index, singleTemplate, updateInputValue }: IWeekdaysFie
             key={`${day}-${singleTemplate.id}`}
             onChange={onWeekDaysChange(indexOfDay)}
             color="secondary"
-            checked={singleTemplate.days.includes(indexOfDay)}
+            checked={value.includes(indexOfDay)}
           />
           {day}
         </span>

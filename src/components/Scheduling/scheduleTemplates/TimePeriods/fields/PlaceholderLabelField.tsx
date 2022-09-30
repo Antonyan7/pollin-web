@@ -1,29 +1,22 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TextField, TextFieldProps } from '@mui/material';
+import { TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { ISingleTemplate } from 'types/create-schedule';
+import { ITemplateGroup } from 'types/create-schedule';
 
-import { TimePeriodsFieldProps } from './TimePeriodsFieldProps';
-
-interface IPlaceholderLabelFieldProps extends TimePeriodsFieldProps {
-  singleTemplate: ISingleTemplate;
-}
-
-const PlaceholderLabelField = ({ index, updateInputValue, singleTemplate }: IPlaceholderLabelFieldProps) => {
+const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
-
-  const onPlaceholderLabelChange: TextFieldProps['onChange'] = (e) =>
-    updateInputValue('placeholderName', e.target.value, index);
+  const { control } = useFormContext<ITemplateGroup>();
+  const { field } = useController({ name: `timePeriods.${index}.placeholderName`, control });
 
   return (
     <TextField
       className="schedule-inputs"
       fullWidth
       id="outlined-email-address"
-      value={singleTemplate.placeholderName}
       placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}
-      onChange={onPlaceholderLabelChange}
+      {...field}
     />
   );
 };

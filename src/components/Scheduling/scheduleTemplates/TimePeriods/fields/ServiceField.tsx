@@ -1,38 +1,28 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FormControlLabel, Radio, RadioGroup, RadioGroupProps } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { ISingleTemplate } from 'types/create-schedule';
+import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 
-import { ServiceTypeOrBlock } from '../../../../../types/create-schedule';
-
-import { TimePeriodsFieldProps } from './TimePeriodsFieldProps';
-
-interface IServiceFieldProps extends TimePeriodsFieldProps {
-  singleTemplate: ISingleTemplate;
-}
-
-const ServiceField = ({ index, singleTemplate, updateInputValue }: IServiceFieldProps) => {
+const ServiceField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
+  const { control } = useFormContext<ITemplateGroup>();
+  const {
+    field: { onChange, ...fieldProps }
+  } = useController({ name: `timePeriods.${index}.periodType`, control });
 
-  const onServiceFieldChange: RadioGroupProps['onChange'] = (e) =>
-    updateInputValue('periodType', e.target.value, index);
+  const onServiceFieldChange: RadioGroupProps['onChange'] = (e) => onChange(e.target.value);
 
   return (
-    <RadioGroup
-      className="schedule-inputs"
-      row
-      name="row-radio-buttons-group"
-      value={singleTemplate.periodType}
-      onChange={onServiceFieldChange}
-    >
+    <RadioGroup {...fieldProps} className="schedule-inputs" row onChange={onServiceFieldChange}>
       <FormControlLabel
-        value={ServiceTypeOrBlock.ServiceType}
+        value={PeriodType.ServiceType}
         control={<Radio />}
         label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPE)}
       />
       <FormControlLabel
-        value={ServiceTypeOrBlock.Block}
+        value={PeriodType.Block}
         control={<Radio />}
         label={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK)}
       />

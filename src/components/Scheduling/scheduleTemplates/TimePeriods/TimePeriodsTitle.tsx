@@ -1,4 +1,5 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -8,20 +9,16 @@ import { MinusIconButton } from '@ui-component/common/buttons';
 
 interface ITimePeriodsTitleProps {
   timePeriodNumber: number;
-  setTemplateData: React.Dispatch<React.SetStateAction<ITemplateGroup>>;
 }
 
-const TimePeriodsTitle = ({ timePeriodNumber, setTemplateData }: ITimePeriodsTitleProps) => {
+const TimePeriodsTitle = ({ timePeriodNumber }: ITimePeriodsTitleProps) => {
   const [t] = useTranslation();
+  const { getValues, setValue } = useFormContext<ITemplateGroup>();
 
   const onMinusClick = (timePeriodIndex: number) => {
-    setTemplateData((templateData) => ({
-      ...templateData,
-      timePeriods: [
-        ...templateData.timePeriods.slice(0, timePeriodIndex),
-        ...templateData.timePeriods.slice(timePeriodIndex + 1)
-      ]
-    }));
+    const timePeriods = getValues('timePeriods');
+
+    setValue('timePeriods', [...timePeriods.slice(0, timePeriodIndex), ...timePeriods.slice(timePeriodIndex + 1)]);
   };
 
   return (

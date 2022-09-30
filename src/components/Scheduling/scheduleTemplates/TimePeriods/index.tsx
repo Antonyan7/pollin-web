@@ -1,12 +1,10 @@
 import React from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box, Divider } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { IServiceType } from 'types/reduxTypes/booking';
+import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 
-import { useAppSelector } from '../../../../redux/hooks';
-import { schedulingSelector } from '../../../../redux/slices/scheduling';
-import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../../../types/create-schedule';
 import CreateSchedulingTemplateStyled from '../../CreateSchedulingStyled';
 
 import PlaceholderLabelField from './fields/PlaceholderLabelField';
@@ -17,66 +15,47 @@ import WeekDaysField from './fields/WeekDaysField';
 import TimePeriodsRow from './TimePeriodsRow';
 import TimePeriodsTitle from './TimePeriodsTitle';
 
-interface ITimePeriodsProps {
-  timePeriods: ISingleTemplate[];
-  setTemplateData: React.Dispatch<React.SetStateAction<ITemplateGroup>>;
-}
-
-export const TimePeriods = ({ timePeriods, setTemplateData }: ITimePeriodsProps) => {
-  const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
+// This component exists just because to avoid re-rendering of the whole form on the timePeriods field change
+const ServiceTypesRow: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
 
-  const updateInputValue = (
-    input: keyof ISingleTemplate,
-    value: string | undefined | boolean | string[],
-    itemIndex: number,
-    indexOfDay?: number
-  ) => {
-    setTemplateData((templateData) => ({
-      ...templateData,
-      timePeriods: templateData.timePeriods.map((data, index) => {
-        // updating days
-        if (index === itemIndex && indexOfDay !== undefined) {
-          return {
-            ...data,
-            [input]: value ? [...data.days, indexOfDay] : data.days.filter((item) => item !== indexOfDay)
-          };
-        }
+  useWatch({
+    name: 'timePeriods'
+  });
 
-        // updating other fields
-        if (index === itemIndex) {
-          return {
-            ...data,
-            [input]: value
-          };
-        }
+  const { getValues } = useFormContext<ITemplateGroup>();
 
-        // couldn't identify what to update
-        return {
-          ...data
-        };
-      })
-    }));
-  };
+  return (
+    <React.Fragment key={index}>
+      {getValues(`timePeriods.${index}.periodType`) === PeriodType.ServiceType && (
+        <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)}>
+          <ServiceTypesField index={index} />
+        </TimePeriodsRow>
+      )}
+    </React.Fragment>
+  );
+};
+
+export const TimePeriods = () => {
+  const [t] = useTranslation();
+  const { getValues } = useFormContext<ITemplateGroup>();
 
   return (
     <>
-      {timePeriods.map((singleTemplate, index) => (
+      {getValues('timePeriods').map((singleTemplate, index) => (
         <React.Fragment key={`${singleTemplate?.id ?? index}`}>
           <CreateSchedulingTemplateStyled>
             <div className="create-scheduling-template">
               <Box key={`timePeriod-${singleTemplate.id}`}>
-                <TimePeriodsTitle timePeriodNumber={index} setTemplateData={setTemplateData} />
+                <TimePeriodsTitle timePeriodNumber={index} />
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT)}>
-                  <WeekDaysField index={index} singleTemplate={singleTemplate} updateInputValue={updateInputValue} />
+                  <WeekDaysField index={index} singleTemplate={singleTemplate} />
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}>
                   <TimeField
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}
                     fieldName="startTime"
                     index={index}
-                    updateInputValue={updateInputValue}
-                    singleTemplate={singleTemplate}
                   />
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}>
@@ -84,24 +63,14 @@ export const TimePeriods = ({ timePeriods, setTemplateData }: ITimePeriodsProps)
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}
                     fieldName="endTime"
                     index={index}
-                    updateInputValue={updateInputValue}
-                    singleTemplate={singleTemplate}
                   />
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PERIOD_TYPE)}>
-                  <ServiceField index={index} updateInputValue={updateInputValue} singleTemplate={singleTemplate} />
+                  <ServiceField index={index} />
                 </TimePeriodsRow>
-                {singleTemplate.periodType === ServiceTypeOrBlock.ServiceType && (
-                  <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)}>
-                    <ServiceTypesField index={index} updateInputValue={updateInputValue} serviceTypes={serviceTypes} />
-                  </TimePeriodsRow>
-                )}
+                <ServiceTypesRow index={index} />
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}>
-                  <PlaceholderLabelField
-                    index={index}
-                    updateInputValue={updateInputValue}
-                    singleTemplate={singleTemplate}
-                  />
+                  <PlaceholderLabelField index={index} />
                 </TimePeriodsRow>
                 <Divider />
               </Box>

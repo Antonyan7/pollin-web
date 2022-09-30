@@ -15,7 +15,7 @@ import { changeDate, changeHours, getWeekDay } from '@utils/dateUtils';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 import Toolbar from './ToolBar';
 import { SlotTypes } from '../../types/calendar';
-import { ISingleTemplate, ServiceTypeOrBlock } from '../../types/create-schedule';
+import { ISingleTemplate, PeriodType } from '../../types/create-schedule';
 import { ICalendarSlot } from '../../types/reduxTypes/booking';
 
 const Calendar = (props: { calendarDate: string }) => {
@@ -57,7 +57,7 @@ const Calendar = (props: { calendarDate: string }) => {
       if (isDaysContainingWeekDay) {
         calendarEvents.push(
           CreateSlot(
-            item.periodType === ServiceTypeOrBlock.ServiceType ? SlotTypes.schedule : SlotTypes.block,
+            item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
             // TODO: remove changeHours function after actual server implementation
             changeHours(changeDate(item.startTime as string, date), index ? 8 : 10),
             changeHours(changeDate(item.endTime as string, date), index ? 8 : 10),

@@ -1,29 +1,28 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
-import { useFormik } from 'formik';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
+import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
 import { toIsoString, utcDate } from '@utils/dateUtils';
 
-import { ISingleTemplate, ITemplateGroup, ServiceTypeOrBlock } from '../../types/create-schedule';
-
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
-  days: new Array<number>(),
+  days: [],
   startTime: null,
   endTime: null,
-  periodType: ServiceTypeOrBlock.Block,
-  serviceTypes: new Array<string>(),
+  periodType: PeriodType.ServiceType,
+  serviceTypes: [],
   placeholderName: ''
 });
 
@@ -34,7 +33,6 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  const [templateData, setTemplateData] = useState<ITemplateGroup>(scheduleTemplate);
   const [t] = useTranslation();
   const router = useRouter();
   const { scheduleId } = router.query;
@@ -45,93 +43,99 @@ const EditTemplate = () => {
     dispatch(schedulingMiddleware.getSingleSchedule(scheduleTemplateID));
   }, [scheduleId, scheduleTemplateID]);
 
-  useEffect(() => {
-    setTemplateData(scheduleTemplate);
-  }, [scheduleTemplate]);
-
   const onOpenModalClick = () => {
     dispatch(viewsMiddleware.setModalState({ name: ModalName.CreateTemplateModal, props: {} }));
   };
 
-  const handleSaveClick = () => {
-    const body = {
-      name: templateData.name,
-      timePeriods: templateData.timePeriods.map((item) => {
-        const { id, ...rest } = item;
+  const handleSaveClick = (values: ITemplateGroup) => {
+    const body: ITemplateGroup = {
+      ...values,
+      timePeriods: values.timePeriods.map((item) => {
+        const { id, serviceTypes, ...rest } = item;
 
-        if (rest.startTime && rest.endTime) {
-          rest.startTime = toIsoString(utcDate(new Date(rest.startTime)));
-          rest.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+        const reqBody: ISingleTemplate = rest;
+
+        if (item.periodType === PeriodType.ServiceType) {
+          reqBody.serviceTypes = serviceTypes;
         }
 
-        return rest;
+        if (rest.startTime && rest.endTime) {
+          reqBody.startTime = toIsoString(utcDate(new Date(rest.startTime)));
+          reqBody.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+        }
+
+        return reqBody;
       })
     };
 
     dispatch(schedulingMiddleware.updateSingleSchedule(scheduleTemplateID, body));
   };
 
-  const onPlusClick = () => {
-    setTemplateData({
-      ...templateData,
-      timePeriods: [...templateData.timePeriods, { ...getDefaultTimePeriodState(), id: v4() }]
-    });
-  };
-
-  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setTemplateData({ ...templateData, name: e.target.value });
-  };
-
-  const createScheduleForm = useFormik({
-    initialValues: getEmptyTemplateState(),
-    onSubmit: () => handleSaveClick()
+  const methods = useForm<ITemplateGroup>({
+    defaultValues: getEmptyTemplateState()
   });
+
+  const { reset, handleSubmit, register } = methods;
+
+  const { append } = useFieldArray({
+    control: methods.control,
+    name: 'timePeriods'
+  });
+
+  const onPlusClick = () => {
+    append({ ...getDefaultTimePeriodState(), id: v4() });
+  };
+
+  useEffect(() => {
+    reset(scheduleTemplate);
+  }, [reset, scheduleTemplate]);
 
   return (
     <ScheduleBoxWrapper>
-      <form onSubmit={createScheduleForm.handleSubmit}>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} lg={3}>
-            <Typography>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}</Typography>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(handleSaveClick)}>
+          <Grid container spacing={3} alignItems="center">
+            <Grid item xs={12} lg={3}>
+              <Typography>{t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}</Typography>
+            </Grid>
+            <Grid item xs={12} lg={9}>
+              <TextField
+                {...register('name')}
+                className="schedule-inputs"
+                fullWidth
+                placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Divider />
+              <TimePeriods />
+            </Grid>
+            <Grid item xs={12}>
+              <PlusIconButton onClick={onPlusClick} />
+            </Grid>
+            <Grid item xs={12} display="flex">
+              <StyledButton
+                color="secondary"
+                onClick={onOpenModalClick}
+                variant="outlined"
+                size="large"
+                sx={{ marginRight: 2, marginLeft: 'auto' }}
+              >
+                {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
+              </StyledButton>
+              <StyledButton
+                color="secondary"
+                variant="contained"
+                size="large"
+                type="submit"
+                sx={{ paddingLeft: 5, paddingRight: 5 }}
+              >
+                {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
+              </StyledButton>
+            </Grid>
           </Grid>
-          <Grid item xs={12} lg={9}>
-            <TextField
-              value={templateData?.name}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => handleNameChange(e)}
-              className="schedule-inputs"
-              fullWidth
-              placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Divider />
-            <TimePeriods timePeriods={templateData?.timePeriods} setTemplateData={setTemplateData} />
-          </Grid>
-          <Grid item xs={12}>
-            <PlusIconButton onClick={onPlusClick} />
-          </Grid>
-          <Grid item xs={12} display="flex">
-            <StyledButton
-              color="secondary"
-              onClick={onOpenModalClick}
-              variant="outlined"
-              size="large"
-              sx={{ marginRight: 2, marginLeft: 'auto' }}
-            >
-              {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
-            </StyledButton>
-            <StyledButton
-              color="secondary"
-              variant="contained"
-              size="large"
-              type="submit"
-              sx={{ paddingLeft: 5, paddingRight: 5 }}
-            >
-              {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
-            </StyledButton>
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </FormProvider>
     </ScheduleBoxWrapper>
   );
 };

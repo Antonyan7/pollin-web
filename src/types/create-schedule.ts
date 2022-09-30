@@ -10,8 +10,8 @@ export interface ISingleTemplate {
   days: number[];
   startTime: string | null;
   endTime: string | null;
-  periodType: string;
-  serviceTypes: string[];
+  periodType: PeriodType;
+  serviceTypes?: string[]; // exists only when periodType is ServiceType
   placeholderName: string;
 }
 
@@ -29,7 +29,7 @@ export interface ITemplateGroup {
   timePeriods: ISingleTemplate[];
 }
 
-export enum ServiceTypeOrBlock {
+export enum PeriodType {
   ServiceType = 'ServiceType',
   Block = 'Block'
 }
