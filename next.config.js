@@ -21,7 +21,6 @@ const withPlugins = require('next-compose-plugins');
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const withTM = require('next-transpile-modules')([
-  '@emotion/react',
   '@fullcalendar/react',
   '@babel/preset-react',
   '@fullcalendar/common',

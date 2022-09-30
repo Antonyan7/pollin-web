@@ -1,6 +1,6 @@
 import React, { ReactNode, useMemo } from 'react';
 // material-ui
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
+import { CssBaseline } from '@mui/material';
 import { createTheme, Theme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import defaultConfig from 'config';
@@ -64,11 +64,9 @@ export default ({ children }: Props) => {
   );
 
   return (
-    <StyledEngineProvider injectFirst>
-      <ThemeProvider theme={themes}>
-        <CssBaseline />
-        {children}
-      </ThemeProvider>
-    </StyledEngineProvider>
+    <ThemeProvider theme={themes}>
+      <CssBaseline />
+      {children}
+    </ThemeProvider>
   );
 };
