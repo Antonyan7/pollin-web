@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react';
-import API, { updateManagersBaseUrls } from '@axios/API';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { updateManagersBaseUrls } from '@axios/API';
 import { CloseOutlined } from '@mui/icons-material';
 import {
   Dialog,
@@ -14,24 +14,42 @@ import {
   RadioGroup,
   Typography
 } from '@mui/material';
+import { CookieKey } from 'constants/cookieKey';
+import { devToolsDefaultConfig } from 'constants/defaultConfigs';
 import { ModalName } from 'constants/modals';
+import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 
-const getBaseURL = () => API.booking.axiosInstance.defaults.baseURL ?? '';
+import { getFromCookie, setToCookie } from '@utils/cookies';
 
 const DevToolsModal = () => {
-  const [server, setServer] = React.useState<string>(getBaseURL());
+  const router = useRouter();
+  const currentConfig = useMemo(() => getFromCookie(CookieKey.DEV_CONFIG, devToolsDefaultConfig), []);
+  const [devConfig, setDevConfig] = useState(getFromCookie(CookieKey.DEV_CONFIG, devToolsDefaultConfig));
+  const isMockServer = useMemo(() => devConfig.server === '/api', [devConfig.server]);
 
-  const isMockServer = useMemo(() => server === '/api', [server]);
+  useEffect(() => {
+    if (devConfig) {
+      setToCookie(CookieKey.DEV_CONFIG, devConfig, { maxAge: 60 * 60 * 24 * 365 });
+    }
+  }, [devConfig]);
+
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-  }, []);
 
-  const onServerChange = useCallback((_: React.ChangeEvent<HTMLInputElement>, value: string) => {
-    setServer(value);
-    updateManagersBaseUrls(value);
-  }, []);
+    if (devConfig.server !== currentConfig.server) {
+      router.reload();
+    }
+  }, [currentConfig, devConfig, router]);
+
+  const onServerChange = useCallback(
+    (_: React.ChangeEvent<HTMLInputElement>, server: string) => {
+      setDevConfig({ ...devConfig, server });
+      updateManagersBaseUrls(server);
+    },
+    [devConfig]
+  );
 
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">

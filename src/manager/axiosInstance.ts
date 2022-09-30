@@ -1,5 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { CookieKey } from 'constants/cookieKey';
+import { devToolsDefaultConfig } from 'constants/defaultConfigs';
 import { guid } from 'helpers/guid';
+
+import { getFromCookie } from '@utils/cookies';
 
 import { FirebaseManager } from './firebase';
 
@@ -18,6 +22,12 @@ const getOrGenerateDeviceId = () => {
   return newDeviceId;
 };
 
+const getServerUrl = () => {
+  const devConfig = getFromCookie(CookieKey.DEV_CONFIG, devToolsDefaultConfig);
+
+  return devConfig?.server;
+};
+
 class RequestManager {
   private static instance: AxiosInstance;
 
@@ -26,7 +36,8 @@ class RequestManager {
       return RequestManager.instance;
     }
 
-    const axiosInstance = axios.create({ baseURL: `${process.env.NEXT_PUBLIC_BASE_URL}` });
+    const serverUrl = getServerUrl();
+    const axiosInstance = axios.create({ baseURL: `${serverUrl}` });
 
     FirebaseManager.initiate();
     axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
