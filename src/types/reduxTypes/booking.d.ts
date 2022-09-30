@@ -26,7 +26,7 @@ export interface BookingProps {
   patientList: IPatientsResponse;
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
-  patientAlerts: AlertDetailsProps;
+  patientAlerts: AlertDetailsProps | null;
 }
 
 export interface IUniqueItem {

@@ -64,7 +64,7 @@ const DuplicatePatientPopup = ({ open, setOnClose }: DuplicatePatientPopUpProps)
         <DialogActions sx={{ p: 4 }}>
           <Grid container justifyContent="flex-end">
             <Grid>
-              <StyledButton variant="contained" sx={{ width: '160px' }} onClick={onClose}>
+              <StyledButton variant="contained" color="secondary" sx={{ width: '160px' }} onClick={onClose}>
                 {t(Translation.PAGE_APPOINTMENTS_DUPLICATE_PATIENT_MODAL_ACTION)}
               </StyledButton>
             </Grid>

@@ -87,20 +87,26 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   }, [control._formValues.patientId]);
 
   useEffect(() => {
-    if (patientAlerts.alerts && patientAlerts.alerts.length) {
-      const findDuplicate = patientAlerts.alerts.filter((alertDetails: AlertDetailsProps) =>
-        Boolean(alertDetails.messages.find((message) => message.title === OpenModalReason.DuplicateName))
-      );
+    if (patientAlerts?.alerts) {
+      if (patientAlerts.alerts.length) {
+        const findDuplicate = patientAlerts.alerts.filter((alertDetails: AlertDetailsProps) =>
+          Boolean(alertDetails.messages.find((message) => message.title === OpenModalReason.DuplicateName))
+        );
 
-      if (findDuplicate.length) {
+        if (findDuplicate.length) {
+          setOpenDuplicateAlertPopUp(true);
+          dispatch(bookingMiddleware.getPatientAlerts());
+        } else {
+          setOpenDuplicateAlertPopUp(false);
+          setDisableActionButton(false);
+        }
+      } else {
         setOpenDuplicateAlertPopUp(true);
         dispatch(bookingMiddleware.getPatientAlerts());
-      } else {
-        setOpenDuplicateAlertPopUp(false);
-        setDisableActionButton(false);
+        setDisableActionButton(true);
       }
     }
-  }, [patientAlerts.alerts, setDisableActionButton]);
+  }, [patientAlerts?.alerts, setDisableActionButton]);
 
   return (
     <>
