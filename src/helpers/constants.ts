@@ -1,4 +1,4 @@
-import { IApplyScheduleDay } from '../types/apply-schedule';
+import { IApplyScheduleDay } from 'types/apply-schedule';
 
 export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
@@ -22,36 +22,8 @@ export const cancellationReasons = [
   'Other: please provide details'
 ];
 
-export const repeatWeeksList: IApplyScheduleDay[] = [
-  {
-    id: 1,
-    name: '1 Week'
-  },
-  {
-    id: 2,
-    name: '2 Week'
-  },
-  {
-    id: 3,
-    name: '3 Week'
-  },
-  {
-    id: 4,
-    name: '4 Week'
-  },
-  {
-    id: 5,
-    name: '5 Week'
-  },
-  {
-    id: 6,
-    name: '6 Week'
-  },
-  {
-    id: 7,
-    name: '7 Week'
-  }
-];
+export const repeatWeeksList = (weekCount: number): IApplyScheduleDay[] =>
+  Array.from({ length: weekCount }).map((_, weekIdx) => ({ id: weekIdx + 1, name: `${weekIdx + 1} Week` }));
 
 export const ESTTimezone = '-04:00';
 

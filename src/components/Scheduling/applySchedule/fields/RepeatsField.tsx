@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Autocomplete, FormControl, TextField } from '@mui/material';
 import { repeatWeeksList } from 'helpers/constants';
@@ -17,12 +17,14 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
     }
   };
 
+  const weeksList = useMemo(() => repeatWeeksList(24), []);
+
   return (
     <FormControl fullWidth>
       <Autocomplete
         inputValue={repeatWeeks.name}
         popupIcon={<KeyboardArrowDownIcon />}
-        options={repeatWeeksList}
+        options={weeksList}
         onChange={(e, value) => {
           onRepeatWeeksUpdate(value);
         }}
