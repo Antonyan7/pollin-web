@@ -14,7 +14,7 @@ const PatientId = () => {
   ) as AppointmentDetailsProps;
   const [t] = useTranslation();
 
-  const patientIdFieldName = 'patientId';
+  const patientIdFieldName = 'id';
   const patientIdHelperText = touched[patientIdFieldName] ? errors[patientIdFieldName] : '';
   const isPatientIdError = !!errors[patientIdFieldName] && touched[patientIdFieldName];
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_PATIENT);
@@ -26,8 +26,8 @@ const PatientId = () => {
         disabled
         defaultValue={details?.patient}
         options={[details.patient]}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => option.title}
+        isOptionEqualToValue={(option, value) => option === value}
+        getOptionLabel={(option) => option.name}
         renderInput={(params: TextFieldProps) => (
           <TextField
             {...params}
@@ -35,7 +35,6 @@ const PatientId = () => {
             name={patientIdFieldName}
             helperText={patientIdHelperText}
             error={isPatientIdError}
-            required
           />
         )}
       />

@@ -14,13 +14,13 @@ const ServiceType = () => {
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
 
-  const serviceTypeIdFieldName = 'serviceType';
+  const serviceTypeIdFieldName = 'serviceType.id';
   const serviceTypeIdHelperText = touched[serviceTypeIdFieldName] ? errors[serviceTypeIdFieldName] : '';
   const isServiceTypeError = !!errors[serviceTypeIdFieldName] && touched[serviceTypeIdFieldName];
   const serviceTypeSelectLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_SERVICE_TYPE);
 
   const defaultServiceTypeOption = useMemo(
-    () => serviceTypeOptions.find((option) => option.item.id === values?.serviceType) ?? null,
+    () => serviceTypeOptions.find((option) => option.item.id === values?.serviceType?.id) ?? null,
     [values, serviceTypeOptions]
   );
 
@@ -45,7 +45,6 @@ const ServiceType = () => {
             {...params}
             label={serviceTypeSelectLabel}
             name={serviceTypeIdFieldName}
-            required
             helperText={serviceTypeIdHelperText}
             error={isServiceTypeError}
           />

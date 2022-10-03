@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
@@ -11,11 +11,11 @@ import { Translation } from 'constants/translations';
 const FormHeader = () => {
   const [t] = useTranslation();
 
-  const onClose = () => {
+  const onClose = useCallback(() => {
     dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
     dispatch(bookingMiddleware.getPatients(null));
     dispatch(bookingMiddleware.getPatientAlerts(''));
-  };
+  }, []);
 
   return (
     <>

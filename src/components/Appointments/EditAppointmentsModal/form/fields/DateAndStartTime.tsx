@@ -15,13 +15,12 @@ const DateAndStartTime: React.FC = () => {
   const { values, setFieldValue }: FormikValues = useFormikContext();
   const [t] = useTranslation();
 
-  const initialDate: DateAndStartTimeType = values.date;
-  const dateFieldName = 'date';
+  const initialDate: DateAndStartTimeType = values.appointment.date;
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) => {
     const roundedTime = date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : undefined;
 
-    setFieldValue(dateFieldName, roundedTime);
+    setFieldValue('appointment.date', roundedTime);
   };
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);

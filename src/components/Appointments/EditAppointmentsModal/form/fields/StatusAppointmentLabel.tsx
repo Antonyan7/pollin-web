@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -6,25 +6,19 @@ import { FormControl, Grid, MenuItem } from '@mui/material';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { FormikValues, useFormikContext } from 'formik';
-import { createOptionsGroup } from 'helpers/berryFunctions';
 import { appointmentStatusData } from 'helpers/constants';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingSelector } from 'redux/slices/booking';
+import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 
 const StatusAppointmentLabel = () => {
   const { values, handleChange }: FormikValues = useFormikContext();
   const [t] = useTranslation();
-
-  const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
-  const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
   const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-  const currentOption: any = () => serviceTypeOptions.find((option) => option.item.id === values.serviceType);
   const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
 
   return (
-    <Grid container spacing={3} style={{ padding: '0 24px' }}>
-      <Grid item xs={currentOption?.item.isVirtual ? 6 : 12}>
+    <Grid container spacing={3} sx={{ marginTop: '0px', paddingLeft: '24px' }}>
+      <Grid item xs={values?.serviceType?.isVirtual ? 6 : 12}>
         <FormControl fullWidth>
           <StyledInputLabel id="status-appointment-label">{statusAppointmentLabel}</StyledInputLabel>
           <StyledSelectButton
@@ -33,8 +27,8 @@ const StatusAppointmentLabel = () => {
             labelId="status-appointment-label"
             label={statusAppointmentLabel}
             name="status"
-            defaultValue={values.status}
-            onChange={handleChange}
+            defaultValue={values.appointment.status}
+            onChange={handleChange('appointment.status')}
           >
             {appointmentStatusData.map((statusItem) => (
               <MenuItem value={statusItem} key={statusItem.toString()}>
@@ -44,8 +38,8 @@ const StatusAppointmentLabel = () => {
           </StyledSelectButton>
         </FormControl>
       </Grid>
-      {currentOption?.item.isVirtual && (
-        <Grid item xs={6}>
+      {values?.serviceType?.isVirtual && (
+        <Grid item xs={values?.serviceType?.isVirtual ? 6 : 12}>
           <StyledButton
             variant="contained"
             sx={{

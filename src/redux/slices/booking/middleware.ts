@@ -161,10 +161,12 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
 const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async (dispatch: AppDispatch) => {
   try {
     const providerId = store.getState().booking.currentServiceProviderId;
+    const calendarDate = store.getState().booking.date;
 
     appointmentValues.providerId = providerId;
     appointmentValues.date = toESTIsoString(appointmentValues.date as Date);
     await API.booking.createAppointment(appointmentValues);
+    dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -189,7 +191,12 @@ const clearAppointmentDetails = () => (dispatch: AppDispatch) => {
 const editAppointment =
   (appointmentId: string, appointmentValues: IEditAppointmentBody) => async (dispatch: AppDispatch) => {
     try {
+      const providerId = store.getState().booking.currentServiceProviderId;
+      const calendarDate = store.getState().booking.date;
+
+      appointmentValues.appointment.date = toESTIsoString(appointmentValues.appointment.date as Date);
       await API.booking.editAppointment(appointmentId, appointmentValues);
+      dispatch(getAppointments(providerId, calendarDate));
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error));
@@ -212,11 +219,13 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
 
 const cancelAppointment = (appointmentId: string, cancellationReason: string) => async (dispatch: AppDispatch) => {
   try {
+    const providerId = store.getState().booking.currentServiceProviderId;
+    const calendarDate = store.getState().booking.date;
+
     await API.booking.cancelAppointment(appointmentId, {
-      appointment: {
-        cancellationReason
-      }
+      cancellationReason
     });
+    dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     dispatch(setError(error));
   }

@@ -10,16 +10,25 @@ import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { AppointmentDetailsProps } from 'types/reduxTypes/booking';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
 
-import { mergeAppointmentDetails } from './form/helpers/mergeAppointmentDetails';
 import { IFormValues } from './form/types';
 import EditAppointmentsModalForm from './form';
 
 const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => ({
-  appointmentId: details?.appointment.id ?? '',
-  description: details?.appointment.description ?? '',
-  date: details?.appointment.date ?? new Date(),
-  status: details?.appointment.status ?? '',
-  serviceType: details?.serviceType?.id ?? ''
+  appointment: {
+    id: details?.appointment.id ?? '',
+    description: details?.appointment.description ?? '',
+    date: details?.appointment.date ?? new Date(),
+    status: details?.appointment.status ?? '',
+    cancellationReason: ''
+  },
+  patient: {
+    id: details?.patient.id ?? '',
+    name: details?.patient.name ?? ''
+  },
+  serviceType: {
+    id: details?.serviceType?.id ?? '',
+    title: details?.serviceType?.title ?? ''
+  }
 });
 
 interface IEditAppointmentModalProps {
@@ -40,14 +49,7 @@ const EditAppointmentsModal = () => {
   const editAppointmentForm = useFormik({
     initialValues: getFormState(),
     validationSchema: editAppointmentsValidationSchema,
-    onSubmit: (values, { resetForm }) => {
-      if (values) {
-        dispatch(
-          bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(details, editAppointmentForm.values))
-        );
-      }
-
-      resetForm();
+    onSubmit: () => {
       onClose();
     }
   });
@@ -69,7 +71,7 @@ const EditAppointmentsModal = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details]);
 
-  return editAppointmentForm.values.appointmentId ? (
+  return editAppointmentForm.values.appointment.id ? (
     <FormikProvider value={editAppointmentForm}>
       <Dialog open onClose={onClose}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>

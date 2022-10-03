@@ -27,7 +27,7 @@ const AddAppointmentsModal = () => {
     defaultValues: getInitialValues(bookAppointmentDateStartTime),
     resolver: yupResolver(addAppointmentsValidationSchema)
   });
-  const [isActionButtonDisabled, setDisableActionButton] = useState<boolean>(true);
+  const [isActionButtonDisabled, setDisableActionButton] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());

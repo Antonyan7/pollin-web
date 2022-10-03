@@ -101,7 +101,7 @@
   "modal.appointments.edit.button.status": "Status",
   "modal.appointments.edit.button.join": "Join Virtual Appointment",
   "modal.appointments.edit.icon.delete": "Delete Event",
-  "modal.appointments.edit.button.cancel": "Cancel",
+  "modal.appointments.edit.button.cancel": "Cancel Appointment",
   "modal.appointments.edit.button.save": "Save",
   "modal.scheduling.deletion.title": "Confirm Template Deletion",
   "modal.scheduling.deletion.content.main": "Are you sure you want to delete the selected template(s)?",

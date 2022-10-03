@@ -39,7 +39,11 @@ export interface IServiceProviders extends IPagination {
 }
 export interface IServiceProvider extends IUniqueItem {}
 
-export interface IPatientInfo extends IUniqueItem {}
+export interface IPatientInfo {
+  id: string;
+  name: string;
+}
+
 export interface IServiceType extends IUniqueItem {
   isVirtual?: boolean;
 }

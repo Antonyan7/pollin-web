@@ -9,7 +9,7 @@ const AppointmentDescription = () => {
   const { handleChange, values }: FormikValues = useFormikContext();
 
   const descriptionFieldName = 'description';
-  const descriptionValue = values[descriptionFieldName];
+  const descriptionValue = values.appointment.description;
   const editDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION);
 
   return (
@@ -20,7 +20,7 @@ const AppointmentDescription = () => {
         name={descriptionFieldName}
         placeholder={editDescriptionLabel}
         value={descriptionValue}
-        onChange={handleChange}
+        onChange={handleChange('appointment.description')}
         rows={4}
         fullWidth
         multiline

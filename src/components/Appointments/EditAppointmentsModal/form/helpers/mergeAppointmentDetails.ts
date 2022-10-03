@@ -8,10 +8,9 @@ export const mergeAppointmentDetails = (
   values: IFormValues
 ): IEditAppointmentBody => ({
   appointment: {
-    id: details.appointment.id,
-    date: values.date,
-    status: values.status,
-    description: values.description
+    date: values.appointment.date,
+    status: values.appointment.status,
+    description: values.appointment.description
   },
-  serviceTypeId: values.serviceType
+  serviceTypeId: values?.serviceType?.id ?? ''
 });

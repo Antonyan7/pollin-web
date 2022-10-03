@@ -74,7 +74,7 @@ const DetailsAppointmentModal = () => {
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_PATIENT)}
-              body={details?.patient?.title}
+              body={details?.patient?.name}
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DESCRIPTION)}
@@ -84,7 +84,7 @@ const DetailsAppointmentModal = () => {
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE)}</Typography>
                 <Typography variant="body2">
-                  {details && timeAdjuster(details?.appointment.date)?.customizedDate}
+                  {details && timeAdjuster(details?.appointment.date as Date)?.customizedDate}
                 </Typography>
               </Stack>
             </Grid>
@@ -92,7 +92,7 @@ const DetailsAppointmentModal = () => {
               <Stack direction="row" spacing={1} alignItems="center">
                 <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_START_TIME)}</Typography>
                 <Typography variant="body2">
-                  {details && timeAdjuster(details?.appointment.date)?.customizedTime}
+                  {details && timeAdjuster(details?.appointment.date as Date)?.customizedTime}
                 </Typography>
               </Stack>
             </Grid>

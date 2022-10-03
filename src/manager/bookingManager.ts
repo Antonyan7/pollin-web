@@ -48,7 +48,7 @@ const bookingManager = {
     );
   },
   cancelAppointment(appointmentId: string, body: ICancelAppointmentReqBody) {
-    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
+    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
   }
 };
 

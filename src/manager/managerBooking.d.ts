@@ -41,13 +41,13 @@ export interface ICreatedAppointmentBody {
 }
 
 export interface IEditAppointmentBody {
-  appointment: IEditAppointmentsDetails;
+  appointment: Omit<IEditAppointmentsDetails, 'id'>;
   serviceTypeId: string;
 }
 
 export interface IEditAppointmentsDetails {
   id: string;
-  date: Date;
+  date: Date | string;
   status: string;
   description: string;
 }
@@ -64,9 +64,7 @@ export interface IAppointmentDetailsResponse {
   appointment: AppointmentDetailsProps;
 }
 
-export interface ICancelAppointmentReqBody {
-  appointment: ICancelAppointmentReason;
-}
+export interface ICancelAppointmentReqBody extends ICancelAppointmentReason {}
 
 export interface ICancelAppointmentReason {
   cancellationReason: string;

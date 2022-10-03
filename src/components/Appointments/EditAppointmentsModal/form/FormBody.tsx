@@ -12,8 +12,8 @@ const FormBody = () => (
     <Grid container spacing={3}>
       <ServiceType />
       <PatientId />
-      <DateAndStartTime />
       <AppointmentDescription />
+      <DateAndStartTime />
       <StatusAppointmentLabel />
     </Grid>
   </DialogContent>
