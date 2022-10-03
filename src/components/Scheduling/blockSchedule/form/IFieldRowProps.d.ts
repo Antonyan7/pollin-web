@@ -1,6 +1,6 @@
-import { initialValues } from './initialValues';
+import { IBlockScheduleForm } from './initialValues';
 
 export interface IFieldRowProps {
   fieldLabel: string;
-  fieldName: keyof typeof initialValues;
+  fieldName: keyof IBlockScheduleForm;
 }

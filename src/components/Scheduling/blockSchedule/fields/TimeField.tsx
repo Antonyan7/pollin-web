@@ -1,20 +1,27 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
-import { useFormikContext } from 'formik';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
-import { initialValues } from '../form/initialValues';
+import { IBlockScheduleForm } from '../form/initialValues';
 
 const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
-  const { values, setFieldValue, handleBlur, touched, errors } = useFormikContext<typeof initialValues>();
+  const { control, formState } = useFormContext<IBlockScheduleForm>();
+  const { touchedFields, errors } = formState;
+
+  const { field } = useController<IBlockScheduleForm>({
+    name: fieldName,
+    control
+  });
+  const { onChange, value, ...fieldProps } = field;
 
   return (
     <TimePicker
       label={fieldLabel}
-      value={values[fieldName]}
-      onChange={(date: Date | null) => date && setFieldValue(fieldName, date)}
+      value={value}
+      onChange={(date: Date | null) => date && onChange(date)}
       minTime={MIN_SELECTABLE_DATE_TIME}
       maxTime={MAX_SELECTABLE_DATE_TIME}
       minutesStep={10}
@@ -31,11 +38,10 @@ const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
         <TextField
           fullWidth
           {...params}
-          name={fieldName}
           id={fieldName}
-          onBlur={handleBlur(fieldName)}
-          helperText={touched[fieldName] ? errors[fieldName] : ''}
-          error={Boolean(errors[fieldName]) && touched[fieldName]}
+          helperText={(touchedFields[fieldName] ? errors[fieldName]?.message : '') ?? ''}
+          error={Boolean(errors[fieldName]?.message) && touchedFields[fieldName]}
+          {...fieldProps}
         />
       )}
     />

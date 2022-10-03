@@ -1,24 +1,27 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
-import { useFormikContext } from 'formik';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
-import { initialValues } from '../form/initialValues';
+import { IBlockScheduleForm } from '../form/initialValues';
 
 const TextInputField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
-  const { values, handleChange, handleBlur, touched, errors } = useFormikContext<typeof initialValues>();
+  const { control, formState } = useFormContext<IBlockScheduleForm>();
+
+  const { field } = useController<IBlockScheduleForm>({
+    name: fieldName,
+    control
+  });
+  const { touchedFields, errors } = formState;
 
   return (
     <TextField
       id={fieldName}
-      name={fieldName}
       fullWidth
-      onBlur={handleBlur(fieldName)}
-      helperText={touched[fieldName] ? errors[fieldName] : ''}
-      error={Boolean(errors[fieldName]) && touched[fieldName]}
+      helperText={(touchedFields[fieldName] ? errors[fieldName]?.message : '') ?? ''}
+      error={Boolean(errors[fieldName]?.message) && touchedFields[fieldName]}
       label={fieldLabel}
-      value={values[fieldName]}
-      onChange={handleChange}
+      {...field}
     />
   );
 };

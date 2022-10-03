@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Translation } from 'constants/translations';
-import { FormikProvider, useFormik } from 'formik';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
@@ -22,7 +23,7 @@ import TextInputField from './fields/TextInputField';
 import TimeField from './fields/TimeField';
 import BlockScheduleFormRow from './form/BlockScheduleFormRow';
 import { IFieldRowProps } from './form/IFieldRowProps';
-import { initialValues } from './form/initialValues';
+import { IBlockScheduleForm, initialValues } from './form/initialValues';
 
 const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowProps> })[] = [
   {
@@ -92,33 +93,38 @@ const BlockTemplates = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleBlockStatus.success, scheduleBlockStatus.fail]);
 
-  const blockScheduleForm = useFormik({
-    initialValues,
-    validationSchema: blockScheduleValidationSchema,
-    onSubmit: (values, { resetForm }) => {
-      const sendingBlockValues = {
-        resourceId: values.resourceId,
-        startDate: linkDateAndTime(values.startDate, values.startTime),
-        endDate: linkDateAndTime(values.endDate, values.endTime),
-        placeholderLabel: values.placeholderLabel
-      };
-
-      if (values.startDate && values.endDate && values.placeholderLabel && sendingBlockValues.resourceId) {
-        dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
-        // after removing formik from here, put this resetForm function in the useEffect when the request succeeded.
-        resetForm();
-      }
-    }
+  const methods = useForm({
+    defaultValues: initialValues,
+    resolver: yupResolver(blockScheduleValidationSchema)
   });
 
+  const { reset, handleSubmit, formState } = methods;
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
+
+  const onSubmit = (values: IBlockScheduleForm) => {
+    const sendingBlockValues = {
+      resourceId: values.resourceId,
+      startDate: linkDateAndTime(values.startDate, values.startTime),
+      endDate: linkDateAndTime(values.endDate, values.endTime),
+      placeholderLabel: values.placeholderLabel
+    };
+
+    dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
+  };
+
   return (
-    <FormikProvider value={blockScheduleForm}>
+    <FormProvider {...methods}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ScheduleBoxWrapper>
-          <form onSubmit={blockScheduleForm.handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
               {fieldRows.map(({ Component, fieldLabel, fieldName }) => (
-                <BlockScheduleFormRow title={t(fieldLabel)}>
+                <BlockScheduleFormRow title={t(fieldLabel)} key={fieldName}>
                   <Component fieldLabel={t(fieldLabel)} fieldName={fieldName} />
                 </BlockScheduleFormRow>
               ))}
@@ -137,7 +143,7 @@ const BlockTemplates = () => {
           </form>
         </ScheduleBoxWrapper>
       </LocalizationProvider>
-    </FormikProvider>
+    </FormProvider>
   );
 };
 

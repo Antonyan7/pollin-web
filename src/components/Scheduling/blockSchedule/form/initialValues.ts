@@ -1,8 +1,17 @@
-export const initialValues = {
+export interface IBlockScheduleForm {
+  resourceId: string;
+  startDate: Date | null;
+  startTime: Date | null;
+  endDate: Date | null;
+  endTime: Date | null;
+  placeholderLabel: string;
+}
+
+export const initialValues: IBlockScheduleForm = {
   resourceId: '',
-  startDate: null as Date | null,
-  startTime: null as Date | null,
-  endDate: null as Date | null,
-  endTime: null as Date | null,
+  startDate: null,
+  startTime: null,
+  endDate: null,
+  endTime: null,
   placeholderLabel: ''
 };

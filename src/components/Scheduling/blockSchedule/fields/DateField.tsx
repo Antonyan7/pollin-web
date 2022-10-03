@@ -1,29 +1,35 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { useFormikContext } from 'formik';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
-import { initialValues } from '../form/initialValues';
+import { IBlockScheduleForm } from '../form/initialValues';
 
 const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
-  const { values, setFieldValue, handleBlur, touched, errors } = useFormikContext<typeof initialValues>();
+  const { control, formState } = useFormContext<IBlockScheduleForm>();
+  const { touchedFields, errors } = formState;
+
+  const { field } = useController<IBlockScheduleForm>({
+    name: fieldName,
+    control
+  });
+  const { onChange, value, ...fieldProps } = field;
 
   return (
     <DesktopDatePicker
       label={fieldLabel}
       inputFormat="MM/dd/yyyy"
-      value={values[fieldName]}
-      onChange={(date: Date | null) => date && setFieldValue(fieldName, date)}
+      value={value}
+      onChange={(date: Date | null) => date && onChange(date)}
       renderInput={(params) => (
         <TextField
           fullWidth
           {...params}
-          name={fieldName}
           id={fieldName}
-          onBlur={handleBlur(fieldName)}
-          helperText={touched[fieldName] ? errors[fieldName] : ''}
-          error={Boolean(errors[fieldName]) && touched[fieldName]}
+          helperText={(touchedFields[fieldName] ? errors[fieldName]?.message : '') ?? ''}
+          error={Boolean(errors[fieldName]?.message) && touchedFields[fieldName]}
+          {...fieldProps}
         />
       )}
     />
