@@ -40,6 +40,10 @@ const EditTemplate = () => {
   const scheduleTemplateID = scheduleId as string;
 
   useEffect(() => {
+    dispatch(schedulingMiddleware.getServiceTypes());
+  }, []);
+
+  useEffect(() => {
     dispatch(schedulingMiddleware.getSingleSchedule(scheduleTemplateID));
   }, [scheduleId, scheduleTemplateID]);
 
