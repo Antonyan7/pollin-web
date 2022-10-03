@@ -3,7 +3,9 @@ name: Danger Validations
 on:
   pull_request:
     types: [opened, edited, reopened, synchronize]
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   danger:
     runs-on: ubuntu-latest

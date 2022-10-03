@@ -9,7 +9,9 @@ on:
   schedule:
     # EST: At 4:00 AM, 12:00 PM, 8:00 PM
     - cron: '0 0,8,16 * * *'
-
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 jobs:
   build:
     timeout-minutes: 100
