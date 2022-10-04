@@ -26,8 +26,10 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
           <Checkbox
             key={`${day}-${singleTemplate.id}`}
             onChange={onWeekDaysChange(indexOfDay)}
-            color="secondary"
             checked={value.includes(indexOfDay)}
+            sx={{
+              color: (theme) => theme.palette.secondary.main
+            }}
           />
           {day}
         </span>
