@@ -13,9 +13,10 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
+  const currentEncounterId = router.query.id as string;
 
   const onCreateEncounterClick = () => {
-    router.push(`/patient-emr/create-encounter/${router.query.id}`);
+    router.push(`/patient-emr/create-encounter/${currentEncounterId}`);
   };
 
   return (
@@ -45,7 +46,7 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
           {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
         </Button>
       </header>
-      <EncounterFilters page={page} />
+      <EncounterFilters page={page} currentEncounterId={currentEncounterId} />
     </Box>
   );
 };

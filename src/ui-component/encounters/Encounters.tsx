@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -16,8 +16,8 @@ import EncounterNoteThumbnail from '@ui-component/encounters/EncounterNoteThumbn
 import NothingFoundEncounters from '@ui-component/encounters/NothingFoundEncounters';
 
 import { Translation } from '../../constants/translations';
-import { useAppSelector } from '../../redux/hooks';
-import { patientsSelector } from '../../redux/slices/patients';
+import { dispatch, useAppSelector } from '../../redux/hooks';
+import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
 import { IEncounterList } from '../../types/reduxTypes/patient-emr';
 
 const Encounters = () => {
@@ -38,6 +38,10 @@ const Encounters = () => {
 
     setPage(0);
   };
+
+  useEffect(() => {
+    dispatch(patientsMiddleware.getEncountersTypes());
+  }, []);
 
   return (
     <>

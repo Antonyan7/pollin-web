@@ -2,8 +2,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import { FormControl, Grid, GridProps, InputLabel, Select, styled, useTheme } from '@mui/material';
+import { FormControl, Grid, GridProps, InputLabel, MenuItem, Select, styled, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { useAppSelector } from 'redux/hooks';
+import { patientsSelector } from 'redux/slices/patients';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCard from '@ui-component/cards/SubCard';
@@ -37,6 +39,7 @@ const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
 const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
 
   return (
     <StyledGrid item xs={12} theme={theme}>
@@ -44,11 +47,13 @@ const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
         <Grid item xs={6} mb={2}>
           <FormControl fullWidth>
             <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
-            <Select
-              labelId="encounter-label"
-              id="encounter-type"
-              label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-            />
+            <Select labelId="encounter-label" id="encounter-type" label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}>
+              {encounterTypes.map((encounterType) => (
+                <MenuItem value={encounterType.id} key={encounterType.toString()}>
+                  {encounterType.title}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
         </Grid>
         <ReactQuill value={editorValue} theme="snow" style={{ backgroundColor: theme.palette.common.white }} />

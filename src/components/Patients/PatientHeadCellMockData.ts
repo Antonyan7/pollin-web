@@ -16,14 +16,14 @@ export const headCellsListMockData: IHeadCell[] = [
     isSortable: false
   },
   {
-    id: 'doctor',
+    id: 'Doctor',
     label: 'Doctor',
     align: 'left',
     paddingLeft: 0,
     isSortable: true
   },
   {
-    id: 'alerts',
+    id: 'Alert',
     label: 'Alerts',
     align: 'center',
     paddingLeft: '25px',
@@ -37,7 +37,7 @@ export const headCellsListMockData: IHeadCell[] = [
     isSortable: false
   },
   {
-    id: 'cycleStatus',
+    id: 'CycleStatus',
     label: 'Cycle Status',
     align: 'center',
     paddingLeft: '20px',

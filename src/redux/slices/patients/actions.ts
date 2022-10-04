@@ -2,6 +2,7 @@ import { IAction, SliceReducers } from 'redux/store';
 import {
   AlertDetailsProps,
   IEncounterList,
+  IEncounterTypes,
   IFilterCategory,
   IPatientList,
   PatientEmrProps
@@ -34,6 +35,9 @@ const actions: SliceReducers<PatientEmrProps> = {
   },
   setEncountersList(state, action: IAction<IEncounterList>) {
     state.encounters.list = action.payload;
+  },
+  setEncountersType(state, action: IAction<IEncounterTypes[]>) {
+    state.encounters.types = action.payload;
   }
 };
 

@@ -56,8 +56,13 @@ export interface AlertDetailsProps {
 
 interface IEncountersProps {
   list: IEncounterList;
+  types: IEncounterTypes[];
 }
 
+export interface IEncounterTypes {
+  id: string;
+  title: string;
+}
 export interface IEncounterList extends IPagination {
   encounters: IEncounterListItem[];
 }

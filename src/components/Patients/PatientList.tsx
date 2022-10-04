@@ -44,9 +44,12 @@ const PatientList = () => {
       searchString: searchValue,
       sortByField: sortField,
       sortOrder,
-      filters,
       page: page + 1
     };
+
+    if (filters.length) {
+      data.filters = filters;
+    }
 
     dispatch(patientsMiddleware.getPatientsList(data));
   }, [filters, page, searchValue, sortField, sortOrder]);

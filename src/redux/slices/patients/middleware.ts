@@ -22,7 +22,8 @@ const {
   setPatientsLoadingState,
   setPatientsFiltersLoadingState,
   setEncountersLoadingState,
-  setEncountersList
+  setEncountersList,
+  setEncountersType
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -131,6 +132,17 @@ const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispa
   }
 };
 
+const getEncountersTypes = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getEncounterTypes();
+
+    dispatch(setEncountersType(response.data.data.encountersTypes));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -139,5 +151,6 @@ export default {
   cleanPatientList,
   createEncounterNote,
   updateEncounterNote,
-  getEncounterList
+  getEncounterList,
+  getEncountersTypes
 };

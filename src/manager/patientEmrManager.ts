@@ -41,6 +41,9 @@ const patientEmrManager = {
       data
     );
   },
+  getEncounterTypes() {
+    return axiosInstance.get(`${baseURL}/v1/encounters/type`);
+  },
   getPatientSearchFilters() {
     return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
   },

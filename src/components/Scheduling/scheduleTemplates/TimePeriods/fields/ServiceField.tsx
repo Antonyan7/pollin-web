@@ -1,7 +1,7 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, styled,useTheme } from '@mui/material';
+import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, styled, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 

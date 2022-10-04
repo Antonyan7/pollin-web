@@ -13,7 +13,7 @@ import { dispatch } from '../../redux/hooks';
 import { patientsMiddleware } from '../../redux/slices/patients';
 import { IEncountersReqBody } from '../../types/patient';
 
-const EncounterFilters = ({ page }: { page: number }) => {
+const EncounterFilters = ({ page, currentEncounterId }: { page: number; currentEncounterId: string }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const [searchValue, setSearchValue] = useState<string>('');
@@ -28,7 +28,12 @@ const EncounterFilters = ({ page }: { page: number }) => {
     const data: IEncountersReqBody = {
       page: page + 1,
       searchString: searchValue,
-      filters: []
+      filters: [
+        {
+          id: 'doctor1',
+          type: 'Doctor'
+        }
+      ]
     };
 
     // TODO: Refactor this logic.
@@ -47,7 +52,12 @@ const EncounterFilters = ({ page }: { page: number }) => {
     const data: IEncountersReqBody = {
       page: page + 1,
       searchString: '',
-      filters: []
+      filters: [
+        {
+          id: 'doctor1',
+          type: 'Doctor'
+        }
+      ]
     };
 
     // TODO: Refactor this logic once we will decide the problem with mock server
@@ -56,7 +66,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
     }
 
     dispatch(patientsMiddleware.getEncounterList(data));
-  }, [page]);
+  }, [page, currentEncounterId]);
 
   return (
     <MainHeader>

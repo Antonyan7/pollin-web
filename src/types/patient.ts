@@ -35,9 +35,9 @@ export enum PatientListField {
 }
 
 export enum PatientListFilterType {
-  DOCTOR = 'doctor',
-  CYCLE_STATUS = 'cycleStatus',
-  ALERTS = 'alerts'
+  DOCTOR = 'Doctor',
+  CYCLE_STATUS = 'CycleStatus',
+  ALERTS = 'Alert'
 }
 
 export enum EncounterFilterTypes {
@@ -66,6 +66,7 @@ export interface IPatientsReqBody {
 }
 
 export interface IEncountersReqBody {
+  id?: string;
   page: number;
   searchString?: string;
   filters?: IEncountersFilterOption[];
