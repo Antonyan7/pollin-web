@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import { Grid, GridProps, styled, useTheme } from '@mui/material';
+import { FormControl, Grid, GridProps, InputLabel, Select, styled, useTheme } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCard from '@ui-component/cards/SubCard';
@@ -34,10 +36,21 @@ const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
 
 const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
   const theme = useTheme();
+  const [t] = useTranslation();
 
   return (
     <StyledGrid item xs={12} theme={theme}>
       <SubCard sx={{ backgroundColor: theme.palette.grey[300] }}>
+        <Grid item xs={6} mb={2}>
+          <FormControl fullWidth>
+            <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
+            <Select
+              labelId="encounter-label"
+              id="encounter-type"
+              label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+            />
+          </FormControl>
+        </Grid>
         <ReactQuill value={editorValue} theme="snow" style={{ backgroundColor: theme.palette.common.white }} />
         <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
           <StyledButton type="button" variant="contained">
