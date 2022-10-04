@@ -14,7 +14,7 @@ import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedu
 import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
-import { toIsoString, utcDate } from '@utils/dateUtils';
+import { toESTIsoString } from '@utils/dateUtils';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
@@ -33,6 +33,7 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
+
   const [t] = useTranslation();
   const router = useRouter();
   const { scheduleId } = router.query;
@@ -53,10 +54,9 @@ const EditTemplate = () => {
 
   const handleSaveClick = (values: ITemplateGroup) => {
     const body: ITemplateGroup = {
-      ...values,
+      name: values.name,
       timePeriods: values.timePeriods.map((item) => {
-        const { id, serviceTypes, ...rest } = item;
-
+        const { serviceTypes, ...rest } = item;
         const reqBody: ISingleTemplate = rest;
 
         if (item.periodType === PeriodType.ServiceType) {
@@ -64,8 +64,8 @@ const EditTemplate = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          reqBody.startTime = toIsoString(utcDate(new Date(rest.startTime)));
-          reqBody.endTime = toIsoString(utcDate(new Date(rest.endTime)));
+          reqBody.startTime = toESTIsoString(new Date(rest.startTime));
+          reqBody.endTime = toESTIsoString(new Date(rest.endTime));
         }
 
         return reqBody;
