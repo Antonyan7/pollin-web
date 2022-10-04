@@ -32,6 +32,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
+import { neutralDateTime } from '@utils/dateUtils';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
@@ -154,7 +155,7 @@ const Appointments = () => {
                   onClose={onDateDatePickerClose}
                   label={t(Translation.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER)}
                   inputFormat="MM/dd/yyyy"
-                  value={calendarDate}
+                  value={new Date(`${calendarDate}${neutralDateTime}`)}
                   onChange={(date: Date | null) => onDateChange(date)}
                   components={{
                     OpenPickerIcon: CalendarIcon

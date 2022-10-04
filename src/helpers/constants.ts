@@ -4,7 +4,7 @@ export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const longWeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'Cancelled', 'NoShow', 'CheckedIn'];
+export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'NoShow', 'CheckedIn'];
 
 export const cancellationReasons = [
   'Personal Emergency',
