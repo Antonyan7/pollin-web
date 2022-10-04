@@ -4,12 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { viewsMiddleware } from 'redux/slices/views';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
@@ -49,7 +47,7 @@ const EditTemplate = () => {
   }, [scheduleId, scheduleTemplateID]);
 
   const onOpenModalClick = () => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.CreateTemplateModal, props: {} }));
+    router.back();
   };
 
   const handleSaveClick = (values: ITemplateGroup) => {
