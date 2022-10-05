@@ -12,11 +12,11 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
 import { changeDate, changeHours, getWeekDay } from '@utils/dateUtils';
-import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
+import { SlotTypes } from 'types/calendar';
+import { ISingleTemplate, PeriodType } from 'types/create-schedule';
+import { ICalendarSlot } from 'types/reduxTypes/booking';
 import Toolbar from './ToolBar';
-import { SlotTypes } from '../../types/calendar';
-import { ISingleTemplate, PeriodType } from '../../types/create-schedule';
-import { ICalendarSlot } from '../../types/reduxTypes/booking';
+import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 
 const Calendar = (props: { calendarDate: string }) => {
   const { calendarDate } = props;
@@ -61,8 +61,8 @@ const Calendar = (props: { calendarDate: string }) => {
             // TODO: remove changeHours function after actual server implementation
             changeHours(changeDate(item.startTime as string, date), index ? 8 : 10),
             changeHours(changeDate(item.endTime as string, date), index ? 8 : 10),
-            item.periodType,
-            item.placeholderName
+            item.placeholderName,
+            item.periodType
           )
         );
       }
