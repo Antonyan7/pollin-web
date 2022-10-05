@@ -8,7 +8,7 @@ import { useAppSelector } from 'redux/hooks';
 import { patientsSelector } from 'redux/slices/patients';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
-import SubCard from '@ui-component/cards/SubCard';
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -43,7 +43,7 @@ const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
 
   return (
     <StyledGrid item xs={12} theme={theme}>
-      <SubCard sx={{ backgroundColor: theme.palette.grey[300] }}>
+      <SubCardStyled content sx={{ backgroundColor: theme.palette.grey[300] }}>
         <Grid item xs={6} mb={2}>
           <FormControl fullWidth>
             <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
@@ -65,7 +65,7 @@ const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
             {mode === SimpleEditorMode.Add ? 'Save' : 'Update'}
           </StyledButton>
         </Grid>
-      </SubCard>
+      </SubCardStyled>
     </StyledGrid>
   );
 };

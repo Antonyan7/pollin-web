@@ -1,7 +1,7 @@
 import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import { IFilterCategory } from 'types/reduxTypes/patient-emr';
 
-const reformatedFilterResults = (filterCategory: IFilterCategory[]) =>
+const reformattedFilterResults = (filterCategory: IFilterCategory[]) =>
   filterCategory.reduce((initialGroupedTitles: GroupedByTitlesProps[], nextGroupedTitles: IFilterCategory) => {
     const { type } = nextGroupedTitles;
     const groupedTitleRows: GroupedByTitlesProps[] = [];
@@ -46,4 +46,4 @@ const filterByUniqueCategory = (filterResult: GroupedByTitlesProps[]) => {
   return filterResult;
 };
 
-export { filterByUniqueCategory, reformatedFilterResults };
+export { filterByUniqueCategory, reformattedFilterResults };

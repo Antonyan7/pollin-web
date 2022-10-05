@@ -6,7 +6,8 @@ import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
-import SubCard from 'ui-component/cards/SubCard';
+
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
@@ -16,7 +17,7 @@ const EditEncounterRecord = () => {
   const [t] = useTranslation();
 
   return (
-    <SubCard
+    <SubCardStyled
       title={
         <Grid container spacing={3} alignItems="center" justifyContent="space-between">
           <Grid container item xs={6}>
@@ -51,7 +52,7 @@ const EditEncounterRecord = () => {
         </Grid>
         <NoteEditor editorValue={editorValue} setEditorValue={setEditorValue} mode={SimpleEditorMode.Edit} />
       </Grid>
-    </SubCard>
+    </SubCardStyled>
   );
 };
 

@@ -10,25 +10,20 @@ import { bookingSelector } from 'redux/slices/booking';
 import { validateInputChange } from 'validation/validationHelpers';
 
 const ServiceType = () => {
-  const {
-    formState: { touchedFields, errors },
-    control
-  } = useFormContext<ICreatedAppointmentBody>();
+  const { control } = useFormContext<ICreatedAppointmentBody>();
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
-
   const serviceTypeIdFieldName = 'serviceTypeId';
-  const serviceTypeIdHelperText =
-    (touchedFields[serviceTypeIdFieldName] ? errors[serviceTypeIdFieldName]?.message : '') ?? '';
-  const isServiceTypeError = !!errors[serviceTypeIdFieldName]?.message && touchedFields[serviceTypeIdFieldName];
   const serviceTypeSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE);
-  const {
-    field: { onChange, onBlur, ...fieldProps }
-  } = useController({
+  const { field, fieldState } = useController({
     name: serviceTypeIdFieldName,
     control
   });
+  const { onChange, onBlur, ...fieldProps } = field;
+  const { error } = fieldState;
+  const serviceTypeIdHelperText = error?.message;
+  const serviceTypeErrorText = !!error?.message;
 
   return (
     <Grid item xs={12}>
@@ -48,7 +43,7 @@ const ServiceType = () => {
             label={serviceTypeSelectLabel}
             name={serviceTypeIdFieldName}
             helperText={serviceTypeIdHelperText}
-            error={isServiceTypeError}
+            error={serviceTypeErrorText}
           />
         )}
       />

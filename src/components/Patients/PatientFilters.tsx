@@ -7,7 +7,7 @@ import { Autocomplete, CircularProgress, InputAdornment, OutlinedInput, TextFiel
 import { styled } from '@mui/material/styles';
 import { Box, shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
-import { filterByUniqueCategory, reformatedFilterResults } from 'helpers/patientFilters';
+import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -104,8 +104,8 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
             <CircularProgress size={20} />
           </Box>
         }
-        options={reformatedFilterResults(filtersList)}
-        groupBy={(option) => option.options.type}
+        options={reformattedFilterResults(filtersList)}
+        groupBy={(option) => option.options.titleName}
         getOptionLabel={(option) => option.options.title as string}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
         value={selectedFilterResults}

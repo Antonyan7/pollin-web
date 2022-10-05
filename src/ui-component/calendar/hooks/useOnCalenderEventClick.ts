@@ -9,7 +9,7 @@ import { SlotTypes } from 'types/calendar';
 const useOnCalendarEventClick = () => {
   const appointments = useAppSelector(bookingSelector.appointmentsList);
 
-  const onEventClick = useCallback(
+  return useCallback(
     (initialEventObject: EventClickArg) => {
       initialEventObject.jsEvent.preventDefault();
 
@@ -22,18 +22,21 @@ const useOnCalendarEventClick = () => {
         return;
       }
 
-      if (new Date(initialEventObject.event.startStr).getTime() < new Date().setHours(0, 0, 0, 0)) {
+      if (new Date(initialEventObject.event.startStr).getTime() < new Date().getTime()) {
         dispatch(
           viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
         );
       } else {
-        dispatch(viewsMiddleware.setModalState({ name: ModalName.EditAppointmentModal, props: { appointmentId: id } }));
+        dispatch(
+          viewsMiddleware.setModalState({
+            name: ModalName.EditAppointmentModal,
+            props: { appointmentId: id }
+          })
+        );
       }
     },
     [appointments]
   );
-
-  return onEventClick;
 };
 
 export default useOnCalendarEventClick;

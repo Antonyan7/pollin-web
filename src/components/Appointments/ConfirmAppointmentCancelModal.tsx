@@ -125,6 +125,7 @@ const ConfirmAppointmentsModal = () => {
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                 <Button
+                  disabled={!cancellationReason}
                   onClick={onConfirm}
                   sx={{
                     width: '160px',

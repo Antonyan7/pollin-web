@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles';
 import { IconChevronRight } from '@tabler/icons';
 import { useRouter } from 'next/router';
 
-import SubCard from '@ui-component/cards/SubCard';
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 import { gridSpacing } from '../../themes/themeConstants';
 import { IEncounterListItem } from '../../types/reduxTypes/patient-emr';
@@ -22,8 +22,9 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
       <Grid sx={{ marginBottom: '25px' }} item lg={8} xs={12}>
         <Grid container direction="column" spacing={gridSpacing}>
           <Grid item xs={12}>
-            <SubCard
+            <SubCardStyled
               title={title}
+              content
               secondary={
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '170px' }}>
                   <Typography fontSize="18px" fontWeight="400">
@@ -45,7 +46,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
                   <Typography variant="body2">{contentPreview}</Typography>
                 </Grid>
               </Grid>
-            </SubCard>
+            </SubCardStyled>
           </Grid>
         </Grid>
       </Grid>

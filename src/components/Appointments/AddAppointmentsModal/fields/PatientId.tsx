@@ -21,10 +21,8 @@ enum OpenModalReason {
 
 const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   const [openDuplicateAlertPopUp, setOpenDuplicateAlertPopUp] = useState<boolean>(false);
-  const {
-    control,
-    formState: { touchedFields, errors }
-  } = useFormContext<ICreatedAppointmentBody>();
+  const { control, formState } = useFormContext<ICreatedAppointmentBody>();
+  const { errors } = formState;
 
   const patientsList = useAppSelector(bookingSelector.patientList);
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
@@ -32,8 +30,8 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   const [t] = useTranslation();
 
   const patientIdFieldName = 'patientId';
-  const patientIdHelperText = (touchedFields[patientIdFieldName] ? errors[patientIdFieldName]?.message : '') ?? '';
-  const isPatientIdError = !!errors[patientIdFieldName]?.message && touchedFields[patientIdFieldName];
+  const patientIdHelperText = errors[patientIdFieldName]?.message;
+  const patientIdErrorText = !!errors[patientIdFieldName]?.message;
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT);
   const [patientsListCurrentPage, setPatientsListCurrentPage] = useState<number>(2);
   const [position, setPosition] = useState<number>(0);
@@ -133,7 +131,7 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
               label={patientIdSelectLabel}
               name={patientIdFieldName}
               helperText={patientIdHelperText}
-              error={isPatientIdError}
+              error={patientIdErrorText}
             />
           )}
         />

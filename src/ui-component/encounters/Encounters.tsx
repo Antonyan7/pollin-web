@@ -61,7 +61,11 @@ const Encounters = () => {
                     author={encounter.author}
                     title={encounter.title}
                     contentPreview={encounter.contentPreview}
-                    date={encounter.date}
+                    date={new Date(encounter.date).toLocaleDateString('en-us', {
+                      day: 'numeric',
+                      year: 'numeric',
+                      month: 'short'
+                    })}
                   />
                 ))}
                 <TablePagination

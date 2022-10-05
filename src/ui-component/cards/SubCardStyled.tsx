@@ -17,7 +17,7 @@ interface SubCardProps {
 
 // ==============================|| CUSTOM SUB CARD ||============================== //
 
-const SubCard = React.forwardRef(
+const SubCardStyled = React.forwardRef(
   (
     {
       children,
@@ -40,7 +40,7 @@ const SubCard = React.forwardRef(
         ref={ref}
         sx={{
           border: '1px solid',
-          borderColor: theme.palette.primary.light,
+          borderColor: theme.palette.grey[300],
           ':hover': {
             boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'
           },
@@ -77,7 +77,7 @@ const SubCard = React.forwardRef(
           <Divider
             sx={{
               opacity: 1,
-              borderColor: theme.palette.mode === 'dark' ? theme.palette.dark.light + 15 : theme.palette.primary.light
+              borderColor: theme.palette.grey[300]
             }}
           />
         )}
@@ -94,8 +94,4 @@ const SubCard = React.forwardRef(
   }
 );
 
-SubCard.defaultProps = {
-  content: true
-};
-
-export default SubCard;
+export default SubCardStyled;
