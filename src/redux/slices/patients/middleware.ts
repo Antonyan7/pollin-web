@@ -90,11 +90,12 @@ const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) =
   dispatch(setCurrentPatientId(patientId));
 };
 
-export const createEncounterNote = (data: ICreateEncounterNoteProps) => async (dispatch: AppDispatch) => {
+export const createEncounterNote = (encounterNoteData: ICreateEncounterNoteProps) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setPatientsLoadingState(true));
-    await API.patients.createEncounterNote(data);
+    await API.patients.createEncounterNote(encounterNoteData);
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
     dispatch(setPatientsLoadingState(false));
