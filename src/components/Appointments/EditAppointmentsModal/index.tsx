@@ -1,9 +1,11 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ModalName } from 'constants/modals';
-import { FormikProvider, useFormik } from 'formik';
+import { getTimezoneOffset } from 'date-fns-tz';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
@@ -13,11 +15,22 @@ import { editAppointmentsValidationSchema } from 'validation/appointments/edit_a
 import { IFormValues } from './form/types';
 import EditAppointmentsModalForm from './form';
 
+// TODO Will be changed After backend ticket was done about iso formatting
+const getCurrentTimezone = () => {
+  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  const offset = getTimezoneOffset(timezone) / 60 / 60 / 1000;
+
+  return `${offset >= 0 ? '+' : '-'}${offset.toString().length > 1 ? '' : '0'}${offset}:00`;
+};
+
 const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => ({
   appointment: {
     id: details?.appointment.id ?? '',
     description: details?.appointment.description ?? '',
-    date: details?.appointment.date ?? new Date(),
+    // TODO Will be changed After backend ticket was done about iso formatting
+    date: details?.appointment.date
+      ? details?.appointment.date.toString().replace('Z', getCurrentTimezone())
+      : new Date(),
     status: details?.appointment.status ?? '',
     cancellationReason: ''
   },
@@ -27,7 +40,8 @@ const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => 
   },
   serviceType: {
     id: details?.serviceType?.id ?? '',
-    title: details?.serviceType?.title ?? ''
+    title: details?.serviceType?.title ?? '',
+    ...(details?.serviceType?.isVirtual ? { isVirtual: details?.serviceType?.isVirtual } : {})
   }
 });
 
@@ -42,17 +56,13 @@ const EditAppointmentsModal = () => {
 
   const { appointmentId }: IEditAppointmentModalProps = useAppSelector(viewsSelector.modal).props;
 
-  const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-  }, []);
+  const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
 
-  const editAppointmentForm = useFormik({
-    initialValues: getFormState(),
-    validationSchema: editAppointmentsValidationSchema,
-    onSubmit: () => {
-      onClose();
-    }
+  const methods = useForm({
+    defaultValues: getFormState(),
+    resolver: yupResolver(editAppointmentsValidationSchema)
   });
+  const { setValue, getValues } = methods;
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());
@@ -66,19 +76,18 @@ const EditAppointmentsModal = () => {
 
   useEffect(() => {
     if (details) {
-      editAppointmentForm.setValues(details as any);
+      Object.entries(getFormState(details)).map(([k, v]) => setValue(k as keyof IFormValues, v));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [details]);
+  }, [details, setValue]);
 
-  return editAppointmentForm.values.appointment.id ? (
-    <FormikProvider value={editAppointmentForm}>
+  return getValues('appointment.id') ? (
+    <FormProvider {...methods}>
       <Dialog open onClose={onClose}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <EditAppointmentsModalForm />
         </LocalizationProvider>
       </Dialog>
-    </FormikProvider>
+    </FormProvider>
   ) : null;
 };
 

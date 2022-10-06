@@ -1,27 +1,31 @@
 import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { roundUpTo } from '@constants';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { FormikValues, useFormikContext } from 'formik';
 
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
+
+import { IFormValues } from '../types';
 
 type DateAndStartTimeType = Date | null;
 
 const DateAndStartTime: React.FC = () => {
-  const { values, setFieldValue }: FormikValues = useFormikContext();
+  const dateFieldName = 'appointment.date';
+
   const [t] = useTranslation();
+  const { control } = useFormContext<IFormValues>();
+  const { field } = useController<IFormValues>({
+    name: dateFieldName,
+    control
+  });
+  const { onChange, value, ...fieldProps } = field;
 
-  const initialDate: DateAndStartTimeType = values.appointment.date;
-
-  const mobileDateTimeChange = (date: DateAndStartTimeType) => {
-    const roundedTime = date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : undefined;
-
-    setFieldValue('appointment.date', roundedTime);
-  };
+  const getMobileDateTime = (date: DateAndStartTimeType) =>
+    date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : null;
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
 
@@ -31,8 +35,8 @@ const DateAndStartTime: React.FC = () => {
         label={dateAndStartTimeLabel}
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
-        value={initialDate}
-        onChange={(date: Date | null) => mobileDateTimeChange(date)}
+        value={value}
+        onChange={(date: Date | null) => onChange(getMobileDateTime(date))}
         renderInput={(params: TextFieldProps) => (
           <TextField
             {...params}
@@ -40,6 +44,7 @@ const DateAndStartTime: React.FC = () => {
             InputProps={{
               endAdornment: <PickerDateIcon />
             }}
+            {...fieldProps}
           />
         )}
       />
