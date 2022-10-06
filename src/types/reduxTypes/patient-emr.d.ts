@@ -54,9 +54,14 @@ export interface AlertDetailsProps {
   messages: AlertDetailsMessagesProps[];
 }
 
+export interface IEncounterDetailsResponse {
+  encounter: IEncounterDetailsProps;
+}
+
 interface IEncountersProps {
   list: IEncounterList;
   types: IEncounterTypes[];
+  encounterDetails: IEncounterDetailsResponse | null;
 }
 
 export interface IEncounterTypes {
@@ -75,12 +80,6 @@ export interface IEncounterListItem {
   author: string;
 }
 
-export interface IAddendum {
-  id: string;
-  title: string;
-  date: string;
-  content: string;
-}
 interface IEncounterNoteProps {
   patientId: string;
   encountersTypeId: string;

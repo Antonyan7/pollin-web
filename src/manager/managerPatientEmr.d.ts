@@ -1,6 +1,6 @@
 import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/booking';
-import { AlertDetailsProps, IEncounterListItem, IPatientListData } from 'types/reduxTypes/patient-emr';
+import { AlertDetailsProps, IEncounterListItem, IEncounterTypes, IPatientListData } from 'types/reduxTypes/patient-emr';
 
 export interface IGetPatientsRequestBody {
   name: string;
@@ -68,6 +68,28 @@ interface IEncounterNoteRequest {
 interface IEncounterAddendumRequest {
   encounterId: string;
   content: string;
+}
+
+export interface IEncounterTypesResponse {
+  encountersTypes: IEncounterTypes;
+}
+
+export interface AddendumsProps {
+  id: string;
+  content: string;
+  author: string;
+  date: Date | string;
+  isEdited: boolean;
+}
+
+export interface IEncounterDetailsProps {
+  id: string;
+  title: string;
+  author: string;
+  createdOn: Date | string;
+  updatedOn: Date | string;
+  content: string;
+  addendums: AddendumsProps;
 }
 
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}

@@ -1,6 +1,7 @@
 import { IAction, SliceReducers } from 'redux/store';
 import {
   AlertDetailsProps,
+  IEncounterDetailsResponse,
   IEncounterList,
   IEncounterTypes,
   IFilterCategory,
@@ -38,6 +39,9 @@ const actions: SliceReducers<PatientEmrProps> = {
   },
   setEncountersType(state, action: IAction<IEncounterTypes[]>) {
     state.encounters.types = action.payload;
+  },
+  setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsResponse>) {
+    state.encounters.encounterDetails = action.payload;
   }
 };
 

@@ -12,7 +12,8 @@ export const getInitialState = (): PatientEmrProps => ({
   isPatientsFiltersLoading: false,
   encounters: {
     list: { encounters: [], pageSize: 0, currentPage: 0, totalItems: 0 },
-    types: [{ id: '', title: '' }]
+    types: [{ id: '', title: '' }],
+    encounterDetails: null
   },
   error: null
 });

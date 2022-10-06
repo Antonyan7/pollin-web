@@ -1,5 +1,5 @@
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IPatientsResponse } from 'types/reduxTypes/patient-emr';
+import { IEncounterDetailsResponse, IPatientsResponse } from 'types/reduxTypes/patient-emr';
 
 import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
 import { Axios } from './axiosInstance';
@@ -7,6 +7,7 @@ import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
+  IEncounterTypesResponse,
   IGetPatientsRequestBody,
   IPatientEncountersListResponse,
   IPatientsFiltersResponse,
@@ -42,7 +43,10 @@ const patientEmrManager = {
     );
   },
   getEncounterTypes() {
-    return axiosInstance.get(`${baseURL}/v1/encounters/type`);
+    return axiosInstance.get<any, IAxiosResponse<IEncounterTypesResponse>>(`${baseURL}/v1/encounters/type`);
+  },
+  getEncounterDetails(encounterId: string) {
+    return axiosInstance.get<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/${encounterId}`);
   },
   getPatientSearchFilters() {
     return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
