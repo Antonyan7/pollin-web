@@ -34,6 +34,9 @@ const actions: SliceReducers<PatientEmrProps> = {
   setEncountersLoadingState(state, action: IAction<boolean>) {
     state.isEncountersListLoading = action.payload;
   },
+  setEncountersAddendumLoadingState(state, action: IAction<boolean>) {
+    state.isEncountersAddendumLoading = action.payload;
+  },
   setEncountersList(state, action: IAction<IEncounterList>) {
     state.encounters.list = action.payload;
   },

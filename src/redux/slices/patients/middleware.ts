@@ -1,15 +1,15 @@
 import API from '@axios/API';
+import { ICreateEncounterAddendumRequest } from '@axios/managerPatientEmr';
 import * as Sentry from '@sentry/nextjs';
+import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
+import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
 import {
   ICreateEncounterNoteProps,
   IEncounterList,
   IPatientList,
   IUpdateEncounterNoteProps
 } from 'types/reduxTypes/patient-emr';
-
-import { IEncountersReqBody, IPatientsReqBody } from '../../../types/patient';
-import { sortOrderTransformer } from '../../data-transformers/sortOrderTransformer';
 
 import slice from './slice';
 
@@ -24,7 +24,8 @@ const {
   setEncountersLoadingState,
   setEncountersList,
   setEncountersType,
-  setEncounterDetailsInfo
+  setEncounterDetailsInfo,
+  setEncountersAddendumLoadingState
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -161,6 +162,18 @@ const getEncounterDetailsInformation = (encounterId: string) => async (dispatch:
   }
 };
 
+const createEncounterAddendum = (addendumData: ICreateEncounterAddendumRequest) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setEncountersAddendumLoadingState(true));
+    await API.patients.createEncounterAddendum(addendumData);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setEncountersAddendumLoadingState(false));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -171,5 +184,6 @@ export default {
   updateEncounterNote,
   getEncounterList,
   getEncountersTypes,
-  getEncounterDetailsInformation
+  getEncounterDetailsInformation,
+  createEncounterAddendum
 };

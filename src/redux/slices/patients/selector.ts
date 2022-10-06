@@ -15,6 +15,7 @@ const encountersTypes = createSelector([selector], (state) => state.encounters.t
 const isEncountersListLoading = createSelector([selector], (state) => state.isEncountersListLoading);
 const currentPatientId = createSelector([selector], (state) => state.patientsList.currentPatientId);
 const encounterDetails = createSelector([selector], (state) => state.encounters.encounterDetails);
+const isEncountersAddendumLoading = createSelector([selector], (state) => state.isEncountersAddendumLoading);
 
 export default {
   patientsListData,
@@ -28,5 +29,6 @@ export default {
   isEncountersListLoading,
   encountersTypes,
   currentPatientId,
-  encounterDetails
+  encounterDetails,
+  isEncountersAddendumLoading
 };

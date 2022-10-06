@@ -7,6 +7,7 @@ export interface PatientEmrProps {
   isPatientsListLoading: boolean;
   isEncountersListLoading: boolean;
   isPatientsFiltersLoading: boolean;
+  isEncountersAddendumLoading: boolean;
   error: Error | null;
 }
 
