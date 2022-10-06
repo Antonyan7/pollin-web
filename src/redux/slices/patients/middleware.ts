@@ -101,16 +101,21 @@ export const createEncounterNote = (data: ICreateEncounterNoteProps) => async (d
   }
 };
 
-export const updateEncounterNote = (data: IUpdateEncounterNoteProps) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setPatientsLoadingState(true));
-    await API.patients.updateEncounterNote(data);
-  } catch (error) {
-    dispatch(setError(error));
-  } finally {
-    dispatch(setPatientsLoadingState(false));
-  }
-};
+export const updateEncounterNote =
+  (newEncounterNoteData: IUpdateEncounterNoteProps) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setPatientsLoadingState(true));
+
+      const response = await API.patients.updateEncounterNote(newEncounterNoteData);
+
+      dispatch(setEncounterDetailsInfo(response.data.data.encounter));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setPatientsLoadingState(false));
+    }
+  };
 
 const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispatch: AppDispatch) => {
   try {

@@ -93,7 +93,10 @@ export interface IEncounterDetailsProps {
 }
 
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
-export interface IUpdateEncounterNoteRequest extends IEncounterNoteRequest {}
+export interface IUpdateEncounterNoteRequest {
+  id: string;
+  content: string;
+}
 
 export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
 export interface IUpdateEncounterAddendumRequest extends IEncounterAddendumRequest {}

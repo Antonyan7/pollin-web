@@ -55,7 +55,7 @@ const patientEmrManager = {
     return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);
   },
   updateEncounterNote(data: IUpdateEncounterNoteRequest) {
-    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);
+    return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters`, data);
   },
   createEncounterAddendum(data: ICreateEncounterAddendumRequest) {
     return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);

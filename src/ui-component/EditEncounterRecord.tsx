@@ -14,6 +14,7 @@ const EditEncounterRecord = () => {
 
   return (
     <SubCardStyled
+      content
       title={
         <Grid container spacing={3} alignItems="center" justifyContent="space-between">
           <Grid container item xs={6}>

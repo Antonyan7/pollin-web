@@ -1,5 +1,5 @@
 import { IPagination } from '@axios/axios';
-import { IGetPatientsResponse } from '@axios/managerPatientEmr';
+import { IGetPatientsResponse, IUpdateEncounterNoteRequest } from '@axios/managerPatientEmr';
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
@@ -89,4 +89,4 @@ interface IEncounterNoteProps {
 interface IEncountersProps {}
 
 export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}
-export interface IUpdateEncounterNoteProps extends IEncounterNoteProps {}
+export interface IUpdateEncounterNoteProps extends IUpdateEncounterNoteRequest {}
