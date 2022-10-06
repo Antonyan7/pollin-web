@@ -15,7 +15,7 @@ const ViewSchedule = () => {
         navigation={{
           basePath: '/',
           items: [
-            { name: t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE), path: '/scheduling/schedule-template' },
+            { name: t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE), path: '/scheduling/schedule-templates' },
             { name: t(Translation.PAGE_SCHEDULING_VIEW_TITLE), path: '/scheduling/view-schedule' }
           ]
         }}

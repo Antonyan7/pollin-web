@@ -66,13 +66,13 @@ const NavItem = ({ item, level }: NavItemProps) => {
   };
 
   useEffect(() => {
-    const currentIndex = document.location.pathname
-      .toString()
-      .split('/')
-      .findIndex((id) => id === item.id);
+    const currentPaths = document.location.pathname.toString().split('/');
+    const currentIndex = currentPaths.findIndex((id) => id.replace('-', '').toLowerCase() === item.id?.toLowerCase());
 
     if (currentIndex > -1) {
       dispatch(viewsMiddleware.activateMenuItem([item.id!]));
+    } else if (currentPaths.includes('patient-emr')) {
+      dispatch(viewsMiddleware.activateMenuItem(['Patient List/EMR']));
     }
   }, [item.id]);
 

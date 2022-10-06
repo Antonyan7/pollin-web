@@ -14,7 +14,7 @@ const ScheduleTemplates = () => {
         currentPage={t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE)}
         navigation={{
           basePath: '/',
-          items: [{ name: t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE), path: '/scheduling/schedule-template' }]
+          items: [{ name: t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE), path: '/scheduling/schedule-templates' }]
         }}
       />
       <ScheduleTemplatesComponent />

@@ -39,7 +39,7 @@ const CreateTemplate = () => {
   const onCancelClick = () => {
     dispatch(
       viewsMiddleware.setRedirectionState({
-        path: '/scheduling/schedule-template',
+        path: '/scheduling/schedule-templates',
         params: '',
         apply: true
       })

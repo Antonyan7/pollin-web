@@ -26,7 +26,7 @@ const NavScheduling: NavSchedulingProps = {
       id: 'scheduleTemplates',
       title: 'Schedule Templates',
       type: 'item',
-      url: '/scheduling/schedule-template',
+      url: '/scheduling/schedule-templates',
       icon: IconCirclePlus,
       breadcrumbs: false
     },

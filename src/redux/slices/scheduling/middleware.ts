@@ -179,7 +179,7 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
     if (response.data.status.code === 'succeed') {
       dispatch(
         viewsMiddleware.setRedirectionState({
-          path: '/scheduling/schedule-template',
+          path: '/scheduling/schedule-templates',
           params: '',
           apply: true
         })
