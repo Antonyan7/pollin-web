@@ -1,9 +1,7 @@
 import * as Sentry from '@sentry/nextjs';
 
-const { SENTRY_DSN } = process.env;
-
 Sentry.init({
-  dsn: SENTRY_DSN,
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN ?? 'URL',
   tracesSampleRate: 1.0,
-  environment: process.env.SENTRY_ENVIRONMENT
+  environment: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT
 });

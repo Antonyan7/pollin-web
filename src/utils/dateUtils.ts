@@ -3,7 +3,7 @@ import { format, utcToZonedTime } from 'date-fns-tz';
 
 import { ESTTimezone, longWeekDays } from '../helpers/constants';
 
-export const neutralDateTime = 'T14:00:00';
+export const neutralDateTime = 'T14:00:00-04:00';
 
 export const toIsoString = (value: Date) => {
   if (isValid(value)) {
