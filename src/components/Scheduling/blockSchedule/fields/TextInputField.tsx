@@ -12,14 +12,14 @@ const TextInputField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
     name: fieldName,
     control
   });
-  const { touchedFields, errors } = formState;
+  const { errors } = formState;
 
   return (
     <TextField
       id={fieldName}
       fullWidth
-      helperText={(touchedFields[fieldName] ? errors[fieldName]?.message : '') ?? ''}
-      error={Boolean(errors[fieldName]?.message) && touchedFields[fieldName]}
+      helperText={errors[fieldName]?.message ?? ''}
+      error={Boolean(errors[fieldName]?.message)}
       label={fieldLabel}
       {...field}
     />

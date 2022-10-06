@@ -8,7 +8,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 
 const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const { control, formState } = useFormContext<IBlockScheduleForm>();
-  const { touchedFields, errors } = formState;
+  const { errors } = formState;
 
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
@@ -27,8 +27,8 @@ const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           fullWidth
           {...params}
           id={fieldName}
-          helperText={(touchedFields[fieldName] ? errors[fieldName]?.message : '') ?? ''}
-          error={Boolean(errors[fieldName]?.message) && touchedFields[fieldName]}
+          helperText={errors[fieldName]?.message ?? ''}
+          error={Boolean(errors[fieldName]?.message)}
           {...fieldProps}
         />
       )}

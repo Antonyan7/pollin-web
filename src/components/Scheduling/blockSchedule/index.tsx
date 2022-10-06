@@ -61,6 +61,25 @@ const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowPro
 const BlockTemplates = () => {
   const [t] = useTranslation();
   const scheduleBlockStatus = useAppSelector(schedulingSelector.scheduleBlockStatus);
+  const methods = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    defaultValues: initialValues,
+    resolver: yupResolver(blockScheduleValidationSchema)
+  });
+
+  const { reset, handleSubmit } = methods;
+
+  const onSubmit = (values: IBlockScheduleForm) => {
+    const sendingBlockValues = {
+      resourceId: values.resourceId,
+      startDate: linkDateAndTime(values.startDate, values.startTime),
+      endDate: linkDateAndTime(values.endDate, values.endTime),
+      placeholderLabel: values.placeholderLabel
+    };
+
+    dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
+  };
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceProviders(1));
@@ -77,6 +96,8 @@ const BlockTemplates = () => {
           }
         })
       );
+      reset();
+
       dispatch(schedulingMiddleware.resetBlockStatusState());
     } else if (scheduleBlockStatus.fail) {
       dispatch(
@@ -92,30 +113,6 @@ const BlockTemplates = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleBlockStatus.success, scheduleBlockStatus.fail]);
-
-  const methods = useForm({
-    defaultValues: initialValues,
-    resolver: yupResolver(blockScheduleValidationSchema)
-  });
-
-  const { reset, handleSubmit, formState } = methods;
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
-    }
-  }, [formState, reset]);
-
-  const onSubmit = (values: IBlockScheduleForm) => {
-    const sendingBlockValues = {
-      resourceId: values.resourceId,
-      startDate: linkDateAndTime(values.startDate, values.startTime),
-      endDate: linkDateAndTime(values.endDate, values.endTime),
-      placeholderLabel: values.placeholderLabel
-    };
-
-    dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
-  };
 
   return (
     <FormProvider {...methods}>
