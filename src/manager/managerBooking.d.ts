@@ -64,7 +64,9 @@ export interface IAppointmentDetailsResponse {
   appointment: AppointmentDetailsProps;
 }
 
-export interface ICancelAppointmentReqBody extends ICancelAppointmentReason {}
+export interface ICancelAppointmentReqBody {
+  appointment: ICancelAppointmentReason;
+}
 
 export interface ICancelAppointmentReason {
   cancellationReason: string;

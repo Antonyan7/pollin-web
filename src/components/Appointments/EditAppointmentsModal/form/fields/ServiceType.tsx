@@ -38,6 +38,9 @@ const ServiceType = () => {
   return (
     <Grid item xs={12}>
       <Autocomplete
+        ListboxProps={{
+          style: { maxHeight: 160 }
+        }}
         id="serviceType"
         onChange={(_, value) => {
           onChange(value?.item.id);

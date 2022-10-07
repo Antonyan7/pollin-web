@@ -87,12 +87,13 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   useEffect(() => {
     if (patientAlerts?.alerts && patientAlerts.alerts.length > 0) {
       const findDuplicate = patientAlerts.alerts.filter((alertDetails: AlertDetailsProps) =>
-        Boolean(alertDetails.messages.find((message) => message.title === OpenModalReason.DuplicateName))
+        Boolean(alertDetails.title === OpenModalReason.DuplicateName)
       );
 
       if (findDuplicate.length) {
         setOpenDuplicateAlertPopUp(true);
         dispatch(bookingMiddleware.getPatientAlerts());
+        setDisableActionButton(true);
       } else {
         setOpenDuplicateAlertPopUp(false);
         setDisableActionButton(false);
@@ -105,7 +106,7 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
       <Grid item xs={12}>
         <Autocomplete
           ListboxProps={{
-            style: { maxHeight: 250 },
+            style: { maxHeight: 150 },
             onScroll: (event) => {
               onPatientListScroll(event as unknown as UIEvent);
             }

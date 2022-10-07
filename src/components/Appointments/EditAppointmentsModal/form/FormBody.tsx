@@ -8,7 +8,7 @@ import ServiceType from './fields/ServiceType';
 import StatusAppointmentLabel from './fields/StatusAppointmentLabel';
 
 const FormBody = () => (
-  <DialogContent sx={{ p: 3 }}>
+  <DialogContent sx={{ p: 4, marginTop: '15px' }}>
     <Grid container spacing={3}>
       <ServiceType />
       <PatientId />

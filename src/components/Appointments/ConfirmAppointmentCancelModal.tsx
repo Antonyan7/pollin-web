@@ -60,7 +60,7 @@ const ConfirmAppointmentsModal = () => {
     <Dialog open onClose={onClose}>
       <Grid sx={{ width: '500px' }}>
         <DialogTitle>
-          <Grid container justifyContent="space-between" alignItems="center">
+          <Grid sx={{ margin: '10px' }} container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Typography
                 sx={{
@@ -80,30 +80,33 @@ const ConfirmAppointmentsModal = () => {
         </DialogTitle>
         <Divider />
         <DialogContent sx={{ p: 3 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
+          <Grid sx={{ minHeight: '300px' }} container spacing={3}>
+            <Grid sx={{ p: 5, height: '100px' }} container spacing={2}>
+              <Grid item xs={12}>
+                <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
+              </Grid>
+              <Grid sx={{ marginTop: '20px' }} item xs={12}>
+                <FormControl fullWidth>
+                  <StyledInputLabel id="cancel-appointment-label">
+                    {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                  </StyledInputLabel>
+                  <Select
+                    IconComponent={KeyboardArrowDownIcon}
+                    id="cancel-appointment-label"
+                    labelId="cancel-appointment-label"
+                    label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                    onChange={onSelectButtonChange}
+                  >
+                    {cancellationReasons.map((reasonItem) => (
+                      <MenuItem value={reasonItem} key={reasonItem.toString()}>
+                        {reasonItem}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <FormControl fullWidth>
-                <StyledInputLabel id="cancel-appointment-label">
-                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                </StyledInputLabel>
-                <Select
-                  IconComponent={KeyboardArrowDownIcon}
-                  id="cancel-appointment-label"
-                  labelId="cancel-appointment-label"
-                  label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                  onChange={onSelectButtonChange}
-                >
-                  {cancellationReasons.map((reasonItem) => (
-                    <MenuItem value={reasonItem} key={reasonItem.toString()}>
-                      {reasonItem}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
+
             {openOtherReasonField && (
               <Grid item xs={12}>
                 <TextField
@@ -125,6 +128,8 @@ const ConfirmAppointmentsModal = () => {
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                 <Button
+                  color="secondary"
+                  variant="contained"
                   disabled={!cancellationReason}
                   onClick={onConfirm}
                   sx={{

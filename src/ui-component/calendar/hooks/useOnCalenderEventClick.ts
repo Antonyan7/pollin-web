@@ -18,21 +18,23 @@ const useOnCalendarEventClick = () => {
 
       const nonIntractableAppointments = [SlotTypes.block, SlotTypes.schedule];
 
-      if (nonIntractableAppointments.includes(targetAppointment?.type as SlotTypes)) {
+      if (nonIntractableAppointments.includes(targetAppointment?.type as SlotTypes) || !targetAppointment?.isEditable) {
         return;
       }
 
-      if (new Date(initialEventObject.event.startStr).getTime() < new Date().getTime()) {
-        dispatch(
-          viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
-        );
-      } else {
-        dispatch(
-          viewsMiddleware.setModalState({
-            name: ModalName.EditAppointmentModal,
-            props: { appointmentId: id }
-          })
-        );
+      if (id) {
+        if (new Date(initialEventObject.event.startStr).getTime() < new Date().getTime()) {
+          dispatch(
+            viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
+          );
+        } else {
+          dispatch(
+            viewsMiddleware.setModalState({
+              name: ModalName.EditAppointmentModal,
+              props: { appointmentId: id }
+            })
+          );
+        }
       }
     },
     [appointments]

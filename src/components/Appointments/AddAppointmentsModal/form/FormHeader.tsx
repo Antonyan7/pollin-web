@@ -19,7 +19,7 @@ const FormHeader = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: '20px', marginLeft: '15px' }}>
         <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
           {t(Translation.MODAL_APPOINTMENTS_ADD_TITLE)}
         </DialogTitle>
@@ -29,7 +29,7 @@ const FormHeader = () => {
           sx={{
             position: 'absolute',
             right: 20,
-            top: 10,
+            top: 20,
             color: (theme) => theme.palette.common.black
           }}
         >

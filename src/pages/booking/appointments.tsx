@@ -154,7 +154,7 @@ const Appointments = () => {
                   onOpen={onDateDatePickerOpen}
                   onClose={onDateDatePickerClose}
                   label={t(Translation.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER)}
-                  inputFormat="MM/dd/yyyy"
+                  inputFormat="MMM dd, yyyy"
                   value={new Date(`${calendarDate}${neutralDateTime}`)}
                   onChange={(date: Date | null) => onDateChange(date)}
                   components={{

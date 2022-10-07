@@ -13,21 +13,22 @@ import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 type DateAndStartTimeType = Date | null;
 
 const DateAndStartTime: React.FC = () => {
-  const { getValues, control } = useFormContext<ICreatedAppointmentBody>();
+  const { control, formState, getValues } = useFormContext<ICreatedAppointmentBody>();
+  const { errors } = formState;
   const [t] = useTranslation();
   const actualDate = getValues('date');
   const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
+
   const initialDate: DateAndStartTimeType = actualDate
     ? new Date(Math.ceil(new Date(actualDate).getTime() / roundUpTo) * roundUpTo)
     : null;
   const dateFieldName = 'date';
 
-  const {
-    field: { onChange, ...fieldProps }
-  } = useController({
-    control,
-    name: dateFieldName
+  const { field } = useController({
+    name: dateFieldName,
+    control
   });
+  const { onChange, onBlur, ...fieldProps } = field;
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) =>
     date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : null;
@@ -64,6 +65,8 @@ const DateAndStartTime: React.FC = () => {
                 cursor: 'pointer'
               }
             }}
+            helperText={errors?.date?.message}
+            error={!!errors?.date?.message}
             onClick={() => setMobileDateTimePickerOpen(true)}
             InputProps={{
               endAdornment: <CalendarIcon />

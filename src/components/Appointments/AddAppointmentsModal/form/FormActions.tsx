@@ -14,7 +14,7 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
   const addButtonLabel = t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_ADD);
 
   return (
-    <DialogActions sx={{ p: 3 }}>
+    <DialogActions sx={{ p: 4, paddingTop: '10px' }}>
       <Grid container justifyContent="flex-end" alignItems="center">
         <Grid item xs={12}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">

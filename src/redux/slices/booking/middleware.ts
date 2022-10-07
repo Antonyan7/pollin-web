@@ -223,7 +223,9 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     const calendarDate = store.getState().booking.date;
 
     await API.booking.cancelAppointment(appointmentId, {
-      cancellationReason
+      appointment: {
+        cancellationReason
+      }
     });
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {

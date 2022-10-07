@@ -25,7 +25,8 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   fontWeight: 400,
   fontSize: '16px',
   lineHeight: '20px',
-  color: theme.palette.common.black
+  color: theme.palette.common.black,
+  margin: '40px 10px'
 }));
 
 const DuplicatePatientPopup = ({ open, setOnClose }: DuplicatePatientPopUpProps) => {

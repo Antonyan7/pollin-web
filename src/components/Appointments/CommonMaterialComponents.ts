@@ -62,12 +62,14 @@ const StyledButtonNew = styled(Button)<ButtonProps>(() => ({
 }));
 
 const StyledButton = styled(Button)<ButtonProps>(() => ({
-  borderRadius: '7px'
+  borderRadius: '7px',
+  height: '45px'
 }));
 
 const StyledAddButton = styled(Button)<ButtonProps>(() => ({
-  borderRadius: '7px',
-  width: '130px'
+  borderRadius: '5px',
+  width: '125px',
+  height: '45px'
 }));
 
 const StyledBox = styled(Box)<BoxProps>(() => ({

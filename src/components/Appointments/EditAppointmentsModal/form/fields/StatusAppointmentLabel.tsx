@@ -45,6 +45,7 @@ const StatusAppointmentLabel = () => {
       {getValues('serviceType.isVirtual') && (
         <Grid item xs={getValues('serviceType.isVirtual') ? 6 : 12}>
           <StyledButton
+            color="secondary"
             variant="contained"
             sx={{
               width: '100%',
