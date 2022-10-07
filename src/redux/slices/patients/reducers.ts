@@ -9,7 +9,7 @@ import {
   PatientEmrProps
 } from 'types/reduxTypes/patient-emr';
 
-const actions: SliceReducers<PatientEmrProps> = {
+const reducers: SliceReducers<PatientEmrProps> = {
   setError(state, action) {
     state.error = action.payload;
   },
@@ -48,4 +48,4 @@ const actions: SliceReducers<PatientEmrProps> = {
   }
 };
 
-export default actions;
+export default reducers;

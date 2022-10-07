@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
+import reducers from 'redux/slices/booking/reducers';
 
-import actions from './actions';
 import { getInitialState } from './initialState';
 
 const slice = createSlice({
   name: 'booking',
   initialState: getInitialState(),
-  reducers: actions
+  reducers
 });
 
 export default slice;

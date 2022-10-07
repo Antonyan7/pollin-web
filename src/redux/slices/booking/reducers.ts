@@ -8,7 +8,7 @@ import {
 } from 'types/reduxTypes/booking';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
-const actions: SliceReducers<BookingProps> = {
+const reducers: SliceReducers<BookingProps> = {
   setAppointments(state, action: IAction<IAppointment[]>) {
     state.appointments = action.payload;
   },
@@ -53,4 +53,4 @@ const actions: SliceReducers<BookingProps> = {
   }
 };
 
-export default actions;
+export default reducers;

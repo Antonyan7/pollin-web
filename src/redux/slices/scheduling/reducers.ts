@@ -9,7 +9,7 @@ import {
   SingleSchedulingProps
 } from 'types/reduxTypes/scheduling';
 
-const actions: SliceReducers<SchedulingProps> = {
+const reducers: SliceReducers<SchedulingProps> = {
   setError(state, action) {
     state.error = action.payload;
   },
@@ -47,4 +47,4 @@ const actions: SliceReducers<SchedulingProps> = {
   }
 };
 
-export default actions;
+export default reducers;
