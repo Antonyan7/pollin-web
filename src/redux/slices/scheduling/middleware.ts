@@ -14,6 +14,7 @@ const {
   setScheduleTemplates,
   setError,
   setScheduleBlock,
+  setScheduleOverrides,
   setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
@@ -105,6 +106,10 @@ export const resetBlockStatusState = () => async (dispatch: AppDispatch) => {
   );
 };
 
+const resetOverrides = () => async (dispatch: AppDispatch) => {
+  dispatch(setScheduleOverrides([]));
+};
+
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.scheduling.applyScheduleBlock({
@@ -185,6 +190,7 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
         })
       );
     } else {
+      dispatch(setScheduleOverrides(response.data.data.data));
       dispatch(
         viewsMiddleware.setModalState({
           name: ModalName.CreateTemplateModal,
@@ -207,6 +213,7 @@ export default {
   getSingleSchedule,
   updateSingleSchedule,
   resetApplyStatusState,
+  resetOverrides,
   resetBlockStatusState,
   deleteTemplate
 };

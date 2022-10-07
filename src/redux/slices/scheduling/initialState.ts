@@ -7,6 +7,7 @@ export const getInitialState = () => ({
   scheduleBlock: [],
   scheduleCalendarLoading: false,
   scheduleResources: [],
+  overrides: [],
   serviceTypes: [],
   applyScheduleStateStatus: {
     success: false,

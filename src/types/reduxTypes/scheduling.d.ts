@@ -47,6 +47,7 @@ export interface SchedulingProps {
   schedulingListLoadingStatus: boolean;
   scheduleTemplates: IScheduleTemplatesList;
   error: Error | null;
+  overrides: number[];
   scheduleBlock: BlockSchedulingProps[];
   scheduleCalendarLoading: boolean;
   scheduleResources: IServiceProvider[];

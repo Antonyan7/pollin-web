@@ -44,6 +44,9 @@ const reducers: SliceReducers<SchedulingProps> = {
   },
   setBlockScheduleState(state, action: IAction<SchedulingStateStatusProps>) {
     state.blockScheduleStateStatus = action.payload;
+  },
+  setScheduleOverrides(state, action: IAction<number[]>) {
+    state.overrides = action.payload;
   }
 };
 

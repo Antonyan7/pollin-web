@@ -19,8 +19,7 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
 
     '.sub-title': {
       width: '100%',
-      fontSize: '18px',
-      color: theme.palette.common.black
+      fontSize: '18px'
     },
 
     '.week-days': {
