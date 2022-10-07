@@ -66,6 +66,14 @@ export const changeDate = (oldDate: string, newDate: Date) => {
   return toESTIsoString(date);
 };
 
+export const changeDateSameTimezone = (oldDate: string, newDate: Date) => {
+  const year = newDate.getFullYear();
+  const month = newDate.toLocaleDateString('en-US', { month: '2-digit' });
+  const day = newDate.toLocaleDateString('en-US', { day: '2-digit' });
+
+  return `${year}-${month}-${day}${oldDate.slice(10)}`;
+};
+
 export const changeHours = (oldDate: string, newHour: number) => {
   const date = setHours(new Date(oldDate), newHour);
 

@@ -11,7 +11,7 @@ import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
-import { changeDate, changeHours, getWeekDay } from '@utils/dateUtils';
+import { changeDateSameTimezone, getWeekDay } from '@utils/dateUtils';
 import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/booking';
@@ -51,7 +51,7 @@ const Calendar = (props: { calendarDate: string }) => {
   const schedules = useMemo(() => {
     const calendarEvents: ICalendarSlot[] = [];
 
-    scheduleSingleTemplate.timePeriods.forEach((item: ISingleTemplate, index: number) => {
+    scheduleSingleTemplate.timePeriods.forEach((item: ISingleTemplate) => {
       const isDaysContainingWeekDay = item.days.includes(getWeekDay(date));
 
       if (isDaysContainingWeekDay) {
@@ -59,8 +59,8 @@ const Calendar = (props: { calendarDate: string }) => {
           CreateSlot(
             item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
             // TODO: remove changeHours function after actual server implementation
-            changeHours(changeDate(item.startTime as string, date), index ? 8 : 10),
-            changeHours(changeDate(item.endTime as string, date), index ? 8 : 10),
+            changeDateSameTimezone(item.startTime as string, date),
+            changeDateSameTimezone(item.endTime as string, date),
             item.placeholderName,
             item.periodType
           )
@@ -95,6 +95,7 @@ const Calendar = (props: { calendarDate: string }) => {
           height="auto"
           initialDate={calendarDate}
           initialView="timeGridDay"
+          timeZone="America/Toronto"
           displayEventTime={false}
           slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
           allDaySlot={false}
