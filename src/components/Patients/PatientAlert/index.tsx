@@ -24,7 +24,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
   return alertCount ? (
     <MuiTooltip
       onOpen={onOpen}
-      title={patientAlertDetails.map((titleContent: AlertDetailsProps) => (
+      title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
         <Grid item>
           <Typography variant="caption" color={theme.palette.background.paper}>
             {titleContent.title}

@@ -4,6 +4,8 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import MainCard from '@ui-component/cards/MainCard';
 import PatientDetailsTabView from '@ui-component/PatientDetailsTabView';
 
+import PatientAlertView from '../PatientAlertView';
+
 interface PatientDetailsProps {
   patientName?: string;
   id?: string;
@@ -11,6 +13,7 @@ interface PatientDetailsProps {
 
 const PatientDetails = ({ patientName, id }: PatientDetailsProps) => (
   <>
+    <PatientAlertView />
     <MainBreadcrumb
       currentPage="Patient Details"
       navigation={{
