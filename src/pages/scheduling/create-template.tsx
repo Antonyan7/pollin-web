@@ -15,10 +15,8 @@ const CreateSchedulingTemplate = () => {
         navigation={{
           basePath: '/',
           items: [
-            {
-              name: t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_TITLE),
-              path: '/scheduling/create-template'
-            }
+            { name: t(Translation.PAGE_SCHEDULING_TEMPLATES_TITLE), path: '/scheduling/schedule-templates' },
+            { name: t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_TITLE), path: '/scheduling/create-template' }
           ]
         }}
       />
