@@ -99,4 +99,7 @@ export interface IUpdateEncounterNoteRequest {
 }
 
 export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
-export interface IUpdateEncounterAddendumRequest extends IEncounterAddendumRequest {}
+export interface IUpdateEncounterAddendumRequest {
+  id: string;
+  content: string;
+}

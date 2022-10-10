@@ -1,5 +1,5 @@
 import API from '@axios/API';
-import { ICreateEncounterAddendumRequest } from '@axios/managerPatientEmr';
+import { ICreateEncounterAddendumRequest, IUpdateEncounterAddendumRequest } from '@axios/managerPatientEmr';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
@@ -174,6 +174,21 @@ const createEncounterAddendum = (addendumData: ICreateEncounterAddendumRequest) 
   }
 };
 
+const updateEncounterAddendum = (newAddendumData: IUpdateEncounterAddendumRequest) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setEncountersAddendumLoadingState(true));
+
+    const response = await API.patients.updateEncounterAddendum(newAddendumData);
+
+    dispatch(setEncounterDetailsInfo(response.data.data.encounter));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setEncountersAddendumLoadingState(false));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -185,5 +200,6 @@ export default {
   getEncounterList,
   getEncountersTypes,
   getEncounterDetailsInformation,
-  createEncounterAddendum
+  createEncounterAddendum,
+  updateEncounterAddendum
 };

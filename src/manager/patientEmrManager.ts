@@ -61,7 +61,7 @@ const patientEmrManager = {
     return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);
   },
   updateEncounterAddendum(data: IUpdateEncounterAddendumRequest) {
-    return axiosInstance.put<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);
+    return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/addendum`, data);
   }
 };
 

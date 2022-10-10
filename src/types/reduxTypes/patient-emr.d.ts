@@ -1,5 +1,5 @@
 import { IPagination } from '@axios/axios';
-import { IGetPatientsResponse, IUpdateEncounterNoteRequest } from '@axios/managerPatientEmr';
+import { IEncounterDetailsProps, IGetPatientsResponse, IUpdateEncounterNoteRequest } from '@axios/managerPatientEmr';
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
@@ -62,7 +62,7 @@ export interface IEncounterDetailsResponse {
 interface IEncountersProps {
   list: IEncounterList;
   types: IEncounterTypes[];
-  encounterDetails: IEncounterDetailsResponse | null;
+  encounterDetails: IEncounterDetailsProps | null;
 }
 
 export interface IEncounterTypes {

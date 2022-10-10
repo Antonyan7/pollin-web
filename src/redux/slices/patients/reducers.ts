@@ -1,7 +1,7 @@
+import { IEncounterDetailsProps } from '@axios/managerPatientEmr';
 import { IAction, SliceReducers } from 'redux/store';
 import {
   AlertDetailsProps,
-  IEncounterDetailsResponse,
   IEncounterList,
   IEncounterTypes,
   IFilterCategory,
@@ -43,7 +43,7 @@ const reducers: SliceReducers<PatientEmrProps> = {
   setEncountersType(state, action: IAction<IEncounterTypes[]>) {
     state.encounters.types = action.payload;
   },
-  setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsResponse>) {
+  setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps>) {
     state.encounters.encounterDetails = action.payload;
   }
 };
