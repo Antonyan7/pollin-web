@@ -1,9 +1,10 @@
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
+import React, { SetStateAction, useEffect, useMemo, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextFieldProps } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
@@ -28,6 +29,7 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
   const { patients } = patientsList;
   const [t] = useTranslation();
+  const patientOptions = useMemo(() => createOptionsGroup(patients.patients), [patients.patients]);
 
   const patientIdFieldName = 'patientId';
   const patientIdHelperText = errors[patientIdFieldName]?.message;
@@ -112,9 +114,11 @@ const PatientId = ({ setDisableActionButton }: PatientIdFieldProps) => {
             }
           }}
           id={patientIdFieldName}
-          options={patients.patients}
-          getOptionLabel={(option) => option.title}
-          onChange={(_, value) => onChange(value?.id)}
+          options={patientOptions}
+          isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+          getOptionLabel={(option) => option.item.title}
+          onChange={(_, value) => onChange(value?.item.id)}
+          groupBy={(option) => option.firstLetter}
           onBlur={onBlur}
           onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) =>
             onChange(validateInputChange(event, value, reason))

@@ -150,6 +150,7 @@ const Appointments = () => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
+                  disableMaskedInput
                   open={datePickerOpen}
                   onOpen={onDateDatePickerOpen}
                   onClose={onDateDatePickerClose}
