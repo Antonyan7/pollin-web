@@ -15,9 +15,8 @@ interface ITimeFieldProps {
 
 const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const { control } = useFormContext<ITemplateGroup>();
-  const {
-    field: { onChange, value, ...fieldProps }
-  } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
+  const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
+  const { onChange, value, ...fieldProps } = field;
 
   const onTimeFieldChange = (newTime: Date | null) => {
     if (newTime && !Number.isNaN(newTime.getTime())) {

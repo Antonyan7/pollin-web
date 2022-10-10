@@ -9,9 +9,8 @@ const ServiceField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const { control } = useFormContext<ITemplateGroup>();
-  const {
-    field: { onChange, ...fieldProps }
-  } = useController({ name: `timePeriods.${index}.periodType`, control });
+  const { field } = useController({ name: `timePeriods.${index}.periodType`, control });
+  const { onChange, ...fieldProps } = field;
 
   const onServiceFieldChange: RadioGroupProps['onChange'] = (e) => onChange(e.target.value);
 

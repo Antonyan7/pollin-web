@@ -11,9 +11,9 @@ interface IWeekdaysFieldProps {
 
 const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
   const { control } = useFormContext<ITemplateGroup>();
-  const {
-    field: { onChange, value }
-  } = useController({ name: `timePeriods.${index}.days`, control });
+  const { field } = useController({ name: `timePeriods.${index}.days`, control });
+  const { onChange, value } = field;
+
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
     (e) =>

@@ -11,12 +11,16 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
   const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
   const { control } = useFormContext<ITemplateGroup>();
-  const {
-    field: { onChange, value: fieldValue, ...fieldProps }
-  } = useController({ name: `timePeriods.${index}.serviceTypes`, control });
+  const { field } = useController({ name: `timePeriods.${index}.serviceTypes`, control });
+  const { onChange, value: selectedServiceTypeIds, ...fieldProps } = field;
 
   const onServiceTypesFieldChange = (_e: React.SyntheticEvent, newValues: OptionsReturnProps<IServiceType>[]) =>
     onChange(newValues.map((newValue) => newValue.item.id));
+
+  const selectedTypeOptions = useMemo(
+    () => serviceTypeOptions.filter(({ item }) => (selectedServiceTypeIds ?? []).includes(item.id)),
+    [selectedServiceTypeIds, serviceTypeOptions]
+  );
 
   return (
     <Autocomplete
@@ -26,6 +30,7 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
       groupBy={(option) => option.firstLetter}
       getOptionLabel={(option) => option.item.title}
       isOptionEqualToValue={(option, value) => option.item.title === value.item.title}
+      value={selectedTypeOptions}
       onChange={onServiceTypesFieldChange}
       renderInput={(params) => <TextField {...params} label="Service Types" {...fieldProps} />}
     />

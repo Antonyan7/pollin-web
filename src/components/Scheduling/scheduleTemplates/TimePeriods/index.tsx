@@ -15,7 +15,7 @@ import WeekDaysField from './fields/WeekDaysField';
 import TimePeriodsRow from './TimePeriodsRow';
 import TimePeriodsTitle from './TimePeriodsTitle';
 
-// This component exists just because to avoid re-rendering of the whole form on the timePeriods field change
+// This component exists just because to avoid re-rendering of the whole form on the ServiceTypesField field change
 const ServiceTypesRow: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
 

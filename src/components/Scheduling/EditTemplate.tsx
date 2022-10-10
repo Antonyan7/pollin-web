@@ -77,7 +77,7 @@ const EditTemplate = () => {
     defaultValues: getEmptyTemplateState()
   });
 
-  const { reset, handleSubmit, register } = methods;
+  const { reset, formState, setValue, handleSubmit, register } = methods;
 
   const { append } = useFieldArray({
     control: methods.control,
@@ -89,8 +89,15 @@ const EditTemplate = () => {
   };
 
   useEffect(() => {
-    reset(scheduleTemplate);
-  }, [reset, scheduleTemplate]);
+    Object.entries(scheduleTemplate).map(([key, value]) => setValue(key as keyof ITemplateGroup, value));
+  }, [scheduleTemplate, setValue]);
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+      router.back();
+    }
+  }, [router, reset, formState]);
 
   return (
     <ScheduleBoxWrapper>
