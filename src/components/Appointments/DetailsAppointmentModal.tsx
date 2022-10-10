@@ -80,22 +80,10 @@ const DetailsAppointmentModal = () => {
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DESCRIPTION)}
               body={details?.appointment.description}
             />
-            <Grid item xs={6}>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE)}</Typography>
-                <Typography variant="body2">
-                  {details && timeAdjuster(details?.appointment.date as Date)?.customizedDate}
-                </Typography>
-              </Stack>
-            </Grid>
-            <Grid item xs={6}>
-              <Stack direction="row" spacing={1} alignItems="center">
-                <Typography variant="subtitle1">{t(Translation.MODAL_APPOINTMENTS_DETAILS_START_TIME)}</Typography>
-                <Typography variant="body2">
-                  {details && timeAdjuster(details?.appointment.date as Date)?.customizedTime}
-                </Typography>
-              </Stack>
-            </Grid>
+            <DialogContentRow
+              subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE_START_TIME)}
+              body={(details && timeAdjuster(details?.appointment.date as Date)?.customizedFullDate) as string}
+            />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}
               body={details?.appointment.status}

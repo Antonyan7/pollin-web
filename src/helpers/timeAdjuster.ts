@@ -5,9 +5,11 @@ export const timeAdjuster = (date: Date) => {
     date
   ).getFullYear()}`;
   const customizedTime = new Date(date).toLocaleTimeString();
+  const customizedFullDate = `${customizedDate} ${customizedTime} [EST]`;
 
   return {
     customizedDate,
-    customizedTime
+    customizedTime,
+    customizedFullDate
   };
 };
