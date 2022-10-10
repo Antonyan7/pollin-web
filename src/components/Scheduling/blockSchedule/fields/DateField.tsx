@@ -1,6 +1,6 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { TextField } from '@mui/material';
+import { TextField, useTheme } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
@@ -9,6 +9,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const { control, formState } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
+  const theme = useTheme();
 
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
@@ -27,6 +28,9 @@ const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           fullWidth
           {...params}
           id={fieldName}
+          sx={{
+            svg: { color: theme.palette.secondary.main }
+          }}
           helperText={errors[fieldName]?.message ?? ''}
           error={Boolean(errors[fieldName]?.message)}
           {...fieldProps}

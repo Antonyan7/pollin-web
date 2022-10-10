@@ -1,6 +1,7 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { TextField } from '@mui/material';
+import WatchLaterIcon from '@mui/icons-material/WatchLater';
+import { TextField, useTheme } from '@mui/material';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 
@@ -10,6 +11,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const { control, formState } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
+  const theme = useTheme();
 
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
@@ -34,11 +36,17 @@ const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           }
         }
       }}
+      components={{
+        OpenPickerIcon: WatchLaterIcon
+      }}
       renderInput={(params) => (
         <TextField
           fullWidth
           {...params}
           id={fieldName}
+          sx={{
+            svg: { color: theme.palette.secondary.main }
+          }}
           helperText={errors[fieldName]?.message ?? ''}
           error={Boolean(errors[fieldName]?.message)}
           {...fieldProps}
