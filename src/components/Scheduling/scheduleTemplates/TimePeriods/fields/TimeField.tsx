@@ -5,7 +5,10 @@ import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
+import { isValid } from 'date-fns';
 import { ITemplateGroup } from 'types/create-schedule';
+
+import { convertToLocale, toESTIsoString } from '@utils/dateUtils';
 
 interface ITimeFieldProps {
   index: number;
@@ -19,10 +22,12 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const { onChange, value, ...fieldProps } = field;
 
   const onTimeFieldChange = (newTime: Date | null) => {
-    if (newTime && !Number.isNaN(newTime.getTime())) {
-      onChange(newTime.toISOString());
+    if (newTime && isValid(newTime)) {
+      onChange(toESTIsoString(newTime));
     }
   };
+
+  const initialValue = convertToLocale(value);
 
   return (
     <div className="schedule-inputs">
@@ -46,7 +51,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
               '& .MuiPickersToolbar-penIconButton': { display: 'none' }
             }
           }}
-          value={value}
+          value={initialValue}
           onChange={onTimeFieldChange}
           renderInput={(params: MuiTextFieldPropsType) => <TextField {...params} fullWidth {...fieldProps} />}
         />

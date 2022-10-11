@@ -6,13 +6,14 @@ import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriod
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { Translation } from 'constants/translations';
+import { standardDate } from 'helpers/constants';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
-import { changeDate } from '@utils/dateUtils';
+import { changeDateSameTimezone } from '@utils/dateUtils';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
@@ -59,8 +60,8 @@ const CreateTemplate = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          reqBody.startTime = changeDate(new Date(rest.startTime).toISOString(), new Date(1970, 0, 1));
-          reqBody.endTime = changeDate(new Date(rest.endTime).toISOString(), new Date(1970, 0, 1));
+          reqBody.startTime = changeDateSameTimezone(rest.startTime, standardDate);
+          reqBody.endTime = changeDateSameTimezone(rest.endTime, standardDate);
         }
 
         return reqBody;

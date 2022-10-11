@@ -5,6 +5,7 @@ import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, CircularProgress, TablePagination, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { rowsPerPage } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
@@ -66,7 +67,7 @@ const ScheduleTemplates = () => {
         )}
         {/* table pagination */}
         <TablePagination
-          rowsPerPageOptions={[10]}
+          rowsPerPageOptions={[rowsPerPage]}
           component="div"
           count={scheduleTemplates.totalItems}
           rowsPerPage={tableRowCount}

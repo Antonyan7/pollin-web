@@ -21,4 +21,8 @@ export const repeatWeeksList = (weekCount: number): IApplyScheduleDay[] =>
 
 export const ESTTimezone = '-04:00';
 
+export const standardDate = new Date(1970, 0, 1, 15, 0, 0, 0);
+
 export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+export const rowsPerPage = 10;

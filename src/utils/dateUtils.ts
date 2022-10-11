@@ -96,3 +96,19 @@ export const linkDateAndTime = (date: Date | null, time: Date | null) => {
 
   return result;
 };
+
+export const convertToLocale = (value: string | null) => {
+  if (!value) {
+    return null;
+  }
+
+  const offset = new Date().getTimezoneOffset();
+  const absoluteOffset = Math.abs(offset);
+
+  const date = value.slice(0, 19);
+  const sign = offset < 0 ? '+' : '-';
+  const hours = `00${Math.floor(absoluteOffset / 60)}`.slice(-2);
+  const minutes = `00${absoluteOffset % 60}`.slice(-2);
+
+  return `${date}${sign}${hours}:${minutes}`;
+};

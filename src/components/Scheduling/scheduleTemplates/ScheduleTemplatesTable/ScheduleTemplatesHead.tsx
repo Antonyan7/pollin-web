@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel, useTheme } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
 import { Translation } from 'constants/translations';
+import { rowsPerPage } from 'helpers/constants';
 import { EnhancedTableHeadProps, HeadCell } from 'types';
 import { SortOrder } from 'types/patient';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
@@ -69,7 +70,7 @@ const ScheduleTemplatesHead = ({
           <Checkbox
             sx={{ color: theme.palette.primary.main }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
+            checked={rowCount > 0 && numSelected === rowsPerPage}
             onChange={onSelectAllClick}
             inputProps={{
               'aria-label': 'select all desserts'
