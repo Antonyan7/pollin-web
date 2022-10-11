@@ -27,17 +27,17 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
         <Grid item>
           <Typography variant="caption" color={theme.palette.background.paper}>
-            {titleContent.title}
+            {titleContent.title}:
           </Typography>
           {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-            <ListItem sx={{ paddingTop: 0 }}>&#9679;{message.title}</ListItem>
+            <ListItem sx={{ paddingTop: 0 }}>&#9679; {message.title}</ListItem>
           ))}
         </Grid>
       ))}
     >
       <Button sx={{ m: 1 }}>
         <Badge badgeContent={alertCount} color="error">
-          <InfoIcon fontSize="large" />
+          <InfoIcon fontSize="large" color="secondary" />
         </Badge>
       </Button>
     </MuiTooltip>
