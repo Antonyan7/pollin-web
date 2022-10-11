@@ -74,6 +74,7 @@ const EditEncounterRecord = () => {
 
   return (
     <SubCardStyled
+      content
       sx={{
         outline: '1px solid #D2DDD8',
         '& > MuiCardHeader-root': {
@@ -103,7 +104,7 @@ const EditEncounterRecord = () => {
                 fontSize="21px"
                 fontWeight="400"
               >
-                {t(Translation.PAGE_ENCOUNTERS_EDIT_ENCOUNTER_NOTE)}
+                {t(Translation.PAGE_ENCOUNTERS_EDIT_ENCOUNTER)}
               </Typography>
             </Grid>
           </Grid>

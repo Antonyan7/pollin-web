@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, SelectChangeEvent, Typography } from '@mui/material';
@@ -22,7 +22,6 @@ const AddEncounterNote = () => {
   const [editorValue, setEditorValue] = useState<string>('Encounter Note');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const [filterTypes, setFilterTypes] = useState<string>('');
-  const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const [t] = useTranslation();
   const router = useRouter();
@@ -49,10 +48,6 @@ const AddEncounterNote = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(patientsMiddleware.getEncounterFilters());
-  }, []);
-
   const handleSave = useCallback(() => {
     dispatch(
       patientsMiddleware.createEncounterNote({
@@ -77,6 +72,7 @@ const AddEncounterNote = () => {
     <>
       <EncountersCancelChangesModal />
       <SubCardStyled
+        content
         sx={{
           '& > MuiCardHeader-root': {
             padding: 0
@@ -109,7 +105,6 @@ const AddEncounterNote = () => {
         <Grid container mt={1}>
           <Grid container>
             <NoteEditor
-              encounterTypes={encounterTypes}
               handleEncounterTypeSelect={handleEncounterTypeSelect}
               editorValue={editorValue}
               setEditorValue={setEditorValue}

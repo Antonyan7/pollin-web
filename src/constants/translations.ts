@@ -70,7 +70,7 @@ export enum Translation {
   PAGE_ENCOUNTERS_CREATE_FIRST_ENCOUNTER = 'page.encounters.create.first.encounter',
   PAGE_ENCOUNTERS_CREATE_ENCOUNTER = 'page.encounters.create.encounter',
   PAGE_ENCOUNTERS_ENCOUNTER_TYPE = 'page.encounters.encounter.type',
-  PAGE_ENCOUNTERS_EDIT_ENCOUNTER_NOTE = 'page.encounters.edit.encounter.note',
+  PAGE_ENCOUNTERS_EDIT_ENCOUNTER = 'page.encounters.edit.encounter',
   PAGE_ENCOUNTERS_ADD_ADDENDUM = 'page.encounters.add.addendum',
   PAGE_ENCOUNTERS_ADDENDUM_NOTE = 'page.encounters.addendum.note',
   PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC = 'page.encounters.consultation.in.clinic',
