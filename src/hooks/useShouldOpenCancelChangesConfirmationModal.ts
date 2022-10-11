@@ -1,36 +1,56 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect } from 'react';
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
+import { ModalName } from 'constants/modals';
 import { useRouter } from 'next/router';
 
-const useShouldOpenCancelChangesConfirmationModal = (textFieldValue: string) => {
-  const [shouldOpenCancelChangesConfirmationModal, setShouldOpenCancelChangesConfirmationModal] = useState(false);
+const useShouldOpenCancelChangesConfirmationModal = (textFieldValue: string, previousTextFieldValue: string) => {
   const router = useRouter();
-  const isConfirmed = useRef(false);
+  const pathName = router.asPath.split('/')[4];
+  const openCancelChangesConfirmationModal = () => {
+    dispatch(
+      viewsMiddleware.setModalState({
+        name: ModalName.EncountersCancelChangesModal,
+        props: {
+          open: true
+        }
+      })
+    );
+  };
 
   useEffect(() => {
-    if (!isConfirmed.current && textFieldValue) {
-      router.beforePopState(({ as: currentPath }) => {
-        const isPathChanging = currentPath !== router.asPath;
+    router.beforePopState(({ as: currentPath }) => {
+      const areThereUnsavedChanges =
+        textFieldValue && previousTextFieldValue && textFieldValue !== previousTextFieldValue;
+      const isModalRouteMatch = router.asPath.includes('/edit-note') || router.asPath.includes('/add-note');
 
-        if (isPathChanging) {
-          setShouldOpenCancelChangesConfirmationModal(true);
+      if (areThereUnsavedChanges && isModalRouteMatch) {
+        openCancelChangesConfirmationModal();
+
+        const fullPath = currentPath.includes(pathName) ? currentPath : `${currentPath}/${pathName}`;
+
+        window.history.pushState('/', '');
+        router.push(fullPath);
+
+        return false;
+      }
+
+      return true;
+    });
+
+    return () => {
+      router.beforePopState(({ as: currentPath }) => {
+        if (currentPath.includes('encounter')) {
+          router.back();
+
+          return false;
         }
 
         return true;
       });
-      isConfirmed.current = true;
-    }
-
-    isConfirmed.current = false;
-
-    if (shouldOpenCancelChangesConfirmationModal) {
-      setShouldOpenCancelChangesConfirmationModal(false);
-    }
-
-    return router.beforePopState(() => true);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
-
-  return [shouldOpenCancelChangesConfirmationModal, setShouldOpenCancelChangesConfirmationModal];
+  }, [textFieldValue]);
 };
 
 export default useShouldOpenCancelChangesConfirmationModal;

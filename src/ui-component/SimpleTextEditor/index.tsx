@@ -43,25 +43,19 @@ const SimpleTextEditor = ({ editorValue, mode }: SimpleEditorProps) => {
 
   return (
     <StyledGrid item xs={12} theme={theme}>
-      <SubCardStyled content sx={{ backgroundColor: theme.palette.grey[300] }}>
-        {mode === SimpleEditorMode.Add ? (
-          <Grid item xs={6} mb={2}>
-            <FormControl fullWidth>
-              <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
-              <Select
-                labelId="encounter-label"
-                id="encounter-type"
-                label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-              >
-                {encounterTypes.map((encounterType) => (
-                  <MenuItem value={encounterType.id} key={encounterType.id}>
-                    {encounterType.title}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </Grid>
-        ) : null}
+      <SubCardStyled sx={{ backgroundColor: theme.palette.grey[300] }}>
+        <Grid item xs={6} mb={2}>
+          <FormControl fullWidth>
+            <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
+            <Select labelId="encounter-label" id="encounter-type" label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}>
+              {encounterTypes.map((encounterType) => (
+                <MenuItem value={encounterType.id} key={encounterType.toString()}>
+                  {encounterType.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Grid>
         <ReactQuill value={editorValue} theme="snow" style={{ backgroundColor: theme.palette.common.white }} />
         <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
           <StyledButton type="button" variant="contained">

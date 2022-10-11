@@ -9,13 +9,14 @@ import { useTheme } from '@mui/material/styles';
 
 import { Translation } from '../../constants/translations';
 import { MainHeader } from '../../pages/booking/appointments';
-import { dispatch } from '../../redux/hooks';
-import { patientsMiddleware } from '../../redux/slices/patients';
+import { dispatch, useAppSelector } from '../../redux/hooks';
+import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
 import { IEncountersReqBody } from '../../types/patient';
 
-const EncounterFilters = ({ page, currentEncounterId }: { page: number; currentEncounterId: string }) => {
+const EncounterFilters = ({ page }: { page: number; currentEncounterId?: string }) => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const patientId = useAppSelector(patientsSelector.currentPatientId);
   const [searchValue, setSearchValue] = useState<string>('');
   const encounterFilters: string[] = [
     'Encounter Filter 1',
@@ -28,6 +29,7 @@ const EncounterFilters = ({ page, currentEncounterId }: { page: number; currentE
     const data: IEncountersReqBody = {
       page: page + 1,
       searchString: searchValue,
+      patientId,
       filters: [
         {
           id: 'doctor1',
@@ -52,6 +54,7 @@ const EncounterFilters = ({ page, currentEncounterId }: { page: number; currentE
     const data: IEncountersReqBody = {
       page: page + 1,
       searchString: '',
+      patientId,
       filters: [
         {
           id: 'doctor1',
@@ -65,8 +68,10 @@ const EncounterFilters = ({ page, currentEncounterId }: { page: number; currentE
       data.searchString = ' ';
     }
 
-    dispatch(patientsMiddleware.getEncounterList(data));
-  }, [page, currentEncounterId]);
+    if (patientId) {
+      dispatch(patientsMiddleware.getEncounterList(data));
+    }
+  }, [page, patientId]);
 
   return (
     <MainHeader>

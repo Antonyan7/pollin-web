@@ -23,6 +23,7 @@ const {
   setPatientsFiltersLoadingState,
   setEncountersLoadingState,
   setEncountersList,
+  setEncounterFilters,
   setEncountersType,
   setEncounterDetailsInfo,
   setEncountersAddendumLoadingState
@@ -119,6 +120,21 @@ export const updateEncounterNote =
     }
   };
 
+export const getEncounterFilters = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPatientsLoadingState(true));
+
+    const response = await API.patients.getEncounterFilters();
+
+    dispatch(setEncounterFilters(response.data.data.filters));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setPatientsLoadingState(false));
+  }
+};
+
 const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setEncountersLoadingState(true));
@@ -193,11 +209,12 @@ export default {
   getPatientsList,
   getPatientSearchFilters,
   getPatientAlertDetails,
+  getEncounterList,
+  getEncounterFilters,
   setCurrentPatient,
   cleanPatientList,
   createEncounterNote,
   updateEncounterNote,
-  getEncounterList,
   getEncountersTypes,
   getEncounterDetailsInformation,
   createEncounterAddendum,

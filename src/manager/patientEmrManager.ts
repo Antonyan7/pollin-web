@@ -7,6 +7,8 @@ import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
+  IEncounterFilterResponse,
+  IEncounterResponse,
   IEncounterTypesResponse,
   IGetPatientsRequestBody,
   IPatientEncountersListResponse,
@@ -50,6 +52,12 @@ const patientEmrManager = {
   },
   getPatientSearchFilters() {
     return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
+  },
+  getEncounterFilters() {
+    return axiosInstance.get<any, IAxiosResponse<IEncounterFilterResponse>>(`${baseURL}/v1/encounters/filters`);
+  },
+  getEncounter(encounterId: string) {
+    return axiosInstance.get<any, IAxiosResponse<IEncounterResponse>>(`${baseURL}/v1/encounters/${encounterId}`);
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {
     return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);

@@ -13,6 +13,7 @@ const patientAlertDetails = createSelector([selector], (state) => state.patients
 const encountersList = createSelector([selector], (state) => state.encounters.list);
 const encountersTypes = createSelector([selector], (state) => state.encounters.types);
 const isEncountersListLoading = createSelector([selector], (state) => state.isEncountersListLoading);
+const encounterFilters = createSelector([selector], (state) => state.encounters.filters);
 const currentPatientId = createSelector([selector], (state) => state.patientsList.currentPatientId);
 const encounterDetails = createSelector([selector], (state) => state.encounters.encounterDetails);
 const isEncountersAddendumLoading = createSelector([selector], (state) => state.isEncountersAddendumLoading);
@@ -26,6 +27,7 @@ export default {
   filtersList,
   patientAlertDetails,
   encountersList,
+  encounterFilters,
   isEncountersListLoading,
   encountersTypes,
   currentPatientId,

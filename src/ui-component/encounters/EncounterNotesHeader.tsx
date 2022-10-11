@@ -15,9 +15,7 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
   const router = useRouter();
   const currentEncounterId = router.query.id as string;
 
-  const onCreateEncounterClick = () => {
-    router.push(`/patient-emr/create-encounter/${currentEncounterId}`);
-  };
+  const handleCreateEncounterNoteClick = () => router.push(`${router.asPath}/add-note`);
 
   return (
     <Box sx={{ marginBottom: '15px' }}>
@@ -38,10 +36,10 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
           {t(Translation.PAGE_ENCOUNTERS_LIST_TITLE)}
         </Typography>
         <Button
-          onClick={onCreateEncounterClick}
           sx={{ color: 'black', height: '45px', borderRadius: '7px', borderColor: theme.palette.grey[400] }}
           variant="outlined"
           endIcon={<Image src={plusIcon} />}
+          onClick={handleCreateEncounterNoteClick}
         >
           {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
         </Button>

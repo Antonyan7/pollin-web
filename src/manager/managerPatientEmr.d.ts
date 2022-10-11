@@ -87,7 +87,7 @@ export interface IEncounterDetailsProps {
   title: string;
   author: string;
   createdOn: Date | string;
-  updatedOn: Date | string;
+  updatedOn?: Date | string;
   content: string;
   addendums: AddendumsProps;
 }
@@ -99,6 +99,30 @@ export interface IUpdateEncounterNoteRequest {
 }
 
 export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
+
+export interface IEncounterFilterResponse {
+  filters: IEncounterFilterProps[];
+}
+
+interface IAddendum {
+  id: string;
+  content: string;
+  author: string;
+  date: string;
+  isEdited: boolean;
+}
+
+export interface IEncounterResponse {
+  encounter: {
+    id: string;
+    content: string;
+    updatedOn?: string;
+    createdOn: string;
+    title: string;
+    author: string;
+    addendums?: IAddendum[];
+  };
+}
 export interface IUpdateEncounterAddendumRequest {
   id: string;
   content: string;

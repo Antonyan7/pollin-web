@@ -14,7 +14,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
   const router = useRouter();
 
   const onEncounterClick = () => {
-    router.push(`/encounters/details/${id}`);
+    router.push(`/patient-emr/encounter/${id}`);
   };
 
   return (

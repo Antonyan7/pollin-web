@@ -2,6 +2,7 @@ import { IEncounterDetailsProps } from '@axios/managerPatientEmr';
 import { IAction, SliceReducers } from 'redux/store';
 import {
   AlertDetailsProps,
+  IEncounterFilterProps,
   IEncounterList,
   IEncounterTypes,
   IFilterCategory,
@@ -39,6 +40,9 @@ const reducers: SliceReducers<PatientEmrProps> = {
   },
   setEncountersList(state, action: IAction<IEncounterList>) {
     state.encounters.list = action.payload;
+  },
+  setEncounterFilters(state, action: IAction<IEncounterFilterProps>) {
+    state.encounters.filters = action.payload as unknown as IEncounterFilterProps[];
   },
   setEncountersType(state, action: IAction<IEncounterTypes[]>) {
     state.encounters.types = action.payload;

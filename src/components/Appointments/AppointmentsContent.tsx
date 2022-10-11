@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { Box, styled, Theme, useTheme } from '@mui/material';
+import { Box, styled, Theme } from '@mui/material';
 
 interface MainStyleProps {
   theme: Theme;
@@ -10,14 +10,10 @@ export const Main = styled('main')(({ theme }: MainStyleProps) => ({
   backgroundColor: theme.palette.common.white
 }));
 
-const AppointmentsContent = ({ children }: PropsWithChildren) => {
-  const theme = useTheme();
-
-  return (
-    <Box sx={{ marginTop: '-68px' }}>
-      <Main theme={theme}>{children}</Main>
-    </Box>
-  );
-};
+const AppointmentsContent = ({ children }: PropsWithChildren) => (
+  <Box sx={{ marginTop: '-68px' }}>
+    <Main>{children}</Main>
+  </Box>
+);
 
 export default AppointmentsContent;
