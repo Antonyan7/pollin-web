@@ -5,6 +5,8 @@ import { ESTTimezone, longWeekDays } from '../helpers/constants';
 
 export const neutralDateTime = 'T14:00:00-04:00';
 
+export const futureDate180DaysAfter = new Date(new Date().setDate(new Date().getDate() + 180));
+
 export const toIsoString = (value: Date) => {
   if (isValid(value)) {
     return format(utcToZonedTime(new Date(value), 'Europe/London'), "yyyy-MM-dd'T'HH:mm:ss'+00:00'", {

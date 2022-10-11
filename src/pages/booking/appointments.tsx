@@ -32,7 +32,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
-import { neutralDateTime } from '@utils/dateUtils';
+import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
 
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
@@ -56,7 +56,6 @@ const Appointments = () => {
   const [t] = useTranslation();
   const serviceProviderSelectRef = useRef(null);
   const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
-
   const isToday = useMemo(
     () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
     [calendarDate]
@@ -151,6 +150,7 @@ const Appointments = () => {
               <Stack spacing={3}>
                 <DesktopDatePicker
                   disableMaskedInput
+                  maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
                   open={datePickerOpen}
                   onOpen={onDateDatePickerOpen}
                   onClose={onDateDatePickerClose}
