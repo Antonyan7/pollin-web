@@ -6,6 +6,8 @@ export const longWeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Frid
 
 export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'NoShow', 'CheckedIn'];
 
+export const TIME_CONFIG = 'EST';
+
 export const cancellationReasons = [
   'Personal Emergency',
   'Work Conflict',

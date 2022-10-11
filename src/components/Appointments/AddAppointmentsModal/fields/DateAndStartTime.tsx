@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
-import { roundUpTo } from '@constants';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
+import { formatDate, toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 
@@ -18,10 +18,7 @@ const DateAndStartTime: React.FC = () => {
   const [t] = useTranslation();
   const actualDate = getValues('date');
   const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
-
-  const initialDate: DateAndStartTimeType = actualDate
-    ? new Date(Math.ceil(new Date(actualDate).getTime() / roundUpTo) * roundUpTo)
-    : null;
+  const initialDate: DateAndStartTimeType = toRoundupTime(actualDate);
   const dateFieldName = 'date';
 
   const { field } = useController({
@@ -30,8 +27,7 @@ const DateAndStartTime: React.FC = () => {
   });
   const { onChange, onBlur, ...fieldProps } = field;
 
-  const mobileDateTimeChange = (date: DateAndStartTimeType) =>
-    date ? new Date(Math.ceil(date.getTime() / roundUpTo) * roundUpTo) : null;
+  const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
 
   return (
     <Grid item xs={12}>
@@ -55,24 +51,36 @@ const DateAndStartTime: React.FC = () => {
             }
           }
         }}
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...fieldProps}
-            {...params}
-            fullWidth
-            sx={{
-              '& input, svg': {
-                cursor: 'pointer'
-              }
-            }}
-            helperText={errors?.date?.message}
-            error={!!errors?.date?.message}
-            onClick={() => setMobileDateTimePickerOpen(true)}
-            InputProps={{
-              endAdornment: <CalendarIcon />
-            }}
-          />
-        )}
+        renderInput={(params: TextFieldProps) => {
+          const formattedDate = formatDate(initialDate as Date);
+
+          const formattedParams = {
+            ...params,
+            inputProps: {
+              ...params.inputProps,
+              value: formattedDate
+            }
+          };
+
+          return (
+            <TextField
+              {...fieldProps}
+              {...formattedParams}
+              fullWidth
+              sx={{
+                '& input, svg': {
+                  cursor: 'pointer'
+                }
+              }}
+              onClick={() => setMobileDateTimePickerOpen(true)}
+              helperText={errors?.date?.message}
+              error={!!errors?.date?.message}
+              InputProps={{
+                endAdornment: <CalendarIcon />
+              }}
+            />
+          );
+        }}
       />
     </Grid>
   );

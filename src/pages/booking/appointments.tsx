@@ -163,7 +163,6 @@ const Appointments = () => {
                   }}
                   renderInput={(params) => (
                     <TextField
-                      disabled
                       sx={{ width: '290px' }}
                       {...params}
                       onClick={() => setDatePickerOpen(true)}

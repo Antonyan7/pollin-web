@@ -41,6 +41,11 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
           label={fieldLabel}
           minTime={MIN_SELECTABLE_DATE_TIME}
           maxTime={MAX_SELECTABLE_DATE_TIME}
+          DialogProps={{
+            sx: {
+              '& .MuiPickersToolbar-penIconButton': { display: 'none' }
+            }
+          }}
           value={value}
           onChange={onTimeFieldChange}
           renderInput={(params: MuiTextFieldPropsType) => <TextField {...params} fullWidth {...fieldProps} />}

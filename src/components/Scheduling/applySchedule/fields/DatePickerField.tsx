@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, TextFieldProps } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -12,6 +12,14 @@ interface Props {
 }
 
 const DatePickerField = ({ label, value, setDate }: Props) => {
+  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
+  const onDateDatePickerOpen = () => {
+    setDatePickerOpen(true);
+  };
+
+  const onDateDatePickerClose = () => {
+    setDatePickerOpen(false);
+  };
   const onDateUpdate = (date: Date | null) => {
     if (date && !Number.isNaN(date.getTime())) {
       setDate(format(date, 'yyyy-MM-dd'));
@@ -21,11 +29,23 @@ const DatePickerField = ({ label, value, setDate }: Props) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <DesktopDatePicker
+        open={datePickerOpen}
+        onOpen={onDateDatePickerOpen}
+        onClose={onDateDatePickerClose}
         disableMaskedInput
         label={label}
         inputFormat="MMM dd, yyyy"
         value={value}
-        renderInput={(params: TextFieldProps) => <TextField {...params} fullWidth />}
+        renderInput={(params: TextFieldProps) => (
+          <TextField
+            {...params}
+            fullWidth
+            onClick={() => setDatePickerOpen(true)}
+            onKeyDown={(event) => {
+              event.preventDefault();
+            }}
+          />
+        )}
         onChange={(date: Date | null) => onDateUpdate(date)}
       />
     </LocalizationProvider>
