@@ -192,8 +192,8 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
     } else {
       dispatch(setScheduleOverrides(response.data.data.data));
       dispatch(
-        viewsMiddleware.setModalState({
-          name: ModalName.CreateTemplateModal,
+        viewsMiddleware.openModal({
+          name: ModalName.ScheduleTemplatesErrorModal,
           props: { title: response.data.data.title, message: response.data.data.message }
         })
       );

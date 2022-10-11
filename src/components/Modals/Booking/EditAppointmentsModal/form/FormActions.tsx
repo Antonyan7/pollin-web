@@ -5,17 +5,16 @@ import { DialogActions, Grid } from '@mui/material';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware } from 'redux/slices/booking';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { viewsMiddleware } from 'redux/slices/views';
 
 const FormActions: React.FC = () => {
   const [t] = useTranslation();
-  const { appointmentId } = useAppSelector(viewsSelector.modal).props;
+  const details = useAppSelector(bookingSelector.appointmentDetails);
+  const appointmentId = details?.appointment.id ?? '';
 
   const onCancelAppointmentClick = useCallback(() => {
-    dispatch(
-      viewsMiddleware.setModalState({ name: ModalName.ConfirmAppointmentCancelModal, props: { appointmentId } })
-    );
+    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelAppointmentModal, props: { appointmentId } }));
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, [appointmentId]);
 

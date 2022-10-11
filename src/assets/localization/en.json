@@ -17,7 +17,7 @@
   "page.appointments.calendar.title.disabled": "Select a resource to view, book or modify \n appointments",
   "page.appointments.duplicate.patient.modal.title": "Duplicate Patient Warning",
   "page.appointments.duplicate.patient.modal.content": "Multiple patients share this name and date of birth. \n\n Please select patient from Patient List and book appointment from the Patient’s Chart.",
-  "page.appointments.duplicate.patient.modal.action": "View Patient List",
+  "page.appointments.duplicate.patient.modal.action": "View Patient Profile",
   "page.scheduling.templates.title": "Schedule Templates",
   "page.scheduling.templates.button.create": "New Template",
   "page.scheduling.templates.table.header.name": "Name",

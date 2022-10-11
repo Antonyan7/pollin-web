@@ -3,7 +3,7 @@ import { ModalName } from 'constants/modals';
 export interface ViewsProps {
   redirection: RedirectionProps;
   menu: MenuProps;
-  modal: IOpenedModal;
+  modals: IOpenedModal[];
   toastNotificationPopUp: IOpenedAlert;
 }
 

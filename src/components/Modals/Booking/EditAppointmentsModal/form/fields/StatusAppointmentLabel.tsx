@@ -18,7 +18,7 @@ const StatusAppointmentLabel = () => {
   const { field } = useController<IFormValues>({ name: appointmentStatusFieldName, control });
   const { value, ...fieldProps } = field;
   const [t] = useTranslation();
-  const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
   const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
 
   return (

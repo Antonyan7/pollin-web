@@ -23,14 +23,17 @@ import { Stack } from '@mui/system';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { cancellationReasons } from 'helpers/constants';
-import { dispatch, useAppSelector } from 'redux/hooks';
+import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { viewsMiddleware } from 'redux/slices/views';
 
-const ConfirmAppointmentsModal = () => {
+export interface CancelAppointmentModalProps {
+  appointmentId: string;
+}
+
+const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) => {
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
   const [cancellationReason, setCancellationReason] = useState<string>('');
-  const { appointmentId } = useAppSelector(viewsSelector.modal).props;
   const [t] = useTranslation();
 
   const onSelectButtonChange = useCallback((event: SelectChangeEvent<unknown>) => {
@@ -42,15 +45,15 @@ const ConfirmAppointmentsModal = () => {
   }, []);
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.EditAppointmentModal, props: { appointmentId } }));
-  }, [appointmentId]);
+    dispatch(viewsMiddleware.closeModal(ModalName.CancelAppointmentModal));
+  }, []);
 
   const onConfirm = useCallback(() => {
     setOpenOtherReasonField(false);
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
     dispatch(bookingMiddleware.cancelAppointment(appointmentId, cancellationReason));
     dispatch(bookingMiddleware.clearAppointmentDetails());
-  }, [appointmentId, cancellationReason]);
+    onClose();
+  }, [onClose, appointmentId, cancellationReason]);
 
   const onReasonChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setCancellationReason(event.target.value);
@@ -148,4 +151,4 @@ const ConfirmAppointmentsModal = () => {
   );
 };
 
-export default ConfirmAppointmentsModal;
+export default CancelAppointmentModal;

@@ -3,25 +3,23 @@ import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
-import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 
 const FormHeader = () => {
   const [t] = useTranslation();
+  const editTitleLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TITLE);
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-    dispatch(bookingMiddleware.getPatients(null));
-    dispatch(bookingMiddleware.getPatientAlerts(''));
+    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
   }, []);
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: '20px', marginLeft: '15px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginLeft: '15px' }}>
         <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
-          {t(Translation.MODAL_APPOINTMENTS_ADD_TITLE)}
+          {editTitleLabel}
         </DialogTitle>
         <IconButton
           aria-label="close"

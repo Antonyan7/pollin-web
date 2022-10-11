@@ -28,11 +28,11 @@ const useOnCalendarEventClick = () => {
 
         if (isAppointmentCanceledOrPast) {
           dispatch(
-            viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
+            viewsMiddleware.openModal({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
           );
         } else if (targetAppointment?.isEditable) {
           dispatch(
-            viewsMiddleware.setModalState({
+            viewsMiddleware.openModal({
               name: ModalName.EditAppointmentModal,
               props: { appointmentId: id }
             })

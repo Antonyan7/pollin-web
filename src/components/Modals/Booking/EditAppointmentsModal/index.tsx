@@ -8,7 +8,7 @@ import { ModalName } from 'constants/modals';
 import { getTimezoneOffset } from 'date-fns-tz';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { viewsMiddleware } from 'redux/slices/views';
 import { AppointmentDetailsProps } from 'types/reduxTypes/booking';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
 
@@ -46,18 +46,14 @@ const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => 
   }
 });
 
-interface IEditAppointmentModalProps {
+export interface EditAppointmentModalProps {
   appointmentId: string;
 }
 
-const EditAppointmentsModal = () => {
-  const details: AppointmentDetailsProps = useAppSelector(
-    bookingSelector.appointmentDetails
-  ) as AppointmentDetailsProps;
+const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => {
+  const details = useAppSelector(bookingSelector.appointmentDetails);
 
-  const { appointmentId }: IEditAppointmentModalProps = useAppSelector(viewsSelector.modal).props;
-
-  const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
 
   const methods = useForm({
     defaultValues: getFormState(),

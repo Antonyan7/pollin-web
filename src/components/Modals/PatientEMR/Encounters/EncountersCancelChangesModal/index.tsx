@@ -17,8 +17,8 @@ import {
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { dispatch } from 'redux/hooks';
+import { viewsMiddleware } from 'redux/slices/views';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontWeight: 400,
@@ -31,10 +31,9 @@ const EncountersCancelChangesModal = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const modal = useAppSelector(viewsSelector.modal);
-  const shouldOpenModal = modal.name === ModalName.EncountersCancelChangesModal && modal.props?.open === true;
+
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+    dispatch(viewsMiddleware.closeModal(ModalName.EncountersCancelChangesModal));
   }, []);
 
   const onConfirm = () => {
@@ -46,7 +45,7 @@ const EncountersCancelChangesModal = () => {
   };
 
   return (
-    <Dialog open={shouldOpenModal} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
       <Grid>
         <DialogTitle sx={{ p: 4 }}>
           <Grid container justifyContent="space-between" alignItems="center">

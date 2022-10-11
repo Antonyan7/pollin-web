@@ -3,8 +3,7 @@ import { useFormContext } from 'react-hook-form';
 import { ModalName } from 'constants/modals';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
-import { AppointmentDetailsProps } from 'types/reduxTypes/booking';
+import { viewsMiddleware } from 'redux/slices/views';
 
 import { mergeAppointmentDetails } from './helpers/mergeAppointmentDetails';
 import FormActions from './FormActions';
@@ -15,17 +14,14 @@ import { IFormValues } from './types';
 const EditAppointmentsModalForm = () => {
   const { handleSubmit, formState, reset } = useFormContext<IFormValues>();
   const { isSubmitSuccessful } = formState;
-  const { appointmentId } = useAppSelector(viewsSelector.modal).props;
+  const details = useAppSelector(bookingSelector.appointmentDetails);
+  const appointmentId = details?.appointment.id ?? '';
 
-  const onClose = () => dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
-
-  const details: AppointmentDetailsProps = useAppSelector(
-    bookingSelector.appointmentDetails
-  ) as AppointmentDetailsProps;
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
 
   const onSubmit = (values: IFormValues) => {
     onClose();
-    dispatch(bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(details, values)));
+    dispatch(bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(values)));
   };
 
   useEffect(() => {

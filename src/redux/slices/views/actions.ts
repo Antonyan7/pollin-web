@@ -14,8 +14,11 @@ const actions: SliceReducers<ViewsProps> = {
   setMenuOpenDrawer(state, action: IAction<boolean>) {
     state.menu.drawerOpen = action.payload;
   },
-  updateModalState<P>(state: ViewsProps, action: IAction<IOpenedModal<P>>) {
-    state.modal = action.payload ? action.payload : { name: ModalName.NONE, props: {} };
+  addModalToList<P>(state: ViewsProps, action: IAction<IOpenedModal<P>>) {
+    state.modals.push(action.payload);
+  },
+  removeModalFromList(state: ViewsProps, action: IAction<ModalName>) {
+    state.modals = state.modals.filter((modal) => modal.name !== action.payload);
   },
   updateToastNotificationState<P>(state: ViewsProps, action: IAction<IOpenedAlert<P>>) {
     state.toastNotificationPopUp = action.payload ? action.payload : { open: false, props: {} };

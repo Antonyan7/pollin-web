@@ -208,7 +208,7 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
     if (patientId) {
       const response = await API.patients.getPatientAlertDetails(patientId);
 
-      dispatch(setPatientAlerts(response.data.data));
+      dispatch(setPatientAlerts(response.data.data.alerts));
     } else {
       dispatch(setPatientAlerts([]));
     }

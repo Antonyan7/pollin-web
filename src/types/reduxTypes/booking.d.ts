@@ -1,8 +1,7 @@
 import { IPagination } from '@axios/axios';
 import { IAppointmentDetails } from '@axios/managerBooking';
-import { AlertDetailsProps } from '@axios/managerPatientEmr';
 
-import { IPatientsResponse } from '@types/reduxTypes/patient-emr';
+import { AlertDetailsProps, IPatientsResponse } from '@types/reduxTypes/patient-emr';
 
 import { SlotTypes } from '../calendar';
 
@@ -26,7 +25,7 @@ export interface BookingProps {
   patientList: IPatientsResponse;
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
-  patientAlerts: AlertDetailsProps | null;
+  patientAlerts: AlertDetailsProps[];
 }
 
 export interface IUniqueItem {

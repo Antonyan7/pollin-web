@@ -19,13 +19,16 @@ import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { viewsMiddleware } from 'redux/slices/views';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 
-const DetailsAppointmentModal = () => {
+export interface DetailsAppointmentModalProps {
+  appointmentId: string;
+}
+
+const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps) => {
   const details = useAppSelector(bookingSelector.appointmentDetails);
-  const { appointmentId } = useAppSelector(viewsSelector.modal).props;
   const router = useRouter();
   const [t] = useTranslation();
 
@@ -34,7 +37,7 @@ const DetailsAppointmentModal = () => {
   }, [appointmentId]);
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+    dispatch(viewsMiddleware.closeModal(ModalName.DetailsAppointmentModal));
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, []);
 

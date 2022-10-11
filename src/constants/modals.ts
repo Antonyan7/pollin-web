@@ -1,10 +1,11 @@
 export enum ModalName {
   NONE = '',
-  AddAppointmentsModal = 'AddAppointmentsModal',
+  AddAppointmentModal = 'AddAppointmentModal',
   EditAppointmentModal = 'EditAppointmentModal',
-  ConfirmAppointmentCancelModal = 'ConfirmAppointmentCancelModal',
+  CancelAppointmentModal = 'CancelAppointmentModal',
   DetailsAppointmentModal = 'DetailsAppointmentModal',
+  AddAppointmentDuplicatePatientModal = 'AddAppointmentDuplicatePatientModal',
   EncountersCancelChangesModal = 'EncountersCancelChangesModal',
   DevToolsModal = 'DevToolsModal',
-  CreateTemplateModal = 'CreateTemplateModal'
+  ScheduleTemplatesErrorModal = 'ScheduleTemplatesErrorModal'
 }

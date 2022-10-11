@@ -1,4 +1,3 @@
-import { ModalName } from 'constants/modals';
 import { ViewsProps } from 'types/reduxTypes/views';
 
 export const getInitialState = (): ViewsProps => ({
@@ -11,10 +10,7 @@ export const getInitialState = (): ViewsProps => ({
     openItem: ['dashboard'],
     drawerOpen: false
   },
-  modal: {
-    name: ModalName.NONE,
-    props: {}
-  },
+  modals: [],
   toastNotificationPopUp: {
     open: false,
     props: {}

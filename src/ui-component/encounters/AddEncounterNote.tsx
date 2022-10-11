@@ -14,7 +14,6 @@ import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
-import EncountersCancelChangesModal from '@ui-component/EncountersCancelChangesModal/EncountersCancelChangesModal';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
@@ -69,9 +68,7 @@ const AddEncounterNote = () => {
   }, []);
 
   return (
-    <>
-      <EncountersCancelChangesModal />
-      <SubCardStyled
+    <SubCardStyled
         content
         sx={{
           '& > MuiCardHeader-root': {
@@ -115,7 +112,6 @@ const AddEncounterNote = () => {
           </Grid>
         </Grid>
       </SubCardStyled>
-    </>
   );
 };
 

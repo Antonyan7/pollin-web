@@ -11,8 +11,8 @@ const useOnRangeSelect = () => {
     }
 
     dispatch(
-      viewsMiddleware.setModalState({
-        name: ModalName.AddAppointmentsModal,
+      viewsMiddleware.openModal({
+        name: ModalName.AddAppointmentModal,
         props: {
           start: arg.startStr,
           end: arg.endStr

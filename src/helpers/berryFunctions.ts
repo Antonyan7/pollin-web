@@ -6,4 +6,4 @@ export const createOptionsGroup = <T extends IUniqueItem>(items: T[]): OptionsRe
   items?.map((item) => ({
     firstLetter: item.title[0].toUpperCase(),
     item
-  }));
+  })) ?? [];

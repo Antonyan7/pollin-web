@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
@@ -14,11 +14,14 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
+import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 
-export interface DuplicatePatientPopUpProps {
-  open: boolean;
-  setOnClose: React.Dispatch<SetStateAction<boolean>>;
+export interface AddAppointmentDuplicatePatientModalProps {
+  patientId: string;
 }
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
@@ -29,15 +32,21 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   margin: '40px 10px'
 }));
 
-const DuplicatePatientPopup = ({ open, setOnClose }: DuplicatePatientPopUpProps) => {
+const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplicatePatientModalProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const router = useRouter();
   const onClose = useCallback(() => {
-    setOnClose(false);
-  }, [setOnClose]);
+    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentDuplicatePatientModal));
+  }, []);
+
+  const onProfileClick = useCallback(() => {
+    onClose();
+    router.push(`/patients-emr/details/${patientId}/profile`);
+  }, [onClose, patientId, router]);
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
       <Grid>
         <DialogTitle sx={{ p: 4 }}>
           <Grid container justifyContent="space-between" alignItems="center">
@@ -65,7 +74,7 @@ const DuplicatePatientPopup = ({ open, setOnClose }: DuplicatePatientPopUpProps)
         <DialogActions sx={{ p: 4 }}>
           <Grid container justifyContent="flex-end">
             <Grid>
-              <StyledButton variant="contained" color="secondary" sx={{ width: '160px' }} onClick={onClose}>
+              <StyledButton variant="contained" color="secondary" sx={{ width: '160px' }} onClick={onProfileClick}>
                 {t(Translation.PAGE_APPOINTMENTS_DUPLICATE_PATIENT_MODAL_ACTION)}
               </StyledButton>
             </Grid>
@@ -76,4 +85,4 @@ const DuplicatePatientPopup = ({ open, setOnClose }: DuplicatePatientPopUpProps)
   );
 };
 
-export default DuplicatePatientPopup;
+export default AddAppointmentDuplicatePatientModal;

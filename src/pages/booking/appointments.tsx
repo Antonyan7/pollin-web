@@ -62,7 +62,7 @@ const Appointments = () => {
   );
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.AddAppointmentsModal, props: {} }));
+    dispatch(viewsMiddleware.openModal({ name: ModalName.AddAppointmentModal, props: {} }));
   }, []);
 
   const onDateDatePickerOpen = useCallback(() => {

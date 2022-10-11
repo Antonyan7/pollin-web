@@ -36,7 +36,7 @@ const DevToolsModal = () => {
   }, [devConfig]);
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.setModalState({ name: ModalName.NONE, props: {} }));
+    dispatch(viewsMiddleware.closeModal(ModalName.DevToolsModal));
 
     if (devConfig.server !== currentConfig.server) {
       router.reload();
