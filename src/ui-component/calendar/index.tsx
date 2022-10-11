@@ -82,7 +82,8 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
         item.startTime,
         addMinutesToTime(item.startTime, item.timeUnits * 10).toISOString(),
         item.title,
-        item.id
+        item.id,
+        item.color
       )
     );
 

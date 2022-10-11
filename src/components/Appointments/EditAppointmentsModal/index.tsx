@@ -19,8 +19,9 @@ import EditAppointmentsModalForm from './form';
 const getCurrentTimezone = () => {
   const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
   const offset = getTimezoneOffset(timezone) / 60 / 60 / 1000;
+  const absoluteOffset = Math.abs(offset);
 
-  return `${offset >= 0 ? '+' : '-'}${offset.toString().length > 1 ? '' : '0'}${offset}:00`;
+  return `${offset >= 0 ? '+' : '-'}${absoluteOffset.toString().length > 1 ? '' : '0'}${absoluteOffset}:00`;
 };
 
 const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => ({

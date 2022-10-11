@@ -1,4 +1,5 @@
 .background-blocked {
+  width: 105%;
   background-size: cover;
   background-image: url('../../images/calendar/slots/blockedSlot.svg');
 }
@@ -27,4 +28,8 @@
 
 .slot-border-radius {
   border-radius: 5px;
+}
+
+.fc-event {
+  cursor: pointer;
 }

@@ -15,19 +15,22 @@ const useOnCalendarEventClick = () => {
 
       const { id } = initialEventObject.event;
       const targetAppointment = appointments.find((appointment) => appointment.id === id);
-
       const nonIntractableAppointments = [SlotTypes.block, SlotTypes.schedule];
 
-      if (nonIntractableAppointments.includes(targetAppointment?.type as SlotTypes) || !targetAppointment?.isEditable) {
+      if (nonIntractableAppointments.includes(targetAppointment?.type as SlotTypes)) {
         return;
       }
 
       if (id) {
-        if (new Date(initialEventObject.event.startStr).getTime() < new Date().getTime()) {
+        const isAppointmentCanceledOrPast =
+          targetAppointment?.type === SlotTypes.canceled ||
+          new Date(initialEventObject.event.startStr).getTime() < new Date().getTime();
+
+        if (isAppointmentCanceledOrPast) {
           dispatch(
             viewsMiddleware.setModalState({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
           );
-        } else {
+        } else if (targetAppointment?.isEditable) {
           dispatch(
             viewsMiddleware.setModalState({
               name: ModalName.EditAppointmentModal,

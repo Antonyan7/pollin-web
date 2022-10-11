@@ -55,6 +55,7 @@ export interface IAppointment {
   timeUnits: number;
   title: string;
   isEditable: boolean;
+  color: string;
 }
 
 export interface ICalendarSlot {

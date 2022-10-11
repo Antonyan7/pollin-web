@@ -6,7 +6,8 @@ export const CreateSlot = (
   start: string,
   end: string,
   title: string,
-  slotId?: string
+  slotId?: string,
+  color?: string
 ): ICalendarSlot => {
   const BackgroundColors: Colors = {
     AppointmentBooked: '#18A0FB',
@@ -22,11 +23,9 @@ export const CreateSlot = (
     OpenSchedule: '#B6B6B6'
   };
 
-  const TextColors: Colors = {
-    AppointmentBooked: 'white',
-    BlockedSchedule: '#111111',
-    AppointmentCancelled: '#18A0FB',
-    OpenSchedule: '#B9B9B9'
+  const TextColors = {
+    AppointmentColor: '#111111',
+    AppointmentCancelled: '#18A0FB'
   };
 
   const ClassNames: Styles = {
@@ -36,14 +35,14 @@ export const CreateSlot = (
     OpenSchedule: ['open-slot', 'font-type']
   };
 
-  return {
+  return <ICalendarSlot>{
     ...(slotId ? { id: slotId } : {}),
     classNames: ClassNames[type],
     ...(type === SlotTypes.schedule ? { display: 'background' } : {}),
     allDay: false,
-    color: BackgroundColors[type],
-    borderColor: BorderColors[type],
-    textColor: TextColors[type],
+    color: type === SlotTypes.canceled ? BackgroundColors[type] : color,
+    borderColor: type === SlotTypes.canceled ? BorderColors[type] : color,
+    textColor: type === SlotTypes.canceled ? TextColors.AppointmentCancelled : TextColors.AppointmentColor,
     title,
     start,
     end

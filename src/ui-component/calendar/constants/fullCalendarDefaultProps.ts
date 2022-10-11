@@ -16,9 +16,10 @@ const FULL_CALENDAR_DEFAULT_PROPS: CalendarOptions = {
   slotDuration: '00:10',
   slotLabelInterval: '00:10',
   weekends: true,
-  editable: true,
-  droppable: true,
+  editable: false,
+  droppable: false,
   selectable: true,
+  nowIndicator: true,
   allDayMaintainDuration: true
 };
 
