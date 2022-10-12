@@ -4,10 +4,9 @@ import { Box, Button, CircularProgress } from '@mui/material';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Translation } from 'constants/translations';
+import BaseModalTitle from 'ui-component/Modal/BaseModal/BaseModalTitle';
 
-import { BaseModalStyled } from '@ui-component/Modal/BaseModalStyled';
-
-import BaseModalTitle from './BaseModalTitle';
+import { BaseModalStyled } from '@ui-component/Modal/BaseModal/BaseModalStyled';
 
 export interface BaseModalProps {
   title: string;

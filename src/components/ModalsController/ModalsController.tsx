@@ -13,6 +13,15 @@ import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounte
 import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
+import PatientLineItemsModal, {
+  PatientLineItemsModalProps
+} from '@components/Patients/PatientModals/PatientLineItemsModal';
+import PatientMedicationsModal, {
+  PatientMedicationsModalProps
+} from '@components/Patients/PatientModals/PatientMedicationsModal';
+import PatientPartnersModal, {
+  PatientPartnersModalProps
+} from '@components/Patients/PatientModals/PatientPartnersModal';
 import { ModalName } from 'constants/modals';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
@@ -46,9 +55,18 @@ const getScheduleTemplatesErrorModal = (modal: IOpenedModal<ScheduleTemplatesErr
 const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesErrorModalProps>) => (
   <EncountersCancelChangesModal key={modal.name} />
 );
+// profile highlight
+const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
+  <PatientLineItemsModal key={modal.name} {...modal.props} />
+);
+const getPatientMedicationsModal = (modal: IOpenedModal<PatientMedicationsModalProps>) => (
+  <PatientMedicationsModal key={modal.name} {...modal.props} />
+);
+const getPatientPartnersModal = (modal: IOpenedModal<PatientPartnersModalProps>) => (
+  <PatientPartnersModal key={modal.name} {...modal.props} />
+);
 
 // dev
-
 const getDevToolsModal = () => <DevToolsModal />;
 
 export const ModalsController = () => {
@@ -77,6 +95,13 @@ export const ModalsController = () => {
           // encounters
           case ModalName.EncountersCancelChangesModal:
             return getEncountersCancelChangesModal(modal);
+          // profile highlight
+          case ModalName.PatientLineItemsModal:
+            return getPatientListItemsModal(modal);
+          case ModalName.PatientMedicationsModal:
+            return getPatientMedicationsModal(modal);
+          case ModalName.PatientPartnersModal:
+            return getPatientPartnersModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

@@ -12,6 +12,9 @@ import {
   IEncounterTypesResponse,
   IGetPatientsRequestBody,
   IPatientEncountersListResponse,
+  IPatientHighlightDetailsResponse,
+  IPatientHighlightResponse,
+  IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
   IUpdateEncounterAddendumRequest,
@@ -70,6 +73,21 @@ const patientEmrManager = {
   },
   updateEncounterAddendum(data: IUpdateEncounterAddendumRequest) {
     return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/addendum`, data);
+  },
+  getPatientProfile(patientId: string | string[]) {
+    return axiosInstance.get<any, IAxiosResponse<IPatientProfileResponse>>(`${baseURL}/v1/profile/${patientId}`);
+  },
+  getPatientHighlight(patientId: string | string[]) {
+    return axiosInstance.get<any, IAxiosResponse<IPatientHighlightResponse>>(
+      `${baseURL}/v1/profile/${patientId}/highlight`
+    );
+  },
+  getPatientHighlightDetails(patientId: string | string[], uuid: string) {
+    return axiosInstance
+      .get<any, IAxiosResponse<IPatientHighlightDetailsResponse>>(
+        `${baseURL}/v1/profile/${patientId}/highlight/${uuid}`
+      )
+      .then(({ data }) => data);
   }
 };
 

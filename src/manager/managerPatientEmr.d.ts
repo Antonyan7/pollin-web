@@ -92,6 +92,62 @@ export interface IEncounterDetailsProps {
   addendums: AddendumsProps;
 }
 
+export interface IPatientProfileResponse {
+  title: string;
+  subTitle: string;
+  cycleStatus: string;
+  imageURL: string;
+}
+
+export interface IPatientHighlightResponse {
+  highlights: {
+    uuid: string;
+    title: string;
+    items: string[];
+  }[];
+}
+
+export interface IPatientPartnerData {
+  name: string;
+  patientId: string;
+  pronoun: string;
+  subTitle: string;
+  relation: string;
+}
+
+interface IPatientHighlightDetailPartner {
+  type: 'Partner';
+  title: string; // title of the modal field
+  partner: IPatientPartnerData; // values of the modal field
+}
+
+export interface IPatientMedicationData {
+  title: string;
+  dosage: string;
+}
+
+interface IPatientHighlightDetailMedications {
+  type: 'Medications';
+  title: string; // title of the modal field
+  medications: IPatientMedicationData[]; // values of the modal field
+}
+
+interface IPatientHighlightDetailLineItems {
+  type: 'LineItems';
+  title: string; // title of the modal field
+  lineItems: string[]; // values of the modal field
+}
+
+type PatientHighlightDetail =
+  | IPatientHighlightDetailPartner
+  | IPatientHighlightDetailMedications
+  | IPatientHighlightDetailLineItems;
+
+export interface IPatientHighlightDetailsResponse {
+  title: string; // Title of modal
+  highlightDetails: PatientHighlightDetail[]; // modal type and entries
+}
+
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
 export interface IUpdateEncounterNoteRequest {
   id: string;

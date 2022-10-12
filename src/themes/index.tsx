@@ -5,9 +5,8 @@ import { createTheme, Theme, ThemeOptions, ThemeProvider } from '@mui/material/s
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import defaultConfig from 'config';
 // types
+import { CustomizationProps } from 'types/config';
 import { CustomShadowProps } from 'types/default-theme';
-
-import { CustomizationProps } from '../types/config';
 
 import componentStyleOverrides from './compStyleOverride';
 import Palette from './palette';

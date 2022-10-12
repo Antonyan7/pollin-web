@@ -2,8 +2,7 @@ import React from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 import DialogTitle from '@mui/material/DialogTitle';
-
-import { DialogTitleProps } from '../../types/modals';
+import { DialogTitleProps } from 'types/modals';
 
 const BaseModalTitle = ({ children, onClose, ...other }: DialogTitleProps) => (
   <DialogTitle sx={other.sx ? other.sx : { m: 0, p: 2 }} {...other}>
