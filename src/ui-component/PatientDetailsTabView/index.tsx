@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Main } from '@components/Appointments/AppointmentsContent';
 import { Link } from '@components/index';
 import { Tab, Tabs, useTheme } from '@mui/material';
+import { patientListTabLinks } from 'helpers/constants';
+import { useRouter } from 'next/router';
 
 import Encounters from '@ui-component/encounters/Encounters';
 
@@ -10,27 +12,33 @@ const allyProps = (index: number) => ({
   'aria-controls': `simple-tabpanel-${index}`
 });
 
-export const patientListTabLinks = [
-  { linkName: 'Patient Profile', href: '#' },
-  { linkName: 'Plans', href: '#' },
-  { linkName: 'Encounters', href: '#' },
-  { linkName: 'Medications', href: '#' },
-  { linkName: 'Orders', href: '#' },
-  { linkName: 'Consents', href: '#' },
-  { linkName: 'Referrals', href: '#' }
-];
-
 const PatientDetailsTabView = () => {
   const theme = useTheme();
-  const [value, setValue] = useState<number>(2);
-  const handleChange = (_: React.SyntheticEvent<Element, Event>, newValue: number) => {
-    setValue(newValue);
+  const router = useRouter();
+  const [currentTabIndex, setCurrentTabIndex] = useState<number>(2);
+  const hashRef = useRef(false);
+  const handleChange = (_: React.SyntheticEvent<Element, Event>, currentIndex: number) => {
+    setCurrentTabIndex(currentIndex);
   };
+
+  useEffect(() => {
+    const currentUrl = router.asPath;
+
+    if (!hashRef.current) {
+      const currentHash = patientListTabLinks.find((_, tabIndex) => tabIndex === currentTabIndex)?.href;
+
+      router.replace(`${currentUrl}${currentHash}`);
+    }
+
+    return () => {
+      hashRef.current = true;
+    };
+  }, [router, currentTabIndex]);
 
   return (
     <>
       <Tabs
-        value={value}
+        value={currentTabIndex}
         indicatorColor="primary"
         textColor="primary"
         onChange={handleChange}

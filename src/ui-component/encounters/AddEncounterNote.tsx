@@ -69,49 +69,49 @@ const AddEncounterNote = () => {
 
   return (
     <SubCardStyled
-        content
-        sx={{
-          '& > MuiCardHeader-root': {
-            padding: 0
-          }
-        }}
-        title={
-          <Grid container alignItems="center" justifyContent="space-between">
-            <Grid container item xs={6} sx={{ p: 0.5 }} alignItems="center">
-              <Grid item xs={1}>
-                <IconButton onClick={handleClose}>
-                  <ArrowBackIosIcon />
-                </IconButton>
-              </Grid>
-              <Grid item xs={5}>
-                <Typography
-                  sx={{ color: (theme) => theme.palette.common.black, marginRight: '20px' }}
-                  fontSize="21px"
-                  fontWeight="400"
-                >
-                  {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
-                </Typography>
-              </Grid>
+      content
+      sx={{
+        '& > MuiCardHeader-root': {
+          padding: 0
+        }
+      }}
+      title={
+        <Grid container alignItems="center" justifyContent="space-between">
+          <Grid container item xs={6} sx={{ p: 0.5 }} alignItems="center">
+            <Grid item xs={1}>
+              <IconButton onClick={handleClose}>
+                <ArrowBackIosIcon />
+              </IconButton>
             </Grid>
-            <Grid container item xs={2} justifyContent="flex-end" pr={3}>
-              <Typography variant="h4">{encounterNoteEditedTime}</Typography>
+            <Grid item xs={5}>
+              <Typography
+                sx={{ color: (theme) => theme.palette.common.black, marginRight: '20px' }}
+                fontSize="21px"
+                fontWeight="400"
+              >
+                {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
+              </Typography>
             </Grid>
           </Grid>
-        }
-      >
-        <Grid container mt={1}>
-          <Grid container>
-            <NoteEditor
-              handleEncounterTypeSelect={handleEncounterTypeSelect}
-              editorValue={editorValue}
-              setEditorValue={setEditorValue}
-              mode={SimpleEditorMode.Add}
-              handleSave={handleSave}
-              handleCancel={handleCancel}
-            />
+          <Grid container item xs={2} justifyContent="flex-end" pr={3}>
+            <Typography variant="h4">{encounterNoteEditedTime}</Typography>
           </Grid>
         </Grid>
-      </SubCardStyled>
+      }
+    >
+      <Grid container mt={1}>
+        <Grid container>
+          <NoteEditor
+            handleEncounterTypeSelect={handleEncounterTypeSelect}
+            editorValue={editorValue}
+            setEditorValue={setEditorValue}
+            mode={SimpleEditorMode.Add}
+            handleSave={handleSave}
+            handleCancel={handleCancel}
+          />
+        </Grid>
+      </Grid>
+    </SubCardStyled>
   );
 };
 

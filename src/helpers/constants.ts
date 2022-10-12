@@ -25,4 +25,13 @@ export const standardDate = new Date(1970, 0, 1, 15, 0, 0, 0);
 
 export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+export const patientListTabLinks = [
+  { linkName: 'Patient Profile', href: '#profile' },
+  { linkName: 'Plans', href: '#plans' },
+  { linkName: 'Encounters', href: '#encounters' },
+  { linkName: 'Medications', href: '#medications' },
+  { linkName: 'Orders', href: '#orders' },
+  { linkName: 'Consents', href: '#consents' },
+  { linkName: 'Referrals', href: '#referrals' }
+];
 export const rowsPerPage = 10;
