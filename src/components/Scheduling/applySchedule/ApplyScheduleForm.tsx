@@ -160,7 +160,7 @@ const ApplyScheduleForm = () => {
               label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}
             />
           </ApplyScheduleFormRow>
-          {isAppliedDays && applyDaysListRendering.length > 0 && (
+          {scheduleTemplate.id && isAppliedDays && applyDaysListRendering.length > 0 && (
             <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_APPLIED_DAYS)}>
               <ApplyDaysField
                 applyDays={applyDays}
