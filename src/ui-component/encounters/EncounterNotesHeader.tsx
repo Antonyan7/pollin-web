@@ -13,7 +13,6 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const currentEncounterId = router.query.id as string;
 
   const handleCreateEncounterNoteClick = () => router.push(`${router.asPath}/add-note`);
 
@@ -44,7 +43,7 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
           {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
         </Button>
       </header>
-      <EncounterFilters page={page} currentEncounterId={currentEncounterId} />
+      <EncounterFilters page={page} />
     </Box>
   );
 };

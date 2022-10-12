@@ -79,10 +79,10 @@ const SimpleTextEditor = ({
           onChange={setEditorValue}
         />
         <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
-          <StyledButton type="button" variant="contained" onClick={handleCancel}>
+          <StyledButton type="button" variant="contained" color="secondary" onClick={handleCancel}>
             {t(Translation.PAGE_ENCOUNTERS_CANCEL_LABEL)}
           </StyledButton>
-          <StyledButton type="button" variant="contained" onClick={handleSave}>
+          <StyledButton type="button" variant="contained" color="secondary" onClick={handleSave}>
             {mode === SimpleEditorMode.Add
               ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
               : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}

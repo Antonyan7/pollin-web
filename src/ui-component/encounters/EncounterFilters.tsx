@@ -1,90 +1,91 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GroupedByTitlesProps } from '@axios/managerPatientEmr';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, Box, CircularProgress, InputAdornment, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
+import debounce from 'lodash.debounce';
+import { IEncounterFilterProps } from 'types/reduxTypes/patient-emr';
 
 import { Translation } from '../../constants/translations';
 import { MainHeader } from '../../pages/booking/appointments';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
-import { IEncountersReqBody } from '../../types/patient';
+import { IEncountersFilterOption, IEncountersReqBody } from '../../types/patient';
 
-const EncounterFilters = ({ page }: { page: number; currentEncounterId?: string }) => {
+const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const patientId = useAppSelector(patientsSelector.currentPatientId);
+  const encounterFilters = useAppSelector(patientsSelector.encounterFilters);
   const [searchValue, setSearchValue] = useState<string>('');
-  const encounterFilters: string[] = [
-    'Encounter Filter 1',
-    'Encounter Filter 2',
-    'Encounter Filter 3',
-    'Encounter Filter 4'
-  ];
-
-  const onEncounterSearchChange = () => {
-    const data: IEncountersReqBody = {
-      page: page + 1,
-      searchString: searchValue,
-      patientId,
-      filters: [
-        {
-          id: 'doctor1',
-          type: 'Doctor'
-        }
-      ]
-    };
-
-    // TODO: Refactor this logic.
-    if (!data.searchString?.length) {
-      data.searchString = ' ';
-    }
-
-    dispatch(patientsMiddleware.getEncounterList(data));
-  };
-
-  const onSearchFieldClearIconClick = () => {
-    setSearchValue('');
-  };
+  const [filters, setFilters] = useState<IEncountersFilterOption[]>([]);
+  const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
+  const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
 
   useEffect(() => {
     const data: IEncountersReqBody = {
-      page: page + 1,
-      searchString: '',
-      patientId,
-      filters: [
-        {
-          id: 'doctor1',
-          type: 'Doctor'
-        }
-      ]
+      patientId
     };
 
-    // TODO: Refactor this logic once we will decide the problem with mock server
-    if (!data.searchString?.length) {
-      data.searchString = ' ';
+    if (filters.length) {
+      data.filters = filters;
+    }
+
+    if (searchValue.length) {
+      data.searchString = searchValue;
+    }
+
+    if (page) {
+      data.page = page + 1;
     }
 
     if (patientId) {
       dispatch(patientsMiddleware.getEncounterList(data));
     }
-  }, [page, patientId]);
+  }, [page, patientId, filters, searchValue]);
+
+  useEffect(() => {
+    dispatch(patientsMiddleware.getEncounterFilters());
+  }, []);
+
+  const onSearchStringChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const debouncedCallback = debounce(() => setSearchValue(event.target.value), 1000);
+
+      debouncedCallback();
+    },
+    [setSearchValue]
+  );
+
+  const onAutoCompleteChange = useCallback(
+    (value: GroupedByTitlesProps[]) => {
+      const filteredResult = filterByUniqueCategory(value);
+
+      setSelectedFilterResults(filteredResult);
+
+      const filteredResultOptions: IEncountersFilterOption[] = [];
+
+      filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
+        const filterOption = {
+          type: titleProps.options.type,
+          id: titleProps.options.id
+        };
+
+        filteredResultOptions.push(filterOption);
+      });
+      setFilters(filteredResultOptions);
+    },
+    [setFilters]
+  );
 
   return (
     <MainHeader>
       <StyledOutlinedInput
-        value={searchValue}
-        onChange={(e) => {
-          setSearchValue(e.target.value);
-        }}
-        onKeyPress={(e) => {
-          if (e.key === 'Enter') {
-            onEncounterSearchChange();
-          }
-        }}
+        onChange={onSearchStringChange}
         id="input-search-encounters"
         placeholder={`${t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH)}`}
         startAdornment={
@@ -92,19 +93,25 @@ const EncounterFilters = ({ page }: { page: number; currentEncounterId?: string 
             <SearchIcon sx={{ color: theme.palette.grey[400] }} />
           </InputAdornment>
         }
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton aria-label="toggle password visibility" onClick={onSearchFieldClearIconClick} edge="end">
-              <HighlightOffIcon />
-            </IconButton>
-          </InputAdornment>
-        }
       />
       <Autocomplete
         id="encounterFilterId"
         fullWidth
         multiple
-        options={encounterFilters}
+        loading={isEncountersFiltersLoading}
+        loadingText={
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <CircularProgress size={20} />
+          </Box>
+        }
+        options={reformattedFilterResults(encounterFilters as IEncounterFilterProps[])}
+        groupBy={(option) => option.options.type as string}
+        getOptionLabel={(option) => option.options.title as string}
+        isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
+        value={selectedFilterResults}
+        onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
+          onAutoCompleteChange(selectedOption);
+        }}
         popupIcon={<KeyboardArrowDownIcon />}
         renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
       />

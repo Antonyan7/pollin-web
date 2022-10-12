@@ -69,8 +69,8 @@ export interface IPatientsReqBody {
 }
 
 export interface IEncountersReqBody {
-  patientId?: string;
-  page: number;
+  patientId: string;
+  page?: number;
   searchString?: string;
   filters?: IEncountersFilterOption[];
 }

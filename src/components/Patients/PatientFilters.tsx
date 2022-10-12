@@ -105,7 +105,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           </Box>
         }
         options={reformattedFilterResults(filtersList)}
-        groupBy={(option) => option.options.titleName as string}
+        groupBy={(option) => option.options.type as string}
         getOptionLabel={(option) => option.options.title as string}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
         value={selectedFilterResults}
