@@ -5,6 +5,7 @@ export class FirebaseManager {
   private static appCheck: AppCheck;
 
   static initiate() {
+    // eslint-disable-next-line no-console
     console.debug('Initiate firebase');
 
     try {
@@ -17,7 +18,9 @@ export class FirebaseManager {
         });
       }
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error('initializeApp error');
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   }
@@ -26,6 +29,7 @@ export class FirebaseManager {
     let token = ' ';
 
     if (!FirebaseManager.appCheck) {
+      // eslint-disable-next-line no-console
       console.error('App check not initiated');
 
       return '';
@@ -36,6 +40,7 @@ export class FirebaseManager {
 
       token = tokenResult.token;
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
 
