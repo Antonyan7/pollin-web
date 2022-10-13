@@ -6,6 +6,7 @@ import store, { AppDispatch } from 'redux/store';
 import { IServiceProviders } from 'types/reduxTypes/booking';
 
 import { toESTIsoString } from '@utils/dateUtils';
+import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
 import slice from './slice';
 
@@ -151,7 +152,9 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
     const response = await API.booking.getServiceTypes();
 
-    dispatch(setServiceTypes(response.data.data.serviceTypes));
+    const serviceTypes = sortServiceTypesByAlphabeticOrder(response.data.data.serviceTypes);
+
+    dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

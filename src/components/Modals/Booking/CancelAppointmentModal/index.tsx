@@ -116,6 +116,9 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
                   multiline
                   name="reason_for_cancellation"
                   rows={4}
+                  inputProps={{
+                    maxLength: 250
+                  }}
                   placeholder={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON)}
                   onChange={onReasonChange}
                 />
