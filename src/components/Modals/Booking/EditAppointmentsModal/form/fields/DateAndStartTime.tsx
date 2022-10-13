@@ -9,6 +9,7 @@ import { formatDate, toRoundupTime } from 'helpers/time';
 
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
+import { futureDate180DaysAfter } from '@utils/dateUtils';
 
 import { IFormValues } from '../types';
 
@@ -38,6 +39,7 @@ const DateAndStartTime: React.FC = () => {
         label={dateAndStartTimeLabel}
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
+        maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
         value={value}
         DialogProps={{
           sx: {

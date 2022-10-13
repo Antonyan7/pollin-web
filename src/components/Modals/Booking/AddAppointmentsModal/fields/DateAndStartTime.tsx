@@ -10,6 +10,7 @@ import { formatDate, toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
+import { futureDate180DaysAfter } from '@utils/dateUtils';
 
 type DateAndStartTimeType = Date | null;
 
@@ -41,6 +42,7 @@ const DateAndStartTime: React.FC = () => {
         onClose={() => setMobileDateTimePickerOpen(false)}
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
+        maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
         label={t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER)}
         value={initialDate}
         onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
