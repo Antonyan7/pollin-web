@@ -9,6 +9,7 @@ import { Translation } from 'constants/translations';
 import { formatDate, toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
+import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 
 type DateAndStartTimeType = Date | null;
 
@@ -32,6 +33,9 @@ const DateAndStartTime: React.FC = () => {
   return (
     <Grid item xs={12}>
       <MobileDateTimePicker
+        components={{
+          ActionBar: DatePickerActionBar
+        }}
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
         onClose={() => setMobileDateTimePickerOpen(false)}

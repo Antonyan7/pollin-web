@@ -2,6 +2,7 @@ import React, { ReactNode, Ref } from 'react';
 import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { borders } from 'themes/themeConstants';
 
 interface SubCardProps {
   children: ReactNode | string | null;
@@ -39,7 +40,7 @@ const SubCardStyled = React.forwardRef(
       <Card
         ref={ref}
         sx={{
-          border: '1px solid',
+          border: `${borders.solid1px}`,
           borderColor: theme.palette.grey[300],
           ':hover': {
             boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'

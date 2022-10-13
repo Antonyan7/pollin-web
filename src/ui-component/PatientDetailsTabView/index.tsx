@@ -4,6 +4,7 @@ import { Link } from '@components/index';
 import { Tab, Tabs, useTheme } from '@mui/material';
 import { patientListTabLinks } from 'helpers/constants';
 import { useRouter } from 'next/router';
+import { margins } from 'themes/themeConstants';
 
 import Encounters from '@ui-component/encounters/Encounters';
 
@@ -62,7 +63,7 @@ const PatientDetailsTabView = () => {
           />
         ))}
       </Tabs>
-      <Main sx={{ marginTop: 0 }}>
+      <Main sx={{ marginTop: margins.top0 }}>
         <Encounters />
       </Main>
     </>

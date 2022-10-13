@@ -3,10 +3,12 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
 import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextFieldProps } from '@mui/material';
+import { useTheme } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
 const PatientId = () => {
@@ -25,7 +27,7 @@ const PatientId = () => {
   const [patientsListCurrentPage, setPatientsListCurrentPage] = useState<number>(2);
   const [position, setPosition] = useState<number>(0);
   const [patientsListRef, setPatientListRef] = useState<{ current: HTMLDivElement | null }>({ current: null });
-
+  const theme = useTheme();
   const mounted = useRef<boolean>(false);
 
   useEffect(() => {
@@ -71,8 +73,14 @@ const PatientId = () => {
     <Grid item xs={12}>
       <Autocomplete
         ListboxProps={{
-          style: { maxHeight: 250 },
-          onScroll: onPatientListScroll
+          style: {
+            maxHeight: 220,
+            borderRadius: `${borderRadius.radius8}`,
+            border: `${borders.solid2px} ${theme.palette.primary.main}`
+          },
+          onScroll: (event) => {
+            onPatientListScroll(event);
+          }
         }}
         id={patientIdFieldName}
         options={patientOptions}

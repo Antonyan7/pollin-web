@@ -10,15 +10,15 @@ import {
   TablePagination,
   TableRow
 } from '@mui/material';
+import { Translation } from 'constants/translations';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
+import { IEncounterList } from 'types/reduxTypes/patient-emr';
 
 import EncounterNotesHeader from '@ui-component/encounters/EncounterNotesHeader';
 import EncounterNoteThumbnail from '@ui-component/encounters/EncounterNoteThumbnail';
 import NothingFoundEncounters from '@ui-component/encounters/NothingFoundEncounters';
-
-import { Translation } from '../../constants/translations';
-import { dispatch, useAppSelector } from '../../redux/hooks';
-import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
-import { IEncounterList } from '../../types/reduxTypes/patient-emr';
 
 const Encounters = () => {
   const [page, setPage] = useState<number>(0);
@@ -91,8 +91,8 @@ const Encounters = () => {
       {/* </Box> */}
       {/* <EncounterNotes /> */}
       {isEncountersListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-          <CircularProgress sx={{ margin: 'auto' }} />
+        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+          <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
       ) : null}
     </>

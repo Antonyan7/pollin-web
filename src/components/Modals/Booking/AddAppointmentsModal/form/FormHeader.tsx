@@ -7,6 +7,7 @@ import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
+import { margins } from 'themes/themeConstants';
 
 const FormHeader = () => {
   const [t] = useTranslation();
@@ -19,7 +20,7 @@ const FormHeader = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: '20px', marginLeft: '15px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: margins.top8, marginLeft: margins.left8 }}>
         <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
           {t(Translation.MODAL_APPOINTMENTS_ADD_TITLE)}
         </DialogTitle>
@@ -30,13 +31,13 @@ const FormHeader = () => {
             position: 'absolute',
             right: 20,
             top: 20,
-            color: (theme) => theme.palette.common.black
+            color: (theme) => theme.palette.primary.main
           }}
         >
           <CloseIcon />
         </IconButton>
       </Box>
-      <Divider />
+      <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
     </>
   );
 };

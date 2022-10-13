@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   styled,
@@ -19,6 +18,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
+import { margins, paddings } from 'themes/themeConstants';
 
 export interface AddAppointmentDuplicatePatientModalProps {
   patientId: string;
@@ -29,7 +29,7 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   fontSize: '16px',
   lineHeight: '20px',
   color: theme.palette.common.black,
-  margin: '40px 10px'
+  margin: `${margins.topBottom40} ${margins.leftRight12}`
 }));
 
 const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplicatePatientModalProps) => {
@@ -48,7 +48,7 @@ const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplic
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">
       <Grid>
-        <DialogTitle sx={{ p: 4 }}>
+        <DialogTitle sx={{ padding: `${paddings.top24} ${paddings.right24} ${paddings.bottom0} ${paddings.left32}` }}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Typography variant="h3">{t(Translation.PAGE_APPOINTMENTS_DUPLICATE_PATIENT_MODAL_TITLE)}</Typography>
@@ -60,8 +60,7 @@ const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplic
             </Grid>
           </Grid>
         </DialogTitle>
-        <Divider />
-        <DialogContent sx={{ p: 4 }}>
+        <DialogContent sx={{ padding: `${paddings.top0} ${paddings.right24} ${paddings.bottom0} ${paddings.left24}` }}>
           <Grid container direction="column" spacing={3} sx={{ whiteSpace: 'pre-line' }}>
             <Grid item>
               <StyledTypography theme={theme}>
@@ -70,11 +69,10 @@ const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplic
             </Grid>
           </Grid>
         </DialogContent>
-        <Divider />
-        <DialogActions sx={{ p: 4 }}>
+        <DialogActions sx={{ padding: `${paddings.top0} ${paddings.right24} ${paddings.bottom24} ${paddings.left24}` }}>
           <Grid container justifyContent="flex-end">
             <Grid>
-              <StyledButton variant="contained" color="secondary" sx={{ width: '160px' }} onClick={onProfileClick}>
+              <StyledButton variant="contained" sx={{ width: '160px' }} onClick={onProfileClick}>
                 {t(Translation.PAGE_APPOINTMENTS_DUPLICATE_PATIENT_MODAL_ACTION)}
               </StyledButton>
             </Grid>

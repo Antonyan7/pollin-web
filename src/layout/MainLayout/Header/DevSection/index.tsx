@@ -5,11 +5,12 @@ import { IconSettings } from '@tabler/icons';
 import { ModalName } from 'constants/modals';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
+import { borders } from 'themes/themeConstants';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
-  border: '1px solid',
+  border: `${borders.solid1px}`,
   borderColor: theme.palette.primary.light,
   background: theme.palette.primary.light,
   color: theme.palette.primary.dark,

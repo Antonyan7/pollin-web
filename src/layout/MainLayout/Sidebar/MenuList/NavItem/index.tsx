@@ -85,12 +85,12 @@ const NavItem = ({ item, level }: NavItemProps) => {
         selected={openItem?.findIndex((id) => id === item.id) > -1}
         onClick={() => itemHandler(item.id!)}
       >
-        <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.common.black }}>
+        <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.primary.main }}>
           {itemIcon}
         </ListItemIcon>
         <ListItemText
           primary={
-            <Typography variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'} color="inherit">
+            <Typography variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'} color="primary">
               {item.title}
             </Typography>
           }

@@ -4,6 +4,7 @@ import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListProps, 
 import { styled, useTheme } from '@mui/material/styles';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { margins } from 'themes/themeConstants';
 import { NavGroupProps } from 'types';
 
 import NavItem from '../NavItem';
@@ -84,7 +85,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
 
   const Icon = menu.icon!;
   const menuIcon = menu.icon ? (
-    <Icon strokeWidth={1.5} style={{ marginTop: 'auto', marginBottom: 'auto' }} />
+    <Icon strokeWidth={1.5} style={{ marginTop: margins.auto, marginBottom: margins.auto }} />
   ) : (
     <FiberManualRecordIcon
       sx={{

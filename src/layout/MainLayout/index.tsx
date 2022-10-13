@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
-import { drawerWidth } from 'themes/themeConstants';
+import { drawerWidth, margins, paddings } from 'themes/themeConstants';
 import { MainStyleProps } from 'types';
 
 import Header from './Header';
@@ -29,15 +29,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
       width: `calc(100% - ${drawerWidth}px)`
     },
     [theme.breakpoints.down('md')]: {
-      marginLeft: '20px',
+      marginLeft: margins.left20,
       width: `calc(100% - ${drawerWidth}px)`,
-      padding: '16px'
+      padding: paddings.all16
     },
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '10px',
+      marginLeft: margins.left12,
       width: `calc(100% - ${drawerWidth}px)`,
-      padding: '16px',
-      marginRight: '10px'
+      padding: paddings.all16,
+      marginRight: margins.right12
     }
   }),
   ...(open && {
@@ -45,15 +45,15 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.shorter
     }),
-    marginLeft: 0,
+    marginLeft: margins.left0,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
     width: `calc(100% - ${drawerWidth}px)`,
     [theme.breakpoints.down('md')]: {
-      marginLeft: '20px'
+      marginLeft: margins.left20
     },
     [theme.breakpoints.down('sm')]: {
-      marginLeft: '10px'
+      marginLeft: margins.left12
     }
   })
 }));

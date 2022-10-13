@@ -1,5 +1,6 @@
 // material-ui
 import { styled } from '@mui/material/styles';
+import { borderRadius, margins, paddings } from 'themes/themeConstants';
 
 const CalendarWrapper = styled('div')(({ theme }) => ({
   // hide license message
@@ -20,9 +21,9 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
     fontFamily: theme.typography.fontFamily,
     border: '1px solid',
     borderColor: theme.palette.grey[200],
-    borderRadius: '7px',
-    marginTop: '30px',
-    padding: '30px'
+    borderRadius: borderRadius.radius12,
+    marginTop: margins.top32,
+    padding: paddings.all32
   },
 
   // slot
@@ -32,7 +33,7 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
 
   // time
   '& .fc .fc-timegrid-slot-label': {
-    padding: '5px 11px 21px 8px'
+    padding: `${paddings.top4} ${paddings.right24} ${paddings.bottom16} ${paddings.left8}`
   },
 
   // slot lane
@@ -45,55 +46,55 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
     display: 'grid',
     '& .fc-daygrid-day-number': {
       textAlign: 'center',
-      marginTop: 12,
-      marginBottom: 12
+      marginTop: margins.top12,
+      marginBottom: margins.bottom12
     }
   },
 
   // weekday
   '& .fc .fc-col-header-cell': {
-    backgroundColor: theme.palette.grey[200]
+    backgroundColor: theme.palette.primary.light
   },
 
   '& .fc .fc-col-header-cell-cushion': {
     color: theme.palette.grey[900],
-    padding: 16
+    padding: paddings.all16
   },
 
   // events
   '& .fc-direction-ltr .fc-daygrid-event.fc-event-end, .fc-direction-rtl .fc-daygrid-event.fc-event-start': {
-    marginLeft: 4,
-    marginBottom: 6,
-    borderRadius: '6px'
+    marginLeft: margins.left4,
+    marginBottom: margins.bottom8,
+    borderRadius: borderRadius.radius8
   },
 
   '& .fc-direction-ltr .fc-daygrid-event.fc-event-start, .fc-direction-rtl .fc-daygrid-event.fc-event-end': {
-    marginLeft: 4,
-    marginBottom: 6,
-    borderRadius: '6px'
+    marginLeft: margins.left4,
+    marginBottom: margins.bottom8,
+    borderRadius: borderRadius.radius8
   },
 
   '& .fc-h-event .fc-event-main': {
-    padding: 4,
-    paddingLeft: 8
+    padding: paddings.all4,
+    paddingLeft: paddings.left8
   },
 
   // popover when multiple events
   '& .fc .fc-more-popover': {
     border: 'none',
-    borderRadius: '14px'
+    borderRadius: borderRadius.radius12
   },
 
   '& .fc .fc-more-popover .fc-popover-body': {
     backgroundColor: theme.palette.grey[200],
-    borderBottomLeftRadius: '12px',
-    borderBottomRightRadius: '12px'
+    borderBottomLeftRadius: borderRadius.radius12,
+    borderBottomRightRadius: borderRadius.radius12
   },
 
   '& .fc .fc-popover-header': {
     padding: 12,
-    borderTopLeftRadius: '12px',
-    borderTopRightRadius: '12px',
+    borderTopLeftRadius: borderRadius.radius12,
+    borderTopRightRadius: borderRadius.radius12,
     backgroundColor: theme.palette.grey[200],
     color: theme.palette.text.primary
   },
@@ -108,8 +109,8 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
   },
 
   '& .fc-timegrid-event-harness-inset .fc-timegrid-event, .fc-timegrid-event.fc-event-mirror, .fc-timegrid-more-link': {
-    padding: 8,
-    margin: 2
+    padding: paddings.all8,
+    margin: margins.all2
   }
 }));
 

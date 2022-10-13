@@ -6,6 +6,7 @@ import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
+import { margins } from 'themes/themeConstants';
 
 const FormHeader = () => {
   const [t] = useTranslation();
@@ -17,7 +18,7 @@ const FormHeader = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginLeft: '15px' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginLeft: '8px' }}>
         <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
           {editTitleLabel}
         </DialogTitle>
@@ -28,13 +29,13 @@ const FormHeader = () => {
             position: 'absolute',
             right: 20,
             top: 20,
-            color: (theme) => theme.palette.common.black
+            color: (theme) => theme.palette.primary.main
           }}
         >
           <CloseIcon />
         </IconButton>
       </Box>
-      <Divider />
+      <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
     </>
   );
 };

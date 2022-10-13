@@ -4,13 +4,14 @@ import { CssBaseline } from '@mui/material';
 import { createTheme, Theme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import defaultConfig from 'config';
-// types
 import { CustomizationProps } from 'types/config';
+// types
 import { CustomShadowProps } from 'types/default-theme';
 
 import componentStyleOverrides from './compStyleOverride';
 import Palette from './palette';
 import customShadows from './shadows';
+import { paddings } from './themeConstants';
 import Typography from './typography';
 
 interface Props {
@@ -43,7 +44,7 @@ export default ({ children }: Props) => {
       mixins: {
         toolbar: {
           minHeight: '48px',
-          padding: '16px',
+          padding: paddings.all16,
           '@media (min-width: 600px)': {
             minHeight: '48px'
           }

@@ -2,11 +2,12 @@ import React from 'react';
 import { Avatar, AvatarProps, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconCheckbox } from '@tabler/icons';
+import { borders } from 'themes/themeConstants';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
-  border: '1px solid',
+  border: `${borders.solid1px}`,
   borderColor: theme.palette.primary.light,
   background: theme.palette.primary.light,
   color: theme.palette.primary.dark,

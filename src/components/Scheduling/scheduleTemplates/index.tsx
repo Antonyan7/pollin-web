@@ -9,6 +9,7 @@ import { rowsPerPage } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
+import { margins } from 'themes/themeConstants';
 
 import { ITableRow } from './ScheduleTemplatesTable/Table';
 import ScheduleTemplatesTable from './ScheduleTemplatesTable';
@@ -52,16 +53,16 @@ const ScheduleTemplates = () => {
           variant="outlined"
           endIcon={<AddIcon sx={{ color: theme.palette.primary.main }} />}
           onClick={handleNewTemplate}
-          sx={{ marginLeft: 'auto' }}
+          sx={{ marginLeft: margins.auto }}
         >
-          <Typography variant="h4" sx={{ marginRight: '10px' }}>
+          <Typography variant="h4" sx={{ marginRight: margins.right12 }}>
             {t(Translation.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE)}
           </Typography>
         </StyledButtonNew>
         <ScheduleTemplatesTable page={page} rows={rows} />
         {isScheduleTemplatesLoading && (
-          <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-            <CircularProgress sx={{ margin: 'auto' }} />
+          <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+            <CircularProgress sx={{ margin: margins.auto }} />
             <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
           </Box>
         )}

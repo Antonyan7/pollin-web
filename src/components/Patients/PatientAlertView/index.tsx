@@ -4,6 +4,7 @@ import { Alert, Box, ListItem, styled, Typography, useTheme } from '@mui/materia
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
 const PatientAlertView = () => {
@@ -30,7 +31,7 @@ const PatientAlertView = () => {
         {patientAlertDetails.map((titleContent: AlertDetailsProps) => (
           <>
             <StyledDiv>
-              <InfoOutlinedIcon sx={{ marginRight: '5px' }} />
+              <InfoOutlinedIcon sx={{ marginRight: margins.right4 }} />
               <Typography color={theme.palette.warning.dark}>{titleContent.title}</Typography>
             </StyledDiv>
             {titleContent.messages.map((message: AlertDetailsMessagesProps) => (

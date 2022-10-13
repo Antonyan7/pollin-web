@@ -2,8 +2,7 @@ import React from 'react';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { IconPencil } from '@tabler/icons';
-
-import { gridSpacing } from '../../themes/themeConstants';
+import { gridSpacing, paddings } from 'themes/themeConstants';
 
 const EncounterNotes = () => {
   interface IEncounterNotesData {
@@ -27,7 +26,7 @@ const EncounterNotes = () => {
   return (
     <div style={{ backgroundColor: 'white' }}>
       {encounterNotesData.map((encounterNote) => (
-        <Grid sx={{ padding: '30px' }} item lg={8} xs={12}>
+        <Grid sx={{ padding: paddings.all32 }} item lg={8} xs={12}>
           <Grid container direction="column" spacing={gridSpacing}>
             <Grid item xs={12}>
               <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>

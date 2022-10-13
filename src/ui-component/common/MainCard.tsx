@@ -10,6 +10,7 @@ import {
   Typography
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { borders } from 'themes/themeConstants';
 
 const headerSX = {
   '& .MuiCardHeader-action': { mr: 0 }
@@ -58,7 +59,7 @@ const MainCard = React.forwardRef(
       transform: `translate(50%, 50%)`,
       position: 'absolute',
       width: { xs: 280, lg: 600 },
-      border: border ? '1px solid' : 'none',
+      border: border ? `${borders.solid1px}` : 'none',
       borderColor: theme.palette.primary[200] + 75,
       ':hover': {
         boxShadow: boxShadow ? shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'

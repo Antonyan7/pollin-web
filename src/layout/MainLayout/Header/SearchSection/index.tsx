@@ -3,35 +3,35 @@ import { Avatar, AvatarProps, Box, Card, Grid, InputAdornment, OutlinedInput, Po
 import { styled, useTheme } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
+import Transitions from 'components/Transition/Transitions';
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
-
-import Transitions from '../../../../components/Transition/Transitions';
+import { margins, paddings } from 'themes/themeConstants';
 
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
   zIndex: 1100,
   width: '99%',
   top: '-55px',
-  padding: '0 12px',
+  padding: `${paddings.topBottom0} ${paddings.leftRight12}`,
   [theme.breakpoints.down('sm')]: {
-    padding: '0 10px'
+    padding: `${paddings.topBottom0} ${paddings.leftRight12}`
   }
 }));
 
 const OutlineInputStyle = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 434,
-  marginLeft: 16,
-  paddingLeft: 16,
-  paddingRight: 16,
+  marginLeft: margins.left16,
+  paddingLeft: paddings.left16,
+  paddingRight: paddings.right16,
   '& input': {
     background: 'transparent',
-    paddingLeft: '4px'
+    paddingLeft: paddings.left4
   },
   [theme.breakpoints.down('lg')]: {
     width: 250
   },
   [theme.breakpoints.down('md')]: {
     width: '100%',
-    marginLeft: 4,
+    marginLeft: margins.left4,
     background: theme.palette.common.white
   }
 }));

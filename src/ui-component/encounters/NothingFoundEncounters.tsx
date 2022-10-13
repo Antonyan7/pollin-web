@@ -2,19 +2,19 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-
-import { Translation } from '../../constants/translations';
+import { Translation } from 'constants/translations';
+import { margins } from 'themes/themeConstants';
 
 const NothingFoundEncounters = () => {
   const [t] = useTranslation();
   const theme = useTheme();
 
   return (
-    <Box sx={{ textAlign: 'center', marginTop: '150px' }}>
+    <Box sx={{ textAlign: 'center', marginTop: margins.top150 }}>
       <Typography
         sx={{
           color: theme.palette.common.black,
-          marginBottom: '20px'
+          marginBottom: margins.bottom20
         }}
         fontSize="21px"
         fontWeight="400"

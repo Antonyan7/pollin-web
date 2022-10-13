@@ -9,6 +9,7 @@ import { Translation } from 'constants/translations';
 import { appointmentStatusData } from 'helpers/constants';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
+import { borders, margins, paddings } from 'themes/themeConstants';
 
 import { IFormValues } from '../types';
 
@@ -22,11 +23,17 @@ const StatusAppointmentLabel = () => {
   const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
 
   return (
-    <Grid container spacing={3} sx={{ marginTop: '0px', paddingLeft: '24px' }}>
+    <Grid container spacing={3} sx={{ marginTop: margins.top0, paddingLeft: paddings.left24 }}>
       <Grid item xs={getValues('serviceType.isVirtual') ? 6 : 12}>
         <FormControl fullWidth>
           <StyledInputLabel id="status-appointment-label">{statusAppointmentLabel}</StyledInputLabel>
           <StyledSelectButton
+            MenuProps={{
+              style: { maxHeight: 260 },
+              PaperProps: {
+                style: { border: `${borders.solid2px}` }
+              }
+            }}
             IconComponent={KeyboardArrowDownIcon}
             id="status-appointment-label"
             labelId="status-appointment-label"
@@ -45,7 +52,6 @@ const StatusAppointmentLabel = () => {
       {getValues('serviceType.isVirtual') && (
         <Grid item xs={getValues('serviceType.isVirtual') ? 6 : 12}>
           <StyledButton
-            color="secondary"
             variant="contained"
             sx={{
               width: '100%',

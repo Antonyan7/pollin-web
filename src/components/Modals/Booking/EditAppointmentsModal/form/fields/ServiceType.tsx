@@ -6,6 +6,7 @@ import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
+import { borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
 import { IFormValues } from '../types';
@@ -39,7 +40,7 @@ const ServiceType = () => {
     <Grid item xs={12}>
       <Autocomplete
         ListboxProps={{
-          style: { maxHeight: 160 }
+          style: { maxHeight: 260, borderRadius: '8px', border: `${borders.solid2px}` }
         }}
         id="serviceType"
         onChange={(_, value) => {

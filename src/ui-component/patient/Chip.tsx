@@ -1,6 +1,7 @@
 import React from 'react';
 import MuiChip, { ChipProps } from '@mui/material/Chip';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
+import { borders, paddings } from 'themes/themeConstants';
 
 interface IChipProps extends ChipProps {
   chipColor?: string;
@@ -27,7 +28,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
   let outlineSX = {
     color: theme.palette.primary.main,
     backgroundColor: 'transparent',
-    border: '1px solid',
+    border: `${borders.solid1px}`,
     borderColor: theme.palette.primary.main,
     ':hover': {
       color: theme.palette.primary.light,
@@ -38,10 +39,10 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
   switch (chipColor) {
     case 'notActive':
       defaultSX = {
-        padding: '15px 35px',
+        padding: `${paddings.topBottom16} ${paddings.leftRight36}`,
         color: theme.palette.common.black,
         backgroundColor: theme.palette.grey[100],
-        border: '1px solid',
+        border: `${borders.solid1px}`,
         borderColor: theme.palette.grey[100],
         ':hover': {
           color: theme.palette.common.black,
@@ -58,7 +59,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
       outlineSX = {
         color: theme.palette.grey[500],
         backgroundColor: 'transparent',
-        border: '1px solid',
+        border: `${borders.solid1px}`,
         borderColor: theme.palette.grey[500],
         ':hover': {
           color: theme.palette.grey[500],

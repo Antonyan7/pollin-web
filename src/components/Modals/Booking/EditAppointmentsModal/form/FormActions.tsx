@@ -22,20 +22,15 @@ const FormActions: React.FC = () => {
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
 
   return (
-    <DialogActions sx={{ p: 4, paddingTop: '10px' }}>
+    <DialogActions sx={{ p: 3, paddingTop: '10px' }}>
       <Grid container justifyContent="space-between">
         <Grid item>
-          <StyledButton
-            color="secondary"
-            sx={{ width: '180px' }}
-            variant="contained"
-            onClick={onCancelAppointmentClick}
-          >
+          <StyledButton sx={{ width: '160px' }} variant="outlined" onClick={onCancelAppointmentClick}>
             {cancelButtonLabel}
           </StyledButton>
         </Grid>
         <Grid item>
-          <StyledButton color="secondary" sx={{ width: '120px' }} type="submit" variant="contained">
+          <StyledButton sx={{ width: '60px' }} type="submit" variant="contained">
             {saveButtonLabel}
           </StyledButton>
         </Grid>

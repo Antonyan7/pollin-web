@@ -11,26 +11,27 @@ import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patien
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins, paddings } from 'themes/themeConstants';
 import { IPatientsFilterOption } from 'types/patient';
 
 export const StyledOutlinedInput = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 500,
   height: 53,
-  marginBottom: 20,
-  marginRight: 20,
-  paddingLeft: 16,
-  paddingRight: 16,
+  marginBottom: margins.bottom20,
+  marginRight: margins.right20,
+  paddingLeft: paddings.left16,
+  paddingRight: paddings.right16,
   background: 'transparent',
   '& input': {
     background: 'transparent',
-    paddingLeft: '4px'
+    paddingLeft: paddings.left4
   },
   [theme.breakpoints.down('lg')]: {
     width: 250
   },
   [theme.breakpoints.down('md')]: {
     width: '100%',
-    marginLeft: 4,
+    marginLeft: margins.left4,
     background: theme.palette.common.white
   }
 }));

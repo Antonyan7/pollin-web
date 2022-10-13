@@ -28,24 +28,25 @@ import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { borderRadius, borders, margins } from 'themes/themeConstants';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
 
-import { dispatch, useAppSelector } from '../../redux/hooks';
-import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
-
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
 export const MainHeader = styled(Box)<BoxProps>(() => ({
-  marginTop: '30px',
+  marginTop: margins.top32,
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between'
 }));
 
+// eslint-disable-next-line max-lines-per-function
 const Appointments = () => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
@@ -60,33 +61,26 @@ const Appointments = () => {
     () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
     [calendarDate]
   );
-
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddAppointmentModal, props: {} }));
   }, []);
-
   const onDateDatePickerOpen = useCallback(() => {
     setDatePickerOpen(true);
   }, []);
-
   const onDateDatePickerClose = useCallback(() => {
     setDatePickerOpen(false);
   }, []);
-
   const onDateChange = useCallback((date: Date | null) => {
     if (date) {
       dispatch(bookingMiddleware.setDateValue(format(date, 'yyyy-MM-dd')));
     }
   }, []);
-
   const onServiceProviderChange = useCallback((event: SelectChangeEvent<unknown>) => {
     dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
-
   const onTodayClick = useCallback(() => {
     dispatch(bookingMiddleware.setDateValue(format(new Date(), 'yyyy-MM-dd')));
   }, []);
-
   const onServiceProviderScroll = (event: UIEvent) => {
     const eventTarget = event.target as HTMLDivElement;
 
@@ -109,15 +103,22 @@ const Appointments = () => {
       />
       <AppointmentsContent>
         <AppointmentsHeader />
-        <Divider variant="fullWidth" sx={{ marginTop: '17px', marginLeft: '-28px', marginRight: '-24px' }} />
+        <Divider
+          variant="fullWidth"
+          sx={{ marginTop: margins.top24, marginLeft: margins.left4, marginRight: margins.right4 }}
+        />
         <MainHeader>
           <Box sx={{ minWidth: '210px' }}>
             <FormControl fullWidth>
               <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}</InputLabel>
               <Select
                 MenuProps={{
-                  style: { maxHeight: 250 },
+                  style: { maxHeight: 260 },
                   PaperProps: {
+                    style: {
+                      border: `${borders.solid2px} ${theme.palette.primary.main}`,
+                      borderRadius: borderRadius.radius12
+                    },
                     onScroll: (event) => onServiceProviderScroll(event as unknown as UIEvent)
                   }
                 }}
@@ -142,9 +143,11 @@ const Appointments = () => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', gap: '40px' }}>
+          <Box sx={{ display: 'flex', gap: '16px' }}>
             <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>
-              <Typography variant="h4">{t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}</Typography>
+              <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
+                {t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}
+              </Typography>
             </StyledButtonNew>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
@@ -163,7 +166,8 @@ const Appointments = () => {
                   }}
                   renderInput={(params) => (
                     <TextField
-                      sx={{ width: '290px' }}
+                      disabled
+                      sx={{ width: '320px' }}
                       {...params}
                       onClick={() => setDatePickerOpen(true)}
                       onKeyDown={(event) => {
@@ -184,7 +188,10 @@ const Appointments = () => {
           >
             <Typography
               variant="h4"
-              sx={{ marginRight: '10px', color: !serviceProviderId ? theme.palette.grey[300] : 'initial' }}
+              sx={{
+                marginRight: margins.right12,
+                color: !serviceProviderId ? theme.palette.grey[300] : theme.palette.primary.main
+              }}
             >
               {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)}
             </Typography>

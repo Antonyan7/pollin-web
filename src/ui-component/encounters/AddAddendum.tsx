@@ -5,6 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
+import { margins } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCardStyled from '../cards/SubCardStyled';
@@ -27,7 +28,7 @@ const AddAddendum = () => {
             </Grid>
             <Grid item xs={5}>
               <Typography
-                sx={{ color: (theme) => theme.palette.common.black, marginRight: '20px' }}
+                sx={{ color: (theme) => theme.palette.common.black, marginRight: margins.right20 }}
                 fontSize="21px"
                 fontWeight="400"
               >

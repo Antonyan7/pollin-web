@@ -7,8 +7,8 @@ import { styled, useTheme } from '@mui/material/styles';
 // redux
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { drawerWidth, paddings } from 'themes/themeConstants';
 
-import { drawerWidth } from '../../../themes/themeConstants';
 import LogoSection from '../LogoSection';
 
 // project imports
@@ -53,8 +53,8 @@ const Sidebar = ({ window }: SidebarProps) => {
         component="div"
         style={{
           height: !matchUpMd ? 'calc(100vh - 56px)' : 'calc(100vh - 88px)',
-          paddingLeft: '16px',
-          paddingRight: '16px'
+          paddingLeft: paddings.left16,
+          paddingRight: paddings.right16
         }}
       >
         <MenuList />

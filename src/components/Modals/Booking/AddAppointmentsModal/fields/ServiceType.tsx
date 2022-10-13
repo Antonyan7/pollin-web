@@ -2,11 +2,12 @@ import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/managerBooking';
-import { Autocomplete, Grid, TextField, TextFieldProps } from '@mui/material';
+import { Autocomplete, Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
+import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
 const ServiceType = () => {
@@ -24,10 +25,18 @@ const ServiceType = () => {
   const { error } = fieldState;
   const serviceTypeIdHelperText = error?.message;
   const serviceTypeErrorText = !!error?.message;
+  const theme = useTheme();
 
   return (
     <Grid item xs={12}>
       <Autocomplete
+        ListboxProps={{
+          style: {
+            maxHeight: 260,
+            borderRadius: `${borderRadius.radius8}`,
+            border: `${borders.solid2px} ${theme.palette.primary.main}`
+          }
+        }}
         id={serviceTypeIdFieldName}
         onChange={(_, value) => onChange(value?.item.id)}
         onBlur={onBlur}

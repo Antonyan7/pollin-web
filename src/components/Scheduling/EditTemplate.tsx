@@ -9,6 +9,7 @@ import { standardDate } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
+import { margins, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
@@ -129,7 +130,7 @@ const EditTemplate = () => {
                 onClick={onOpenModalClick}
                 variant="outlined"
                 size="large"
-                sx={{ marginRight: 2, marginLeft: 'auto' }}
+                sx={{ marginRight: margins.right2, marginLeft: margins.auto }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
@@ -138,7 +139,7 @@ const EditTemplate = () => {
                 variant="contained"
                 size="large"
                 type="submit"
-                sx={{ paddingLeft: 5, paddingRight: 5 }}
+                sx={{ paddingLeft: paddings.left4, paddingRight: paddings.right4 }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
               </StyledButton>

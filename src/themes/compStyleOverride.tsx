@@ -9,7 +9,7 @@ import {
   MuiCardContent,
   MuiCardHeader,
   MuiChip,
-  MuiDialog,
+  MuiClockPicker,
   MuiDialogTitle,
   MuiDivider,
   MuiInputBase,
@@ -19,6 +19,7 @@ import {
   MuiListItemText,
   MuiOutlinedInput,
   MuiPaper,
+  MuiPickersToolbar,
   MuiSelect,
   MuiSlider,
   MuiTableCell,
@@ -37,11 +38,14 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
   const textColorDark = theme.palette.text.dark;
   const textColorSecondary = theme.palette.text.secondary;
   const lightColor = theme.palette.primary.light;
+  const secondary200 = theme.palette.secondary[200];
   const paperColor = theme.palette.background.paper;
   const textColorPrimaryDark = theme.palette.primary.dark;
+  const buttonBorderColor = theme.palette.primary.main;
+  const secondaryMain = theme.palette.secondary.main;
 
   return {
-    MuiButton,
+    MuiButton: MuiButton(buttonBorderColor),
     MuiPaper: MuiPaper(borderRadius),
     MuiCardHeader: MuiCardHeader(textColorDark),
     MuiCardContent,
@@ -51,7 +55,7 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
     MuiListItemIcon: MuiListItemIcon(textColor),
     MuiListItemText: MuiListItemText(textColorDark),
     MuiInputBase: MuiInputBase(textColorDark, textColorSecondary),
-    MuiOutlinedInput: MuiOutlinedInput(outlinedFilled, bgColor, borderRadius, theme.palette.grey[400], lightColor),
+    MuiOutlinedInput: MuiOutlinedInput(outlinedFilled, bgColor, 12, lightColor, lightColor),
     MuiSlider: MuiSlider(lightColor, theme.palette.grey[300], paperColor),
     MuiAutocomplete: MuiAutocomplete(menuSelectedBack, textColorDark, theme.palette.secondary[200], borderRadius),
     MuiDivider: MuiDivider(theme.palette.divider),
@@ -67,10 +71,11 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
       theme.palette.grey[900],
       textColorPrimaryDark
     ),
+    MuiDialogTitle,
     MuiTabs: MuiTabs(theme.palette.grey[200]),
-    MuiDialog,
     MuiTableCell: MuiTableCell(theme.palette.grey[200], theme.palette.grey[600]),
     MuiTooltip: MuiTooltip(paperColor, textColor),
-    MuiDialogTitle
+    MuiClockPicker: MuiClockPicker(lightColor, buttonBorderColor, secondary200, secondaryMain),
+    MuiPickersToolbar: MuiPickersToolbar()
   };
 }

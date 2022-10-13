@@ -17,7 +17,7 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
         <Toolbar
           sx={{
             backgroundColor: theme.palette.common.white,
-            borderRadius: '7px'
+            borderRadius: '12px'
           }}
         >
           <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>

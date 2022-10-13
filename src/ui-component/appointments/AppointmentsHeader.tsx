@@ -1,9 +1,10 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { margins } from 'themes/themeConstants';
 
 import { Translation } from '../../constants/translations';
 
@@ -22,8 +23,20 @@ const AppointmentsHeader = () => {
         justifyContent: 'flex-end'
       }}
     >
-      <StyledButtonNew theme={theme} variant="outlined" endIcon={<OpenInNewIcon />} onClick={onNewCalendarClick}>
-        <Typography variant="h4" sx={{ marginRight: '10px' }}>
+      <StyledButtonNew
+        sx={{
+          marginTop: margins.top16,
+          '& > span > svg': {
+            width: 24,
+            height: 24
+          }
+        }}
+        theme={theme}
+        variant="contained"
+        endIcon={<AddIcon />}
+        onClick={onNewCalendarClick}
+      >
+        <Typography color={theme.palette.common.white} variant="h4" sx={{ marginRight: margins.right12 }}>
           {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR)}
         </Typography>
       </StyledButtonNew>

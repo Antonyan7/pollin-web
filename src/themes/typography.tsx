@@ -1,6 +1,8 @@
 import { Theme } from '@mui/material/styles';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 
+import { margins, paddings } from './themeConstants';
+
 const Typography = (theme: Theme, borderRadius: number, fontFamily: string): TypographyOptions => ({
   fontFamily,
   h6: {
@@ -63,43 +65,43 @@ const Typography = (theme: Theme, borderRadius: number, fontFamily: string): Typ
     textTransform: 'capitalize'
   },
   customInput: {
-    marginTop: 1,
-    marginBottom: 1,
+    marginTop: margins.top2,
+    marginBottom: margins.bottom2,
     '& > label': {
-      top: 23,
-      left: 0,
+      top: margins.top24,
+      left: margins.left0,
       color: theme.palette.grey[500],
       '&[data-shrink="false"]': {
-        top: 5
+        top: margins.top4
       }
     },
     '& > div > input': {
-      padding: '30.5px 14px 11.5px'
+      padding: `${paddings.top32} ${paddings.leftRight16} ${paddings.left12}`
     },
     '& legend': {
       display: 'none'
     },
     '& fieldset': {
-      top: 0
+      top: margins.top0
     }
   },
   mainContent: {
-    backgroundColor: theme.palette.primary.light,
+    backgroundColor: theme.palette.secondary[200],
     width: '100%',
     minHeight: 'calc(100vh - 88px)',
     flexGrow: 1,
-    padding: '14px 24px 64px 28px',
-    marginTop: '88px',
-    marginRight: '20px',
+    padding: `${paddings.top12} ${paddings.right24} ${paddings.bottom64} ${paddings.left24}`,
+    marginTop: margins.top88,
+    marginRight: margins.right20,
     borderRadius: `${borderRadius}px`
   },
   menuCaption: {
     fontSize: '0.875rem',
     fontWeight: 500,
     color: theme.palette.grey[600],
-    padding: '6px',
+    padding: paddings.all8,
     textTransform: 'capitalize',
-    marginTop: '10px'
+    marginTop: margins.top12
   },
   subMenuCaption: {
     fontSize: '0.6875rem',

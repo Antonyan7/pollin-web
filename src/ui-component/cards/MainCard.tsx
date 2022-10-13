@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { borders } from 'themes/themeConstants';
 // project imports
 import { KeyedObject } from 'types';
 
@@ -63,7 +64,7 @@ const MainCard = React.forwardRef(
         ref={ref}
         {...others}
         sx={{
-          border: border ? '1px solid' : 'none',
+          border: border ? `${borders.solid1px}` : 'none',
           borderColor: theme.palette.primary[200] + 75,
           ':hover': {
             boxShadow: boxShadow ? shadow ?? '0 2px 14px 0 rgb(32 40 45 / 8%)' : 'inherit'

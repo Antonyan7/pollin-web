@@ -1,9 +1,11 @@
+import { borders, margins, paddings } from 'themes/themeConstants';
+
 export const MuiListItemButton = (textColor: string, menuSelected: string, menuSelectedBack: string) => ({
   styleOverrides: {
     root: {
       color: textColor,
-      paddingTop: '10px',
-      paddingBottom: '10px',
+      paddingTop: paddings.top12,
+      paddingBottom: paddings.bottom12,
       '&.Mui-selected': {
         color: menuSelected,
         backgroundColor: menuSelectedBack,
@@ -25,14 +27,15 @@ export const MuiListItemButton = (textColor: string, menuSelected: string, menuS
   }
 });
 
-export const MuiButton = {
+export const MuiButton = (color: string) => ({
   styleOverrides: {
     root: {
       fontWeight: 500,
-      borderRadius: '4px'
+      borderRadius: '4px',
+      borderColor: color
     }
   }
-};
+});
 
 export const MuiPaper = (borderRadius: number) => ({
   defaultProps: {
@@ -52,7 +55,7 @@ export const MuiCardHeader = (textColor: string) => ({
   styleOverrides: {
     root: {
       color: textColor,
-      padding: '24px'
+      padding: paddings.all24
     },
     title: {
       fontSize: '1.125rem'
@@ -63,7 +66,7 @@ export const MuiCardHeader = (textColor: string) => ({
 export const MuiCardContent = {
   styleOverrides: {
     root: {
-      padding: '24px'
+      padding: paddings.all24
     }
   }
 };
@@ -71,7 +74,7 @@ export const MuiCardContent = {
 export const MuiCardActions = {
   styleOverrides: {
     root: {
-      padding: '24px'
+      padding: paddings.all24
     }
   }
 };
@@ -134,23 +137,23 @@ export const MuiOutlinedInput = (
         borderColor: color
       },
       '&.MuiInputBase-multiline': {
-        padding: 1
+        padding: paddings.all2
       }
     },
     input: {
       fontWeight: 500,
       background: outlinedFilled ? bgColor : 'transparent',
-      padding: '15.5px 14px',
+      padding: `${paddings.topBottom16} ${paddings.leftRight12}`,
       borderRadius: `${borderRadius}px`,
       '&.MuiInputBase-inputSizeSmall': {
-        padding: '10px 14px',
+        padding: `${paddings.topBottom12} ${paddings.leftRight16}`,
         '&.MuiInputBase-inputAdornedStart': {
-          paddingLeft: 0
+          paddingLeft: paddings.left0
         }
       }
     },
     inputAdornedStart: {
-      paddingLeft: 4
+      paddingLeft: paddings.left4
     },
     notchedOutline: {
       borderRadius: `${borderRadius}px`
@@ -186,7 +189,6 @@ export const MuiAutocomplete = (
       '& .MuiAutocomplete-tag': {
         background: secondaryColor,
         borderRadius: 4,
-        color: darkColor,
         '.MuiChip-deleteIcon': {
           color: iconColor
         }
@@ -250,8 +252,8 @@ export const MuiTimelineContent = (textColor: string) => ({
 export const MuiTreeItem = {
   styleOverrides: {
     label: {
-      marginTop: 14,
-      marginBottom: 14
+      marginTop: margins.top16,
+      marginBottom: margins.bottom16
     }
   }
 };
@@ -292,7 +294,7 @@ export const MuiInternalDateTimePickerTabs = (
 export const MuiTabs = (borderColor: string) => ({
   styleOverrides: {
     flexContainer: {
-      borderBottom: '1px solid',
+      borderBottom: `${borders.solid1px}`,
       borderColor
     }
   }
@@ -301,7 +303,7 @@ export const MuiTabs = (borderColor: string) => ({
 export const MuiDialog = {
   styleOverrides: {
     paper: {
-      padding: '12px 0 12px 0'
+      padding: `${paddings.top12} ${paddings.right0} ${paddings.bottom12} ${paddings.left0}`
     }
   }
 };
@@ -324,6 +326,51 @@ export const MuiTooltip = (color: string, background: string) => ({
     tooltip: {
       color,
       background
+    }
+  }
+});
+export const MuiPickersToolbar = () => ({
+  styleOverrides: {
+    root: {
+      '& > span': {
+        display: 'block',
+        width: '100%',
+        textAlign: 'center',
+        color: 'black'
+      },
+      '& > .MuiPickersToolbar-content button span': {
+        fontSize: '16px'
+      },
+      '& > .MuiPickersToolbar-content .MuiDateTimePickerToolbar-dateContainer': {
+        marginTop: margins.top8,
+        display: 'grid',
+        gridTemplateColumns: 'auto auto',
+        alignItems: 'center',
+        gridColumnGap: '8px',
+        '& button span': {
+          color: 'black',
+          fontWeight: '400'
+        },
+        '& button:nth-child(2) span': {
+          paddingTop: paddings.top2
+        }
+      }
+    },
+    '& > timeContainer > button > span': {
+      fontSize: '10px'
+    }
+  }
+});
+export const MuiClockPicker = (lightColor: string, mainColor: string, secondary200: string, secondaryMain: string) => ({
+  styleOverrides: {
+    root: {
+      '& > div > div': {
+        backgroundColor: secondary200,
+        marginBottom: margins.bottom32
+      },
+      '& .MuiButtonBase-root > span': {
+        color: secondaryMain
+      }
     }
   }
 });

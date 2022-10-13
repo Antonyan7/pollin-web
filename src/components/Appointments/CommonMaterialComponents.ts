@@ -11,6 +11,7 @@ import {
   TextareaAutosize,
   TextareaAutosizeProps
 } from '@mui/material';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 const StyledSelectButton = styled(Select)<SelectProps>(({ theme }) => ({
   color: theme.palette.common.white,
@@ -30,23 +31,23 @@ const StyledInputLabel = styled(InputLabel)<InputLabelProps>(({ theme }) => ({
 }));
 
 const InternalButton = styled(Button)<ButtonProps>(({ theme }) => ({
-  border: `1px solid ${theme.palette.dark[300]}`,
-  borderRadius: '7px',
+  border: `${borders.solid1px} ${theme.palette.dark[300]}`,
+  borderRadius: borderRadius.radius8,
   color: theme.palette.common.black,
   display: 'flex',
   justifyContent: 'center',
   backgroundColor: theme.palette.dark[400],
   '&:hover': {
     backgroundColor: theme.palette.dark[200],
-    border: `1px solid ${theme.palette.dark[300]}`
+    border: `${borders.solid1px} ${theme.palette.dark[300]}`
   }
 }));
 
 const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>(({ theme }) => ({
   maxWidth: '100%',
   minWidth: '100%',
-  border: `1px solid ${theme.palette.dark[300]}`,
-  borderRadius: '7px',
+  border: `${borders.solid1px} ${theme.palette.dark[300]}`,
+  borderRadius: borderRadius.radius8,
   backgroundColor: theme.palette.dark[400],
   maxHeight: '150px',
   minHeight: '50px',
@@ -55,30 +56,35 @@ const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>((
 }));
 
 const StyledButtonNew = styled(Button)<ButtonProps>(() => ({
-  borderRadius: '7px',
-  padding: '15px 20px',
+  '& > span > svg': {
+    width: 24,
+    height: 24
+  },
+  borderRadius: borderRadius.radius8,
+  padding: `${paddings.topBottom16} ${paddings.leftRight20}`,
   display: 'flex',
+  height: '52px',
   alignItems: 'center'
 }));
 
 const StyledButton = styled(Button)<ButtonProps>(() => ({
-  borderRadius: '7px',
+  borderRadius: borderRadius.radius8,
   height: '45px'
 }));
 
 const StyledAddButton = styled(Button)<ButtonProps>(() => ({
-  borderRadius: '5px',
-  width: '125px',
+  borderRadius: borderRadius.radius4,
+  width: '60px',
   height: '45px'
 }));
 
 const StyledBox = styled(Box)<BoxProps>(() => ({
   textAlign: 'left',
-  marginBottom: '8px'
+  marginBottom: margins.bottom8
 }));
 
 const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
-  borderRadius: '7px',
+  borderRadius: borderRadius.radius8,
   padding: theme.spacing(3),
   backgroundColor: theme.palette.background.paper
 }));

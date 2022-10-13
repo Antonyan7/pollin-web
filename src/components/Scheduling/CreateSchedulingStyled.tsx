@@ -1,4 +1,5 @@
 import { styled } from '@mui/material/styles';
+import { borders, paddings } from 'themes/themeConstants';
 
 const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
   '.create-scheduling-template': {
@@ -36,8 +37,8 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
       height: theme.spacing(7),
       borderRadius: '50%',
       color: theme.palette.secondary.main,
-      border: `1px solid ${theme.palette.secondary.main}`,
-      padding: '5px'
+      border: `${borders.solid1px} ${theme.palette.secondary.main}`,
+      padding: paddings.all4
     },
     '.dark-button': {
       background: `${theme.palette.grey[700]}`
@@ -45,7 +46,7 @@ const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
     '.light-button': {
       background: theme.palette.grey[100],
       color: theme.palette.common.black,
-      border: `1px solid ${theme.palette.grey[300]}`
+      border: `${borders.solid1px} ${theme.palette.grey[300]}`
     }
   }
 }));

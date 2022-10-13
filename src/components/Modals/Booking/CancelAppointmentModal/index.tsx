@@ -9,7 +9,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   FormControl,
   Grid,
   IconButton,
@@ -26,6 +25,7 @@ import { cancellationReasons } from 'helpers/constants';
 import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { margins } from 'themes/themeConstants';
 
 export interface CancelAppointmentModalProps {
   appointmentId: string;
@@ -64,7 +64,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
     <Dialog open onClose={onClose}>
       <Grid sx={{ width: '500px' }}>
         <DialogTitle>
-          <Grid sx={{ margin: '10px' }} container justifyContent="space-between" alignItems="center">
+          <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
               <Typography
                 sx={{
@@ -82,33 +82,30 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
             </Grid>
           </Grid>
         </DialogTitle>
-        <Divider />
         <DialogContent sx={{ p: 3 }}>
-          <Grid sx={{ minHeight: '300px' }} container spacing={3}>
-            <Grid sx={{ p: 5, height: '100px' }} container spacing={2}>
-              <Grid item xs={12}>
-                <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
-              </Grid>
-              <Grid sx={{ marginTop: '20px' }} item xs={12}>
-                <FormControl fullWidth>
-                  <StyledInputLabel id="cancel-appointment-label">
-                    {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                  </StyledInputLabel>
-                  <Select
-                    IconComponent={KeyboardArrowDownIcon}
-                    id="cancel-appointment-label"
-                    labelId="cancel-appointment-label"
-                    label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                    onChange={onSelectButtonChange}
-                  >
-                    {cancellationReasons.map((reasonItem) => (
-                      <MenuItem value={reasonItem} key={reasonItem.toString()}>
-                        {reasonItem}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
+            </Grid>
+            <Grid sx={{ marginTop: margins.top20 }} item xs={12}>
+              <FormControl fullWidth>
+                <StyledInputLabel id="cancel-appointment-label">
+                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                </StyledInputLabel>
+                <Select
+                  IconComponent={KeyboardArrowDownIcon}
+                  id="cancel-appointment-label"
+                  labelId="cancel-appointment-label"
+                  label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                  onChange={onSelectButtonChange}
+                >
+                  {cancellationReasons.map((reasonItem) => (
+                    <MenuItem value={reasonItem} key={reasonItem.toString()}>
+                      {reasonItem}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Grid>
 
             {openOtherReasonField && (
@@ -126,18 +123,16 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
             )}
           </Grid>
         </DialogContent>
-        <Divider />
         <DialogActions sx={{ p: 3 }}>
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
                 <Button
-                  color="secondary"
                   variant="contained"
                   disabled={!cancellationReason}
                   onClick={onConfirm}
                   sx={{
-                    width: '160px',
+                    width: '80px',
                     height: '40px'
                   }}
                 >

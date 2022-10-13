@@ -7,6 +7,7 @@ import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/ti
 import { Translation } from 'constants/translations';
 import { formatDate, toRoundupTime } from 'helpers/time';
 
+import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
 
 import { IFormValues } from '../types';
@@ -31,10 +32,23 @@ const DateAndStartTime: React.FC = () => {
   return (
     <Grid item xs={12}>
       <MobileDateTimePicker
+        components={{
+          ActionBar: DatePickerActionBar
+        }}
         label={dateAndStartTimeLabel}
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
         value={value}
+        DialogProps={{
+          sx: {
+            '& .MuiPickersToolbar-penIconButton': { display: 'none' },
+            '& div': {
+              '& .Mui-disabled': {
+                display: 'none'
+              }
+            }
+          }
+        }}
         onChange={(date: Date | null) => getMobileDateTime(date)}
         renderInput={(params: TextFieldProps) => {
           const formattedDate = formatDate(value as Date);

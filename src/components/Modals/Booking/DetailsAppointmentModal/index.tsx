@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { margins } from 'themes/themeConstants';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 
@@ -62,13 +63,13 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
               </Typography>
             </Grid>
             <Grid item>
-              <IconButton onClick={onClose}>
+              <IconButton color="primary" onClick={onClose}>
                 <CloseOutlined />
               </IconButton>
             </Grid>
           </Grid>
         </DialogTitle>
-        <Divider />
+        <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
         <DialogContent>
           <Grid container spacing={3}>
             <DialogContentRow
@@ -97,12 +98,12 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
           </Grid>
         </DialogContent>
-        <Divider />
+        <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
         <DialogActions sx={{ p: 3 }}>
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                <StyledButton onClick={onViewProfileClick} color="secondary" variant="contained">
+                <StyledButton onClick={onViewProfileClick} variant="contained">
                   {t(Translation.MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW)}
                 </StyledButton>
               </Stack>

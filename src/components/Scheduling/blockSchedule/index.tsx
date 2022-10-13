@@ -12,6 +12,7 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
+import { margins } from 'themes/themeConstants';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
@@ -131,7 +132,7 @@ const BlockTemplates = () => {
                   type="submit"
                   variant="contained"
                   size="large"
-                  sx={{ marginLeft: 'auto' }}
+                  sx={{ marginLeft: margins.auto }}
                 >
                   {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
                 </StyledButton>

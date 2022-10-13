@@ -15,11 +15,11 @@ import {
   TableRow
 } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
 import { IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 import { IPatientListData } from 'types/reduxTypes/patient-emr';
-
-import { dispatch, useAppSelector } from '../../redux/hooks';
-import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
 
 import { PatientListHeadCell } from './PatientListHeadCell';
 
@@ -82,8 +82,8 @@ const PatientList = () => {
         </Table>
       </TableContainer>
       {isPatientListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: '16px' }}>
-          <CircularProgress sx={{ margin: 'auto' }} />
+        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+          <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
       ) : null}
       <TablePagination
