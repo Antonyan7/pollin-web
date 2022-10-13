@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
@@ -11,60 +11,54 @@ import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
+const INITIAL_PAGE_NUMBER = 1;
+
 const PatientId = () => {
-  const { control, formState } = useFormContext<ICreatedAppointmentBody>();
-  const { errors } = formState;
+  const [t] = useTranslation();
+  const patientIdFieldName = 'patientId';
 
   const patientsList = useAppSelector(bookingSelector.patientList);
-  const { patients } = patientsList;
-  const [t] = useTranslation();
+  const { patients, isLoading } = patientsList;
   const patientOptions = useMemo(() => createOptionsGroup(patients.patients), [patients.patients]);
 
-  const patientIdFieldName = 'patientId';
-  const patientIdHelperText = errors[patientIdFieldName]?.message;
-  const patientIdErrorText = !!errors[patientIdFieldName]?.message;
+  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { field, fieldState } = useController({ name: patientIdFieldName, control });
+  const { onBlur, onChange, ...fieldProps } = field;
+  const { error } = fieldState;
+
+  const patientIdHelperText = error?.message;
+  const patientIdErrorText = !!error?.message;
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT);
-  const [patientsListCurrentPage, setPatientsListCurrentPage] = useState<number>(2);
-  const [position, setPosition] = useState<number>(0);
-  const [patientsListRef, setPatientListRef] = useState<{ current: HTMLDivElement | null }>({ current: null });
+  const patientsListCurrentPage = useRef(INITIAL_PAGE_NUMBER);
+  const patientsListRef = useRef<HTMLDivElement | null>(null);
+  const scrollPosition = useRef(0);
   const theme = useTheme();
-  const mounted = useRef<boolean>(false);
 
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-    } else if (position && patientsListRef.current) {
-      patientsListRef.current.scrollTop = position - patientsListRef.current.offsetHeight;
+    if (!isLoading && patientsListCurrentPage.current > INITIAL_PAGE_NUMBER && patientsListRef.current) {
+      patientsListRef.current.scrollTop = scrollPosition.current;
     }
-  });
-
-  const {
-    field: { onBlur, onChange, ...fieldProps }
-  } = useController({ name: patientIdFieldName, control });
+  }, [isLoading]);
 
   const onPatientListScroll = (event: React.UIEvent) => {
     const eventTarget = event.target as HTMLDivElement;
 
     const isScrollBottom = eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight;
-    const isPageEnd = patientsList.pageSize * patientsListCurrentPage <= patientsList.totalItems;
+    const isLastPage = patientsList.pageSize * patientsListCurrentPage.current >= patientsList.totalItems;
 
     if (isScrollBottom) {
-      if (isPageEnd) {
-        setPatientsListCurrentPage(patientsListCurrentPage + 1);
+      if (!isLastPage) {
+        scrollPosition.current = eventTarget.scrollTop;
+        patientsListCurrentPage.current = 1 + patientsListCurrentPage.current;
 
         const getNewPatientsRequestObj = {
           name: '',
-          page: patientsListCurrentPage
+          page: patientsListCurrentPage.current
         };
 
         dispatch(bookingMiddleware.getNewPatients(getNewPatientsRequestObj));
 
-        const scrollPosition = eventTarget.scrollTop + eventTarget.clientHeight;
-
-        setPosition(scrollPosition);
-        setPatientListRef({
-          current: eventTarget
-        });
+        patientsListRef.current = eventTarget;
       }
     }
   };

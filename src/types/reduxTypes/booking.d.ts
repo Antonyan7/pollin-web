@@ -4,7 +4,9 @@ import { AlertDetailsProps, IPatientsResponse } from 'types/reduxTypes/patient-e
 
 import { SlotTypes } from '../calendar';
 
-export interface IPatientList extends IPagination, IPatientsResponse {}
+export interface IPatientList extends IPagination, IPatientsResponse {
+  isLoading: boolean;
+}
 
 export interface AppointmentDetailsProps {
   appointment: IAppointmentDetails;
@@ -21,7 +23,7 @@ export interface BookingProps {
   isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
-  patientList: IPatientsResponse;
+  patientList: IPatientList;
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];

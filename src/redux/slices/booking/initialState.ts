@@ -1,6 +1,5 @@
 import { format } from 'date-fns';
-
-import { BookingProps } from '../../../types/reduxTypes/booking';
+import { BookingProps } from 'types/reduxTypes/booking';
 
 export const getInitialState = (): BookingProps => ({
   appointments: [],
@@ -15,6 +14,7 @@ export const getInitialState = (): BookingProps => ({
     patients: {
       patients: []
     },
+    isLoading: false,
     pageSize: 0,
     currentPage: 0,
     totalItems: 0

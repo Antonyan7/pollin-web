@@ -20,6 +20,7 @@ const {
   setCurrentServiceProviderId,
   setCalendarLoadingState,
   setPatientsList,
+  setPatientListLoading,
   updatePatientsList,
   setServiceTypes,
   setAppointmentDetails,
@@ -30,6 +31,7 @@ const resetPatientData = (dispatch: AppDispatch) => {
   dispatch(
     setPatientsList({
       patients: [],
+      isLoading: false,
       currentPage: 0,
       totalItems: 0,
       pageSize: 0
@@ -106,11 +108,14 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
   }
 
   try {
+    dispatch(setPatientListLoading(true));
+
     const response = await API.patients.getPatients(patientsListData);
 
     dispatch(
       setPatientsList({
         patients: response.data.data,
+        isLoading: false,
         currentPage: response.data.currentPage,
         totalItems: response.data.totalItems,
         pageSize: response.data.pageSize
@@ -119,6 +124,7 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
   } catch (error) {
     Sentry.captureException(error);
     resetPatientData(dispatch);
+    dispatch(setPatientListLoading(false));
     dispatch(setError(error));
   }
 };
@@ -131,11 +137,14 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
   }
 
   try {
+    dispatch(setPatientListLoading(true));
+
     const response = await API.patients.getPatients(patientsListData);
 
     dispatch(
       updatePatientsList({
         patients: response.data.data,
+        isLoading: false,
         currentPage: response.data.currentPage,
         totalItems: response.data.totalItems,
         pageSize: response.data.pageSize
@@ -144,6 +153,7 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
   } catch (error) {
     Sentry.captureException(error);
     resetPatientData(dispatch);
+    dispatch(setPatientListLoading(false));
     dispatch(setError(error));
   }
 };
