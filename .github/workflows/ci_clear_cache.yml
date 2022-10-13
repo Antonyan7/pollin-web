@@ -1,0 +1,15 @@
+name: Continues Integration VM Cache Clean
+on:
+  workflow_dispatch:
+  schedule:
+    # EST: At 3:00 AM on Sundays
+    - cron: '0 0 * * 0'
+
+jobs:
+  build:
+    timeout-minutes: 60
+    runs-on: self-hosted-FE
+    steps:
+      - run: yarn cache clean
+      - run: npm cache verify
+      - run: cypress cache clear
