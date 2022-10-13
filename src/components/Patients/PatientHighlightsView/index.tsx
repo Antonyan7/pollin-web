@@ -26,7 +26,6 @@ const PatientHighlightsView = ({ alertCount }: PatientAlertProps) => {
 
   useEffect(() => {
     if (patientId) {
-      dispatch(patientsMiddleware.getPatientProfile(patientId));
       dispatch(patientsMiddleware.getPatientHighlight(patientId));
     }
   }, [patientId]);
@@ -67,7 +66,7 @@ const PatientHighlightsView = ({ alertCount }: PatientAlertProps) => {
           <Grid container alignItems="flex-start" py="15px">
             {patientHighlightColumns.map((patientHighlightColumn, index) => (
               // eslint-disable-next-line react/no-array-index-key
-              <Grid container xs={12} sm={4} key={index} rowGap={1.5} justifyContent="center">
+              <Grid container item xs={12} sm={4} key={index} rowGap={1.5} justifyContent="center">
                 {patientHighlightColumn.map(({ uuid, title, items }) => (
                   <React.Fragment key={title}>
                     <Grid item xs={12} sm={4}>

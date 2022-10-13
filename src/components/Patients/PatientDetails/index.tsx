@@ -12,11 +12,11 @@ interface PatientDetailsProps {
   id?: string;
 }
 
-const PatientDetails = ({ patientName, id }: PatientDetailsProps) => (
+const PatientDetails = ({ patientName = '', id = '' }: PatientDetailsProps) => (
   <>
     <PatientAlertView />
     <MainBreadcrumb
-      currentPage="Patient Details"
+      currentPage={patientName}
       navigation={{
         basePath: '/',
         items: [
