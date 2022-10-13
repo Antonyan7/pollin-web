@@ -1,8 +1,7 @@
-import bookingManager from '@axios/bookingManager';
-import patientEmrManager from '@axios/patientEmrManager';
+import bookingManager from '@axios/booking/bookingManager';
+import patientEmrManager from '@axios/patientEmr/patientEmrManager';
 import { AxiosInstance } from 'axios';
-
-import schedulingManager from './schedulingManager';
+import schedulingManager from 'manager/scheduling/schedulingManager';
 
 const API = {
   scheduling: schedulingManager,

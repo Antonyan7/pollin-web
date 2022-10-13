@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { IPatientPartnerData } from '@axios/managerPatientEmr';
+import { IPatientPartnerData } from '@axios/patientEmr/managerPatientEmr';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Button, DialogProps, DialogTitle, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -115,10 +115,10 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
       }
       footer={
         <>
-          <Button color="secondary" variant="outlined" disableTouchRipple>
+          <Button color="primary" variant="outlined" disableTouchRipple>
             Edit
           </Button>
-          <Button color="secondary" variant="contained" disableTouchRipple onClick={onClose}>
+          <Button color="primary" variant="contained" disableTouchRipple onClick={onClose}>
             Close
           </Button>
         </>

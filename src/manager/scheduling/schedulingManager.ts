@@ -1,10 +1,9 @@
+import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axios';
+import { Axios } from 'manager/axiosInstance';
+import { IScheduleTemplatesCreateResponse, IScheduleTemplatesListResponse } from 'manager/scheduling/managerScheduling';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/booking';
 import { BlockSchedulingProps, DeleteScheduleTemplateProps, SingleSchedulingProps } from 'types/reduxTypes/scheduling';
-
-import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
-import { Axios } from './axiosInstance';
-import { IScheduleTemplatesCreateResponse, IScheduleTemplatesListResponse } from './managerScheduling';
 
 const baseURL = '/clinic-scheduling';
 

@@ -1,5 +1,5 @@
 import API from '@axios/API';
-import { ICreateEncounterAddendumRequest, IUpdateEncounterAddendumRequest } from '@axios/managerPatientEmr';
+import { ICreateEncounterAddendumRequest, IUpdateEncounterAddendumRequest } from '@axios/patientEmr/managerPatientEmr';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
@@ -26,6 +26,8 @@ const {
   setEncounterFilters,
   setEncountersType,
   setEncounterDetailsInfo,
+  setPatientProfile,
+  setPatientHighlights,
   setEncountersAddendumLoadingState,
   setEncountersFiltersLoadingState
 } = slice.actions;
@@ -168,6 +170,28 @@ const getEncountersTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getPatientProfile(patientId);
+
+    dispatch(setPatientProfile(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getPatientHighlights(patientId);
+
+    dispatch(setPatientHighlights(response.data.data.highlights));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const getEncounterDetailsInformation = (encounterId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.patients.getEncounterDetails(encounterId);
@@ -216,6 +240,8 @@ export default {
   cleanPatientList,
   createEncounterNote,
   updateEncounterNote,
+  getPatientProfile,
+  getPatientHighlight,
   getEncountersTypes,
   getEncounterDetailsInformation,
   createEncounterAddendum,

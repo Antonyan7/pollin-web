@@ -1,5 +1,9 @@
 import { IPagination } from '@axios/axios';
-import { IEncounterDetailsProps, IGetPatientsResponse, IUpdateEncounterNoteRequest } from '@axios/managerPatientEmr';
+import {
+  IEncounterDetailsProps,
+  IGetPatientsResponse,
+  IUpdateEncounterNoteRequest
+} from '@axios/patientEmr/managerPatientEmr';
 import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
 
 export interface PatientEmrProps {

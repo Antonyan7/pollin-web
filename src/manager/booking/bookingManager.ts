@@ -11,9 +11,8 @@ import {
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
   IUpdatedAppointmentResponse
-} from '@axios/managerBooking';
-
-import { Axios } from './axiosInstance';
+} from '@axios/booking/managerBooking';
+import { Axios } from 'manager/axiosInstance';
 
 const baseURL = '/clinic-booking';
 

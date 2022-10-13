@@ -1,7 +1,6 @@
 import { IPagination } from '@axios/axios';
-import { IAppointmentDetails } from '@axios/managerBooking';
-
-import { AlertDetailsProps, IPatientsResponse } from '@types/reduxTypes/patient-emr';
+import { IAppointmentDetails } from '@axios/booking/managerBooking';
+import { AlertDetailsProps, IPatientsResponse } from 'types/reduxTypes/patient-emr';
 
 import { SlotTypes } from '../calendar';
 

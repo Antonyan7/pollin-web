@@ -74,7 +74,7 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
         </Stack>
       }
       footer={
-        <Button color="secondary" variant="contained" disableTouchRipple onClick={onClose}>
+        <Button color="primary" variant="contained" disableTouchRipple onClick={onClose}>
           Close
         </Button>
       }

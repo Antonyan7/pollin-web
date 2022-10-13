@@ -1,6 +1,6 @@
 import API from '@axios/API';
-import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/managerBooking';
-import { IGetPatientsRequestBody } from '@axios/managerPatientEmr';
+import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/booking/managerBooking';
+import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmr';
 import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IServiceProviders } from 'types/reduxTypes/booking';

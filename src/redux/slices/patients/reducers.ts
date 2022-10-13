@@ -1,4 +1,4 @@
-import { IEncounterDetailsProps } from '@axios/managerPatientEmr';
+import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmr';
 import { IAction, SliceReducers } from 'redux/store';
 import {
   AlertDetailsProps,
@@ -7,7 +7,9 @@ import {
   IEncounterTypes,
   IFilterCategory,
   IPatientList,
-  PatientEmrProps
+  PatientEmrProps,
+  PatientHighlight,
+  PatientProfile
 } from 'types/reduxTypes/patient-emr';
 
 const reducers: SliceReducers<PatientEmrProps> = {
@@ -52,6 +54,12 @@ const reducers: SliceReducers<PatientEmrProps> = {
   },
   setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps>) {
     state.encounters.encounterDetails = action.payload;
+  },
+  setPatientProfile(state, action: IAction<PatientProfile>) {
+    state.patientProfile = action.payload;
+  },
+  setPatientHighlights(state, action: IAction<PatientHighlight[]>) {
+    state.patientHighlights = action.payload;
   }
 };
 

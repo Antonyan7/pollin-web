@@ -5,6 +5,7 @@ import MainCard from '@ui-component/cards/MainCard';
 import PatientDetailsTabView from '@ui-component/PatientDetailsTabView';
 
 import PatientAlertView from '../PatientAlertView';
+import PatientHighlightsView from '../PatientHighlightsView';
 
 interface PatientDetailsProps {
   patientName?: string;
@@ -24,6 +25,8 @@ const PatientDetails = ({ patientName, id }: PatientDetailsProps) => (
         ]
       }}
     />
+    <br />
+    <PatientHighlightsView />
     <br />
     <MainCard content={false}>
       <PatientDetailsTabView />

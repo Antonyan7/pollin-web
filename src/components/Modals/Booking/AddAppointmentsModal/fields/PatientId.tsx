@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
 import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextFieldProps } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { Translation } from 'constants/translations';

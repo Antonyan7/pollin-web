@@ -1,6 +1,12 @@
 import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/booking';
-import { AlertDetailsProps, IEncounterListItem, IEncounterTypes, IPatientListData } from 'types/reduxTypes/patient-emr';
+import {
+  AlertDetailsProps,
+  IEncounterListItem,
+  IEncounterTypes,
+  IPatientListData,
+  PatientHighlight
+} from 'types/reduxTypes/patient-emr';
 
 export interface IGetPatientsRequestBody {
   name: string;
@@ -100,11 +106,7 @@ export interface IPatientProfileResponse {
 }
 
 export interface IPatientHighlightResponse {
-  highlights: {
-    uuid: string;
-    title: string;
-    items: string[];
-  }[];
+  highlights: PatientHighlight[];
 }
 
 export interface IPatientPartnerData {

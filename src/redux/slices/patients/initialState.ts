@@ -18,5 +18,7 @@ export const getInitialState = (): PatientEmrProps => ({
     types: [{ id: '', title: '' }],
     encounterDetails: null
   },
-  error: null
+  error: null,
+  patientProfile: null,
+  patientHighlights: null
 });

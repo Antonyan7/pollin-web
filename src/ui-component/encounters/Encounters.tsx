@@ -57,6 +57,7 @@ const Encounters = () => {
               <>
                 {encountersList.encounters.map((encounter) => (
                   <EncounterNoteThumbnail
+                    key={encounter.id}
                     id={encounter.id}
                     author={encounter.author}
                     title={encounter.title}

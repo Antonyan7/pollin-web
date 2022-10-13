@@ -1,8 +1,6 @@
-import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse, IPatientsResponse } from 'types/reduxTypes/patient-emr';
-
-import { IAxiosResponse, IAxiosResponsePaginated } from './axios';
-import { Axios } from './axiosInstance';
+import * as Sentry from '@sentry/nextjs';
+import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axios';
+import { Axios } from 'manager/axiosInstance';
 import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
@@ -19,7 +17,9 @@ import {
   IPatientsListResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest
-} from './managerPatientEmr';
+} from 'manager/patientEmr/managerPatientEmr';
+import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
+import { IEncounterDetailsResponse, IPatientsResponse } from 'types/reduxTypes/patient-emr';
 
 const baseURL = '/clinic-patient-emr';
 
@@ -74,20 +74,27 @@ const patientEmrManager = {
   updateEncounterAddendum(data: IUpdateEncounterAddendumRequest) {
     return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/addendum`, data);
   },
-  getPatientProfile(patientId: string | string[]) {
+  getPatientProfile(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<IPatientProfileResponse>>(`${baseURL}/v1/profile/${patientId}`);
   },
-  getPatientHighlight(patientId: string | string[]) {
+  getPatientHighlights(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<IPatientHighlightResponse>>(
       `${baseURL}/v1/profile/${patientId}/highlight`
     );
   },
-  getPatientHighlightDetails(patientId: string | string[], uuid: string) {
+  getPatientHighlightDetails(patientId: string, uuid: string) {
     return axiosInstance
       .get<any, IAxiosResponse<IPatientHighlightDetailsResponse>>(
         `${baseURL}/v1/profile/${patientId}/highlight/${uuid}`
       )
-      .then(({ data }) => data);
+      .then(
+        ({ data }) => data.data,
+        (error) => {
+          Sentry.captureException(error);
+
+          return null;
+        }
+      );
   }
 };
 

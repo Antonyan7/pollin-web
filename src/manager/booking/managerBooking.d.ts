@@ -1,12 +1,11 @@
+import { IEmptyResponse } from 'manager/common';
 import {
   AppointmentDetailsProps,
   IAppointment,
   IPatientInfo,
   IServiceProvider,
   IServiceType
-} from '../types/reduxTypes/booking';
-
-import { IEmptyResponse } from './common';
+} from 'types/reduxTypes/booking';
 
 export interface IAppointmentListReqParams {
   resourceId: string;

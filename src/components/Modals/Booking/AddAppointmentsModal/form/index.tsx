@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
 import { Divider } from '@mui/material';
 import { ModalName } from 'constants/modals';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-
-import { margins } from '../../../../../themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 
 import FormActions from './FormActions';
 import FormBody from './FormBody';

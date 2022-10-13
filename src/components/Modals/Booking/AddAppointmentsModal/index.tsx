@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';

@@ -1,5 +1,9 @@
 import { IPagination } from '@axios/axios';
-import { IEncounterDetailsProps, IGetPatientsResponse, IUpdateEncounterNoteRequest } from '@axios/managerPatientEmr';
+import {
+  IEncounterDetailsProps,
+  IGetPatientsResponse,
+  IUpdateEncounterNoteRequest
+} from '@axios/patientEmr/managerPatientEmr';
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
@@ -10,6 +14,21 @@ export interface PatientEmrProps {
   isEncountersAddendumLoading: boolean;
   isEncountersFiltersLoading: boolean;
   error: Error | null;
+  patientProfile: PatientProfile | null;
+  patientHighlights: PatientHighlight[] | null;
+}
+
+export interface PatientHighlight {
+  uuid?: string;
+  title: string;
+  items: string[];
+}
+
+export interface PatientProfile {
+  imageURL: string;
+  subTitle: string;
+  title: string;
+  cycleStatus: string | boolean;
 }
 
 export interface IEncounterDataProps {
