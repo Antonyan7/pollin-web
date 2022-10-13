@@ -7,6 +7,9 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
   '& .fc-license-message': {
     display: 'none'
   },
+  '& .fc-scrollgrid-sync-inner': {
+    backgroundColor: theme.palette.secondary.light
+  },
 
   // basic style
   '& .fc': {
