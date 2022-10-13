@@ -52,6 +52,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
     setOpenOtherReasonField(false);
     dispatch(bookingMiddleware.cancelAppointment(appointmentId, cancellationReason));
     dispatch(bookingMiddleware.clearAppointmentDetails());
+    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
     onClose();
   }, [onClose, appointmentId, cancellationReason]);
 
