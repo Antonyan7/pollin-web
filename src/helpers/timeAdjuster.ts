@@ -1,6 +1,6 @@
 import { monthNames } from './constants';
 
-export const timeAdjuster = (date: Date) => {
+export const timeAdjuster = (date: Date | string) => {
   const customizedDate = `${monthNames[new Date(date).getMonth()]} ${new Date(date).getDate()}, ${new Date(
     date
   ).getFullYear()}`;

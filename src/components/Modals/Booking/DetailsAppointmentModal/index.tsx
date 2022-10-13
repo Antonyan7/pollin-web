@@ -23,6 +23,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
+import { convertToLocale } from '@utils/dateUtils';
 
 export interface DetailsAppointmentModalProps {
   appointmentId: string;
@@ -86,7 +87,11 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE_START_TIME)}
-              body={(details && timeAdjuster(details?.appointment.date as Date)?.customizedFullDate) as string}
+              body={
+                (details &&
+                  timeAdjuster(convertToLocale(details?.appointment.date as string) as string)
+                    ?.customizedFullDate) as string
+              }
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}
