@@ -2,13 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, SelectChangeEvent, Typography } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
@@ -18,7 +18,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
 const AddEncounterNote = () => {
-  const [editorValue, setEditorValue] = useState<string>('Encounter Note');
+  const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const [filterTypes, setFilterTypes] = useState<string>('');
   const patientId = useAppSelector(patientsSelector.currentPatientId);
@@ -32,9 +32,7 @@ const AddEncounterNote = () => {
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
   const closeImmediately = (): void => {
-    const backTo = router.asPath.split('/').slice(0, 4).join('/');
-
-    router.push(backTo);
+    router.push(`/patient-emr/details/${patientId}/encounters`);
   };
 
   const handleClose = (): void => {
@@ -59,10 +57,6 @@ const AddEncounterNote = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterTypes, editorValue]);
 
-  const handleCancel = () => {
-    handleClose();
-  };
-
   const handleEncounterTypeSelect = useCallback((event: SelectChangeEvent) => {
     setFilterTypes(event.target.value as string);
   }, []);
@@ -80,7 +74,7 @@ const AddEncounterNote = () => {
           <Grid container item xs={6} sx={{ p: 0.5 }} alignItems="center">
             <Grid item xs={1}>
               <IconButton onClick={handleClose}>
-                <ArrowBackIosIcon />
+                <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
               </IconButton>
             </Grid>
             <Grid item xs={5}>
@@ -105,9 +99,9 @@ const AddEncounterNote = () => {
             handleEncounterTypeSelect={handleEncounterTypeSelect}
             editorValue={editorValue}
             setEditorValue={setEditorValue}
-            mode={SimpleEditorMode.Add}
+            mode={SimpleEditorMode.Add_Note}
             handleSave={handleSave}
-            handleCancel={handleCancel}
+            handleCancel={handleClose}
           />
         </Grid>
       </Grid>

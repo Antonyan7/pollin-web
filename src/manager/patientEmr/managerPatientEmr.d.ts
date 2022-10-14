@@ -95,7 +95,7 @@ export interface IEncounterDetailsProps {
   createdOn: Date | string;
   updatedOn?: Date | string;
   content: string;
-  addendums: AddendumsProps;
+  addendums: AddendumsProps[];
 }
 
 export interface IPatientProfileResponse {

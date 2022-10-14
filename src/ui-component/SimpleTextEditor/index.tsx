@@ -2,10 +2,22 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import { FormControl, Grid, GridProps, InputLabel, MenuItem, Select, styled, useTheme } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import {
+  Divider,
+  FormControl,
+  Grid,
+  GridProps,
+  InputLabel,
+  MenuItem,
+  Select,
+  styled,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { Translation } from 'constants/translations';
+import { timeAdjuster } from 'helpers/timeAdjuster';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -36,6 +48,40 @@ const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
   }
 }));
 
+const EditEncounterNoteAddendums = () => {
+  const encounterData = useAppSelector(patientsSelector.encounterDetails);
+  const [t] = useTranslation();
+
+  return encounterData ? (
+    <Grid item container direction="column" sx={{ gap: '1.5rem', pt: 2, ml: 4 }}>
+      {encounterData.addendums.map((addendum) => (
+        <>
+          <Divider />
+          <Grid item container direction="row" alignItems="center" gap={3}>
+            <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
+              {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
+            </Typography>
+          </Grid>
+          <Grid item pt={2.75}>
+            <Typography component="p" variant="body1">
+              {addendum.content}
+            </Typography>
+          </Grid>
+          <Grid item container direction="column" gap={2} sx={{ pt: 3.5 }}>
+            <Typography component="h4" variant="h4">
+              {addendum.author}
+            </Typography>
+            <Typography variant="body1" component="p">
+              {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
+              {timeAdjuster(new Date(addendum.date as Date)).customizedDate}
+            </Typography>
+          </Grid>
+        </>
+      ))}
+    </Grid>
+  ) : null;
+};
+
 const SimpleTextEditor = ({
   editorValue,
   handleEncounterTypeSelect,
@@ -53,43 +99,49 @@ const SimpleTextEditor = ({
   }, []);
 
   return (
-    <StyledGrid item xs={12} theme={theme}>
-      <SubCardStyled sx={{ backgroundColor: theme.palette.grey[300], p: 4 }}>
-        <Grid item xs={6} mb={2}>
-          <FormControl fullWidth>
-            <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
-            <Select
-              labelId="encounter-label"
-              id="encounter-type"
-              label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-              onChange={handleEncounterTypeSelect}
-            >
-              {encounterTypes?.map((encounterType) => (
-                <MenuItem value={encounterType.id} key={encounterType.toString()}>
-                  {encounterType.title}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        </Grid>
-        <ReactQuill
-          value={editorValue}
-          theme="snow"
-          style={{ backgroundColor: theme.palette.common.white }}
-          onChange={setEditorValue}
-        />
-        <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
-          <StyledButton type="button" variant="contained" color="secondary" onClick={handleCancel}>
-            {t(Translation.PAGE_ENCOUNTERS_CANCEL_LABEL)}
-          </StyledButton>
-          <StyledButton type="button" variant="contained" color="secondary" onClick={handleSave}>
-            {mode === SimpleEditorMode.Add
-              ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
-              : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
-          </StyledButton>
-        </Grid>
-      </SubCardStyled>
-    </StyledGrid>
+    <>
+      {mode === SimpleEditorMode.Edit_Addendum ? <EditEncounterNoteAddendums /> : null}
+      <StyledGrid item xs={12} theme={theme}>
+        <SubCardStyled sx={{ backgroundColor: theme.palette.grey[300], p: 4 }}>
+          {mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Edit_Note ? (
+            <Grid item xs={6} mb={2}>
+              <FormControl fullWidth>
+                <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
+                <Select
+                  labelId="encounter-label"
+                  id="encounter-type"
+                  label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+                  onChange={handleEncounterTypeSelect}
+                >
+                  {encounterTypes?.map((encounterType) => (
+                    <MenuItem value={encounterType.id} key={encounterType.toString()}>
+                      {encounterType.title}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+          ) : null}
+          <ReactQuill
+            value={editorValue}
+            theme="snow"
+            style={{ backgroundColor: theme.palette.common.white }}
+            onChange={setEditorValue}
+          />
+          <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
+            <StyledButton type="button" variant="outlined" onClick={handleCancel}>
+              {t(Translation.PAGE_ENCOUNTERS_CANCEL_LABEL)}
+            </StyledButton>
+            <StyledButton type="button" variant="contained" onClick={handleSave}>
+              {mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Add_Addendum
+                ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
+                : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
+            </StyledButton>
+          </Grid>
+        </SubCardStyled>
+      </StyledGrid>
+      {mode === SimpleEditorMode.Edit_Note ? <EditEncounterNoteAddendums /> : null}
+    </>
   );
 };
 

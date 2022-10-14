@@ -20,6 +20,8 @@ import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 
+import { ConfirmationPaths } from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontWeight: 400,
   fontSize: '16px',
@@ -39,7 +41,11 @@ const EncountersCancelChangesModal = () => {
   const onConfirm = () => {
     onClose();
 
-    const backTo = router.asPath.split('/').slice(0, 4).join('/');
+    let backTo = router.asPath.split('/').slice(0, 4).join('/');
+
+    if (router.asPath.includes(ConfirmationPaths.Add_Note)) {
+      backTo = `${backTo}/encounters`;
+    }
 
     router.push(backTo);
   };

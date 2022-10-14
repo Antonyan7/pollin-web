@@ -3,6 +3,6 @@ import { SimpleEditorMode } from 'types/patient';
 
 import EditEncounterRecord from '@ui-component/encounters/EditEncounterRecord';
 
-const EditEncounterPage = () => <EditEncounterRecord mode={SimpleEditorMode.Edit_Note} />;
+const EditEncounterAddendumPage = () => <EditEncounterRecord mode={SimpleEditorMode.Edit_Addendum} />;
 
-export default EditEncounterPage;
+export default EditEncounterAddendumPage;

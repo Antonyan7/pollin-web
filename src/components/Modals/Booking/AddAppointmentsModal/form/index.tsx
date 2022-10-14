@@ -26,7 +26,7 @@ const AddAppointmentsModalForm = () => {
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
 
   const isDuplicatePatientName = useMemo(() => {
-    if (!patientAlerts.length) {
+    if (!patientAlerts?.length) {
       return false;
     }
 

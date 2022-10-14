@@ -59,6 +59,7 @@ interface IPatientsProps {
   list: IPatientList;
   patientAlertDetails: AlertDetailsProps[];
   currentPatientId: string;
+  currentEncounterId: string;
 }
 
 export interface IFilterCategory {

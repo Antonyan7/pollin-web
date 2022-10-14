@@ -29,7 +29,8 @@ const {
   setPatientProfile,
   setPatientHighlights,
   setEncountersAddendumLoadingState,
-  setEncountersFiltersLoadingState
+  setEncountersFiltersLoadingState,
+  setCurrentEncounterID
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -93,6 +94,10 @@ const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch
 
 const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setCurrentPatientId(patientId));
+};
+
+const setCurrentEncounterId = (encounterId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setCurrentEncounterID(encounterId));
 };
 
 export const createEncounterNote = (encounterNoteData: ICreateEncounterNoteProps) => async (dispatch: AppDispatch) => {
@@ -245,5 +250,6 @@ export default {
   getEncountersTypes,
   getEncounterDetailsInformation,
   createEncounterAddendum,
-  updateEncounterAddendum
+  updateEncounterAddendum,
+  setCurrentEncounterId
 };

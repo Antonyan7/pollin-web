@@ -28,6 +28,9 @@ const reducers: SliceReducers<PatientEmrProps> = {
   setCurrentPatientId(state, action: IAction<string>) {
     state.patientsList.currentPatientId = action.payload;
   },
+  setCurrentEncounterID(state, action: IAction<string>) {
+    state.patientsList.currentEncounterId = action.payload;
+  },
   setPatientsLoadingState(state, action: IAction<boolean>) {
     state.isPatientsListLoading = action.payload;
   },

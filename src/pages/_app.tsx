@@ -18,6 +18,9 @@ const clientSideEmotionCache = createEmotionCache();
 
 type PollinAppProps = AppProps & {
   emotionCache: EmotionCache;
+  Component: AppProps['Component'] & {
+    PageLayout?: React.ComponentState;
+  };
 };
 
 const Pollin = ({ Component, pageProps, emotionCache = clientSideEmotionCache }: PollinAppProps) => (
@@ -26,7 +29,13 @@ const Pollin = ({ Component, pageProps, emotionCache = clientSideEmotionCache }:
       <Provider store={store}>
         <NavigationScroll>
           <Main>
-            <Component {...pageProps} />
+            {Component.PageLayout ? (
+              <Component.PageLayout>
+                <Component {...pageProps} />
+              </Component.PageLayout>
+            ) : (
+              <Component {...pageProps} />
+            )}
           </Main>
         </NavigationScroll>
       </Provider>

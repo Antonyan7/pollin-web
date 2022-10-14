@@ -22,7 +22,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
   const [t] = useTranslation();
 
   const onRowClick = (id: string) => {
-    router.push(`/patient-emr/details/${id}`);
+    router.push(`/patient-emr/details/${id}/encounters`);
   };
 
   return (

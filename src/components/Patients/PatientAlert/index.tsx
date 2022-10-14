@@ -23,6 +23,13 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
 
   return alertCount ? (
     <MuiTooltip
+      componentsProps={{
+        tooltip: {
+          sx: {
+            bgcolor: theme.palette.primary.main
+          }
+        }
+      }}
       onOpen={onOpen}
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
         <Grid item>
@@ -37,7 +44,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
     >
       <Button sx={{ m: 1 }}>
         <Badge badgeContent={alertCount} color="error">
-          <InfoIcon fontSize="large" color="secondary" />
+          <InfoIcon fontSize="large" sx={{ color: theme.palette.primary.main }} />
         </Badge>
       </Button>
     </MuiTooltip>

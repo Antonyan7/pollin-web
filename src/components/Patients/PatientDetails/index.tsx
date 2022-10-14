@@ -1,9 +1,6 @@
 import React from 'react';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 
-import MainCard from '@ui-component/cards/MainCard';
-import PatientDetailsTabView from '@ui-component/PatientDetailsTabView';
-
 import PatientAlertView from '../PatientAlertView';
 import PatientHighlightsView from '../PatientHighlightsView';
 
@@ -28,9 +25,6 @@ const PatientDetails = ({ patientName = '', id = '' }: PatientDetailsProps) => (
     <br />
     <PatientHighlightsView />
     <br />
-    <MainCard content={false}>
-      <PatientDetailsTabView />
-    </MainCard>
   </>
 );
 

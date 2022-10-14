@@ -90,7 +90,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
         placeholder={`${t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH)}`}
         startAdornment={
           <InputAdornment position="start">
-            <SearchIcon sx={{ color: theme.palette.grey[400] }} />
+            <SearchIcon sx={{ color: theme.palette.primary.main }} />
           </InputAdornment>
         }
       />
@@ -112,7 +112,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
         onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
           onAutoCompleteChange(selectedOption);
         }}
-        popupIcon={<KeyboardArrowDownIcon />}
+        popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
         renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
       />
     </MainHeader>

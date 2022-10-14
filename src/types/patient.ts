@@ -88,8 +88,10 @@ export enum CycleStatuses {
 }
 
 export enum SimpleEditorMode {
-  Add = 'add',
-  Edit = 'edit'
+  Add_Note = 'add_note',
+  Edit_Note = 'edit_note',
+  Add_Addendum = 'add_addendum',
+  Edit_Addendum = 'edit_addendum'
 }
 
 export interface SimpleEditorProps {
