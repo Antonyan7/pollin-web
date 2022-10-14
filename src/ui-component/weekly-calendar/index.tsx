@@ -1,7 +1,7 @@
 /* eslint-disable simple-import-sort/imports */
 import FullCalendar from '@fullcalendar/react';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -11,22 +11,50 @@ import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
-import { changeDateSameTimezone, getWeekDay } from '@utils/dateUtils';
+import { changeDateSameTimezone, excludeDates, getWeekDay } from '@utils/dateUtils';
 import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/booking';
+import { isValid, setHours } from 'date-fns';
 import Toolbar from './ToolBar';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 
-const Calendar = (props: { calendarDate: string }) => {
-  const { calendarDate } = props;
+const Calendar = () => {
   const router = useRouter();
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   // const scheduleCalendarLoading = useAppSelector(schedulingSelector.scheduleCalendarLoading);
 
-  const onDatePrevClick = () => {
+  const initialDate: Date = useMemo(() => {
+    const todaysDay = getWeekDay(new Date());
+    let selectedWeekDays: number[] = [];
+    let nearestDayOfWeek: number;
+
+    scheduleSingleTemplate.timePeriods.forEach((item: ISingleTemplate) => {
+      selectedWeekDays = [...selectedWeekDays, ...item.days];
+    });
+
+    if (selectedWeekDays.includes(todaysDay)) {
+      nearestDayOfWeek = todaysDay;
+    } else {
+      const greaterDays = selectedWeekDays.filter((item: number) => item > todaysDay);
+
+      if (greaterDays.length) {
+        nearestDayOfWeek = Math.min(...greaterDays);
+      } else {
+        nearestDayOfWeek = Math.min(...selectedWeekDays);
+      }
+    }
+
+    const nearestDate = setHours(excludeDates(new Date(), todaysDay - nearestDayOfWeek), 15);
+
+    setDate(nearestDate);
+
+    return nearestDate;
+  }, [scheduleSingleTemplate.timePeriods]);
+
+  const onDatePrevClick = useCallback(() => {
     const calendarEl = calendarRef.current;
 
     if (calendarEl) {
@@ -35,9 +63,9 @@ const Calendar = (props: { calendarDate: string }) => {
       calendarApi.prev();
       setDate(calendarApi.getDate());
     }
-  };
+  }, []);
 
-  const onDateNextClick = () => {
+  const onDateNextClick = useCallback(() => {
     const calendarEl = calendarRef.current;
 
     if (calendarEl) {
@@ -46,30 +74,36 @@ const Calendar = (props: { calendarDate: string }) => {
       calendarApi.next();
       setDate(calendarApi.getDate());
     }
-  };
+  }, []);
 
   const schedules = useMemo(() => {
     const calendarEvents: ICalendarSlot[] = [];
 
     scheduleSingleTemplate.timePeriods.forEach((item: ISingleTemplate) => {
+      if (!isValid(date)) {
+        return;
+      }
+
       const isDaysContainingWeekDay = item.days.includes(getWeekDay(date));
 
-      if (isDaysContainingWeekDay) {
-        calendarEvents.push(
-          CreateSlot(
-            item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
-            // TODO: remove changeHours function after actual server implementation
-            changeDateSameTimezone(item.startTime as string, date),
-            changeDateSameTimezone(item.endTime as string, date),
-            item.placeholderName,
-            item.periodType
-          )
-        );
+      if (!isDaysContainingWeekDay || !initialDate) {
+        return;
       }
+
+      calendarEvents.push(
+        CreateSlot(
+          item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
+          // TODO: remove changeHours function after actual server implementation
+          changeDateSameTimezone(item.startTime as string, date),
+          changeDateSameTimezone(item.endTime as string, date),
+          item.placeholderName,
+          item.periodType
+        )
+      );
     });
 
     return calendarEvents;
-  }, [date, scheduleSingleTemplate.timePeriods]);
+  }, [date, initialDate, scheduleSingleTemplate.timePeriods]);
 
   useEffect(() => {
     const { scheduleId } = router.query;
@@ -82,29 +116,33 @@ const Calendar = (props: { calendarDate: string }) => {
   return (
     <div style={{ position: 'relative' }}>
       <FullCalendarWrapper>
-        <Toolbar date={date} onClickNext={onDateNextClick} onClickPrev={onDatePrevClick} />
-        <FullCalendar
-          weekends
-          ref={calendarRef}
-          rerenderDelay={10}
-          dayMaxEventRows={3}
-          eventDisplay="block"
-          events={schedules}
-          headerToolbar={false}
-          allDayMaintainDuration
-          height="auto"
-          initialDate={calendarDate}
-          initialView="timeGridDay"
-          timeZone="America/Toronto"
-          displayEventTime={false}
-          slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
-          allDaySlot={false}
-          slotMinTime="07:00:00"
-          slotMaxTime="18:10:00"
-          slotDuration="00:10"
-          slotLabelInterval="00:10"
-          plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
-        />
+        {isValid(initialDate) && (
+          <>
+            <Toolbar date={date} onClickNext={onDateNextClick} onClickPrev={onDatePrevClick} />
+            <FullCalendar
+              weekends
+              ref={calendarRef}
+              rerenderDelay={10}
+              dayMaxEventRows={3}
+              eventDisplay="block"
+              events={schedules}
+              headerToolbar={false}
+              allDayMaintainDuration
+              height="auto"
+              initialDate={initialDate}
+              initialView="timeGridDay"
+              timeZone="America/Toronto"
+              displayEventTime={false}
+              slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
+              allDaySlot={false}
+              slotMinTime="07:00:00"
+              slotMaxTime="18:10:00"
+              slotDuration="00:10"
+              slotLabelInterval="00:10"
+              plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
+            />
+          </>
+        )}
       </FullCalendarWrapper>
     </div>
   );

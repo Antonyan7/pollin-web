@@ -1,4 +1,4 @@
-import { addMinutes, isValid, setDate, setHours, setMonth, setYear } from 'date-fns';
+import { addMinutes, isValid, setDate, setHours, setMonth, setYear, subDays } from 'date-fns';
 import { format, utcToZonedTime } from 'date-fns-tz';
 
 import { ESTTimezone, longWeekDays } from '../helpers/constants';
@@ -59,6 +59,8 @@ export const getWeekDay = (date: string | Date) => {
 
   return longWeekDays.indexOf(weekName);
 };
+
+export const excludeDates = (date: Date, days: number) => subDays(date, days);
 
 export const changeDate = (oldDate: string, newDate: Date) => {
   const yearDate = setYear(new Date(oldDate), newDate.getFullYear());

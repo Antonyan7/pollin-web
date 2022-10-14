@@ -6,7 +6,7 @@ const DynamicCalendar = dynamic(() => import('@ui-component/weekly-calendar'));
 
 const ViewScheduleTemplate = () => (
   <ScheduleBoxWrapper>
-    <DynamicCalendar calendarDate={new Date().toISOString()} />
+    <DynamicCalendar />
   </ScheduleBoxWrapper>
 );
 
