@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, CircularProgress, TablePagination, Typography, useTheme } from '@mui/material';
+import { TablePagination, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { useRouter } from 'next/router';
@@ -59,13 +59,7 @@ const ScheduleTemplates = () => {
             {t(Translation.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE)}
           </Typography>
         </StyledButtonNew>
-        <ScheduleTemplatesTable page={page} rows={rows} />
-        {isScheduleTemplatesLoading && (
-          <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-            <CircularProgress sx={{ margin: margins.auto }} />
-            <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
-          </Box>
-        )}
+        <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
         {/* table pagination */}
         <TablePagination
           rowsPerPageOptions={[rowsPerPage]}
