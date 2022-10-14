@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { tableRowCount } from '@constants';
 import { Table, TableBody, TableCell, TableContainer, TableRow } from '@mui/material';
+import { ScheduledTemplatesListContext } from 'context/ScheduledTemplates';
 import { getComparator, stableSort } from 'helpers/tableSort';
 import { useAppSelector } from 'redux/hooks';
 import { schedulingSelector } from 'redux/slices/scheduling';
@@ -61,20 +62,32 @@ const ScheduleTemplatesTable = ({ page, rows }: Props) => {
     setOrderBy(property);
   };
 
+  const changeSelectedScheduledTemplate = useCallback((newSelected: string[]) => {
+    setSelected(newSelected);
+  }, []);
+
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
+
+  const scheduledTemplatesListContextState = useMemo(
+    () => ({
+      selected,
+      setSelected: changeSelectedScheduledTemplate
+    }),
+    [changeSelectedScheduledTemplate, selected]
+  );
 
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-        <ScheduleTemplatesHead
-          numSelected={selected.length}
-          order={order}
-          orderBy={orderBy}
-          onSelectAllClick={handleSelectAllClick}
-          onRequestSort={handleRequestSort}
-          rowCount={scheduleTemplates.totalItems}
-          selected={selected}
-        />
+        <ScheduledTemplatesListContext.Provider value={scheduledTemplatesListContextState}>
+          <ScheduleTemplatesHead
+            order={order}
+            orderBy={orderBy}
+            onSelectAllClick={handleSelectAllClick}
+            onRequestSort={handleRequestSort}
+            rowCount={scheduleTemplates.totalItems}
+          />
+        </ScheduledTemplatesListContext.Provider>
         <TableBody>
           {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
             /** Make sure no display bugs if row isn't an OrderData object */

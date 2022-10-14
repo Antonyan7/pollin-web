@@ -20,14 +20,14 @@ import { dispatch } from 'redux/hooks';
 import { schedulingMiddleware } from 'redux/slices/scheduling';
 import MainCard from 'ui-component/cards/MainCard';
 
+import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+
 interface BodyProps extends CardProps {
   handleOpenClose?: () => void;
-  selected: string[];
 }
 interface SimpleModalProps {
   handleOpenClose: () => void;
   open: boolean;
-  selected: string[];
 }
 
 const StyledMainCard = styled(Box)<SelectProps>(() => ({
@@ -38,12 +38,15 @@ const StyledMainCard = styled(Box)<SelectProps>(() => ({
   transform: 'translate(-50%, -50%)'
 }));
 
-const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: React.Ref<HTMLDivElement>) => {
+const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HTMLDivElement>) => {
   const [t] = useTranslation();
+
+  const { selected, setSelected } = useScheduledTemplatesListContext();
 
   const handleConfirm = () => {
     dispatch(schedulingMiddleware.deleteTemplate({ templateIds: selected }));
     handleOpenClose?.();
+    setSelected([]);
   };
 
   return (
@@ -78,7 +81,7 @@ const Body = React.forwardRef(({ handleOpenClose, selected }: BodyProps, ref: Re
   );
 });
 
-const RemoveTemplatesModal = ({ handleOpenClose, open, selected }: SimpleModalProps) => (
+const RemoveTemplatesModal = ({ handleOpenClose, open }: SimpleModalProps) => (
   <Grid container justifyContent="flex-end">
     <Modal
       open={open}
@@ -86,7 +89,7 @@ const RemoveTemplatesModal = ({ handleOpenClose, open, selected }: SimpleModalPr
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
     >
-      <Body handleOpenClose={handleOpenClose} selected={selected} />
+      <Body handleOpenClose={handleOpenClose} />
     </Modal>
   </Grid>
 );

@@ -2,14 +2,18 @@ import React, { useCallback, useState } from 'react';
 import RemoveTemplatesModal from '@components/Scheduling/scheduleTemplates/RemoveTemplatesModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
-import { EnhancedTableToolbarProps } from 'types';
 
-const EnhancedTableToolbar = ({ numSelected, selected }: EnhancedTableToolbarProps) => {
+import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+
+const EnhancedTableToolbar = () => {
   const [open, setOpen] = useState(false);
 
   const handleOpenClose = useCallback(() => {
     setOpen(!open);
   }, [open]);
+
+  const { selected } = useScheduledTemplatesListContext();
+  const numSelected = selected.length;
 
   return (
     <>
@@ -45,7 +49,7 @@ const EnhancedTableToolbar = ({ numSelected, selected }: EnhancedTableToolbarPro
           </Tooltip>
         )}
       </Toolbar>
-      <RemoveTemplatesModal handleOpenClose={handleOpenClose} open={open} selected={selected} />
+      <RemoveTemplatesModal handleOpenClose={handleOpenClose} open={open} />
     </>
   );
 };

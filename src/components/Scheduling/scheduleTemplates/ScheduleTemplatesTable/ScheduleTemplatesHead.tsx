@@ -8,6 +8,8 @@ import { EnhancedTableHeadProps, HeadCell } from 'types';
 import { SortOrder } from 'types/patient';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
+import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+
 // table header options
 const headCells: HeadCell[] = [
   {
@@ -44,24 +46,21 @@ const headCells: HeadCell[] = [
 
 // ==============================|| TABLE HEADER ||============================== //
 
-interface ScheduleTemplatesHeadProps extends EnhancedTableHeadProps {
-  selected: string[];
-}
-
 const ScheduleTemplatesHead = ({
   onSelectAllClick,
   order,
   orderBy,
-  numSelected,
   rowCount,
-  onRequestSort,
-  selected
-}: ScheduleTemplatesHeadProps) => {
+  onRequestSort
+}: EnhancedTableHeadProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const handleSort = (property: string) => (event: React.SyntheticEvent) => {
     onRequestSort(event, property);
   };
+
+  const { selected } = useScheduledTemplatesListContext();
+  const numSelected = selected.length;
 
   return (
     <TableHead>
@@ -79,7 +78,7 @@ const ScheduleTemplatesHead = ({
         </TableCell>
         {numSelected > 0 && (
           <TableCell padding="none" colSpan={6}>
-            <EnhancedTableToolbar numSelected={selected.length} selected={selected} />
+            <EnhancedTableToolbar />
           </TableCell>
         )}
         {numSelected <= 0 &&

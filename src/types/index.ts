@@ -12,16 +12,13 @@ export interface GenericCardProps {
   color?: string;
   size?: string;
 }
-
 export type GetComparator = (o: ArrangementOrder, o1: string) => (a: KeyedObject, b: KeyedObject) => number;
 export interface OverrideIcon {
   overrideIcon: FunctionComponent;
 }
-
 export interface LinkTarget {
   target: '_blank' | '_self' | '_parent' | '_top';
 }
-
 export interface NavItemType {
   id?: string;
   icon?: GenericCardProps['iconPrimary'];
@@ -36,7 +33,6 @@ export interface NavItemType {
   disabled?: boolean;
   chip?: ChipProps;
 }
-
 export interface SnackbarStateProps {
   action: boolean;
   open: boolean;
@@ -54,18 +50,16 @@ export interface DefaultRootStateProps {
 export interface EnhancedTableToolbarProps {
   numSelected: number;
   selected: string[];
+  setSelected: (selected: string[]) => void;
 }
-
 export interface KeyedObject {
   [key: string]: string | number | KeyedObject | any;
 }
 export type ArrangementOrder = 'asc' | 'desc' | undefined;
-
 export interface EnhancedTableHeadProps extends TableCellProps {
   onSelectAllClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
   order: ArrangementOrder;
   orderBy?: string;
-  numSelected: number;
   rowCount: number;
   onRequestSort: (e: React.SyntheticEvent, property: string) => void;
 }
@@ -79,7 +73,6 @@ export interface HeadCell {
 export interface ColorProps {
   readonly [key: string]: string;
 }
-
 export interface NavGroupProps {
   item: {
     id?: string;
@@ -92,7 +85,6 @@ export interface NavGroupProps {
     url?: string;
   };
 }
-
 export interface MainStyleProps {
   theme: Theme;
   open: boolean;
