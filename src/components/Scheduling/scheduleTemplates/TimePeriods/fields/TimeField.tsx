@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
@@ -17,6 +17,7 @@ interface ITimeFieldProps {
 }
 
 const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
+  const [openTimePicker, setOpenTimePicker] = useState(false);
   const { control } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, value, ...fieldProps } = field;
@@ -33,6 +34,9 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
     <div className="schedule-inputs">
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <TimePicker
+          open={openTimePicker}
+          onOpen={() => setOpenTimePicker(true)}
+          onClose={() => setOpenTimePicker(false)}
           minutesStep={10}
           PopperProps={{
             sx: {
@@ -53,7 +57,15 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
           }}
           value={initialValue}
           onChange={onTimeFieldChange}
-          renderInput={(params: MuiTextFieldPropsType) => <TextField {...params} fullWidth {...fieldProps} />}
+          renderInput={(params: MuiTextFieldPropsType) => (
+            <TextField
+              {...params}
+              fullWidth
+              {...fieldProps}
+              onKeyDown={(e) => e.preventDefault()}
+              onClick={() => setOpenTimePicker(true)}
+            />
+          )}
         />
       </LocalizationProvider>
     </div>
