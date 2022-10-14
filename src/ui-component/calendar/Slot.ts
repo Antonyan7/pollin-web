@@ -52,7 +52,7 @@ export const CreateSlot = (
 
   return <ICalendarSlot>{
     ...(slotId ? { id: slotId } : {}),
-    classNames: ClassNames[type] && isAppointmentShort,
+    classNames: [...ClassNames[type], isAppointmentShort || []],
     ...(type === SlotTypes.schedule || type === SlotTypes.serviceType ? { display: 'background' } : {}),
     allDay: false,
     color: type === SlotTypes.canceled ? BackgroundColors[type] : color,
