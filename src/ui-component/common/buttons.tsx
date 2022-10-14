@@ -1,7 +1,10 @@
 import React, { ReactNode } from 'react';
+import { Add } from '@mui/icons-material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { LoadingButton } from '@mui/lab';
 import { Box, Button, ButtonProps, Fab, Grid, SxProps, Typography } from '@mui/material';
+import { paddings } from 'themes/themeConstants';
 
 export const PlusIconButton = (props: { onClick: () => void }) => {
   const { onClick } = props;
@@ -69,4 +72,39 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({ onClick, icon, l
       {icon}
     </Box>
   </Button>
+);
+
+interface ButtonWithLoadingProps extends ButtonProps {
+  isLoading: boolean;
+}
+
+export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWithLoadingProps) => (
+  <LoadingButton
+    loading={isLoading}
+    loadingPosition="end"
+    endIcon={<Add />}
+    variant="contained"
+    sx={{
+      textTransform: 'none',
+      color: (theme) => theme.palette.common.white,
+      background: (theme) => theme.palette.primary.main,
+      px: 2,
+      '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
+        color: (theme) => theme.palette.common.white,
+        background: (theme) => theme.palette.primary.main
+      },
+      '&.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-sizeSmall': {
+        py: paddings.bottom8
+      },
+      '&.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-sizeMedium': {
+        py: paddings.bottom12
+      },
+      '&.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-sizeLarge': {
+        py: paddings.bottom16
+      }
+    }}
+    {...otherProps}
+  >
+    {otherProps?.children}
+  </LoadingButton>
 );
