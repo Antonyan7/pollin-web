@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import InfoIcon from '@mui/icons-material/Info';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { Badge, Grid, ListItem, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import MuiTooltip from '@mui/material/Tooltip';
@@ -26,25 +26,25 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
       componentsProps={{
         tooltip: {
           sx: {
-            bgcolor: theme.palette.primary.main
+            bgcolor: theme.palette.primary.light
           }
         }
       }}
       onOpen={onOpen}
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
         <Grid item>
-          <Typography variant="caption" color={theme.palette.background.paper}>
+          <Typography variant="caption" color={theme.palette.common.black}>
             {titleContent.title}:
           </Typography>
           {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-            <ListItem sx={{ paddingTop: 0 }}>&#9679; {message.title}</ListItem>
+            <ListItem sx={{ paddingTop: 0, color: theme.palette.common.black }}>&#9679; {message.title}</ListItem>
           ))}
         </Grid>
       ))}
     >
       <Button sx={{ m: 1 }}>
         <Badge badgeContent={alertCount} color="error">
-          <InfoIcon fontSize="large" sx={{ color: theme.palette.primary.main }} />
+          <ReportGmailerrorredIcon fontSize="large" sx={{ color: theme.palette.primary.main }} />
         </Badge>
       </Button>
     </MuiTooltip>

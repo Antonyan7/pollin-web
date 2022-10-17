@@ -6,15 +6,14 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, Box, CircularProgress, InputAdornment, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
+import { MainHeader } from 'pages/booking/appointments';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
 import { IEncounterFilterProps } from 'types/reduxTypes/patient-emr';
-
-import { Translation } from '../../constants/translations';
-import { MainHeader } from '../../pages/booking/appointments';
-import { dispatch, useAppSelector } from '../../redux/hooks';
-import { patientsMiddleware, patientsSelector } from '../../redux/slices/patients';
-import { IEncountersFilterOption, IEncountersReqBody } from '../../types/patient';
 
 const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();

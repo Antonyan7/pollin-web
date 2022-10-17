@@ -13,16 +13,45 @@ import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
-import SubCardStyled from '@ui-component/cards/SubCardStyled';
+
+import EncountersWrapper from './EncountersWrapper';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
+
+interface AddEncounterNoteTitleProps {
+  handleClose: () => void;
+  encounterNoteEditedTime: string;
+}
+
+const AddEncounterNoteTitle = ({ handleClose, encounterNoteEditedTime }: AddEncounterNoteTitleProps) => {
+  const [t] = useTranslation();
+
+  return (
+    <Grid container alignItems="center" justifyContent="space-between">
+      <Grid container item xs={6} sx={{ p: 2 }} alignItems="center">
+        <Grid item xs={1}>
+          <IconButton onClick={handleClose}>
+            <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
+          </IconButton>
+        </Grid>
+        <Grid item xs={5}>
+          <Typography sx={{ color: (theme) => theme.palette.common.black }} fontSize="21px" fontWeight="400">
+            {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container item xs={2} justifyContent="flex-end" pr={2}>
+        <Typography variant="h4">{encounterNoteEditedTime}</Typography>
+      </Grid>
+    </Grid>
+  );
+};
 
 const AddEncounterNote = () => {
   const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const [filterTypes, setFilterTypes] = useState<string>('');
   const patientId = useAppSelector(patientsSelector.currentPatientId);
-  const [t] = useTranslation();
   const router = useRouter();
 
   // Remove all html tags from textVor for compare and decide should show modal or not.
@@ -46,14 +75,16 @@ const AddEncounterNote = () => {
   };
 
   const handleSave = useCallback(() => {
-    dispatch(
-      patientsMiddleware.createEncounterNote({
-        patientId,
-        encountersTypeId: filterTypes,
-        content: editorValue
-      })
-    );
-    closeImmediately();
+    if (filterTypes.length && editorValue) {
+      dispatch(
+        patientsMiddleware.createEncounterNote({
+          patientId,
+          encountersTypeId: filterTypes,
+          content: editorValue
+        })
+      );
+      closeImmediately();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filterTypes, editorValue]);
 
@@ -62,36 +93,8 @@ const AddEncounterNote = () => {
   }, []);
 
   return (
-    <SubCardStyled
-      content
-      sx={{
-        '& > MuiCardHeader-root': {
-          padding: 0
-        }
-      }}
-      title={
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Grid container item xs={6} sx={{ p: 0.5 }} alignItems="center">
-            <Grid item xs={1}>
-              <IconButton onClick={handleClose}>
-                <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
-              </IconButton>
-            </Grid>
-            <Grid item xs={5}>
-              <Typography
-                sx={{ color: (theme) => theme.palette.common.black, marginRight: '20px' }}
-                fontSize="21px"
-                fontWeight="400"
-              >
-                {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid container item xs={2} justifyContent="flex-end" pr={3}>
-            <Typography variant="h4">{encounterNoteEditedTime}</Typography>
-          </Grid>
-        </Grid>
-      }
+    <EncountersWrapper
+      title={<AddEncounterNoteTitle handleClose={handleClose} encounterNoteEditedTime={encounterNoteEditedTime} />}
     >
       <Grid container mt={1}>
         <Grid container>
@@ -105,7 +108,7 @@ const AddEncounterNote = () => {
           />
         </Grid>
       </Grid>
-    </SubCardStyled>
+    </EncountersWrapper>
   );
 };
 

@@ -1,13 +1,12 @@
 import React from 'react';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { IconChevronRight } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { gridSpacing } from 'themes/themeConstants';
+import { IEncounterListItem } from 'types/reduxTypes/patient-emr';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
-
-import { gridSpacing } from '../../themes/themeConstants';
-import { IEncounterListItem } from '../../types/reduxTypes/patient-emr';
 
 const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEncounterListItem) => {
   const theme = useTheme();
@@ -26,19 +25,19 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
               title={title}
               content
               secondary={
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '170px' }}>
-                  <Typography fontSize="18px" fontWeight="400">
+                <Grid container justifyContent="space-between" alignItems="center">
+                  <Typography fontSize="16px" fontWeight="400">
                     {date}
                   </Typography>
                   <IconButton>
-                    <IconChevronRight stroke={1.5} size="1.3rem" />
+                    <ChevronRightIcon sx={{ color: theme.palette.common.black }} />
                   </IconButton>
-                </Box>
+                </Grid>
               }
             >
               <Grid container direction="column" spacing={2}>
                 <Grid item xs={12}>
-                  <Typography fontSize="16px" fontWeight="400">
+                  <Typography fontSize="16px" fontWeight="400" sx={{ color: theme.palette.common.black }}>
                     {author}
                   </Typography>
                 </Grid>

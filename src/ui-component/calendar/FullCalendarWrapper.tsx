@@ -8,7 +8,7 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
     display: 'none'
   },
   '& .fc-scrollgrid-sync-inner': {
-    backgroundColor: theme.palette.secondary.light
+    backgroundColor: theme.palette.primary.light
   },
 
   // basic style

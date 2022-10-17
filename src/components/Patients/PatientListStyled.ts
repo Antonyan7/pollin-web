@@ -1,12 +1,11 @@
 import { Box, styled } from '@mui/material';
 import { BoxProps } from '@mui/system';
-import { borderRadius, borders, margins } from 'themes/themeConstants';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 export const PatientListStyled = styled(Box)<BoxProps>(({ theme }) => ({
-  marginTop: margins.top36,
+  marginTop: margins.top20,
   borderRadius: borderRadius.radius8,
-  border: `${borders.solid1px} #dce1e4`,
-  padding: '0 2rem',
-  paddingTop: '2rem',
+  border: `${borders.solid1px} ${theme.palette.dark[500]}`,
+  padding: paddings.all24,
   backgroundColor: theme.palette.background.paper
 }));

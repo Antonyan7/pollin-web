@@ -86,11 +86,6 @@ const Encounters = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {/* Keeping this block for addendums */}
-      {/* <Box sx={{ marginTop: '50px', display: 'flex', justifyContent: 'center', textAlign: 'center' }}> */}
-      {/*  {isLoading && <CircularProgress />} */}
-      {/* </Box> */}
-      {/* <EncounterNotes /> */}
       {isEncountersListLoading ? (
         <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
           <CircularProgress sx={{ margin: margins.auto }} />

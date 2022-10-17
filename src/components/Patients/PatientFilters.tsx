@@ -113,7 +113,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
         onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
           onAutoCompleteChange(selectedOption);
         }}
-        popupIcon={<KeyboardArrowDownIcon />}
+        popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
         renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
       />
     </Box>
