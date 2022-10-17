@@ -128,7 +128,7 @@ const BlockTemplates = () => {
               ))}
               <Grid item xs={12} display="flex">
                 <StyledButton
-                  color="secondary"
+                  color="primary"
                   type="submit"
                   variant="contained"
                   size="large"

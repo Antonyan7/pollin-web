@@ -13,7 +13,7 @@ const ActionsField = ({ submitButtonText }: Props) => (
     <Grid item container xs={4} lg={2} justifyContent="flex-end">
       <StyledButton
         type="submit"
-        color="secondary"
+        color="primary"
         variant="contained"
         size="large"
         style={{

@@ -126,7 +126,7 @@ const EditTemplate = () => {
             </Grid>
             <Grid item xs={12} display="flex">
               <StyledButton
-                color="secondary"
+                color="primary"
                 onClick={onOpenModalClick}
                 variant="outlined"
                 size="large"
@@ -135,7 +135,7 @@ const EditTemplate = () => {
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
               <StyledButton
-                color="secondary"
+                color="primary"
                 variant="contained"
                 size="large"
                 type="submit"

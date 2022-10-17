@@ -24,7 +24,7 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
     <FormControl fullWidth>
       <Autocomplete
         inputValue={resource.title}
-        popupIcon={<KeyboardArrowDownIcon />}
+        popupIcon={<KeyboardArrowDownIcon color="primary" />}
         onChange={(e, value) => {
           onSelectResourceUpdate(value);
         }}

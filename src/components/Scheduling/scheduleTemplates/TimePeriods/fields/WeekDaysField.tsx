@@ -28,7 +28,7 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
             onChange={onWeekDaysChange(indexOfDay)}
             checked={value.includes(indexOfDay)}
             sx={{
-              color: (theme) => theme.palette.secondary.main
+              color: (theme) => theme.palette.primary.main
             }}
           />
           {day}

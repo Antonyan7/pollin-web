@@ -16,7 +16,7 @@ const ServiceField: React.FC<{ index: number }> = ({ index }) => {
 
   const StyledRadio = styled(Radio)(() => ({
     '&, &.Mui-checked': {
-      color: theme.palette.secondary.main
+      color: theme.palette.primary.main
     }
   }));
 

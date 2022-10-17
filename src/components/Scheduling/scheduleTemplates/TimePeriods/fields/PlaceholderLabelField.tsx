@@ -14,6 +14,7 @@ const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
     <TextField
       className="schedule-inputs"
       fullWidth
+      color="primary"
       id="outlined-email-address"
       placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}
       {...field}

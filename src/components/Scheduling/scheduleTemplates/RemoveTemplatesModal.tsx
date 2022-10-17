@@ -22,6 +22,8 @@ import MainCard from 'ui-component/cards/MainCard';
 
 import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
 
+import { margins, paddings } from '../../../themes/themeConstants';
+
 interface BodyProps extends CardProps {
   handleOpenClose?: () => void;
 }
@@ -63,14 +65,20 @@ const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HT
         >
           <CardContent>
             <Typography variant="body1">{t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_MAIN)}</Typography>
-            <Typography variant="body2" sx={{ mt: 2 }}>
+            <Typography variant="body2" sx={{ mt: margins.top2 }}>
               {t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_FOOTNOTE)}
             </Typography>
           </CardContent>
           <Divider />
           <CardActions>
             <Grid container justifyContent="flex-end">
-              <Button variant="contained" color="secondary" type="button" onClick={handleConfirm} sx={{ px: 4 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                type="button"
+                onClick={handleConfirm}
+                sx={{ px: paddings.all32 }}
+              >
                 {t(Translation.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)}
               </Button>
             </Grid>

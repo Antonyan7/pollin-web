@@ -47,7 +47,7 @@ const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
             event.preventDefault();
           }}
           sx={{
-            svg: { color: theme.palette.secondary.main }
+            svg: { color: theme.palette.primary.main }
           }}
           helperText={errors[fieldName]?.message ?? ''}
           error={Boolean(errors[fieldName]?.message)}

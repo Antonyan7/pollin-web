@@ -42,7 +42,7 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           {...fieldProps}
         />
       )}
-      popupIcon={<KeyboardArrowDownIcon color="secondary" />}
+      popupIcon={<KeyboardArrowDownIcon color="primary" />}
     />
   );
 };

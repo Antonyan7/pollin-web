@@ -25,7 +25,7 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
     <FormControl fullWidth>
       <Autocomplete
         inputValue={scheduleTemplate.name}
-        popupIcon={<KeyboardArrowDownIcon />}
+        popupIcon={<KeyboardArrowDownIcon color="primary" />}
         options={scheduleTemplates.templates}
         onChange={(e, value: SchedulingTemplateProps | null) => {
           handleSelectTemplate(value);

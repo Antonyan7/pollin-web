@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
+import { useTheme } from '@mui/system';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
@@ -21,7 +22,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const { control } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, value, ...fieldProps } = field;
-
+  const theme = useTheme();
   const onTimeFieldChange = (newTime: Date | null) => {
     if (newTime && isValid(newTime)) {
       onChange(toESTIsoString(newTime));
@@ -61,6 +62,9 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
             <TextField
               {...params}
               fullWidth
+              sx={{
+                svg: { color: theme.palette.primary.main }
+              }}
               {...fieldProps}
               onKeyDown={(e) => e.preventDefault()}
               onClick={() => setOpenTimePicker(true)}

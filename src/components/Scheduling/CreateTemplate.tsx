@@ -97,6 +97,7 @@ const CreateTemplate = () => {
               <TextField
                 {...methods.register('name')}
                 className="schedule-inputs"
+                color="primary"
                 fullWidth
                 placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
               />
@@ -110,7 +111,7 @@ const CreateTemplate = () => {
             </Grid>
             <Grid item xs={12} container justifyContent="flex-end">
               <StyledButton
-                color="secondary"
+                color="primary"
                 onClick={onCancelClick}
                 variant="outlined"
                 size="large"
@@ -119,7 +120,7 @@ const CreateTemplate = () => {
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
               <StyledButton
-                color="secondary"
+                color="primary"
                 variant="contained"
                 size="large"
                 type="submit"

@@ -54,7 +54,7 @@ const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
           {...params}
           id={fieldName}
           sx={{
-            svg: { color: theme.palette.secondary.main }
+            svg: { color: theme.palette.primary.main }
           }}
           helperText={errors[fieldName]?.message ?? ''}
           error={Boolean(errors[fieldName]?.message)}

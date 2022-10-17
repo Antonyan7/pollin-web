@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { Autocomplete, TextField } from '@mui/material';
+import { useTheme } from '@mui/system';
 import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
 import { createOptionsGroup } from 'helpers/berryFunctions';
@@ -13,7 +14,6 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   const { control } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.serviceTypes`, control });
   const { onChange, value: selectedServiceTypeIds, ...fieldProps } = field;
-
   const onServiceTypesFieldChange = (_e: React.SyntheticEvent, newValues: OptionsReturnProps<IServiceType>[]) =>
     onChange(newValues.map((newValue) => newValue.item.id));
 
@@ -21,6 +21,8 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
     () => serviceTypeOptions.filter(({ item }) => (selectedServiceTypeIds ?? []).includes(item.id)),
     [selectedServiceTypeIds, serviceTypeOptions]
   );
+
+  const theme = useTheme();
 
   return (
     <Autocomplete
@@ -31,8 +33,18 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
       getOptionLabel={(option) => option.item.title}
       isOptionEqualToValue={(option, value) => option.item.title === value.item.title}
       value={selectedTypeOptions}
+      color="primary"
       onChange={onServiceTypesFieldChange}
-      renderInput={(params) => <TextField {...params} label="Service Types" {...fieldProps} />}
+      renderInput={(params) => (
+        <TextField
+          sx={{
+            svg: { color: theme.palette.primary.main }
+          }}
+          {...params}
+          label="Service Types"
+          {...fieldProps}
+        />
+      )}
     />
   );
 };

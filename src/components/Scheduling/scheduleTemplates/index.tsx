@@ -50,12 +50,12 @@ const ScheduleTemplates = () => {
       <ScheduleBoxWrapper>
         <StyledButtonNew
           theme={theme}
-          variant="outlined"
-          endIcon={<AddIcon sx={{ color: theme.palette.primary.main }} />}
+          variant="contained"
+          endIcon={<AddIcon sx={{ color: theme.palette.primary.contrastText }} />}
           onClick={handleNewTemplate}
           sx={{ marginLeft: margins.auto }}
         >
-          <Typography variant="h4" sx={{ marginRight: margins.right12 }}>
+          <Typography variant="h4" sx={{ color: theme.palette.primary.contrastText, marginRight: margins.right12 }}>
             {t(Translation.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE)}
           </Typography>
         </StyledButtonNew>
