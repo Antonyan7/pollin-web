@@ -37,6 +37,7 @@ const DateAndStartTime: React.FC = () => {
         components={{
           ActionBar: DatePickerActionBar
         }}
+        disablePast
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
         onClose={() => setMobileDateTimePickerOpen(false)}

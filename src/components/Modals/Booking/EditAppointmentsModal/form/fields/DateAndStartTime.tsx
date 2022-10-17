@@ -37,6 +37,7 @@ const DateAndStartTime: React.FC = () => {
           ActionBar: DatePickerActionBar
         }}
         label={dateAndStartTimeLabel}
+        disablePast
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
         maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
