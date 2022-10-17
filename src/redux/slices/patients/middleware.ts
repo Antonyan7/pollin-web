@@ -85,7 +85,7 @@ const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch
   try {
     const response = await API.patients.getPatientAlertDetails(alertId);
 
-    dispatch(setPatientAlertDetails(response.data.data.alerts));
+    dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

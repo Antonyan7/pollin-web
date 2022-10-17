@@ -1,14 +1,18 @@
-import { IAction, SliceReducers } from 'redux/store';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
+import { IAction } from 'redux/store';
 import {
   AppointmentDetailsProps,
   BookingProps,
   IAppointment,
   IPatientList,
-  IServiceProviders
+  IServiceProviders,
+  IServiceType
 } from 'types/reduxTypes/booking';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
-const reducers: SliceReducers<BookingProps> = {
+const createReducer = <T extends SliceCaseReducers<BookingProps>>(reducer: T) => ({ ...reducer });
+
+const reducers = createReducer({
   setAppointments(state, action: IAction<IAppointment[]>) {
     state.appointments = action.payload;
   },
@@ -43,13 +47,13 @@ const reducers: SliceReducers<BookingProps> = {
     state.patientList.isLoading = action.payload;
   },
   updatePatientsList(state, action: IAction<IPatientList>) {
-    state.patientList.patients.patients = [...state.patientList.patients.patients, ...action.payload.patients.patients];
+    state.patientList.patients = [...state.patientList.patients, ...action.payload.patients];
     state.patientList.isLoading = action.payload.isLoading;
     state.patientList.currentPage = action.payload.currentPage;
     state.patientList.pageSize = action.payload.pageSize;
     state.patientList.totalItems = action.payload.totalItems;
   },
-  setServiceTypes(state, action: IAction<{ id: string; title: string; isVirtual: boolean }[]>) {
+  setServiceTypes(state, action: IAction<IServiceType[]>) {
     state.serviceTypes = action.payload;
   },
   setAppointmentDetails(state, action: IAction<AppointmentDetailsProps | null>) {
@@ -58,6 +62,6 @@ const reducers: SliceReducers<BookingProps> = {
   setPatientAlerts(state, action: IAction<AlertDetailsProps[]>) {
     state.patientAlerts = action.payload;
   }
-};
+});
 
 export default reducers;

@@ -1,10 +1,18 @@
-export const getInitialState = () => ({
+import { SchedulingProps } from 'types/reduxTypes/scheduling';
+
+export const getInitialState = (): SchedulingProps => ({
   scheduleTemplates: { templates: [], pageSize: 1, currentPage: 1, totalItems: 0 },
   scheduleApplyTemplates: [],
   error: null,
   scheduleSingleTemplate: { name: '', timePeriods: [] },
   schedulingListLoadingStatus: false,
-  scheduleBlock: [],
+  scheduleBlock: {
+    endDate: '',
+    slots: [],
+    resourceId: '',
+    startDate: '',
+    placeholderLabel: ''
+  },
   scheduleCalendarLoading: false,
   scheduleResources: [],
   overrides: [],

@@ -1,10 +1,12 @@
 import { IPagination } from '@axios/axios';
 import { IAppointmentDetails } from '@axios/booking/managerBooking';
-import { AlertDetailsProps, IPatientsResponse } from 'types/reduxTypes/patient-emr';
+import { IPatientsData } from '@axios/patientEmr/managerPatientEmr';
+import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
 
 import { SlotTypes } from '../calendar';
 
-export interface IPatientList extends IPagination, IPatientsResponse {
+export interface IPatientList extends IPagination {
+  patients: IPatientsData[];
   isLoading: boolean;
 }
 

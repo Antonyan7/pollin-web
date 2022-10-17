@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 
-import { IEncounterTypes } from './reduxTypes/patient-emr';
+import { IEncounterType } from './reduxTypes/patient-emr';
 
 export interface IPatient {
   id: string;
@@ -101,5 +101,5 @@ export interface SimpleEditorProps {
   handleCancel?: () => void;
   handleSave?: () => void;
   handleEncounterTypeSelect?: (e: SelectChangeEvent) => void;
-  encounterTypes?: IEncounterTypes[];
+  encounterTypes?: IEncounterType[];
 }

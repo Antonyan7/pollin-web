@@ -1,10 +1,11 @@
 import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmr';
-import { IAction, SliceReducers } from 'redux/store';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
+import { IAction } from 'redux/store';
 import {
   AlertDetailsProps,
   IEncounterFilterProps,
   IEncounterList,
-  IEncounterTypes,
+  IEncounterType,
   IFilterCategory,
   IPatientList,
   PatientEmrProps,
@@ -12,7 +13,9 @@ import {
   PatientProfile
 } from 'types/reduxTypes/patient-emr';
 
-const reducers: SliceReducers<PatientEmrProps> = {
+const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
+
+const reducers = createReducer({
   setError(state, action) {
     state.error = action.payload;
   },
@@ -49,10 +52,10 @@ const reducers: SliceReducers<PatientEmrProps> = {
   setEncountersList(state, action: IAction<IEncounterList>) {
     state.encounters.list = action.payload;
   },
-  setEncounterFilters(state, action: IAction<IEncounterFilterProps>) {
-    state.encounters.filters = action.payload as unknown as IEncounterFilterProps[];
+  setEncounterFilters(state, action: IAction<IEncounterFilterProps[]>) {
+    state.encounters.filters = action.payload;
   },
-  setEncountersType(state, action: IAction<IEncounterTypes[]>) {
+  setEncountersType(state, action: IAction<IEncounterType[]>) {
     state.encounters.types = action.payload;
   },
   setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps>) {
@@ -64,6 +67,6 @@ const reducers: SliceReducers<PatientEmrProps> = {
   setPatientHighlights(state, action: IAction<PatientHighlight[]>) {
     state.patientHighlights = action.payload;
   }
-};
+});
 
 export default reducers;

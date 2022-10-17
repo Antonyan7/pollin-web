@@ -1,4 +1,5 @@
-import { IAction, SliceReducers } from 'redux/store';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
+import { IAction } from 'redux/store';
 import { IServiceProvider, IServiceType } from 'types/reduxTypes/booking';
 import {
   BlockSchedulingProps,
@@ -9,7 +10,9 @@ import {
   SingleSchedulingProps
 } from 'types/reduxTypes/scheduling';
 
-const reducers: SliceReducers<SchedulingProps> = {
+const createReducer = <T extends SliceCaseReducers<SchedulingProps>>(reducer: T) => ({ ...reducer });
+
+const reducers = createReducer({
   setError(state, action) {
     state.error = action.payload;
   },
@@ -30,7 +33,7 @@ const reducers: SliceReducers<SchedulingProps> = {
   setSingleScheduleTemplate(state, action: IAction<SingleSchedulingProps>) {
     state.scheduleSingleTemplate = action.payload;
   },
-  setScheduleBlock(state, action: IAction<BlockSchedulingProps[]>) {
+  setScheduleBlock(state, action: IAction<BlockSchedulingProps>) {
     state.scheduleBlock = action.payload;
   },
   setScheduleBlockResources(state, action: IAction<IServiceProvider[]>) {
@@ -48,6 +51,6 @@ const reducers: SliceReducers<SchedulingProps> = {
   setScheduleOverrides(state, action: IAction<number[]>) {
     state.overrides = action.payload;
   }
-};
+});
 
 export default reducers;

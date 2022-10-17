@@ -52,7 +52,7 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
     dispatch(setServiceProviders(data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -72,7 +72,7 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
     dispatch(setIsServiceProvidersLoading(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -88,7 +88,7 @@ const getAppointments = (resourceId: string, date: string) => async (dispatch: A
     dispatch(setAppointments([]));
     dispatch(setCalendarLoadingState(false));
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -114,7 +114,7 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
 
     dispatch(
       setPatientsList({
-        patients: response.data.data,
+        patients: response.data.data.patients,
         isLoading: false,
         currentPage: response.data.currentPage,
         totalItems: response.data.totalItems,
@@ -125,7 +125,7 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
     Sentry.captureException(error);
     resetPatientData(dispatch);
     dispatch(setPatientListLoading(false));
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -143,7 +143,7 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
 
     dispatch(
       updatePatientsList({
-        patients: response.data.data,
+        patients: response.data.data.patients,
         isLoading: false,
         currentPage: response.data.currentPage,
         totalItems: response.data.totalItems,
@@ -154,7 +154,7 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
     Sentry.captureException(error);
     resetPatientData(dispatch);
     dispatch(setPatientListLoading(false));
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -167,7 +167,7 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
     dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -182,7 +182,7 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -193,7 +193,7 @@ const getAppointmentDetails = (appointmentId: string) => async (dispatch: AppDis
     dispatch(setAppointmentDetails(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 
@@ -212,7 +212,7 @@ const editAppointment =
       dispatch(getAppointments(providerId, calendarDate));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
+      dispatch(setError(error as string));
     }
   };
 
@@ -221,7 +221,7 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
     if (patientId) {
       const response = await API.patients.getPatientAlertDetails(patientId);
 
-      dispatch(setPatientAlerts(response.data.data.alerts));
+      dispatch(setPatientAlerts(response.data.data.alerts ?? []));
     } else {
       dispatch(setPatientAlerts([]));
     }
@@ -242,7 +242,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     });
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
-    dispatch(setError(error));
+    dispatch(setError(error as string));
   }
 };
 

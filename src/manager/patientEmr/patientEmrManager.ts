@@ -9,6 +9,7 @@ import {
   IEncounterResponse,
   IEncounterTypesResponse,
   IGetPatientsRequestBody,
+  IGetPatientsResponse,
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
@@ -19,7 +20,7 @@ import {
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmr';
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse, IPatientsResponse } from 'types/reduxTypes/patient-emr';
+import { IEncounterDetailsResponse } from 'types/reduxTypes/patient-emr';
 
 const baseURL = '/clinic-patient-emr';
 
@@ -33,7 +34,7 @@ const patientEmrManager = {
     });
   },
   getPatients(data: IGetPatientsRequestBody) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientsResponse>>(`${baseURL}/v1/patients`, data);
+    return axiosInstance.post<any, IAxiosResponsePaginated<IGetPatientsResponse>>(`${baseURL}/v1/patients`, data);
   },
   getPatientsList(data: IPatientsReqBody) {
     return axiosInstance.post<any, IAxiosResponsePaginated<IPatientsListResponse>>(

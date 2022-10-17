@@ -1,9 +1,5 @@
 import { IPagination } from '@axios/axios';
-import {
-  IEncounterDetailsProps,
-  IGetPatientsResponse,
-  IUpdateEncounterNoteRequest
-} from '@axios/patientEmr/managerPatientEmr';
+import { IEncounterDetailsProps, IUpdateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmr';
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
@@ -82,13 +78,6 @@ export interface IPatientListData {
   doctor: string;
 }
 
-export interface IPatientsResponse {
-  patients: IGetPatientsResponse;
-  pageSize: number;
-  currentPage: number;
-  totalItems: number;
-}
-
 export interface AlertDetailsMessagesProps {
   title: string;
 }
@@ -106,11 +95,11 @@ export interface IEncounterDetailsResponse {
 interface IEncountersProps {
   list: IEncounterList;
   filters: IEncounterFilterProps[] | null;
-  types: IEncounterTypes[];
+  types: IEncounterType[];
   encounterDetails: IEncounterDetailsProps | null;
 }
 
-export interface IEncounterTypes {
+export interface IEncounterType {
   id: string;
   title: string;
 }

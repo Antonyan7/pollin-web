@@ -19,7 +19,7 @@ const PatientId = () => {
 
   const patientsList = useAppSelector(bookingSelector.patientList);
   const { patients, isLoading } = patientsList;
-  const patientOptions = useMemo(() => createOptionsGroup(patients.patients), [patients.patients]);
+  const patientOptions = useMemo(() => createOptionsGroup(patients), [patients]);
 
   const { control } = useFormContext<ICreatedAppointmentBody>();
   const { field, fieldState } = useController({ name: patientIdFieldName, control });

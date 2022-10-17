@@ -11,9 +11,7 @@ export const getInitialState = (): BookingProps => ({
   currentAppointmentId: '',
   error: null,
   patientList: {
-    patients: {
-      patients: []
-    },
+    patients: [],
     isLoading: false,
     pageSize: 0,
     currentPage: 0,
