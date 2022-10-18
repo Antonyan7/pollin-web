@@ -3,9 +3,9 @@ import { date, object, string } from 'yup';
 
 export const blockScheduleValidationSchema = object({
   resourceId: string().required(generateErrorMessage('Resource Id')),
-  startDate: date().required(generateErrorMessage('Start Date')).nullable(false),
-  startTime: date().required(generateErrorMessage('Start Time')).nullable(false),
-  endDate: date().required(generateErrorMessage('End Date')).nullable(false),
-  endTime: date().required(generateErrorMessage('End Time')).nullable(false),
+  startDate: date().required('Start date cannot be in the past.').nullable(true),
+  startTime: date().required('Start time must occur before end time.').nullable(true),
+  endDate: date().required('End date cannot be in the past.').nullable(true),
+  endTime: date().required('End time must occur after start time.').nullable(true),
   placeholderLabel: string().required(generateErrorMessage('Placeholder Label'))
 });
