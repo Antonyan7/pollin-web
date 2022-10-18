@@ -54,6 +54,7 @@ export interface SchedulingProps {
   serviceTypes: IServiceType[];
   applyScheduleStateStatus: SchedulingStateStatusProps;
   blockScheduleStateStatus: SchedulingStateStatusProps;
+  scheduleLoading: boolean;
 }
 
 export interface IScheduleTemplatesList extends IPagination {

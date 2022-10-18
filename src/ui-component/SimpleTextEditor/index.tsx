@@ -98,6 +98,8 @@ const SimpleTextEditor = ({
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
 
+  const isAddModal = mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Add_Addendum;
+
   return (
     <>
       <StyledGrid item xs={12} theme={theme}>
@@ -139,9 +141,7 @@ const SimpleTextEditor = ({
               variant="contained"
               onClick={handleSave}
             >
-              {!isEncounterLoading
-                ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
-                : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
+              {isAddModal ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL) : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
             </ButtonWithLoading>
           </Grid>
         </SubCardStyled>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
 import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
@@ -12,10 +12,11 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
-import { margins } from 'themes/themeConstants';
+import { borderRadius, margins } from 'themes/themeConstants';
 import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 import { linkDateAndTime } from '@utils/dateUtils';
 
 import AutoCompleteTextField from './fields/AutoCompleteTextField';
@@ -62,6 +63,8 @@ const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowPro
 const BlockTemplates = () => {
   const [t] = useTranslation();
   const scheduleBlockStatus = useAppSelector(schedulingSelector.scheduleBlockStatus);
+  const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
+
   const methods = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
@@ -127,15 +130,18 @@ const BlockTemplates = () => {
                 </BlockScheduleFormRow>
               ))}
               <Grid item xs={12} display="flex">
-                <StyledButton
+                <ButtonWithLoading
+                  isLoading={isScheduleLoading}
                   color="primary"
                   type="submit"
                   variant="contained"
-                  size="large"
-                  sx={{ marginLeft: margins.auto }}
+                  sx={{
+                    marginLeft: margins.auto,
+                    borderRadius: borderRadius.radius8
+                  }}
                 >
                   {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
-                </StyledButton>
+                </ButtonWithLoading>
               </Grid>
             </Grid>
           </form>

@@ -13,7 +13,7 @@ import FormBody from './FormBody';
 import FormHeader from './FormHeader';
 
 export interface AddAppointmentsModalFormProps {
-  isActionButtonDisabled: boolean;
+  isActionButtonDisabled?: boolean;
 }
 
 enum OpenModalReason {

@@ -1,6 +1,10 @@
 import React from 'react';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { schedulingSelector } from '@redux/slices/scheduling';
+import { borderRadius } from 'themes/themeConstants';
+
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 import { margins } from '../../../../themes/themeConstants';
 
@@ -8,24 +12,29 @@ interface Props {
   submitButtonText: string;
 }
 
-const ActionsField = ({ submitButtonText }: Props) => (
-  <Grid container alignItems="center">
-    <Grid item xs />
-    <Grid item xs />
-    <Grid item container xs={4} lg={2} justifyContent="flex-end">
-      <StyledButton
-        type="submit"
-        color="primary"
-        variant="contained"
-        size="large"
-        style={{
-          margin: `${margins.bottom32} ${margins.all0}`
-        }}
-      >
-        {submitButtonText}
-      </StyledButton>
+const ActionsField = ({ submitButtonText }: Props) => {
+  const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
+
+  return (
+    <Grid container alignItems="center">
+      <Grid item xs />
+      <Grid item xs />
+      <Grid item container xs={4} lg={2} justifyContent="flex-end">
+        <ButtonWithLoading
+          isLoading={isScheduleLoading}
+          type="submit"
+          color="primary"
+          variant="contained"
+          style={{
+            borderRadius: borderRadius.radius8,
+            margin: `${margins.bottom32} ${margins.all0}`
+          }}
+        >
+          {submitButtonText}
+        </ButtonWithLoading>
+      </Grid>
     </Grid>
-  </Grid>
-);
+  );
+};
 
 export default ActionsField;

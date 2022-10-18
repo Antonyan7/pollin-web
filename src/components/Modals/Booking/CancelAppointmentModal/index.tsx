@@ -4,7 +4,6 @@ import { StyledInputLabel } from '@components/Appointments/CommonMaterialCompone
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
-  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -22,10 +21,12 @@ import { Stack } from '@mui/system';
 import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { cancellationReasons } from 'helpers/constants';
-import { dispatch } from 'redux/hooks';
-import { bookingMiddleware } from 'redux/slices/booking';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
+
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 export interface CancelAppointmentModalProps {
   appointmentId: string;
@@ -34,6 +35,8 @@ export interface CancelAppointmentModalProps {
 const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) => {
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
   const [cancellationReason, setCancellationReason] = useState<string>('');
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
+
   const [t] = useTranslation();
 
   const onSelectButtonChange = useCallback((event: SelectChangeEvent<unknown>) => {
@@ -130,7 +133,8 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                <Button
+                <ButtonWithLoading
+                  isLoading={isConfirmationLoading}
                   variant="contained"
                   disabled={!cancellationReason}
                   onClick={onConfirm}
@@ -140,7 +144,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
                   }}
                 >
                   {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM)}
-                </Button>
+                </ButtonWithLoading>
               </Stack>
             </Grid>
           </Grid>

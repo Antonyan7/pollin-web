@@ -13,6 +13,7 @@ export const serviceTypes = createSelector([selector], (state) => state.serviceT
 export const appointmentDetails = createSelector([selector], (state) => state.appointmentDetails);
 export const patientAlerts = createSelector([selector], (state) => state.patientAlerts);
 export const isServiceProvidersLoading = createSelector([selector], (state) => state.isServiceProvidersLoading);
+export const isAppoitmentLoading = createSelector([selector], (state) => state.isAppoitmentLoading);
 
 export default {
   isServiceProvidersLoading,
@@ -24,5 +25,6 @@ export default {
   patientList,
   serviceTypes,
   appointmentDetails,
-  patientAlerts
+  patientAlerts,
+  isAppoitmentLoading
 };

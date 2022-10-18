@@ -50,6 +50,9 @@ const reducers = createReducer({
   },
   setScheduleOverrides(state, action: IAction<number[]>) {
     state.overrides = action.payload;
+  },
+  setScheduleLoading(state, action: IAction<boolean>) {
+    state.scheduleLoading = action.payload;
   }
 });
 

@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
-import { dispatch } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { Translation } from 'constants/translations';
 import { standardDate } from 'helpers/constants';
-import { schedulingMiddleware } from 'redux/slices/scheduling';
+import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
-import { margins, paddings } from 'themes/themeConstants';
+import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
-import { PlusIconButton } from '@ui-component/common/buttons';
+import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
 import { changeDateSameTimezone } from '@utils/dateUtils';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
@@ -33,6 +33,8 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 
 const CreateTemplate = () => {
   const [t] = useTranslation();
+
+  const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
@@ -119,15 +121,19 @@ const CreateTemplate = () => {
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
-              <StyledButton
+              <ButtonWithLoading
+                isLoading={isScheduleLoading}
                 color="primary"
                 variant="contained"
-                size="large"
                 type="submit"
-                sx={{ paddingLeft: paddings.left4, paddingRight: paddings.right4 }}
+                sx={{
+                  paddingLeft: paddings.left4,
+                  paddingRight: paddings.right4,
+                  borderRadius: borderRadius.radius8
+                }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
-              </StyledButton>
+              </ButtonWithLoading>
             </Grid>
           </Grid>
         </form>

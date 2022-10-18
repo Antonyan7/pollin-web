@@ -9,11 +9,11 @@ import { standardDate } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { margins, paddings } from 'themes/themeConstants';
+import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
-import { PlusIconButton } from '@ui-component/common/buttons';
+import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
 import { changeDateSameTimezone } from '@utils/dateUtils';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
@@ -34,6 +34,7 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
 
+  const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const [t] = useTranslation();
   const router = useRouter();
   const { scheduleId } = router.query;
@@ -134,15 +135,19 @@ const EditTemplate = () => {
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
-              <StyledButton
+              <ButtonWithLoading
+                isLoading={isScheduleLoading}
                 color="primary"
                 variant="contained"
-                size="large"
                 type="submit"
-                sx={{ paddingLeft: paddings.left4, paddingRight: paddings.right4 }}
+                sx={{
+                  paddingLeft: paddings.left4,
+                  paddingRight: paddings.right4,
+                  borderRadius: borderRadius.radius8
+                }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
-              </StyledButton>
+              </ButtonWithLoading>
             </Grid>
           </Grid>
         </form>

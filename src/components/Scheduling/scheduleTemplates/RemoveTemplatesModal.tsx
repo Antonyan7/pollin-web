@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Box,
-  Button,
   CardActions,
   CardContent,
   CardProps,
@@ -16,11 +15,12 @@ import {
   Typography
 } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { dispatch } from 'redux/hooks';
-import { schedulingMiddleware } from 'redux/slices/scheduling';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import MainCard from 'ui-component/cards/MainCard';
 
 import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 import { margins, paddings } from '../../../themes/themeConstants';
 
@@ -42,6 +42,7 @@ const StyledMainCard = styled(Box)<SelectProps>(() => ({
 
 const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HTMLDivElement>) => {
   const [t] = useTranslation();
+  const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
 
   const { selected, setSelected } = useScheduledTemplatesListContext();
 
@@ -72,7 +73,8 @@ const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HT
           <Divider />
           <CardActions>
             <Grid container justifyContent="flex-end">
-              <Button
+              <ButtonWithLoading
+                isLoading={isScheduleLoading}
                 variant="contained"
                 color="primary"
                 type="button"
@@ -80,7 +82,7 @@ const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HT
                 sx={{ px: paddings.all32 }}
               >
                 {t(Translation.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)}
-              </Button>
+              </ButtonWithLoading>
             </Grid>
           </CardActions>
         </MainCard>

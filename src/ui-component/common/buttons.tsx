@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import { Add } from '@mui/icons-material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { LoadingButton } from '@mui/lab';
@@ -80,15 +79,17 @@ interface ButtonWithLoadingProps extends ButtonProps {
 
 export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWithLoadingProps) => (
   <LoadingButton
-    loading={isLoading}
     loadingPosition="end"
-    endIcon={<Add />}
     variant="contained"
+    {...otherProps}
+    loading={isLoading}
     sx={{
       textTransform: 'none',
       color: (theme) => theme.palette.common.white,
       background: (theme) => theme.palette.primary.main,
+      minWidth: '100px',
       px: 2,
+      textAlign: 'left',
       '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
         color: (theme) => theme.palette.common.white,
         background: (theme) => theme.palette.primary.main
@@ -101,9 +102,9 @@ export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWi
       },
       '&.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-sizeLarge': {
         py: paddings.bottom16
-      }
+      },
+      ...otherProps?.sx
     }}
-    {...otherProps}
   >
     {otherProps?.children}
   </LoadingButton>

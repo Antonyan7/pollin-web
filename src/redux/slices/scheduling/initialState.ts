@@ -24,5 +24,6 @@ export const getInitialState = (): SchedulingProps => ({
   blockScheduleStateStatus: {
     success: false,
     fail: false
-  }
+  },
+  scheduleLoading: false
 });

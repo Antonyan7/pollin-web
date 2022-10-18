@@ -1,9 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledAddButton } from '@components/Appointments/CommonMaterialComponents';
 import { DialogActions, Grid, Stack } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
-import { margins } from 'themes/themeConstants';
+import { borderRadius, margins } from 'themes/themeConstants';
+
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface FormActionsProps {
   isActionButtonDisabled: boolean;
@@ -11,6 +14,7 @@ interface FormActionsProps {
 
 const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
   const [t] = useTranslation();
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
 
   const addButtonLabel = t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_ADD);
 
@@ -19,9 +23,17 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
       <Grid container justifyContent="flex-end" alignItems="center">
         <Grid item xs={12}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-            <StyledAddButton variant="contained" type="submit" disabled={isActionButtonDisabled}>
+            <ButtonWithLoading
+              sx={{
+                borderRadius: borderRadius.radius8
+              }}
+              isLoading={isConfirmationLoading}
+              variant="contained"
+              type="submit"
+              disabled={isActionButtonDisabled}
+            >
               {addButtonLabel}
-            </StyledAddButton>
+            </ButtonWithLoading>
           </Stack>
         </Grid>
       </Grid>

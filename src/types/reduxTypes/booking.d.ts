@@ -29,6 +29,7 @@ export interface BookingProps {
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
+  isAppoitmentLoading: boolean;
 }
 
 export interface IUniqueItem {

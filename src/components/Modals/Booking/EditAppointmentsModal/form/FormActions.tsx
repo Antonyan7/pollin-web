@@ -7,16 +7,19 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { borderRadius } from 'themes/themeConstants';
 
-const FormActions: React.FC = () => {
+import { ButtonWithLoading } from '@ui-component/common/buttons';
+
+const FormActions = () => {
   const [t] = useTranslation();
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const appointmentId = details?.appointment.id ?? '';
-
   const onCancelAppointmentClick = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelAppointmentModal, props: { appointmentId } }));
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, [appointmentId]);
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
 
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL);
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
@@ -30,9 +33,14 @@ const FormActions: React.FC = () => {
           </StyledButton>
         </Grid>
         <Grid item>
-          <StyledButton sx={{ width: '60px' }} type="submit" variant="contained">
+          <ButtonWithLoading
+            isLoading={isConfirmationLoading}
+            sx={{ width: '60px', borderRadius: borderRadius.radius8 }}
+            type="submit"
+            variant="contained"
+          >
             {saveButtonLabel}
-          </StyledButton>
+          </ButtonWithLoading>
         </Grid>
       </Grid>
     </DialogActions>

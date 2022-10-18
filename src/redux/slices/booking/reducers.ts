@@ -61,6 +61,9 @@ const reducers = createReducer({
   },
   setPatientAlerts(state, action: IAction<AlertDetailsProps[]>) {
     state.patientAlerts = action.payload;
+  },
+  setAppointmentLoading(state, action: IAction<boolean>) {
+    state.isAppoitmentLoading = action.payload;
   }
 });
 

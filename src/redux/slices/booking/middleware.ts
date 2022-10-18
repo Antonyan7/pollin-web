@@ -24,7 +24,8 @@ const {
   updatePatientsList,
   setServiceTypes,
   setAppointmentDetails,
-  setPatientAlerts
+  setPatientAlerts,
+  setAppointmentLoading
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -176,6 +177,8 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
 
+    dispatch(setAppointmentLoading(true));
+
     appointmentValues.providerId = providerId;
     appointmentValues.date = toESTIsoString(appointmentValues.date as Date);
     await API.booking.createAppointment(appointmentValues);
@@ -235,6 +238,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
 
+    dispatch(setAppointmentLoading(true));
     await API.booking.cancelAppointment(appointmentId, {
       appointment: {
         cancellationReason

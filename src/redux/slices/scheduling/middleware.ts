@@ -21,7 +21,8 @@ const {
   setSingleScheduleTemplate,
   setApplyScheduleState,
   setBlockScheduleState,
-  setCalendarLoadingState
+  setCalendarLoadingState,
+  setScheduleLoading
 } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
@@ -103,6 +104,8 @@ const resetOverrides = () => async (dispatch: AppDispatch) => {
 
 const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setScheduleLoading(true));
+
     const response = await API.scheduling.applyScheduleBlock({
       resourceId: applyBlockScheduleData.resourceId,
       startDate: applyBlockScheduleData.startDate,
@@ -126,6 +129,8 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
       })
     );
     dispatch(setError(error));
+  } finally {
+    dispatch(setScheduleLoading(false));
   }
 };
 
@@ -147,29 +152,34 @@ const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) 
 const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setCalendarLoadingState(true));
+    dispatch(setScheduleLoading(true));
     await API.scheduling.updateSingleTemplate(templateId, data);
-
-    dispatch(setCalendarLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
     dispatch(setCalendarLoadingState(false));
+    dispatch(setScheduleLoading(false));
   }
 };
 
 const deleteTemplate = (templateId: DeleteScheduleTemplateProps) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setScheduleLoading(true));
     await API.scheduling.deleteTemplate(templateId);
-
     dispatch(getSchedulingTemplates(1));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setScheduleLoading(false));
   }
 };
 
 const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setScheduleLoading(true));
+
     const response = await API.scheduling.createTemplate(createScheduleTemplateData);
 
     if (response.data.status.code === 'succeed') {
@@ -192,6 +202,8 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setScheduleLoading(false));
   }
 };
 
