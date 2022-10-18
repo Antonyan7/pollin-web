@@ -2,6 +2,8 @@ import React from 'react';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { Grid } from '@mui/material';
 
+import { margins } from '../../../../themes/themeConstants';
+
 interface Props {
   submitButtonText: string;
 }
@@ -17,7 +19,7 @@ const ActionsField = ({ submitButtonText }: Props) => (
         variant="contained"
         size="large"
         style={{
-          margin: '30px 0'
+          margin: `${margins.bottom32} ${margins.all0}`
         }}
       >
         {submitButtonText}

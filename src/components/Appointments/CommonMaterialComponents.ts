@@ -85,7 +85,7 @@ const StyledBox = styled(Box)<BoxProps>(() => ({
 
 const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   borderRadius: borderRadius.radius8,
-  padding: theme.spacing(3),
+  padding: paddings.all24,
   backgroundColor: theme.palette.background.paper
 }));
 

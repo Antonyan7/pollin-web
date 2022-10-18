@@ -1,13 +1,13 @@
 import { styled } from '@mui/material/styles';
-import { borders, paddings } from 'themes/themeConstants';
+import { borders, margins, paddings } from 'themes/themeConstants';
 
 const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({
   '.create-scheduling-template': {
-    marginTop: theme.spacing(3),
+    marginTop: margins.top24,
     '.create-template-box': {
       display: 'grid',
       gridTemplateColumns: ' repeat(4, minmax(0, 1fr))',
-      margin: `${theme.spacing(3)} 0`,
+      margin: `${margins.all24} ${margins.all0}`,
       gridGap: theme.spacing(3),
 
       '.schedule-inputs': {

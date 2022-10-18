@@ -95,7 +95,7 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
   },
 
   '& .fc .fc-popover-header': {
-    padding: 12,
+    padding: paddings.all12,
     borderTopLeftRadius: borderRadius.radius12,
     borderTopRightRadius: borderRadius.radius12,
     backgroundColor: theme.palette.grey[200],
