@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import { Link } from '@components/index';
@@ -6,18 +6,24 @@ import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
 import { Tab, Tabs, useTheme } from '@mui/material';
 import { patientListTabLinks } from 'helpers/constants';
-import { useAppSelector } from 'redux/hooks';
-import { patientsSelector } from 'redux/slices/patients';
-import { borders, margins } from 'themes/themeConstants';
+import { useRouter } from 'next/router';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
 
 const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
   'aria-controls': `simple-tabpanel-${index}`
 });
 
-const PatientEmrLayout = ({ children }: PropsWithChildren) => {
-  const theme = useTheme();
+export enum AvailablePages {
+  Encounters = 'Encounters',
+  Profile = 'Patient Profile'
+}
 
+const PatientEmrLayout = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
+  const theme = useTheme();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
 
@@ -25,6 +31,21 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
   const handleChange = (_: React.SyntheticEvent<Element, Event>, currentIndex: number) => {
     setCurrentTabIndex(currentIndex);
   };
+
+  useEffect(() => {
+    const splitPaths = router.asPath.split('/');
+    const currentPagePath = splitPaths[splitPaths.length - 1];
+
+    const currentIndex = patientListTabLinks.findIndex((tabLink) => tabLink.href === currentPagePath);
+
+    setCurrentTabIndex(currentIndex);
+  }, [router]);
+
+  useEffect(() => {
+    if (!currentPatientId && router.query.id) {
+      dispatch(patientsMiddleware.setCurrentPatient(router.query.id as string));
+    }
+  }, [currentPatientId, router.query.id]);
 
   return (
     <>
@@ -42,36 +63,37 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
       <br />
       <PatientHighlightsView />
       <br />
-      <Main sx={{ marginTop: margins.top0 }}>
-        <Tabs
-          value={currentTabIndex}
-          onChange={handleChange}
-          aria-label="Patient Emr Tabs"
-          variant="fullWidth"
-          sx={{
-            marginBottom: margins.bottom32,
-            div: {
-              borderBottom: `${borders.solid1px} transparent`
-            },
-            '& .MuiTabs-indicator': {
-              height: 3,
-              backgroundColor: theme.palette.primary.main
-            }
-          }}
-        >
-          {patientListTabLinks.map((link, linkIndex) => (
+      <Tabs
+        value={currentTabIndex}
+        indicatorColor="primary"
+        textColor="primary"
+        onChange={handleChange}
+        aria-label="simple tabs example"
+        variant="fullWidth"
+        sx={{
+          '& .MuiTabs-indicator': {
+            height: 3,
+            backgroundColor: theme.palette.dark[200]
+          }
+        }}
+      >
+        {patientListTabLinks.map((link, linkIndex) => {
+          const availableLinks =
+            link.linkName !== AvailablePages.Encounters && link.linkName !== AvailablePages.Profile;
+
+          return (
             <Tab
-              disabled={link.linkName !== 'Encounters'}
+              disabled={availableLinks}
               key={link.linkName}
               component={Link}
               href={`/patient-emr/details/${currentPatientId}/${link.href}`}
               label={link.linkName}
               {...allyProps(linkIndex)}
             />
-          ))}
-        </Tabs>
-        {children}
-      </Main>
+          );
+        })}
+      </Tabs>
+      <Main sx={{ marginTop: margins.top0 }}>{children}</Main>
     </>
   );
 };

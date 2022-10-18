@@ -12,7 +12,8 @@ const {
   setMenuOpenDrawer,
   addModalToList,
   removeModalFromList,
-  updateToastNotificationState
+  updateToastNotificationState,
+  removeAllModalsFromList
 } = slice.actions;
 
 const setRedirectionState = (value: RedirectionProps) => (dispatch: AppDispatch) => {
@@ -37,6 +38,10 @@ const closeModal = (name: ModalName) => (dispatch: AppDispatch) => {
   dispatch(removeModalFromList(name));
 };
 
+const closeAllModals = () => (dispatch: AppDispatch) => {
+  dispatch(removeAllModalsFromList([]));
+};
+
 const setToastNotificationPopUpState =
   <P>(value: IOpenedAlert<P>) =>
   (dispatch: AppDispatch) => {
@@ -49,5 +54,6 @@ export default {
   openMenuDrawer,
   openModal,
   closeModal,
-  setToastNotificationPopUpState
+  setToastNotificationPopUpState,
+  closeAllModals
 };

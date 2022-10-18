@@ -9,13 +9,7 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 
 import ContactList from '@ui-component/common/ContactList';
 
-interface PatientAlertProps {
-  alertCount?: number;
-}
-
-const PatientHighlightsView = ({ alertCount }: PatientAlertProps) => {
-  console.log(alertCount);
-
+const PatientHighlightsView = () => {
   const theme = useTheme();
 
   const [open, setOpen] = useState(true);

@@ -13,7 +13,6 @@ import {
   Stack,
   Typography
 } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
@@ -30,8 +29,8 @@ export interface DetailsAppointmentModalProps {
 }
 
 const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps) => {
-  const details = useAppSelector(bookingSelector.appointmentDetails);
   const router = useRouter();
+  const details = useAppSelector(bookingSelector.appointmentDetails);
   const [t] = useTranslation();
 
   useEffect(() => {
@@ -39,14 +38,16 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
   }, [appointmentId]);
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.DetailsAppointmentModal));
+    dispatch(viewsMiddleware.closeAllModals());
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, []);
 
   const onViewProfileClick = useCallback(() => {
-    onClose();
-    router.push(`/patient-emr/profile/${details?.patient.id}`);
-  }, [router, onClose, details]);
+    if (details && details.patient.id) {
+      router.push(`/patient-emr/details/${details.patient.id}/profile`);
+      onClose();
+    }
+  }, [onClose, details, router]);
 
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">

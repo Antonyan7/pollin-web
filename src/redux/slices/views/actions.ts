@@ -20,6 +20,9 @@ const actions: SliceReducers<ViewsProps> = {
   removeModalFromList(state: ViewsProps, action: IAction<ModalName>) {
     state.modals = state.modals.filter((modal) => modal.name !== action.payload);
   },
+  removeAllModalsFromList<P>(state: ViewsProps, action: IAction<IOpenedModal<P>[]>) {
+    state.modals = action.payload;
+  },
   updateToastNotificationState<P>(state: ViewsProps, action: IAction<IOpenedAlert<P>>) {
     state.toastNotificationPopUp = action.payload ? action.payload : { open: false, props: {} };
   }
