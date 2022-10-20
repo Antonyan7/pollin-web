@@ -44,8 +44,8 @@ const NavItem = ({ item, level }: NavItemProps) => {
   ) : (
     <FiberManualRecordIcon
       sx={{
-        width: openItem.findIndex((id) => id === item?.id) > -1 ? 8 : 6,
-        height: openItem.findIndex((id) => id === item?.id) > -1 ? 8 : 6
+        width: openItem.findIndex((id: string | undefined) => id === item?.id) > -1 ? 8 : 6,
+        height: openItem.findIndex((id: string | undefined) => id === item?.id) > -1 ? 8 : 6
       }}
       fontSize={level > 0 ? 'inherit' : 'medium'}
     />
@@ -82,7 +82,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
         theme={theme}
         level={level}
         disabled={item.disabled}
-        selected={openItem?.findIndex((id) => id === item.id) > -1}
+        selected={openItem?.findIndex((id: string | undefined) => id === item.id) > -1}
         onClick={() => itemHandler(item.id!)}
       >
         <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.primary.main }}>
@@ -90,7 +90,10 @@ const NavItem = ({ item, level }: NavItemProps) => {
         </ListItemIcon>
         <ListItemText
           primary={
-            <Typography variant={openItem?.findIndex((id) => id === item.id) > -1 ? 'h5' : 'body1'} color="primary">
+            <Typography
+              variant={openItem?.findIndex((id: string | undefined) => id === item.id) > -1 ? 'h5' : 'body1'}
+              color="primary"
+            >
               {item.title}
             </Typography>
           }

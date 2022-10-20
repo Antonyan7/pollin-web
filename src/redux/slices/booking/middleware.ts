@@ -1,9 +1,9 @@
 import API from '@axios/API';
-import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/booking/managerBooking';
-import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmr';
+import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
-import { IServiceProviders } from 'types/reduxTypes/booking';
+import { IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
 import { toESTIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';

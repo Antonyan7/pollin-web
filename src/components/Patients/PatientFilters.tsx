@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmr';
+import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, CircularProgress, InputAdornment, OutlinedInput, TextField, useTheme } from '@mui/material';

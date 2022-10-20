@@ -4,12 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { ModalName } from 'constants/modals';
 import { getTimezoneOffset } from 'date-fns-tz';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { AppointmentDetailsProps } from 'types/reduxTypes/booking';
+import { ModalName } from 'types/modals';
+import { AppointmentDetailsProps } from 'types/reduxTypes/bookingStateTypes';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
 
 import { IFormValues } from './form/types';

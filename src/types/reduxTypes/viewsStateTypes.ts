@@ -1,10 +1,11 @@
-import { ModalName } from 'constants/modals';
+import { ModalName } from 'types/modals';
 
 export interface ViewsProps {
   redirection: RedirectionProps;
   menu: MenuProps;
-  modals: IOpenedModal[];
-  toastNotificationPopUp: IOpenedAlert;
+  // Temporary solution
+  modals: IOpenedModal<any>[];
+  toastNotificationPopUp: IOpenedAlert<any>;
 }
 
 export interface RedirectionProps {

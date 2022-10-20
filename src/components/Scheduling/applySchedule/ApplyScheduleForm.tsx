@@ -1,7 +1,6 @@
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
-import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
 import { FormControl, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
@@ -12,8 +11,10 @@ import { weekDays } from 'helpers/constants';
 import { viewsMiddleware } from 'redux/slices/views';
 import { IAppliedDay, IApplyScheduleDay } from 'types/apply-schedule';
 import { IApplyScheduleData, ISingleTemplate } from 'types/create-schedule';
-import { IServiceProvider } from 'types/reduxTypes/booking';
-import { SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
+import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
+import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
+
+import { SeveritiesType } from '../types';
 
 import ActionsField from './fields/ActionsField';
 import ApplyDaysField from './fields/ApplyDaysField';

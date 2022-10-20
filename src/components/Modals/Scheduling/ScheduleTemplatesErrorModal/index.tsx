@@ -4,8 +4,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import { CardActions, CardContent, Divider, Grid, IconButton, Modal, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
-import { ModalName } from 'constants/modals';
 import HTMLReactParser from 'html-react-parser';
+import { ModalName } from 'types/modals';
 import MainCard from 'ui-component/common/MainCard';
 
 export interface ScheduleTemplatesErrorModalProps {

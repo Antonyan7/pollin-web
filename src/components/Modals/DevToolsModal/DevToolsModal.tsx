@@ -16,10 +16,10 @@ import {
 } from '@mui/material';
 import { CookieKey } from 'constants/cookieKey';
 import { devToolsDefaultConfig } from 'constants/defaultConfigs';
-import { ModalName } from 'constants/modals';
 import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'types/modals';
 
 import { getFromCookie, setToCookie } from '@utils/cookies';
 

@@ -10,16 +10,12 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
+import { AvailablePages } from 'types/patient';
 
 const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
   'aria-controls': `simple-tabpanel-${index}`
 });
-
-export enum AvailablePages {
-  Encounters = 'Encounters',
-  Profile = 'Patient Profile'
-}
 
 const PatientEmrLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();

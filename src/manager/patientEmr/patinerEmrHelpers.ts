@@ -1,9 +1,9 @@
-import { IPatientHighlightDetailsResponse } from '@axios/patientEmr/managerPatientEmr';
+import { IPatientHighlightDetailsResponse } from '@axios/patientEmr/managerPatientEmrTypes';
 import { PatientLineItemsModalProps } from '@components/Patients/PatientModals/PatientLineItemsModal';
 import { PatientMedicationsModalProps } from '@components/Patients/PatientModals/PatientMedicationsModal';
 import { PatientPartnersModalProps } from '@components/Patients/PatientModals/PatientPartnersModal';
-import { ModalName } from 'constants/modals';
-import { IOpenedModal } from 'types/reduxTypes/views';
+import { ModalName } from 'types/modals';
+import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 
 const getModalParamsFromPatientHighlightDetails = (
   patientHighlightDetails: IPatientHighlightDetailsResponse

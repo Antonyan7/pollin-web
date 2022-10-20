@@ -2,10 +2,10 @@ import React, { useCallback } from 'react';
 import { Avatar, AvatarProps, Box } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
-import { ModalName } from 'constants/modals';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borders } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,

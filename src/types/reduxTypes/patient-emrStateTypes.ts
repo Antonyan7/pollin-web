@@ -1,9 +1,5 @@
-import { IPagination } from '@axios/axios';
-import {
-  IEncounterDetailsProps,
-  IGetPatientsResponse,
-  IUpdateEncounterNoteRequest
-} from '@axios/patientEmr/managerPatientEmr';
+import { IPagination } from '@axios/axiosTypes';
+import { IEncounterDetailsProps, IUpdateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
 
 export interface PatientEmrProps {
@@ -13,7 +9,46 @@ export interface PatientEmrProps {
   isEncountersListLoading: boolean;
   isPatientsFiltersLoading: boolean;
   isEncountersAddendumLoading: boolean;
+  isEncountersFiltersLoading: boolean;
   error: Error | null;
+  patientProfile: PatientProfile | null;
+  patientHighlights: PatientHighlight[] | null;
+}
+
+export interface PatientHighlight {
+  uuid?: string;
+  title: string;
+  items: string[];
+}
+
+export interface PatientProfile {
+  imageURL: string;
+  subTitle: string;
+  title: string;
+  cycleStatus: string | boolean;
+}
+
+export interface IEncounterDataProps {
+  title: string;
+  content: string;
+  author: string;
+  createdOn: string;
+  updatedOn?: string;
+}
+
+interface IEncounterFilterOption {
+  id: string;
+  title: string;
+}
+
+export interface IEncounterFilterProps {
+  type: string;
+  title: string;
+  options: IEncounterFilterOption[];
+}
+
+export interface IEncounterFilters {
+  filters: IEncounterFilterProps[];
 }
 
 interface IPatientsProps {
@@ -21,6 +56,7 @@ interface IPatientsProps {
   list: IPatientList;
   patientAlertDetails: AlertDetailsProps[];
   currentPatientId: string;
+  currentEncounterId: string;
 }
 
 export interface IFilterCategory {
@@ -43,13 +79,6 @@ export interface IPatientListData {
   doctor: string;
 }
 
-export interface IPatientsResponse {
-  patients: IGetPatientsResponse;
-  pageSize: number;
-  currentPage: number;
-  totalItems: number;
-}
-
 export interface AlertDetailsMessagesProps {
   title: string;
 }
@@ -66,11 +95,12 @@ export interface IEncounterDetailsResponse {
 
 interface IEncountersProps {
   list: IEncounterList;
-  types: IEncounterTypes[];
+  filters: IEncounterFilterProps[] | null;
+  types: IEncounterType[];
   encounterDetails: IEncounterDetailsProps | null;
 }
 
-export interface IEncounterTypes {
+export interface IEncounterType {
   id: string;
   title: string;
 }
@@ -91,8 +121,6 @@ interface IEncounterNoteProps {
   encountersTypeId: string;
   content: string;
 }
-
-interface IEncountersProps {}
 
 export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}
 export interface IUpdateEncounterNoteProps extends IUpdateEncounterNoteRequest {}

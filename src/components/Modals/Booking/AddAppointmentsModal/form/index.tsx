@@ -1,24 +1,16 @@
 import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Divider } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
+import { ModalName, OpenModalReason } from 'types/modals';
 
 import FormActions from './FormActions';
 import FormBody from './FormBody';
 import FormHeader from './FormHeader';
-
-export interface AddAppointmentsModalFormProps {
-  isActionButtonDisabled?: boolean;
-}
-
-enum OpenModalReason {
-  DuplicateName = 'Duplicate Name'
-}
 
 const AddAppointmentsModalForm = () => {
   const { handleSubmit } = useFormContext<ICreatedAppointmentBody>();

@@ -1,15 +1,9 @@
 import { useEffect } from 'react';
-import { ModalName } from 'constants/modals';
+import { ConfirmationPaths } from 'constants/confirmationModalPaths';
 import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
-
-export enum ConfirmationPaths {
-  Edit_Note = '/edit-note',
-  Add_Note = '/add-note',
-  Edit_Addendum = '/edit-addendum',
-  Add_Addendum = '/add-addendum'
-}
+import { ModalName } from 'types/modals';
 
 const useShouldOpenCancelChangesConfirmationModal = (textFieldValue: string, previousTextFieldValue: string) => {
   const router = useRouter();

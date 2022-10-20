@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
-import { IPatientPartnerData } from '@axios/patientEmr/managerPatientEmr';
+import { IPatientPartnerData } from '@axios/patientEmr/managerPatientEmrTypes';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Button, DialogProps, DialogTitle, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
-import { ModalName } from 'constants/modals';
 import Link from 'next/link';
+import { ModalName } from 'types/modals';
 
 import ViewModal from '@ui-component/Modal/ViewModal';
 

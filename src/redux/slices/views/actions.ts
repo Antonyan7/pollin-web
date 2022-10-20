@@ -1,8 +1,6 @@
-import { ModalName } from 'constants/modals';
 import { IAction, SliceReducers } from 'redux/store';
-import { IOpenedModal, RedirectionProps, ViewsProps } from 'types/reduxTypes/views';
-
-import { IOpenedAlert } from '../../../types/reduxTypes/views.d';
+import { ModalName } from 'types/modals';
+import { IOpenedAlert, IOpenedModal, RedirectionProps, ViewsProps } from 'types/reduxTypes/viewsStateTypes';
 
 const actions: SliceReducers<ViewsProps> = {
   setRedirection(state, action: IAction<RedirectionProps>) {

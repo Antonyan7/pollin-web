@@ -4,12 +4,12 @@ import { useTranslation } from 'react-i18next';
 import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, Grid, MenuItem } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { appointmentStatusData } from 'helpers/constants';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borders, margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import { IFormValues } from '../types';
 

@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 interface PatientAlertProps {
   rowId: string;

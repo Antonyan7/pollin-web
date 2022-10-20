@@ -1,4 +1,4 @@
-import { IServiceType } from 'types/reduxTypes/booking';
+import { IServiceType } from 'types/reduxTypes/bookingStateTypes';
 
 export const sortServiceTypesByAlphabeticOrder = (arrayForSort: IServiceType[]) => {
   arrayForSort.sort((a: IServiceType, b: IServiceType) => {

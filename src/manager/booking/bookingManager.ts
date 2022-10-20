@@ -1,4 +1,4 @@
-import { IAxiosResponse, IAxiosResponsePaginated } from '@axios/axios';
+import { IAxiosResponse, IAxiosResponsePaginated } from '@axios/axiosTypes';
 import {
   IAppointmentDetailsResponse,
   IAppointmentListReqParams,
@@ -11,7 +11,7 @@ import {
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
   IUpdatedAppointmentResponse
-} from '@axios/booking/managerBooking';
+} from '@axios/booking/managerBookingTypes';
 import { Axios } from 'manager/axiosInstance';
 
 const baseURL = '/clinic-booking';

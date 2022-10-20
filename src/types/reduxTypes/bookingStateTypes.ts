@@ -1,7 +1,7 @@
-import { IPagination } from '@axios/axios';
-import { IAppointmentDetails } from '@axios/booking/managerBooking';
-import { IPatientsData } from '@axios/patientEmr/managerPatientEmr';
-import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+import { IPagination } from '@axios/axiosTypes';
+import { IAppointmentDetails } from '@axios/booking/managerBookingTypes';
+import { IPatientsData } from '@axios/patientEmr/managerPatientEmrTypes';
+import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 import { SlotTypes } from '../calendar';
 

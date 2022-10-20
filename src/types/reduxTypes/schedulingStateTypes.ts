@@ -1,8 +1,8 @@
-import { IPagination } from '@axios/axios';
+import { IPagination } from '@axios/axiosTypes';
 
 import { ISingleTemplate } from '../create-schedule';
 
-import { IServiceProvider, IServiceType } from './booking';
+import { IServiceProvider, IServiceType } from './bookingStateTypes';
 
 export interface SchedulingTemplateProps {
   id: string;

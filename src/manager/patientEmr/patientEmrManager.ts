@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/nextjs';
-import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axios';
 import { Axios } from 'manager/axiosInstance';
+import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
@@ -18,9 +18,9 @@ import {
   IPatientsListResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest
-} from 'manager/patientEmr/managerPatientEmr';
+} from 'manager/patientEmr/managerPatientEmrTypes';
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse } from 'types/reduxTypes/patient-emr';
+import { IEncounterDetailsResponse } from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
 

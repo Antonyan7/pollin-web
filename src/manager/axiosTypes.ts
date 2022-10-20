@@ -28,7 +28,7 @@ interface IData<T> extends IResponseStatus {
   status: IResponseStatus;
 }
 
-interface IPagination {
+export interface IPagination {
   pageSize: number;
   currentPage: number;
   totalItems: number;

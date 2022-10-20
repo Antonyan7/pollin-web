@@ -1,4 +1,4 @@
-import { SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
+import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
 
 export interface IScheduleTemplatesListResponse {
   templates: SchedulingTemplateProps[];

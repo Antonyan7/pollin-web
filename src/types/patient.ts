@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 
-import { IEncounterType } from './reduxTypes/patient-emr';
+import { IEncounterType } from './reduxTypes/patient-emrStateTypes';
 
 export interface IPatient {
   id: string;
@@ -27,6 +27,11 @@ interface AlertInfo {
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
+}
+
+export enum AvailablePages {
+  Encounters = 'Encounters',
+  Profile = 'Patient Profile'
 }
 
 export enum PatientListField {

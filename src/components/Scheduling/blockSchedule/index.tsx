@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
-import { SeveritiesType } from '@components/ToastNotification/ToastNotification';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -13,11 +12,13 @@ import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borderRadius, margins } from 'themes/themeConstants';
-import { BlockSchedulingProps } from 'types/reduxTypes/scheduling';
+import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import { linkDateAndTime } from '@utils/dateUtils';
+
+import { SeveritiesType } from '../types';
 
 import AutoCompleteTextField from './fields/AutoCompleteTextField';
 import DateField from './fields/DateField';

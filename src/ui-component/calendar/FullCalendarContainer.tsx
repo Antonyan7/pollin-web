@@ -6,7 +6,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
-import { ICalendarSlot } from 'types/reduxTypes/booking';
+import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 
 import useOnCalendarEventClick from './hooks/useOnCalenderEventClick';
 import useOnRangeSelect from './hooks/useOnRangeSelect';

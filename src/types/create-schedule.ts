@@ -1,4 +1,4 @@
-import { IUniqueItem } from './reduxTypes/booking';
+import { IUniqueItem } from './reduxTypes/bookingStateTypes';
 
 export interface OptionsReturnProps<T extends IUniqueItem> {
   firstLetter: string;

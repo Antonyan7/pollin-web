@@ -19,7 +19,7 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
 import { IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
-import { IPatientListData } from 'types/reduxTypes/patient-emr';
+import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
 
 import { PatientListHeadCell } from './PatientListHeadCell';
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Autocomplete, Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';

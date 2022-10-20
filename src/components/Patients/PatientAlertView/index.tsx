@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
-import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 const PatientAlertView = () => {
   const router = useRouter();

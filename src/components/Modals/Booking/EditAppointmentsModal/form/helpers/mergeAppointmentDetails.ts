@@ -1,4 +1,4 @@
-import { IEditAppointmentBody } from '@axios/booking/managerBooking';
+import { IEditAppointmentBody } from '@axios/booking/managerBookingTypes';
 
 import { IFormValues } from '../types';
 

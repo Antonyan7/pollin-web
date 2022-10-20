@@ -1,13 +1,14 @@
 import { PatientListFilterType } from 'types/patient';
-import { IServiceProvider } from 'types/reduxTypes/booking';
+import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 import {
   AlertDetailsProps,
   IEncounterFilterProps,
   IEncounterListItem,
   IEncounterType,
+  IFilterCategory,
   IPatientListData,
   PatientHighlight
-} from 'types/reduxTypes/patient-emr';
+} from 'types/reduxTypes/patient-emrStateTypes';
 
 export interface IGetPatientsRequestBody {
   name: string;
@@ -43,7 +44,7 @@ export interface IOptionsProps {
   title?: string;
   type: PatientListFilterType;
   id: string;
-  titleName: string;
+  titleName?: string;
 }
 
 export interface GroupedByTitlesProps {

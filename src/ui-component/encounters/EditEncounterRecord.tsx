@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { AddendumsProps } from '@axios/patientEmr/managerPatientEmr';
+import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';

@@ -1,5 +1,5 @@
-import { IAppointmentDetails } from '@axios/booking/managerBooking';
-import { IServiceType } from 'types/reduxTypes/booking';
+import { IAppointmentDetails } from '@axios/booking/managerBookingTypes';
+import { IServiceType } from 'types/reduxTypes/bookingStateTypes';
 
 export interface IFormValues {
   appointment: IAppointmentDetails;

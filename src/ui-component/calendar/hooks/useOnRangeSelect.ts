@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { DateSelectArg } from '@fullcalendar/common';
-import { ModalName } from 'constants/modals';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'types/modals';
 
 const useOnRangeSelect = () => {
   const onRangeSelect = useCallback((arg: DateSelectArg) => {

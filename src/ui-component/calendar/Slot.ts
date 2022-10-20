@@ -1,5 +1,5 @@
 import { Colors, SlotTypes, Styles } from '../../types/calendar';
-import { ICalendarSlot } from '../../types/reduxTypes/booking';
+import { ICalendarSlot } from '../../types/reduxTypes/bookingStateTypes';
 
 const shortAppointmentClassname = 'short-appointment';
 

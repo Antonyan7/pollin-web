@@ -5,7 +5,7 @@ import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextField
 import { Translation } from 'constants/translations';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
-import { AppointmentDetailsProps } from 'types/reduxTypes/booking';
+import { AppointmentDetailsProps } from 'types/reduxTypes/bookingStateTypes';
 import { validateInputChange } from 'validation/validationHelpers';
 
 import { IFormValues } from '../types';

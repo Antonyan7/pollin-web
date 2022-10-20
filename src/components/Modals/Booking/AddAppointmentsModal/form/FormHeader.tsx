@@ -5,9 +5,9 @@ import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 const FormHeader = () => {
   const [t] = useTranslation();

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmr';
+import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -13,13 +13,13 @@ import { MainHeader } from 'pages/booking/appointments';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
-import { IEncounterFilterProps } from 'types/reduxTypes/patient-emr';
+import { IFilterCategory } from 'types/reduxTypes/patient-emrStateTypes';
 
 const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const patientId = useAppSelector(patientsSelector.currentPatientId);
-  const encounterFilters = useAppSelector(patientsSelector.encounterFilters);
+  const encounterFilters = useAppSelector(patientsSelector.encounterFilters) ?? [];
   const [searchValue, setSearchValue] = useState<string>('');
   const [filters, setFilters] = useState<IEncountersFilterOption[]>([]);
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
@@ -103,7 +103,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
             <CircularProgress size={20} />
           </Box>
         }
-        options={reformattedFilterResults(encounterFilters as IEncounterFilterProps[])}
+        options={reformattedFilterResults(encounterFilters as unknown as IFilterCategory[])}
         groupBy={(option) => option.options.type as string}
         getOptionLabel={(option) => option.options.title as string}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}

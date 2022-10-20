@@ -1,4 +1,4 @@
-import { IUniqueItem } from 'types/reduxTypes/booking';
+import { IUniqueItem } from 'types/reduxTypes/bookingStateTypes';
 
 import { OptionsReturnProps } from '../types/create-schedule';
 

@@ -1,5 +1,8 @@
 import API from '@axios/API';
-import { ICreateEncounterAddendumRequest, IUpdateEncounterAddendumRequest } from '@axios/patientEmr/managerPatientEmr';
+import {
+  ICreateEncounterAddendumRequest,
+  IUpdateEncounterAddendumRequest
+} from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
@@ -9,7 +12,7 @@ import {
   IEncounterList,
   IPatientList,
   IUpdateEncounterNoteProps
-} from 'types/reduxTypes/patient-emr';
+} from 'types/reduxTypes/patient-emrStateTypes';
 
 import slice from './slice';
 

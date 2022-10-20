@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmr';
+import { AddendumsProps, IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ArrowBackIos, EditOutlined, PrintOutlined, ShareOutlined } from '@mui/icons-material';
 import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/system';
@@ -116,7 +116,7 @@ const EncounterDetailsPage = () => {
             </Typography>
           </Grid>
           <Grid item container direction="column" gap={2} sx={{ pt: 2 }}>
-            {encounterData.addendums.map((addendum) => (
+            {encounterData.addendums.map((addendum: AddendumsProps) => (
               <>
                 <Divider />
                 <Grid item container direction="row" alignItems="center" gap={3}>

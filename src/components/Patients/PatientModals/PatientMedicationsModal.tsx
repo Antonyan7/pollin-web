@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react';
-import { IPatientMedicationData } from '@axios/patientEmr/managerPatientEmr';
+import { IPatientMedicationData } from '@axios/patientEmr/managerPatientEmrTypes';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
-import { ModalName } from 'constants/modals';
+import { ModalName } from 'types/modals';
 
 import ObjectViewModal from '@ui-component/Modal/ObjectViewModal';
 

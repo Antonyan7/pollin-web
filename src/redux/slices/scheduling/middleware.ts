@@ -2,11 +2,15 @@ import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
 import { AppDispatch } from 'redux/store';
 import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
-import { BlockSchedulingProps, DeleteScheduleTemplateProps, IScheduleTemplatesList } from 'types/reduxTypes/scheduling';
+import { ModalName } from 'types/modals';
+import {
+  BlockSchedulingProps,
+  DeleteScheduleTemplateProps,
+  IScheduleTemplatesList
+} from 'types/reduxTypes/schedulingStateTypes';
 
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
-import { ModalName } from '../../../constants/modals';
 import { viewsMiddleware } from '../views';
 
 import slice from './slice';

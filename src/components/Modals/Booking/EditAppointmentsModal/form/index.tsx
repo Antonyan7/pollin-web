@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { Divider } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import { mergeAppointmentDetails } from './helpers/mergeAppointmentDetails';
 import FormActions from './FormActions';

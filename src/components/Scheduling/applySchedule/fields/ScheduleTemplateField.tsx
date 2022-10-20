@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Autocomplete, FormControl, TextField } from '@mui/material';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { SchedulingTemplateProps } from 'types/reduxTypes/scheduling';
+import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
 
 interface Props {
   setScheduleTemplate: (value: React.SetStateAction<SchedulingTemplateProps>) => void;

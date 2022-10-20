@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
-import { ModalName } from 'constants/modals';
+import { ModalName } from 'types/modals';
 
 import ObjectViewModal from '@ui-component/Modal/ObjectViewModal';
 

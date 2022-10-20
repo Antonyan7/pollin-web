@@ -14,7 +14,7 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
-import { IEncounterList } from 'types/reduxTypes/patient-emr';
+import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
 
 import EncounterNotesHeader from '@ui-component/encounters/EncounterNotesHeader';
 import EncounterNoteThumbnail from '@ui-component/encounters/EncounterNoteThumbnail';

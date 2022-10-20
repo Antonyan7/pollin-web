@@ -1,4 +1,4 @@
-import { PatientEmrProps } from 'types/reduxTypes/patient-emr';
+import { PatientEmrProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 export const getInitialState = (): PatientEmrProps => ({
   patientsList: {

@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBooking';
+import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { ModalName } from 'constants/modals';
 import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'types/modals';
 import { addAppointmentsValidationSchema } from 'validation/appointments/add_appointment';
 
 import AddAppointmentsModalForm from './form';

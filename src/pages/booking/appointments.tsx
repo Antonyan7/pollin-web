@@ -24,7 +24,6 @@ import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
@@ -32,6 +31,7 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borderRadius, borders, margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';

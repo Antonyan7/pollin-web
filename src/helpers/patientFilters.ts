@@ -1,5 +1,5 @@
-import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmr';
-import { IFilterCategory } from 'types/reduxTypes/patient-emr';
+import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { IFilterCategory } from 'types/reduxTypes/patient-emrStateTypes';
 
 const reformattedFilterResults = (filterCategory: IFilterCategory[]) =>
   filterCategory.reduce((initialGroupedTitles: GroupedByTitlesProps[], nextGroupedTitles: IFilterCategory) => {

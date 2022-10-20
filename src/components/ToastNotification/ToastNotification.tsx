@@ -7,13 +7,6 @@ import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
-export enum SeveritiesType {
-  success = 'success',
-  error = 'error',
-  info = 'info',
-  warning = 'warning'
-}
-
 const useStyles = makeStyles({
   snackbar: {
     width: '30wv',

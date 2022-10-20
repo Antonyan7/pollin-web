@@ -1,6 +1,6 @@
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
-import { IServiceProvider, IServiceType } from 'types/reduxTypes/booking';
+import { IServiceProvider, IServiceType } from 'types/reduxTypes/bookingStateTypes';
 import {
   BlockSchedulingProps,
   IScheduleTemplatesList,
@@ -8,7 +8,7 @@ import {
   SchedulingStateStatusProps,
   SchedulingTemplateProps,
   SingleSchedulingProps
-} from 'types/reduxTypes/scheduling';
+} from 'types/reduxTypes/schedulingStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<SchedulingProps>>(reducer: T) => ({ ...reducer });
 

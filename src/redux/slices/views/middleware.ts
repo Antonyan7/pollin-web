@@ -1,8 +1,6 @@
-import { ModalName } from 'constants/modals';
 import { AppDispatch } from 'redux/store';
-import { IOpenedModal, RedirectionProps } from 'types/reduxTypes/views';
-
-import { IOpenedAlert } from '../../../types/reduxTypes/views.d';
+import { ModalName } from 'types/modals';
+import { IOpenedAlert, IOpenedModal, RedirectionProps } from 'types/reduxTypes/viewsStateTypes';
 
 import slice from './slice';
 

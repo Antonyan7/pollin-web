@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { EventClickArg } from '@fullcalendar/common';
-import { ModalName } from 'constants/modals';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { SlotTypes } from 'types/calendar';
+import { ModalName } from 'types/modals';
 
 const useOnCalendarEventClick = () => {
   const appointments = useAppSelector(bookingSelector.appointmentsList);

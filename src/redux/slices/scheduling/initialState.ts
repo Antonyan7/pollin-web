@@ -1,4 +1,4 @@
-import { SchedulingProps } from 'types/reduxTypes/scheduling';
+import { SchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 
 export const getInitialState = (): SchedulingProps => ({
   scheduleTemplates: { templates: [], pageSize: 1, currentPage: 1, totalItems: 0 },

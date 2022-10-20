@@ -4,7 +4,7 @@ import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useRouter } from 'next/router';
 import { gridSpacing } from 'themes/themeConstants';
-import { IEncounterListItem } from 'types/reduxTypes/patient-emr';
+import { IEncounterListItem } from 'types/reduxTypes/patient-emrStateTypes';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 

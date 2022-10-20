@@ -3,7 +3,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Autocomplete, FormControl, TextField, TextFieldProps } from '@mui/material';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
-import { IServiceProvider } from 'types/reduxTypes/booking';
+import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
 interface Props {
   setResource: React.Dispatch<React.SetStateAction<IServiceProvider>>;

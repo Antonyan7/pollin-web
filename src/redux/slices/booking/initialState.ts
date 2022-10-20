@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { BookingProps } from 'types/reduxTypes/booking';
+import { BookingProps } from 'types/reduxTypes/bookingStateTypes';
 
 export const getInitialState = (): BookingProps => ({
   appointments: [],

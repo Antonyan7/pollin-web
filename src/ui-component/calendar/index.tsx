@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from '../../redux/hooks';
 import { CreateSlot } from './Slot';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
-import { IAppointment, ICalendarSlot } from '../../types/reduxTypes/booking';
+import { IAppointment, ICalendarSlot } from '../../types/reduxTypes/bookingStateTypes';
 import { StyledDisabledLayer } from './StyledDisabledLayer';
 import FullCalendarContainer from './FullCalendarContainer';
 import FullCalendarWrapper from './FullCalendarWrapper';

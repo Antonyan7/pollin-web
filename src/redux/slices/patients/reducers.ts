@@ -1,4 +1,4 @@
-import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmr';
+import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -11,7 +11,7 @@ import {
   PatientEmrProps,
   PatientHighlight,
   PatientProfile
-} from 'types/reduxTypes/patient-emr';
+} from 'types/reduxTypes/patient-emrStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
 

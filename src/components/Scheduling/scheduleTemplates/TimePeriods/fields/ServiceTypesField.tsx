@@ -6,7 +6,7 @@ import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { ITemplateGroup, OptionsReturnProps } from 'types/create-schedule';
-import { IServiceType } from 'types/reduxTypes/booking';
+import { IServiceType } from 'types/reduxTypes/bookingStateTypes';
 
 const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);

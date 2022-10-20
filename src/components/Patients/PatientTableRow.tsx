@@ -5,7 +5,7 @@ import { TableCell, TableRow, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { IPatientListData } from 'types/reduxTypes/patient-emr';
+import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
 

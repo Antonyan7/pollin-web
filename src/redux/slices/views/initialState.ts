@@ -1,4 +1,4 @@
-import { ViewsProps } from 'types/reduxTypes/views';
+import { ViewsProps } from 'types/reduxTypes/viewsStateTypes';
 
 export const getInitialState = (): ViewsProps => ({
   redirection: {

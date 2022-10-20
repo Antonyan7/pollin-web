@@ -18,13 +18,13 @@ import {
   Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { cancellationReasons } from 'helpers/constants';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 

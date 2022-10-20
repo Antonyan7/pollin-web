@@ -14,7 +14,7 @@ import { CreateSlot } from '@ui-component/calendar/Slot';
 import { changeDateSameTimezone, excludeDates, getWeekDay } from '@utils/dateUtils';
 import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
-import { ICalendarSlot } from 'types/reduxTypes/booking';
+import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 import { isValid, setHours } from 'date-fns';
 import Toolbar from './ToolBar';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';

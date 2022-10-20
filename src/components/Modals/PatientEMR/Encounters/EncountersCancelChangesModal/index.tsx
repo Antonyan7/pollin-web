@@ -14,13 +14,12 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import { ModalName } from 'constants/modals';
+import { ConfirmationPaths } from 'constants/confirmationModalPaths';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
-
-import { ConfirmationPaths } from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+import { ModalName } from 'types/modals';
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   fontWeight: 400,

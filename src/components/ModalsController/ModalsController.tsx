@@ -22,10 +22,10 @@ import PatientMedicationsModal, {
 import PatientPartnersModal, {
   PatientPartnersModalProps
 } from '@components/Patients/PatientModals/PatientPartnersModal';
-import { ModalName } from 'constants/modals';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
-import { IOpenedModal } from 'types/reduxTypes/views';
+import { ModalName } from 'types/modals';
+import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 
 // <BOOKING>
 // appointments

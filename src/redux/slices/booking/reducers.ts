@@ -7,8 +7,8 @@ import {
   IPatientList,
   IServiceProviders,
   IServiceType
-} from 'types/reduxTypes/booking';
-import { AlertDetailsProps } from 'types/reduxTypes/patient-emr';
+} from 'types/reduxTypes/bookingStateTypes';
+import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<BookingProps>>(reducer: T) => ({ ...reducer });
 
