@@ -1,7 +1,9 @@
 import React from 'react';
 import PatientEmrLayout from 'layout/PatientEmrLayout';
 
-const PatientProfile = () => <div>Patient Profile</div>;
+import PatientProfile from '@ui-component/profile/PatientProfile';
 
-PatientProfile.PageLayout = PatientEmrLayout;
-export default PatientProfile;
+const PatientProfileTab = () => <PatientProfile />;
+
+PatientProfileTab.PageLayout = PatientEmrLayout;
+export default PatientProfileTab;
