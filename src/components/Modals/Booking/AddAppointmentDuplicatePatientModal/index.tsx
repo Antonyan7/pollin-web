@@ -13,13 +13,13 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 export interface AddAppointmentDuplicatePatientModalProps {
   patientId: string;
