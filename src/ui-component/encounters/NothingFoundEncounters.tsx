@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Translation } from 'constants/translations';
-import { margins, paddings } from 'themes/themeConstants';
+import { useRouter } from 'next/router';
+import { borders, margins, paddings } from 'themes/themeConstants';
 
 const NothingFoundEncounters = () => {
   const [t] = useTranslation();
   const theme = useTheme();
+  const router = useRouter();
+
+  const onCreateFirstEncounter = useCallback(() => {
+    router.push(`/patient-emr/details/${router.query.id}/add-note`);
+  }, [router]);
 
   return (
     <Box sx={{ textAlign: 'center', marginTop: margins.top150 }}>
@@ -23,8 +29,12 @@ const NothingFoundEncounters = () => {
       </Typography>
       <Button
         variant="outlined"
+        onClick={onCreateFirstEncounter}
         sx={{
-          padding: paddings.all12
+          padding: paddings.all16,
+          border: `${borders.solid2px} ${theme.palette.primary.main}`,
+          fontWeight: 400,
+          fontSize: '14px'
         }}
       >
         {t(Translation.PAGE_ENCOUNTERS_CREATE_FIRST_ENCOUNTER)}
