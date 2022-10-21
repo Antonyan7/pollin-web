@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconCirclePlus } from '@tabler/icons';
+import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
 import { OverrideIcon } from 'types';
 
 interface PatientsProps {
@@ -26,7 +26,7 @@ const NavPatients: PatientsProps = {
       title: 'Patient List/EMR',
       type: 'item',
       url: '/patient-emr/list',
-      icon: IconCirclePlus,
+      icon: GroupsTwoToneIcon,
       breadcrumbs: false
     }
   ]

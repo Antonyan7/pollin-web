@@ -1,5 +1,5 @@
 import React from 'react';
-import { IconCirclePlus } from '@tabler/icons';
+import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import { OverrideIcon } from 'types';
 
 interface BookingProps {
@@ -26,7 +26,7 @@ const Booking: BookingProps = {
       title: 'Appointments',
       type: 'item',
       url: '/booking/appointments',
-      icon: IconCirclePlus,
+      icon: CalendarTodayTwoToneIcon,
       breadcrumbs: false
     }
   ]

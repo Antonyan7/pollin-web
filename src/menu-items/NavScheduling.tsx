@@ -1,6 +1,8 @@
 // assets
 import React from 'react';
-import { IconCirclePlus } from '@tabler/icons';
+import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import ReorderIcon from '@mui/icons-material/Reorder';
+import ViewDayIcon from '@mui/icons-material/ViewDay';
 import { OverrideIcon } from 'types';
 
 interface NavSchedulingProps {
@@ -27,7 +29,7 @@ const NavScheduling: NavSchedulingProps = {
       title: 'Schedule Templates',
       type: 'item',
       url: '/scheduling/schedule-templates',
-      icon: IconCirclePlus,
+      icon: ReorderIcon,
       breadcrumbs: false
     },
     {
@@ -35,7 +37,7 @@ const NavScheduling: NavSchedulingProps = {
       title: 'Apply Schedule',
       type: 'item',
       url: '/scheduling/apply-schedule',
-      icon: IconCirclePlus,
+      icon: CalendarViewMonthIcon,
       breadcrumbs: false
     },
     {
@@ -43,7 +45,7 @@ const NavScheduling: NavSchedulingProps = {
       title: 'Block Schedule',
       type: 'item',
       url: '/scheduling/block-schedule',
-      icon: IconCirclePlus,
+      icon: ViewDayIcon,
       breadcrumbs: false
     }
   ]
