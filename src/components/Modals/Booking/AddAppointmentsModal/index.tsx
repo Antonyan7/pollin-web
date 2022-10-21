@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -25,7 +25,10 @@ export interface AddAppointmentsModalProps {
 }
 
 const AddAppointmentsModal = ({ start }: AddAppointmentsModalProps) => {
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+  const onClose = useCallback(() => {
+    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+    dispatch(bookingMiddleware.getPatientAlerts());
+  }, []);
   const methods = useForm<ICreatedAppointmentBody>({
     defaultValues: getInitialValues(start),
     resolver: yupResolver(addAppointmentsValidationSchema)

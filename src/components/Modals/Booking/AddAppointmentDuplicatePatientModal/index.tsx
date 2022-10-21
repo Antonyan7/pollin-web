@@ -13,11 +13,12 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import { dispatch } from '@redux/hooks';
-import { viewsMiddleware } from '@redux/slices/views';
+import { ModalName } from 'constants/modals';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
+import { dispatch } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
+import { viewsMiddleware } from 'redux/slices/views';
 import { margins, paddings } from 'themes/themeConstants';
 
 export interface AddAppointmentDuplicatePatientModalProps {
@@ -37,14 +38,14 @@ const AddAppointmentDuplicatePatientModal = ({ patientId }: AddAppointmentDuplic
   const router = useRouter();
   const [t] = useTranslation();
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeAllModals());
-    dispatch(bookingMiddleware.getPatientAlerts());
+    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentDuplicatePatientModal));
   }, []);
 
   const onProfileClick = useCallback(() => {
-    onClose();
+    dispatch(viewsMiddleware.closeAllModals());
+    dispatch(bookingMiddleware.getPatientAlerts());
     router.push(`/patient-emr/details/${patientId}/profile`);
-  }, [onClose, patientId, router]);
+  }, [patientId, router]);
 
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">

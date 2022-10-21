@@ -25,7 +25,10 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
               sx={{
-                borderRadius: borderRadius.radius8
+                borderRadius: borderRadius.radius8,
+                '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
+                  backgroundColor: (theme) => theme.palette.grey[200]
+                }
               }}
               isLoading={isConfirmationLoading}
               variant="contained"
