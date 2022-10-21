@@ -62,7 +62,7 @@ const Encounters = () => {
                     author={encounter.author}
                     title={encounter.title}
                     contentPreview={encounter.contentPreview}
-                    date={new Date(encounter.date).toLocaleDateString('en-us', {
+                    createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
                       day: 'numeric',
                       year: 'numeric',
                       month: 'short'

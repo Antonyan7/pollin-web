@@ -111,7 +111,7 @@ export interface IEncounterList extends IPagination {
 export interface IEncounterListItem {
   id: string;
   title: string;
-  date: string;
+  createdOn: string;
   contentPreview: string;
   author: string;
 }

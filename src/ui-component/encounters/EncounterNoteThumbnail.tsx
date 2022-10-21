@@ -8,7 +8,7 @@ import { IEncounterListItem } from 'types/reduxTypes/patient-emrStateTypes';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
-const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEncounterListItem) => {
+const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }: IEncounterListItem) => {
   const theme = useTheme();
   const router = useRouter();
 
@@ -27,7 +27,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, date, id }: IEn
               secondary={
                 <Grid container justifyContent="space-between" alignItems="center">
                   <Typography fontSize="16px" fontWeight="400">
-                    {date}
+                    {createdOn}
                   </Typography>
                   <IconButton>
                     <ChevronRightIcon sx={{ color: theme.palette.common.black }} />
