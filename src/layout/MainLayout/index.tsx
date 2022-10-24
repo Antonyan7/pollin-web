@@ -4,6 +4,7 @@ import { ToastNotificationsController } from '@components/ModalsController/Toast
 import RedirectionHandler from '@components/RedirectionHandler/RedirectionHandler';
 import { AppBar, Box, CssBaseline, styled, Toolbar, useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { coreMiddleware } from '@redux/slices/core';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
@@ -74,6 +75,10 @@ const MainLayout = ({ children }: PropsWithChildren) => {
       router.push(router.asPath);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    dispatch(coreMiddleware.getClinicConfig());
   }, []);
 
   const header = useMemo(

@@ -5,7 +5,6 @@ const FULL_CALENDAR_DEFAULT_PROPS: CalendarOptions = {
   dayMaxEventRows: 3,
   headerToolbar: false,
   eventDisplay: 'block',
-  timeZone: 'America/Toronto',
   height: 'auto',
   initialView: 'timeGridDay',
   slotLabelFormat: [{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }],

@@ -16,6 +16,7 @@ import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 import { isValid, setHours } from 'date-fns';
+import { coreSelector } from '@redux/slices/core';
 import Toolbar from './ToolBar';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 
@@ -24,7 +25,7 @@ const Calendar = () => {
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  // const scheduleCalendarLoading = useAppSelector(schedulingSelector.scheduleCalendarLoading);
+  const { timeZone } = useAppSelector(coreSelector.clinicConfigs);
 
   const initialDate: Date = useMemo(() => {
     const todaysDay = getWeekDay(new Date());
@@ -131,7 +132,7 @@ const Calendar = () => {
               height="auto"
               initialDate={initialDate}
               initialView="timeGridDay"
-              timeZone="America/Toronto"
+              timeZone={timeZone}
               displayEventTime={false}
               slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
               allDaySlot={false}
