@@ -45,7 +45,7 @@ const DateAndStartTime: React.FC = () => {
         DialogProps={{
           sx: {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
-            '& div': {
+            '& .MuiClock-clock': {
               '& .Mui-disabled': {
                 display: 'none'
               }
