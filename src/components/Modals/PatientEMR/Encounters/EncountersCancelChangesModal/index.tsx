@@ -66,7 +66,7 @@ const EncountersCancelChangesModal = () => {
         </DialogTitle>
         <Divider />
         <DialogContent sx={{ p: 4 }}>
-          <Grid container direction="column" spacing={3} sx={{ whiteSpace: 'pre-line' }}>
+          <Grid container direction="column" spacing={3}>
             <Grid item>
               <StyledTypography theme={theme}>{t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE)}</StyledTypography>
             </Grid>
@@ -77,7 +77,7 @@ const EncountersCancelChangesModal = () => {
           <Grid container justifyContent="flex-end">
             <Grid>
               <StyledButton variant="contained" sx={{ width: '160px' }} onClick={onConfirm}>
-                {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM)}
+                {t(Translation.PAGE_ENCOUNTERS_CANCEL_CHANGES_BUTTON)}
               </StyledButton>
             </Grid>
           </Grid>

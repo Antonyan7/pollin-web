@@ -83,6 +83,7 @@ export enum Translation {
   PAGE_ENCOUNTERS_SAVE_LABEL = 'page.encounters.save.label',
   PAGE_ENCOUNTERS_CANCEL_LABEL = 'page.encounters.cancel.label',
   PAGE_ENCOUNTERS_UPDATE_LABEL = 'page.encounters.update.label',
+  PAGE_ENCOUNTERS_CANCEL_CHANGES_BUTTON = 'page.encounters.cancel.changes.button',
   MODAL_CANCEL = 'modal.cancel',
   MODAL_APPOINTMENTS_ADD_TITLE = 'modal.appointments.add.title',
   MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE = 'modal.appointments.add.select.service.type',
