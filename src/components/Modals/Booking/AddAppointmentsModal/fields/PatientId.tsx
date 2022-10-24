@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
@@ -15,6 +15,7 @@ const INITIAL_PAGE_NUMBER = 1;
 
 const PatientId = () => {
   const [t] = useTranslation();
+  const [openAutocompleteList, setOpenAutocompleteList] = useState(false);
   const patientIdFieldName = 'patientId';
 
   const patientsList = useAppSelector(bookingSelector.patientList);
@@ -25,7 +26,7 @@ const PatientId = () => {
   const { field, fieldState } = useController({ name: patientIdFieldName, control });
   const { onBlur, onChange, ...fieldProps } = field;
   const { error } = fieldState;
-
+  const [inputValue, setInputValue] = useState(field.value);
   const patientIdHelperText = error?.message;
   const patientIdErrorText = !!error?.message;
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT);
@@ -63,9 +64,20 @@ const PatientId = () => {
     }
   };
 
+  const onInputChange = useCallback((_: React.SyntheticEvent, newInputValue: string) => {
+    setInputValue(newInputValue);
+
+    if (newInputValue.length > 0) {
+      setOpenAutocompleteList(true);
+    } else {
+      setOpenAutocompleteList(false);
+    }
+  }, []);
+
   return (
     <Grid item xs={12}>
       <Autocomplete
+        inputValue={inputValue}
         ListboxProps={{
           style: {
             maxHeight: 220,
@@ -76,6 +88,8 @@ const PatientId = () => {
             onPatientListScroll(event);
           }
         }}
+        open={openAutocompleteList}
+        onClose={() => setOpenAutocompleteList(false)}
         id={patientIdFieldName}
         options={patientOptions}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
@@ -83,9 +97,10 @@ const PatientId = () => {
         onChange={(_, value) => onChange(value?.item.id)}
         groupBy={(option) => option.firstLetter}
         onBlur={onBlur}
-        onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) =>
-          onChange(validateInputChange(event, value, reason))
-        }
+        onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => {
+          onChange(validateInputChange(event, value, reason));
+          onInputChange(event, value);
+        }}
         renderInput={(params: TextFieldProps) => (
           <TextField
             {...fieldProps}
