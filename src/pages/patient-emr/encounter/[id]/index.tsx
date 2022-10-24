@@ -89,7 +89,7 @@ const EncounterDetailsPage = () => {
         <Grid container sx={{ px: 4, pt: 3.5, flexDirection: 'column' }}>
           <Grid item container sx={{ pt: 2 }} alignItems="center" gap={3}>
             <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
-              {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+              {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}
             </Typography>
             <IconButton
               sx={{
