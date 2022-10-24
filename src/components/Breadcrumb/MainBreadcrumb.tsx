@@ -3,7 +3,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import { AppBar, Box, Toolbar, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
-import { borderRadius } from 'themes/themeConstants';
+import { borderRadius, margins } from 'themes/themeConstants';
 
 import { IBreadcrumbNavigationItem, IMainBreadcrumb } from './Breadcrumb';
 import BreadcrumbNavItem from './BreadcrumbNavItem';
@@ -21,10 +21,10 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
             borderRadius: borderRadius.radius12
           }}
         >
-          <Typography variant="h2" component="div" sx={{ flexGrow: 1 }}>
+          <Typography variant="h2" component="div" sx={{ flexGrow: 1, marginRight: margins.right12 }}>
             {currentPage}
           </Typography>
-          <Box sx={{ display: 'flex', gap: '20px' }}>
+          <Box sx={{ display: 'flex', gap: margins.all20 }}>
             <Link href={navigation.basePath}>
               <HomeIcon sx={{ color: theme.palette.primary.main, cursor: 'pointer' }} />
             </Link>

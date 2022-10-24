@@ -40,11 +40,20 @@ import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
 export const MainHeader = styled(Box)<BoxProps>(() => ({
-  marginTop: margins.top32,
   display: 'flex',
   flexDirection: 'row',
+  flexWrap: 'wrap',
   justifyContent: 'space-between'
 }));
+
+const formControlStyle = { minWidth: '210px', marginTop: margins.top32, marginRight: margins.right12 };
+const dateFormControlStyle = {
+  display: 'flex',
+  gap: margins.all16,
+  flexWrap: 'wrap',
+  marginTop: margins.top32,
+  marginRight: margins.right12
+};
 
 // eslint-disable-next-line max-lines-per-function
 const Appointments = () => {
@@ -108,7 +117,7 @@ const Appointments = () => {
           sx={{ marginTop: margins.top24, marginLeft: margins.left4, marginRight: margins.right4 }}
         />
         <MainHeader>
-          <Box sx={{ minWidth: '210px' }}>
+          <Box sx={formControlStyle}>
             <FormControl fullWidth>
               <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}</InputLabel>
               <Select
@@ -143,7 +152,7 @@ const Appointments = () => {
               </Select>
             </FormControl>
           </Box>
-          <Box sx={{ display: 'flex', gap: '16px' }}>
+          <Box sx={dateFormControlStyle}>
             <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>
               <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
                 {t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}
@@ -184,6 +193,7 @@ const Appointments = () => {
             theme={theme}
             variant="outlined"
             endIcon={<AddIcon />}
+            sx={{ marginTop: margins.top32 }}
             onClick={onOpenAppointmentsModalAdd}
           >
             <Typography
