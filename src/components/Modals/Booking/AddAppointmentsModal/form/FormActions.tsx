@@ -14,7 +14,7 @@ interface FormActionsProps {
 
 const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
   const [t] = useTranslation();
-  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
 
   const addButtonLabel = t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_ADD);
 

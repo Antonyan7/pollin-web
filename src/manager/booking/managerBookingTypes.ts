@@ -66,3 +66,23 @@ export interface ICancelAppointmentReqBody {
 export interface ICancelAppointmentReason {
   cancellationReason: string;
 }
+
+export interface IGetPatientAppointmentsListReqBody {
+  searchString: string;
+  filterId?: string;
+  page: number;
+  sortByField?: 'Type' | 'Date' | 'Status';
+  sortOrder?: 'Asc' | 'Desc';
+}
+
+export interface IPatientAppointment {
+  id: string;
+  type: string;
+  status: 'Booked' | 'Cancelled' | 'Fulfilled';
+  date: string;
+  time: string;
+}
+
+export interface IGetPatientAppointmentsListResponse {
+  appointments: IPatientAppointment[];
+}

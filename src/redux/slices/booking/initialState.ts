@@ -20,5 +20,5 @@ export const getInitialState = (): BookingProps => ({
   serviceTypes: [],
   appointmentDetails: null,
   patientAlerts: [],
-  isAppoitmentLoading: false
+  isAppointmentLoading: false
 });

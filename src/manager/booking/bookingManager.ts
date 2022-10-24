@@ -8,6 +8,8 @@ import {
   ICreatedAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
+  IGetPatientAppointmentsListReqBody,
+  IGetPatientAppointmentsListResponse,
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
   IUpdatedAppointmentResponse
@@ -48,6 +50,12 @@ const bookingManager = {
   },
   cancelAppointment(appointmentId: string, body: ICancelAppointmentReqBody) {
     return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
+  },
+
+  getAppointmentList(body: IGetPatientAppointmentsListReqBody) {
+    return axiosInstance
+      .post<any, IAxiosResponsePaginated<IGetPatientAppointmentsListResponse>>(`${baseURL}/v1/appointment/list`, body)
+      .then(({ data }) => data);
   }
 };
 

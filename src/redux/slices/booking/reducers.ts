@@ -63,7 +63,7 @@ const reducers = createReducer({
     state.patientAlerts = action.payload;
   },
   setAppointmentLoading(state, action: IAction<boolean>) {
-    state.isAppoitmentLoading = action.payload;
+    state.isAppointmentLoading = action.payload;
   }
 });
 

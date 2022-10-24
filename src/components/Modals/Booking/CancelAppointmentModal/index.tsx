@@ -35,7 +35,7 @@ export interface CancelAppointmentModalProps {
 const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) => {
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
   const [cancellationReason, setCancellationReason] = useState<string>('');
-  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
 
   const [t] = useTranslation();
 

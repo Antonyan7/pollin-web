@@ -19,7 +19,7 @@ const FormActions = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelAppointmentModal, props: { appointmentId } }));
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, [appointmentId]);
-  const isConfirmationLoading = useAppSelector(bookingSelector.isAppoitmentLoading);
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
 
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL);
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
