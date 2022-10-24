@@ -1,5 +1,4 @@
 import React from 'react';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import HomeIcon from '@mui/icons-material/Home';
 import { AppBar, Box, Toolbar, Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
@@ -28,7 +27,6 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
             <Link href={navigation.basePath}>
               <HomeIcon sx={{ color: theme.palette.primary.main, cursor: 'pointer' }} />
             </Link>
-            <ArrowForwardIosIcon sx={{ color: theme.palette.dark[200] }} />
             {navigation.items.map((page: IBreadcrumbNavigationItem, index: number) => (
               <BreadcrumbNavItem key={`header-nav-${page.name}-${page.path}`} page={page} index={index} />
             ))}
