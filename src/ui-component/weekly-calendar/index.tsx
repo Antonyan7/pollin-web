@@ -52,6 +52,14 @@ const Calendar = () => {
 
     setDate(nearestDate);
 
+    const calendarEl = calendarRef.current;
+
+    if (calendarEl) {
+      const calendarApi = calendarEl.getApi();
+
+      calendarApi.gotoDate(nearestDate);
+    }
+
     return nearestDate;
   }, [scheduleSingleTemplate.timePeriods]);
 
