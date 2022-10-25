@@ -86,6 +86,7 @@
   "page.encounters.save.label": "Save",
   "page.encounters.cancel.label": "Cancel",
   "page.encounters.update.label": "Saving",
+  "page.encounters.cancel.changes.button": "Close",
   "modal.cancel": "Cancel",
   "modal.appointments.add.title": " Add Appointment",
   "modal.appointments.add.select.service.type": "Appointment Type",
