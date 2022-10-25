@@ -6,7 +6,6 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { weekDays } from 'helpers/constants';
 import { viewsMiddleware } from 'redux/slices/views';
 import { IAppliedDay, IApplyScheduleDay } from 'types/apply-schedule';
@@ -23,19 +22,7 @@ import RepeatsField from './fields/RepeatsField';
 import ResourceField from './fields/ResourceField';
 import ScheduleTemplateField from './fields/ScheduleTemplateField';
 import ApplyScheduleFormRow from './form/ApplyScheduleFormRow';
-
-const defaultResource: IServiceProvider = {
-  id: '',
-  title: ''
-};
-
-const defaultScheduleTemplate: SchedulingTemplateProps = {
-  id: '',
-  name: '',
-  duration: '',
-  lastSavedDay: '',
-  status: ''
-};
+import { defaultRepeatWeeks, defaultResource, defaultScheduleTemplate } from './defaultValues';
 
 const getUniqueTimePeriodsApplyDates = (scheduleApplyTemplates: { name: string; timePeriods?: ISingleTemplate[] }) => {
   // Logic For Comparing two or more timePeriods
@@ -59,19 +46,18 @@ const ApplyScheduleForm = () => {
   const [resource, setResource] = useState<IServiceProvider>({ ...defaultResource });
   const [scheduleTemplate, setScheduleTemplate] = useState<SchedulingTemplateProps>({ ...defaultScheduleTemplate });
   const [isAppliedDays, setIsAppliedDays] = useState<boolean>(false);
-  const [repeatWeeks, setRepeatWeeks] = useState<IApplyScheduleDay>({ id: 0, name: '' });
-  const [startDate, setStartDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
-  const [endDate, setEndDate] = useState<Date | string | null>(format(new Date(), 'yyyy-MM-dd'));
+  const [repeatWeeks, setRepeatWeeks] = useState<IApplyScheduleDay>({ ...defaultRepeatWeeks });
+  const [startDate, setStartDate] = useState<Date | string | null>(null);
+  const [endDate, setEndDate] = useState<Date | string | null>(null);
   const [applyDays, setApplyDays] = useState<number[]>([]);
   const [applyDaysListRendering, setApplyDaysListRendering] = useState<IAppliedDay[]>([]);
-
   const resetFormValues = () => {
     setScheduleTemplate({ ...defaultScheduleTemplate });
     setResource({ ...defaultResource });
-    setRepeatWeeks({ id: 0, name: '' });
+    setRepeatWeeks({ ...defaultRepeatWeeks });
     setIsAppliedDays(false);
-    setStartDate(format(new Date(), 'yyyy-MM-dd'));
-    setEndDate(format(new Date(), 'yyyy-MM-dd'));
+    setStartDate(null);
+    setEndDate(null);
   };
   const handleApplyClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

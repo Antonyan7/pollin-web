@@ -5,6 +5,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
 
+import { defaultScheduleTemplate } from '../defaultValues';
+
 interface Props {
   setScheduleTemplate: (value: React.SetStateAction<SchedulingTemplateProps>) => void;
   label: string;
@@ -18,6 +20,8 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
     if (templateItem) {
       dispatch(schedulingMiddleware.getSingleSchedule(templateItem.id));
       setScheduleTemplate(templateItem);
+    } else {
+      setScheduleTemplate({ ...defaultScheduleTemplate });
     }
   };
 

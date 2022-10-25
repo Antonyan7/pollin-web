@@ -4,6 +4,8 @@ import { Autocomplete, FormControl, TextField } from '@mui/material';
 import { repeatWeeksList } from 'helpers/constants';
 import { IApplyScheduleDay } from 'types/apply-schedule';
 
+import { defaultRepeatWeeks } from '../defaultValues';
+
 interface Props {
   setRepeatWeeks: (value: React.SetStateAction<IApplyScheduleDay>) => void;
   label: string;
@@ -14,6 +16,8 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
   const onRepeatWeeksUpdate = (repeatWeeksItem: IApplyScheduleDay | null) => {
     if (repeatWeeksItem) {
       setRepeatWeeks(repeatWeeksItem);
+    } else {
+      setRepeatWeeks({ ...defaultRepeatWeeks });
     }
   };
 

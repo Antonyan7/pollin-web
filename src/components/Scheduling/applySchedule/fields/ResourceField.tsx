@@ -5,6 +5,8 @@ import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
+import { defaultResource } from '../defaultValues';
+
 interface Props {
   setResource: React.Dispatch<React.SetStateAction<IServiceProvider>>;
   label: string;
@@ -17,6 +19,8 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
     if (resourceItem) {
       setResource(resourceItem);
+    } else {
+      setResource({ ...defaultResource });
     }
   };
 
