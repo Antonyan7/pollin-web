@@ -3,18 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import {
-  Divider,
-  FormControl,
-  Grid,
-  GridProps,
-  InputLabel,
-  MenuItem,
-  Select,
-  styled,
-  Typography,
-  useTheme
-} from '@mui/material';
+import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import parse from 'html-react-parser';
@@ -23,6 +12,7 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
@@ -101,6 +91,8 @@ const SimpleTextEditor = ({
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
 
+  const isEncountersTypeSelectDisabled = mode === SimpleEditorMode.Edit_Note;
+
   return (
     <>
       <StyledGrid item xs={12} theme={theme}>
@@ -109,22 +101,19 @@ const SimpleTextEditor = ({
         >
           {mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Edit_Note ? (
             <Grid item xs={6} mb={2}>
-              <FormControl fullWidth>
-                <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
-                <Select
-                  disabled={mode === SimpleEditorMode.Edit_Note}
-                  labelId="encounter-label"
-                  id="encounter-type"
-                  label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-                  onChange={handleEncounterTypeSelect}
-                >
-                  {encounterTypes?.map((encounterType) => (
-                    <MenuItem value={encounterType.id} key={encounterType.toString()}>
-                      {encounterType.title}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <BaseSelectWithLoading
+                disabled={isEncountersTypeSelectDisabled}
+                labelId="encounter-label"
+                id="encounter-type"
+                label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+                onChange={handleEncounterTypeSelect}
+              >
+                {encounterTypes?.map((encounterType) => (
+                  <MenuItem value={encounterType.id} key={encounterType.toString()}>
+                    {encounterType.title}
+                  </MenuItem>
+                ))}
+              </BaseSelectWithLoading>
             </Grid>
           ) : null}
           <ReactQuill

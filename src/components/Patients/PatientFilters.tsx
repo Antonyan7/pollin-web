@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, CircularProgress, InputAdornment, OutlinedInput, TextField, useTheme } from '@mui/material';
+import { InputAdornment, OutlinedInput, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Box, shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
@@ -13,6 +13,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins, paddings } from 'themes/themeConstants';
 import { IPatientsFilterOption } from 'types/patient';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 export const StyledOutlinedInput = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 500,
@@ -95,16 +97,11 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           </InputAdornment>
         }
       />
-      <Autocomplete
+      <BaseDropdownWithLoading
         id="patientFilterId"
         fullWidth
         multiple
-        loading={isFiltersLoading}
-        loadingText={
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <CircularProgress size={20} />
-          </Box>
-        }
+        isLoading={isFiltersLoading}
         options={reformattedFilterResults(filtersList)}
         groupBy={(option) => option.options.type as string}
         getOptionLabel={(option) => option.options.title as string}
@@ -114,7 +111,9 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           onAutoCompleteChange(selectedOption);
         }}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
-        renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
+        renderInputProps={{
+          label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
+        }}
       />
     </Box>
   );

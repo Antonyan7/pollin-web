@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, FormControl, TextField } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { repeatWeeksList } from 'helpers/constants';
 import { IApplyScheduleDay } from 'types/apply-schedule';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { defaultRepeatWeeks } from '../defaultValues';
 
@@ -25,7 +27,8 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
 
   return (
     <FormControl fullWidth>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={false}
         inputValue={repeatWeeks.name}
         popupIcon={<KeyboardArrowDownIcon />}
         options={weeksList}
@@ -34,7 +37,7 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         getOptionLabel={(itemRepeat) => itemRepeat.name}
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInputProps={{ label }}
       />
     </FormControl>
   );

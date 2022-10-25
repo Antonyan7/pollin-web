@@ -5,19 +5,7 @@ import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponen
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  styled,
-  Typography
-} from '@mui/material';
+import { Box, Divider, MenuItem, SelectChangeEvent, Stack, styled, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
@@ -35,6 +23,7 @@ import { ModalName } from 'types/modals';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
 
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
@@ -118,39 +107,32 @@ const Appointments = () => {
         />
         <MainHeader>
           <Box sx={formControlStyle}>
-            <FormControl fullWidth>
-              <InputLabel id="resource-label">{t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}</InputLabel>
-              <Select
-                MenuProps={{
-                  style: { maxHeight: 260 },
-                  PaperProps: {
-                    style: {
-                      border: `${borders.solid2px} ${theme.palette.primary.main}`,
-                      borderRadius: borderRadius.radius12
-                    },
-                    onScroll: (event) => onServiceProviderScroll(event as unknown as UIEvent)
-                  }
-                }}
-                ref={serviceProviderSelectRef}
-                IconComponent={KeyboardArrowDownIcon}
-                id="demo-simple-select"
-                labelId="resource-label"
-                label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
-                onChange={onServiceProviderChange}
-                value={serviceProviderId}
-              >
-                {serviceProviders.providers.map((serviceProvider) => (
-                  <MenuItem key={`resource-${serviceProvider.id}`} value={serviceProvider.id}>
-                    {serviceProvider.title}
-                  </MenuItem>
-                ))}
-                {isServiceProvidersLoading ? (
-                  <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                    <CircularProgress size={20} />
-                  </Box>
-                ) : null}
-              </Select>
-            </FormControl>
+            <BaseSelectWithLoading
+              isLoading={isServiceProvidersLoading}
+              MenuProps={{
+                style: { maxHeight: 260 },
+                PaperProps: {
+                  style: {
+                    border: `${borders.solid2px} ${theme.palette.primary.main}`,
+                    borderRadius: borderRadius.radius12
+                  },
+                  onScroll: (event) => onServiceProviderScroll(event as unknown as UIEvent)
+                }
+              }}
+              ref={serviceProviderSelectRef}
+              IconComponent={KeyboardArrowDownIcon}
+              id="demo-simple-select"
+              labelId="resource-label"
+              label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
+              onChange={onServiceProviderChange}
+              value={serviceProviderId}
+            >
+              {serviceProviders.providers.map((serviceProvider) => (
+                <MenuItem key={`resource-${serviceProvider.id}`} value={serviceProvider.id}>
+                  {serviceProvider.title}
+                </MenuItem>
+              ))}
+            </BaseSelectWithLoading>
           </Box>
           <Box sx={dateFormControlStyle}>
             <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>

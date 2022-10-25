@@ -15,6 +15,7 @@ const scheduleBlocks = createSelector([selector], (state) => state.scheduleBlock
 const scheduleResources = createSelector([selector], (state) => state.scheduleResources);
 const scheduleOverrides = createSelector([selector], (state) => state.overrides);
 const scheduleLoading = createSelector([selector], (state) => state.scheduleLoading);
+const isServiceTypesLoading = createSelector([selector], (state) => state.isServiceTypesLoading);
 
 export default {
   scheduleError,
@@ -28,5 +29,6 @@ export default {
   scheduleApplyStatus,
   scheduleBlockStatus,
   scheduleCalendarLoading,
-  scheduleLoading
+  scheduleLoading,
+  isServiceTypesLoading
 };

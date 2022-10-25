@@ -123,7 +123,8 @@ export enum Translation {
   MODAL_SCHEDULING_DELETION_TITLE = 'modal.scheduling.deletion.title',
   MODAL_SCHEDULING_DELETION_CONTENT_MAIN = 'modal.scheduling.deletion.content.main',
   MODAL_SCHEDULING_DELETION_CONTENT_FOOTNOTE = 'modal.scheduling.deletion.content.footnote',
-  MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM = 'modal.scheduling.deletion.button.confirm'
+  MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM = 'modal.scheduling.deletion.button.confirm',
+  BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

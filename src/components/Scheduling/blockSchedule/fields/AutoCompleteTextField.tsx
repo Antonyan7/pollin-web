@@ -1,16 +1,18 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, TextField, TextFieldProps } from '@mui/material';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
 
 const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
+  const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
   const optionsGroup = createOptionsGroup(scheduleResources.providers);
   const { control, formState } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
@@ -22,7 +24,8 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
 
   return (
-    <Autocomplete
+    <BaseDropdownWithLoading
+      isLoading={isServiceProvidersLoading}
       id={fieldName}
       options={optionsGroup}
       onChange={(_, value) => {
@@ -33,16 +36,13 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       getOptionLabel={(option) => option.item.title}
       groupBy={(option) => option.firstLetter}
       onBlur={onBlur}
-      renderInput={(params: TextFieldProps) => (
-        <TextField
-          {...params}
-          label={fieldLabel}
-          helperText={errors[fieldName]?.message ?? ''}
-          error={Boolean(errors[fieldName]?.message)}
-          {...fieldProps}
-        />
-      )}
-      popupIcon={<KeyboardArrowDownIcon color="primary" />}
+      renderInputProps={{
+        label: fieldLabel,
+        helperText: errors[fieldName]?.message ?? '',
+        error: Boolean(errors[fieldName]?.message),
+        ...fieldProps
+      }}
+      popupIcon={<KeyboardArrowDownIcon color="secondary" />}
     />
   );
 };

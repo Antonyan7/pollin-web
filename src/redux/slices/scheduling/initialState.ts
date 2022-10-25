@@ -13,6 +13,7 @@ export const getInitialState = (): SchedulingProps => ({
     startDate: '',
     placeholderLabel: ''
   },
+  isServiceTypesLoading: false,
   scheduleCalendarLoading: false,
   scheduleResources: [],
   overrides: [],

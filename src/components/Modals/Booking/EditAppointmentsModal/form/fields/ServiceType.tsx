@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Autocomplete, Grid, TextField, TextFieldProps } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
@@ -9,12 +9,15 @@ import { bookingSelector } from 'redux/slices/booking';
 import { borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+
 import { IFormValues } from '../types';
 
 const ServiceType = () => {
   const { control } = useFormContext<IFormValues>();
 
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
+  const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
 
@@ -38,7 +41,8 @@ const ServiceType = () => {
 
   return (
     <Grid item xs={12}>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={isServiceTypesLoading}
         ListboxProps={{
           style: { maxHeight: 260, borderRadius: '8px', border: `${borders.solid2px}` }
         }}
@@ -53,15 +57,12 @@ const ServiceType = () => {
         getOptionLabel={(option) => option.item.title}
         onBlur={onBlur}
         onInputChange={(event, value, reason) => onChange(validateInputChange(event, value, reason))}
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...params}
-            label={serviceTypeSelectLabel}
-            helperText={serviceTypeIdHelperText}
-            error={isServiceTypeError}
-            {...fieldProps}
-          />
-        )}
+        renderInputProps={{
+          label: serviceTypeSelectLabel,
+          helperText: serviceTypeIdHelperText,
+          error: isServiceTypeError,
+          ...fieldProps
+        }}
       />
     </Grid>
   );

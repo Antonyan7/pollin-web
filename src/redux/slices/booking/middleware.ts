@@ -21,6 +21,7 @@ const {
   setCalendarLoadingState,
   setPatientsList,
   setPatientListLoading,
+  setIsServiceTypesLoading,
   updatePatientsList,
   setServiceTypes,
   setAppointmentDetails,
@@ -161,14 +162,17 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.booking.getServiceTypes();
+    dispatch(setIsServiceTypesLoading(true));
 
+    const response = await API.booking.getServiceTypes();
     const serviceTypes = sortServiceTypesByAlphabeticOrder(response.data.data.serviceTypes);
 
     dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));
+  } finally {
+    dispatch(setIsServiceTypesLoading(false));
   }
 };
 

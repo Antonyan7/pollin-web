@@ -1,9 +1,11 @@
 import React from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, FormControl, TextField } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { defaultScheduleTemplate } from '../defaultValues';
 
@@ -15,6 +17,7 @@ interface Props {
 
 const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }: Props) => {
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
+  const isScheduleTemplatesLoading = useAppSelector(schedulingSelector.scheduleListLoadingStatus);
 
   const handleSelectTemplate = (templateItem: SchedulingTemplateProps | null) => {
     if (templateItem) {
@@ -27,7 +30,8 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
 
   return (
     <FormControl fullWidth>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={isScheduleTemplatesLoading}
         inputValue={scheduleTemplate.name}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         options={scheduleTemplates.templates}
@@ -36,7 +40,9 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         getOptionLabel={(itemTemplate) => itemTemplate.name}
-        renderInput={(params) => <TextField {...params} label={label} />}
+        renderInputProps={{
+          label
+        }}
       />
     </FormControl>
   );

@@ -121,5 +121,6 @@
   "modal.scheduling.deletion.title": "Confirm Template Deletion",
   "modal.scheduling.deletion.content.main": "Are you sure you want to delete the selected template(s)?",
   "modal.scheduling.deletion.content.footnote": "Please note that this action is permanent and cannot be undone.",
-  "modal.scheduling.deletion.button.confirm": "Confirm"
+  "modal.scheduling.deletion.button.confirm": "Confirm",
+  "base.dropdown.loading.more": "Loading More"
 }

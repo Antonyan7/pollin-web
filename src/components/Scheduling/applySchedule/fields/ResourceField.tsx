@@ -1,9 +1,11 @@
 import React from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, FormControl, TextField, TextFieldProps } from '@mui/material';
+import { FormControl } from '@mui/material';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { defaultResource } from '../defaultValues';
 
@@ -15,7 +17,7 @@ interface Props {
 
 const ResourceField = ({ setResource, label, resource }: Props) => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
-
+  const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
     if (resourceItem) {
       setResource(resourceItem);
@@ -26,7 +28,8 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
 
   return (
     <FormControl fullWidth>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={isServiceProvidersLoading}
         inputValue={resource.title}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         onChange={(e, value) => {
@@ -35,7 +38,7 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
         isOptionEqualToValue={(option, value) => option.id === value.id}
         options={serviceProviders.providers}
         getOptionLabel={(itemResource) => itemResource.title}
-        renderInput={(params: TextFieldProps) => <TextField {...params} label={label} />}
+        renderInputProps={{ label }}
       />
     </FormControl>
   );

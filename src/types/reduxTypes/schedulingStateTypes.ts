@@ -42,6 +42,7 @@ export interface SchedulingStateStatusProps {
   fail: boolean;
 }
 export interface SchedulingProps {
+  isServiceTypesLoading: boolean;
   scheduleApplyTemplates: IScheduleApplyTemplate[];
   scheduleSingleTemplate: SingleSchedulingProps;
   schedulingListLoadingStatus: boolean;

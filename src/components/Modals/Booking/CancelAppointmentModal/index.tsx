@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledInputLabel } from '@components/Appointments/CommonMaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -8,11 +7,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
   Grid,
   IconButton,
   MenuItem,
-  Select,
   SelectChangeEvent,
   TextField,
   Typography
@@ -26,6 +23,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 export interface CancelAppointmentModalProps {
@@ -91,24 +89,19 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
               <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
             </Grid>
             <Grid sx={{ marginTop: margins.top20 }} item xs={12}>
-              <FormControl fullWidth>
-                <StyledInputLabel id="cancel-appointment-label">
-                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                </StyledInputLabel>
-                <Select
-                  IconComponent={KeyboardArrowDownIcon}
-                  id="cancel-appointment-label"
-                  labelId="cancel-appointment-label"
-                  label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
-                  onChange={onSelectButtonChange}
-                >
-                  {cancellationReasons.map((reasonItem) => (
-                    <MenuItem value={reasonItem} key={reasonItem.toString()}>
-                      {reasonItem}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
+              <BaseSelectWithLoading
+                IconComponent={KeyboardArrowDownIcon}
+                id="cancel-appointment-label"
+                labelId="cancel-appointment-label"
+                label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                onChange={onSelectButtonChange}
+              >
+                {cancellationReasons.map((reasonItem) => (
+                  <MenuItem value={reasonItem} key={reasonItem.toString()}>
+                    {reasonItem}
+                  </MenuItem>
+                ))}
+              </BaseSelectWithLoading>
             </Grid>
 
             {openOtherReasonField && (

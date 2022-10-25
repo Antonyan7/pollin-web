@@ -25,6 +25,9 @@ const reducers = createReducer({
   setIsServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isServiceProvidersLoading = action.payload;
   },
+  setIsServiceTypesLoading(state, action: IAction<boolean>) {
+    state.isServiceTypesLoading = action.payload;
+  },
   setServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders = action.payload;
   },

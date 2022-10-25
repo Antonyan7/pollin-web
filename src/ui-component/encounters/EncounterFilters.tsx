@@ -4,8 +4,9 @@ import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, BoxProps,CircularProgress, InputAdornment, styled, TextField } from '@mui/material';
+import { BoxProps, InputAdornment } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { Box, styled } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
@@ -13,7 +14,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
 import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
-import { IFilterCategory } from 'types/reduxTypes/patient-emrStateTypes';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: margins.top16,
@@ -100,17 +102,12 @@ const EncounterFilters = ({ page }: { page: number }) => {
           </InputAdornment>
         }
       />
-      <Autocomplete
+      <BaseDropdownWithLoading
         id="encounterFilterId"
         fullWidth
         multiple
-        loading={isEncountersFiltersLoading}
-        loadingText={
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-            <CircularProgress size={20} />
-          </Box>
-        }
-        options={reformattedFilterResults(encounterFilters as unknown as IFilterCategory[])}
+        isLoading={isEncountersFiltersLoading}
+        options={reformattedFilterResults(encounterFilters as any)}
         groupBy={(option) => option.options.type as string}
         getOptionLabel={(option) => option.options.title as string}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
@@ -119,7 +116,9 @@ const EncounterFilters = ({ page }: { page: number }) => {
           onAutoCompleteChange(selectedOption);
         }}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
-        renderInput={(params) => <TextField {...params} label={t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)} />}
+        renderInputProps={{
+          label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
+        }}
       />
     </MainHeader>
   );

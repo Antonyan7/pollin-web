@@ -1,12 +1,14 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextFieldProps } from '@mui/material';
+import { AutocompleteInputChangeReason, Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { AppointmentDetailsProps } from 'types/reduxTypes/bookingStateTypes';
 import { validateInputChange } from 'validation/validationHelpers';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { IFormValues } from '../types';
 
@@ -22,13 +24,17 @@ const PatientId = () => {
   const { onChange, ...fieldProps } = field;
   const { isTouched, error } = fieldState;
 
+  const patientsList = useAppSelector(bookingSelector.patientList);
+  const { isLoading } = patientsList;
+
   const patientIdHelperText = isTouched ? error?.message : '';
   const isPatientIdError = !!error?.message && isTouched;
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_PATIENT);
 
   return (
     <Grid item xs={12}>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={isLoading}
         id={patientIdFieldName}
         disabled
         defaultValue={details?.patient}
@@ -38,15 +44,12 @@ const PatientId = () => {
         onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) =>
           onChange(validateInputChange(event, value, reason))
         }
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...params}
-            label={patientIdSelectLabel}
-            helperText={patientIdHelperText}
-            error={isPatientIdError}
-            {...fieldProps}
-          />
-        )}
+        renderInputProps={{
+          label: patientIdSelectLabel,
+          helperText: patientIdHelperText,
+          error: isPatientIdError,
+          ...fieldProps
+        }}
       />
     </Grid>
   );

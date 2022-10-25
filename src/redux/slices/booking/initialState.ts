@@ -7,6 +7,7 @@ export const getInitialState = (): BookingProps => ({
   serviceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
   isServiceProvidersLoading: false,
   isCalendarLoading: false,
+  isServiceTypesLoading: false,
   currentServiceProviderId: '',
   currentAppointmentId: '',
   error: null,

@@ -26,11 +26,14 @@ const {
   setApplyScheduleState,
   setBlockScheduleState,
   setCalendarLoadingState,
-  setScheduleLoading
+  setScheduleLoading,
+  setIsServiceTypesLoading
 } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsServiceTypesLoading(true));
+
     const response = await API.booking.getServiceTypes();
 
     const serviceTypes = sortServiceTypesByAlphabeticOrder(response.data.data.serviceTypes);
@@ -39,6 +42,8 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setIsServiceTypesLoading(false));
   }
 };
 

@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 
-const usePreviousState = (nextValue: string, stale: boolean) => {
+const usePreviousState = (nextValue: string, stale?: boolean) => {
   const previousState: MutableRefObject<string> = useRef('');
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { Autocomplete, AutocompleteInputChangeReason, Grid, TextField, TextFieldProps } from '@mui/material';
+import { AutocompleteInputChangeReason, Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
@@ -10,6 +10,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
+
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const INITIAL_PAGE_NUMBER = 1;
 
@@ -76,8 +78,9 @@ const PatientId = () => {
 
   return (
     <Grid item xs={12}>
-      <Autocomplete
+      <BaseDropdownWithLoading
         inputValue={inputValue}
+        isLoading={isLoading}
         ListboxProps={{
           style: {
             maxHeight: 220,
@@ -101,16 +104,13 @@ const PatientId = () => {
           onChange(validateInputChange(event, value, reason));
           onInputChange(event, value);
         }}
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...fieldProps}
-            {...params}
-            label={patientIdSelectLabel}
-            name={patientIdFieldName}
-            helperText={patientIdHelperText}
-            error={patientIdErrorText}
-          />
-        )}
+        renderInputProps={{
+          ...fieldProps,
+          label: patientIdSelectLabel,
+          name: patientIdFieldName,
+          helperText: patientIdHelperText,
+          error: patientIdErrorText
+        }}
       />
     </Grid>
   );

@@ -2,7 +2,7 @@ import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { Autocomplete, Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
@@ -10,9 +10,12 @@ import { bookingSelector } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+
 const ServiceType = () => {
   const { control } = useFormContext<ICreatedAppointmentBody>();
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
+  const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
   const serviceTypeIdFieldName = 'serviceTypeId';
@@ -29,7 +32,8 @@ const ServiceType = () => {
 
   return (
     <Grid item xs={12}>
-      <Autocomplete
+      <BaseDropdownWithLoading
+        isLoading={isServiceTypesLoading}
         ListboxProps={{
           style: {
             maxHeight: 260,
@@ -45,16 +49,13 @@ const ServiceType = () => {
         groupBy={(option) => option.firstLetter}
         getOptionLabel={(option) => option.item.title}
         onInputChange={(event, value, reason) => onChange(validateInputChange(event, value, reason))}
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...fieldProps}
-            {...params}
-            label={serviceTypeSelectLabel}
-            name={serviceTypeIdFieldName}
-            helperText={serviceTypeIdHelperText}
-            error={serviceTypeErrorText}
-          />
-        )}
+        renderInputProps={{
+          ...fieldProps,
+          label: serviceTypeSelectLabel,
+          name: serviceTypeIdFieldName,
+          helperText: serviceTypeIdHelperText,
+          error: serviceTypeErrorText
+        }}
       />
     </Grid>
   );

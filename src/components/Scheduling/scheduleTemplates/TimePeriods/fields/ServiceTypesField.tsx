@@ -1,15 +1,17 @@
 import React, { useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { Autocomplete, TextField } from '@mui/material';
-import { useTheme } from '@mui/system';
+import { useSelector } from 'react-redux';
 import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { ITemplateGroup, OptionsReturnProps } from 'types/create-schedule';
 import { IServiceType } from 'types/reduxTypes/bookingStateTypes';
 
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+
 const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
+  const isServiceTypesLoading = useSelector(schedulingSelector.isServiceTypesLoading);
   const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
   const { control } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.serviceTypes`, control });
@@ -22,10 +24,9 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
     [selectedServiceTypeIds, serviceTypeOptions]
   );
 
-  const theme = useTheme();
-
   return (
-    <Autocomplete
+    <BaseDropdownWithLoading
+      isLoading={isServiceTypesLoading}
       className="schedule-inputs"
       multiple
       options={serviceTypeOptions}
@@ -35,16 +36,13 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
       value={selectedTypeOptions}
       color="primary"
       onChange={onServiceTypesFieldChange}
-      renderInput={(params) => (
-        <TextField
-          sx={{
-            svg: { color: theme.palette.primary.main }
-          }}
-          {...params}
-          label="Service Types"
-          {...fieldProps}
-        />
-      )}
+      renderInputProps={{
+        sx: {
+          svg: { color: (theme) => theme.palette.primary.main }
+        },
+        label: 'Service Types',
+        ...fieldProps
+      }}
     />
   );
 };
