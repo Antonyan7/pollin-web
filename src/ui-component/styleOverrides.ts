@@ -342,6 +342,11 @@ export const MuiPickersToolbar = () => ({
       '& > .MuiPickersToolbar-content button span': {
         fontSize: '16px'
       },
+      '& > .MuiPickersToolbar-content span': {
+        fontSize: '16px',
+        display: 'flex',
+        alignItems: 'center'
+      },
       '& > .MuiPickersToolbar-content .MuiDateTimePickerToolbar-dateContainer': {
         marginTop: margins.top8,
         display: 'grid',

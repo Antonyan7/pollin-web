@@ -42,6 +42,7 @@ const DateAndStartTime: React.FC = () => {
         maxTime={MAX_SELECTABLE_DATE_TIME}
         maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
         value={value}
+        minutesStep={10}
         DialogProps={{
           sx: {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
@@ -52,7 +53,7 @@ const DateAndStartTime: React.FC = () => {
             }
           }
         }}
-        onChange={(date: Date | null) => getMobileDateTime(date)}
+        onChange={(date: DateAndStartTimeType) => onChange(getMobileDateTime(date))}
         renderInput={(params: TextFieldProps) => {
           const formattedDate = formatDate(value as Date);
 
