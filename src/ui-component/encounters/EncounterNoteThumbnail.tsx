@@ -2,11 +2,13 @@ import React from 'react';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import { gridSpacing } from 'themes/themeConstants';
 import { IEncounterListItem } from 'types/reduxTypes/patient-emrStateTypes';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
 
 const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }: IEncounterListItem) => {
   const theme = useTheme();
@@ -42,7 +44,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="body2">{contentPreview}</Typography>
+                  <ParserTypographyWrapper variant="body2">{parse(contentPreview)}</ParserTypographyWrapper>
                 </Grid>
               </Grid>
             </SubCardStyled>

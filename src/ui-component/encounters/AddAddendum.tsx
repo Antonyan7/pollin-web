@@ -5,6 +5,7 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import parse from 'html-react-parser';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -14,6 +15,7 @@ import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -109,7 +111,9 @@ const AddAddendum = () => {
             <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
           </Grid>
           <Grid item>
-            <Typography variant="subtitle1">{encounterData?.content}</Typography>
+            {encounterData && (
+              <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
+            )}
           </Grid>
         </Grid>
         <NoteEditor

@@ -6,12 +6,14 @@ import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders } from 'themes/themeConstants';
 
 import { ButtonWithIcon } from '@ui-component/common/buttons';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
 import EncountersWrapper from '@ui-component/encounters/EncountersWrapper';
 
 interface EncounterDetailsPageTitleProps {
@@ -103,9 +105,7 @@ const EncounterDetailsPage = () => {
             </IconButton>
           </Grid>
           <Grid item pt={2.75}>
-            <Typography component="p" variant="body1">
-              {encounterData.content}
-            </Typography>
+            <ParserTypographyWrapper variant="body1">{parse(encounterData.content)}</ParserTypographyWrapper>
           </Grid>
           <Grid item sx={{ pt: 3.5 }}>
             <Typography component="h4" variant="h4">
@@ -136,9 +136,7 @@ const EncounterDetailsPage = () => {
                   </IconButton>
                 </Grid>
                 <Grid item>
-                  <Typography component="p" variant="body1">
-                    {addendum.content}
-                  </Typography>
+                  <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
                 </Grid>
                 <Grid item container direction="column" sx={{ pt: 2 }}>
                   <Typography component="h4" variant="h4">

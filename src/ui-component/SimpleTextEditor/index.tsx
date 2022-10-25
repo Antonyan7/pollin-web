@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
+import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import {
+  Divider,
   FormControl,
   Grid,
   GridProps,
@@ -15,6 +17,7 @@ import {
 } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders } from 'themes/themeConstants';
@@ -22,6 +25,7 @@ import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -54,7 +58,7 @@ const EditEncounterNoteAddendums = () => {
 
   return encounterData ? (
     <Grid item container direction="column" gap={3} sx={{ pt: 2, ml: 2 }}>
-      {encounterData.addendums.map((addendum) => (
+      {encounterData.addendums.map((addendum: AddendumsProps, addendumIndex: number) => (
         <>
           <Grid item container direction="row" alignItems="center">
             <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
@@ -62,9 +66,7 @@ const EditEncounterNoteAddendums = () => {
             </Typography>
           </Grid>
           <Grid item>
-            <Typography component="p" variant="body1">
-              {addendum.content}
-            </Typography>
+            <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
           </Grid>
           <Grid item container direction="column" mb={2}>
             <Typography component="h4" variant="h4">
@@ -75,6 +77,7 @@ const EditEncounterNoteAddendums = () => {
               {timeAdjuster(new Date(addendum.date as Date)).customizedDate}
             </Typography>
           </Grid>
+          <Divider sx={{ display: addendumIndex === encounterData.addendums.length - 1 ? 'none' : 'block' }} />
         </>
       ))}
     </Grid>
@@ -97,8 +100,6 @@ const SimpleTextEditor = ({
   useEffect(() => {
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
-
-  const isAddModal = mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Add_Addendum;
 
   return (
     <>
@@ -141,7 +142,9 @@ const SimpleTextEditor = ({
               variant="contained"
               onClick={handleSave}
             >
-              {isAddModal ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL) : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
+              {!isEncounterLoading
+                ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
+                : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
             </ButtonWithLoading>
           </Grid>
         </SubCardStyled>
