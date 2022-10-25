@@ -2,13 +2,7 @@ import { Dialog } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 export const BaseModalStyled = styled(Dialog)(({ theme }) => ({
-  '& .MuDialogContent-root': {
-    padding: theme.spacing(2)
-  },
-  '& .MuDialogActions-root': {
-    padding: theme.spacing(1)
-  },
-  '.DialogBox': {
+  '.Dialog-box': {
     display: 'grid',
     justifyContent: 'center',
     alignItems: 'center',

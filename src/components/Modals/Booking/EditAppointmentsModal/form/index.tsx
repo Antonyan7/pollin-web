@@ -10,7 +10,6 @@ import { ModalName } from 'types/modals';
 import { mergeAppointmentDetails } from './helpers/mergeAppointmentDetails';
 import FormActions from './FormActions';
 import FormBody from './FormBody';
-import FormHeader from './FormHeader';
 import { IFormValues } from './types';
 
 const EditAppointmentsModalForm = () => {
@@ -34,7 +33,6 @@ const EditAppointmentsModalForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <FormHeader />
       <FormBody />
       <Divider sx={{ margin: `${margins.top0} ${margins.right24} ${margins.bottom8} ${margins.left24}` }} />
       <FormActions />

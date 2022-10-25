@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Translation } from 'constants/translations';
 import { getTimezoneOffset } from 'date-fns-tz';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
@@ -11,6 +12,8 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import { AppointmentDetailsProps } from 'types/reduxTypes/bookingStateTypes';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
+
+import BaseModal from '@ui-component/Modal/BaseModal';
 
 import { IFormValues } from './form/types';
 import EditAppointmentsModalForm from './form';
@@ -51,15 +54,18 @@ export interface EditAppointmentModalProps {
 }
 
 const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => {
-  const details = useAppSelector(bookingSelector.appointmentDetails);
+  const [t] = useTranslation();
 
+  const details = useAppSelector(bookingSelector.appointmentDetails);
+  const [modalLoading, setModalLoading] = useState(true);
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
 
   const methods = useForm({
     defaultValues: getFormState(),
     resolver: yupResolver(editAppointmentsValidationSchema)
   });
-  const { setValue, getValues } = methods;
+  const { setValue } = methods;
+  const editTitleLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TITLE);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());
@@ -74,18 +80,19 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
   useEffect(() => {
     if (details) {
       Object.entries(getFormState(details)).map(([k, v]) => setValue(k as keyof IFormValues, v));
+      setModalLoading(false);
     }
   }, [details, setValue]);
 
-  return getValues('appointment.id') ? (
+  return (
     <FormProvider {...methods}>
-      <Dialog open onClose={onClose}>
+      <BaseModal isLoading={modalLoading} title={editTitleLabel} onClose={onClose}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <EditAppointmentsModalForm />
         </LocalizationProvider>
-      </Dialog>
+      </BaseModal>
     </FormProvider>
-  ) : null;
+  );
 };
 
 export default EditAppointmentsModal;

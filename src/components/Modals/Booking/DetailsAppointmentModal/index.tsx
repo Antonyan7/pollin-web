@@ -1,18 +1,7 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import { CloseOutlined } from '@mui/icons-material';
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Grid,
-  IconButton,
-  Stack,
-  Typography
-} from '@mui/material';
+import { DialogActions, DialogContent, Divider, Grid, Stack } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
@@ -22,6 +11,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
+import BaseModal from '@ui-component/Modal/BaseModal';
 import { convertToLocale } from '@utils/dateUtils';
 
 export interface DetailsAppointmentModalProps {
@@ -31,11 +21,18 @@ export interface DetailsAppointmentModalProps {
 const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps) => {
   const router = useRouter();
   const details = useAppSelector(bookingSelector.appointmentDetails);
+  const [modalLoading, setModalLoading] = useState(true);
   const [t] = useTranslation();
 
   useEffect(() => {
     dispatch(bookingMiddleware.getAppointmentDetails(appointmentId));
   }, [appointmentId]);
+
+  useEffect(() => {
+    if (details) {
+      setModalLoading(false);
+    }
+  }, [details]);
 
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeAllModals());
@@ -50,28 +47,8 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
   }, [onClose, details, router]);
 
   return (
-    <Dialog open onClose={onClose} fullWidth maxWidth="sm">
+    <BaseModal isLoading={modalLoading} title={t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)} onClose={onClose}>
       <Grid>
-        <DialogTitle>
-          <Grid container justifyContent="space-between" alignItems="center">
-            <Grid item>
-              <Typography
-                sx={{
-                  fontSize: '1.25rem',
-                  fontWeight: 700
-                }}
-              >
-                {t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)}
-              </Typography>
-            </Grid>
-            <Grid item>
-              <IconButton color="primary" onClick={onClose}>
-                <CloseOutlined />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </DialogTitle>
-        <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
         <DialogContent>
           <Grid container spacing={3}>
             <DialogContentRow
@@ -89,9 +66,8 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE_START_TIME)}
               body={
-                (details &&
-                  timeAdjuster(convertToLocale(details?.appointment.date as string) as string)
-                    ?.customizedFullDate) as string
+                timeAdjuster(convertToLocale(details?.appointment.date as string) as string)
+                  ?.customizedFullDate as string
               }
             />
             <DialogContentRow
@@ -117,7 +93,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
           </Grid>
         </DialogActions>
       </Grid>
-    </Dialog>
+    </BaseModal>
   );
 };
 
