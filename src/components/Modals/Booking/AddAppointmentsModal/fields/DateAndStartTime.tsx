@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { formatDate, toRoundupTime } from 'helpers/time';
@@ -11,6 +12,8 @@ import { formatDate, toRoundupTime } from 'helpers/time';
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { futureDate180DaysAfter } from '@utils/dateUtils';
+
+const dateTimeViewOptions: CalendarOrClockPickerView[] = ['month', 'day', 'hours', 'minutes'];
 
 type DateAndStartTimeType = Date | null;
 
@@ -37,6 +40,7 @@ const DateAndStartTime: React.FC = () => {
         components={{
           ActionBar: DatePickerActionBar
         }}
+        views={dateTimeViewOptions}
         disablePast
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
