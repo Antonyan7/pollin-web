@@ -112,6 +112,7 @@ const SimpleTextEditor = ({
               <FormControl fullWidth>
                 <InputLabel id="encounter-label">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</InputLabel>
                 <Select
+                  disabled={mode === SimpleEditorMode.Edit_Note}
                   labelId="encounter-label"
                   id="encounter-type"
                   label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}

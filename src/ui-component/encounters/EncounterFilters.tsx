@@ -4,16 +4,23 @@ import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, Box, CircularProgress, InputAdornment, TextField } from '@mui/material';
+import { Autocomplete, Box, BoxProps,CircularProgress, InputAdornment, styled, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
-import { MainHeader } from 'pages/booking/appointments';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
 import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
 import { IFilterCategory } from 'types/reduxTypes/patient-emrStateTypes';
+
+const MainHeader = styled(Box)<BoxProps>(() => ({
+  marginTop: margins.top16,
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'space-between'
+}));
 
 const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();
