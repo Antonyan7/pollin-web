@@ -3,6 +3,7 @@ import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriods';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { standardDate } from 'helpers/constants';
@@ -15,6 +16,8 @@ import { v4 } from 'uuid';
 
 import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
 import { changeDateSameTimezone } from '@utils/dateUtils';
+
+import { createTemplateValidationSchema } from '../../validation/scheduling/create_template';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
@@ -77,8 +80,13 @@ const EditTemplate = () => {
   };
 
   const methods = useForm<ITemplateGroup>({
-    defaultValues: getEmptyTemplateState()
+    defaultValues: getEmptyTemplateState(),
+    mode: 'onSubmit',
+    reValidateMode: 'onChange',
+    resolver: yupResolver(createTemplateValidationSchema)
   });
+  const { errors } = methods.formState;
+  const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR);
 
   const { reset, formState, setValue, handleSubmit, register } = methods;
 
@@ -115,6 +123,8 @@ const EditTemplate = () => {
                 {...register('name')}
                 className="schedule-inputs"
                 fullWidth
+                helperText={errors.name?.message && errorMessage}
+                error={Boolean(errors.name?.message)}
                 placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
               />
             </Grid>
