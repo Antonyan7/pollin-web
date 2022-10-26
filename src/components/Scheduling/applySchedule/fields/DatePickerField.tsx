@@ -10,9 +10,10 @@ interface Props {
   label: string;
   value: string | Date | null;
   setDate: (value: React.SetStateAction<string | Date | null>) => void;
+  errorText: string;
 }
 
-const DatePickerField = ({ label, value, setDate }: Props) => {
+const DatePickerField = ({ label, value, setDate, errorText }: Props) => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const theme = useTheme();
   const onDateDatePickerOpen = () => {
@@ -49,6 +50,8 @@ const DatePickerField = ({ label, value, setDate }: Props) => {
             onKeyDown={(event) => {
               event.preventDefault();
             }}
+            error={!!errorText}
+            helperText={errorText}
           />
         )}
         onChange={(date: Date | null) => onDateUpdate(date)}

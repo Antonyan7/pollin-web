@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import React, { FormEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
@@ -129,6 +130,22 @@ const ApplyScheduleForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleApplyStatus.success, scheduleApplyStatus.fail]);
 
+  const startDateTime = startDate && new Date(startDate).getTime();
+  const endDateTime = endDate && new Date(endDate).getTime();
+  const curDateTime = new Date().getTime();
+
+  const isStartDateLowerThanToday = startDateTime && startDateTime < curDateTime;
+  const isEndDateLowerThanToday = endDateTime && endDateTime < curDateTime;
+  const isStartDateGreaterThanEndDate = startDateTime && endDateTime && startDateTime > endDateTime;
+
+  const startDateErrorMessage = isStartDateLowerThanToday
+    ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_BEFORE_TODAY_ERROR)
+    : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_AFTER_END_DATE_ERROR)) || '';
+
+  const endDateErrorMessage = isEndDateLowerThanToday
+    ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_TODAY_ERROR)
+    : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_START_DATE_ERROR)) || '';
+
   return (
     <ScheduleBoxWrapper>
       <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
@@ -170,6 +187,7 @@ const ApplyScheduleForm = () => {
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
               value={startDate}
               setDate={setStartDate}
+              errorText={startDateErrorMessage}
             />
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}>
@@ -177,6 +195,7 @@ const ApplyScheduleForm = () => {
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
               value={endDate}
               setDate={setEndDate}
+              errorText={endDateErrorMessage}
             />
           </ApplyScheduleFormRow>
           <Grid item xs={12}>
