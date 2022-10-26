@@ -38,6 +38,19 @@ export const MuiButton = (color: string) => ({
   }
 });
 
+export const MuiTablePagination = {
+  styleOverrides: {
+    selectRoot: {
+      '&': {
+        pointerEvents: 'none'
+      },
+      '& > svg': {
+        display: 'none'
+      }
+    }
+  }
+};
+
 export const MuiPaper = (borderRadius: number) => ({
   defaultProps: {
     elevation: 0

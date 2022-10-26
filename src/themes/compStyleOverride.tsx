@@ -23,6 +23,7 @@ import {
   MuiSelect,
   MuiSlider,
   MuiTableCell,
+  MuiTablePagination,
   MuiTabs,
   MuiTimelineContent,
   MuiTimelineDot,
@@ -76,6 +77,7 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
     MuiTableCell: MuiTableCell(theme.palette.grey[200], theme.palette.grey[600]),
     MuiTooltip: MuiTooltip(paperColor, textColor),
     MuiClockPicker: MuiClockPicker(lightColor, buttonBorderColor, secondary200, secondaryMain),
-    MuiPickersToolbar: MuiPickersToolbar()
+    MuiPickersToolbar: MuiPickersToolbar(),
+    MuiTablePagination
   };
 }
