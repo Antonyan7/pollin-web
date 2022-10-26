@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
 import { useTheme } from '@mui/system';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
+import { Translation } from 'constants/translations';
 import { isValid } from 'date-fns';
 import { ITemplateGroup } from 'types/create-schedule';
 
@@ -18,11 +20,20 @@ interface ITimeFieldProps {
 }
 
 const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
+  const [t] = useTranslation();
   const [openTimePicker, setOpenTimePicker] = useState(false);
-  const { control } = useFormContext<ITemplateGroup>();
+  const { control, formState } = useFormContext<ITemplateGroup>();
+  const {
+    errors: { timePeriods }
+  } = formState;
   const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, value, ...fieldProps } = field;
   const theme = useTheme();
+  const timeFieldError = timePeriods?.[index]?.[fieldName];
+  const errorMessage =
+    fieldName === 'startTime'
+      ? t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR)
+      : t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR);
   const onTimeFieldChange = (newTime: Date | null) => {
     if (newTime && isValid(newTime)) {
       onChange(toESTIsoString(newTime));
@@ -66,6 +77,8 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
                 svg: { color: theme.palette.primary.main }
               }}
               {...fieldProps}
+              helperText={timeFieldError?.message && errorMessage}
+              error={Boolean(timeFieldError)}
               onKeyDown={(e) => e.preventDefault()}
               onClick={() => setOpenTimePicker(true)}
             />

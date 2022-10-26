@@ -1,6 +1,8 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { Checkbox, CheckboxProps } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import { Box, Checkbox, CheckboxProps, FormControl, FormControlLabel, FormHelperText } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
 import { ISingleTemplate, ITemplateGroup } from 'types/create-schedule';
 
@@ -10,10 +12,15 @@ interface IWeekdaysFieldProps {
 }
 
 const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
-  const { control } = useFormContext<ITemplateGroup>();
+  const [t] = useTranslation();
+  const { control, formState, register } = useFormContext<ITemplateGroup>();
+  const {
+    errors: { timePeriods }
+  } = formState;
+  const weekDayError = timePeriods?.[index]?.days;
   const { field } = useController({ name: `timePeriods.${index}.days`, control });
   const { onChange, value } = field;
-
+  const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT_ERROR);
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
     (e) =>
@@ -21,19 +28,28 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
 
   return (
     <span className="week-days schedule-inputs schedule-days-checkbox">
-      {weekDays.map((day, indexOfDay) => (
-        <span key={day}>
-          <Checkbox
-            key={`${day}-${singleTemplate.id}`}
-            onChange={onWeekDaysChange(indexOfDay)}
-            checked={value.includes(indexOfDay)}
-            sx={{
-              color: (theme) => theme.palette.primary.main
-            }}
-          />
-          {day}
-        </span>
-      ))}
+      <FormControl error={!!weekDayError}>
+        <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+          {weekDays.map((day, indexOfDay) => (
+            <FormControlLabel
+              key={`${day}-${singleTemplate.id}`}
+              label={day}
+              value={indexOfDay}
+              control={
+                <Checkbox
+                  {...register(field.name, { required: true })}
+                  checked={value.includes(indexOfDay)}
+                  onChange={onWeekDaysChange(indexOfDay)}
+                />
+              }
+              sx={{
+                color: (theme) => theme.palette.primary.main
+              }}
+            />
+          ))}
+        </Box>
+        {weekDayError?.message && <FormHelperText>{errorMessage}</FormHelperText>}
+      </FormControl>
     </span>
   );
 };
