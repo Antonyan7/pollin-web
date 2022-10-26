@@ -190,9 +190,9 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));
+  } finally {
+    dispatch(setAppointmentLoading(false));
   }
-
-  dispatch(setAppointmentLoading(false));
 };
 
 const getAppointmentDetails = (appointmentId: string) => async (dispatch: AppDispatch) => {
