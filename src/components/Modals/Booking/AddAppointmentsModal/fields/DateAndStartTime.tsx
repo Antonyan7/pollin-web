@@ -41,6 +41,7 @@ const DateAndStartTime: React.FC = () => {
           ActionBar: DatePickerActionBar
         }}
         views={dateTimeViewOptions}
+        toolbarFormat="yyyy MMM dd"
         disablePast
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
