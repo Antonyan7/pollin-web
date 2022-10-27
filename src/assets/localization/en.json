@@ -41,6 +41,7 @@
   "page.scheduling.edit.templates.title": "Edit Schedule Templates",
   "page.scheduling.create.templates.name": "Name of Template",
   "page.scheduling.create.templates.name.error": "Name of Template is required",
+  "page.scheduling.create.templates.name.length.error": "Name should not contain more than 50 characters",
   "page.scheduling.create.templates.time.period": "Time Period",
   "page.scheduling.create.templates.select": "Select Day(s)",
   "page.scheduling.create.templates.select.error": "Select Day(s) is required",

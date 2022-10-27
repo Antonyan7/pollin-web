@@ -84,7 +84,9 @@ const CreateTemplate = () => {
     resolver: yupResolver(createTemplateValidationSchema)
   });
   const { errors } = methods.formState;
-  const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR);
+  const errorMessage =
+    (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
+    (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
   const { append } = useFieldArray({
     control: methods.control,
     name: 'timePeriods'

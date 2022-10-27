@@ -1,7 +1,7 @@
 import { array, number, object, string } from 'yup';
 
 export const createTemplateValidationSchema = object({
-  name: string().required(),
+  name: string().max(50).required(),
   timePeriods: array().of(
     object().shape({
       days: array().of(number()).min(1),
