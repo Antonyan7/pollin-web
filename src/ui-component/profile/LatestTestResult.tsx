@@ -34,14 +34,14 @@ const LatestTestResults = () => {
   const [t] = useTranslation();
 
   return (
-    <MainCard title={t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TITLE)} content={false}>
+    <MainCard title={t(Translation.PAGE_PATIENT_RESULT_TABLE_HEADER_TITLE)} content={false}>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATECOLLECTED)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUEDATE)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_TEST)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_DATECOLLECTED)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_DUEDATE)}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -65,7 +65,7 @@ const LatestTestResults = () => {
       </TableContainer>
       <CardActions sx={{ justifyContent: 'flex-end' }}>
         <Button variant="text">
-          {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_BUTTON)}
+          {t(Translation.PAGE_PATIENT_RESULT_BUTTON)}
           <ChevronRightOutlinedIcon />
         </Button>
       </CardActions>

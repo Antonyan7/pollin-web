@@ -1,3 +1,4 @@
+import { resultsSlice } from '@redux/slices/results';
 import { combineReducers } from 'redux';
 
 import { bookingSlice } from './slices/booking';
@@ -13,6 +14,8 @@ const reducer = combineReducers({
   patients: patientsSlice.reducer,
   views: viewsSlice.reducer,
   booking: bookingSlice.reducer,
+  results: resultsSlice.reducer,
+  // TODO: Discuss to have merged testResults and results, they are two different things should we keep under one slice?
   testResults: testResultsSlice.reducer
 });
 

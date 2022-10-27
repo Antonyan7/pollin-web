@@ -1,9 +1,11 @@
-import { IPatientsReqBody, SortOrder } from '../../types/patient';
+import { SortOrder } from '../../types/patient';
 
-export const sortOrderTransformer = (patientsListData: IPatientsReqBody): IPatientsReqBody => {
-  const { sortOrder } = patientsListData;
+export const sortOrderTransformer = (data: { sortOrder: SortOrder }) => {
+  const { sortOrder } = data;
 
-  patientsListData.sortOrder = (sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)) as SortOrder;
+  if (data.sortOrder) {
+    data.sortOrder = (sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)) as SortOrder;
+  }
 
-  return patientsListData;
+  return data;
 };

@@ -51,7 +51,7 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
   try {
     dispatch(setPatientsLoadingState(true));
 
-    const response = await API.patients.getPatientsList(sortOrderTransformer(patientsListData));
+    const response = await API.patients.getPatientsList(sortOrderTransformer(patientsListData) as IPatientsReqBody);
     const data: IPatientList = {
       totalItems: response.data.totalItems,
       currentPage: response.data.currentPage,
