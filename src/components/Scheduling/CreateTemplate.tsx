@@ -6,8 +6,8 @@ import { TimePeriods } from '@components/Scheduling/scheduleTemplates/TimePeriod
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { coreSelector } from '@redux/slices/core';
 import { Translation } from 'constants/translations';
-import { standardDate } from 'helpers/constants';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
@@ -15,7 +15,7 @@ import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedu
 import { v4 } from 'uuid';
 
 import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
-import { changeDateSameTimezone } from '@utils/dateUtils';
+import { changeDateSameTimezoneString } from '@utils/dateUtils';
 
 import { createTemplateValidationSchema } from '../../validation/scheduling/create_template';
 
@@ -38,6 +38,7 @@ const CreateTemplate = () => {
   const [t] = useTranslation();
 
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
+  const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
@@ -66,8 +67,8 @@ const CreateTemplate = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          reqBody.startTime = changeDateSameTimezone(rest.startTime, standardDate);
-          reqBody.endTime = changeDateSameTimezone(rest.endTime, standardDate);
+          reqBody.startTime = changeDateSameTimezoneString(rest.startTime, currentDate);
+          reqBody.endTime = changeDateSameTimezoneString(rest.endTime, currentDate);
         }
 
         return reqBody;

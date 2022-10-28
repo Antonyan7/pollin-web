@@ -78,6 +78,14 @@ export const changeDateSameTimezone = (oldDate: string, newDate: Date) => {
   return `${year}-${month}-${day}${oldDate.slice(10)}`;
 };
 
+export const changeDateSameTimezoneString = (oldDate: string, newDate: string) => {
+  const year = newDate.slice(0, 4);
+  const month = newDate.slice(5, 7);
+  const day = newDate.slice(8, 10);
+
+  return `${year}-${month}-${day}${oldDate.slice(10)}`;
+};
+
 export const changeHours = (oldDate: string, newHour: number) => {
   const date = setHours(new Date(oldDate), newHour);
 
