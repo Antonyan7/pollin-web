@@ -13,7 +13,7 @@ import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { futureDate180DaysAfter } from '@utils/dateUtils';
 
-const dateTimeViewOptions: CalendarOrClockPickerView[] = ['month', 'day', 'hours', 'minutes'];
+const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
 type DateAndStartTimeType = Date | null;
 
@@ -41,7 +41,7 @@ const DateAndStartTime: React.FC = () => {
           ActionBar: DatePickerActionBar
         }}
         views={dateTimeViewOptions}
-        toolbarFormat="yyyy MMM dd"
+        toolbarFormat="yyyy, MMM dd"
         disablePast
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
