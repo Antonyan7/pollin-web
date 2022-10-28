@@ -132,9 +132,11 @@ const SimpleTextEditor = ({
               variant="contained"
               onClick={handleSave}
             >
-              {!isEncounterLoading
-                ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
-                : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
+              <Typography mr={isEncounterLoading ? 3 : 0}>
+                {!isEncounterLoading
+                  ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
+                  : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
+              </Typography>
             </ButtonWithLoading>
           </Grid>
         </SubCardStyled>
