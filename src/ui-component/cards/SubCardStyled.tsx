@@ -1,10 +1,13 @@
 import React, { ReactNode, Ref } from 'react';
-import { Card, CardContent, CardHeader, Divider, Typography } from '@mui/material';
+import { Card, CardContent, CardHeader, Divider, Typography, TypographyTypeMap } from '@mui/material';
+import { OverrideProps } from '@mui/material/OverridableComponent';
 // material-ui
 import { useTheme } from '@mui/material/styles';
+import { TypographyProps } from '@mui/system';
 import { borders } from 'themes/themeConstants';
 
 interface SubCardProps {
+  titleProps?: OverrideProps<TypographyTypeMap<TypographyProps, 'span'>, 'span'>;
   children: ReactNode | string | null;
   content?: boolean;
   className?: string;
@@ -29,6 +32,7 @@ const SubCardStyled = React.forwardRef(
       secondary,
       sx = {},
       contentSX = {},
+      titleProps = {},
       title,
       ...others
     }: SubCardProps,
@@ -54,7 +58,7 @@ const SubCardStyled = React.forwardRef(
           <CardHeader
             sx={{ p: 2.5 }}
             title={
-              <Typography fontSize="21px" fontWeight="400">
+              <Typography fontSize="21px" fontWeight="400" {...titleProps}>
                 {title}
               </Typography>
             }
@@ -65,7 +69,7 @@ const SubCardStyled = React.forwardRef(
           <CardHeader
             sx={{ p: 2.5 }}
             title={
-              <Typography fontSize="21px" fontWeight="400">
+              <Typography fontSize="21px" fontWeight="400" {...titleProps}>
                 {title}
               </Typography>
             }

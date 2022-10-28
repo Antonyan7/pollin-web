@@ -21,6 +21,8 @@ const encounterDetails = createSelector([selector], (state) => state.encounters.
 const isEncountersAddendumLoading = createSelector([selector], (state) => state.isEncountersAddendumLoading);
 const patientProfile = createSelector([selector], (state) => state.patientProfile);
 const patientHighlights = createSelector([selector], (state) => state.patientHighlights);
+const patientProfileOverview = createSelector([selector], (state) => state.profile.overview);
+const isPatientProfileOverviewLoading = createSelector([selector], (state) => state.profile.isOverviewLoading);
 
 export default {
   patientsListData,
@@ -35,10 +37,12 @@ export default {
   isEncountersListLoading,
   encountersTypes,
   currentPatientId,
-  patientProfile,
-  patientHighlights,
   encounterDetails,
   isEncountersAddendumLoading,
   isEncountersFiltersLoading,
-  currentEncounterId
+  isPatientProfileOverviewLoading,
+  currentEncounterId,
+  patientProfile,
+  patientHighlights,
+  patientProfileOverview
 };

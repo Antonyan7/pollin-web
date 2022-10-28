@@ -2,6 +2,11 @@ import { IPagination } from '@axios/axiosTypes';
 import { IEncounterDetailsProps, IUpdateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
 
+interface IProfileProps {
+  isOverviewLoading: boolean;
+  overview: PatientProfileOverview | null;
+}
+
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
   encounters: IEncountersProps;
@@ -13,6 +18,18 @@ export interface PatientEmrProps {
   error: Error | null;
   patientProfile: PatientProfile | null;
   patientHighlights: PatientHighlight[] | null;
+  profile: IProfileProps;
+}
+
+export interface PatientProfileOverview {
+  widgetTitle: string;
+  items: {
+    title: string;
+    lineItems: {
+      title: string;
+      uuid?: string;
+    }[];
+  }[];
 }
 
 export interface PatientHighlight {

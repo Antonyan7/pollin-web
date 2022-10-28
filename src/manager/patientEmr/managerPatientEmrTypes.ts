@@ -7,7 +7,8 @@ import {
   IEncounterType,
   IFilterCategory,
   IPatientListData,
-  PatientHighlight
+  PatientHighlight,
+  PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 export interface IGetPatientsRequestBody {
@@ -150,6 +151,10 @@ type PatientHighlightDetail =
 export interface IPatientHighlightDetailsResponse {
   title: string; // Title of modal
   highlightDetails: PatientHighlightDetail[]; // modal type and entries
+}
+
+export interface IPatientProfileOverviewResponse {
+  overview: PatientProfileOverview;
 }
 
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}

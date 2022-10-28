@@ -1,7 +1,7 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import { Box } from '@mui/material';
 
-import BottombarLoading from './BottombarLoading';
+import BottomBarLoading from './BottomBarLoading';
 
 export const BaseDropdownWithLoadingContext = createContext(false);
 
@@ -12,7 +12,7 @@ const Listbox: React.FC<PropsWithChildren> = React.forwardRef(({ children, ...ot
   return (
     <Box component="ul" ref={ref} {...otherProps}>
       {children}
-      {isLoading && <BottombarLoading />}
+      {isLoading && <BottomBarLoading />}
     </Box>
   );
 });

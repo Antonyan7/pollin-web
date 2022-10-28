@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-const BottombarLoading = () => {
+const BottomBarLoading = () => {
   const [t] = useTranslation();
 
   return (
@@ -27,4 +27,4 @@ const BottombarLoading = () => {
   );
 };
 
-export default BottombarLoading;
+export default BottomBarLoading;

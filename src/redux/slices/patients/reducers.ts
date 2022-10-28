@@ -10,7 +10,8 @@ import {
   IPatientList,
   PatientEmrProps,
   PatientHighlight,
-  PatientProfile
+  PatientProfile,
+  PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
@@ -66,6 +67,12 @@ const reducers = createReducer({
   },
   setPatientHighlights(state, action: IAction<PatientHighlight[]>) {
     state.patientHighlights = action.payload;
+  },
+  setPatientProfileOverview(state, action: IAction<PatientProfileOverview>) {
+    state.profile.overview = action.payload;
+  },
+  setIsPatientProfileOverviewLoading(state, action: IAction<boolean>) {
+    state.profile.isOverviewLoading = action.payload;
   }
 });
 

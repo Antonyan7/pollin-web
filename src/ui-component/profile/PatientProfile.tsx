@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PatientProfileWidget from '@components/PatientProfileWidget';
 import { Box, Grid } from '@mui/material';
 
 import AppointmentsList from '@ui-component/profile/AppointmentsList';
@@ -19,9 +20,11 @@ const PatientProfile = () => {
       >
         <Grid item flexGrow={1} flexBasis={0}>
           {/* TODO: Patient Profile Page Layout */}
-          <button type="button" onClick={() => setShowUpcomingAppointments(!showUpcomingAppointments)}>
+          {/* <button type="button" onClick={() => setShowUpcomingAppointments(!showUpcomingAppointments)}>
             Slide to Appointments Section
-          </button>
+          </button> */}
+          <PatientProfileWidget />
+
           {/*  Patient Profile Page Layout End */}
         </Grid>
         <Grid item flexGrow={1} flexBasis={0}>

@@ -24,6 +24,8 @@ const {
   setCurrentPatientId,
   setPatientsLoadingState,
   setPatientsFiltersLoadingState,
+  setPatientProfileOverview,
+  setIsPatientProfileOverviewLoading,
   setEncountersLoadingState,
   setEncountersList,
   setEncounterFilters,
@@ -237,10 +239,26 @@ const updateEncounterAddendum = (newAddendumData: IUpdateEncounterAddendumReques
   }
 };
 
+const getPatientProfileOverview = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientProfileOverviewLoading(true));
+
+    const response = await API.patients.getPatientProfileOverview(patientId);
+
+    dispatch(setPatientProfileOverview(response.data.data.overview));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsPatientProfileOverviewLoading(false));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
   getPatientAlertDetails,
+  getPatientProfileOverview,
   getEncounterList,
   getEncounterFilters,
   setCurrentPatient,

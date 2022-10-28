@@ -13,7 +13,7 @@ import {
   TextFieldProps
 } from '@mui/material';
 
-import BottombarLoading from './BottombarLoading';
+import BottomBarLoading from './BottomBarLoading';
 import Listbox, { BaseDropdownWithLoadingContext } from './Listbox';
 
 interface BaseDropdownWithLoadingProps
@@ -95,7 +95,7 @@ export const BaseSelectWithLoading: React.FC<BaseSelectWithLoadingProps> = ({ is
     <InputLabel id={selectProps.labelId}>{selectProps.label}</InputLabel>
     <Select {...selectProps}>
       {selectProps.children}
-      {isLoading && <BottombarLoading />}
+      {isLoading && <BottomBarLoading />}
     </Select>
   </FormControl>
 );

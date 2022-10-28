@@ -13,6 +13,7 @@ import {
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
+  IPatientProfileOverviewResponse,
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
@@ -96,6 +97,11 @@ const patientEmrManager = {
           return null;
         }
       );
+  },
+  getPatientProfileOverview(patientId: string) {
+    return axiosInstance.get<any, IAxiosResponse<IPatientProfileOverviewResponse>>(
+      `${baseURL}/v1/profile/${patientId}/overview`
+    );
   }
 };
 
