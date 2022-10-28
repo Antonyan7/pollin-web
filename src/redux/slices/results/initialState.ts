@@ -8,7 +8,9 @@ export const getInitialState = (): IResultsProps => ({
     totalItems: 0
   },
   resultFilters: [],
+  pendingTestStats: [],
   error: null,
   isResultsListLoading: false,
-  isResultsFiltersLoading: false
+  isResultsFiltersLoading: false,
+  isPendingTestStatsLoading: false
 });

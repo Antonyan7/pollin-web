@@ -1,7 +1,7 @@
 import { IResultsReqBody } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { IResultsList } from 'types/reduxTypes/resultsStateTypes';
+import { IPendingTestStats, IResultsList } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFiltersResponse } from 'types/results';
 
 const baseURL = '/clinic-test-results';
@@ -15,6 +15,9 @@ const resultsManager = {
   },
   getResultsFilters() {
     return axiosInstance.get<any, IAxiosResponse<IResultsFiltersResponse>>(`${baseURL}/v1/test-result/filter/pending`);
+  },
+  getPendingTestStats() {
+    return axiosInstance.get<any, IAxiosResponse<IPendingTestStats[]>>(`${baseURL}/v1/test-result/stats/pending`);
   }
 };
 

@@ -7,10 +7,14 @@ const resultsList = createSelector([selector], (state) => state.resultsList);
 const resultsFiltersList = createSelector([selector], (state) => state.resultFilters);
 const isResultsLoading = createSelector([selector], (state) => state.isResultsListLoading);
 const isResultsFiltersLoading = createSelector([selector], (state) => state.isResultsFiltersLoading);
+const isPendingTestStatsLoading = createSelector([selector], (state) => state.isPendingTestStatsLoading);
+const pendingTestStats = createSelector([selector], (state) => state.pendingTestStats);
 
 export default {
   resultsList,
   isResultsLoading,
   isResultsFiltersLoading,
-  resultsFiltersList
+  resultsFiltersList,
+  isPendingTestStatsLoading,
+  pendingTestStats
 };

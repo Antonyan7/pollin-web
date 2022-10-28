@@ -1,6 +1,11 @@
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
-import { IResultsFilterCategory, IResultsList, IResultsProps } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IPendingTestStats,
+  IResultsFilterCategory,
+  IResultsList,
+  IResultsProps
+} from 'types/reduxTypes/resultsStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<IResultsProps>>(reducer: T) => ({ ...reducer });
 
@@ -19,6 +24,12 @@ const reducers = createReducer({
   },
   setResultsFiltersLoadingState(state, action: IAction<boolean>) {
     state.isResultsFiltersLoading = action.payload;
+  },
+  setPendingTestStats(state, action: IAction<IPendingTestStats[]>) {
+    state.pendingTestStats = action.payload;
+  },
+  setPendingTestStatsLoadingState(state, action: IAction<boolean>) {
+    state.isPendingTestStatsLoading = action.payload;
   }
 });
 

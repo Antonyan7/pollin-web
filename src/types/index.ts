@@ -4,7 +4,7 @@ import { ChipProps, SnackbarOrigin, SvgIconProps, TableCellProps, Theme } from '
 export interface GenericCardProps {
   title?: string;
   primary?: string | number | undefined;
-  secondary?: string;
+  secondary?: string | number | undefined;
   content?: string;
   image?: string;
   dateTime?: string;

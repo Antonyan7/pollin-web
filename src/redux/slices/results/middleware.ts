@@ -6,8 +6,15 @@ import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { IResultsList } from 'types/reduxTypes/resultsStateTypes';
 
-const { setResultsList, setError, setResultsLoadingState, setResultsFiltersLoadingState, setResultsSearchFilters } =
-  slice.actions;
+const {
+  setResultsList,
+  setError,
+  setResultsLoadingState,
+  setResultsFiltersLoadingState,
+  setResultsSearchFilters,
+  setPendingTestStats,
+  setPendingTestStatsLoadingState
+} = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
   try {
@@ -53,7 +60,23 @@ const getResultsFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getPendingTestStats = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPendingTestStatsLoadingState(true));
+
+    const response = await API.results.getPendingTestStats();
+
+    dispatch(setPendingTestStats(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setPendingTestStatsLoadingState(false));
+};
+
 export default {
   getResultsList,
-  getResultsFilters
+  getResultsFilters,
+  getPendingTestStats
 };

@@ -150,5 +150,6 @@ export const borderRadius = {
 
 export const borders = {
   solid1px: '1px solid',
-  solid2px: '2px solid'
+  solid2px: '2px solid',
+  solid10px: '10px solid'
 };

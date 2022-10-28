@@ -7,6 +7,10 @@ export enum TestResultsListSortFields {
   PATIENT_NAME = 'Patient Name'
 }
 
+export enum PendingTestStatsType {
+  Test = 'Test',
+  Panel = 'Panel'
+}
 export interface IResultsReqBody {
   page: number;
   searchString?: string;
