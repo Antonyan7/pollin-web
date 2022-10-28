@@ -6,6 +6,7 @@ import { coreSlice } from './slices/core';
 import { patientsSlice } from './slices/patients';
 import { schedulingSlice } from './slices/scheduling';
 import { testResultsSlice } from './slices/testResults';
+import { userSlice } from './slices/user';
 import { viewsSlice } from './slices/views';
 
 const reducer = combineReducers({
@@ -14,6 +15,7 @@ const reducer = combineReducers({
   patients: patientsSlice.reducer,
   views: viewsSlice.reducer,
   booking: bookingSlice.reducer,
+  user: userSlice.reducer,
   results: resultsSlice.reducer,
   // TODO: Discuss to have merged testResults and results, they are two different things should we keep under one slice?
   testResults: testResultsSlice.reducer

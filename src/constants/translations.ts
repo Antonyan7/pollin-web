@@ -151,6 +151,10 @@ export enum Translation {
   MODAL_SCHEDULING_DELETION_CONTENT_MAIN = 'modal.scheduling.deletion.content.main',
   MODAL_SCHEDULING_DELETION_CONTENT_FOOTNOTE = 'modal.scheduling.deletion.content.footnote',
   MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM = 'modal.scheduling.deletion.button.confirm',
+  GOOGLE_SIGN_IN_BUTTON = 'google.sign.in.button',
+  GOOGLE_SIGN_UP_BUTTON = 'google.sign.up.button',
+  GOOGLE_LOGIN_TITLE = 'google.login.title',
+  DO_NOT_HAVE_AN_ACCOUNT = 'do.not.have.an.account',
   BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more'
 }
 
