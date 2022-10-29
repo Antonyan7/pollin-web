@@ -1,5 +1,9 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IEncounterDetailsProps, IUpdateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmrTypes';
+import {
+  IEncounterDetailsProps,
+  IUpdateEncounterNoteRequest,
+  LatestTestResultType
+} from '@axios/patientEmr/managerPatientEmrTypes';
 import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
 
 interface IProfileProps {
@@ -18,6 +22,7 @@ export interface PatientEmrProps {
   error: Error | null;
   patientProfile: PatientProfile | null;
   patientHighlights: PatientHighlight[] | null;
+  latestTestResults: ITestResultLatest[];
   profile: IProfileProps;
 }
 
@@ -76,6 +81,11 @@ interface IPatientsProps {
   currentEncounterId: string;
 }
 
+export interface ITestResultLatest {
+  title: string;
+  dateCollected: string;
+  result: LatestTestResultType;
+}
 export interface IFilterCategory {
   type: PatientListFilterType;
   title: string;

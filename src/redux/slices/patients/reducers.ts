@@ -8,6 +8,7 @@ import {
   IEncounterType,
   IFilterCategory,
   IPatientList,
+  ITestResultLatest,
   PatientEmrProps,
   PatientHighlight,
   PatientProfile,
@@ -73,6 +74,9 @@ const reducers = createReducer({
   },
   setIsPatientProfileOverviewLoading(state, action: IAction<boolean>) {
     state.profile.isOverviewLoading = action.payload;
+  },
+  setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
+    state.latestTestResults = action.payload;
   }
 });
 

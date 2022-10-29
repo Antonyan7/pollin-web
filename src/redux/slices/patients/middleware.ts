@@ -34,7 +34,8 @@ const {
   setPatientProfile,
   setPatientHighlights,
   setEncountersFiltersLoadingState,
-  setCurrentEncounterID
+  setCurrentEncounterID,
+  setLatestTestResults
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -254,6 +255,17 @@ const getPatientProfileOverview = (patientId: string) => async (dispatch: AppDis
   }
 };
 
+const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getProfileTestResultLatest(patientId);
+
+    dispatch(setLatestTestResults(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -271,5 +283,6 @@ export default {
   getEncounterDetailsInformation,
   createEncounterAddendum,
   updateEncounterAddendum,
-  setCurrentEncounterId
+  setCurrentEncounterId,
+  getProfileTestResultLatest
 };

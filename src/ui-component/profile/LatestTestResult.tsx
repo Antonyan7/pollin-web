@@ -1,7 +1,6 @@
-// material-ui
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { LatestTestResultType } from '@axios/patientEmr/managerPatientEmrTypes';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
   Button,
@@ -16,22 +15,22 @@ import {
 } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
-import { dispatch } from 'redux/hooks';
-import { patientsSelector } from 'redux/slices/patients';
-import { testResultsMiddleware, testResultsSelector } from 'redux/slices/testResults';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { patientsMiddleware,patientsSelector } from 'redux/slices/patients';
 
 import MainCard from '@ui-component/cards/MainCard';
 import Chip from '@ui-component/patient/Chip';
 
 const LatestTestResults = () => {
-  const patientId = useSelector(patientsSelector.currentPatientId);
+  const patientId = useAppSelector(patientsSelector.currentPatientId);
+  const [t] = useTranslation();
+  const latestTestResults = useAppSelector(patientsSelector.latestTestResults);
 
   useEffect(() => {
-    dispatch(testResultsMiddleware.getProfileTestResultLatest(patientId));
+    if (patientId) {
+      dispatch(patientsMiddleware.getProfileTestResultLatest(patientId));
+    }
   }, [patientId]);
-
-  const patientHighlights = useSelector(testResultsSelector.profileTestResult);
-  const [t] = useTranslation();
 
   return (
     <MainCard title={t(Translation.PAGE_PATIENT_RESULT_TABLE_HEADER_TITLE)} content={false}>
@@ -45,17 +44,17 @@ const LatestTestResults = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {patientHighlights?.map((row) => {
-              const cellChipColor = row.result === 'Normal' ? '' : 'error';
+            {latestTestResults?.map((latestTestResult) => {
+              const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? '' : 'error';
 
               return (
-                <TableRow hover key={row.title}>
+                <TableRow hover key={latestTestResult.title}>
                   <TableCell>
-                    <Typography variant="h5">{row.title}</Typography>
+                    <Typography variant="h5">{latestTestResult.title}</Typography>
                   </TableCell>
-                  <TableCell>{timeAdjuster(new Date(row.dateCollected)).customizedDate}</TableCell>
+                  <TableCell>{timeAdjuster(new Date(latestTestResult.dateCollected)).customizedDate}</TableCell>
                   <TableCell>
-                    <Chip chipColor={cellChipColor} label={row.result} />
+                    <Chip chipColor={cellChipColor} label={latestTestResult.result} />
                   </TableCell>
                 </TableRow>
               );

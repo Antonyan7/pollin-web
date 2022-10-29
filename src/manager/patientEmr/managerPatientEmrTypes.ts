@@ -192,3 +192,8 @@ export interface IUpdateEncounterAddendumRequest {
   id: string;
   content: string;
 }
+
+export enum LatestTestResultType {
+  Normal = 'Normal',
+  Abnormal = 'Abnormal'
+}

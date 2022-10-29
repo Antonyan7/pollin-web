@@ -21,10 +21,10 @@ import {
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmrTypes';
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse } from 'types/reduxTypes/patient-emrStateTypes';
+import { IEncounterDetailsResponse, ITestResultLatest } from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
-
+const baseURLTestsResults = '/clinic-test-results';
 const axiosInstance = Axios();
 
 const patientEmrManager = {
@@ -101,6 +101,11 @@ const patientEmrManager = {
   getPatientProfileOverview(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<IPatientProfileOverviewResponse>>(
       `${baseURL}/v1/profile/${patientId}/overview`
+    );
+  },
+  getProfileTestResultLatest(patientId: string) {
+    return axiosInstance.get<any, IAxiosResponse<ITestResultLatest[]>>(
+      `${baseURLTestsResults}/v1/profile-test-result/${patientId}/latest`
     );
   }
 };

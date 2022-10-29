@@ -22,6 +22,7 @@ export const getInitialState = (): PatientEmrProps => ({
   error: null,
   patientProfile: null,
   patientHighlights: null,
+  latestTestResults: [],
   profile: {
     isOverviewLoading: false,
     overview: null
