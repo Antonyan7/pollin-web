@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { AutocompleteInputChangeReason, Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -43,34 +44,17 @@ const PatientId = () => {
     }
   }, [isLoading]);
 
-  const onPatientListScroll = (event: React.UIEvent) => {
-    const eventTarget = event.target as HTMLDivElement;
-
-    const isScrollBottom = eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight;
-    const isLastPage = patientsList.pageSize * patientsListCurrentPage.current >= patientsList.totalItems;
-
-    if (isScrollBottom) {
-      if (!isLastPage) {
-        scrollPosition.current = eventTarget.scrollTop;
-        patientsListCurrentPage.current = 1 + patientsListCurrentPage.current;
-
-        const getNewPatientsRequestObj = {
-          name: '',
-          page: patientsListCurrentPage.current
-        };
-
-        dispatch(bookingMiddleware.getNewPatients(getNewPatientsRequestObj));
-
-        patientsListRef.current = eventTarget;
-      }
-    }
-  };
-
   const onInputChange = useCallback((_: React.SyntheticEvent, newInputValue: string) => {
     setInputValue(newInputValue);
 
     if (newInputValue.length > 0) {
       setOpenAutocompleteList(true);
+
+      const data = {
+        searchString: newInputValue
+      };
+
+      dispatch(patientsMiddleware.getPatientsList(data));
     } else {
       setOpenAutocompleteList(false);
     }
@@ -79,6 +63,7 @@ const PatientId = () => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
+        freeSolo
         inputValue={inputValue}
         isLoading={isLoading}
         ListboxProps={{
@@ -86,9 +71,6 @@ const PatientId = () => {
             maxHeight: 220,
             borderRadius: `${borderRadius.radius8}`,
             border: `${borders.solid2px} ${theme.palette.primary.main}`
-          },
-          onScroll: (event) => {
-            onPatientListScroll(event);
           }
         }}
         open={openAutocompleteList}
@@ -97,7 +79,11 @@ const PatientId = () => {
         options={patientOptions}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
         getOptionLabel={(option) => option.item.title}
-        onChange={(_, value) => onChange(value?.item.id)}
+        onChange={(_, value) => {
+          if (value?.item.id) {
+            dispatch(bookingMiddleware.getPatientAlerts(value?.item.id));
+          }
+        }}
         groupBy={(option) => option.firstLetter}
         onBlur={onBlur}
         onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => {

@@ -67,10 +67,10 @@ export interface IEncountersFilterOption {
 
 export interface IPatientsReqBody {
   searchString: string;
-  sortByField: PatientListField;
-  sortOrder: SortOrder;
+  sortByField?: PatientListField;
+  sortOrder?: SortOrder;
   filters?: IPatientsFilterOption[];
-  page: number;
+  page?: number;
 }
 
 export interface IEncountersReqBody {

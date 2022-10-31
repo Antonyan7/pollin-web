@@ -47,12 +47,6 @@ const AddAppointmentsModalForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDuplicatePatientName]);
 
-  useEffect(() => {
-    if (patientId) {
-      dispatch(bookingMiddleware.getPatientAlerts(patientId));
-    }
-  }, [patientId]);
-
   const onSubmit = (values: ICreatedAppointmentBody) => {
     const body: ICreatedAppointmentBody = {
       ...values,

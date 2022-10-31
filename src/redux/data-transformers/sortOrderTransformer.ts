@@ -1,9 +1,9 @@
-import { SortOrder } from '../../types/patient';
+import { SortOrder } from 'types/patient';
 
-export const sortOrderTransformer = (data: { sortOrder: SortOrder }) => {
+export const sortOrderTransformer = (data: { sortOrder?: SortOrder }) => {
   const { sortOrder } = data;
 
-  if (data.sortOrder) {
+  if (sortOrder) {
     data.sortOrder = (sortOrder.charAt(0).toUpperCase() + sortOrder.slice(1)) as SortOrder;
   }
 
