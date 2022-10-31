@@ -1,4 +1,4 @@
-import { IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { IEncounterDetailsProps, ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -74,6 +74,9 @@ const reducers = createReducer({
   },
   setIsPatientProfileOverviewLoading(state, action: IAction<boolean>) {
     state.profile.isOverviewLoading = action.payload;
+  },
+  setTestResultsHistory(state, action: IAction<ITestResultHistory>) {
+    state.profile.testResultsHistory = action.payload;
   },
   setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
     state.latestTestResults = action.payload;

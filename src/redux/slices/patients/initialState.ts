@@ -25,6 +25,7 @@ export const getInitialState = (): PatientEmrProps => ({
   latestTestResults: [],
   profile: {
     isOverviewLoading: false,
-    overview: null
+    overview: null,
+    testResultsHistory: null
   }
 });

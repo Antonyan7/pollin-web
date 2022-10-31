@@ -1,6 +1,7 @@
 import { IPagination } from '@axios/axiosTypes';
 import {
   IEncounterDetailsProps,
+  ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType
 } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -9,6 +10,7 @@ import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
 interface IProfileProps {
   isOverviewLoading: boolean;
   overview: PatientProfileOverview | null;
+  testResultsHistory: ITestResultHistory | null;
 }
 
 export interface PatientEmrProps {

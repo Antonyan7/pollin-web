@@ -197,3 +197,10 @@ export enum LatestTestResultType {
   Normal = 'Normal',
   Abnormal = 'Abnormal'
 }
+
+export interface ITestResultHistory {
+  widgetTitle: string;
+  items: {
+    title: string;
+  }[];
+}
