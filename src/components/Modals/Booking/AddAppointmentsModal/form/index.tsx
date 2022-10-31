@@ -1,11 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { Divider } from '@mui/material';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { margins } from 'themes/themeConstants';
 import { ModalName, OpenModalReason } from 'types/modals';
 
 import FormActions from './FormActions';
@@ -69,7 +67,6 @@ const AddAppointmentsModalForm = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormHeader />
       <FormBody />
-      <Divider sx={{ margin: `${margins.top0} ${margins.right32} ${margins.bottom16} ${margins.left32}` }} />
       <FormActions isActionButtonDisabled={isDuplicatePatientName} />
     </form>
   );

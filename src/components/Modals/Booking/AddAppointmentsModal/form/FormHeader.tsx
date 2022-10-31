@@ -37,7 +37,7 @@ const FormHeader = () => {
           <CloseIcon />
         </IconButton>
       </Box>
-      <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
+      <Divider />
     </>
   );
 };

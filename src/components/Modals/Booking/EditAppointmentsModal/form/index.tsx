@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
-import { Divider } from '@mui/material';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { mergeAppointmentDetails } from './helpers/mergeAppointmentDetails';
@@ -34,7 +32,6 @@ const EditAppointmentsModalForm = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormBody />
-      <Divider sx={{ margin: `${margins.top0} ${margins.right24} ${margins.bottom8} ${margins.left24}` }} />
       <FormActions />
     </form>
   );

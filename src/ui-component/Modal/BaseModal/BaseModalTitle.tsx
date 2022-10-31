@@ -5,14 +5,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { DialogTitleProps } from 'types/modals';
 
 const BaseModalTitle = ({ children, onClose, ...other }: DialogTitleProps) => (
-  <DialogTitle sx={other.sx ? other.sx : { m: 0, px: 6, py: 3, fontSize: '1.25rem', fontWeight: 700 }} {...other}>
+  <DialogTitle sx={other.sx ? other.sx : { m: 0, px: 4, py: 3, fontSize: '1.25rem', fontWeight: 700 }} {...other}>
     {children}
     <IconButton
       aria-label="close"
       onClick={onClose}
       sx={{
         position: 'absolute',
-        right: 48,
+        right: 20,
         top: 20,
         color: (theme) => theme.palette.grey[500]
       }}

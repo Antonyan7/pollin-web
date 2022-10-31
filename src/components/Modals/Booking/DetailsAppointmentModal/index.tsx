@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
-import { DialogActions, DialogContent, Divider, Grid, Stack } from '@mui/material';
+import { DialogActions, DialogContent, Grid, Stack } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { margins } from 'themes/themeConstants';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 import BaseModal from '@ui-component/Modal/BaseModal';
@@ -49,7 +48,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
   return (
     <BaseModal isLoading={modalLoading} title={t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)} onClose={onClose}>
       <Grid>
-        <DialogContent>
+        <DialogContent sx={{ p: 1.5 }}>
           <Grid container spacing={3}>
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_APPOINTMENT_TYPE)}
@@ -80,8 +79,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
           </Grid>
         </DialogContent>
-        <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />
-        <DialogActions sx={{ p: 3 }}>
+        <DialogActions sx={{ p: 2 }}>
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">

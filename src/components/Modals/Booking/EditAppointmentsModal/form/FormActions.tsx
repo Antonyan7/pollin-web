@@ -6,7 +6,7 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { borderRadius } from 'themes/themeConstants';
+import { borderRadius, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -26,7 +26,7 @@ const FormActions = () => {
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
 
   return (
-    <DialogActions sx={{ p: 3, paddingTop: '10px' }}>
+    <DialogActions sx={{ padding: `${paddings.top32} ${paddings.right8} ${paddings.bottom24} ${paddings.left8}` }}>
       <Grid container justifyContent="space-between">
         <Grid item>
           <StyledButton sx={{ width: '160px' }} variant="outlined" onClick={onCancelAppointmentClick}>

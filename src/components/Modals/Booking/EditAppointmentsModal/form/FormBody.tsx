@@ -1,6 +1,6 @@
 import React from 'react';
 import { DialogContent, Divider, Grid } from '@mui/material';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 
 import AppointmentDescription from './fields/AppointmentDescription';
 import DateAndStartTime from './fields/DateAndStartTime';
@@ -9,7 +9,7 @@ import ServiceType from './fields/ServiceType';
 import StatusAppointmentLabel from './fields/StatusAppointmentLabel';
 
 const FormBody = () => (
-  <DialogContent sx={{ p: 3 }}>
+  <DialogContent sx={{ padding: `${paddings.top24} ${paddings.right8} ${paddings.bottom8} ${paddings.left8}` }}>
     <Grid container spacing={3}>
       <ServiceType />
       <PatientId />
