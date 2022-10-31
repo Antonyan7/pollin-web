@@ -69,7 +69,7 @@ const PatientHighlightsView = () => {
                       </Typography>
                     </Grid>
                     <Grid item xs={12} sm={6} container direction="column" rowGap={0.25}>
-                      {items.map((item) => (
+                      {items?.map((item) => (
                         <Typography key={item} color={theme.palette.grey[800]}>
                           {item}
                         </Typography>
