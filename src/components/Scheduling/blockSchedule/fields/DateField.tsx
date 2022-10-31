@@ -35,6 +35,7 @@ const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       label={fieldLabel}
       inputFormat="MMM dd, yyy"
       disableMaskedInput
+      disablePast
       value={value}
       onChange={(date: Date | null) => date && onChange(date)}
       renderInput={(params) => (

@@ -3,7 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Translation } from 'constants/translations';
@@ -141,7 +141,9 @@ const BlockTemplates = () => {
                     borderRadius: borderRadius.radius8
                   }}
                 >
-                  {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
+                  <Typography sx={{ mr: isScheduleLoading ? 2 : 0 }}>
+                    {t(Translation.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY)}
+                  </Typography>
                 </ButtonWithLoading>
               </Grid>
             </Grid>

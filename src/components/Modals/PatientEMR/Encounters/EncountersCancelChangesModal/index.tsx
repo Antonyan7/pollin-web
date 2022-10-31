@@ -76,7 +76,7 @@ const EncountersCancelChangesModal = () => {
         <DialogActions sx={{ p: 4 }}>
           <Grid container justifyContent="flex-end">
             <Grid>
-              <StyledButton variant="contained" sx={{ width: '160px' }} onClick={onConfirm}>
+              <StyledButton variant="contained" sx={{ width: '70px' }} onClick={onConfirm}>
                 {t(Translation.PAGE_ENCOUNTERS_CANCEL_CHANGES_BUTTON)}
               </StyledButton>
             </Grid>
