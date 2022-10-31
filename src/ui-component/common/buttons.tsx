@@ -92,7 +92,7 @@ export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWi
       textAlign: 'left',
       '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
         color: (theme) => theme.palette.common.white,
-        background: (theme) => theme.palette.primary.main
+        background: (theme) => theme.palette.grey[300]
       },
       '&.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-sizeSmall': {
         py: paddings.bottom8

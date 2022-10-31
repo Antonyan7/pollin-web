@@ -32,8 +32,7 @@ export const MuiButton = (color: string) => ({
     root: {
       fontWeight: 500,
       borderRadius: '4px',
-      borderColor: color,
-      height: '45px'
+      borderColor: color
     }
   }
 });

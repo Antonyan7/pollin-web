@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { formatDate, toRoundupTime } from 'helpers/time';
@@ -17,6 +19,7 @@ type DateAndStartTimeType = Date | null;
 
 const DateAndStartTime: React.FC = () => {
   const dateFieldName = 'appointment.date';
+  const details = useAppSelector(bookingSelector.appointmentDetails);
 
   const [t] = useTranslation();
   const { control } = useFormContext<IFormValues>();
@@ -29,6 +32,14 @@ const DateAndStartTime: React.FC = () => {
   const getMobileDateTime = (date: DateAndStartTimeType) => toRoundupTime(date);
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
+
+  useEffect(() => {
+    if (field.value && !(details?.appointment?.date === field.value)) {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(false));
+    } else {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(true));
+    }
+  }, [details?.appointment?.date, field.value]);
 
   return (
     <Grid item xs={12}>

@@ -14,6 +14,7 @@ export const appointmentDetails = createSelector([selector], (state) => state.ap
 export const patientAlerts = createSelector([selector], (state) => state.patientAlerts);
 export const isServiceProvidersLoading = createSelector([selector], (state) => state.isServiceProvidersLoading);
 export const isAppointmentLoading = createSelector([selector], (state) => state.isAppointmentLoading);
+export const isSaveButtonDisabled = createSelector([selector], (state) => state.isSaveButtonDisabled);
 export const isServiceTypesLoading = createSelector([selector], (state) => state.isServiceTypesLoading);
 
 export default {
@@ -28,5 +29,6 @@ export default {
   serviceTypes,
   appointmentDetails,
   patientAlerts,
-  isAppointmentLoading
+  isAppointmentLoading,
+  isSaveButtonDisabled
 };

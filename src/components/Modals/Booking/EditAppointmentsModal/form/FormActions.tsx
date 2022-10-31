@@ -20,6 +20,7 @@ const FormActions = () => {
     dispatch(bookingMiddleware.clearAppointmentDetails());
   }, [appointmentId]);
   const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
+  const isSaveButtonDisabled = useAppSelector(bookingSelector.isSaveButtonDisabled);
 
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL);
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
@@ -34,6 +35,7 @@ const FormActions = () => {
         </Grid>
         <Grid item>
           <ButtonWithLoading
+            disabled={isSaveButtonDisabled}
             isLoading={isConfirmationLoading}
             sx={{ width: '60px', borderRadius: borderRadius.radius8 }}
             type="submit"

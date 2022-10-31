@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
-import { useAppSelector } from 'redux/hooks';
-import { bookingSelector } from 'redux/slices/booking';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
@@ -20,6 +20,7 @@ const ServiceType = () => {
   const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
+  const details = useAppSelector(bookingSelector.appointmentDetails);
 
   const serviceTypeIdFieldName = 'serviceType.id';
   const { field, fieldState } = useController<IFormValues>({
@@ -38,6 +39,14 @@ const ServiceType = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
+
+  useEffect(() => {
+    if (field.value && !(details?.serviceType?.id === field.value)) {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(false));
+    } else {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(true));
+    }
+  }, [details?.serviceType?.id, field.value]);
 
   return (
     <Grid item xs={12}>

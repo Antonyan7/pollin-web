@@ -153,3 +153,7 @@ export const borders = {
   solid2px: '2px solid',
   solid10px: '10px solid'
 };
+
+export const heights = {
+  height45: '45px'
+};

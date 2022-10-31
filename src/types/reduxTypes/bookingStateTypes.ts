@@ -31,6 +31,7 @@ export interface BookingProps {
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
   isAppointmentLoading: boolean;
+  isSaveButtonDisabled: boolean;
 }
 
 export interface IUniqueItem {

@@ -10,7 +10,7 @@ import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { borderRadius, heights, margins, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
 
@@ -154,7 +154,8 @@ const EditTemplate = () => {
                 sx={{
                   paddingLeft: paddings.left4,
                   paddingRight: paddings.right4,
-                  borderRadius: borderRadius.radius8
+                  borderRadius: borderRadius.radius8,
+                  height: heights.height45
                 }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}

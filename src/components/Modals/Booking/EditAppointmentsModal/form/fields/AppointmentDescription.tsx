@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid, TextField } from '@mui/material';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
 
 import { IFormValues } from '../types';
 
 const AppointmentDescription = () => {
   const [t] = useTranslation();
-
+  const details = useAppSelector(bookingSelector.appointmentDetails);
   const descriptionFieldName = 'appointment.description';
   const { control } = useFormContext<IFormValues>();
   const { field } = useController<IFormValues>({
@@ -16,6 +18,14 @@ const AppointmentDescription = () => {
     control
   });
   const editDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION);
+
+  useEffect(() => {
+    if (field.value && !(details?.appointment?.description === field.value)) {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(false));
+    } else {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(true));
+    }
+  }, [details?.appointment?.description, field.value]);
 
   return (
     <Grid item xs={12}>

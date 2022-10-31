@@ -26,7 +26,8 @@ const {
   setServiceTypes,
   setAppointmentDetails,
   setPatientAlerts,
-  setAppointmentLoading
+  setAppointmentLoading,
+  setSaveButtonDisabled
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -96,6 +97,10 @@ const getAppointments = (resourceId: string, date: string) => async (dispatch: A
 
 const setDateValue = (value: string) => (dispatch: AppDispatch) => {
   dispatch(setDate(value));
+};
+
+const setEditSaveButtonDisabled = (value: boolean) => (dispatch: AppDispatch) => {
+  dispatch(setSaveButtonDisabled(value));
 };
 
 const applyResource = (value: string) => (dispatch: AppDispatch) => {
@@ -250,6 +255,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
         cancellationReason
       }
     });
+    dispatch(setAppointmentLoading(false));
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     dispatch(setError(error as string));
@@ -270,5 +276,6 @@ export default {
   getAppointmentDetails,
   editAppointment,
   clearAppointmentDetails,
-  getPatientAlerts
+  getPatientAlerts,
+  setEditSaveButtonDisabled
 };

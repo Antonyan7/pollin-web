@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, Grid, MenuItem } from '@mui/material';
+import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
 import { appointmentStatusData } from 'helpers/constants';
-import { dispatch } from 'redux/hooks';
+import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -15,12 +16,21 @@ import { IFormValues } from '../types';
 
 const StatusAppointmentLabel = () => {
   const appointmentStatusFieldName = 'appointment.status';
+  const details = useAppSelector(bookingSelector.appointmentDetails);
   const { control, getValues } = useFormContext<IFormValues>();
   const { field } = useController<IFormValues>({ name: appointmentStatusFieldName, control });
   const { value, ...fieldProps } = field;
   const [t] = useTranslation();
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
   const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
+
+  useEffect(() => {
+    if (field.value && !(details?.appointment?.status === field.value)) {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(false));
+    } else {
+      dispatch(bookingMiddleware.setEditSaveButtonDisabled(true));
+    }
+  }, [details?.appointment?.status, field.value]);
 
   return (
     <Grid container spacing={3} sx={{ marginTop: margins.top0, paddingLeft: paddings.left24 }}>

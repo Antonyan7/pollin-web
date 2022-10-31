@@ -67,6 +67,9 @@ const reducers = createReducer({
   },
   setAppointmentLoading(state, action: IAction<boolean>) {
     state.isAppointmentLoading = action.payload;
+  },
+  setSaveButtonDisabled(state, action: IAction<boolean>) {
+    state.isSaveButtonDisabled = action.payload;
   }
 });
 
