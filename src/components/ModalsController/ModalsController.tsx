@@ -2,7 +2,9 @@ import React from 'react';
 import AddAppointmentDuplicatePatientModal, {
   AddAppointmentDuplicatePatientModalProps
 } from '@components/Modals/Booking/AddAppointmentDuplicatePatientModal';
-import AddAppointmentsModal, { AddAppointmentsModalProps } from '@components/Modals/Booking/AddAppointmentsModal';
+import AddResourceAppointmentModal, {
+  AddResourceAppointmentModalProps
+} from '@components/Modals/Booking/AddResourceAppointmentModal';
 import CancelAppointmentModal, { CancelAppointmentModalProps } from '@components/Modals/Booking/CancelAppointmentModal';
 import DetailsAppointmentModal, {
   DetailsAppointmentModalProps
@@ -32,8 +34,8 @@ import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 const getDetailsAppointmentModal = (modal: IOpenedModal<DetailsAppointmentModalProps>) => (
   <DetailsAppointmentModal key={modal.name} {...modal.props} />
 );
-const getAddAppointmentModal = (modal: IOpenedModal<AddAppointmentsModalProps>) => (
-  <AddAppointmentsModal key={modal.name} {...modal.props} />
+const getAddResourceAppointmentModal = (modal: IOpenedModal<AddResourceAppointmentModalProps>) => (
+  <AddResourceAppointmentModal key={modal.name} {...modal.props} />
 );
 const getAddAppointmentDuplicatePatientModal = (modal: IOpenedModal<AddAppointmentDuplicatePatientModalProps>) => (
   <AddAppointmentDuplicatePatientModal key={modal.name} {...modal.props} />
@@ -80,8 +82,8 @@ export const ModalsController = () => {
           // appointments
           case ModalName.DetailsAppointmentModal:
             return getDetailsAppointmentModal(modal);
-          case ModalName.AddAppointmentModal:
-            return getAddAppointmentModal(modal);
+          case ModalName.AddResourceAppointmentModal:
+            return getAddResourceAppointmentModal(modal);
           case ModalName.EditAppointmentModal:
             return getEditAppointmentModal(modal);
           case ModalName.CancelAppointmentModal:

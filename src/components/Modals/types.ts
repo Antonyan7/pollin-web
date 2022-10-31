@@ -3,13 +3,13 @@ import { PatientMedicationsModalProps } from '@components/Patients/PatientModals
 import { PatientPartnersModalProps } from '@components/Patients/PatientModals/PatientPartnersModal';
 
 import { AddAppointmentDuplicatePatientModalProps } from './Booking/AddAppointmentDuplicatePatientModal';
-import { AddAppointmentsModalProps } from './Booking/AddAppointmentsModal';
+import { AddResourceAppointmentModalProps } from './Booking/AddResourceAppointmentModal';
 import { CancelAppointmentModalProps } from './Booking/CancelAppointmentModal';
 import { EditAppointmentModalProps } from './Booking/EditAppointmentsModal';
 import { ScheduleTemplatesErrorModalProps } from './Scheduling/ScheduleTemplatesErrorModal';
 
 export type ModalPropType =
-  | AddAppointmentsModalProps
+  | AddResourceAppointmentModalProps
   | EditAppointmentModalProps
   | AddAppointmentDuplicatePatientModalProps
   | CancelAppointmentModalProps

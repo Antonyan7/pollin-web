@@ -60,7 +60,7 @@ const Appointments = () => {
     [calendarDate]
   );
   const onOpenAppointmentsModalAdd = useCallback(() => {
-    dispatch(viewsMiddleware.openModal({ name: ModalName.AddAppointmentModal, props: {} }));
+    dispatch(viewsMiddleware.openModal({ name: ModalName.AddResourceAppointmentModal, props: {} }));
   }, []);
   const onDateDatePickerOpen = useCallback(() => {
     setDatePickerOpen(true);

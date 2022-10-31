@@ -12,7 +12,7 @@ const useOnRangeSelect = () => {
 
     dispatch(
       viewsMiddleware.openModal({
-        name: ModalName.AddAppointmentModal,
+        name: ModalName.AddResourceAppointmentModal,
         props: {
           start: arg.startStr,
           end: arg.endStr

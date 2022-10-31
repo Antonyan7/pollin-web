@@ -28,7 +28,7 @@ const AddAppointmentsModalForm = () => {
   const patientId = useWatch({ name: 'patientId', control });
 
   const onClose = () => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+    dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
     dispatch(bookingMiddleware.getPatients(null));
     dispatch(bookingMiddleware.getPatientAlerts(''));
   };

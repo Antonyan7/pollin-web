@@ -20,13 +20,13 @@ const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreatedAppointm
   date: bookAppointmentDateStartTime ? new Date(bookAppointmentDateStartTime) : null
 });
 
-export interface AddAppointmentsModalProps {
+export interface AddResourceAppointmentModalProps {
   start?: Date;
 }
 
-const AddAppointmentsModal = ({ start }: AddAppointmentsModalProps) => {
+const AddAppointmentsModal = ({ start }: AddResourceAppointmentModalProps) => {
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+    dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
     dispatch(bookingMiddleware.getPatientAlerts());
   }, []);
   const methods = useForm<ICreatedAppointmentBody>({

@@ -13,7 +13,7 @@ const FormHeader = () => {
   const [t] = useTranslation();
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+    dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
     dispatch(bookingMiddleware.getPatients(null));
     dispatch(bookingMiddleware.getPatientAlerts(''));
   }, []);
