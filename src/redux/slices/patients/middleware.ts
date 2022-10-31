@@ -63,11 +63,12 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
     };
 
     dispatch(setPatientsList(data));
-    dispatch(setPatientsLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(cleanPatientList());
     dispatch(setError(error));
+  } finally {
+    dispatch(setPatientsLoadingState(false));
   }
 };
 

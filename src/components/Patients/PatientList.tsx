@@ -73,12 +73,13 @@ const PatientList = () => {
               ))}
             </TableRow>
           </TableHead>
-
-          <TableBody>
-            {patientsList.patients.map((row: IPatientListData, index) => (
-              <PatientTableRow row={row} index={index} key={row.id} />
-            ))}
-          </TableBody>
+          {!isPatientListLoading && (
+            <TableBody>
+              {patientsList.patients.map((row: IPatientListData, index) => (
+                <PatientTableRow row={row} index={index} key={row.id} />
+              ))}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
       {isPatientListLoading ? (

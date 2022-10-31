@@ -11,6 +11,7 @@ import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patien
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import slice from 'redux/slices/patients/slice';
 import { margins, paddings } from 'themes/themeConstants';
 import { IPatientsFilterOption } from 'types/patient';
 
@@ -46,6 +47,7 @@ interface PatientFiltersProps {
 const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
   const theme = useTheme();
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
+  const { setPatientsLoadingState } = slice.actions;
   const filtersList = useAppSelector(patientsSelector.filtersList);
   const isFiltersLoading = useAppSelector(patientsSelector.isPatientsFiltersLoading);
 
@@ -57,11 +59,13 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(setPatientsLoadingState(true));
+
       const debouncedCallback = debounce(() => setSearchValue(event.target.value), 1000);
 
       debouncedCallback();
     },
-    [setSearchValue]
+    [setSearchValue, setPatientsLoadingState]
   );
 
   const onAutoCompleteChange = useCallback(
