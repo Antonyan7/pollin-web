@@ -81,6 +81,7 @@ const PatientId = () => {
         getOptionLabel={(option) => option.item.title}
         onChange={(_, value) => {
           if (value?.item.id) {
+            onChange(value.item.id);
             dispatch(bookingMiddleware.getPatientAlerts(value?.item.id));
           }
         }}
