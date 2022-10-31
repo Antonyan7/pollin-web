@@ -50,6 +50,8 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
           onOpen={() => setOpenTimePicker(true)}
           onClose={() => setOpenTimePicker(false)}
           minutesStep={10}
+          ampm={false}
+          rifmFormatter={(date) => (date ? `${date} [EST]` : '')}
           PopperProps={{
             sx: {
               '& > div > div > div > div > div + div > div': {

@@ -31,6 +31,8 @@ const TimeField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       minTime={MIN_SELECTABLE_DATE_TIME}
       maxTime={MAX_SELECTABLE_DATE_TIME}
       minutesStep={10}
+      ampm={false}
+      rifmFormatter={(date) => (date ? `${date} [EST]` : '')}
       DialogProps={{
         sx: {
           '& .MuiPickersToolbar-penIconButton': { display: 'none' }
