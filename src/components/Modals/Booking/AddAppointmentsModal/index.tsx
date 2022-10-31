@@ -5,8 +5,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { dispatch } from 'redux/hooks';
-import { bookingMiddleware } from 'redux/slices/booking';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import { addAppointmentsValidationSchema } from 'validation/appointments/add_appointment';
@@ -33,11 +33,12 @@ const AddAppointmentsModal = ({ start }: AddAppointmentsModalProps) => {
     defaultValues: getInitialValues(start),
     resolver: yupResolver(addAppointmentsValidationSchema)
   });
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceTypes());
+    dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
     dispatch(bookingMiddleware.getPatients({ name: '', page: 1 }));
-  }, []);
+  }, [serviceProviderId]);
 
   return (
     <FormProvider {...methods}>

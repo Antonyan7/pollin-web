@@ -55,7 +55,7 @@ export interface EditAppointmentModalProps {
 
 const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => {
   const [t] = useTranslation();
-
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const [modalLoading, setModalLoading] = useState(true);
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
@@ -68,8 +68,10 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
   const editTitleLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TITLE);
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceTypes());
-  }, []);
+    if (serviceProviderId) {
+      dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
+    }
+  }, [serviceProviderId]);
 
   useEffect(() => {
     if (appointmentId) {

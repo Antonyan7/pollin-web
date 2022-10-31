@@ -5,6 +5,9 @@ export interface IAppointmentListReqParams {
   resourceId: string;
   date: string;
 }
+export interface IServiceTypesReqParams {
+  resourceId?: string;
+}
 export interface IServiceProvidersReqParams {
   page: number;
 }

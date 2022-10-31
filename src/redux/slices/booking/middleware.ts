@@ -1,5 +1,9 @@
 import API from '@axios/API';
-import { ICreatedAppointmentBody, IEditAppointmentBody } from '@axios/booking/managerBookingTypes';
+import {
+  ICreatedAppointmentBody,
+  IEditAppointmentBody,
+  IServiceTypesReqParams
+} from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
@@ -165,11 +169,11 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
   }
 };
 
-const getServiceTypes = () => async (dispatch: AppDispatch) => {
+const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsServiceTypesLoading(true));
 
-    const response = await API.booking.getServiceTypes();
+    const response = await API.booking.getServiceTypes(params);
     const serviceTypes = sortServiceTypesByAlphabeticOrder(response.data.data.serviceTypes);
 
     dispatch(setServiceTypes(serviceTypes));

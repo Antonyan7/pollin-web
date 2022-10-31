@@ -12,6 +12,7 @@ import {
   IGetPatientAppointmentsListResponse,
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
+  IServiceTypesReqParams,
   IUpdatedAppointmentResponse
 } from '@axios/booking/managerBookingTypes';
 import { Axios } from 'manager/axiosInstance';
@@ -29,8 +30,10 @@ const bookingManager = {
       params
     });
   },
-  getServiceTypes() {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`${baseURL}/v1/service-type`);
+  getServiceTypes(params?: IServiceTypesReqParams) {
+    return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`${baseURL}/v1/service-type`, {
+      params
+    });
   },
   createAppointment(appointmentValues: ICreatedAppointmentBody) {
     return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentResponse>>(`${baseURL}/v1/appointment`, {
