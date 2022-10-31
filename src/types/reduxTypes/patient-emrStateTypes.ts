@@ -38,7 +38,7 @@ export interface PatientProfileOverview {
 }
 
 export interface PatientHighlight {
-  uuid?: string;
+  uiid?: string;
   title: string;
   items: string[];
 }

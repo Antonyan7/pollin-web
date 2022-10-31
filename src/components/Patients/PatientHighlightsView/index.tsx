@@ -33,9 +33,9 @@ const PatientHighlightsView = () => {
     : [[], [], []];
 
   const onDetailsClick =
-    (uuid: string): TypographyProps['onClick'] =>
+    (uiid: string): TypographyProps['onClick'] =>
     async () => {
-      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uuid);
+      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uiid);
 
       if (patientHighlightDetails) {
         const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
@@ -61,7 +61,7 @@ const PatientHighlightsView = () => {
             {patientHighlightColumns.map((patientHighlightColumn, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <Grid container item xs={12} sm={4} key={index} rowGap={1.5} justifyContent="center">
-                {patientHighlightColumn.map(({ uuid, title, items }) => (
+                {patientHighlightColumn.map(({ uiid, title, items }) => (
                   <React.Fragment key={title}>
                     <Grid item xs={12} sm={4}>
                       <Typography fontWeight="bold" color={theme.palette.common.black}>
@@ -74,12 +74,12 @@ const PatientHighlightsView = () => {
                           {item}
                         </Typography>
                       ))}
-                      {uuid && (
+                      {uiid && (
                         <Typography
                           fontWeight="bolder"
                           color={theme.palette.common.black}
                           sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
-                          onClick={onDetailsClick(uuid)}
+                          onClick={onDetailsClick(uiid)}
                         >
                           View Details
                         </Typography>
