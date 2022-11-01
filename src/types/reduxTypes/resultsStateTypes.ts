@@ -1,6 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
-import { PendingTestStatsType } from '@axios/results/resultsManagerTypes';
-import { IResultsFilterOption } from 'types/results';
+import { IResultsFilterOption, TestResultsStats } from 'types/results';
 
 export interface IResultsProps {
   resultsList: IResultsList;
@@ -17,7 +16,7 @@ export interface IResultsList extends IPagination {
 }
 export interface IPendingTestStats {
   title: string;
-  type: PendingTestStatsType;
+  type: TestResultsStats;
   count: number;
 }
 

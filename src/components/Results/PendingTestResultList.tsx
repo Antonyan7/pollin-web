@@ -21,12 +21,15 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { IExternalResultListData } from 'types/reduxTypes/resultsStateTypes';
+import { IResultsFilterOption } from 'types/results';
+
+import PendingTestResultsStatisticsView from '@ui-component/profile/PendingTestResultsStatisticsView';
 
 const PendingTestResultList = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(null);
   const [sortField, setSortField] = useState<TestResultsListSortFields | null>(null);
-  const [filterId, setFilterId] = useState<string>('');
+  const [filters, setFilters] = useState<Omit<IResultsFilterOption, 'title'>[]>([]);
   const [page, setPage] = useState<number>(0);
   const [t] = useTranslation();
 
@@ -39,21 +42,33 @@ const PendingTestResultList = () => {
     setPage(newPage);
   };
 
+  const handleFiltersUpdate = (updatedFilters: IResultsFilterOption[]) => {
+    const filtersWithoutTitle = updatedFilters.map((filter: Partial<IResultsFilterOption>) => ({
+      id: filter.id,
+      type: filter.type
+    }));
+
+    setFilters(filtersWithoutTitle as Omit<IResultsFilterOption, 'title'>[]);
+  };
+
   useEffect(() => {
     const data: IResultsReqBody = {
       ...(searchValue ? { searchString: searchValue } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {}),
-      ...(filterId ? { filterId } : {}),
+      ...(filters.length > 0 ? { filters } : {}),
       page: page + 1
     };
 
     dispatch(resultsMiddleware.getResultsList(data));
-  }, [filterId, page, searchValue, sortField, sortOrder]);
+  }, [filters, page, searchValue, sortField, sortOrder]);
 
   return (
     <PatientListStyled>
-      <ResultFilters setSearchValue={setSearchValue} setFiltersChange={setFilterId} />
+      <Box sx={{ marginBottom: margins.bottom32 }}>
+        <PendingTestResultsStatisticsView />
+      </Box>
+      <ResultFilters setSearchValue={setSearchValue} setFiltersChange={handleFiltersUpdate} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
@@ -85,7 +100,6 @@ const PendingTestResultList = () => {
       ) : null}
       <TablePagination
         component="div"
-        rowsPerPageOptions={[]}
         count={resultsList.totalItems}
         rowsPerPage={resultsList.pageSize}
         page={resultsList.currentPage - 1}

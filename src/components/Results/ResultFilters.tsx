@@ -1,4 +1,4 @@
-import React, { SetStateAction, useCallback, useEffect } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
 import { Autocomplete, InputAdornment, OutlinedInput, TextField, TextFieldProps, useTheme } from '@mui/material';
@@ -9,6 +9,7 @@ import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { IResultsFilterOption } from 'types/results';
 
 const StyledOutlinedInputResultsFilter = styled(OutlinedInput, { shouldForwardProp })(({ theme }) => ({
   width: 700,
@@ -34,7 +35,7 @@ const StyledOutlinedInputResultsFilter = styled(OutlinedInput, { shouldForwardPr
 
 interface ResultFiltersProps {
   setSearchValue: React.Dispatch<SetStateAction<string>>;
-  setFiltersChange: React.Dispatch<SetStateAction<string>>;
+  setFiltersChange: (args: IResultsFilterOption[]) => void;
 }
 
 const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps) => {
@@ -43,9 +44,12 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
   const resultsFilterLabel = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
   const filtersList = useAppSelector(resultsSelector.resultsFiltersList);
   const isFiltersLoading = useAppSelector(resultsSelector.isResultsFiltersLoading);
+  const [selectedFilters, setSelectedFilters] = useState<IResultsFilterOption[]>([]);
 
   const adaptedGroupedOptions = () =>
-    filtersList?.flatMap((item) => item.options.map((option) => ({ ...option, type: item.type })));
+    filtersList?.flatMap((item) =>
+      item.options.map((option: IResultsFilterOption) => ({ ...option, type: item.type }))
+    );
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,16 +60,10 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
     [setSearchValue]
   );
 
-  const onFilterUpdate = useCallback(
-    (filter: { id: string } | null) => {
-      if (filter) {
-        setFiltersChange(filter.id);
-      } else {
-        setFiltersChange(' ');
-      }
-    },
-    [setFiltersChange]
-  );
+  const onFilterUpdate = (filters: IResultsFilterOption[]) => {
+    setSelectedFilters(filters);
+    setFiltersChange(filters);
+  };
 
   useEffect(() => {
     dispatch(resultsMiddleware.getResultsFilters());
@@ -85,7 +83,7 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
       />
       <Autocomplete
         fullWidth
-        multiple={false}
+        multiple
         loading={isFiltersLoading}
         ListboxProps={{
           style: {
@@ -94,7 +92,14 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
             border: `${borders.solid2px} ${theme.palette.primary.main}`
           }
         }}
-        onChange={(event, filter) => onFilterUpdate(filter)}
+        onChange={(event, filters) => onFilterUpdate(filters)}
+        getOptionDisabled={(option) => {
+          if (option && selectedFilters.length > 0) {
+            return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
+          }
+
+          return false;
+        }}
         options={filtersList ? adaptedGroupedOptions() : []}
         groupBy={(option) => option.type}
         getOptionLabel={(option) => option.title}
