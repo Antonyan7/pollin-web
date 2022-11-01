@@ -7,13 +7,14 @@ import { ITemplateGroup } from 'types/create-schedule';
 
 const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
-  const { control, formState } = useFormContext<ITemplateGroup>();
+  const { control, formState, getValues } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.placeholderName`, control });
   const {
     errors: { timePeriods }
   } = formState;
   const placeholderError = timePeriods?.[index]?.placeholderName;
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER_ERROR);
+  const placeholderValue = getValues().timePeriods[index]?.placeholderName;
 
   return (
     <TextField
@@ -25,6 +26,7 @@ const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
       error={Boolean(placeholderError)}
       placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}
       {...field}
+      value={placeholderValue}
     />
   );
 };

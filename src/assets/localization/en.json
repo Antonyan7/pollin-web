@@ -49,6 +49,8 @@
   "page.scheduling.create.templates.select": "Select Day(s)",
   "page.scheduling.create.templates.select.error": "Select Day(s) is required",
   "page.scheduling.create.templates.start": "Start Time",
+  "page.scheduling.create.templates.start.before.end.error": "Start time must occur before end time",
+  "page.scheduling.create.templates.end.after.error": "End time must occur after start time",
   "page.scheduling.create.templates.start.error": "Start Time is required",
   "page.scheduling.create.templates.end": "End Time",
   "page.scheduling.create.templates.end.error": "End Time is required",

@@ -13,18 +13,24 @@ interface IWeekdaysFieldProps {
 
 const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
   const [t] = useTranslation();
-  const { control, formState, register } = useFormContext<ITemplateGroup>();
+  const { control, formState, register, getValues } = useFormContext<ITemplateGroup>();
   const {
     errors: { timePeriods }
   } = formState;
   const weekDayError = timePeriods?.[index]?.days;
   const { field } = useController({ name: `timePeriods.${index}.days`, control });
-  const { onChange, value } = field;
+  const { onChange } = field;
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT_ERROR);
+  const values = getValues().timePeriods[index]?.days.map((item) => Number(item));
+
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
     (e) =>
-      onChange(e.target.checked ? [...value, indexOfDay] : value.filter((item) => item !== indexOfDay));
+      onChange(
+        e.target.checked
+          ? [...values, indexOfDay]
+          : values.map((item) => Number(item)).filter((item) => item !== indexOfDay)
+      );
 
   return (
     <span className="week-days schedule-inputs schedule-days-checkbox">
@@ -38,7 +44,7 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
               control={
                 <Checkbox
                   {...register(field.name, { required: true })}
-                  checked={value.includes(indexOfDay)}
+                  checked={values.map((item) => Number(item)).includes(indexOfDay)}
                   onChange={onWeekDaysChange(indexOfDay)}
                 />
               }

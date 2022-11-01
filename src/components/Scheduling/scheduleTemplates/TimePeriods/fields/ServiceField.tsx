@@ -8,7 +8,7 @@ import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 const ServiceField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { control } = useFormContext<ITemplateGroup>();
+  const { control, getValues } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.periodType`, control });
   const { onChange, ...fieldProps } = field;
 
@@ -20,8 +20,10 @@ const ServiceField: React.FC<{ index: number }> = ({ index }) => {
     }
   }));
 
+  const radioGroupValue = getValues().timePeriods[index]?.periodType;
+
   return (
-    <RadioGroup {...fieldProps} className="schedule-inputs" row onChange={onServiceFieldChange}>
+    <RadioGroup {...fieldProps} className="schedule-inputs" value={radioGroupValue} row onChange={onServiceFieldChange}>
       <FormControlLabel
         value={PeriodType.ServiceType}
         control={<StyledRadio />}

@@ -21,26 +21,41 @@ interface ITimeFieldProps {
 
 const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const [t] = useTranslation();
-  const [openTimePicker, setOpenTimePicker] = useState(false);
-  const { control, formState } = useFormContext<ITemplateGroup>();
+  const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
+  const { control, formState, getValues } = useFormContext<ITemplateGroup>();
   const {
     errors: { timePeriods }
   } = formState;
   const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
-  const { onChange, value, ...fieldProps } = field;
+  const { onChange, ...fieldProps } = field;
   const theme = useTheme();
   const timeFieldError = timePeriods?.[index]?.[fieldName];
-  const errorMessage =
-    fieldName === 'startTime'
-      ? t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR)
-      : t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR);
+  let errorMessage = '';
+
+  switch (timeFieldError?.type) {
+    case 'required':
+      errorMessage =
+        fieldName === 'startTime'
+          ? t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR)
+          : t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR);
+      break;
+    case 'startTimeBefore':
+      errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
+      break;
+    case 'endTimeAfter':
+      errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
+      break;
+    default:
+      break;
+  }
+
   const onTimeFieldChange = (newTime: Date | null) => {
     if (newTime && isValid(newTime)) {
       onChange(toESTIsoString(newTime));
     }
   };
-
-  const initialValue = convertToLocale(value);
+  const timeFieldValue = getValues().timePeriods[index]?.[fieldName];
+  const initialValue = convertToLocale(timeFieldValue);
 
   return (
     <div className="schedule-inputs">

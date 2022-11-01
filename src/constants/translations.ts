@@ -51,6 +51,8 @@ export enum Translation {
   PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT = 'page.scheduling.create.templates.select',
   PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT_ERROR = 'page.scheduling.create.templates.select.error',
   PAGE_SCHEDULING_CREATE_TEMPLATES_START = 'page.scheduling.create.templates.start',
+  PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR = 'page.scheduling.create.templates.start.before.end.error',
+  PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR = 'page.scheduling.create.templates.end.after.error',
   PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR = 'page.scheduling.create.templates.start.error',
   PAGE_SCHEDULING_CREATE_TEMPLATES_END = 'page.scheduling.create.templates.end',
   PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR = 'page.scheduling.create.templates.end.error',

@@ -13,15 +13,17 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   const serviceTypes: IServiceType[] = useAppSelector(schedulingSelector.serviceTypes);
   const isServiceTypesLoading = useSelector(schedulingSelector.isServiceTypesLoading);
   const serviceTypeOptions = useMemo(() => createOptionsGroup(serviceTypes), [serviceTypes]);
-  const { control } = useFormContext<ITemplateGroup>();
+  const { control, getValues } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.serviceTypes`, control });
   const { onChange, value: selectedServiceTypeIds, ...fieldProps } = field;
   const onServiceTypesFieldChange = (_e: React.SyntheticEvent, newValues: OptionsReturnProps<IServiceType>[]) =>
     onChange(newValues.map((newValue) => newValue.item.id));
 
+  const values = getValues().timePeriods[index]?.serviceTypes;
+
   const selectedTypeOptions = useMemo(
-    () => serviceTypeOptions.filter(({ item }) => (selectedServiceTypeIds ?? []).includes(item.id)),
-    [selectedServiceTypeIds, serviceTypeOptions]
+    () => serviceTypeOptions.filter(({ item }) => (values ?? []).includes(item.id)),
+    [values, serviceTypeOptions]
   );
 
   return (
