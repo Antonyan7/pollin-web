@@ -1,7 +1,8 @@
 import 'utils/i18n';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
+import { FirebaseManager } from '@axios/firebase';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import type { AppProps } from 'next/app';
 import Main from 'pages';
@@ -23,24 +24,30 @@ type PollinAppProps = AppProps & {
   };
 };
 
-const Pollin = ({ Component, pageProps, emotionCache = clientSideEmotionCache }: PollinAppProps) => (
-  <CacheProvider value={emotionCache}>
-    <ThemeCustomization>
-      <Provider store={store}>
-        <NavigationScroll>
-          <Main>
-            {Component.PageLayout ? (
-              <Component.PageLayout>
+const Pollin = ({ Component, pageProps, emotionCache = clientSideEmotionCache }: PollinAppProps) => {
+  useEffect(() => {
+    FirebaseManager.initiate();
+  }, []);
+
+  return (
+    <CacheProvider value={emotionCache}>
+      <ThemeCustomization>
+        <Provider store={store}>
+          <NavigationScroll>
+            <Main>
+              {Component.PageLayout ? (
+                <Component.PageLayout>
+                  <Component {...pageProps} />
+                </Component.PageLayout>
+              ) : (
                 <Component {...pageProps} />
-              </Component.PageLayout>
-            ) : (
-              <Component {...pageProps} />
-            )}
-          </Main>
-        </NavigationScroll>
-      </Provider>
-    </ThemeCustomization>
-  </CacheProvider>
-);
+              )}
+            </Main>
+          </NavigationScroll>
+        </Provider>
+      </ThemeCustomization>
+    </CacheProvider>
+  );
+};
 
 export default Pollin;

@@ -39,7 +39,6 @@ class RequestManager {
     const serverUrl = getServerUrl();
     const axiosInstance = axios.create({ baseURL: `${serverUrl}` });
 
-    FirebaseManager.initiate();
     axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
       const requestConfig = config;
 
