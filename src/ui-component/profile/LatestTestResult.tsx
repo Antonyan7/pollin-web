@@ -16,7 +16,7 @@ import {
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { patientsMiddleware,patientsSelector } from 'redux/slices/patients';
+import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 
 import MainCard from '@ui-component/cards/MainCard';
 import Chip from '@ui-component/patient/Chip';
