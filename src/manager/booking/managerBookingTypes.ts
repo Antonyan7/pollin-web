@@ -29,6 +29,7 @@ export interface IAppointmentTypesData {
 }
 
 export interface ICreatedAppointmentBody {
+  resourceId?: string;
   serviceTypeId: string;
   patientId: string;
   providerId?: string;
