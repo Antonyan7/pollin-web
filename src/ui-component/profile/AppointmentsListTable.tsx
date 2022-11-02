@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import bookingHelpers from '@axios/booking/bookingHelpers';
 import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   Table,
@@ -14,6 +13,8 @@ import {
   TableSortLabel,
   Typography
 } from '@mui/material';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { SortOrder } from 'types/patient';
@@ -44,68 +45,32 @@ const headCells: HeadCell[] = [
 
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
-  const [orderBy, setOrderBy] = useState<Exclude<HeadCell['id'], 'time'> | undefined>();
-  const [order, setOrder] = useState<SortOrder | undefined>();
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(0);
-  const [totalRows, setTotalRows] = useState(0);
 
-  const [tableData, setTableData] = useState<IPatientAppointment[]>([]);
-  const [isTableDataLoading, setIsTableDataLoading] = useState(false);
+  const { list, orderBy, order, search, filterId } = useAppSelector(patientsSelector.patientAppointments);
+  const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
   useEffect(() => {
-    if (!isTableDataLoading) {
-      bookingHelpers.getAppointmentsListFromParams().then((response) => {
-        if (response) {
-          const { data, totalItems } = response;
-
-          setTableData(data?.appointments ?? []);
-          setRowsPerPage(data?.appointments.length ?? 0);
-          setTotalRows(totalItems);
-        }
-      });
-      setIsTableDataLoading(false);
+    if (tableData === null) {
+      dispatch(patientsMiddleware.getInitialPatientAppointments());
     }
-  }, [isTableDataLoading]);
+  }, [tableData]);
 
   const onTableHeadCellClick = async (newOrderBy: Exclude<HeadCell['id'], 'time'>) => {
     const newOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
-    const response = await bookingHelpers.getAppointmentsListFromParams({
-      search: '',
-      page,
-      order: orderBy === newOrderBy ? newOrder : SortOrder.Asc,
-      orderBy: newOrderBy
-    });
 
-    if (response) {
-      const { data } = response;
-
-      if (orderBy === newOrderBy) {
-        setOrder(newOrder);
-      } else {
-        setOrderBy(newOrderBy);
-        setOrder(SortOrder.Asc);
-      }
-
-      setTableData(data.appointments);
-    }
+    dispatch(
+      patientsMiddleware.getPatientAppointments(
+        search,
+        filterId,
+        currentPage,
+        orderBy === newOrderBy ? newOrder : SortOrder.Asc,
+        newOrderBy
+      )
+    );
   };
 
   const onTablePageChange: TablePaginationProps['onPageChange'] = async (_e, newPage) => {
-    const response = await bookingHelpers.getAppointmentsListFromParams({
-      search: '',
-      page: newPage,
-      order,
-      orderBy
-    });
-
-    if (response) {
-      const { data } = response;
-
-      setPage(newPage);
-      setTableData(data.appointments);
-      setRowsPerPage(data.appointments.length);
-    }
+    dispatch(patientsMiddleware.getPatientAppointments(search, filterId, newPage + 1, order, orderBy));
   };
 
   return (
@@ -115,12 +80,12 @@ const AppointmentsListTable = () => {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  onClick={() => headCell.id !== 'time' && onTableHeadCellClick(headCell.id)}
-                >
+                <TableCell key={headCell.id}>
                   {headCell.id !== 'time' ? (
-                    <TableSortLabel direction={headCell.id === orderBy ? order : undefined}>
+                    <TableSortLabel
+                      direction={headCell.id === orderBy && order ? order : undefined}
+                      onClick={() => onTableHeadCellClick(headCell.id as Exclude<HeadCell['id'], 'time'>)}
+                    >
                       <Typography fontWeight="bold">{t(headCell.label)}</Typography>
                     </TableSortLabel>
                   ) : (
@@ -133,27 +98,28 @@ const AppointmentsListTable = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {tableData.map(({ id, type, date, time, status }) => (
-              <TableRow key={id}>
-                <TableCell>{type}</TableCell>
-                <TableCell>{format(new Date(date), 'MMM dd, yyyy')}</TableCell>
-                <TableCell>{time}</TableCell>
-                <TableCell>{status}</TableCell>
-              </TableRow>
-            ))}
+            {tableData &&
+              tableData.map(({ id, type, date, time, status }) => (
+                <TableRow key={id}>
+                  <TableCell>{type}</TableCell>
+                  <TableCell>{format(new Date(date), 'MMM dd, yyyy')}</TableCell>
+                  <TableCell>{time}</TableCell>
+                  <TableCell>{status}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[rowsPerPage]}
+        rowsPerPageOptions={[pageSize]}
         component="div"
-        count={totalRows}
-        rowsPerPage={rowsPerPage}
-        page={page}
+        count={totalItems}
+        rowsPerPage={pageSize}
+        page={currentPage - 1}
         onPageChange={onTablePageChange}
       />
     </>
   );
 };
 
-export default AppointmentsListTable;
+export default React.memo(AppointmentsListTable);

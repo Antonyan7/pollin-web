@@ -8,6 +8,7 @@ import {
   ICreatedAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
+  IGetPatientAppointmentsListFiltersResponse,
   IGetPatientAppointmentsListReqBody,
   IGetPatientAppointmentsListResponse,
   IServiceProvidersListResponse,
@@ -58,6 +59,11 @@ const bookingManager = {
   getAppointmentList(body: IGetPatientAppointmentsListReqBody) {
     return axiosInstance
       .post<any, IAxiosResponsePaginated<IGetPatientAppointmentsListResponse>>(`${baseURL}/v1/appointment/list`, body)
+      .then(({ data }) => data);
+  },
+  getAppointmentListFilters() {
+    return axiosInstance
+      .get<any, IAxiosResponse<IGetPatientAppointmentsListFiltersResponse>>(`${baseURL}/v1/appointment/filter`)
       .then(({ data }) => data);
   }
 };

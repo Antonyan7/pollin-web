@@ -25,6 +25,7 @@ const latestTestResults = createSelector([selector], (state) => state.latestTest
 const patientProfileOverview = createSelector([selector], (state) => state.profile.overview);
 const isPatientProfileOverviewLoading = createSelector([selector], (state) => state.profile.isOverviewLoading);
 const testResultsHistory = createSelector([selector], (state) => state.profile.testResultsHistory);
+const patientAppointments = createSelector([selector], (state) => state.patientAppointments);
 
 export default {
   patientsListData,
@@ -48,5 +49,6 @@ export default {
   latestTestResults,
   isPatientProfileOverviewLoading,
   patientProfileOverview,
-  testResultsHistory
+  testResultsHistory,
+  patientAppointments
 };

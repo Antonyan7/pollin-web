@@ -1,4 +1,6 @@
 import API from '@axios/API';
+import bookingHelpers from '@axios/booking/bookingHelpers';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
@@ -6,7 +8,7 @@ import {
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
-import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
+import { IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   ICreateEncounterNoteProps,
   IEncounterList,
@@ -36,7 +38,9 @@ const {
   setEncountersFiltersLoadingState,
   setCurrentEncounterID,
   setLatestTestResults,
-  setTestResultsHistory
+  setTestResultsHistory,
+  setPatientAppointments,
+  setPatientAppointmentsList
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -279,6 +283,62 @@ const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => 
   }
 };
 
+const getInitialPatientAppointments = () => async (dispatch: AppDispatch) => {
+  try {
+    const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams();
+
+    dispatch(
+      setPatientAppointmentsList({
+        appointments: data.appointments,
+        currentPage,
+        pageSize,
+        totalItems
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const getPatientAppointments =
+  (
+    search: string,
+    filterId: string,
+    page: number,
+    order: SortOrder | null,
+    orderBy: Exclude<keyof IPatientAppointment, 'time'> | null
+  ) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
+        search,
+        filterId,
+        page,
+        order,
+        orderBy
+      });
+
+      dispatch(
+        setPatientAppointments({
+          list: {
+            appointments: data.appointments,
+            currentPage,
+            pageSize,
+            totalItems
+          },
+          order,
+          orderBy,
+          search,
+          filterId
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+  };
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -298,5 +358,7 @@ export default {
   updateEncounterAddendum,
   setCurrentEncounterId,
   getProfileTestResultLatest,
-  getProfileTestResultsHistory
+  getProfileTestResultsHistory,
+  getInitialPatientAppointments,
+  getPatientAppointments
 };

@@ -1,11 +1,12 @@
 import { IPagination } from '@axios/axiosTypes';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType
 } from '@axios/patientEmr/managerPatientEmrTypes';
-import { IPatientsFilterOption, PatientListFilterType } from 'types/patient';
+import { IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
 
 interface IProfileProps {
   isOverviewLoading: boolean;
@@ -24,6 +25,7 @@ export interface PatientEmrProps {
   error: Error | null;
   patientProfile: PatientProfile | null;
   patientHighlights: PatientHighlight[] | null;
+  patientAppointments: IPatientAppointmentsProps;
   latestTestResults: ITestResultLatest[];
   profile: IProfileProps;
 }
@@ -149,6 +151,18 @@ interface IEncounterNoteProps {
   patientId: string;
   encountersTypeId: string;
   content: string;
+}
+
+export interface IPatientAppointmentsList extends IPagination {
+  appointments: IPatientAppointment[] | null;
+}
+
+export interface IPatientAppointmentsProps {
+  list: IPatientAppointmentsList;
+  filterId: string;
+  search: string;
+  orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
+  order: SortOrder | null;
 }
 
 export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}

@@ -1,3 +1,5 @@
+import { PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
+import { SortOrder } from 'types/patient';
 import { PatientEmrProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 export const getInitialState = (): PatientEmrProps => ({
@@ -27,5 +29,17 @@ export const getInitialState = (): PatientEmrProps => ({
     isOverviewLoading: false,
     overview: null,
     testResultsHistory: null
+  },
+  patientAppointments: {
+    list: {
+      appointments: null,
+      pageSize: 0,
+      currentPage: 0,
+      totalItems: 0
+    },
+    filterId: 'allFilterId',
+    search: '',
+    order: SortOrder.Desc,
+    orderBy: PatientAppointmentsSortField.Date
   }
 });

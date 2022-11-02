@@ -7,6 +7,8 @@ import {
   IEncounterList,
   IEncounterType,
   IFilterCategory,
+  IPatientAppointmentsList,
+  IPatientAppointmentsProps,
   IPatientList,
   ITestResultLatest,
   PatientEmrProps,
@@ -80,6 +82,12 @@ const reducers = createReducer({
   },
   setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
     state.latestTestResults = action.payload;
+  },
+  setPatientAppointments(state, action: IAction<IPatientAppointmentsProps>) {
+    state.patientAppointments = action.payload;
+  },
+  setPatientAppointmentsList(state, action: IAction<IPatientAppointmentsList>) {
+    state.patientAppointments.list = action.payload;
   }
 });
 

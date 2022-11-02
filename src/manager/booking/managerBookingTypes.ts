@@ -71,12 +71,18 @@ export interface ICancelAppointmentReason {
   cancellationReason: string;
 }
 
+export enum PatientAppointmentsSortField {
+  Type = 'type',
+  Date = 'date',
+  Status = 'status'
+}
+
 export interface IGetPatientAppointmentsListReqBody {
   searchString: string;
   filterId?: string;
   page: number;
-  sortByField?: 'Type' | 'Date' | 'Status';
-  sortOrder?: 'Asc' | 'Desc';
+  sortOrder: 'Asc' | 'Desc';
+  sortByField: 'Type' | 'Date' | 'Status';
 }
 
 export interface IPatientAppointment {
@@ -89,4 +95,13 @@ export interface IPatientAppointment {
 
 export interface IGetPatientAppointmentsListResponse {
   appointments: IPatientAppointment[];
+}
+
+export interface IPatientAppointmentsListFilter {
+  id: string;
+  title: string;
+}
+
+export interface IGetPatientAppointmentsListFiltersResponse {
+  filters: IPatientAppointmentsListFilter[];
 }
