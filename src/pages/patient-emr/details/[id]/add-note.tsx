@@ -1,6 +1,6 @@
 import React from 'react';
 
-import AddEncounterNote from '@ui-component/encounters/AddEncounterNote';
+import AddEncounterNote from '@ui-component/encounters/components/AddEncounterNote';
 
 const AddEncounterNotePage = () => <AddEncounterNote />;
 

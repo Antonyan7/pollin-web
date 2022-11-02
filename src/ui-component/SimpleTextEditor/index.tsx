@@ -5,7 +5,6 @@ import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -16,6 +15,7 @@ import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
+import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
 
 import 'react-quill/dist/quill.snow.css';
 
@@ -64,7 +64,7 @@ const EditEncounterNoteAddendums = () => {
             </Typography>
             <Typography variant="body1" component="p">
               {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-              {timeAdjuster(new Date(addendum.date as Date)).customizedDate}
+              {encountersCustomizedDate(new Date(addendum.date as Date))}
             </Typography>
           </Grid>
           <Divider sx={{ display: addendumIndex === encounterData.addendums.length - 1 ? 'none' : 'block' }} />

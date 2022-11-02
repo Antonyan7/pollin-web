@@ -7,7 +7,7 @@ import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { borderRadius } from 'themes/themeConstants';
 
-import EncounterFilters from '@ui-component/encounters/EncounterFilters';
+import EncounterFilters from './EncounterFilters';
 
 const EncounterNotesHeader = ({ page }: { page: number }) => {
   const theme = useTheme();

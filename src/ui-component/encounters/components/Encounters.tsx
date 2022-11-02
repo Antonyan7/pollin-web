@@ -16,9 +16,9 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
 import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
 
-import EncounterNotesHeader from '@ui-component/encounters/EncounterNotesHeader';
-import EncounterNoteThumbnail from '@ui-component/encounters/EncounterNoteThumbnail';
-import NothingFoundEncounters from '@ui-component/encounters/NothingFoundEncounters';
+import EncounterNotesHeader from './EncounterNotesHeader';
+import EncounterNoteThumbnail from './EncounterNoteThumbnail';
+import NothingFoundEncounters from './NothingFoundEncounters';
 
 const Encounters = () => {
   const [page, setPage] = useState<number>(0);

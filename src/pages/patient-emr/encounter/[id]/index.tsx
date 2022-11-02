@@ -14,7 +14,8 @@ import { borderRadius, borders } from 'themes/themeConstants';
 
 import { ButtonWithIcon } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
-import EncountersWrapper from '@ui-component/encounters/EncountersWrapper';
+import EncountersWrapper from '@ui-component/encounters/components/EncountersWrapper';
+import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
 
 interface EncounterDetailsPageTitleProps {
   theme: Theme;
@@ -63,7 +64,7 @@ const EncounterDetailsPage = () => {
   const [t] = useTranslation();
   const router = useRouter();
   const encounterNoteEditedTime = timeAdjuster(new Date(encounterData?.updatedOn as Date)).customizedDate;
-  const encounterNoteCreatedTime = timeAdjuster(new Date(encounterData?.createdOn as Date)).customizedDate;
+  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
   const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.id}/edit-note`);
   const goToAddAddendumPage = () => router.push(`/patient-emr/encounter/${router.query.id}/add-addendum`);
   const goToEditAddendumPage = (addendumId: string) =>
@@ -144,7 +145,7 @@ const EncounterDetailsPage = () => {
                   </Typography>
                   <Typography variant="body1" component="p">
                     {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-                    {timeAdjuster(new Date(addendum.date as Date)).customizedDate}
+                    {encountersCustomizedDate(addendum.date as Date)}
                   </Typography>
                 </Grid>
               </>

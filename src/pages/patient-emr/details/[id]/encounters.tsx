@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { patientsMiddleware } from 'redux/slices/patients';
 
-import Encounters from '@ui-component/encounters/Encounters';
+import Encounters from '@ui-component/encounters/components/Encounters';
 
 const EncountersTab = () => {
   const router = useRouter();

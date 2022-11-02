@@ -17,6 +17,8 @@ import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 
+import { encountersCustomizedDate } from '../helpers/encountersDate';
+
 import EncountersWrapper from './EncountersWrapper';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
@@ -147,7 +149,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
               <Grid item>
                 <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
               </Grid>
-              <Grid item>
+              <Grid item mt={-1.5}>
                 <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
               </Grid>
               <Grid item container direction="column">
@@ -156,7 +158,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
                 </Typography>
                 <Typography variant="body1" component="p">
                   {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-                  {timeAdjuster(new Date(encounterData.createdOn as Date)).customizedDate}
+                  {encountersCustomizedDate(new Date(encounterData.createdOn as Date))}
                 </Typography>
               </Grid>
               <Divider variant="fullWidth" />
@@ -174,7 +176,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
                 </Typography>
                 <Typography variant="body1" component="p">
                   {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-                  {timeAdjuster(new Date(currentAddendum.date as Date)).customizedDate}
+                  {encountersCustomizedDate(new Date(currentAddendum.date as Date))}
                 </Typography>
               </Grid>
             </Grid>
