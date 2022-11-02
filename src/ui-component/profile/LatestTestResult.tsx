@@ -5,6 +5,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
   Button,
   CardActions,
+  Grid,
   Table,
   TableBody,
   TableCell,
@@ -18,7 +19,7 @@ import { timeAdjuster } from 'helpers/timeAdjuster';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 
-import MainCard from '@ui-component/cards/MainCard';
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import Chip from '@ui-component/patient/Chip';
 
 const LatestTestResults = () => {
@@ -33,14 +34,14 @@ const LatestTestResults = () => {
   }, [patientId]);
 
   return (
-    <MainCard title={t(Translation.PAGE_PATIENT_RESULT_TABLE_HEADER_TITLE)} content={false}>
+    <SubCardStyled title={t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TITLE)} content={false}>
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_TEST)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_DATECOLLECTED)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_RESULT_CELL_HEADER_DUEDATE)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}</TableCell>
+              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUE_DATE)}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -62,13 +63,15 @@ const LatestTestResults = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      <CardActions sx={{ justifyContent: 'flex-end' }}>
-        <Button variant="text">
-          {t(Translation.PAGE_PATIENT_RESULT_BUTTON)}
-          <ChevronRightOutlinedIcon />
-        </Button>
+      <CardActions>
+        <Grid container justifyContent="right">
+          <Button variant="text">
+            {t(Translation.COMMON_BUTTON_VIEW_ALL)}
+            <ChevronRightOutlinedIcon />
+          </Button>
+        </Grid>
       </CardActions>
-    </MainCard>
+    </SubCardStyled>
   );
 };
 

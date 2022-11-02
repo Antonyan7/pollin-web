@@ -4,16 +4,16 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-interface Props {
-  onBack: () => void;
-}
+import { usePatientProfileNavigator } from '@hooks/usePatientProfileNavigator';
 
-const AppointmentsListHeader = ({ onBack }: Props) => {
+const AppointmentsListHeader = () => {
   const [t] = useTranslation();
+
+  const { navigateBack } = usePatientProfileNavigator();
 
   return (
     <Grid container item xs={12} columnGap={1} direction="row" justifyItems="center">
-      <IconButton onClick={onBack}>
+      <IconButton onClick={navigateBack}>
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">

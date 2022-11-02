@@ -6,13 +6,9 @@ import AppointmentsListFilter from '@ui-component/profile/AppointmentsListFilter
 import AppointmentsListSearch from '@ui-component/profile/AppointmentsListSearch';
 import AppointmentsListTable from '@ui-component/profile/AppointmentsListTable';
 
-interface Props {
-  onBack: () => void;
-}
-
-const AppointmentsList = ({ onBack }: Props) => (
+const AppointmentsList = () => (
   <Stack rowGap={1.5}>
-    <AppointmentsListHeader onBack={onBack} />
+    <AppointmentsListHeader />
     <Divider />
     <Grid container justifyContent="space-between" rowGap={1}>
       <AppointmentsListSearch />

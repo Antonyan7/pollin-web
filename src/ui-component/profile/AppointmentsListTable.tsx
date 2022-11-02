@@ -122,4 +122,4 @@ const AppointmentsListTable = () => {
   );
 };
 
-export default React.memo(AppointmentsListTable);
+export default AppointmentsListTable;
