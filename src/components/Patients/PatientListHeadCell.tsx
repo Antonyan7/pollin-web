@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { TableCell, TableSortLabel } from '@mui/material';
+import { TableCell, TableSortLabel, Typography } from '@mui/material';
 import { IHeadCell, PatientListField, SortOrder } from 'types/patient';
 
 interface PatientListHeadCellProps {
@@ -36,7 +36,7 @@ export const PatientListHeadCell = ({
           }}
           onClick={() => onSort(headCell.id as PatientListField)}
         >
-          {headCell.label}
+          <Typography fontWeight="bold">{headCell.label}</Typography>
         </TableSortLabel>
       ) : (
         <TableSortLabel
@@ -45,7 +45,7 @@ export const PatientListHeadCell = ({
             paddingLeft: headCell.paddingLeft
           }}
         >
-          {headCell.label}
+          <Typography fontWeight="bold">{headCell.label}</Typography>
         </TableSortLabel>
       )}
     </TableCell>

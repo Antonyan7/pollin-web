@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 const List = () => (
   <Box>
     <MainBreadcrumb
-      currentPage="Patient List/EMR"
+      currentPage="Patient List"
       navigation={{
         basePath: '/',
         items: [{ name: 'Patient List/EMR', path: '/patient-emr/list' }]
