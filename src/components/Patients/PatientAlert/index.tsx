@@ -23,6 +23,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
 
   return alertCount ? (
     <MuiTooltip
+      disableInteractive
       componentsProps={{
         tooltip: {
           sx: {
@@ -30,6 +31,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
           }
         }
       }}
+      onClick={(e) => e.stopPropagation()}
       onOpen={onOpen}
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
         <Grid item>
