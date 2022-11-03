@@ -125,7 +125,6 @@ const EncounterDetailsPage = () => {
                     {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
                   </Typography>
                   <IconButton
-                    disabled={addendum.isEdited}
                     sx={{
                       color: theme.palette.primary.main,
                       border: `${borders.solid1px} ${theme.palette.primary.main}`,
