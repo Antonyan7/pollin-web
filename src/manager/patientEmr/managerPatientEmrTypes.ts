@@ -157,6 +157,10 @@ export interface IPatientProfileOverviewResponse {
   overview: PatientProfileOverview;
 }
 
+export interface ITestResultHistoryResponse {
+  testResultsHistory: ITestResultHistory;
+}
+
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
 export interface IUpdateEncounterNoteRequest {
   id: string;
@@ -203,4 +207,38 @@ export interface ITestResultHistory {
   items: {
     title: string;
   }[];
+}
+
+export interface IPatientTestResult {
+  widgetTitle: string;
+  testResults: ITestResult[];
+}
+
+export interface IProfileData {
+  name: string;
+  contribution: string;
+}
+
+export interface ITestTypeItem {
+  title: string;
+  testTypeId: string;
+}
+
+export interface ITestResult {
+  title: string;
+  items: {
+    title: string;
+    items: ITestTypeItem[];
+  }[];
+}
+
+export interface IPartner {
+  widgetTitle: string;
+  patientId: string;
+  profile: IProfileData;
+  testResults: ITestResult[];
+}
+export interface IProfileTestResults {
+  patient: IPatientTestResult;
+  partners?: IPartner[];
 }

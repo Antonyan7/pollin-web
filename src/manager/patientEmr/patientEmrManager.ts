@@ -17,7 +17,8 @@ import {
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
-  ITestResultHistory,
+  IProfileTestResults,
+  ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmrTypes';
@@ -104,13 +105,18 @@ const patientEmrManager = {
       `${baseURL}/v1/profile/${patientId}/overview`
     );
   },
+  getProfileTestResults(patientId: string) {
+    return axiosInstance.get<any, IAxiosResponse<IProfileTestResults>>(
+      `${baseURLTestsResults}/v1/profile-test-result/${patientId}`
+    );
+  },
   getProfileTestResultLatest(patientId: string) {
     return axiosInstance.get<any, IAxiosResponse<ITestResultLatest[]>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/latest`
     );
   },
   getProfileTestResultsHistory(patientId: string, testTypeId: string) {
-    return axiosInstance.get<any, IAxiosResponse<ITestResultHistory>>(
+    return axiosInstance.get<any, IAxiosResponse<ITestResultHistoryResponse>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/testType/${testTypeId}/history`
     );
   }

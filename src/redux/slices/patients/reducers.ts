@@ -1,4 +1,8 @@
-import { IEncounterDetailsProps, ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
+import {
+  IEncounterDetailsProps,
+  IProfileTestResults,
+  ITestResultHistory
+} from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -79,6 +83,15 @@ const reducers = createReducer({
   },
   setTestResultsHistory(state, action: IAction<ITestResultHistory>) {
     state.profile.testResultsHistory = action.payload;
+  },
+  setIsTestResultsHistoryLoading(state, action: IAction<boolean>) {
+    state.profile.isTestResultsHistoryLoading = action.payload;
+  },
+  setProfileTestResults(state, action: IAction<IProfileTestResults>) {
+    state.profile.profileTestResults = action.payload;
+  },
+  setIsProfileTestResultsLoading(state, action: IAction<boolean>) {
+    state.profile.isProfileTestResultsLoading = action.payload;
   },
   setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
     state.latestTestResults = action.payload;

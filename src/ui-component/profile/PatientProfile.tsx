@@ -1,11 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import Overview from '@components/PatientProfile/Overview';
+import PartnerProfileOverview from '@components/PatientProfile/PartnerProfileOverview';
+import TestResults from '@components/PatientProfile/TestResults';
 import { Box, Grid, Stack } from '@mui/material';
 import {
   PatientProfileNavigatorContext,
   PatientProfileNavigatorContextData,
   ProfilePageName
 } from 'context/PatientProfileNavigatorContext';
+import { paddings } from 'themes/themeConstants';
 import { AppointmentType } from 'types/patientProfile';
 
 import AppointmentsCard from '@ui-component/profile/AppointmentsCard';
@@ -45,15 +48,17 @@ const PatientProfile = () => {
           height="100%"
           container
         >
-          <Grid item container flexGrow={1} flexBasis={0} columnGap={2}>
+          <Grid item container flexGrow={1} flexBasis={0} columnGap={3} pt={paddings.top20}>
             <Grid item flexGrow={6} flexBasis={0} direction="column">
-              <Stack rowGap={4}>
+              <Stack rowGap={3}>
                 <Overview />
+                <TestResults />
                 <LatestTestResults />
               </Stack>
             </Grid>
             <Grid item flexGrow={4} flexBasis={0}>
-              <Stack rowGap={4}>
+              <Stack rowGap={3}>
+                <PartnerProfileOverview />
                 <AppointmentsCard appointmentType={AppointmentType.Upcoming} />
                 <AppointmentsCard appointmentType={AppointmentType.Past} />
               </Stack>

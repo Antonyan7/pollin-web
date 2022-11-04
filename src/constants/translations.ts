@@ -20,6 +20,8 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_DATE = 'page.patient.profile.appointments.list.table.header.date',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_TIME = 'page.patient.profile.appointments.list.table.header.time',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_STATUS = 'page.patient.profile.appointments.list.table.header.status',
+  PAGE_PATIENT_PARTNERS_PROFILE_NAME = 'page.patient.partners.profile.name',
+  PAGE_PATIENT_PARTNERS_PROFILE_CONTRIBUTION = 'page.patient.partners.profile.contribution',
   PAGE_PATIENT_PROFILE_UPCOMING_APPOINTMENTS = 'page.patient.profile.upcoming.appointments',
   PAGE_PATIENT_PROFILE_PAST_APPOINTMENTS = 'page.patient.profile.past.appointments',
   COMMON_BUTTON_VIEW_ALL = 'common.button.view.all',
@@ -165,7 +167,9 @@ export enum Translation {
   GOOGLE_SIGN_UP_BUTTON = 'google.sign.up.button',
   GOOGLE_LOGIN_TITLE = 'google.login.title',
   DO_NOT_HAVE_AN_ACCOUNT = 'do.not.have.an.account',
-  BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more'
+  BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more',
+  PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVALIABLE = 'page.patient.widget.data.is.not.avaliable',
+  PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

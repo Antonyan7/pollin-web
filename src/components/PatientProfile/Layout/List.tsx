@@ -1,20 +1,9 @@
 import React from 'react';
-import { Box, Typography, TypographyProps } from '@mui/material';
-import { BoxProps } from '@mui/system';
+import { Box, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
-import { WidgetProps } from '../types';
-
-interface ListLayoutProps {
-  items: WidgetProps['data']['items'];
-  title?: string;
-  renderAsList?: boolean;
-  componentProps?: {
-    list?: BoxProps;
-    listWrapper?: BoxProps;
-    title?: TypographyProps;
-  };
-}
+import TestHistoryHint from '../TestHistoryHint';
+import { ListLayoutProps } from '../types';
 
 const ListLayout = ({ items, title, renderAsList, componentProps }: ListLayoutProps) => (
   <Box {...componentProps?.listWrapper}>
@@ -25,36 +14,31 @@ const ListLayout = ({ items, title, renderAsList, componentProps }: ListLayoutPr
     )}
     <Box
       display="flex"
-      px={3}
-      py={4}
+      px={paddings.leftRight20}
+      py={paddings.topBottom32}
       flexDirection="column"
       {...(renderAsList && { component: 'ul' })}
       {...componentProps?.list}
     >
       {items?.map((item, index) => {
-        const [leftSideValue, rightSideValue] = Object.values(item);
-
-        const itemKey = leftSideValue;
+        const itemKey = item.title;
         const shouldAddPaddingForNextItem = index > 0 && !renderAsList;
 
         return (
-          <Box {...(renderAsList && { component: 'li' })}>
-            <Box
-              display="flex"
-              alignItems="center"
-              key={itemKey as string}
-              {...(shouldAddPaddingForNextItem && { pt: paddings.top16 })}
-            >
+          <Box {...(renderAsList && { component: 'li', sx: { fontSize: '14px' } })} key={itemKey}>
+            <Box display="flex" {...(shouldAddPaddingForNextItem && { pt: paddings.top16 })}>
               <Box
                 sx={{
                   flexBasis: renderAsList ? '100%' : '30%'
                 }}
               >
-                <Typography color={(theme) => theme.palette.secondary[800]}>{leftSideValue as string}</Typography>
+                <Typography {...(!renderAsList && { color: (theme) => theme.palette.secondary[800], fontWeight: 600 })}>
+                  {item.title}
+                </Typography>
               </Box>
               {!renderAsList && (
                 <>
-                  <Box sx={{ flexBasis: '10%', px: '5%' }}>
+                  <Box sx={{ flexBasis: '10%' }}>
                     <Typography color={(theme) => theme.palette.secondary[800]}>:</Typography>
                   </Box>
                   <Box
@@ -62,14 +46,26 @@ const ListLayout = ({ items, title, renderAsList, componentProps }: ListLayoutPr
                       flexBasis: '30%'
                     }}
                   >
-                    {Array.isArray(rightSideValue) ? (
-                      rightSideValue?.map((lineItem, lineItemindex) => (
-                        <Typography color={(theme) => theme.palette.grey[700]} {...(lineItemindex > 0 && { pt: 2 })}>
-                          {lineItem.title}
+                    {item.subItems?.map((subItem, subItemIndex) =>
+                      subItem.id ? (
+                        <TestHistoryHint testResultId={subItem.id} key={subItem.id}>
+                          <Typography
+                            sx={{ textDecoration: 'underline' }}
+                            color={(theme) => theme.palette.grey[700]}
+                            {...(subItemIndex > 0 && { pt: paddings.top16 })}
+                          >
+                            {subItem.title}
+                          </Typography>
+                        </TestHistoryHint>
+                      ) : (
+                        <Typography
+                          key={subItem.title}
+                          color={(theme) => theme.palette.grey[700]}
+                          {...(subItemIndex > 0 && { pt: paddings.top16 })}
+                        >
+                          {subItem.title}
                         </Typography>
-                      ))
-                    ) : (
-                      <Typography>{rightSideValue}</Typography>
+                      )
                     )}
                   </Box>
                 </>

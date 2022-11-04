@@ -51,6 +51,33 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
       };
       break;
 
+    case 'active':
+      defaultSX = {
+        padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
+        width: '140px',
+        color: theme.palette.success[800],
+        fontWeight: 600,
+        backgroundColor: theme.palette.success.light,
+        ':hover': {
+          color: theme.palette.success.light,
+          backgroundColor: theme.palette.success[800]
+        }
+      };
+      break;
+    case 'inActive':
+      defaultSX = {
+        padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
+        width: '140px',
+        color: theme.palette.error[800],
+        fontWeight: 600,
+        backgroundColor: theme.palette.error.light,
+        ':hover': {
+          color: theme.palette.error.light,
+          backgroundColor: theme.palette.error[800]
+        }
+      };
+      break;
+
     default:
   }
 

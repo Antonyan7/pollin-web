@@ -28,7 +28,10 @@ export const getInitialState = (): PatientEmrProps => ({
   profile: {
     isOverviewLoading: false,
     overview: null,
-    testResultsHistory: null
+    testResultsHistory: null,
+    isTestResultsHistoryLoading: false,
+    profileTestResults: null,
+    isProfileTestResultsLoading: false
   },
   patientAppointments: {
     list: {

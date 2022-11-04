@@ -8,23 +8,25 @@ import WidgetLayout from './Layout';
 
 const Overview = () => {
   const patinetProfileOverview = useAppSelector(patientsSelector.patientProfileOverview);
+  const isPatientProfileOverview = useAppSelector(patientsSelector.isPatientProfileOverviewLoading);
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
 
   useEffect(() => {
-    dispatch(patientsMiddleware.getPatientProfileOverview(currentPatientId));
+    if (currentPatientId) {
+      dispatch(patientsMiddleware.getPatientProfileOverview(currentPatientId));
+    }
   }, [currentPatientId]);
 
   return (
-    patinetProfileOverview && (
-      <WidgetLayout
-        data={patinetProfileOverview}
-        secondary={
-          <IconButton>
-            <EditOutlined color="primary" />
-          </IconButton>
-        }
-      />
-    )
+    <WidgetLayout
+      loading={isPatientProfileOverview}
+      data={patinetProfileOverview}
+      secondary={
+        <IconButton>
+          <EditOutlined color="primary" />
+        </IconButton>
+      }
+    />
   );
 };
 

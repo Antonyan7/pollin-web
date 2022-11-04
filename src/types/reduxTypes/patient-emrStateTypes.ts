@@ -2,6 +2,7 @@ import { IPagination } from '@axios/axiosTypes';
 import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType
@@ -12,6 +13,9 @@ interface IProfileProps {
   isOverviewLoading: boolean;
   overview: PatientProfileOverview | null;
   testResultsHistory: ITestResultHistory | null;
+  profileTestResults: IProfileTestResults | null;
+  isTestResultsHistoryLoading: boolean;
+  isProfileTestResultsLoading: boolean;
 }
 
 export interface PatientEmrProps {
@@ -30,15 +34,17 @@ export interface PatientEmrProps {
   profile: IProfileProps;
 }
 
+export interface IItem {
+  title: string;
+  lineItems: {
+    title: string;
+    uuid?: string;
+  }[];
+}
+
 export interface PatientProfileOverview {
   widgetTitle: string;
-  items: {
-    title: string;
-    lineItems: {
-      title: string;
-      uuid?: string;
-    }[];
-  }[];
+  items: IItem[];
 }
 
 export interface PatientHighlight {

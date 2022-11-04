@@ -18,6 +18,8 @@
   "page.patient.profile.appointments.list.table.header.date": "Date",
   "page.patient.profile.appointments.list.table.header.time": "Time",
   "page.patient.profile.appointments.list.table.header.status": "Status",
+  "page.patient.partners.profile.name": "Name",
+  "page.patient.partners.profile.contribution": "Contribution",
   "page.patient.profile.upcoming.appointments": "Upcoming Appointments",
   "page.patient.profile.past.appointments": "Past Appointments",
   "common.button.view.all": "View All",
@@ -163,5 +165,7 @@
   "google.sign.up.button": "Sign Up With Google",
   "google.login.title": "Hi, Welcome Back",
   "do.not.have.an.account": "Don't have an account?",
-  "base.dropdown.loading.more": "Loading More"
+  "base.dropdown.loading.more": "Loading More",
+  "page.patient.widget.data.is.not.avaliable": "No information available.",
+  "page.patient.widget.profile.partners.title": "Partners Profile"
 }

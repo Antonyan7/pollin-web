@@ -39,8 +39,11 @@ const {
   setCurrentEncounterID,
   setLatestTestResults,
   setTestResultsHistory,
+  setProfileTestResults,
   setPatientAppointments,
-  setPatientAppointmentsList
+  setPatientAppointmentsList,
+  setIsProfileTestResultsLoading,
+  setIsTestResultsHistoryLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -274,12 +277,31 @@ const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDi
 
 const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsProfileTestResultsLoading(true));
+
     const response = await API.patients.getProfileTestResultsHistory(patientId, testTypeId);
 
-    dispatch(setTestResultsHistory(response.data.data));
+    dispatch(setTestResultsHistory(response.data.data.testResultsHistory));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setIsProfileTestResultsLoading(false));
+  }
+};
+
+const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTestResultsHistoryLoading(true));
+
+    const response = await API.patients.getProfileTestResults(patientId);
+
+    dispatch(setProfileTestResults(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTestResultsHistoryLoading(false));
   }
 };
 
@@ -347,6 +369,7 @@ export default {
   getEncounterList,
   getEncounterFilters,
   setCurrentPatient,
+  setCurrentPatientId,
   cleanPatientList,
   createEncounterNote,
   updateEncounterNote,
@@ -359,6 +382,7 @@ export default {
   setCurrentEncounterId,
   getProfileTestResultLatest,
   getProfileTestResultsHistory,
+  getProfileTestResults,
   getInitialPatientAppointments,
   getPatientAppointments
 };

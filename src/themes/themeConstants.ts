@@ -29,6 +29,7 @@ export const margins = {
   right20: '20px',
   right24: '24px',
   right32: '32px',
+  right64: '64px',
   bottom0: 0,
   bottom2: '2px',
   bottom4: '4px',

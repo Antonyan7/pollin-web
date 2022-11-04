@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import ListLayout from '@components/PatientProfile/Layout/List';
 import { Box, Tooltip, tooltipClasses, TooltipProps } from '@mui/material';
 import { MUIStyledCommonProps, styled } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import ListLayout from 'components/PatientProfile/Layout/List';
 import { paddings } from 'themes/themeConstants';
+
+import { IListLayoutItem } from './types';
 
 interface TestHistoryHintProps extends MUIStyledCommonProps {
   testResultId: string;
@@ -25,40 +27,41 @@ const TestHistoryTooltipContent = ({ testResultId }: Omit<TestHistoryHintProps, 
   const testResultsHistory = useAppSelector(patientsSelector.testResultsHistory);
 
   useEffect(() => {
-    if (testResultId) {
+    if (testResultId && currentPatientId) {
       dispatch(patientsMiddleware.getProfileTestResultsHistory(currentPatientId, testResultId));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [testResultId, currentPatientId]);
 
   return (
-    <Box
-      sx={{
-        width: '205px',
-        pb: paddings.bottom8
-      }}
-    >
-      <ListLayout
-        items={testResultsHistory?.items ?? []}
-        title={testResultsHistory?.widgetTitle}
-        renderAsList
-        componentProps={{
-          list: {
-            py: 0,
-            px: paddings.leftRight20,
-            sx: {
-              margin: 0
-            }
-          },
-          title: {
-            sx: {
-              pt: paddings.top8,
-              m: 0
-            }
-          }
+    testResultsHistory && (
+      <Box
+        sx={{
+          width: '205px',
+          pb: paddings.bottom8
         }}
-      />
-    </Box>
+      >
+        <ListLayout
+          items={testResultsHistory?.items as IListLayoutItem[]}
+          title={testResultsHistory?.widgetTitle}
+          renderAsList
+          componentProps={{
+            list: {
+              py: 0,
+              px: paddings.leftRight20,
+              sx: {
+                margin: 0
+              }
+            },
+            title: {
+              sx: {
+                pt: paddings.top8,
+                m: 0
+              }
+            }
+          }}
+        />
+      </Box>
+    )
   );
 };
 

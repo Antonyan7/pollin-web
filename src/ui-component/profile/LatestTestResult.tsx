@@ -18,6 +18,7 @@ import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import Chip from '@ui-component/patient/Chip';
@@ -34,28 +35,57 @@ const LatestTestResults = () => {
   }, [patientId]);
 
   return (
-    <SubCardStyled title={t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TITLE)} content={false}>
+    <SubCardStyled
+      title={t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TITLE)}
+      titleProps={{
+        fontWeight: 600,
+        pr: paddings.right12,
+        fontSize: '14px',
+        color: (theme) => theme.palette.secondary[800]
+      }}
+      content={false}
+    >
       <TableContainer>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}</TableCell>
-              <TableCell>{t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUE_DATE)}</TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">
+                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">
+                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography fontWeight="bold">
+                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUE_DATE)}
+                </Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {latestTestResults?.map((latestTestResult) => {
-              const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? '' : 'error';
+              const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? 'active' : 'inActive';
 
               return (
                 <TableRow hover key={latestTestResult.title}>
                   <TableCell>
-                    <Typography variant="h5">{latestTestResult.title}</Typography>
+                    <Typography fontWeight="bold" variant="h5">
+                      {latestTestResult.title}
+                    </Typography>
                   </TableCell>
                   <TableCell>{timeAdjuster(new Date(latestTestResult.dateCollected)).customizedDate}</TableCell>
-                  <TableCell>
-                    <Chip chipColor={cellChipColor} label={latestTestResult.result} />
+                  <TableCell width={30}>
+                    <Chip
+                      sx={{
+                        mr: margins.right64
+                      }}
+                      chipColor={cellChipColor}
+                      label={latestTestResult.result}
+                    />
                   </TableCell>
                 </TableRow>
               );

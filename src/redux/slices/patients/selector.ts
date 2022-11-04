@@ -25,9 +25,14 @@ const latestTestResults = createSelector([selector], (state) => state.latestTest
 const patientProfileOverview = createSelector([selector], (state) => state.profile.overview);
 const isPatientProfileOverviewLoading = createSelector([selector], (state) => state.profile.isOverviewLoading);
 const testResultsHistory = createSelector([selector], (state) => state.profile.testResultsHistory);
+const isTestResultsHistoryLoading = createSelector([selector], (state) => state.profile.isTestResultsHistoryLoading);
+const profileTestResults = createSelector([selector], (state) => state.profile.profileTestResults);
+const isProfileTestResultsLoading = createSelector([selector], (state) => state.profile.isProfileTestResultsLoading);
 const patientAppointments = createSelector([selector], (state) => state.patientAppointments);
 
 export default {
+  isTestResultsHistoryLoading,
+  isProfileTestResultsLoading,
   patientsListData,
   patientsList,
   isPatientsFiltersLoading,
@@ -50,5 +55,6 @@ export default {
   isPatientProfileOverviewLoading,
   patientProfileOverview,
   testResultsHistory,
+  profileTestResults,
   patientAppointments
 };
