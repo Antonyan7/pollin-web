@@ -49,7 +49,7 @@ const PatientProfile = () => {
           container
         >
           <Grid item container flexGrow={1} flexBasis={0} columnGap={3} pt={paddings.top20}>
-            <Grid item flexGrow={6} flexBasis={0} direction="column">
+            <Grid item flexGrow={6} flexBasis={0}>
               <Stack rowGap={3}>
                 <Overview />
                 <TestResults />

@@ -78,14 +78,16 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
             link.linkName !== AvailablePages.Encounters && link.linkName !== AvailablePages.Profile;
 
           return (
-            <Tab
-              disabled={availableLinks}
-              key={link.linkName}
-              component={Link}
-              href={`/patient-emr/details/${currentPatientId}/${link.href}`}
-              label={link.linkName}
-              {...allyProps(linkIndex)}
-            />
+            currentPatientId && (
+              <Tab
+                disabled={availableLinks}
+                key={link.linkName}
+                component={Link}
+                href={`/patient-emr/details/${currentPatientId}/${link.href}`}
+                label={link.linkName}
+                {...allyProps(linkIndex)}
+              />
+            )
           );
         })}
       </Tabs>

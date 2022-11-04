@@ -29,20 +29,20 @@ const PatientAlertView = () => {
     <Box sx={{ width: '100%' }}>
       <Alert sx={{ mb: 2, background: theme.palette.warning.light }}>
         {patientAlertDetails.map((titleContent: AlertDetailsProps) => (
-          <>
+          <React.Fragment key={titleContent.id}>
             <StyledDiv>
               <InfoOutlinedIcon sx={{ marginRight: margins.right4 }} />
               <Typography color={theme.palette.warning.dark}>{titleContent.title}</Typography>
             </StyledDiv>
             {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-              <StyledDiv>
+              <StyledDiv key={`${titleContent.id}-${message.title}`}>
                 <Typography variant="caption" color={theme.palette.warning.dark} sx={{ marginLeft: '10px' }}>
                   &#9679;
                 </Typography>
                 <ListItem>{message.title}</ListItem>
               </StyledDiv>
             ))}
-          </>
+          </React.Fragment>
         ))}
       </Alert>
     </Box>

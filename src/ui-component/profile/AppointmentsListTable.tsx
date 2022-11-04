@@ -107,6 +107,11 @@ const AppointmentsListTable = () => {
                   <TableCell>{status}</TableCell>
                 </TableRow>
               ))}
+            {Array.from({ length: pageSize - (tableData?.length ?? 0) }, (_, i) => (
+              <TableRow key={`placeholder-${i}`}>
+                <TableCell sx={{ borderColor: 'transparent', userSelect: 'none' }}>&nbsp;</TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
