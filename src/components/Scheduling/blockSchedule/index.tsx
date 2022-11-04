@@ -16,7 +16,7 @@ import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { linkDateAndTime } from '@utils/dateUtils';
+import { calculateTimeInUTC, linkDateAndTime } from '@utils/dateUtils';
 
 import { SeveritiesType } from '../types';
 
@@ -78,8 +78,8 @@ const BlockTemplates = () => {
   const onSubmit = (values: IBlockScheduleForm) => {
     const sendingBlockValues = {
       resourceId: values.resourceId,
-      startDate: linkDateAndTime(values.startDate, values.startTime),
-      endDate: linkDateAndTime(values.endDate, values.endTime),
+      startDate: calculateTimeInUTC(linkDateAndTime(values.startDate, values.startTime)),
+      endDate: calculateTimeInUTC(linkDateAndTime(values.endDate, values.endTime)),
       placeholderLabel: values.placeholderLabel
     };
 

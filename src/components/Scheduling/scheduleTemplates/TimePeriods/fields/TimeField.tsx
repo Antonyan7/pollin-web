@@ -8,10 +8,9 @@ import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { isValid } from 'date-fns';
 import { ITemplateGroup } from 'types/create-schedule';
 
-import { convertToLocale, toESTIsoString } from '@utils/dateUtils';
+import { convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 
 interface ITimeFieldProps {
   index: number;
@@ -50,9 +49,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   }
 
   const onTimeFieldChange = (newTime: Date | null) => {
-    if (newTime && isValid(newTime)) {
-      onChange(toESTIsoString(newTime));
-    }
+    onChange(toLocalIsoString(newTime));
   };
   const timeFieldValue = getValues().timePeriods[index]?.[fieldName];
   const initialValue = convertToLocale(timeFieldValue);

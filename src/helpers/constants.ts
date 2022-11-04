@@ -19,7 +19,7 @@ export const cancellationReasons = [
 export const repeatWeeksList = (weekCount: number): IApplyScheduleDay[] =>
   Array.from({ length: weekCount }).map((_, weekIdx) => ({ id: weekIdx + 1, name: `${weekIdx + 1} Week` }));
 
-export const ESTTimezone = '-04:00';
+export const UTCTimezone = '+00:00';
 
 export const standardDate = new Date(1970, 0, 1, 15, 0, 0, 0);
 

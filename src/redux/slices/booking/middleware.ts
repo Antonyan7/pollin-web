@@ -9,7 +9,7 @@ import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
-import { toESTIsoString } from '@utils/dateUtils';
+import { calculateTimeInUTC, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
 import slice from './slice';
@@ -193,7 +193,7 @@ const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async 
     dispatch(setAppointmentLoading(true));
 
     appointmentValues.providerId = providerId;
-    appointmentValues.date = toESTIsoString(appointmentValues.date as Date);
+    appointmentValues.date = calculateTimeInUTC(toLocalIsoString(appointmentValues.date as Date));
     await API.booking.createAppointment(appointmentValues);
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
@@ -225,7 +225,9 @@ const editAppointment =
       const providerId = store.getState().booking.currentServiceProviderId;
       const calendarDate = store.getState().booking.date;
 
-      appointmentValues.appointment.date = toESTIsoString(appointmentValues.appointment.date as Date);
+      appointmentValues.appointment.date = calculateTimeInUTC(
+        toLocalIsoString(appointmentValues.appointment.date as Date)
+      );
       await API.booking.editAppointment(appointmentId, appointmentValues);
       dispatch(getAppointments(providerId, calendarDate));
     } catch (error) {

@@ -11,7 +11,7 @@ import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
-import { changeDateSameTimezone, excludeDates, getWeekDay } from '@utils/dateUtils';
+import { changeDateSameTime, excludeDates, getWeekDay } from '@utils/dateUtils';
 import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
@@ -102,9 +102,8 @@ const Calendar = () => {
       calendarEvents.push(
         CreateSlot(
           item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
-          // TODO: remove changeHours function after actual server implementation
-          changeDateSameTimezone(item.startTime as string, date),
-          changeDateSameTimezone(item.endTime as string, date),
+          changeDateSameTime(item.startTime as string, date),
+          changeDateSameTime(item.endTime as string, date),
           item.placeholderName,
           item.periodType
         )

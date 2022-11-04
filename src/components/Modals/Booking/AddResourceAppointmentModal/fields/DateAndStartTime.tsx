@@ -7,11 +7,12 @@ import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { formatDate, toRoundupTime } from 'helpers/time';
+import { UTCTimezone } from 'helpers/constants';
+import { toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import { futureDate180DaysAfter } from '@utils/dateUtils';
+import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
 
 const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
@@ -64,7 +65,7 @@ const DateAndStartTime: React.FC = () => {
           }
         }}
         renderInput={(params: TextFieldProps) => {
-          const formattedDate = formatDate(initialDate as Date);
+          const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
 
           const formattedParams = {
             ...params,

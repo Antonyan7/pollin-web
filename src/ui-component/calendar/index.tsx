@@ -1,14 +1,14 @@
 /* eslint-disable simple-import-sort/imports */
 import React, { useEffect, useRef, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
-import { addMinutesToTime } from '@utils/dateUtils';
+import { calculateEndTime } from '@utils/dateUtils';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { Translation } from 'constants/translations';
-import { dispatch, useAppSelector } from '../../redux/hooks';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { IAppointment, ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 import { CreateSlot } from './Slot';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
-import { IAppointment, ICalendarSlot } from '../../types/reduxTypes/bookingStateTypes';
 import { StyledDisabledLayer } from './StyledDisabledLayer';
 import FullCalendarContainer from './FullCalendarContainer';
 import FullCalendarWrapper from './FullCalendarWrapper';
@@ -80,7 +80,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
       CreateSlot(
         item.type,
         item.startTime,
-        addMinutesToTime(item.startTime, item.timeUnits * 10).toISOString(),
+        calculateEndTime(item.startTime, item.timeUnits),
         item.title,
         item.id,
         item.color

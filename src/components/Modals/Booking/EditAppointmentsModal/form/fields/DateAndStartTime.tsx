@@ -7,11 +7,12 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { formatDate, toRoundupTime } from 'helpers/time';
+import { UTCTimezone } from 'helpers/constants';
+import { toRoundupTime } from 'helpers/time';
 
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
-import { futureDate180DaysAfter } from '@utils/dateUtils';
+import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
 
 import { IFormValues } from '../types';
 
@@ -66,7 +67,7 @@ const DateAndStartTime: React.FC = () => {
         }}
         onChange={(date: DateAndStartTimeType) => onChange(getMobileDateTime(date))}
         renderInput={(params: TextFieldProps) => {
-          const formattedDate = formatDate(value as Date);
+          const formattedDate = dateInputValue(changeTimezone(value as string | Date, UTCTimezone));
 
           const formattedParams = {
             ...params,
