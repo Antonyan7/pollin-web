@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -27,6 +27,8 @@ const Encounters = () => {
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const encountersList: IEncounterList = useAppSelector(patientsSelector.encountersList);
 
+  const encounters = useMemo(() => [...encountersList.encounters], [encountersList.encounters]);
+
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
@@ -53,27 +55,29 @@ const Encounters = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isEncountersListLoading || encountersList.encounters.length ? (
+            {isEncountersListLoading || encounters.length ? (
               <>
-                {encountersList.encounters.map((encounter) => (
-                  <EncounterNoteThumbnail
-                    key={encounter.id}
-                    id={encounter.id}
-                    author={encounter.author}
-                    title={encounter.title}
-                    contentPreview={encounter.contentPreview}
-                    createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
-                      day: 'numeric',
-                      year: 'numeric',
-                      month: 'short'
-                    })}
-                  />
-                ))}
+                {encounters
+                  .sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())
+                  .map((encounter) => (
+                    <EncounterNoteThumbnail
+                      key={encounter.id}
+                      id={encounter.id}
+                      author={encounter.author}
+                      title={encounter.title}
+                      contentPreview={encounter.contentPreview}
+                      createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
+                        day: 'numeric',
+                        year: 'numeric',
+                        month: 'short'
+                      })}
+                    />
+                  ))}
                 <TablePagination
                   labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
                   rowsPerPageOptions={[25, 40, 100]}
                   component="div"
-                  count={encountersList.encounters.length}
+                  count={encounters.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}

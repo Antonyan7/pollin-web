@@ -75,7 +75,7 @@ const EncounterDetailsPage = () => {
       dispatch(patientsMiddleware.getEncounterDetailsInformation(router.query.id as string));
       dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
     }
-  }, [router.query.id]);
+  }, [router.query.id, encounterData?.addendums.length]);
 
   return (
     encounterData && (
@@ -116,7 +116,7 @@ const EncounterDetailsPage = () => {
               {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} {encounterNoteCreatedTime}
             </Typography>
           </Grid>
-          <Grid item container direction="column" gap={2} sx={{ pt: 2 }}>
+          <Grid item container direction="column" gap={1} sx={{ pt: 2 }}>
             {encounterData.addendums.map((addendum: AddendumsProps) => (
               <>
                 <Divider />
