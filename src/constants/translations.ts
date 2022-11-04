@@ -12,7 +12,7 @@ export enum Translation {
   PAGE_PATIENT_LATEST_TEST_RESULT_TITLE = 'page.patient.latest.test.result.title',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST = 'page.patient.latest.test.result.table.header.test',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED = 'page.patient.latest.test.result.table.header.date.collected',
-  PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUE_DATE = 'page.patient.latest.test.result.table.header.due.date',
+  PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT = 'page.patient.latest.test.result.table.header.result',
   PAGE_PATIENT_RESULT_BUTTON = 'page.patient.result.button',
   PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_30 = 'page.patient.pending.test.results.greater.30',
   PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_15 = 'page.patient.pending.test.results.greater.15',
@@ -169,7 +169,9 @@ export enum Translation {
   DO_NOT_HAVE_AN_ACCOUNT = 'do.not.have.an.account',
   BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more',
   PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVALIABLE = 'page.patient.widget.data.is.not.avaliable',
-  PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title'
+  PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title',
+  PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE = 'page.patient.widget.test.results.title',
+  PAGE_PATIENT_WIDGET_PROFILE_OVERVIEW_TITLE = 'page.patient.widget.profile.overview.title'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

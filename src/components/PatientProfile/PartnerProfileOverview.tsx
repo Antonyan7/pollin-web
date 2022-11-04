@@ -33,7 +33,9 @@ const PartnerProfileOverview = () => {
   };
 
   const isProfilePartnersInformationAvailable =
-    Array.isArray(profileTestResults?.partners) && profileTestResults?.partners?.length;
+    Array.isArray(profileTestResults?.partners) &&
+    profileTestResults?.partners?.length &&
+    !isPatientProfileOverviewLoading;
 
   return (
     <Box display="flex" flexDirection="column" rowGap={3}>
@@ -43,6 +45,7 @@ const PartnerProfileOverview = () => {
 
           return (
             <WidgetLayout
+              key={patientId}
               data={partnerData}
               profile={profile}
               secondary={

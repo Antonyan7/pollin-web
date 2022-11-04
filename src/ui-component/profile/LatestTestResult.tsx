@@ -61,7 +61,7 @@ const LatestTestResults = () => {
               </TableCell>
               <TableCell>
                 <Typography fontWeight="bold">
-                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DUE_DATE)}
+                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT)}
                 </Typography>
               </TableCell>
             </TableRow>

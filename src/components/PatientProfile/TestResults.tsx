@@ -1,10 +1,13 @@
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { Translation } from 'constants/translations';
 
 import WidgetLayout from './Layout';
 
 const TestResults = () => {
+  const [t] = useTranslation();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const profileTestResults = useAppSelector(patientsSelector.profileTestResults);
   const isPatientProfileOverviewLoading = useAppSelector(patientsSelector.isPatientProfileOverviewLoading);
@@ -15,7 +18,13 @@ const TestResults = () => {
     }
   }, [currentPatientId]);
 
-  return <WidgetLayout data={profileTestResults?.patient} loading={isPatientProfileOverviewLoading} />;
+  return (
+    <WidgetLayout
+      data={profileTestResults?.patient}
+      emptyWidgetTitle={t(Translation.PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE)}
+      loading={isPatientProfileOverviewLoading}
+    />
+  );
 };
 
 export default TestResults;

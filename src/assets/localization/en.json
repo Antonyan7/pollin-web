@@ -10,7 +10,7 @@
   "page.patient.latest.test.result.title": "Latest Test Result",
   "page.patient.latest.test.result.table.header.test": "Test",
   "page.patient.latest.test.result.table.header.date.collected": "Date Collected",
-  "page.patient.latest.test.result.table.header.due.date": "Due Date",
+  "page.patient.latest.test.result.table.header.result": "Result",
   "page.patient.result.button": "View All",
   "page.patient.pending.test.results.greater.30": "30+ days",
   "page.patient.pending.test.results.greater.15": "16-30 days",
@@ -167,5 +167,7 @@
   "do.not.have.an.account": "Don't have an account?",
   "base.dropdown.loading.more": "Loading More",
   "page.patient.widget.data.is.not.avaliable": "No information available.",
-  "page.patient.widget.profile.partners.title": "Partners Profile"
+  "page.patient.widget.profile.partners.title": "Partners Profile",
+  "page.patient.widget.test.results.title": "Test Results",
+  "page.patient.widget.profile.overview.title": "Overview"
 }
