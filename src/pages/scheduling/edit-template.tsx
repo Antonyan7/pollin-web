@@ -5,7 +5,7 @@ import EditTemplate from '@components/Scheduling/EditTemplate';
 import { Box } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-const CreateSchedulingTemplate = () => {
+const EditSchedulingTemplate = () => {
   const [t] = useTranslation();
 
   return (
@@ -25,4 +25,4 @@ const CreateSchedulingTemplate = () => {
   );
 };
 
-export default CreateSchedulingTemplate;
+export default EditSchedulingTemplate;

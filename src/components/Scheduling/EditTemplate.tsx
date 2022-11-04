@@ -142,7 +142,7 @@ const EditTemplate = () => {
                 onClick={onOpenModalClick}
                 variant="outlined"
                 size="large"
-                sx={{ marginRight: margins.right2, marginLeft: margins.auto }}
+                sx={{ marginRight: margins.all20, marginLeft: margins.auto }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>

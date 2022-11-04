@@ -6,8 +6,6 @@ import { borderRadius } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-import { margins } from '../../../../themes/themeConstants';
-
 interface Props {
   submitButtonText: string;
 }
@@ -27,7 +25,7 @@ const ActionsField = ({ submitButtonText }: Props) => {
           variant="contained"
           style={{
             borderRadius: borderRadius.radius8,
-            margin: `${margins.bottom32} ${margins.all0}`
+            lineHeight: 1.5
           }}
         >
           {submitButtonText}
