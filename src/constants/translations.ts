@@ -168,6 +168,7 @@ export enum Translation {
   GOOGLE_LOGIN_TITLE = 'google.login.title',
   DO_NOT_HAVE_AN_ACCOUNT = 'do.not.have.an.account',
   BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more',
+  COMMENTS_TEXTFIELD_LABEL = 'comments.textfield.label',
   PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVALIABLE = 'page.patient.widget.data.is.not.avaliable',
   PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title',
   PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE = 'page.patient.widget.test.results.title',

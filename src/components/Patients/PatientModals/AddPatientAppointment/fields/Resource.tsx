@@ -14,7 +14,7 @@ const ResourceField = () => {
   const [t] = useTranslation();
   const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
   const optionsGroup = createOptionsGroup(scheduleResources.providers);
-  const fieldLabel = t(Translation.MODAL_PATIENT_APPOINTMENTS_SELECT_RESOURCE);
+  const fieldLabel = t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE);
   const fieldName = 'resourceId';
   const { control } = useFormContext<ICreatedAppointmentBody>();
   const { field, fieldState } = useController({
