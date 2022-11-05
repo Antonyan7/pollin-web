@@ -20,6 +20,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
   const { t } = useTranslation();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
   const onOpen = debounce(() => dispatch(patientsMiddleware.getPatientAlertDetails(rowId)), 500);
+  const onClose = () => dispatch(patientsMiddleware.resetPatientAlerts());
 
   return alertCount ? (
     <MuiTooltip
@@ -31,10 +32,11 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
           }
         }
       }}
-      onClick={(e) => e.stopPropagation()}
       onOpen={onOpen}
+      onClick={(e) => e.stopPropagation()}
+      onClose={onClose}
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
-        <Grid item>
+        <Grid item key={titleContent.id}>
           <Typography variant="caption" color={theme.palette.common.black}>
             {titleContent.title}:
           </Typography>

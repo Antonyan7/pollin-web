@@ -105,6 +105,14 @@ const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch
     dispatch(setError(error));
   }
 };
+const resetPatientAlerts = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPatientAlertDetails([]));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
 
 const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setCurrentPatientId(patientId));
@@ -365,6 +373,7 @@ export default {
   getPatientsList,
   getPatientSearchFilters,
   getPatientAlertDetails,
+  resetPatientAlerts,
   getPatientProfileOverview,
   getEncounterList,
   getEncounterFilters,
