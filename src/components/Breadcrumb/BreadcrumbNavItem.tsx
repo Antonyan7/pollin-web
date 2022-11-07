@@ -5,10 +5,9 @@ import Link from 'next/link';
 
 import { IBreadcrumbNavItemProp } from './Breadcrumb';
 
-const StyledBreadcrumbParagraph = styled(Typography)<TypographyProps>(({ theme }) => ({
+const StyledBreadcrumbParagraph = styled(Typography)<TypographyProps>(() => ({
   fontSize: '16px',
   lineHeight: '20px',
-  color: theme.palette.grey[800],
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center'
@@ -30,12 +29,7 @@ const BreadcrumbNavItem = ({ page, index }: IBreadcrumbNavItemProp) => {
       <Link href={page.path}>
         <StyledBreadcrumbParagraph
           sx={{
-            fontSize: '16px',
-            lineHeight: '20px',
-            color: theme.palette.grey[800],
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center'
+            color: index ? theme.palette.grey[800] : theme.palette.secondary.main
           }}
           variant="h3"
         >

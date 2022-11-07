@@ -23,7 +23,7 @@ const MainBreadcrumb = (props: IMainBreadcrumb) => {
           <Typography variant="h2" component="div" sx={{ flexGrow: 1, marginRight: margins.right12 }}>
             {currentPage}
           </Typography>
-          <Box sx={{ display: 'flex', gap: margins.all20 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: margins.all20 }}>
             <Link href={navigation.basePath}>
               <HomeIcon sx={{ color: theme.palette.primary.main, cursor: 'pointer' }} />
             </Link>
