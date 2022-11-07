@@ -173,5 +173,15 @@
   "page.patient.widget.data.is.not.avaliable": "No information available.",
   "page.patient.widget.profile.partners.title": "Partners Profile",
   "page.patient.widget.test.results.title": "Test Results",
-  "page.patient.widget.profile.overview.title": "Overview"
+  "page.patient.widget.profile.overview.title": "Overview",
+  "page.input.results.title": "Input Results",
+  "page.input.results.back.to.external.results": "Back to External Results",
+  "page.input.results.test.name": "Test Name",
+  "page.input.results.test.lab.title": "Lab Information",
+  "page.input.results.test.lab.location": "Location",
+  "page.input.results.test.lab.phone.number": "Phone Number",
+  "page.input.results.test.lab.ordering.mrp": "Ordering MRP",
+  "page.input.results.test.dates.title": "Date",
+  "page.input.results.test.dates.date.collected": "Date Collected",
+  "page.input.results.test.dates.date.ordered": "Date Ordered"
 }

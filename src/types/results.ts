@@ -15,3 +15,8 @@ export enum TestResultsStats {
   GreaterThan15Days = 'GreaterThan15Days',
   LessThanOrEqual15Days = 'LessThanOrEqual15Days'
 }
+
+export enum FinalResultChipColor {
+  Active = 'active',
+  InActive = 'inActive'
+}

@@ -13,7 +13,9 @@ const {
   setResultsFiltersLoadingState,
   setResultsSearchFilters,
   setPendingTestStats,
-  setPendingTestStatsLoadingState
+  setPendingTestStatsLoadingState,
+  setTestResultDetails,
+  setIsTestResultDetailsLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -75,8 +77,24 @@ const getPendingTestStats = () => async (dispatch: AppDispatch) => {
   dispatch(setPendingTestStatsLoadingState(false));
 };
 
+const getTestResultDetails = (testResultId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTestResultDetailsLoading(true));
+
+    const response = await API.results.getTestResultsDetails(testResultId);
+
+    dispatch(setTestResultDetails(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsTestResultDetailsLoading(false));
+};
+
 export default {
   getResultsList,
   getResultsFilters,
-  getPendingTestStats
+  getPendingTestStats,
+  getTestResultDetails
 };

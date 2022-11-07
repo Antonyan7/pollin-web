@@ -4,7 +4,8 @@ import {
   IPendingTestStats,
   IResultsFilterCategory,
   IResultsList,
-  IResultsProps
+  IResultsProps,
+  TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<IResultsProps>>(reducer: T) => ({ ...reducer });
@@ -30,6 +31,12 @@ const reducers = createReducer({
   },
   setPendingTestStatsLoadingState(state, action: IAction<boolean>) {
     state.isPendingTestStatsLoading = action.payload;
+  },
+  setTestResultDetails(state, action: IAction<TestResultsDetails>) {
+    state.testResultDetails = action.payload;
+  },
+  setIsTestResultDetailsLoading(state, action: IAction<boolean>) {
+    state.isTestResultDetailsLoading = action.payload;
   }
 });
 

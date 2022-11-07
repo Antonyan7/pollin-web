@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, Typography } from '@mui/material';
+import { useRouter } from 'next/router';
 import { IExternalResultListData } from 'types/reduxTypes/resultsStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
@@ -15,9 +16,25 @@ interface IExternalResultsTableRow {
 const PendingTestResultRow = ({ row, index }: IExternalResultsTableRow) => {
   const labelId = `enhanced-table-checkbox-${index}`;
   const [t] = useTranslation();
+  const router = useRouter();
+
+  const goToTestInputResultsPage = () => {
+    const currentPath = router.asPath;
+    const testResultId = row.id;
+    const inputTestPageURL = `${currentPath}/input-results/${testResultId}`;
+
+    router.push(inputTestPageURL);
+  };
 
   return (
-    <TableRow sx={{ cursor: 'pointer' }} hover role="checkbox" tabIndex={-1} key={row.id}>
+    <TableRow
+      onClick={goToTestInputResultsPage}
+      sx={{ cursor: 'pointer' }}
+      hover
+      role="checkbox"
+      tabIndex={-1}
+      key={row.id}
+    >
       <TableCell>{row.title}</TableCell>
       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography variant="subtitle1">{row.patient.name}</Typography>

@@ -9,6 +9,8 @@ const isResultsLoading = createSelector([selector], (state) => state.isResultsLi
 const isResultsFiltersLoading = createSelector([selector], (state) => state.isResultsFiltersLoading);
 const isPendingTestStatsLoading = createSelector([selector], (state) => state.isPendingTestStatsLoading);
 const pendingTestStats = createSelector([selector], (state) => state.pendingTestStats);
+const isTestResultDetailsLoading = createSelector([selector], (state) => state.isTestResultDetailsLoading);
+const testResultDetails = createSelector([selector], (state) => state.testResultDetails);
 
 export default {
   resultsList,
@@ -16,5 +18,7 @@ export default {
   isResultsFiltersLoading,
   resultsFiltersList,
   isPendingTestStatsLoading,
-  pendingTestStats
+  pendingTestStats,
+  isTestResultDetailsLoading,
+  testResultDetails
 };

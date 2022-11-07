@@ -34,7 +34,7 @@ const Results: ResultProps = {
       id: 'externalResults',
       title: 'External Results',
       type: 'item',
-      url: '/clinic-test-results/test-results',
+      url: '/clinic-test-results/external-results',
       icon: KeyboardDoubleArrowLeftOutlined,
       breadcrumbs: false
     }

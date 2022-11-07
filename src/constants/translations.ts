@@ -175,7 +175,17 @@ export enum Translation {
   PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVALIABLE = 'page.patient.widget.data.is.not.avaliable',
   PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title',
   PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE = 'page.patient.widget.test.results.title',
-  PAGE_PATIENT_WIDGET_PROFILE_OVERVIEW_TITLE = 'page.patient.widget.profile.overview.title'
+  PAGE_PATIENT_WIDGET_PROFILE_OVERVIEW_TITLE = 'page.patient.widget.profile.overview.title',
+  PAGE_INPUT_RESULTS_TITLE = 'page.input.results.title',
+  PAGE_INPUT_RESULTS_BACK_TO_EXTERNAL_RESULTS = 'page.input.results.back.to.external.results',
+  PAGE_INPUT_RESULTS_TEST_NAME = 'page.input.results.test.name',
+  PAGE_INPUT_RESULTS_TEST_LAB_TITLE = 'page.input.results.test.lab.title',
+  PAGE_INPUT_RESULTS_TEST_LAB_LOCATION = 'page.input.results.test.lab.location',
+  PAGE_INPUT_RESULTS_TEST_LAB_PHONE_NUMBER = 'page.input.results.test.lab.phone.number',
+  PAGE_INPUT_RESULTS_TEST_LAB_ORDERING_MRP = 'page.input.results.test.lab.ordering.mrp',
+  PAGE_INPUT_RESULTS_TEST_DATES_TITLE = 'page.input.results.test.dates.title',
+  PAGE_INPUT_RESULTS_TEST_DATES_DATE_COLLECTED = 'page.input.results.test.dates.date.collected',
+  PAGE_INPUT_RESULTS_TEST_DATES_DATE_ORDERED = 'page.input.results.test.dates.date.ordered'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
