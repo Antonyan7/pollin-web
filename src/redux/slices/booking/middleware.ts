@@ -31,7 +31,8 @@ const {
   setAppointmentDetails,
   setPatientAlerts,
   setAppointmentLoading,
-  setSaveButtonDisabled
+  setSaveButtonDisabled,
+  setAppointmentStatus
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -185,16 +186,41 @@ const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: Ap
   }
 };
 
+const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
+  const resetOption = {
+    success: false,
+    fail: false
+  };
+
+  dispatch(
+    setAppointmentStatus({
+      create: resetOption,
+      edit: resetOption,
+      cancel: resetOption
+    })
+  );
+};
+
 const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async (dispatch: AppDispatch) => {
   try {
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
+    const { appointmentStatus } = store.getState().booking;
 
     dispatch(setAppointmentLoading(true));
 
     appointmentValues.providerId = providerId;
     appointmentValues.date = calculateTimeInUTC(toLocalIsoString(appointmentValues.date as Date));
     await API.booking.createAppointment(appointmentValues);
+    dispatch(
+      setAppointmentStatus({
+        ...appointmentStatus,
+        create: {
+          fail: false,
+          success: true
+        }
+      })
+    );
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
@@ -224,11 +250,21 @@ const editAppointment =
     try {
       const providerId = store.getState().booking.currentServiceProviderId;
       const calendarDate = store.getState().booking.date;
+      const { appointmentStatus } = store.getState().booking;
 
       appointmentValues.appointment.date = calculateTimeInUTC(
         toLocalIsoString(appointmentValues.appointment.date as Date)
       );
       await API.booking.editAppointment(appointmentId, appointmentValues);
+      dispatch(
+        setAppointmentStatus({
+          ...appointmentStatus,
+          edit: {
+            fail: false,
+            success: true
+          }
+        })
+      );
       dispatch(getAppointments(providerId, calendarDate));
     } catch (error) {
       Sentry.captureException(error);
@@ -254,6 +290,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
   try {
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
+    const { appointmentStatus } = store.getState().booking;
 
     dispatch(setAppointmentLoading(true));
     await API.booking.cancelAppointment(appointmentId, {
@@ -262,6 +299,15 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
       }
     });
     dispatch(setAppointmentLoading(false));
+    dispatch(
+      setAppointmentStatus({
+        ...appointmentStatus,
+        cancel: {
+          fail: false,
+          success: true
+        }
+      })
+    );
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     dispatch(setError(error as string));
@@ -283,5 +329,6 @@ export default {
   editAppointment,
   clearAppointmentDetails,
   getPatientAlerts,
-  setEditSaveButtonDisabled
+  setEditSaveButtonDisabled,
+  resetAppointmentStatus
 };

@@ -22,5 +22,10 @@ export const getInitialState = (): BookingProps => ({
   appointmentDetails: null,
   patientAlerts: [],
   isAppointmentLoading: false,
-  isSaveButtonDisabled: true
+  isSaveButtonDisabled: true,
+  appointmentStatus: {
+    create: { fail: false, success: false },
+    edit: { fail: false, success: false },
+    cancel: { fail: false, success: false }
+  }
 });

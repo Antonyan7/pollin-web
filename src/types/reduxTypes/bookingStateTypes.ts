@@ -16,6 +16,17 @@ export interface AppointmentDetailsProps {
   serviceType?: IServiceType;
 }
 
+export interface AppointmentStatusProps {
+  fail: boolean;
+  success: boolean;
+}
+
+export interface AppointmentStatusState {
+  create: AppointmentStatusProps;
+  edit: AppointmentStatusProps;
+  cancel: AppointmentStatusProps;
+}
+
 export interface BookingProps {
   appointments: IAppointment[];
   date: string;
@@ -32,6 +43,7 @@ export interface BookingProps {
   patientAlerts: AlertDetailsProps[];
   isAppointmentLoading: boolean;
   isSaveButtonDisabled: boolean;
+  appointmentStatus: AppointmentStatusState;
 }
 
 export interface IUniqueItem {

@@ -22,6 +22,7 @@ import { borderRadius, borders, margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
+import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
@@ -89,6 +90,8 @@ const Appointments = () => {
       }
     }
   };
+
+  useAppointmentStatusState();
 
   return (
     <Box>

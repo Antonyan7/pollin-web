@@ -2,6 +2,7 @@ import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
   AppointmentDetailsProps,
+  AppointmentStatusState,
   BookingProps,
   IAppointment,
   IPatientList,
@@ -70,6 +71,9 @@ const reducers = createReducer({
   },
   setSaveButtonDisabled(state, action: IAction<boolean>) {
     state.isSaveButtonDisabled = action.payload;
+  },
+  setAppointmentStatus(state, action: IAction<AppointmentStatusState>) {
+    state.appointmentStatus = action.payload;
   }
 });
 

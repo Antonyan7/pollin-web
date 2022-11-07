@@ -1,5 +1,7 @@
 import React, { useCallback } from 'react';
+import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import CloseIcon from '@mui/icons-material/Close';
+import { Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
@@ -16,6 +18,8 @@ const useStyles = makeStyles({
   },
   alertBanner: {
     width: '100%',
+    display: 'flex',
+    alignItems: 'center',
     fontSize: '14px',
     '& .MuiAlert-icon': {
       fontSize: 30
@@ -45,16 +49,19 @@ export const ToastNotification = React.forwardRef(() => {
       className={classes.snackbar}
     >
       <Alert
+        icon={<CheckCircleTwoToneIcon fontSize="inherit" sx={{ color: (theme) => theme.palette.common.white }} />}
         variant="filled"
         severity={toastNotificationPopUp.props.severityType}
         className={classes.alertBanner}
         action={
-          <IconButton aria-label="close" color="inherit" size="large" onClick={onClose}>
-            <CloseIcon fontSize="inherit" />
+          <IconButton aria-label="close" size="large" onClick={onClose}>
+            <CloseIcon fontSize="inherit" sx={{ color: (theme) => theme.palette.common.white }} />
           </IconButton>
         }
       >
-        {toastNotificationPopUp.props.description}
+        <Typography sx={{ fontWeight: 600, color: (theme) => theme.palette.common.white }}>
+          {toastNotificationPopUp.props.description}
+        </Typography>
       </Alert>
     </Snackbar>
   );
