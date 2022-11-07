@@ -2,9 +2,16 @@
 
 It's React JS project combined with Next.js.
 
+## Prerequisites
+Please use:
+- node `v16.18.1` (lts/gallium)
+- [yarn](https://classic.yarnpkg.com/en/docs/install)
+
 ## Installation:
 
+```
 yarn install
+```
 
 ## Set environment variables:
 
@@ -19,23 +26,33 @@ To get them:
 - [LOCAL_MOCK] - use `gcloud secrets versions access latest --secret=CLINIC_PORTAL_MOCK_ENVIRONMENT_CRDENTIALS > .env` to download secrets as `.env` to use in local
 - [DEV_SERVER] - use `gcloud secrets versions access latest --secret=CLINIC_PORTAL_DEV_ENVIRONMENT_CRDENTIALS > .env` to download secrets as `.env` to use in local
 
-if receive error `gcloud.secrets.versions.access` then please ask your manager to give you an access to this resource.
+If receive error `gcloud.secrets.versions.access` then please ask your manager to give you an access to this resource.
+
+**NOTE: Do not use IDE terminal for the `gcloud` commands or you will get permission errors**
 
 ## Development:
 
+```
 yarn run dev
+```
 
 ## Build:
 
+```
 yarn run build
+```
 
 ## Installing Husky:
 
+```
 yarn run prepare
+```
 
 ## To Visit App:
 
+```
 localhost:3000
+```
 
 ## Used Packages:
 
