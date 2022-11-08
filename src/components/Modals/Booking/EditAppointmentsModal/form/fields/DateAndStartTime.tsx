@@ -12,7 +12,7 @@ import { toRoundupTime } from 'helpers/time';
 
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
-import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
+import { changeTimezone, dateInputValue, futureDate180DaysAfter, getTimezoneOffset } from '@utils/dateUtils';
 
 import { IFormValues } from '../types';
 
@@ -35,7 +35,10 @@ const DateAndStartTime: React.FC = () => {
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
 
   useEffect(() => {
-    if (field.value && !(details?.appointment?.date === field.value)) {
+    if (
+      field.value &&
+      !(details?.appointment?.date === changeTimezone(field.value as string | Date, getTimezoneOffset()))
+    ) {
       dispatch(bookingMiddleware.setEditSaveButtonDisabled(false));
     } else {
       dispatch(bookingMiddleware.setEditSaveButtonDisabled(true));
