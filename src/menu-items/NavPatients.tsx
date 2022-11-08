@@ -22,8 +22,8 @@ const NavPatients: PatientsProps = {
   type: 'group',
   children: [
     {
-      id: 'Patient List/EMR',
-      title: 'Patient List/EMR',
+      id: 'Patient List',
+      title: 'Patient List',
       type: 'item',
       url: '/patient-emr/list',
       icon: GroupsTwoToneIcon,

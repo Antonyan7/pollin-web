@@ -29,7 +29,7 @@ const BreadcrumbNavItem = ({ page, index }: IBreadcrumbNavItemProp) => {
       <Link href={page.path}>
         <StyledBreadcrumbParagraph
           sx={{
-            color: index ? theme.palette.grey[800] : theme.palette.secondary.main
+            color: index ? theme.palette.secondary.main : theme.palette.grey[400]
           }}
           variant="h3"
         >

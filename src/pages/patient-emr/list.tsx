@@ -9,7 +9,7 @@ const List = () => (
       currentPage="Patient List"
       navigation={{
         basePath: '/',
-        items: [{ name: 'Patient List/EMR', path: '/patient-emr/list' }]
+        items: [{ name: 'Patient List', path: '/patient-emr/list' }]
       }}
     />
     <PatientList />

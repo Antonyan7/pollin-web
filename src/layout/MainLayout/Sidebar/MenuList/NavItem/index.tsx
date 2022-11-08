@@ -72,7 +72,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
     if (currentIndex > -1) {
       dispatch(viewsMiddleware.activateMenuItem([item.id!]));
     } else if (currentPaths.includes('patient-emr')) {
-      dispatch(viewsMiddleware.activateMenuItem(['Patient List/EMR']));
+      dispatch(viewsMiddleware.activateMenuItem(['Patient List']));
     }
   }, [item.id]);
 
