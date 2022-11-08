@@ -159,3 +159,11 @@ export const borders = {
 export const heights = {
   height45: '45px'
 };
+
+export const lineHeights = {
+  lineHeight10: '10px',
+  lineHeight15: '15px',
+  lineHeight20: '20px',
+  lineHeight25: '25px',
+  lineHeight30: '30px'
+};

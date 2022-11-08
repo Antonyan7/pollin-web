@@ -1,8 +1,10 @@
 import { styled, Typography } from '@mui/material';
-import { margins } from 'themes/themeConstants';
+import { lineHeights, margins } from 'themes/themeConstants';
 
 const ParserTypographyWrapper = styled(Typography)(() => ({
-  '& > *': { margin: margins.all0 }
+  wordBreak: 'break-word',
+  '& > *': { margin: margins.all0 },
+  '& > h1': { lineHeight: lineHeights.lineHeight25 }
 }));
 
 export default ParserTypographyWrapper;

@@ -2,7 +2,7 @@ import React from 'react';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Box, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import parse from 'html-react-parser';
+import { makeStyles } from '@mui/styles';
 import { useRouter } from 'next/router';
 import { gridSpacing } from 'themes/themeConstants';
 import { IEncounterListItem } from 'types/reduxTypes/patient-emrStateTypes';
@@ -10,7 +10,20 @@ import { IEncounterListItem } from 'types/reduxTypes/patient-emrStateTypes';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 
+import { extractContent } from '../helpers/extractContent';
+
+const useStyles = makeStyles({
+  multiLineEllipsis: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    '-webkit-line-clamp': 4,
+    '-webkit-box-orient': 'vertical'
+  }
+});
+
 const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }: IEncounterListItem) => {
+  const classes = useStyles();
   const theme = useTheme();
   const router = useRouter();
 
@@ -44,7 +57,9 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <ParserTypographyWrapper variant="body2">{parse(contentPreview)}</ParserTypographyWrapper>
+                  <ParserTypographyWrapper className={classes.multiLineEllipsis} variant="body2">
+                    {extractContent(contentPreview)}
+                  </ParserTypographyWrapper>
                 </Grid>
               </Grid>
             </SubCardStyled>
