@@ -22,7 +22,8 @@ export enum ModalName {
   CreateTemplateModal = 'CreateTemplateModal',
   PatientPartnersModal = 'PatientPartnersModal',
   PatientMedicationsModal = 'PatientMedicationsModal',
-  PatientLineItemsModal = 'PatientLineItemsModal'
+  PatientLineItemsModal = 'PatientLineItemsModal',
+  PatientContactInformation = 'PatientInformationModal'
 }
 
 export enum OpenModalReason {

@@ -20,7 +20,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { IExternalResultListData } from 'types/reduxTypes/resultsStateTypes';
+import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 import PendingTestResultsStatisticsView from '@ui-component/profile/PendingTestResultsStatisticsView';
@@ -87,7 +87,7 @@ const PendingTestResultList = () => {
           </TableHead>
 
           <TableBody>
-            {resultsList?.testResults?.map((row: IExternalResultListData, index: number) => (
+            {resultsList?.testResults?.map((row: IPatientContactInformationModalProps, index: number) => (
               <PendingTestResultRow row={row} index={index} key={row.id} />
             ))}
           </TableBody>

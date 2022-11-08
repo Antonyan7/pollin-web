@@ -54,7 +54,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   </Grid>
                   <Grid item xs={4}>
                     <Button startIcon={<ContentPasteIcon />}>
-                      <Typography variant="caption">OHIF Info</Typography>
+                      <Typography variant="caption">OHIP Info</Typography>
                     </Button>
                   </Grid>
                   <Grid item xs={4}>

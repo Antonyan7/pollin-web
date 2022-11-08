@@ -11,6 +11,7 @@ import DetailsAppointmentModal, {
 } from '@components/Modals/Booking/DetailsAppointmentModal';
 import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Modals/Booking/EditAppointmentsModal';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
+import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
@@ -28,6 +29,7 @@ import PatientPartnersModal, {
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
+import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 
 // <BOOKING>
@@ -58,6 +60,10 @@ const getScheduleTemplatesErrorModal = (modal: IOpenedModal<ScheduleTemplatesErr
 // encounters
 const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesErrorModalProps>) => (
   <EncountersCancelChangesModal key={modal.name} />
+);
+// <EXTERNAL RESULTS>
+const getExternalResultsPatientInformationModal = (modal: IOpenedModal<IPatientContactInformationModalProps>) => (
+  <PatientContactInformationModal key={modal.name} {...modal.props} />
 );
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
@@ -101,6 +107,9 @@ export const ModalsController = () => {
           // encounters
           case ModalName.EncountersCancelChangesModal:
             return getEncountersCancelChangesModal(modal);
+          // <EXTERNAL RESULTS>
+          case ModalName.PatientContactInformation:
+            return getExternalResultsPatientInformationModal(modal);
           // profile highlight
           case ModalName.PatientLineItemsModal:
             return getPatientListItemsModal(modal);

@@ -15,7 +15,7 @@ export interface IResultsProps {
 }
 
 export interface IResultsList extends IPagination {
-  testResults: IExternalResultListData[];
+  testResults: IPatientContactInformationModalProps[];
 }
 export interface IPendingTestStats {
   title: string;
@@ -73,7 +73,7 @@ export interface IResultListPatient {
   dateOfBirth: string;
 }
 
-export interface IExternalResultListData {
+export interface IPatientContactInformationModalProps {
   id: string;
   age: number;
   labName: string;

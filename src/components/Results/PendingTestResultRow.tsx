@@ -1,34 +1,29 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, Typography } from '@mui/material';
-import { useRouter } from 'next/router';
-import { IExternalResultListData } from 'types/reduxTypes/resultsStateTypes';
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
+import { ModalName } from 'types/modals';
+import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
 
 import { Translation } from '../../constants/translations';
 
 interface IExternalResultsTableRow {
-  row: IExternalResultListData;
+  row: IPatientContactInformationModalProps;
   index: number;
 }
 
 const PendingTestResultRow = ({ row, index }: IExternalResultsTableRow) => {
   const labelId = `enhanced-table-checkbox-${index}`;
   const [t] = useTranslation();
-  const router = useRouter();
-
-  const goToTestInputResultsPage = () => {
-    const currentPath = router.asPath;
-    const testResultId = row.id;
-    const inputTestPageURL = `${currentPath}/input-results/${testResultId}`;
-
-    router.push(inputTestPageURL);
-  };
 
   return (
     <TableRow
-      onClick={goToTestInputResultsPage}
+      onClick={() => {
+        dispatch(viewsMiddleware.openModal({ name: ModalName.PatientContactInformation, props: row }));
+      }}
       sx={{ cursor: 'pointer' }}
       hover
       role="checkbox"
