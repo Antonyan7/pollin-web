@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { BoxProps, InputAdornment } from '@mui/material';
@@ -30,6 +31,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const encounterFilters = useAppSelector(patientsSelector.encounterFilters) ?? [];
   const [searchValue, setSearchValue] = useState<string>('');
+  const [clearSearchInput, setClearSearchInput] = useState<boolean>(false);
   const [filters, setFilters] = useState<IEncountersFilterOption[]>([]);
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
@@ -60,13 +62,34 @@ const EncounterFilters = ({ page }: { page: number }) => {
     dispatch(patientsMiddleware.getEncounterFilters());
   }, []);
 
-  const onSearchStringChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const debouncedCallback = debounce(() => setSearchValue(event.target.value), 1000);
+  const handleDebounceSearch = useCallback(
+    (inputValue: string) => {
+      const data: IEncountersReqBody = {
+        patientId
+      };
 
-      debouncedCallback();
+      if (inputValue) {
+        data.searchString = inputValue;
+      }
+
+      dispatch(patientsMiddleware.getEncounterList(data));
     },
-    [setSearchValue]
+    [patientId]
+  );
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debounceFn = useCallback(debounce(handleDebounceSearch, 1000), [handleDebounceSearch]);
+
+  const handleSearchValueChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (clearSearchInput) {
+        setSearchValue('');
+      } else {
+        setSearchValue(event.target.value);
+        debounceFn(event.target.value);
+      }
+    },
+    [debounceFn, setSearchValue, clearSearchInput]
   );
 
   const onAutoCompleteChange = useCallback(
@@ -90,15 +113,29 @@ const EncounterFilters = ({ page }: { page: number }) => {
     [setFilters]
   );
 
+  const clearSearchValue = useCallback(() => {
+    setSearchValue('');
+    setClearSearchInput(true);
+  }, []);
+
   return (
     <MainHeader>
       <StyledOutlinedInput
-        onChange={onSearchStringChange}
+        onChange={handleSearchValueChange}
         id="input-search-encounters"
+        value={searchValue}
         placeholder={`${t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH)}`}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon sx={{ color: theme.palette.primary.main }} />
+          </InputAdornment>
+        }
+        endAdornment={
+          <InputAdornment position="end">
+            <HighlightOffTwoToneIcon
+              sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
+              onClick={clearSearchValue}
+            />
           </InputAdornment>
         }
       />
