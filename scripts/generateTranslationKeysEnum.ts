@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 // @ts-ignore - this is a script, not a module
-
 const shell = require('shelljs');
 const fs = require('fs');
 

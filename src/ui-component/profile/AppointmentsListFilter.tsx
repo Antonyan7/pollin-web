@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import bookingManager from '@axios/booking/bookingManager';
 import { IPatientAppointmentsListFilter } from '@axios/booking/managerBookingTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Autocomplete, AutocompleteProps, Box, CircularProgress, Grid, TextField, useTheme } from '@mui/material';
+import { Autocomplete, Box, CircularProgress, Grid, TextField, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 
@@ -21,12 +21,10 @@ const AppointmentListFilter = () => {
     }
   }, [filters]);
 
-  const onAppointmentRecencyChange: AutocompleteProps<
-    IPatientAppointmentsListFilter,
-    undefined,
-    undefined,
-    undefined
-  >['onChange'] = (_event, value) => {
+  const onAppointmentRecencyChange = (
+    _event: React.SyntheticEvent<Element, Event>,
+    value: IPatientAppointmentsListFilter | null
+  ) => {
     const newFilterId = value?.id ?? 'allFilterId';
 
     dispatch(patientsMiddleware.getPatientAppointments(search, newFilterId, currentPage, order, orderBy));

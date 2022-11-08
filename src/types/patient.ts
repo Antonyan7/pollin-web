@@ -83,7 +83,7 @@ export interface IEncountersReqBody {
 export interface IHeadCell {
   id: string;
   label: string;
-  align: 'center' | 'left' | 'right' | 'inherit' | 'justify' | undefined;
+  align?: 'center' | 'left' | 'right' | 'inherit' | 'justify';
   paddingLeft: string | number;
   isSortable: boolean;
 }

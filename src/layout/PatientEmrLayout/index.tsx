@@ -4,7 +4,7 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import { Link } from '@components/index';
 import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
-import { Tab, Tabs, useTheme } from '@mui/material';
+import { Tab, TabProps, Tabs, useTheme } from '@mui/material';
 import { patientListTabLinks } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -16,6 +16,9 @@ const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
   'aria-controls': `simple-tabpanel-${index}`
 });
+
+// Refer to this example https://mui.com/material-ui/guides/composition/#with-typescript
+const TabWithLink = (props: TabProps<typeof Link, { component: typeof Link }>) => <Tab {...props} />;
 
 const PatientEmrLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
@@ -79,7 +82,7 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
 
           return (
             currentPatientId && (
-              <Tab
+              <TabWithLink
                 disabled={availableLinks}
                 key={link.linkName}
                 component={Link}

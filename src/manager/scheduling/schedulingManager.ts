@@ -19,27 +19,41 @@ const axiosInstance = Axios();
 const schedulingManager = {
   axiosInstance,
   createTemplate(data: ITemplateGroup) {
-    return axiosInstance.post<any, IAxiosResponse<IScheduleTemplatesCreateResponse>>(`${baseURL}/v1/templates`, data);
+    return axiosInstance.post<IScheduleTemplatesCreateResponse, IAxiosResponse<IScheduleTemplatesCreateResponse>>(
+      `${baseURL}/v1/templates`,
+      data
+    );
   },
   getTemplatesList(pageSize: number) {
-    return axiosInstance.get<any, IAxiosResponsePaginated<IScheduleTemplatesListResponse>>(`${baseURL}/v1/templates`, {
-      params: { page: pageSize }
-    });
+    return axiosInstance.get<IScheduleTemplatesListResponse, IAxiosResponsePaginated<IScheduleTemplatesListResponse>>(
+      `${baseURL}/v1/templates`,
+      {
+        params: { page: pageSize }
+      }
+    );
   },
   deleteTemplate(data: DeleteScheduleTemplateProps) {
-    return axiosInstance.delete<any, IAxiosResponse<void>>(`${baseURL}/v1/templates`, { data });
+    return axiosInstance.delete<null, IAxiosResponse<null>>(`${baseURL}/v1/templates`, { data });
   },
   getSingleTemplate(templateId: string) {
-    return axiosInstance.get<any, IAxiosResponse<SingleSchedulingProps>>(`${baseURL}/v1/templates/${templateId}`);
+    return axiosInstance.get<SingleSchedulingProps, IAxiosResponse<SingleSchedulingProps>>(
+      `${baseURL}/v1/templates/${templateId}`
+    );
   },
   updateSingleTemplate(templateId: string, data: ITemplateGroup) {
-    return axiosInstance.put<any, IAxiosResponse<SingleSchedulingProps>>(`${baseURL}/v1/templates/${templateId}`, data);
+    return axiosInstance.put<SingleSchedulingProps, IAxiosResponse<SingleSchedulingProps>>(
+      `${baseURL}/v1/templates/${templateId}`,
+      data
+    );
   },
   applyScheduleBlock(data: BlockSchedulingProps) {
-    return axiosInstance.post<any, IAxiosResponse<BlockSchedulingProps>>(`${baseURL}/v1/block/apply`, data);
+    return axiosInstance.post<BlockSchedulingProps, IAxiosResponse<BlockSchedulingProps>>(
+      `${baseURL}/v1/block/apply`,
+      data
+    );
   },
   applyScheduleTemplate(data: IApplyScheduleData) {
-    return axiosInstance.post<any, IAxiosResponse<IServiceType[]>>(`${baseURL}/v1/templates/apply`, data);
+    return axiosInstance.post<IServiceType[], IAxiosResponse<IServiceType[]>>(`${baseURL}/v1/templates/apply`, data);
   }
 };
 

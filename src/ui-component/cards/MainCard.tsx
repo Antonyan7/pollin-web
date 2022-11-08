@@ -13,7 +13,6 @@ import {
 import { useTheme } from '@mui/material/styles';
 import { borders } from 'themes/themeConstants';
 // project imports
-import { KeyedObject } from 'types';
 
 // constant
 const headerSX = {
@@ -22,7 +21,7 @@ const headerSX = {
 
 // ==============================|| CUSTOM MAIN CARD ||============================== //
 
-export interface MainCardProps extends KeyedObject {
+export interface MainCardProps {
   border?: boolean;
   boxShadow?: boolean;
   children: React.ReactNode;

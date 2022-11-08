@@ -10,7 +10,16 @@ module.exports = {
     RequestInit: 'readonly'
   },
   plugins: ['react', '@emotion', '@typescript-eslint', 'simple-import-sort', '@next/eslint-plugin-next'],
-  extends: ['plugin:react/recommended', 'airbnb', 'airbnb-typescript', 'airbnb/hooks', 'prettier'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'airbnb',
+    'airbnb-typescript',
+    'airbnb/hooks',
+    'prettier'
+  ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: { jsx: true },
@@ -22,6 +31,20 @@ module.exports = {
     react: { version: 'detect' }
   },
   rules: {
+    '@typescript-eslint/ban-types': [
+      'error',
+      {
+        types: {
+          undefined: "use optional parameters instead, e.g. 'foo?: string' instead of 'foo: string | undefined'",
+          unknown: "Do not use 'unknown' as a type"
+        },
+        extendDefaults: false
+      }
+    ],
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/no-confusing-void-expression': ['error', { ignoreArrowShorthand: true }],
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-explicit-any': 'error',
     'max-lines-per-function': ['error', 150],
     '@emotion/jsx-import': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],

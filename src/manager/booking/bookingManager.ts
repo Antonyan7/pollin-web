@@ -24,46 +24,64 @@ const axiosInstance = Axios();
 const bookingManager = {
   axiosInstance,
   getAppointments(params: IAppointmentListReqParams) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentListResponse>>(`${baseURL}/v1/calendar/slot`, { params });
+    return axiosInstance.get<IAppointmentListResponse, IAxiosResponse<IAppointmentListResponse>>(
+      `${baseURL}/v1/calendar/slot`,
+      { params }
+    );
   },
   getServiceProviders(params: IServiceProvidersReqParams) {
-    return axiosInstance.get<any, IAxiosResponsePaginated<IServiceProvidersListResponse>>(`${baseURL}/v1/provider`, {
-      params
-    });
+    return axiosInstance.get<IServiceProvidersListResponse, IAxiosResponsePaginated<IServiceProvidersListResponse>>(
+      `${baseURL}/v1/provider`,
+      {
+        params
+      }
+    );
   },
   getServiceTypes(params?: IServiceTypesReqParams) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentTypesData>>(`${baseURL}/v1/service-type`, {
-      params
-    });
+    return axiosInstance.get<IAppointmentTypesData, IAxiosResponse<IAppointmentTypesData>>(
+      `${baseURL}/v1/service-type`,
+      {
+        params
+      }
+    );
   },
   createAppointment(appointmentValues: ICreatedAppointmentBody) {
-    return axiosInstance.post<any, IAxiosResponse<ICreatedAppointmentResponse>>(`${baseURL}/v1/appointment`, {
-      ...appointmentValues
-    });
+    return axiosInstance.post<ICreatedAppointmentResponse, IAxiosResponse<ICreatedAppointmentResponse>>(
+      `${baseURL}/v1/appointment`,
+      {
+        ...appointmentValues
+      }
+    );
   },
   getAppointmentDetails(appointmentId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IAppointmentDetailsResponse>>(
+    return axiosInstance.get<IAppointmentDetailsResponse, IAxiosResponse<IAppointmentDetailsResponse>>(
       `${baseURL}/v1/appointment/${appointmentId}`
     );
   },
   editAppointment(appointmentId: string, appointmentValues: IEditAppointmentBody) {
-    return axiosInstance.put<any, IAxiosResponse<IUpdatedAppointmentResponse>>(
+    return axiosInstance.put<IUpdatedAppointmentResponse, IAxiosResponse<IUpdatedAppointmentResponse>>(
       `${baseURL}/v1/appointment/${appointmentId}`,
       appointmentValues
     );
   },
+
   cancelAppointment(appointmentId: string, body: ICancelAppointmentReqBody) {
-    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
   },
 
   getAppointmentList(body: IGetPatientAppointmentsListReqBody) {
     return axiosInstance
-      .post<any, IAxiosResponsePaginated<IGetPatientAppointmentsListResponse>>(`${baseURL}/v1/appointment/list`, body)
+      .post<IGetPatientAppointmentsListResponse, IAxiosResponsePaginated<IGetPatientAppointmentsListResponse>>(
+        `${baseURL}/v1/appointment/list`,
+        body
+      )
       .then(({ data }) => data);
   },
   getAppointmentListFilters() {
     return axiosInstance
-      .get<any, IAxiosResponse<IGetPatientAppointmentsListFiltersResponse>>(`${baseURL}/v1/appointment/filter`)
+      .get<IGetPatientAppointmentsListFiltersResponse, IAxiosResponse<IGetPatientAppointmentsListFiltersResponse>>(
+        `${baseURL}/v1/appointment/filter`
+      )
       .then(({ data }) => data);
   }
 };

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Action, configureStore } from '@reduxjs/toolkit';
 
 import rootReducer from './reducer';

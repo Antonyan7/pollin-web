@@ -144,7 +144,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
         fullWidth
         multiple
         isLoading={isEncountersFiltersLoading}
-        options={reformattedFilterResults(encounterFilters as any)}
+        options={reformattedFilterResults(encounterFilters as [])}
         groupBy={(option) => option.options.type as string}
         getOptionLabel={(option) => option.options.title as string}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}

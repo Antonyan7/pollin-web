@@ -1,6 +1,7 @@
 import * as React from 'react';
-import MuiLink from '@mui/material/Link';
-import { styled } from '@mui/material/styles';
+import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
+import { styled, SxProps } from '@mui/material/styles';
+import { Theme } from '@mui/system';
 import clsx from 'clsx';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,25 +11,23 @@ import NextLinkComposed from '../NextLinkComposed/NextLinkComposed';
 const Anchor = styled('a')({});
 
 interface LinkProps {
-  activeClassName: string;
-  as: string;
-  className: string;
+  activeClassName?: string;
+  className?: string;
+  noLinkStyle?: string;
+  sx: SxProps<Theme>;
+  target?: string;
+  as?: string;
   href: NextLinkProps['href'];
-  noLinkStyle: string;
-  role: string;
 }
+
+// Refer to this example https://mui.com/material-ui/guides/composition/#with-typescript
+const ComposedMuiLink = (props: MuiLinkProps<typeof NextLinkComposed, { component: typeof NextLinkComposed }>) => (
+  <MuiLink {...props} />
+);
 
 const Link = React.forwardRef(
   (
-    {
-      activeClassName = 'active',
-      as: linkAs,
-      className: classNameProps,
-      href,
-      noLinkStyle,
-      role,
-      ...other
-    }: LinkProps | any,
+    { activeClassName = 'active', as: linkAs, className: classNameProps = '', href, noLinkStyle, ...other }: LinkProps,
     ref: React.ForwardedRef<HTMLAnchorElement>
   ) => {
     const router = useRouter();
@@ -46,7 +45,14 @@ const Link = React.forwardRef(
     }
 
     return (
-      <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...other} />
+      <ComposedMuiLink
+        component={NextLinkComposed}
+        linkAs={linkAs}
+        className={className}
+        ref={ref}
+        to={href as string}
+        {...other}
+      />
     );
   }
 );

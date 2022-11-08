@@ -38,14 +38,13 @@ const NavItem = ({ item, level }: NavItemProps) => {
 
   const { openItem } = useAppSelector(viewsSelector.menu);
 
-  const Icon = item?.icon!;
   const itemIcon = item?.icon ? (
-    <Icon />
+    <item.icon />
   ) : (
     <FiberManualRecordIcon
       sx={{
-        width: openItem.findIndex((id: string | undefined) => id === item?.id) > -1 ? 8 : 6,
-        height: openItem.findIndex((id: string | undefined) => id === item?.id) > -1 ? 8 : 6
+        width: openItem.findIndex((id: string) => id === item?.id) > -1 ? 8 : 6,
+        height: openItem.findIndex((id: string) => id === item?.id) > -1 ? 8 : 6
       }}
       fontSize={level > 0 ? 'inherit' : 'medium'}
     />
@@ -70,7 +69,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
     const currentIndex = currentPaths.findIndex((id) => id.replace('-', '').toLowerCase() === item.id?.toLowerCase());
 
     if (currentIndex > -1) {
-      dispatch(viewsMiddleware.activateMenuItem([item.id!]));
+      dispatch(viewsMiddleware.activateMenuItem([item.id]));
     } else if (currentPaths.includes('patient-emr')) {
       dispatch(viewsMiddleware.activateMenuItem(['Patient List']));
     }
@@ -82,8 +81,8 @@ const NavItem = ({ item, level }: NavItemProps) => {
         theme={theme}
         level={level}
         disabled={item.disabled}
-        selected={openItem?.findIndex((id: string | undefined) => id === item.id) > -1}
-        onClick={() => itemHandler(item.id!)}
+        selected={openItem?.findIndex((id: string) => id === item.id) > -1}
+        onClick={() => itemHandler(item.id)}
       >
         <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.primary.main }}>
           {itemIcon}
@@ -91,7 +90,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
         <ListItemText
           primary={
             <Typography
-              variant={openItem?.findIndex((id: string | undefined) => id === item.id) > -1 ? 'h5' : 'body1'}
+              variant={openItem?.findIndex((id: string) => id === item.id) > -1 ? 'h5' : 'body1'}
               color="primary"
             >
               {item.title}

@@ -37,8 +37,8 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
 
   const [t] = useTranslation();
 
-  const onSelectButtonChange = useCallback((event: SelectChangeEvent<unknown>) => {
-    const value: string = event.target.value as string;
+  const onSelectButtonChange = useCallback((event: SelectChangeEvent<string>) => {
+    const { value } = event.target;
     const isOtherField = value === cancellationReasons[cancellationReasons.length - 1];
 
     setOpenOtherReasonField(isOtherField);

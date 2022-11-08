@@ -29,7 +29,7 @@ interface EditEncounterRecordProps {
 interface EditEncounterAddendumTitleProps {
   handleClose: () => void;
   mode: SimpleEditorMode;
-  updatedOn: string | undefined | Date;
+  updatedOn?: string | Date;
 }
 
 const EditEncounterAddendumTitle = ({ handleClose, mode, updatedOn }: EditEncounterAddendumTitleProps) => {

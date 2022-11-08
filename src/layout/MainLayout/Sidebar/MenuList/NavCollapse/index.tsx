@@ -43,7 +43,7 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   const theme = useTheme();
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState<string | null | undefined>(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
   const handleClick = () => {
     setOpen(!open);
@@ -83,9 +83,8 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
     }
   });
 
-  const Icon = menu.icon!;
   const menuIcon = menu.icon ? (
-    <Icon strokeWidth={1.5} style={{ marginTop: margins.auto, marginBottom: margins.auto }} />
+    <menu.icon strokeWidth={1.5} style={{ marginTop: margins.auto, marginBottom: margins.auto }} />
   ) : (
     <FiberManualRecordIcon
       sx={{

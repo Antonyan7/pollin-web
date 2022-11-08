@@ -90,7 +90,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
         </ScheduledTemplatesListContext.Provider>
         {!isScheduleTemplatesLoading && (
           <TableBody>
-            {stableSort(rows, getComparator(order, orderBy)).map((row, index) => {
+            {stableSort<ITableRow>(rows, getComparator<ITableRow>(order, orderBy)).map((row, index) => {
               /** Make sure no display bugs if row isn't an OrderData object */
               if (typeof row === 'number') {
                 return null;

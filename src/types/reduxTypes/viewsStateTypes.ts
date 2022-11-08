@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ModalName } from 'types/modals';
 
 export interface ViewsProps {

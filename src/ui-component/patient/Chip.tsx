@@ -1,14 +1,15 @@
 import React from 'react';
 import MuiChip, { ChipProps } from '@mui/material/Chip';
 import { SxProps, Theme, useTheme } from '@mui/material/styles';
+import { CSSSelectorObjectOrCssVariables } from '@mui/system';
 import { borders, paddings } from 'themes/themeConstants';
 
 interface IChipProps extends ChipProps {
   chipColor?: string;
-  sx?: {};
+  sx?: CSSSelectorObjectOrCssVariables<Theme>;
   disabled?: boolean;
   label?: string;
-  avatar?: React.ReactElement | undefined;
+  avatar?: React.ReactElement;
   onDelete?: () => void;
   onClick?: () => void;
 }

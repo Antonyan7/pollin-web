@@ -1,20 +1,10 @@
-import { AxiosRequestConfig, AxiosResponseHeaders } from 'axios';
+import { AxiosResponse } from 'axios';
 
-export interface IAxiosResponse<T> {
+export interface IAxiosResponse<T> extends AxiosResponse {
   data: IData<T>;
-  status: IResponseStatus;
-  statusText: string;
-  headers: AxiosResponseHeaders;
-  config: AxiosRequestConfig<any>;
-  request?: any;
 }
-export interface IAxiosResponsePaginated<T> {
+export interface IAxiosResponsePaginated<T> extends AxiosResponse {
   data: IPaginatedData<T>;
-  status: number;
-  statusText: string;
-  headers: AxiosResponseHeaders;
-  config: AxiosRequestConfig<any>;
-  request?: XMLHttpRequest;
 }
 
 interface IResponseStatus {

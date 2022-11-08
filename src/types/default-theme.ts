@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { Color, PaletteMode } from '@mui/material';
 import { Property } from 'csstype';
 

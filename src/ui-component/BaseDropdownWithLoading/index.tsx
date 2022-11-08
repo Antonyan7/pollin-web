@@ -18,17 +18,12 @@ import Listbox, { BaseDropdownWithLoadingContext } from './Listbox';
 
 interface BaseDropdownWithLoadingProps
   extends Omit<
-    AutocompleteProps<any | unknown, boolean | undefined, boolean | undefined, boolean | undefined>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    AutocompleteProps<any, boolean, boolean, boolean>,
     'renderInput'
   > {
   renderInputProps?: TextFieldProps | InputProps;
   isLoading: boolean;
-}
-
-interface AutocompleteTextFieldProps {
-  isLoading: boolean;
-  renderInputProps?: TextFieldProps | InputProps;
-  params: any;
 }
 
 const EndAdornmentLoading = () => (
@@ -38,17 +33,6 @@ const EndAdornmentLoading = () => (
     sx={{
       position: 'relative',
       left: '20px'
-    }}
-  />
-);
-
-const AutocompleteTextField = ({ params, isLoading, renderInputProps }: AutocompleteTextFieldProps) => (
-  <TextField
-    {...params}
-    {...renderInputProps}
-    InputProps={{
-      ...params.InputProps,
-      endAdornment: isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
     }}
   />
 );
@@ -74,19 +58,25 @@ const BaseDropdownWithLoading = ({ isLoading, renderInputProps, ...otherProps }:
           id: 'listBox'
         }}
         ListboxComponent={Listbox}
-        renderInput={(params: AutocompleteRenderInputParams) => (
-          <AutocompleteTextField
-            params={params}
-            isLoading={isFirstLoading && isLoading}
-            renderInputProps={renderInputProps}
-          />
-        )}
+        renderInput={(params: AutocompleteRenderInputParams) => {
+          const props = { ...params, ...renderInputProps } as AutocompleteRenderInputParams;
+
+          return (
+            <TextField
+              {...props}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: isFirstLoading && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
+              }}
+            />
+          );
+        }}
       />
     </BaseDropdownWithLoadingContext.Provider>
   );
 };
 
-interface BaseSelectWithLoadingProps extends SelectProps<any> {
+interface BaseSelectWithLoadingProps extends SelectProps<string> {
   isLoading?: boolean;
 }
 

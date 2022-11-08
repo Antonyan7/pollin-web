@@ -17,6 +17,8 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 
+import { IMeasurementListFieldForm } from '../types';
+
 import DateRecivedField from './fields/DateRecivedField';
 import ResultTypeField from './fields/ResultTypeField';
 import MEASUREMENT_LIST_TABLE_HEADERS from './data';
@@ -37,7 +39,7 @@ interface MeasurementListProps {
 const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
   const [t] = useTranslation();
 
-  const { control, register } = useForm({
+  const { control, register } = useForm<IMeasurementListFieldForm>({
     defaultValues: {
       data: listItems?.map((item: ITestResultItem) => ({
         resultType: item.resultType,

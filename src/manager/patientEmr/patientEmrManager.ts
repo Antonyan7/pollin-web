@@ -32,63 +32,87 @@ const axiosInstance = Axios();
 const patientEmrManager = {
   axiosInstance,
   getPatientAlertDetails(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IAlertDetailsResponse>>(`${baseURL}/v1/patients/alerts`, {
-      params: { patientId }
-    });
+    return axiosInstance.get<IAlertDetailsResponse, IAxiosResponse<IAlertDetailsResponse>>(
+      `${baseURL}/v1/patients/alerts`,
+      {
+        params: { patientId }
+      }
+    );
   },
   getPatients(data: IGetPatientsRequestBody) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IGetPatientsResponse>>(`${baseURL}/v1/patients`, data);
+    return axiosInstance.post<IGetPatientsResponse, IAxiosResponsePaginated<IGetPatientsResponse>>(
+      `${baseURL}/v1/patients`,
+      data
+    );
   },
   getPatientsList(data: IPatientsReqBody) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientsListResponse>>(
+    return axiosInstance.post<IPatientsListResponse, IAxiosResponsePaginated<IPatientsListResponse>>(
       `${baseURL}/v1/patients/search`,
       data
     );
   },
   getEncounterList(data: IEncountersReqBody) {
-    return axiosInstance.post<any, IAxiosResponsePaginated<IPatientEncountersListResponse>>(
+    return axiosInstance.post<IPatientEncountersListResponse, IAxiosResponsePaginated<IPatientEncountersListResponse>>(
       `${baseURL}/v1/encounters/list`,
       data
     );
   },
   getEncounterTypes() {
-    return axiosInstance.get<any, IAxiosResponse<IEncounterTypesResponse>>(`${baseURL}/v1/encounters/type`);
+    return axiosInstance.get<IEncounterTypesResponse, IAxiosResponse<IEncounterTypesResponse>>(
+      `${baseURL}/v1/encounters/type`
+    );
   },
   getEncounterDetails(encounterId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/${encounterId}`);
+    return axiosInstance.get<IEncounterDetailsResponse, IAxiosResponse<IEncounterDetailsResponse>>(
+      `${baseURL}/v1/encounters/${encounterId}`
+    );
   },
   getPatientSearchFilters() {
-    return axiosInstance.get<any, IAxiosResponse<IPatientsFiltersResponse>>(`${baseURL}/v1/patients/search/filter`);
+    return axiosInstance.get<IPatientsFiltersResponse, IAxiosResponse<IPatientsFiltersResponse>>(
+      `${baseURL}/v1/patients/search/filter`
+    );
   },
   getEncounterFilters() {
-    return axiosInstance.get<any, IAxiosResponse<IEncounterFilterResponse>>(`${baseURL}/v1/encounters/filters`);
+    return axiosInstance.get<IEncounterFilterResponse, IAxiosResponse<IEncounterFilterResponse>>(
+      `${baseURL}/v1/encounters/filters`
+    );
   },
   getEncounter(encounterId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IEncounterResponse>>(`${baseURL}/v1/encounters/${encounterId}`);
+    return axiosInstance.get<IEncounterResponse, IAxiosResponse<IEncounterResponse>>(
+      `${baseURL}/v1/encounters/${encounterId}`
+    );
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {
-    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters`, data);
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/encounters`, data);
   },
   updateEncounterNote(data: IUpdateEncounterNoteRequest) {
-    return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters`, data);
+    return axiosInstance.put<IEncounterDetailsResponse, IAxiosResponse<IEncounterDetailsResponse>>(
+      `${baseURL}/v1/encounters`,
+      data
+    );
   },
   createEncounterAddendum(data: ICreateEncounterAddendumRequest) {
-    return axiosInstance.post<any, IAxiosResponse<void>>(`${baseURL}/v1/encounters/addendum`, data);
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/encounters/addendum`, data);
   },
   updateEncounterAddendum(data: IUpdateEncounterAddendumRequest) {
-    return axiosInstance.put<any, IAxiosResponse<IEncounterDetailsResponse>>(`${baseURL}/v1/encounters/addendum`, data);
+    return axiosInstance.put<IEncounterDetailsResponse, IAxiosResponse<IEncounterDetailsResponse>>(
+      `${baseURL}/v1/encounters/addendum`,
+      data
+    );
   },
   getPatientProfile(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IPatientProfileResponse>>(`${baseURL}/v1/profile/${patientId}`);
+    return axiosInstance.get<IPatientProfileResponse, IAxiosResponse<IPatientProfileResponse>>(
+      `${baseURL}/v1/profile/${patientId}`
+    );
   },
   getPatientHighlights(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IPatientHighlightResponse>>(
+    return axiosInstance.get<IPatientHighlightResponse, IAxiosResponse<IPatientHighlightResponse>>(
       `${baseURL}/v1/profile/${patientId}/highlight`
     );
   },
   getPatientHighlightDetails(patientId: string, uiid: string) {
     return axiosInstance
-      .get<any, IAxiosResponse<IPatientHighlightDetailsResponse>>(
+      .get<IPatientHighlightDetailsResponse, IAxiosResponse<IPatientHighlightDetailsResponse>>(
         `${baseURL}/v1/profile/${patientId}/highlight/${uiid}`
       )
       .then(
@@ -101,22 +125,22 @@ const patientEmrManager = {
       );
   },
   getPatientProfileOverview(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IPatientProfileOverviewResponse>>(
+    return axiosInstance.get<IPatientProfileOverviewResponse, IAxiosResponse<IPatientProfileOverviewResponse>>(
       `${baseURL}/v1/profile/${patientId}/overview`
     );
   },
   getProfileTestResults(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<IProfileTestResults>>(
+    return axiosInstance.get<IProfileTestResults, IAxiosResponse<IProfileTestResults>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}`
     );
   },
   getProfileTestResultLatest(patientId: string) {
-    return axiosInstance.get<any, IAxiosResponse<ITestResultLatest[]>>(
+    return axiosInstance.get<ITestResultLatest[], IAxiosResponse<ITestResultLatest[]>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/latest`
     );
   },
   getProfileTestResultsHistory(patientId: string, testTypeId: string) {
-    return axiosInstance.get<any, IAxiosResponse<ITestResultHistoryResponse>>(
+    return axiosInstance.get<ITestResultHistoryResponse, IAxiosResponse<ITestResultHistoryResponse>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/testType/${testTypeId}/history`
     );
   }

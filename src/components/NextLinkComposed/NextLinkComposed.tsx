@@ -6,13 +6,13 @@ const Anchor = styled('a')({});
 
 interface NextLinkComposedProps {
   to: string;
-  linkAs: string;
+  linkAs?: string;
   href: string;
-  replace: boolean | undefined;
-  scroll: boolean | undefined;
-  shallow: boolean | undefined;
-  prefetch: boolean | undefined;
-  locale: string;
+  replace?: boolean;
+  scroll?: boolean;
+  shallow?: boolean;
+  prefetch?: boolean;
+  locale?: string;
 }
 
 const NextLinkComposed = React.forwardRef(

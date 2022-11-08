@@ -9,7 +9,9 @@ const axiosInstance = Axios();
 const coreManager = {
   axiosInstance,
   getClinicConfig() {
-    return axiosInstance.get<any, IAxiosResponse<IClinicConfigResponse>>(`${baseURL}/v1/clinic-config`);
+    return axiosInstance.get<IClinicConfigResponse, IAxiosResponse<IClinicConfigResponse>>(
+      `${baseURL}/v1/clinic-config`
+    );
   }
 };
 

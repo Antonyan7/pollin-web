@@ -3,7 +3,7 @@ import { Grid, Stack, Typography } from '@mui/material';
 
 interface DialogContentRowProps {
   subtitle: string;
-  body: string | undefined;
+  body?: string;
 }
 
 const DialogContentRow = ({ subtitle, body }: DialogContentRowProps) => (

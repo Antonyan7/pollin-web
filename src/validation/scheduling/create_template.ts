@@ -10,7 +10,7 @@ export const createTemplateValidationSchema = object({
         .nullable(true)
         .test('startTimeBefore', (value, testContext) => {
           const endTime = new Date(testContext.parent.endTime);
-          const startTime = new Date(value as unknown as Date);
+          const startTime = new Date(value as string);
 
           return endTime.getTime() > startTime.getTime();
         }),
@@ -19,7 +19,7 @@ export const createTemplateValidationSchema = object({
         .nullable(true)
         .test('endTimeAfter', (value, testContext) => {
           const endTime = new Date(testContext.parent.startTime);
-          const startTime = new Date(value as unknown as Date);
+          const startTime = new Date(value as string);
 
           return endTime.getTime() < startTime.getTime();
         }),

@@ -43,7 +43,7 @@ export interface BlockSchedulingProps {
 
 export interface IOptionsProps {
   title?: string;
-  type: PatientListFilterType;
+  type: PatientListFilterType | string;
   id: string;
   titleName?: string;
 }

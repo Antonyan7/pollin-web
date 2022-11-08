@@ -50,7 +50,7 @@ const useAppointmentStatusState = () => {
       );
     }
 
-    return resetBookingStatus();
+    resetBookingStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     appointmentStatus.create.success,

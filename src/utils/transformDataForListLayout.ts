@@ -7,7 +7,7 @@ interface ITransformedItem {
   title: string;
   listItems: {
     title: string;
-    subItems: unknown[];
+    subItems: [];
   }[];
 }
 
@@ -25,7 +25,7 @@ const transformDataForListLayout = (data: TransformDataType) => {
 
         return {
           title: subItemTitle,
-          ...((id && { id }) as {})
+          ...((id && { id }) as Record<string, string>)
         };
       });
 

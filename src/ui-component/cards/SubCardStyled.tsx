@@ -2,8 +2,8 @@ import React, { ReactNode, Ref } from 'react';
 import { Card, CardContent, CardHeader, Divider, Typography, TypographyTypeMap } from '@mui/material';
 import { OverrideProps } from '@mui/material/OverridableComponent';
 // material-ui
-import { useTheme } from '@mui/material/styles';
-import { TypographyProps } from '@mui/system';
+import { Theme, useTheme } from '@mui/material/styles';
+import { SxProps, TypographyProps } from '@mui/system';
 import { borders } from 'themes/themeConstants';
 
 interface SubCardProps {
@@ -14,8 +14,8 @@ interface SubCardProps {
   contentClass?: string;
   darkTitle?: boolean;
   secondary?: ReactNode | string;
-  sx?: {};
-  contentSX?: {};
+  sx?: SxProps<Theme>;
+  contentSX?: SxProps<Theme>;
   title?: ReactNode | string;
 }
 

@@ -33,7 +33,7 @@ const Encounters = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement> | undefined) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     if (event?.target.value) {
       setRowsPerPage(parseInt(event?.target.value, 10));
     }

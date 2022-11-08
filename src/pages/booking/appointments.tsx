@@ -74,13 +74,13 @@ const Appointments = () => {
       dispatch(bookingMiddleware.setDateValue(format(date, 'yyyy-MM-dd')));
     }
   }, []);
-  const onServiceProviderChange = useCallback((event: SelectChangeEvent<unknown>) => {
+  const onServiceProviderChange = useCallback((event: SelectChangeEvent<string>) => {
     dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
   const onTodayClick = useCallback(() => {
     dispatch(bookingMiddleware.setDateValue(format(new Date(), 'yyyy-MM-dd')));
   }, []);
-  const onServiceProviderScroll = (event: UIEvent) => {
+  const onServiceProviderScroll = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const eventTarget = event.target as HTMLDivElement;
 
     if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
@@ -119,7 +119,7 @@ const Appointments = () => {
                     border: `${borders.solid2px} ${theme.palette.primary.main}`,
                     borderRadius: borderRadius.radius12
                   },
-                  onScroll: (event) => onServiceProviderScroll(event as unknown as UIEvent)
+                  onScroll: (event) => onServiceProviderScroll(event)
                 }
               }}
               ref={serviceProviderSelectRef}

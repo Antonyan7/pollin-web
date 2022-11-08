@@ -3,8 +3,8 @@ import { ChipProps, SnackbarOrigin, SvgIconProps, TableCellProps, Theme } from '
 
 export interface GenericCardProps {
   title?: string;
-  primary?: string | number | undefined;
-  secondary?: string | number | undefined;
+  primary?: string | number;
+  secondary?: string | number;
   content?: string;
   image?: string;
   dateTime?: string;
@@ -20,14 +20,14 @@ export interface LinkTarget {
   target: '_blank' | '_self' | '_parent' | '_top';
 }
 export interface NavItemType {
-  id?: string;
+  id: string;
   icon?: GenericCardProps['iconPrimary'];
   target?: boolean;
   external?: string;
-  url?: string | undefined;
+  url?: string;
   type?: string;
   title?: React.ReactNode | string;
-  color?: 'primary' | 'secondary' | 'default' | undefined;
+  color?: 'primary' | 'secondary' | 'default';
   caption?: React.ReactNode | string;
   breadcrumbs?: boolean;
   disabled?: boolean;
@@ -44,21 +44,18 @@ export interface SnackbarStateProps {
   close: boolean;
   actionButton: boolean;
 }
-export interface DefaultRootStateProps {
-  user: any;
-}
 export interface EnhancedTableToolbarProps {
   numSelected: number;
   selected: string[];
   setSelected: (selected: string[]) => void;
 }
 export interface KeyedObject {
-  [key: string]: string | number | KeyedObject | any;
+  [key: string]: string | number | KeyedObject;
 }
-export type ArrangementOrder = 'asc' | 'desc' | undefined;
+export type ArrangementOrder = 'asc' | 'desc';
 export interface EnhancedTableHeadProps extends TableCellProps {
   onSelectAllClick: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  order: ArrangementOrder;
+  order?: ArrangementOrder;
   orderBy?: string;
   rowCount: number;
   onRequestSort: (e: React.SyntheticEvent, property: string) => void;
@@ -67,21 +64,21 @@ export interface HeadCell {
   id: string;
   numeric: boolean;
   label: string;
-  disablePadding?: string | boolean | undefined;
-  align?: 'left' | 'right' | 'inherit' | 'center' | 'justify' | undefined;
+  disablePadding?: string | boolean;
+  align?: 'left' | 'right' | 'inherit' | 'center' | 'justify';
 }
 export interface ColorProps {
   readonly [key: string]: string;
 }
 export interface NavGroupProps {
   item: {
-    id?: string;
+    id: string;
     type?: string;
     icon?: GenericCardProps['iconPrimary'];
     children?: NavGroupProps['item'][];
     title?: ReactNode | string;
     caption?: ReactNode | string;
-    color?: 'primary' | 'secondary' | 'default' | undefined;
+    color?: 'primary' | 'secondary' | 'default';
     url?: string;
   };
 }

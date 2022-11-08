@@ -18,7 +18,7 @@ const ListItemLink = forwardRef(
         {...props}
         sx={{ ...theme.typography.subMenuCaption, textDecoration: 'none' }}
         ref={ref}
-        href={`${item.url!}`}
+        href={`${item.url}`}
         target={itemTarget}
       />
     );
