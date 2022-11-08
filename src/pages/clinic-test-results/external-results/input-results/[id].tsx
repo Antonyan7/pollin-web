@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
-import InputResults from '@components/InputResults';
+import InputResults from '@components/Results/InputResults';
 import { Box } from '@mui/material';
 import { Translation } from 'constants/translations';
 

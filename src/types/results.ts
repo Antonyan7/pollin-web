@@ -17,6 +17,6 @@ export enum TestResultsStats {
 }
 
 export enum FinalResultChipColor {
-  Active = 'active',
-  InActive = 'inActive'
+  Normal = 'active',
+  Abnormal = 'inActive'
 }

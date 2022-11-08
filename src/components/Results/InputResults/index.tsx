@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import MeasurementList from '@components/Results/InputResults/MeasurementList';
+import TextFieldWithLabel from '@components/TextFieldWithLabel';
 import { ArrowBackIos } from '@mui/icons-material';
-import { IconButton, Typography } from '@mui/material';
+import { Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
@@ -49,6 +51,14 @@ const InputResults = () => {
         lab={testResultDetails?.lab}
         finalResultType={testResultDetails?.finalResultType}
       />
+      {testResultDetails?.items && <MeasurementList listItems={testResultDetails?.items} />}
+      <Grid px={paddings.leftRight24}>
+        <Divider sx={{ my: margins.topBottom8 }} />
+        <TextFieldWithLabel
+          label={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
+          placeholder={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
+        />
+      </Grid>
     </SubCardStyled>
   );
 };

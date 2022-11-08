@@ -23,7 +23,7 @@ export interface IPendingTestStats {
   count: number;
 }
 
-enum TestResultMeasurementType {
+export enum TestResultMeasurementType {
   Normal = 'Normal',
   Abnormal = 'Abnormal',
   Inconclusive = 'Inconclusive',
@@ -41,7 +41,7 @@ interface ITestResultLab {
   doctorName: string;
 }
 
-interface ITestResultItem {
+export interface ITestResultItem {
   id: string;
   type: string;
   unit: string;

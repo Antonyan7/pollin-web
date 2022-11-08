@@ -20,7 +20,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({ title, lab,
   const isTestResultDetailsLoading = useAppSelector(resultsSelector.isTestResultDetailsLoading);
 
   const chipColor =
-    finalResultType === LatestTestResultType.Normal ? FinalResultChipColor.Active : FinalResultChipColor.InActive;
+    finalResultType === LatestTestResultType.Normal ? FinalResultChipColor.Normal : FinalResultChipColor.Abnormal;
 
   const { customizedDate: formattedOrderedDate } = timeAdjuster(dates?.ordered ?? '');
   const { customizedDate: formattedCollectedDate } = timeAdjuster(dates?.ordered ?? '');
@@ -30,7 +30,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({ title, lab,
       {!isTestResultDetailsLoading ? (
         <>
           <Grid item>
-            <Typography variant="h4">
+            <Typography variant="h4" component="h4">
               {t(Translation.PAGE_INPUT_RESULTS_TEST_NAME)} : {title}
             </Typography>
           </Grid>

@@ -92,6 +92,7 @@ export const paddings = {
   left20: '20px',
   left24: '24px',
   left32: '32px',
+  left64: '64px',
   right0: 0,
   right2: '2px',
   right4: '4px',

@@ -192,5 +192,11 @@
   "page.input.results.test.lab.ordering.mrp": "Ordering MRP",
   "page.input.results.test.dates.title": "Date",
   "page.input.results.test.dates.date.collected": "Date Collected",
-  "page.input.results.test.dates.date.ordered": "Date Ordered"
+  "page.input.results.test.dates.date.ordered": "Date Ordered",
+  "page.input.results.test.measurement.list.title": "Complete Blood Count (CBC)",
+  "page.input.results.test.measurement.list.field.name.type": "Type",
+  "page.input.results.test.measurement.list.field.name.unit": "Unit",
+  "page.input.results.test.measurement.list.field.name.result": "Result",
+  "page.input.results.test.measurement.list.field.name.date.recived": "Date recived",
+  "page.input.results.test.measurement.list.field.name.result.type": "Result type"
 }
