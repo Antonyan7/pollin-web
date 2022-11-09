@@ -19,7 +19,7 @@ interface IPatientInfoProps {
 const Actions = ({ row }: IPatientInfoProps) => {
   const [t] = useTranslation();
   const router = useRouter();
-  const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_INFORMATION_CONFIRM_BUTTON);
+  const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
   const { patientInfo } = UsePatientInfoState();
 
   const redirectToTestResultsDetailsPage = () => {

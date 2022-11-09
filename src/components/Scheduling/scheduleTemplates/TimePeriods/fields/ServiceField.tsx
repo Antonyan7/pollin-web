@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, styled, useTheme } from '@mui/material';
@@ -8,7 +8,8 @@ import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 const ServiceField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { control, getValues } = useFormContext<ITemplateGroup>();
+  const { control, watch } = useFormContext<ITemplateGroup>();
+  const [radioGroupValue, setRadioGroupValue] = useState<string>(PeriodType.ServiceType);
   const { field } = useController({ name: `timePeriods.${index}.periodType`, control });
   const { onChange, ...fieldProps } = field;
 
@@ -20,7 +21,13 @@ const ServiceField: React.FC<{ index: number }> = ({ index }) => {
     }
   }));
 
-  const radioGroupValue = getValues().timePeriods[index]?.periodType;
+  useEffect(() => {
+    const subscription = watch((item) => {
+      setRadioGroupValue(item.timePeriods?.[index]?.periodType ?? '');
+    });
+
+    return () => subscription.unsubscribe();
+  }, [index, watch]);
 
   return (
     <RadioGroup {...fieldProps} className="schedule-inputs" value={radioGroupValue} row onChange={onServiceFieldChange}>

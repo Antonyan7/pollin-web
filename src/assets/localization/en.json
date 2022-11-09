@@ -56,6 +56,7 @@
   "page.scheduling.create.templates.time.period": "Time Period",
   "page.scheduling.create.templates.select": "Select Day(s)",
   "page.scheduling.create.templates.select.error": "Select Day(s) is required",
+  "page.scheduling.create.templates.service.types.error": "Service Types are required",
   "page.scheduling.create.templates.start": "Start Time",
   "page.scheduling.create.templates.start.before.end.error": "Start time must occur before end time. Please update start or end time and try again.",
   "page.scheduling.create.templates.end.after.error": "End time must occur after start time. Please update start or end time and try again.",

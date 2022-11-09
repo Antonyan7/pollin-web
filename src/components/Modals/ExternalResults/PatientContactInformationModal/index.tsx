@@ -16,7 +16,7 @@ import BaseModal from '@ui-component/Modal/BaseModal';
 const PatientContactInformationModal = (row: IPatientContactInformationModalProps) => {
   const [modalLoading] = useState(false);
   const [t] = useTranslation();
-  const patientContactInformationTitleLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_INFORMATION_TITLE);
+  const patientContactInformationTitleLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_TITLE);
 
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
 

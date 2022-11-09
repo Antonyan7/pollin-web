@@ -1,3 +1,4 @@
+import { PeriodType } from 'types/create-schedule';
 import { array, number, object, string } from 'yup';
 
 export const createTemplateValidationSchema = object({
@@ -23,6 +24,13 @@ export const createTemplateValidationSchema = object({
 
           return endTime.getTime() < startTime.getTime();
         }),
+      periodType: string().required(),
+      serviceTypes: array().test('serviceTypes', (value, testContext) => {
+        const isPeriodServiceType = testContext.parent.periodType === PeriodType.ServiceType;
+        const isPeriodServiceEmpty = isPeriodServiceType && value?.length === 0;
+
+        return !isPeriodServiceEmpty;
+      }),
       placeholderName: string().required()
     })
   )
