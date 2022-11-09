@@ -15,7 +15,7 @@ import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedu
 import { v4 } from 'uuid';
 
 import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
-import { calculateTimeInUTC, changeDateSameTimeString } from '@utils/dateUtils';
+import { calculateTimeInUTC, changeDateSameTimeString, convertToLocale } from '@utils/dateUtils';
 
 import { createTemplateValidationSchema } from '../../validation/scheduling/create_template';
 
@@ -69,8 +69,11 @@ const EditTemplate = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          reqBody.startTime = changeDateSameTimeString(calculateTimeInUTC(rest.startTime), currentDate);
-          reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(rest.endTime), currentDate);
+          reqBody.startTime = changeDateSameTimeString(
+            calculateTimeInUTC(convertToLocale(rest.startTime)),
+            currentDate
+          );
+          reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(convertToLocale(rest.endTime)), currentDate);
         }
 
         return reqBody;

@@ -129,7 +129,7 @@ export const linkDateAndTime = (date: Date | null, time: Date | null) => {
 
 export const convertToLocale = (value: string | null) => {
   if (!value) {
-    return null;
+    return '';
   }
 
   const offset = new Date().getTimezoneOffset();
