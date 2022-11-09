@@ -13,9 +13,11 @@ export interface InputResultsHeaderSectionProps {
 
 export interface InputTestResultsHeaderProps extends Partial<ITestResultsDetails> {}
 
-export interface IMeasurementListFieldForm {
-  data?: { resultType?: TestResultMeasurementType; dateReceived: string; result: string }[];
+export interface IMeasurementsFieldValues {
+  data: { resultType?: TestResultMeasurementType; dateReceived: string; result: string }[];
 }
+
+export interface IMeasurementsControl extends Control<IMeasurementsFieldValues> {}
 
 export interface IMeasurementListField {
   name:
@@ -24,5 +26,5 @@ export interface IMeasurementListField {
     | `data.${number}.result`
     | `data.${number}.dateReceived`
     | `data.${number}.resultType`;
-  control: Control<IMeasurementListFieldForm>;
+  control: IMeasurementsControl;
 }

@@ -1,5 +1,4 @@
 import { IPagination } from '@axios/axiosTypes';
-import { LatestTestResultType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IResultsFilterOption, TestResultsStats } from 'types/results';
 
 export interface IResultsProps {
@@ -59,7 +58,6 @@ interface ITestResultAttachment {
 export interface ITestResultsDetails {
   id: string;
   title: string;
-  finalResultType: LatestTestResultType;
   comment?: string;
   dates: ITestResultDates;
   lab: ITestResultLab;

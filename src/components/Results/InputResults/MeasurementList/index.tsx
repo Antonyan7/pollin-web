@@ -1,6 +1,8 @@
 import React from 'react';
-import { useFieldArray, useForm } from 'react-hook-form';
+import { useFieldArray, useFormContext } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { useTranslation } from 'react-i18next';
+import { IMeasurementsControl, IMeasurementsFieldValues } from '@components/Results/InputResults/types';
 import {
   Paper,
   styled,
@@ -17,9 +19,7 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 
-import { IMeasurementListFieldForm } from '../types';
-
-import DateRecivedField from './fields/DateRecivedField';
+import DateReceivedField from './fields/DateReceivedField';
 import ResultTypeField from './fields/ResultTypeField';
 import MEASUREMENT_LIST_TABLE_HEADERS from './data';
 
@@ -32,23 +32,15 @@ const StyledTableRow = styled(TableRow)(() => ({
   border: 'none'
 }));
 
-interface MeasurementListProps {
+export interface MeasurementListProps {
   listItems?: ITestResultItem[];
 }
 
 const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
   const [t] = useTranslation();
 
-  const { control, register } = useForm<IMeasurementListFieldForm>({
-    defaultValues: {
-      data: listItems?.map((item: ITestResultItem) => ({
-        resultType: item.resultType,
-        dateReceived: item.dateReceived,
-        result: item.result
-      }))
-    },
-    shouldUnregister: false
-  });
+  const { register, control }: { register: UseFormRegister<IMeasurementsFieldValues>; control: IMeasurementsControl } =
+    useFormContext();
 
   const { fields } = useFieldArray({
     control,
@@ -92,7 +84,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
                 />
               </StyledTableCell>
               <StyledTableCell>
-                <DateRecivedField name={`data.${index}.dateReceived`} control={control} />
+                <DateReceivedField name={`data.${index}.dateReceived`} control={control} />
               </StyledTableCell>
               <StyledTableCell>
                 <ResultTypeField name={`data.${index}.resultType`} control={control} />

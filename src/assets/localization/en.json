@@ -174,6 +174,7 @@
   "modal.external.results.ohip.version.code": "OHIP Version Code",
   "modal.external.results.confirm.details": "Please confirm the following details:",
   "modal.external.results.ohip.information": "OHIP Information (Health Number/Version Code)",
+  "modal.external.results.result.text": "Final Result Type",
   "google.sign.in.button": "Sign In With Google",
   "google.sign.up.button": "Sign Up With Google",
   "google.login.title": "Hi, Welcome Back",
@@ -202,5 +203,6 @@
   "page.input.results.test.measurement.list.field.name.result.type": "Result type",
   "page.input.results.test.attach.file": "Attach file",
   "page.input.results.test.attach.file.notes.form.lab": "Notes from Lab (Optional)",
-  "page.input.results.test.save.as.final": "Save as Final"
+  "page.input.results.test.save.as.final": "Save as Final",
+  "page.input.results.test.save.as.pending": "Save as Pending"
 }

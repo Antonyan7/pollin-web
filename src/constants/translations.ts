@@ -176,6 +176,7 @@ export enum Translation {
   MODAL_EXTERNAL_RESULTS_OHIP_VERSION_CODE = 'modal.external.results.ohip.version.code',
   MODAL_EXTERNAL_RESULTS_CONFIRM_DETAILS = 'modal.external.results.confirm.details',
   MODAL_EXTERNAL_RESULTS_OHIP_INFORMATION = 'modal.external.results.ohip.information',
+  MODAL_EXTERNAL_RESULTS_RESULT_TEXT = 'modal.external.results.result.text',
   GOOGLE_SIGN_IN_BUTTON = 'google.sign.in.button',
   GOOGLE_SIGN_UP_BUTTON = 'google.sign.up.button',
   GOOGLE_LOGIN_TITLE = 'google.login.title',
@@ -204,7 +205,8 @@ export enum Translation {
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT_TYPE = 'page.input.results.test.measurement.list.field.name.result.type',
   PAGE_INPUT_RESULTS_TEST_ATTACH_FILE = 'page.input.results.test.attach.file',
   PAGE_INPUT_RESULTS_TEST_ATTACH_FILE_NOTES_FORM_LAB = 'page.input.results.test.attach.file.notes.form.lab',
-  PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL = 'page.input.results.test.save.as.final'
+  PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL = 'page.input.results.test.save.as.final',
+  PAGE_INPUT_RESULTS_TEST_SAVE_AS_PENDING = 'page.input.results.test.save.as.pending'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

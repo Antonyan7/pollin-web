@@ -43,6 +43,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
         padding: `${paddings.topBottom16} ${paddings.leftRight36}`,
         color: theme.palette.common.black,
         backgroundColor: theme.palette.grey[100],
+        width: '160px',
         border: `${borders.solid1px}`,
         borderColor: theme.palette.grey[100],
         ':hover': {
@@ -55,7 +56,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
     case 'active':
       defaultSX = {
         padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
-        width: '140px',
+        width: '160px',
         color: theme.palette.success[800],
         fontWeight: 600,
         backgroundColor: theme.palette.success.light,
@@ -68,13 +69,30 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
     case 'inActive':
       defaultSX = {
         padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
-        width: '140px',
+        width: '160px',
         color: theme.palette.error[800],
         fontWeight: 600,
         backgroundColor: theme.palette.error.light,
         ':hover': {
           color: theme.palette.error.light,
           backgroundColor: theme.palette.error[800]
+        }
+      };
+      break;
+    case 'initial':
+      defaultSX = {
+        padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
+        width: '180px',
+        color: theme.palette.grey[500],
+        fontWeight: 600,
+        border: `1px solid ${theme.palette.grey[500]}`,
+        backgroundColor: theme.palette.secondary.light,
+        ':hover': {
+          color: theme.palette.grey[500],
+          backgroundColor: theme.palette.secondary.light
+        },
+        root: {
+          width: '500px'
         }
       };
       break;

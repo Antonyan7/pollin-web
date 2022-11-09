@@ -12,7 +12,7 @@ import { futureDate180DaysAfter } from '@utils/dateUtils';
 
 import { IMeasurementListField } from '../../types';
 
-const DateRecivedField = ({ name, control }: IMeasurementListField) => {
+const DateReceivedField = ({ name, control }: IMeasurementListField) => {
   const { field } = useController({
     name,
     control
@@ -69,4 +69,4 @@ const DateRecivedField = ({ name, control }: IMeasurementListField) => {
   );
 };
 
-export default DateRecivedField;
+export default DateReceivedField;
