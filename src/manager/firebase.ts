@@ -1,7 +1,12 @@
+import React from 'react';
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { AppCheck, getToken, initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { Auth, getAuth, onAuthStateChanged, SAMLAuthProvider, signInWithPopup } from 'firebase/auth';
+import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadBytesResumable } from 'firebase/storage';
 import { dispatchAuthError, dispatchIsAuthChecked, dispatchLoginUser } from 'layout/MainLayout/Login/loginHelpers';
+import { v4 } from 'uuid';
+
+import { getFileExtension } from '@utils/stringUtils';
 
 export class FirebaseManager {
   private static appCheck: AppCheck;
@@ -10,6 +15,8 @@ export class FirebaseManager {
 
   private static auth: Auth;
 
+  private static storage: FirebaseStorage;
+
   private static initializeAuth() {
     this.auth = getAuth(this.app);
     this.auth.tenantId = process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID ?? '';
@@ -17,6 +24,10 @@ export class FirebaseManager {
       dispatchIsAuthChecked(true);
       dispatchLoginUser(user);
     });
+  }
+
+  private static initiateStorage() {
+    this.storage = getStorage(this.app);
   }
 
   public static async login() {
@@ -60,12 +71,41 @@ export class FirebaseManager {
       if (!this.auth) {
         this.initializeAuth();
       }
+
+      if (!this.storage) {
+        this.initiateStorage();
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error('initializeApp error');
       // eslint-disable-next-line no-console
       console.error(e);
     }
+  }
+
+  static uploadFile(file: File, path: string, setProgress?: React.Dispatch<React.SetStateAction<number>>) {
+    const fileExtension = getFileExtension(file.name);
+    const storageRef = ref(this.storage, `${path}/${v4()}${fileExtension}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    return new Promise<string>((resolve, reject: (reason: StorageError) => void) => {
+      uploadTask.on(
+        'state_changed',
+        (snapshot) => {
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
+          setProgress?.(progress);
+        },
+        (error) => {
+          reject(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadUrl) => {
+            resolve(downloadUrl);
+          });
+        }
+      );
+    });
   }
 
   static async getToken(): Promise<string> {
