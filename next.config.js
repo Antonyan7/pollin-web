@@ -6,11 +6,8 @@ const nextConfig = {
     disableServerWebpackPlugin: true,
     disableClientWebpackPlugin: true
   },
-  // TODO fix by adding custom loader https://nextjs.org/docs/messages/export-image-api
-  experimental: {
-    images: {
-      unoptimized: true
-    }
+  images: {
+    unoptimized: true
   }
 };
 const SentryWebpackPluginOptions = {
