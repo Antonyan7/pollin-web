@@ -3,7 +3,9 @@
 It's React JS project combined with Next.js.
 
 ## Prerequisites
+
 Please use:
+
 - node `v16.18.1` (lts/gallium)
 - [yarn](https://classic.yarnpkg.com/en/docs/install)
 

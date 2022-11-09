@@ -199,5 +199,8 @@
   "page.input.results.test.measurement.list.field.name.unit": "Unit",
   "page.input.results.test.measurement.list.field.name.result": "Result",
   "page.input.results.test.measurement.list.field.name.date.recived": "Date recived",
-  "page.input.results.test.measurement.list.field.name.result.type": "Result type"
+  "page.input.results.test.measurement.list.field.name.result.type": "Result type",
+  "page.input.results.test.attach.file": "Attach file",
+  "page.input.results.test.attach.file.notes.form.lab": "Notes from Lab (Optional)",
+  "page.input.results.test.save.as.final": "Save as Final"
 }

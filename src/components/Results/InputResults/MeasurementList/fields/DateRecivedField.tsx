@@ -20,7 +20,7 @@ const DateRecivedField = ({ name, control }: IMeasurementListField) => {
 
   const [t] = useTranslation();
 
-  const [openedDatePickerId, setOpenedDatePickerId] = useState(false);
+  const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const onDateChange = (date: Date | null) => {
     if (date) {
@@ -30,8 +30,8 @@ const DateRecivedField = ({ name, control }: IMeasurementListField) => {
     }
   };
 
-  const onDateDatePickerClose = () => {
-    setOpenedDatePickerId(false);
+  const onDatePickerClose = () => {
+    setOpenDatePicker(false);
   };
 
   const { value, ...otherFieldProps } = field;
@@ -42,8 +42,8 @@ const DateRecivedField = ({ name, control }: IMeasurementListField) => {
         <DesktopDatePicker
           disableMaskedInput
           maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
-          open={openedDatePickerId}
-          onClose={onDateDatePickerClose}
+          open={openDatePicker}
+          onClose={onDatePickerClose}
           label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECIVED)}
           inputFormat="MMM dd, yyyy"
           value={new Date(value as string)}
@@ -57,7 +57,7 @@ const DateRecivedField = ({ name, control }: IMeasurementListField) => {
               sx={{ width: '320px' }}
               {...params}
               {...otherFieldProps}
-              onClick={() => setOpenedDatePickerId(true)}
+              onClick={() => setOpenDatePicker(true)}
               onKeyDown={(event) => {
                 event.preventDefault();
               }}

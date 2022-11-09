@@ -30,6 +30,9 @@ const resultsManager = {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<ITestResultsDetails>>(
       `${baseURL}/v1/test-result/${testResultId}`
     );
+  },
+  removeTestResultsAttachment(attachmentId: string) {
+    return axiosInstance.delete<void, IAxiosResponse<void>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);
   }
 };
 

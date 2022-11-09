@@ -201,7 +201,10 @@ export enum Translation {
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_UNIT = 'page.input.results.test.measurement.list.field.name.unit',
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT = 'page.input.results.test.measurement.list.field.name.result',
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECIVED = 'page.input.results.test.measurement.list.field.name.date.recived',
-  PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT_TYPE = 'page.input.results.test.measurement.list.field.name.result.type'
+  PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT_TYPE = 'page.input.results.test.measurement.list.field.name.result.type',
+  PAGE_INPUT_RESULTS_TEST_ATTACH_FILE = 'page.input.results.test.attach.file',
+  PAGE_INPUT_RESULTS_TEST_ATTACH_FILE_NOTES_FORM_LAB = 'page.input.results.test.attach.file.notes.form.lab',
+  PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL = 'page.input.results.test.save.as.final'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

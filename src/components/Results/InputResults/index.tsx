@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import AttachFile from '@components/AttachFile';
 import MeasurementList from '@components/Results/InputResults/MeasurementList';
 import TextFieldWithLabel from '@components/TextFieldWithLabel';
 import { ArrowBackIos } from '@mui/icons-material';
@@ -12,6 +13,7 @@ import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 import InputResultsHeader from './Header';
 
@@ -58,6 +60,15 @@ const InputResults = () => {
           label={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
           placeholder={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
         />
+        <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
+        <AttachFile />
+      </Grid>
+      <Divider sx={{ mt: margins.top12 }} />
+      <Grid p={paddings.all20} display="flex" justifyContent="end">
+        {/* isLoading={false} is temporary, the logic will be added by the next tickets */}
+        <ButtonWithLoading isLoading={false} sx={{ fontWeight: 600 }}>
+          {t(Translation.PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL)}
+        </ButtonWithLoading>
       </Grid>
     </SubCardStyled>
   );

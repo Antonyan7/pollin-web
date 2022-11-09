@@ -34,7 +34,8 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
         main: colors.primaryMain,
         dark: colors.primaryDark,
         200: colors.primary200,
-        800: colors.primary800
+        800: colors.primary800,
+        100: colors.primary100
       },
       secondary: {
         light: colors.secondaryLight,

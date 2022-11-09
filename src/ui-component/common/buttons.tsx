@@ -38,9 +38,17 @@ interface ButtonWithIconProps extends ButtonProps {
   icon?: ReactNode;
   label: string;
   sx?: SxProps;
+  labelSx?: SxProps;
 }
 
-export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({ onClick, icon, label, sx, ...buttonProps }) => (
+export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
+  onClick,
+  icon,
+  label,
+  labelSx,
+  sx,
+  ...buttonProps
+}) => (
   <Button
     sx={{
       border: '1px solid #BDBDBD',
@@ -55,7 +63,8 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({ onClick, icon, l
   >
     <Typography
       sx={{
-        fontWeight: 500
+        fontWeight: 500,
+        ...labelSx
       }}
     >
       {label}

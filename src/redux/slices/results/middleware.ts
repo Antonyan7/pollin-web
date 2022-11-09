@@ -77,6 +77,15 @@ const getPendingTestStats = () => async (dispatch: AppDispatch) => {
   dispatch(setPendingTestStatsLoadingState(false));
 };
 
+const removeTestResultsAttachment = (attachmentId: string) => async (dispatch: AppDispatch) => {
+  try {
+    await API.results.removeTestResultsAttachment(attachmentId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const getTestResultDetails = (testResultId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsTestResultDetailsLoading(true));
@@ -87,14 +96,15 @@ const getTestResultDetails = (testResultId: string) => async (dispatch: AppDispa
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setIsTestResultDetailsLoading(false));
   }
-
-  dispatch(setIsTestResultDetailsLoading(false));
 };
 
 export default {
   getResultsList,
   getResultsFilters,
   getPendingTestStats,
+  removeTestResultsAttachment,
   getTestResultDetails
 };
