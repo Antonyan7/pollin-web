@@ -4,7 +4,6 @@ import { useTheme } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { format } from 'date-fns';
 
 interface Props {
   label: string;
@@ -24,8 +23,8 @@ const DatePickerField = ({ label, value, setDate, errorText }: Props) => {
     setDatePickerOpen(false);
   };
   const onDateUpdate = (date: Date | null) => {
-    if (date && !Number.isNaN(date.getTime())) {
-      setDate(format(date, 'yyyy-MM-dd'));
+    if (date) {
+      setDate(date);
     }
   };
 
