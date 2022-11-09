@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { LoadingButton } from '@mui/lab';
-import { Box, Button, ButtonProps, Fab, Grid, SxProps, Typography } from '@mui/material';
+import { Box, Button, ButtonProps, CircularProgress, Fab, Grid, SxProps, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 export const PlusIconButton = (props: { onClick: () => void }) => {
@@ -88,10 +88,13 @@ interface ButtonWithLoadingProps extends ButtonProps {
 
 export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWithLoadingProps) => (
   <LoadingButton
-    loadingPosition="end"
     variant="contained"
     {...otherProps}
     loading={isLoading}
+    {...(isLoading && {
+      endIcon: <CircularProgress size={16} color="inherit" />,
+      loadingPosition: 'end'
+    })}
     sx={{
       textTransform: 'none',
       color: (theme) => theme.palette.common.white,

@@ -58,7 +58,12 @@ const SubCardStyled = React.forwardRef(
           <CardHeader
             sx={{ p: 2.5 }}
             title={
-              <Typography fontSize="21px" fontWeight="400" {...titleProps}>
+              <Typography
+                fontSize="21px"
+                fontWeight="400"
+                {...titleProps}
+                {...(typeof title !== 'string' && { component: 'div' })}
+              >
                 {title}
               </Typography>
             }
@@ -69,7 +74,12 @@ const SubCardStyled = React.forwardRef(
           <CardHeader
             sx={{ p: 2.5 }}
             title={
-              <Typography fontSize="21px" fontWeight="400" {...titleProps}>
+              <Typography
+                fontSize="21px"
+                fontWeight="400"
+                {...titleProps}
+                {...(typeof title !== 'string' && { component: 'div' })}
+              >
                 {title}
               </Typography>
             }

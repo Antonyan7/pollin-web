@@ -12,14 +12,14 @@ import AttachedFilesDetails from './AttachedFilesDetails';
 
 const AttachFile = () => {
   const [t] = useTranslation();
-  const fileInputRef = useRef<HTMLElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]);
 
   const handleFileAttachment = (e: ChangeEvent<HTMLInputElement>) => {
     const newAttachedFiles = Object.values(e?.target?.files ?? []);
     const allAttachedFiles = [...attachedFiles, ...newAttachedFiles];
     const allAttachedFilesCount = allAttachedFiles.length;
-    const isValidFilesCount = allAttachedFilesCount > 0 && allAttachedFilesCount < MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT;
+    const isValidFilesCount = allAttachedFilesCount < MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT;
 
     if (isValidFilesCount) {
       setAttachedFiles(allAttachedFiles);
@@ -27,9 +27,12 @@ const AttachFile = () => {
   };
 
   const handleRemoveAttachedFile = (removingAttachedFileName: string) => {
-    const filteredAttachedFiles = attachedFiles.filter(
-      (attachedFile) => attachedFile.name !== removingAttachedFileName
-    );
+    const filteredAttachedFiles =
+      attachedFiles.filter((attachedFile) => attachedFile.name !== removingAttachedFileName) ?? [];
+
+    if (fileInputRef?.current?.value) {
+      fileInputRef.current.value = '';
+    }
 
     setAttachedFiles(filteredAttachedFiles);
   };
@@ -64,7 +67,6 @@ const AttachFile = () => {
         onChange={handleFileAttachment}
         inputProps={{
           multiple: true,
-          hidden: true,
           accept: '.pdf'
         }}
         inputRef={fileInputRef}
