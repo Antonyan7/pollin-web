@@ -24,6 +24,9 @@ const reducers = createReducer({
   setScheduleTemplates(state, action: IAction<IScheduleTemplatesList>) {
     state.scheduleTemplates = action.payload;
   },
+  updateScheduleTemplates(state, action: IAction<IScheduleTemplatesList>) {
+    state.scheduleTemplates.templates = [...state.scheduleTemplates.templates, ...action.payload.templates];
+  },
   setCalendarLoadingState(state, action: IAction<boolean>) {
     state.scheduleCalendarLoading = action.payload;
   },

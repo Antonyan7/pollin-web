@@ -27,7 +27,8 @@ const {
   setBlockScheduleState,
   setCalendarLoadingState,
   setScheduleLoading,
-  setIsServiceTypesLoading
+  setIsServiceTypesLoading,
+  updateScheduleTemplates
 } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
@@ -64,6 +65,29 @@ const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatc
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+    dispatch(setSchedulingListLoadingStatus(false));
+  }
+};
+
+const getNewSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setSchedulingListLoadingStatus(true));
+
+    const response = await API.scheduling.getTemplatesList(pageSize);
+
+    const data: IScheduleTemplatesList = {
+      totalItems: response.data.totalItems,
+      pageSize: response.data.pageSize,
+      currentPage: response.data.currentPage,
+      templates: response.data.data.templates
+    };
+
+    dispatch(updateScheduleTemplates(data));
+    dispatch(setSchedulingListLoadingStatus(false));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
     dispatch(setSchedulingListLoadingStatus(false));
   }
 };
@@ -233,5 +257,6 @@ export default {
   resetOverrides,
   resetBlockStatusState,
   deleteTemplate,
+  getNewSchedulingTemplates,
   cleanError
 };
