@@ -199,6 +199,7 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
           apply: true
         })
       );
+      dispatch(setError(null));
     } else {
       dispatch(setScheduleOverrides(response.data.data.data));
       dispatch(
@@ -216,6 +217,10 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
   }
 };
 
+const cleanError = () => async (dispatch: AppDispatch) => {
+  dispatch(setError(null));
+};
+
 export default {
   getServiceTypes,
   getSchedulingTemplates,
@@ -227,5 +232,6 @@ export default {
   resetApplyStatusState,
   resetOverrides,
   resetBlockStatusState,
-  deleteTemplate
+  deleteTemplate,
+  cleanError
 };

@@ -40,6 +40,8 @@ const CreateTemplate = () => {
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
 
+  const error = useAppSelector(schedulingSelector.scheduleError);
+
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
   }, []);
@@ -84,8 +86,12 @@ const CreateTemplate = () => {
     reValidateMode: 'onChange',
     resolver: yupResolver(createTemplateValidationSchema)
   });
+
+  const { watch } = methods;
+
   const { errors } = methods.formState;
   const errorMessage =
+    (error && error.response && error.response.data?.status?.message) ||
     (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
     (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
   const { append } = useFieldArray({
@@ -96,6 +102,12 @@ const CreateTemplate = () => {
   const onPlusClick = () => {
     append({ ...getDefaultTimePeriodState(), id: v4() });
   };
+
+  useEffect(() => {
+    watch(() => {
+      dispatch(schedulingMiddleware.cleanError());
+    });
+  }, [watch]);
 
   return (
     <ScheduleBoxWrapper>
@@ -111,8 +123,8 @@ const CreateTemplate = () => {
                 className="schedule-inputs"
                 color="primary"
                 fullWidth
-                helperText={errors.name?.message && errorMessage}
-                error={Boolean(errors.name?.message)}
+                helperText={(errors.name?.message || error) && errorMessage}
+                error={Boolean(errors.name?.message) || Boolean(error)}
                 placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
               />
             </Grid>
