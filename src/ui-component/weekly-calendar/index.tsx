@@ -70,7 +70,12 @@ const Calendar = () => {
       const calendarApi = calendarEl.getApi();
 
       calendarApi.prev();
-      setDate(calendarApi.getDate());
+
+      const viewTitle = calendarApi.currentDataManager?.getCurrentData().viewTitle as string;
+
+      const getCurrentDate = new Date(viewTitle);
+
+      setDate(getCurrentDate);
     }
   }, []);
 
@@ -81,7 +86,12 @@ const Calendar = () => {
       const calendarApi = calendarEl.getApi();
 
       calendarApi.next();
-      setDate(calendarApi.getDate());
+
+      const viewTitle = calendarApi.currentDataManager?.getCurrentData().viewTitle as string;
+
+      const getCurrentDate = new Date(viewTitle);
+
+      setDate(getCurrentDate);
     }
   }, []);
 
