@@ -52,7 +52,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
     onChange(toLocalIsoString(newTime));
   };
   const timeFieldValue = getValues().timePeriods[index]?.[fieldName];
-  const initialValue = convertToLocale(timeFieldValue);
+  const initialValue = convertToLocale(timeFieldValue ?? '');
 
   return (
     <div className="schedule-inputs">

@@ -12,7 +12,14 @@ import { toRoundupTime } from 'helpers/time';
 
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import { PickerDateIcon } from '@ui-component/common/TimeDateIcons';
-import { changeTimezone, dateInputValue, futureDate180DaysAfter, getTimezoneOffset } from '@utils/dateUtils';
+import {
+  changeTimezone,
+  convertToLocale,
+  dateInputValue,
+  futureDate180DaysAfter,
+  getTimezoneOffset,
+  toLocalIsoString
+} from '@utils/dateUtils';
 
 import { IFormValues } from '../types';
 
@@ -30,9 +37,11 @@ const DateAndStartTime: React.FC = () => {
   });
   const { onChange, value, ...fieldProps } = field;
 
-  const getMobileDateTime = (date: DateAndStartTimeType) => toRoundupTime(date);
+  const getMobileDateTime = (date: DateAndStartTimeType) => toLocalIsoString(toRoundupTime(date));
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
+
+  const initialValue = convertToLocale(value as string);
 
   useEffect(() => {
     if (
@@ -56,7 +65,7 @@ const DateAndStartTime: React.FC = () => {
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
         maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
-        value={value}
+        value={initialValue}
         minutesStep={10}
         DialogProps={{
           sx: {

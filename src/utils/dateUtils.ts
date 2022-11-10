@@ -127,7 +127,7 @@ export const linkDateAndTime = (date: Date | null, time: Date | null) => {
   return result;
 };
 
-export const convertToLocale = (value: string | null) => {
+export const convertToLocale = (value?: string) => {
   if (!value) {
     return '';
   }
