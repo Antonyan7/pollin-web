@@ -130,9 +130,9 @@ const ApplyScheduleForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleApplyStatus.success, scheduleApplyStatus.fail]);
 
-  const startDateTime = startDate && new Date(startDate).getTime();
-  const endDateTime = endDate && new Date(endDate).getTime();
-  const curDateTime = new Date().getTime();
+  const startDateTime = startDate && new Date(startDate).setHours(0, 0, 0, 0);
+  const endDateTime = endDate && new Date(endDate).setHours(0, 0, 0, 0);
+  const curDateTime = new Date().setHours(0, 0, 0, 0);
 
   const isStartDateLowerThanToday = startDateTime && startDateTime < curDateTime;
   const isEndDateLowerThanToday = endDateTime && endDateTime < curDateTime;
