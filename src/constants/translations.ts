@@ -41,6 +41,7 @@ export enum Translation {
   PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS = 'page.appointments.create.success.status',
   PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS = 'page.appointments.edit.success.status',
   PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS = 'page.appointments.cancel.success.status',
+  PAGE_APPOINTMENTS_OUTSIDE_HOURS_FAIL_STATUS = 'page.appointments.outside.hours.fail.status',
   PAGE_SCHEDULING_TEMPLATES_TITLE = 'page.scheduling.templates.title',
   PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE = 'page.scheduling.templates.button.create',
   PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_NAME = 'page.scheduling.templates.table.header.name',

@@ -39,6 +39,7 @@
   "page.appointments.create.success.status": "Appointment Added",
   "page.appointments.edit.success.status": "Appointment Updated",
   "page.appointments.cancel.success.status": "Appointment Cancelled",
+  "page.appointments.outside.hours.fail.status": "Can't create appointment outside working hours",
   "page.scheduling.templates.title": "Schedule Templates",
   "page.scheduling.templates.button.create": "New Template",
   "page.scheduling.templates.table.header.name": "Name",

@@ -163,3 +163,5 @@ export const dateInputValue = (date: string) => {
 
   return dayjs(initialDate).format(`MMM DD, YYYY HH:mm a [${TIME_CONFIG || ''}]`);
 };
+
+export const customizedTimeForWorkingHours = (time: string | Date) => format(time, 'HH:mm:ss');
