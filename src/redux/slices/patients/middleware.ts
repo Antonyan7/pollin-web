@@ -42,6 +42,7 @@ const {
   setProfileTestResults,
   setPatientAppointments,
   setPatientAppointmentsList,
+  setEncountersDetailsLoadingState,
   setIsProfileTestResultsLoading,
   setIsTestResultsHistoryLoading
 } = slice.actions;
@@ -56,6 +57,18 @@ const cleanPatientList = () => async (dispatch: AppDispatch) => {
     })
   );
   dispatch(setPatientsLoadingState(false));
+};
+
+const cleanEncountersList = () => (dispatch: AppDispatch) => {
+  dispatch(
+    setEncountersList({
+      encounters: [],
+      currentPage: 0,
+      totalItems: 0,
+      pageSize: 0
+    })
+  );
+  dispatch(setEncountersLoadingState(false));
 };
 
 const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch: AppDispatch) => {
@@ -219,15 +232,23 @@ const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch)
   }
 };
 
-const getEncounterDetailsInformation = (encounterId: string) => async (dispatch: AppDispatch) => {
+const getEncounterDetailsInformation = (encounterId?: string) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.patients.getEncounterDetails(encounterId);
+    dispatch(setEncountersDetailsLoadingState(true));
 
-    dispatch(setEncounterDetailsInfo(response.data.data.encounter));
+    if (encounterId) {
+      const response = await API.patients.getEncounterDetails(encounterId);
+
+      dispatch(setEncounterDetailsInfo(response.data.data.encounter));
+    } else {
+      dispatch(setEncounterDetailsInfo(null));
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
+
+  dispatch(setEncountersDetailsLoadingState(false));
 };
 
 const createEncounterAddendum = (addendumData: ICreateEncounterAddendumRequest) => async (dispatch: AppDispatch) => {
@@ -393,5 +414,6 @@ export default {
   getProfileTestResultsHistory,
   getProfileTestResults,
   getInitialPatientAppointments,
-  getPatientAppointments
+  getPatientAppointments,
+  cleanEncountersList
 };

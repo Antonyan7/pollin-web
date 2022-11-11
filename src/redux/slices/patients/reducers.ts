@@ -66,7 +66,7 @@ const reducers = createReducer({
   setEncountersType(state, action: IAction<IEncounterType[]>) {
     state.encounters.types = action.payload;
   },
-  setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps>) {
+  setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps | null>) {
     state.encounters.encounterDetails = action.payload;
   },
   setPatientProfile(state, action: IAction<PatientProfile>) {
@@ -101,6 +101,9 @@ const reducers = createReducer({
   },
   setPatientAppointmentsList(state, action: IAction<IPatientAppointmentsList>) {
     state.patientAppointments.list = action.payload;
+  },
+  setEncountersDetailsLoadingState(state, action: IAction<boolean>) {
+    state.isEncountersDetailsLoading = action.payload;
   }
 });
 

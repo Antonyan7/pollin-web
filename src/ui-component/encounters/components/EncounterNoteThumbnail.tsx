@@ -15,7 +15,6 @@ import { extractContent } from '../helpers/extractContent';
 const useStyles = makeStyles({
   multiLineEllipsis: {
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
     display: '-webkit-box',
     '-webkit-line-clamp': 4,
     '-webkit-box-orient': 'vertical'

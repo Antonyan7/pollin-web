@@ -1,6 +1,8 @@
 import { SetStateAction } from 'react';
 import { SelectChangeEvent } from '@mui/material';
 
+import { AddendumsProps } from '../manager/patientEmr/managerPatientEmrTypes';
+
 import { IEncounterType } from './reduxTypes/patient-emrStateTypes';
 
 export interface IPatient {
@@ -107,4 +109,6 @@ export interface SimpleEditorProps {
   handleSave?: () => void;
   handleEncounterTypeSelect?: (e: SelectChangeEvent) => void;
   encounterTypes?: IEncounterType[];
+  currentAddendum?: AddendumsProps | null;
+  filteredAddendums?: AddendumsProps[];
 }

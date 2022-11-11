@@ -8,13 +8,14 @@ import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { borderRadius, borders } from 'themes/themeConstants';
+import { borderRadius, borders, margins } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
+import CurrentAddendum from '@ui-component/encounters/components/CurrentAddendum';
 import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
 
 import 'react-quill/dist/quill.snow.css';
@@ -58,13 +59,14 @@ const EditEncounterNoteAddendums = () => {
           <Grid item>
             <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
           </Grid>
-          <Grid item container direction="column" mb={2}>
+          <Grid item container direction="column" mb={margins.bottom16}>
             <Typography component="h4" variant="h4">
               {addendum.author}
             </Typography>
             <Typography variant="body1" component="p">
-              {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-              {encountersCustomizedDate(new Date(addendum.date as Date))}
+              {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
+                new Date(addendum.date as Date)
+              )}`}
             </Typography>
           </Grid>
           <Divider sx={{ display: addendumIndex === encounterData.addendums.length - 1 ? 'none' : 'block' }} />
@@ -80,7 +82,9 @@ const SimpleTextEditor = ({
   setEditorValue,
   mode,
   handleSave,
-  handleCancel
+  handleCancel,
+  currentAddendum,
+  filteredAddendums
 }: SimpleEditorProps) => {
   const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
   const isEncounterLoading = useAppSelector(patientsSelector.isEncountersListLoading);
@@ -142,6 +146,9 @@ const SimpleTextEditor = ({
         </SubCardStyled>
       </StyledGrid>
       {mode === SimpleEditorMode.Edit_Note ? <EditEncounterNoteAddendums /> : null}
+      {mode === SimpleEditorMode.Edit_Addendum && currentAddendum && !filteredAddendums?.length ? (
+        <CurrentAddendum currentAddendum={currentAddendum as AddendumsProps} />
+      ) : null}
     </>
   );
 };

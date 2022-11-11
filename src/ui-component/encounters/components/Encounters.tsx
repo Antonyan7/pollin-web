@@ -55,7 +55,7 @@ const Encounters = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {isEncountersListLoading || encounters.length ? (
+            {encounters.length && !isEncountersListLoading ? (
               <>
                 {encounters
                   .sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())

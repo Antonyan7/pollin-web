@@ -84,6 +84,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       if (clearSearchInput) {
         setSearchValue('');
+        setClearSearchInput(false);
       } else {
         setSearchValue(event.target.value);
         debounceFn(event.target.value);

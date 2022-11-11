@@ -26,6 +26,7 @@ export interface PatientEmrProps {
   isPatientsFiltersLoading: boolean;
   isEncountersAddendumLoading: boolean;
   isEncountersFiltersLoading: boolean;
+  isEncountersDetailsLoading: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;
   patientHighlights: PatientHighlight[] | null;

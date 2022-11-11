@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -11,6 +11,7 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { paddings } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
@@ -19,6 +20,7 @@ import ParserTypographyWrapper from '@ui-component/common/Typography';
 
 import { encountersCustomizedDate } from '../helpers/encountersDate';
 
+import CurrentAddendum from './CurrentAddendum';
 import EncountersWrapper from './EncountersWrapper';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
@@ -65,6 +67,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
   const [currentAddendum, setCurrentAddendum] = useState<AddendumsProps | null>(null);
+  const [filteredAddendums, setFilteredAddendums] = useState<AddendumsProps[]>([]);
   const [editorValue, setEditorValue] = useState<string>('');
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
@@ -90,9 +93,14 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   useEffect(() => {
     if (currentAddendumId) {
       const currentAddendumData = encounterData?.addendums.find((addendum) => addendum.id === currentAddendumId);
+      const filteredAddendumsData = encounterData?.addendums.filter((addendum) => addendum.id !== currentAddendumId);
 
       if (currentAddendumData) {
         setCurrentAddendum(currentAddendumData);
+      }
+
+      if (filteredAddendumsData?.length) {
+        setFilteredAddendums(filteredAddendumsData);
       }
     }
   }, [currentAddendumId, encounterData?.addendums]);
@@ -132,55 +140,45 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorValue, currentAddendumId, currentEncounterId]);
 
+  const showFilteredAddendums = filteredAddendums.length && encounterData;
+
   return (
     <EncountersWrapper
       title={<EditEncounterAddendumTitle handleClose={handleClose} mode={mode} updatedOn={encounterData?.updatedOn} />}
     >
-      <Grid container spacing={3} pt={4}>
+      <Grid container spacing={3} pt={paddings.top32}>
         <Grid item container xs={12} spacing={1} direction="column">
-          <Grid item>
-            <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="h5">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
-          </Grid>
-          {mode === SimpleEditorMode.Edit_Addendum && currentAddendum && encounterData ? (
-            <Grid item container direction="column" xs={4} gap={2}>
+          {encounterData && (
+            <>
+              <Grid item>
+                <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
+              </Grid>
+              <Grid item>
+                <Typography variant="h5">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
+              </Grid>
               <Grid item>
                 <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
               </Grid>
               <Grid item mt={-1.5}>
-                <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
+                <ParserTypographyWrapper variant="subtitle1">
+                  {parse(encounterData ? encounterData.content : '')}
+                </ParserTypographyWrapper>
               </Grid>
               <Grid item container direction="column">
                 <Typography component="h4" variant="h4">
                   {encounterData.author}
                 </Typography>
                 <Typography variant="body1" component="p">
-                  {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-                  {encountersCustomizedDate(new Date(encounterData.createdOn as Date))}
+                  {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
+                    new Date(encounterData.createdOn as Date)
+                  )}`}
                 </Typography>
               </Grid>
-              <Divider variant="fullWidth" />
-              <Grid item container direction="row" alignItems="center">
-                <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
-                  {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <ParserTypographyWrapper variant="body1">{parse(currentAddendum.content)}</ParserTypographyWrapper>
-              </Grid>
-              <Grid item container direction="column" mb={2}>
-                <Typography component="h4" variant="h4">
-                  {currentAddendum.author}
-                </Typography>
-                <Typography variant="body1" component="p">
-                  {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)}{' '}
-                  {encountersCustomizedDate(new Date(currentAddendum.date as Date))}
-                </Typography>
-              </Grid>
-            </Grid>
-          ) : null}
+            </>
+          )}
+          {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
+            ? filteredAddendums.map((filteredAddendum) => <CurrentAddendum currentAddendum={filteredAddendum} />)
+            : null}
         </Grid>
         <NoteEditor
           handleCancel={handleClose}
@@ -188,6 +186,8 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
           editorValue={editorValue}
           setEditorValue={setEditorValue}
           mode={mode}
+          currentAddendum={currentAddendum}
+          filteredAddendums={filteredAddendums}
         />
       </Grid>
     </EncountersWrapper>
