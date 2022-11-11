@@ -92,7 +92,7 @@ const EditTemplate = () => {
   const { errors } = methods.formState;
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR);
 
-  const { reset, formState, setValue, handleSubmit, register } = methods;
+  const { setValue, handleSubmit, register } = methods;
 
   const { append } = useFieldArray({
     control: methods.control,
@@ -106,13 +106,6 @@ const EditTemplate = () => {
   useEffect(() => {
     Object.entries(scheduleTemplate).map(([key, value]) => setValue(key as keyof ITemplateGroup, value));
   }, [scheduleTemplate, setValue]);
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset();
-      router.back();
-    }
-  }, [router, reset, formState]);
 
   return (
     <ScheduleBoxWrapper>

@@ -31,6 +31,9 @@ export interface BlockSchedulingProps {
 
 export interface SingleSchedulingProps {
   name: string;
+  data: number[];
+  message: string;
+  title: string;
   timePeriods: ISingleTemplate[];
 }
 

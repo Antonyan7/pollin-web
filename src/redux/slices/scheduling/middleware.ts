@@ -186,7 +186,27 @@ const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async
   try {
     dispatch(setCalendarLoadingState(true));
     dispatch(setScheduleLoading(true));
-    await API.scheduling.updateSingleTemplate(templateId, data);
+
+    const response = await API.scheduling.updateSingleTemplate(templateId, data);
+
+    if (response.data.status.code === 'succeed') {
+      dispatch(
+        viewsMiddleware.setRedirectionState({
+          path: '/scheduling/schedule-templates',
+          params: '',
+          apply: true
+        })
+      );
+      dispatch(setError(null));
+    } else {
+      dispatch(setScheduleOverrides(response.data.data.data));
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ScheduleTemplatesErrorModal,
+          props: { title: response.data.data.title, message: response.data.data.message }
+        })
+      );
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
