@@ -18,6 +18,6 @@ export const addAppointmentsValidationSchema = object({
   description: string().notRequired().max(250, 'Description is too much longer'),
   date: date()
     .max(futureDate180DaysAfter, "Can't select days for future more than 180 days")
-    .required(generateErrorMessage('Date'))
+    .required('Date & Start Time are required')
     .nullable(true)
 });
