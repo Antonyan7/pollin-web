@@ -156,24 +156,28 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
               <Grid item>
                 <Typography variant="h5">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
               </Grid>
-              <Grid item>
-                <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
-              </Grid>
-              <Grid item mt={-1.5}>
-                <ParserTypographyWrapper variant="subtitle1">
-                  {parse(encounterData ? encounterData.content : '')}
-                </ParserTypographyWrapper>
-              </Grid>
-              <Grid item container direction="column">
-                <Typography component="h4" variant="h4">
-                  {encounterData.author}
-                </Typography>
-                <Typography variant="body1" component="p">
-                  {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-                    new Date(encounterData.createdOn as Date)
-                  )}`}
-                </Typography>
-              </Grid>
+              {mode === SimpleEditorMode.Edit_Addendum ? (
+                <>
+                  <Grid item>
+                    <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
+                  </Grid>
+                  <Grid item mt={-1}>
+                    <ParserTypographyWrapper variant="subtitle1">
+                      {parse(encounterData ? encounterData.content : '')}
+                    </ParserTypographyWrapper>
+                  </Grid>
+                  <Grid item container direction="column">
+                    <Typography component="h4" variant="h4">
+                      {encounterData.author}
+                    </Typography>
+                    <Typography variant="body1" component="p">
+                      {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
+                        new Date(encounterData.createdOn as Date)
+                      )}`}
+                    </Typography>
+                  </Grid>
+                </>
+              ) : null}
             </>
           )}
           {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
