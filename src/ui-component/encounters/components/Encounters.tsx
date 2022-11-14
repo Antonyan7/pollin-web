@@ -27,7 +27,10 @@ const Encounters = () => {
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const encountersList: IEncounterList = useAppSelector(patientsSelector.encountersList);
 
-  const encounters = useMemo(() => [...encountersList.encounters], [encountersList.encounters]);
+  const encounters = useMemo(() => [...encountersList.encounters], [encountersList.encounters]).sort(
+    (firstEncounter, secondEncounter) =>
+      new Date(secondEncounter.createdOn).getTime() - new Date(firstEncounter.createdOn).getTime()
+  );
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -57,22 +60,20 @@ const Encounters = () => {
           <TableBody>
             {encounters.length && !isEncountersListLoading ? (
               <>
-                {encounters
-                  .sort((a, b) => new Date(b.createdOn).getTime() - new Date(a.createdOn).getTime())
-                  .map((encounter) => (
-                    <EncounterNoteThumbnail
-                      key={encounter.id}
-                      id={encounter.id}
-                      author={encounter.author}
-                      title={encounter.title}
-                      contentPreview={encounter.contentPreview}
-                      createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
-                        day: 'numeric',
-                        year: 'numeric',
-                        month: 'short'
-                      })}
-                    />
-                  ))}
+                {encounters.map((encounter) => (
+                  <EncounterNoteThumbnail
+                    key={encounter.id}
+                    id={encounter.id}
+                    author={encounter.author}
+                    title={encounter.title}
+                    contentPreview={encounter.contentPreview}
+                    createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
+                      day: 'numeric',
+                      year: 'numeric',
+                      month: 'short'
+                    })}
+                  />
+                ))}
                 <TablePagination
                   labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
                   rowsPerPageOptions={[25, 40, 100]}

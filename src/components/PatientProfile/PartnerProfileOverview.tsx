@@ -27,7 +27,7 @@ const PartnerProfileOverview = () => {
     if (patientId) {
       const partnerProfileURL = router.pathname.replace('[id]', patientId);
 
-      dispatch(patientsMiddleware.setCurrentPatientId(patientId));
+      dispatch(patientsMiddleware.setCurrentPatient(patientId));
       router.push(partnerProfileURL);
     }
   };

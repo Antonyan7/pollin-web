@@ -399,7 +399,6 @@ export default {
   getEncounterList,
   getEncounterFilters,
   setCurrentPatient,
-  setCurrentPatientId,
   cleanPatientList,
   createEncounterNote,
   updateEncounterNote,

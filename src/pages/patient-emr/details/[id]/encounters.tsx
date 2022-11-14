@@ -15,11 +15,13 @@ const EncountersTab = () => {
       dispatch(patientsMiddleware.setCurrentPatient(router.query.id as string));
       dispatch(patientsMiddleware.getPatientProfile(router.query.id as string));
     }
+  }, [router.query.id]);
 
+  useEffect(() => {
     if (patientId) {
       dispatch(patientsMiddleware.getEncounterList({ patientId }));
     }
-  }, [router.query.id, patientId]);
+  }, [patientId]);
 
   return <Encounters />;
 };

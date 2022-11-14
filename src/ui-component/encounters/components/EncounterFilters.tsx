@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
@@ -31,6 +31,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const encounterFilters = useAppSelector(patientsSelector.encounterFilters) ?? [];
   const [searchValue, setSearchValue] = useState<string>('');
+  const [isSearchInputFocused, setSearchInputFocused] = useState(false);
   const [clearSearchInput, setClearSearchInput] = useState<boolean>(false);
   const [filters, setFilters] = useState<IEncountersFilterOption[]>([]);
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
@@ -119,9 +120,18 @@ const EncounterFilters = ({ page }: { page: number }) => {
     setClearSearchInput(true);
   }, []);
 
+  const onKeyDownEvent = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key === 'Enter') {
+      (event.target as HTMLElement).blur();
+    }
+  };
+
   return (
     <MainHeader>
       <StyledOutlinedInput
+        onBlur={() => setSearchInputFocused(false)}
+        onFocus={() => setSearchInputFocused(true)}
+        onKeyDown={onKeyDownEvent}
         onChange={handleSearchValueChange}
         id="input-search-encounters"
         value={searchValue}
@@ -132,12 +142,14 @@ const EncounterFilters = ({ page }: { page: number }) => {
           </InputAdornment>
         }
         endAdornment={
-          <InputAdornment position="end">
-            <HighlightOffTwoToneIcon
-              sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
-              onClick={clearSearchValue}
-            />
-          </InputAdornment>
+          searchValue.length && !isSearchInputFocused ? (
+            <InputAdornment position="end">
+              <HighlightOffTwoToneIcon
+                sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
+                onClick={clearSearchValue}
+              />
+            </InputAdornment>
+          ) : null
         }
       />
       <BaseDropdownWithLoading
