@@ -109,6 +109,7 @@ const EncounterDetailsPage = () => {
   const router = useRouter();
   const encounterNoteEditedTime = timeAdjuster(new Date(encounterData?.updatedOn as Date)).customizedDate;
   const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
+  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
   const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.id}/edit-note`);
   const goToEditAddendumPage = (addendumId: string) =>
     router.push(`/patient-emr/encounter/${addendumId}/edit-addendum`);
@@ -123,6 +124,9 @@ const EncounterDetailsPage = () => {
       dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
     }
   }, [router.query.id, encounterData?.addendums.length]);
+
+  const isEncounterNoteUpdated =
+    new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
 
   return encounterData && !isEncountersDetailsLoading ? (
     <EncountersWrapper
@@ -159,7 +163,9 @@ const EncounterDetailsPage = () => {
             {encounterData.author}
           </Typography>
           <Typography pt={paddings.top8} component="p">
-            {t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} {encounterNoteCreatedTime}
+            {isEncounterNoteUpdated
+              ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
+              : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
           </Typography>
         </Grid>
         <Grid item container direction="column" gap={2} sx={{ pt: paddings.top16 }}>

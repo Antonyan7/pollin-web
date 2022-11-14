@@ -112,6 +112,7 @@ export enum Translation {
   PAGE_ENCOUNTERS_ADDENDUM_NOTE = 'page.encounters.addendum.note',
   PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC = 'page.encounters.consultation.in.clinic',
   PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON = 'page.encounters.encounter.created.on',
+  PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON = 'page.encounters.encounter.updated.on',
   PAGE_ENCOUNTERS_BTN_ADD_ADDENDUM = 'page.encounters.btn.add.addendum',
   PAGE_ENCOUNTERS_BTN_PRINT = 'page.encounters.btn.print',
   PAGE_ENCOUNTERS_BTN_SHARE = 'page.encounters.btn.share',
