@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Checkbox, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { UsePatientInfoState } from 'context/PatientInformationContext';
-import { PatientInformationContextStaticData } from 'context/static/PatientInformationContextStaticData';
+import { usePatientInfoContext } from 'context/PatientInformationContext';
+import { PatientInformationContextActionTypes } from 'context/types/PatientInformationContextTypes';
 
 const CheckboxConfirming = () => {
   const [t] = useTranslation();
@@ -11,13 +11,13 @@ const CheckboxConfirming = () => {
   const [patientNameChecked, setPatientNameChecked] = useState<boolean>(false);
   const [patientIdChecked, setPatientIdChecked] = useState<boolean>(false);
   const [OHIPInformationChecked, setOfipInformationChecked] = useState<boolean>(false);
-  const { setPatientInfo } = UsePatientInfoState();
+  const { setPatientInfo } = usePatientInfoContext();
 
   useEffect(() => {
     if (patientNameChecked && patientIdChecked && OHIPInformationChecked) {
-      setPatientInfo({ type: PatientInformationContextStaticData.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: true });
+      setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: true });
     } else {
-      setPatientInfo({ type: PatientInformationContextStaticData.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: false });
+      setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [patientNameChecked, patientIdChecked, OHIPInformationChecked]);

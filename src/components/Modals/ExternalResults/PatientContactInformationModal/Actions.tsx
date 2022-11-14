@@ -4,7 +4,7 @@ import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { UsePatientInfoState } from 'context/PatientInformationContext';
+import { usePatientInfoContext } from 'context/PatientInformationContext';
 import { useRouter } from 'next/router';
 import { borderRadius, margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -20,7 +20,7 @@ const Actions = ({ row }: IPatientInfoProps) => {
   const [t] = useTranslation();
   const router = useRouter();
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
-  const { patientInfo } = UsePatientInfoState();
+  const { patientInfo } = usePatientInfoContext();
 
   const redirectToTestResultsDetailsPage = () => {
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));

@@ -11,6 +11,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { margins } from 'themes/themeConstants';
 
+import { ScheduleTemplatesContext } from '../../../context/ScheduleTemplatesContext';
+
 import { ITableRow } from './ScheduleTemplatesTable/Table';
 import ScheduleTemplatesTable from './ScheduleTemplatesTable';
 
@@ -59,7 +61,9 @@ const ScheduleTemplates = () => {
             {t(Translation.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE)}
           </Typography>
         </StyledButtonNew>
-        <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
+        <ScheduleTemplatesContext>
+          <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
+        </ScheduleTemplatesContext>
         {/* table pagination */}
         <TablePagination
           rowsPerPageOptions={[rowsPerPage]}

@@ -1,8 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, CircularProgress, Table, TableBody, TableContainer } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { ScheduledTemplatesListContext } from 'context/ScheduledTemplates';
+import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { getComparator, stableSort } from 'helpers/tableSort';
 import { useAppSelector } from 'redux/hooks';
 import { schedulingSelector } from 'redux/slices/scheduling';
@@ -24,7 +24,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
 
   const [order, setOrder] = React.useState<ArrangementOrder>('asc');
   const [orderBy, setOrderBy] = React.useState<string>('calories');
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const { selected, setSelected } = useScheduleTemplatesContext();
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -62,32 +62,18 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
     setOrderBy(property);
   };
 
-  const changeSelectedScheduledTemplate = useCallback((newSelected: string[]) => {
-    setSelected(newSelected);
-  }, []);
-
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
-
-  const scheduledTemplatesListContextState = useMemo(
-    () => ({
-      selected,
-      setSelected: changeSelectedScheduledTemplate
-    }),
-    [changeSelectedScheduledTemplate, selected]
-  );
 
   return (
     <TableContainer>
       <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-        <ScheduledTemplatesListContext.Provider value={scheduledTemplatesListContextState}>
-          <ScheduleTemplatesHead
-            order={order}
-            orderBy={orderBy}
-            onSelectAllClick={handleSelectAllClick}
-            onRequestSort={handleRequestSort}
-            rowCount={scheduleTemplates.totalItems}
-          />
-        </ScheduledTemplatesListContext.Provider>
+        <ScheduleTemplatesHead
+          order={order}
+          orderBy={orderBy}
+          onSelectAllClick={handleSelectAllClick}
+          onRequestSort={handleRequestSort}
+          rowCount={scheduleTemplates.totalItems}
+        />
         {!isScheduleTemplatesLoading && (
           <TableBody>
             {stableSort<ITableRow>(rows, getComparator<ITableRow>(order, orderBy)).map((row, index) => {

@@ -1,26 +1,29 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
-import { PatientInformationReducer } from './reducers/PatientInformationReducer';
-import { IPatientInformationContextActions, IPatientInformationState } from './types/PatientInfromationContextTypes';
+import { IUpdateIsPatientInfoConfirmedAction } from './actions/PatientInfromationContextActions';
+import { patientInformationReducer } from './reducers/PatientInformationReducer';
+import { IPatientInformationState } from './types/PatientInformationContextTypes';
 
 const initialState: IPatientInformationState = {
   isPatientInfoConfirmed: false
 };
 
-const initialPatientInformationContext: {
+export interface IPatientInformationContext {
   patientInfo: IPatientInformationState;
-  setPatientInfo: React.Dispatch<IPatientInformationContextActions>;
-} = {
+  setPatientInfo: React.Dispatch<IUpdateIsPatientInfoConfirmedAction>;
+}
+
+const initialPatientInformationContext: IPatientInformationContext = {
   patientInfo: initialState,
   setPatientInfo: () => {}
 };
 
-const PatientInformationContext = createContext(initialPatientInformationContext);
+const Context = createContext<IPatientInformationContext>(initialPatientInformationContext);
 
-export const PatientInformationContextProvider = ({ children }: { children: React.ReactNode }) => {
-  const [patientInfo, setPatientInfo] = useReducer(PatientInformationReducer, initialState);
+export const PatientInformationContext: React.FC<React.PropsWithChildren> = ({ children }) => {
+  const [patientInfo, setPatientInfo] = useReducer(patientInformationReducer, initialState);
 
-  const value = React.useMemo(
+  const value: IPatientInformationContext = React.useMemo(
     () => ({
       patientInfo,
       setPatientInfo
@@ -28,7 +31,7 @@ export const PatientInformationContextProvider = ({ children }: { children: Reac
     [patientInfo]
   );
 
-  return <PatientInformationContext.Provider value={value}>{children}</PatientInformationContext.Provider>;
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-export const UsePatientInfoState = () => useContext(PatientInformationContext);
+export const usePatientInfoContext = () => useContext(Context);

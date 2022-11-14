@@ -6,7 +6,7 @@ import { DialogContent, Divider, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { PatientInformationContextProvider } from 'context/PatientInformationContext';
+import { PatientInformationContext } from 'context/PatientInformationContext';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
@@ -24,7 +24,7 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
     <BaseModal isLoading={modalLoading} title={patientContactInformationTitleLabel} onClose={onClose}>
       <Grid>
         <DialogContent sx={{ p: 1.5 }}>
-          <PatientInformationContextProvider>
+          <PatientInformationContext>
             <Grid container spacing={3}>
               <Grid item xs={12}>
                 <Body />
@@ -34,7 +34,7 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
                 <Actions row={row} />
               </Grid>
             </Grid>
-          </PatientInformationContextProvider>
+          </PatientInformationContext>
         </DialogContent>
       </Grid>
     </BaseModal>

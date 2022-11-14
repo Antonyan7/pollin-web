@@ -8,7 +8,7 @@ import { EnhancedTableHeadProps, HeadCell } from 'types';
 import { SortOrder } from 'types/patient';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
-import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+import { useScheduleTemplatesContext } from '../../../../context/ScheduleTemplatesContext';
 
 // table header options
 const headCells: HeadCell[] = [
@@ -59,7 +59,7 @@ const ScheduleTemplatesHead = ({
     onRequestSort(event, property);
   };
 
-  const { selected } = useScheduledTemplatesListContext();
+  const { selected } = useScheduleTemplatesContext();
   const numSelected = selected.length;
 
   return (

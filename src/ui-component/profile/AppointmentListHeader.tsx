@@ -4,12 +4,12 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-import { usePatientProfileNavigator } from '@hooks/usePatientProfileNavigator';
+import { usePatientProfileNavigatorContext } from '../../context/PatientProfileNavigatorContext';
 
 const AppointmentsListHeader = () => {
   const [t] = useTranslation();
 
-  const { navigateBack } = usePatientProfileNavigator();
+  const { navigateBack } = usePatientProfileNavigatorContext();
 
   return (
     <Grid container item xs={12} columnGap={1} direction="row" justifyItems="center">

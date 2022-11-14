@@ -19,9 +19,9 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import MainCard from 'ui-component/cards/MainCard';
 
-import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
+import { useScheduleTemplatesContext } from '../../../context/ScheduleTemplatesContext';
 import { margins, paddings } from '../../../themes/themeConstants';
 
 interface BodyProps extends CardProps {
@@ -44,7 +44,7 @@ const Body = React.forwardRef(({ handleOpenClose }: BodyProps, ref: React.Ref<HT
   const [t] = useTranslation();
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
 
-  const { selected, setSelected } = useScheduledTemplatesListContext();
+  const { selected, setSelected } = useScheduleTemplatesContext();
 
   const handleConfirm = () => {
     dispatch(schedulingMiddleware.deleteTemplate({ templateIds: selected }));

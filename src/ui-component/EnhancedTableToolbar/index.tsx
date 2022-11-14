@@ -3,7 +3,7 @@ import RemoveTemplatesModal from '@components/Scheduling/scheduleTemplates/Remov
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 
-import useScheduledTemplatesListContext from '@hooks/useScheduledTemplatesListContext';
+import { useScheduleTemplatesContext } from '../../context/ScheduleTemplatesContext';
 
 const EnhancedTableToolbar = () => {
   const [open, setOpen] = useState(false);
@@ -12,7 +12,7 @@ const EnhancedTableToolbar = () => {
     setOpen(!open);
   }, [open]);
 
-  const { selected } = useScheduledTemplatesListContext();
+  const { selected } = useScheduleTemplatesContext();
   const numSelected = selected.length;
 
   return (

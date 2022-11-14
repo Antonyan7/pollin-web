@@ -19,12 +19,13 @@ import {
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { ProfilePageName } from 'context/PatientProfileNavigatorContext';
+import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { AppointmentType } from 'types/patientProfile';
 
-import { usePatientProfileNavigator } from '@hooks/usePatientProfileNavigator';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
+
+import { PatientProfilePageName } from '../../context/types/PatientProfileNavigatorContextTypes';
 
 interface Props {
   appointmentType: AppointmentType;
@@ -33,7 +34,7 @@ interface Props {
 const AppointmentsCard = ({ appointmentType }: Props) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { navigateTo } = usePatientProfileNavigator();
+  const { navigateTo } = usePatientProfileNavigatorContext();
 
   const { list } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: appointmentsList } = list;
@@ -44,7 +45,7 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
     }
   }, [appointmentsList]);
 
-  const onViewAllClick = () => navigateTo(ProfilePageName.AppointmentsListPage);
+  const onViewAllClick = () => navigateTo(PatientProfilePageName.AppointmentsList);
 
   return (
     <SubCardStyled

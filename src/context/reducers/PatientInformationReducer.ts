@@ -1,12 +1,15 @@
-import { PatientInformationContextStaticData } from '../static/PatientInformationContextStaticData';
-import { IPatientInformationContextActions, IPatientInformationState } from '../types/PatientInfromationContextTypes';
+import { PatientInformationContextActions } from '../actions/PatientInfromationContextActions';
+import {
+  IPatientInformationState,
+  PatientInformationContextActionTypes
+} from '../types/PatientInformationContextTypes';
 
-export const PatientInformationReducer = (
+export const patientInformationReducer = (
   state: IPatientInformationState,
-  action: IPatientInformationContextActions
-) => {
+  action: PatientInformationContextActions
+): IPatientInformationState => {
   switch (action.type) {
-    case PatientInformationContextStaticData.UPDATE_IS_PATIENT_INFO_CONFIRMED:
+    case PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED:
       return {
         ...state,
         isPatientInfoConfirmed: action.status
