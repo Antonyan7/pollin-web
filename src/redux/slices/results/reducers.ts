@@ -5,6 +5,7 @@ import {
   IResultsFilterCategory,
   IResultsList,
   IResultsProps,
+  LabMachine,
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
 
@@ -34,6 +35,12 @@ const reducers = createReducer({
   },
   setTestResultDetails(state, action: IAction<TestResultsDetails>) {
     state.testResultDetails = action.payload;
+  },
+  setLabMachines(state, action: IAction<LabMachine[]>) {
+    state.labMachines = action.payload;
+  },
+  setIsLabMachinesLoading(state, action: IAction<boolean>) {
+    state.islabMachinesLoading = action.payload;
   },
   setIsTestResultDetailsLoading(state, action: IAction<boolean>) {
     state.isTestResultDetailsLoading = action.payload;

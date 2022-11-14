@@ -7,10 +7,17 @@ export interface IResultsProps {
   pendingTestStats: IPendingTestStats[];
   testResultDetails: TestResultsDetails | null;
   error: Error | null;
+  labMachines: LabMachine[];
   isResultsListLoading: boolean;
   isResultsFiltersLoading: boolean;
   isPendingTestStatsLoading: boolean;
   isTestResultDetailsLoading: boolean;
+  islabMachinesLoading: boolean;
+}
+
+export interface LabMachine {
+  id: string;
+  title: string;
 }
 
 export interface IResultsList extends IPagination {

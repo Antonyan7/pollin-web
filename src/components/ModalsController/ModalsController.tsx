@@ -16,6 +16,7 @@ import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounte
 import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
+import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -41,6 +42,9 @@ const getAddResourceAppointmentModal = (modal: IOpenedModal<AddResourceAppointme
   <AddResourceAppointmentModal key={modal.name} {...modal.props} />
 );
 const getAddPatientAppointmentsModal = () => <AddPatientAppointmentsModal />;
+const getSelectMachineModal = (modal: IOpenedModal<SelectMachineModalProps>) => (
+  <SelectMachineModal key={modal.name} {...modal.props} />
+);
 const getAddAppointmentDuplicatePatientModal = (modal: IOpenedModal<AddAppointmentDuplicatePatientModalProps>) => (
   <AddAppointmentDuplicatePatientModal key={modal.name} {...modal.props} />
 );
@@ -94,6 +98,8 @@ export const ModalsController = () => {
             return getAddResourceAppointmentModal(modal);
           case ModalName.AddPatientAppointmentsModal:
             return getAddPatientAppointmentsModal();
+          case ModalName.SelectMachineModal:
+            return getSelectMachineModal(modal);
           case ModalName.EditAppointmentModal:
             return getEditAppointmentModal(modal);
           case ModalName.CancelAppointmentModal:

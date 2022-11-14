@@ -1,7 +1,7 @@
 import { IResultsReqBody } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { IPendingTestStats, IResultsList, ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
+import { IPendingTestStats, IResultsList, ITestResultsDetails, LabMachine } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFiltersResponse } from 'types/results';
 
 const baseURL = '/clinic-test-results';
@@ -33,6 +33,9 @@ const resultsManager = {
   },
   removeTestResultsAttachment(attachmentId: string) {
     return axiosInstance.delete<void, IAxiosResponse<void>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);
+  },
+  getLabMachines() {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
   }
 };
 

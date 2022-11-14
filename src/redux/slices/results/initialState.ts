@@ -10,9 +10,11 @@ export const getInitialState = (): IResultsProps => ({
   resultFilters: [],
   pendingTestStats: [],
   testResultDetails: null,
+  labMachines: [],
   error: null,
   isResultsListLoading: false,
   isResultsFiltersLoading: false,
   isPendingTestStatsLoading: false,
-  isTestResultDetailsLoading: false
+  isTestResultDetailsLoading: false,
+  islabMachinesLoading: false
 });

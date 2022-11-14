@@ -11,6 +11,8 @@ const isPendingTestStatsLoading = createSelector([selector], (state) => state.is
 const pendingTestStats = createSelector([selector], (state) => state.pendingTestStats);
 const isTestResultDetailsLoading = createSelector([selector], (state) => state.isTestResultDetailsLoading);
 const testResultDetails = createSelector([selector], (state) => state.testResultDetails);
+const labMachines = createSelector([selector], (state) => state.labMachines);
+const islabMachinesLoading = createSelector([selector], (state) => state.islabMachinesLoading);
 
 export default {
   resultsList,
@@ -20,5 +22,7 @@ export default {
   isPendingTestStatsLoading,
   pendingTestStats,
   isTestResultDetailsLoading,
-  testResultDetails
+  testResultDetails,
+  labMachines,
+  islabMachinesLoading
 };

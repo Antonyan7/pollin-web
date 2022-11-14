@@ -15,6 +15,8 @@ const {
   setPendingTestStats,
   setPendingTestStatsLoadingState,
   setTestResultDetails,
+  setLabMachines,
+  setIsLabMachinesLoading,
   setIsTestResultDetailsLoading
 } = slice.actions;
 
@@ -101,10 +103,26 @@ const getTestResultDetails = (testResultId: string) => async (dispatch: AppDispa
   }
 };
 
+const getLabMachines = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsLabMachinesLoading(true));
+
+    const response = await API.results.getLabMachines();
+
+    dispatch(setLabMachines(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsLabMachinesLoading(false));
+  }
+};
+
 export default {
   getResultsList,
   getResultsFilters,
   getPendingTestStats,
   removeTestResultsAttachment,
-  getTestResultDetails
+  getTestResultDetails,
+  getLabMachines
 };
