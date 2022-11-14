@@ -15,14 +15,13 @@ import {
   Typography
 } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
+import { margins, paddings } from 'themes/themeConstants';
 import MainCard from 'ui-component/cards/MainCard';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-
-import { useScheduleTemplatesContext } from '../../../context/ScheduleTemplatesContext';
-import { margins, paddings } from '../../../themes/themeConstants';
 
 interface BodyProps extends CardProps {
   handleOpenClose?: () => void;

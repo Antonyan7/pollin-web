@@ -3,8 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
-
-import { usePatientProfileNavigatorContext } from '../../context/PatientProfileNavigatorContext';
+import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 
 const AppointmentsListHeader = () => {
   const [t] = useTranslation();

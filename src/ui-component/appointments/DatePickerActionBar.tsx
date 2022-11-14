@@ -1,8 +1,7 @@
 import React from 'react';
 import { Button, DialogActions } from '@mui/material';
 import { PickersActionBarProps } from '@mui/x-date-pickers/PickersActionBar';
-
-import { margins } from '../../themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 
 export const DatePickerActionBar = ({ onAccept, onCancel }: PickersActionBarProps) => (
   <DialogActions sx={{ marginBottom: margins.bottom8 }}>

@@ -20,12 +20,11 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
+import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { AppointmentType } from 'types/patientProfile';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
-
-import { PatientProfilePageName } from '../../context/types/PatientProfileNavigatorContextTypes';
 
 interface Props {
   appointmentType: AppointmentType;

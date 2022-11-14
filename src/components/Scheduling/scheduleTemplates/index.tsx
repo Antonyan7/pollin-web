@@ -5,13 +5,12 @@ import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 import { TablePagination, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { ScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { rowsPerPage } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { margins } from 'themes/themeConstants';
-
-import { ScheduleTemplatesContext } from '../../../context/ScheduleTemplatesContext';
 
 import { ITableRow } from './ScheduleTemplatesTable/Table';
 import ScheduleTemplatesTable from './ScheduleTemplatesTable';

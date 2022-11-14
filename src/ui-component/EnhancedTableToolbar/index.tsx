@@ -2,8 +2,7 @@ import React, { useCallback, useState } from 'react';
 import RemoveTemplatesModal from '@components/Scheduling/scheduleTemplates/RemoveTemplatesModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
-
-import { useScheduleTemplatesContext } from '../../context/ScheduleTemplatesContext';
+import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 
 const EnhancedTableToolbar = () => {
   const [open, setOpen] = useState(false);
