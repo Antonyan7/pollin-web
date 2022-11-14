@@ -16,7 +16,7 @@ const TestResultCard = ({ primary, secondary, color, backgroundColor }: TestResu
       <CardContent>
         <Grid container>
           <Grid item xs={12}>
-            <Typography variant="body1" sx={{ color: theme.palette.grey[800], fontSize: 12, fontWeight: 500 }}>
+            <Typography variant="body1" sx={{ color: theme.palette.grey[800], fontSize: 12, fontWeight: 600 }}>
               {primary}
             </Typography>
           </Grid>

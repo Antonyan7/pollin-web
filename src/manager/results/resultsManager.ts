@@ -1,7 +1,12 @@
 import { IResultsReqBody, ITestResultsParams } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { IPendingTestStats, IResultsList, ITestResultsDetails, LabMachine } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IPendingTestResultStats,
+  IResultsList,
+  ITestResultsDetails,
+  LabMachine
+} from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFiltersResponse } from 'types/results';
 
 const baseURL = '/clinic-test-results';
@@ -22,7 +27,7 @@ const resultsManager = {
     );
   },
   getPendingTestStats() {
-    return axiosInstance.get<IPendingTestStats[], IAxiosResponse<IPendingTestStats[]>>(
+    return axiosInstance.get<IPendingTestResultStats, IAxiosResponse<IPendingTestResultStats>>(
       `${baseURL}/v1/test-result/stats/pending`
     );
   },

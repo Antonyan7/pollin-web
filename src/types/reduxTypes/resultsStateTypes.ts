@@ -29,6 +29,10 @@ export interface IPendingTestStats {
   count: number;
 }
 
+export interface IPendingTestResultStats {
+  testResultStats: IPendingTestStats[];
+}
+
 export enum TestResultMeasurementType {
   Normal = 'Normal',
   Abnormal = 'Abnormal',

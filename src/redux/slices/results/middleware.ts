@@ -70,7 +70,7 @@ const getPendingTestStats = () => async (dispatch: AppDispatch) => {
 
     const response = await API.results.getPendingTestStats();
 
-    dispatch(setPendingTestStats(response.data.data));
+    dispatch(setPendingTestStats(response.data.data.testResultStats));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
