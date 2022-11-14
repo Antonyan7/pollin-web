@@ -213,7 +213,17 @@ export enum Translation {
   PAGE_INPUT_RESULTS_TEST_ATTACH_FILE = 'page.input.results.test.attach.file',
   PAGE_INPUT_RESULTS_TEST_ATTACH_FILE_NOTES_FORM_LAB = 'page.input.results.test.attach.file.notes.form.lab',
   PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL = 'page.input.results.test.save.as.final',
-  PAGE_INPUT_RESULTS_TEST_SAVE_AS_PENDING = 'page.input.results.test.save.as.pending'
+  PAGE_INPUT_RESULTS_TEST_SAVE_AS_PENDING = 'page.input.results.test.save.as.pending',
+  PAGE_IN_HOUSE_TITLE = 'page.in.house.title',
+  PAGE_IN_HOUSE_RESULTS_BACK_TO_IN_HOUSE_TESTS = 'page.in.house.results.back.to.in.house.tests',
+  PAGE_IN_HOUSE_RESULTS_TEST_SAVE_AS_COMPLETED = 'page.in.house.results.test.save.as.completed',
+  PAGE_IN_HOUSE_RESULTS_TEST_SPECIMEN_ID = 'page.in.house.results.test.specimen.id',
+  COMMON_BUTTON_CANCEL_LABEL = 'common.button.cancel.label',
+  NAVIGATION_TAB_ITEM_RESULTS = 'navigation.tab.item.results',
+  COMMON_BUTTON_CONFIRM_LABEL = 'common.button.confirm.label',
+  COMMON_MODAL_HEADER_CANCEL_CONFIRMATION = 'common.modal.header.cancel.confirmation',
+  PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY1 = 'page.in.house.results.test.cancel.modal.body1',
+  PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY2 = 'page.in.house.results.test.cancel.modal.body2'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

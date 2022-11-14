@@ -33,8 +33,8 @@ const reducers = createReducer({
   setPendingTestStatsLoadingState(state, action: IAction<boolean>) {
     state.isPendingTestStatsLoading = action.payload;
   },
-  setTestResultDetails(state, action: IAction<TestResultsDetails>) {
-    state.testResultDetails = action.payload;
+  setTestResultsDetails(state, action: IAction<TestResultsDetails[]>) {
+    state.testResultsDetails = action.payload;
   },
   setLabMachines(state, action: IAction<LabMachine[]>) {
     state.labMachines = action.payload;
@@ -42,8 +42,8 @@ const reducers = createReducer({
   setIsLabMachinesLoading(state, action: IAction<boolean>) {
     state.islabMachinesLoading = action.payload;
   },
-  setIsTestResultDetailsLoading(state, action: IAction<boolean>) {
-    state.isTestResultDetailsLoading = action.payload;
+  setIsTestResultsDetailsLoading(state, action: IAction<boolean>) {
+    state.isTestResultsDetailsLoading = action.payload;
   }
 });
 

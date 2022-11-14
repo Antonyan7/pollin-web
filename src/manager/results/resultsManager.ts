@@ -1,4 +1,4 @@
-import { IResultsReqBody } from '@axios/results/resultsManagerTypes';
+import { IResultsReqBody, ITestResultsParams } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import { IPendingTestStats, IResultsList, ITestResultsDetails, LabMachine } from 'types/reduxTypes/resultsStateTypes';
@@ -26,10 +26,10 @@ const resultsManager = {
       `${baseURL}/v1/test-result/stats/pending`
     );
   },
-  getTestResultsDetails(testResultId: string) {
-    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<ITestResultsDetails>>(
-      `${baseURL}/v1/test-result/${testResultId}`
-    );
+  getTestResultsDetails(params: ITestResultsParams) {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<ITestResultsDetails[]>>(`${baseURL}/v1/test-result`, {
+      params
+    });
   },
   removeTestResultsAttachment(attachmentId: string) {
     return axiosInstance.delete<void, IAxiosResponse<void>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);

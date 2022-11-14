@@ -1,5 +1,5 @@
 import API from '@axios/API';
-import { IResultsReqBody, IResultsReqBodyWithSortOrder } from '@axios/results/resultsManagerTypes';
+import { IResultsReqBody, IResultsReqBodyWithSortOrder, ITestResultsParams } from '@axios/results/resultsManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/results/slice';
 import { AppDispatch } from '@redux/store';
@@ -14,10 +14,10 @@ const {
   setResultsSearchFilters,
   setPendingTestStats,
   setPendingTestStatsLoadingState,
-  setTestResultDetails,
+  setTestResultsDetails,
+  setIsTestResultsDetailsLoading,
   setLabMachines,
-  setIsLabMachinesLoading,
-  setIsTestResultDetailsLoading
+  setIsLabMachinesLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -88,18 +88,18 @@ const removeTestResultsAttachment = (attachmentId: string) => async (dispatch: A
   }
 };
 
-const getTestResultDetails = (testResultId: string) => async (dispatch: AppDispatch) => {
+const getTestResultsDetails = (testResultsParams: ITestResultsParams) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setIsTestResultDetailsLoading(true));
+    dispatch(setIsTestResultsDetailsLoading(true));
 
-    const response = await API.results.getTestResultsDetails(testResultId);
+    const response = await API.results.getTestResultsDetails(testResultsParams);
 
-    dispatch(setTestResultDetails(response.data.data));
+    dispatch(setTestResultsDetails(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
-    dispatch(setIsTestResultDetailsLoading(false));
+    dispatch(setIsTestResultsDetailsLoading(false));
   }
 };
 
@@ -123,6 +123,6 @@ export default {
   getResultsFilters,
   getPendingTestStats,
   removeTestResultsAttachment,
-  getTestResultDetails,
+  getTestResultsDetails,
   getLabMachines
 };

@@ -4,19 +4,28 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { useRouter } from 'next/router';
 
 import MeasurementListForm from './MeasurementList/MeasurementListForm';
+import { InputResultsProps, InputResultTestType } from './types';
 
-const InputResults = () => {
+const InputResults: React.FC<InputResultsProps> = ({ testType }) => {
+  const testResultsDetails = useAppSelector(resultsSelector.testResultsDetails);
   const router = useRouter();
-  const testResultDetails = useAppSelector(resultsSelector.testResultDetails);
-  const testResultId = `${router.query.id}`;
+
+  const currentTestResultPageId = `${router.query.id}`;
+  const isInHouseTest = testType === InputResultTestType.InHouse;
 
   useEffect(() => {
-    if (testResultId) {
-      dispatch(resultsMiddleware.getTestResultDetails(testResultId));
-    }
-  }, [testResultId]);
+    if (currentTestResultPageId) {
+      const currentPageRequestParams = isInHouseTest
+        ? { specimenId: currentTestResultPageId }
+        : { testResultId: currentTestResultPageId };
 
-  return testResultDetails && <MeasurementListForm />;
+      dispatch(resultsMiddleware.getTestResultsDetails(currentPageRequestParams));
+    }
+  }, [currentTestResultPageId, isInHouseTest]);
+
+  return testResultsDetails.length ? (
+    <MeasurementListForm {...(isInHouseTest && { specimenId: currentTestResultPageId })} />
+  ) : null;
 };
 
 export default InputResults;

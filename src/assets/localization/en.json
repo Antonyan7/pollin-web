@@ -211,5 +211,15 @@
   "page.input.results.test.attach.file": "Attach file",
   "page.input.results.test.attach.file.notes.form.lab": "Notes from Lab (Optional)",
   "page.input.results.test.save.as.final": "Save as Final",
-  "page.input.results.test.save.as.pending": "Save as Pending"
+  "page.input.results.test.save.as.pending": "Save as Pending",
+  "page.in.house.title": "In-House Tests",
+  "page.in.house.results.back.to.in.house.tests": "Back to In-House Tests",
+  "page.in.house.results.test.save.as.completed": "Save as Completed",
+  "page.in.house.results.test.specimen.id": "Specimen ID",
+  "common.button.cancel.label": "Cancel",
+  "navigation.tab.item.results": "Results",
+  "common.button.confirm.label": "Confirm",
+  "common.modal.header.cancel.confirmation": "Cancel Confirmation",
+  "page.in.house.results.test.cancel.modal.body1": "Are you sure you want to cancel?",
+  "page.in.house.results.test.cancel.modal.body2": "Please note that your changes will not be saved."
 }

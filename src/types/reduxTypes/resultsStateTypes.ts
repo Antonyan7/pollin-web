@@ -5,13 +5,13 @@ export interface IResultsProps {
   resultsList: IResultsList;
   resultFilters: IResultsFilterCategory[];
   pendingTestStats: IPendingTestStats[];
-  testResultDetails: TestResultsDetails | null;
+  testResultsDetails: TestResultsDetails[];
   error: Error | null;
   labMachines: LabMachine[];
   isResultsListLoading: boolean;
   isResultsFiltersLoading: boolean;
   isPendingTestStatsLoading: boolean;
-  isTestResultDetailsLoading: boolean;
+  isTestResultsDetailsLoading: boolean;
   islabMachinesLoading: boolean;
 }
 
@@ -64,6 +64,7 @@ interface ITestResultAttachment {
 
 export interface ITestResultsDetails {
   id: string;
+  isAttachmentRequired: boolean;
   title: string;
   comment?: string;
   dates: ITestResultDates;

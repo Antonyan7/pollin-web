@@ -8,10 +8,10 @@ interface SelectMachineModalFormProps {
 }
 
 const SelectMachineModalForm = ({ specimenIds }: SelectMachineModalFormProps) => (
-    <form>
-      <FormHeader />
-      <FormBody specimenIds={specimenIds} />
-    </form>
-  );
+  <form>
+    <FormHeader />
+    <FormBody specimenIds={specimenIds} />
+  </form>
+);
 
 export default SelectMachineModalForm;

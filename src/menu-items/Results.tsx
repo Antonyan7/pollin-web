@@ -1,6 +1,8 @@
 import React from 'react';
 import { KeyboardDoubleArrowLeftOutlined } from '@mui/icons-material';
 import { IconBuilding } from '@tabler/icons';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import { OverrideIcon } from 'types';
 
 interface ResultProps {
@@ -19,20 +21,20 @@ interface ResultProps {
 
 const Results: ResultProps = {
   id: 'Results',
-  title: <h3>Results</h3>,
+  title: <h3>{t(Translation.NAVIGATION_TAB_ITEM_RESULTS)}</h3>,
   type: 'group',
   children: [
     {
-      id: 'inHouseResults',
-      title: 'In-House Results',
+      id: 'inHouseTests',
+      title: t(Translation.PAGE_IN_HOUSE_TITLE),
       type: 'item',
-      url: '/clinic-test-results/test-results',
+      url: '/clinic-test-results/in-house-tests',
       icon: IconBuilding,
       breadcrumbs: false
     },
     {
       id: 'externalResults',
-      title: 'External Results',
+      title: t(Translation.PAGE_RESULTS_TITLE),
       type: 'item',
       url: '/clinic-test-results/external-results',
       icon: KeyboardDoubleArrowLeftOutlined,

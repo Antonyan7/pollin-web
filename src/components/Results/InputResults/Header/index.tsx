@@ -16,14 +16,20 @@ import { InputTestResultsHeaderProps } from '../types';
 
 import InputResultsHeaderSection from './InputResultsHeaderSection';
 
-const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({ title, lab, dates }) => {
+const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
+  title,
+  lab,
+  dates,
+  specimenId,
+  currentFormFieldName
+}) => {
   const [t] = useTranslation();
-  const isTestResultDetailsLoading = useAppSelector(resultsSelector.isTestResultDetailsLoading);
+  const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
   const { control } = useFormContext();
 
   const initialResultValue = useMemo(() => t(Translation.MODAL_EXTERNAL_RESULTS_RESULT_TEXT), [t]);
 
-  const measurements = useWatch({ name: 'data', control });
+  const measurements = useWatch({ name: currentFormFieldName, control });
 
   const detectedStatusType = useMemo(() => {
     const allElementsWithNormalStatus = measurements.map((item: { resultType: TestResultMeasurementType }) => {
@@ -67,8 +73,16 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({ title, lab,
 
   return (
     <Grid container p={paddings.leftRight32} flexDirection="column">
-      {!isTestResultDetailsLoading ? (
+      {!isTestResultsDetailsLoading ? (
         <>
+          {specimenId && (
+            <Grid item>
+              <Typography variant="h4" component="h4">
+                {t(Translation.PAGE_IN_HOUSE_RESULTS_TEST_SPECIMEN_ID)} : {specimenId}
+              </Typography>
+              <Divider sx={{ my: margins.topBottom24 }} />
+            </Grid>
+          )}
           <Grid item>
             <Typography variant="h4" component="h4">
               {t(Translation.PAGE_INPUT_RESULTS_TEST_NAME)} : {title}

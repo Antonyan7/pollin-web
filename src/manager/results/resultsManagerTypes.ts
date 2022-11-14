@@ -19,3 +19,8 @@ export interface IResultsReqBody {
 export interface IResultsReqBodyWithSortOrder extends IResultsReqBody {
   sortOrder: SortOrder;
 }
+
+export interface ITestResultsParams {
+  testResultId?: string;
+  specimenId?: string;
+}

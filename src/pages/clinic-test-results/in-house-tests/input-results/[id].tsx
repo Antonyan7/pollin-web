@@ -17,17 +17,17 @@ const InputResultsPage = () => {
           basePath: '/',
           items: [
             {
-              name: t(Translation.PAGE_RESULTS_TITLE),
-              path: '/clinic-test-results/external-results'
+              name: t(Translation.PAGE_IN_HOUSE_TITLE),
+              path: '/clinic-test-results/in-house-tests'
             },
             {
               name: t(Translation.PAGE_INPUT_RESULTS_TITLE),
-              path: '/clinic-test-results/external-results/input-results/[id]'
+              path: '/clinic-test-results/in-house-tests/input-results/[id]'
             }
           ]
         }}
       />
-      <InputResults testType={InputResultTestType.External} />
+      <InputResults testType={InputResultTestType.InHouse} />
     </Box>
   );
 };

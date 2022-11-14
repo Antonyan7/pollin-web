@@ -12,6 +12,7 @@ import DetailsAppointmentModal, {
 import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Modals/Booking/EditAppointmentsModal';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
+import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
@@ -80,6 +81,8 @@ const getPatientPartnersModal = (modal: IOpenedModal<PatientPartnersModalProps>)
   <PatientPartnersModal key={modal.name} {...modal.props} />
 );
 
+const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
+
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
 
@@ -123,6 +126,8 @@ export const ModalsController = () => {
             return getPatientMedicationsModal(modal);
           case ModalName.PatientPartnersModal:
             return getPatientPartnersModal(modal);
+          case ModalName.InHouseTestResults:
+            return getInHouseTestResultsModal();
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

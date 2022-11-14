@@ -9,8 +9,8 @@ const isResultsLoading = createSelector([selector], (state) => state.isResultsLi
 const isResultsFiltersLoading = createSelector([selector], (state) => state.isResultsFiltersLoading);
 const isPendingTestStatsLoading = createSelector([selector], (state) => state.isPendingTestStatsLoading);
 const pendingTestStats = createSelector([selector], (state) => state.pendingTestStats);
-const isTestResultDetailsLoading = createSelector([selector], (state) => state.isTestResultDetailsLoading);
-const testResultDetails = createSelector([selector], (state) => state.testResultDetails);
+const isTestResultsDetailsLoading = createSelector([selector], (state) => state.isTestResultsDetailsLoading);
+const testResultsDetails = createSelector([selector], (state) => state.testResultsDetails);
 const labMachines = createSelector([selector], (state) => state.labMachines);
 const islabMachinesLoading = createSelector([selector], (state) => state.islabMachinesLoading);
 
@@ -21,8 +21,8 @@ export default {
   resultsFiltersList,
   isPendingTestStatsLoading,
   pendingTestStats,
-  isTestResultDetailsLoading,
-  testResultDetails,
+  isTestResultsDetailsLoading,
+  testResultsDetails,
   labMachines,
   islabMachinesLoading
 };

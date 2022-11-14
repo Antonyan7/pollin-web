@@ -33,10 +33,11 @@ const StyledTableRow = styled(TableRow)(() => ({
 }));
 
 export interface MeasurementListProps {
-  listItems?: ITestResultItem[];
+  listItems: ITestResultItem[];
+  currentFormFieldName: string;
 }
 
-const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
+const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName }) => {
   const [t] = useTranslation();
 
   const { register, control }: { register: UseFormRegister<IMeasurementsFieldValues>; control: IMeasurementsControl } =
@@ -44,7 +45,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
 
   const { fields } = useFieldArray({
     control,
-    name: 'data'
+    name: currentFormFieldName
   });
 
   return (
@@ -75,19 +76,19 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems }) => {
           </StyledTableRow>
           {fields.map((item, index) => (
             <TableRow key={item.id}>
-              <StyledTableCell>{listItems?.[index].type}</StyledTableCell>
-              <StyledTableCell>{listItems?.[index].unit}</StyledTableCell>
+              <StyledTableCell>{listItems[index].type}</StyledTableCell>
+              <StyledTableCell>{listItems[index].unit}</StyledTableCell>
               <StyledTableCell>
                 <TextField
-                  {...register(`data.${index}.result`)}
+                  {...register(`${currentFormFieldName}.${index}.result`)}
                   label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT)}
                 />
               </StyledTableCell>
               <StyledTableCell>
-                <DateReceivedField name={`data.${index}.dateReceived`} control={control} />
+                <DateReceivedField name={`${currentFormFieldName}.${index}.dateReceived`} control={control} />
               </StyledTableCell>
               <StyledTableCell>
-                <ResultTypeField name={`data.${index}.resultType`} control={control} />
+                <ResultTypeField name={`${currentFormFieldName}.${index}.resultType`} control={control} />
               </StyledTableCell>
             </TableRow>
           ))}
