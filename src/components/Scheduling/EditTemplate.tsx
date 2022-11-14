@@ -38,6 +38,8 @@ const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
 
+  const error = useAppSelector(schedulingSelector.scheduleError);
+
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const [t] = useTranslation();
   const router = useRouter();
@@ -89,8 +91,14 @@ const EditTemplate = () => {
     reValidateMode: 'onChange',
     resolver: yupResolver(createTemplateValidationSchema)
   });
+
+  const { watch } = methods;
+
   const { errors } = methods.formState;
-  const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR);
+  const errorMessage =
+    (error && error.response && error.response.data?.status?.message) ||
+    (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
+    (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
 
   const { setValue, handleSubmit, register } = methods;
 
@@ -102,6 +110,12 @@ const EditTemplate = () => {
   const onPlusClick = () => {
     append({ ...getDefaultTimePeriodState(), id: v4() });
   };
+
+  useEffect(() => {
+    watch(() => {
+      dispatch(schedulingMiddleware.cleanError());
+    });
+  }, [watch]);
 
   useEffect(() => {
     Object.entries(scheduleTemplate).map(([key, value]) => setValue(key as keyof ITemplateGroup, value));
@@ -120,8 +134,8 @@ const EditTemplate = () => {
                 {...register('name')}
                 className="schedule-inputs"
                 fullWidth
-                helperText={errors.name?.message && errorMessage}
-                error={Boolean(errors.name?.message)}
+                helperText={(errors.name?.message || error) && errorMessage}
+                error={Boolean(errors.name?.message) || Boolean(error)}
                 placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
               />
             </Grid>
