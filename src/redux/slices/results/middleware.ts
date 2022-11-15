@@ -17,7 +17,9 @@ const {
   setTestResultsDetails,
   setIsTestResultsDetailsLoading,
   setLabMachines,
-  setIsLabMachinesLoading
+  setIsLabMachinesLoading,
+  setPendingSpecimenStatsLoadingState,
+  setPendingSpecimenStats
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -118,11 +120,27 @@ const getLabMachines = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getPendingSpecimenStats = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setPendingSpecimenStatsLoadingState(true));
+
+    const response = await API.results.getPendingSpecimenStats();
+
+    dispatch(setPendingSpecimenStats(response.data.data.testResultStats));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setPendingSpecimenStatsLoadingState(false));
+};
+
 export default {
   getResultsList,
   getResultsFilters,
   getPendingTestStats,
   removeTestResultsAttachment,
   getTestResultsDetails,
-  getLabMachines
+  getLabMachines,
+  getPendingSpecimenStats
 };

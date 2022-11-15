@@ -1,6 +1,12 @@
 import { IPagination } from '@axios/axiosTypes';
 import { IResultsFilterOption, TestResultsStats } from 'types/results';
 
+export interface ISpecimenProps {
+  pendingSpecimenStats: IPendingTestStats[];
+  isPendingSpecimenStatsLoading: boolean;
+  error: Error | null;
+}
+
 export interface IResultsProps {
   resultsList: IResultsList;
   resultFilters: IResultsFilterCategory[];
@@ -13,6 +19,8 @@ export interface IResultsProps {
   isPendingTestStatsLoading: boolean;
   isTestResultsDetailsLoading: boolean;
   islabMachinesLoading: boolean;
+  pendingSpecimenStats: IPendingTestStats[];
+  isPendingSpecimenStatsLoading: boolean;
 }
 
 export interface LabMachine {

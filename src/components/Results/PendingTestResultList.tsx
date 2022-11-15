@@ -23,7 +23,7 @@ import { IHeadCell, SortOrder } from 'types/patient';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
-import PendingTestResultsStatisticsView from '@ui-component/profile/PendingTestResultsStatisticsView';
+import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
 const PendingTestResultList = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -35,6 +35,7 @@ const PendingTestResultList = () => {
 
   const resultsList = useAppSelector(resultsSelector.resultsList);
   const isResultsLoading = useAppSelector(resultsSelector.isResultsLoading);
+  const pendingTestStats = useAppSelector(resultsSelector.pendingTestStats);
 
   const headCells = headCellsData(t) as IHeadCell[];
 
@@ -52,6 +53,10 @@ const PendingTestResultList = () => {
   };
 
   useEffect(() => {
+    dispatch(resultsMiddleware.getPendingTestStats());
+  }, []);
+
+  useEffect(() => {
     const data: IResultsReqBody = {
       ...(searchValue ? { searchString: searchValue } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
@@ -66,7 +71,7 @@ const PendingTestResultList = () => {
   return (
     <PatientListStyled>
       <Box sx={{ marginBottom: margins.bottom32 }}>
-        <PendingTestResultsStatisticsView />
+        <SpecimensStatsView stats={pendingTestStats} />
       </Box>
       <ResultFilters setSearchValue={setSearchValue} setFiltersChange={handleFiltersUpdate} />
       <TableContainer>

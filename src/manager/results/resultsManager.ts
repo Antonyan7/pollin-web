@@ -41,6 +41,12 @@ const resultsManager = {
   },
   getLabMachines() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
+  },
+  getPendingSpecimenStats() {
+    return axiosInstance.get<IPendingTestResultStats, IAxiosResponse<IPendingTestResultStats>>(
+      // Url to be changed
+      `${baseURL}/v1/test-result/stats/pending`
+    );
   }
 };
 

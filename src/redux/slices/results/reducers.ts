@@ -44,6 +44,12 @@ const reducers = createReducer({
   },
   setIsTestResultsDetailsLoading(state, action: IAction<boolean>) {
     state.isTestResultsDetailsLoading = action.payload;
+  },
+  setPendingSpecimenStats(state, action: IAction<IPendingTestStats[]>) {
+    state.pendingSpecimenStats = action.payload;
+  },
+  setPendingSpecimenStatsLoadingState(state, action: IAction<boolean>) {
+    state.isPendingSpecimenStatsLoading = action.payload;
   }
 });
 
