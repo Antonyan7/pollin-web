@@ -1,4 +1,4 @@
-import { IResultsReqBody, ITestResultsParams } from '@axios/results/resultsManagerTypes';
+import { IResultsReqBody, ITestResultsDetailsBody, ITestResultsParams } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
@@ -32,9 +32,12 @@ const resultsManager = {
     );
   },
   getTestResultsDetails(params: ITestResultsParams) {
-    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<ITestResultsDetails[]>>(`${baseURL}/v1/test-result`, {
-      params
-    });
+    return axiosInstance.get<ITestResultsDetailsBody, IAxiosResponse<ITestResultsDetailsBody>>(
+      `${baseURL}/v1/test-result`,
+      {
+        params
+      }
+    );
   },
   removeTestResultsAttachment(attachmentId: string) {
     return axiosInstance.delete<void, IAxiosResponse<void>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);

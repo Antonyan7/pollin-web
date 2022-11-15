@@ -1,4 +1,5 @@
 import { SortOrder } from 'types/patient';
+import { ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 export enum TestResultsListSortFields {
@@ -23,4 +24,8 @@ export interface IResultsReqBodyWithSortOrder extends IResultsReqBody {
 export interface ITestResultsParams {
   testResultId?: string;
   specimenId?: string;
+}
+
+export interface ITestResultsDetailsBody {
+  testResults: ITestResultsDetails[];
 }

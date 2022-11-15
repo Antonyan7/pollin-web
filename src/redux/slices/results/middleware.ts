@@ -96,7 +96,7 @@ const getTestResultsDetails = (testResultsParams: ITestResultsParams) => async (
 
     const response = await API.results.getTestResultsDetails(testResultsParams);
 
-    dispatch(setTestResultsDetails(response.data.data));
+    dispatch(setTestResultsDetails(response.data.data.testResults));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
