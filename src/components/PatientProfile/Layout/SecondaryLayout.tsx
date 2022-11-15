@@ -15,7 +15,7 @@ const SecondaryLayout = ({ loading }: SecondaryLayoutProps) => {
     </Box>
   ) : (
     <Typography py={paddings.topBottom24} textAlign="center">
-      {t(Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVALIABLE)}
+      {t(Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE)}
     </Typography>
   );
 };

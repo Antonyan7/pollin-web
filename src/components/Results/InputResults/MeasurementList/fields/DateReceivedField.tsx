@@ -44,7 +44,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
           maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
           open={openDatePicker}
           onClose={onDatePickerClose}
-          label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECIVED)}
+          label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED)}
           inputFormat="MMM dd, yyyy"
           value={new Date(`${value}`)}
           onChange={(date: Date | null) => onDateChange(date)}

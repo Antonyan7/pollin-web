@@ -87,8 +87,8 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                 <Grid px={paddings.leftRight24}>
                   <Divider sx={{ my: margins.topBottom8 }} />
                   <TextFieldWithLabel
-                    label={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
-                    placeholder={t(Translation.COMMENTS_TEXTFIELD_LABEL)}
+                    label={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
+                    placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
                   />
                   {testResultDetails.isAttachmentRequired && (
                     <>
