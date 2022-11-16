@@ -48,6 +48,7 @@ const AddEncounterNoteTitle = ({ handleClose, encounterNoteEditedTime }: AddEnco
 };
 
 const AddEncounterNote = () => {
+  const isCreateEncounterNoteLoading = useAppSelector(patientsSelector.isCreateEncounterNoteLoading);
   const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const [filterTypes, setFilterTypes] = useState<string>('');
@@ -105,6 +106,7 @@ const AddEncounterNote = () => {
             mode={SimpleEditorMode.Add_Note}
             handleSave={handleSave}
             handleCancel={handleClose}
+            loadingButtonState={isCreateEncounterNoteLoading}
           />
         </Grid>
       </Grid>

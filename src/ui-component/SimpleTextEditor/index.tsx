@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { borderRadius, borders, margins } from 'themes/themeConstants';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
@@ -48,11 +48,11 @@ const EditEncounterNoteAddendums = () => {
   const [t] = useTranslation();
 
   return encounterData ? (
-    <Grid item container direction="column" gap={3} sx={{ pt: 2, ml: 2 }}>
+    <Grid item container direction="column" gap={3} sx={{ pt: paddings.top16, ml: margins.left16 }}>
       {encounterData.addendums.map((addendum: AddendumsProps, addendumIndex: number) => (
         <>
           <Grid item container direction="row" alignItems="center">
-            <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
+            <Typography variant="h4" sx={{ width: '130px' }}>
               {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
             </Typography>
           </Grid>
@@ -60,10 +60,8 @@ const EditEncounterNoteAddendums = () => {
             <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
           </Grid>
           <Grid item container direction="column" mb={margins.bottom16}>
-            <Typography component="h4" variant="h4">
-              {addendum.author}
-            </Typography>
-            <Typography variant="body1" component="p">
+            <Typography variant="h4">{addendum.author}</Typography>
+            <Typography variant="body1">
               {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
                 new Date(addendum.date as Date)
               )}`}
@@ -83,11 +81,12 @@ const SimpleTextEditor = ({
   mode,
   handleSave,
   handleCancel,
-  currentAddendum,
-  filteredAddendums
+  secondPartAddendums,
+  loadingButtonState
 }: SimpleEditorProps) => {
   const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
   const isEncounterLoading = useAppSelector(patientsSelector.isEncountersListLoading);
+  const buttonWithLoadingState = loadingButtonState ?? isEncounterLoading;
   const theme = useTheme();
   const [t] = useTranslation();
 
@@ -131,13 +130,13 @@ const SimpleTextEditor = ({
             </StyledButton>
             <ButtonWithLoading
               sx={{ borderRadius: borderRadius.radius8 }}
-              isLoading={isEncounterLoading}
+              isLoading={buttonWithLoadingState}
               type="button"
               variant="contained"
               onClick={handleSave}
             >
-              <Typography mr={isEncounterLoading ? 3 : 0}>
-                {!isEncounterLoading
+              <Typography mr={buttonWithLoadingState ? margins.right8 : margins.all0}>
+                {!buttonWithLoadingState
                   ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)
                   : t(Translation.PAGE_ENCOUNTERS_UPDATE_LABEL)}
               </Typography>
@@ -146,9 +145,9 @@ const SimpleTextEditor = ({
         </SubCardStyled>
       </StyledGrid>
       {mode === SimpleEditorMode.Edit_Note ? <EditEncounterNoteAddendums /> : null}
-      {mode === SimpleEditorMode.Edit_Addendum && currentAddendum && !filteredAddendums?.length ? (
-        <CurrentAddendum currentAddendum={currentAddendum as AddendumsProps} />
-      ) : null}
+      {mode === SimpleEditorMode.Edit_Addendum && secondPartAddendums?.length
+        ? secondPartAddendums.map((addendum: AddendumsProps) => <CurrentAddendum currentAddendum={addendum} />)
+        : null}
     </>
   );
 };

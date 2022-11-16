@@ -104,6 +104,18 @@ const reducers = createReducer({
   },
   setEncountersDetailsLoadingState(state, action: IAction<boolean>) {
     state.isEncountersDetailsLoading = action.payload;
+  },
+  setCreateEncounterNoteLoadingState(state, action: IAction<boolean>) {
+    state.isCreateEncounterNoteLoading = action.payload;
+  },
+  setUpdateEncounterNoteLoadingState(state, action: IAction<boolean>) {
+    state.isUpdateEncounterNoteLoading = action.payload;
+  },
+  setUpdateEncounterAddendumLoadingState(state, action: IAction<boolean>) {
+    state.isUpdateEncounterAddendumLoading = action.payload;
+  },
+  setCreateEncounterAddendumLoadingState(state, action: IAction<boolean>) {
+    state.isCreateEncounterAddendumLoading = action.payload;
   }
 });
 

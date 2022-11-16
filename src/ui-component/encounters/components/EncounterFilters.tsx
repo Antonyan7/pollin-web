@@ -2,7 +2,7 @@ import React, { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
-import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { BoxProps, InputAdornment } from '@mui/material';
@@ -144,7 +144,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
         endAdornment={
           searchValue.length && !isSearchInputFocused ? (
             <InputAdornment position="end">
-              <HighlightOffTwoToneIcon
+              <CloseIcon
                 sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
                 onClick={clearSearchValue}
               />

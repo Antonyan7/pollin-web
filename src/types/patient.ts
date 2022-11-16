@@ -109,6 +109,6 @@ export interface SimpleEditorProps {
   handleSave?: () => void;
   handleEncounterTypeSelect?: (e: SelectChangeEvent) => void;
   encounterTypes?: IEncounterType[];
-  currentAddendum?: AddendumsProps | null;
-  filteredAddendums?: AddendumsProps[];
+  secondPartAddendums?: AddendumsProps[];
+  loadingButtonState?: boolean;
 }

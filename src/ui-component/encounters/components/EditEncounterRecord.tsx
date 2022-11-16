@@ -65,17 +65,23 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   const router = useRouter();
   const currentAddendumId = router.query.id as string;
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
+  const isUpdateEncounterNoteLoading = useAppSelector(patientsSelector.isUpdateEncounterNoteLoading);
+  const isUpdateEncounterAddendumLoading = useAppSelector(patientsSelector.isUpdateEncounterAddendumLoading);
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
+  const isEncounterNoteUpdated =
+    new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
   const [currentAddendum, setCurrentAddendum] = useState<AddendumsProps | null>(null);
-  const [filteredAddendums, setFilteredAddendums] = useState<AddendumsProps[]>([]);
+  const [firstPartAddendums, setFirstPartAddendums] = useState<AddendumsProps[]>([]);
+  const [secondPartAddendums, setSecondPartAddendums] = useState<AddendumsProps[]>([]);
   const [editorValue, setEditorValue] = useState<string>('');
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
+  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
+  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
 
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
   useEffect(() => {
-    // In case when user comes directly from URL or refreshed the page.
     if (!encounterData && mode === SimpleEditorMode.Edit_Note) {
       dispatch(patientsMiddleware.getEncounterDetailsInformation(currentEncounterId));
     }
@@ -91,16 +97,22 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   }, [mode, currentAddendum, encounterData]);
 
   useEffect(() => {
-    if (currentAddendumId) {
+    if (currentAddendumId && encounterData?.addendums.length) {
       const currentAddendumData = encounterData?.addendums.find((addendum) => addendum.id === currentAddendumId);
-      const filteredAddendumsData = encounterData?.addendums.filter((addendum) => addendum.id !== currentAddendumId);
+      const currentAddendumIndex = encounterData?.addendums.indexOf(currentAddendumData as AddendumsProps);
+      const firstAddendumPart: AddendumsProps[] = encounterData?.addendums.slice().splice(0, currentAddendumIndex);
+      const secondAddendumPart: AddendumsProps[] = encounterData?.addendums.slice().splice(currentAddendumIndex + 1);
 
       if (currentAddendumData) {
         setCurrentAddendum(currentAddendumData);
       }
 
-      if (filteredAddendumsData?.length) {
-        setFilteredAddendums(filteredAddendumsData);
+      if (firstAddendumPart?.length) {
+        setFirstPartAddendums(firstAddendumPart);
+      }
+
+      if (secondAddendumPart?.length) {
+        setSecondPartAddendums(secondAddendumPart);
       }
     }
   }, [currentAddendumId, encounterData?.addendums]);
@@ -140,7 +152,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editorValue, currentAddendumId, currentEncounterId]);
 
-  const showFilteredAddendums = filteredAddendums.length && encounterData;
+  const showFilteredAddendums = firstPartAddendums.length && encounterData;
 
   return (
     <EncountersWrapper
@@ -167,13 +179,11 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
                     </ParserTypographyWrapper>
                   </Grid>
                   <Grid item container direction="column">
-                    <Typography component="h4" variant="h4">
-                      {encounterData.author}
-                    </Typography>
-                    <Typography variant="body1" component="p">
-                      {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-                        new Date(encounterData.createdOn as Date)
-                      )}`}
+                    <Typography variant="h4">{encounterData.author}</Typography>
+                    <Typography variant="body1">
+                      {isEncounterNoteUpdated
+                        ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
+                        : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
                     </Typography>
                   </Grid>
                 </>
@@ -181,7 +191,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
             </>
           )}
           {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
-            ? filteredAddendums.map((filteredAddendum) => <CurrentAddendum currentAddendum={filteredAddendum} />)
+            ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} />)
             : null}
         </Grid>
         <NoteEditor
@@ -190,8 +200,8 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
           editorValue={editorValue}
           setEditorValue={setEditorValue}
           mode={mode}
-          currentAddendum={currentAddendum}
-          filteredAddendums={filteredAddendums}
+          secondPartAddendums={secondPartAddendums}
+          loadingButtonState={isUpdateEncounterNoteLoading ?? isUpdateEncounterAddendumLoading}
         />
       </Grid>
     </EncountersWrapper>

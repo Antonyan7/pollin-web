@@ -30,29 +30,21 @@ const EncounterDetailsPageTitle = ({
   handleBack,
   encounterNoteEditedTime
 }: EncounterDetailsPageTitleProps) => (
-  <Grid container alignItems="center" justifyContent="space-between">
-    <Grid container item xs={6} sx={{ p: 2 }} alignItems="center">
-      <Grid item xs={1}>
-        <IconButton sx={{ display: 'flex' }} onClick={handleBack}>
+  <Grid container alignItems="center" justifyContent="space-between" xs={12}>
+    <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
+      <Grid item>
+        <IconButton onClick={handleBack}>
           <ArrowBackIos sx={{ color: theme.palette.primary.main }} />
         </IconButton>
       </Grid>
-      <Grid item xs={5}>
-        <Typography
-          component="h3"
-          variant="h3"
-          sx={{ color: theme.palette.common.black, marginRight: '20px' }}
-          fontSize="21px"
-          fontWeight="500"
-        >
+      <Grid item xs={7}>
+        <Typography variant="h3" sx={{ color: theme.palette.common.black }} fontSize="21px" fontWeight="500">
           {encounterData.title}
         </Typography>
       </Grid>
     </Grid>
-    <Grid container item xs={2} justifyContent="flex-end" pr={2}>
-      <Typography component="h4" variant="h4">
-        {encounterNoteEditedTime}
-      </Typography>
+    <Grid container item xs={4} justifyContent="flex-end" pr={paddings.right16}>
+      <Typography variant="h4">{encounterNoteEditedTime}</Typography>
     </Grid>
   </Grid>
 );
@@ -90,7 +82,8 @@ const FooterEncounter = () => {
           onClick={goToAddAddendumPage}
           variant="contained"
           sx={{
-            border: 'none'
+            border: 'none',
+            height: '100%'
           }}
           label={t(Translation.PAGE_ENCOUNTERS_BTN_ADD_ADDENDUM)}
           icon={<EditOutlined fontSize="small" />}
@@ -103,6 +96,7 @@ const FooterEncounter = () => {
 const EncounterDetailsPage = () => {
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
+  const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const isEncountersDetailsLoading = useAppSelector(patientsSelector.isEncountersDetailsLoading);
   const theme = useTheme();
   const [t] = useTranslation();
@@ -123,93 +117,100 @@ const EncounterDetailsPage = () => {
       dispatch(patientsMiddleware.getEncounterDetailsInformation(router.query.id as string));
       dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
     }
-  }, [router.query.id, encounterData?.addendums.length]);
+  }, [router.query.id]);
 
   const isEncounterNoteUpdated =
     new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
 
-  return encounterData && !isEncountersDetailsLoading ? (
-    <EncountersWrapper
-      title={
-        <EncounterDetailsPageTitle
-          theme={theme}
-          encounterData={encounterData}
-          handleBack={handleBack}
-          encounterNoteEditedTime={encounterNoteEditedTime}
-        />
-      }
-    >
-      <Grid container sx={{ px: paddings.all32, pt: paddings.top28, flexDirection: 'column' }}>
-        <Grid item container pt={paddings.top16} alignItems="center" gap={3}>
-          <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
-            {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}
-          </Typography>
-          <IconButton
-            sx={{
-              color: theme.palette.primary.main,
-              border: `${borders.solid1px} ${theme.palette.primary.main}`,
-              borderRadius: borderRadius.radius8
-            }}
-            onClick={goToEditEncounterPage}
-          >
-            <EditOutlined />
-          </IconButton>
-        </Grid>
-        <Grid item pt={paddings.top22}>
-          <ParserTypographyWrapper variant="body1">{parse(encounterData.content)}</ParserTypographyWrapper>
-        </Grid>
-        <Grid item pt={paddings.top28}>
-          <Typography component="h4" variant="h4">
-            {encounterData.author}
-          </Typography>
-          <Typography pt={paddings.top8} component="p">
-            {isEncounterNoteUpdated
-              ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
-              : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
-          </Typography>
-        </Grid>
-        <Grid item container direction="column" gap={2} sx={{ pt: paddings.top16 }}>
-          {encounterData.addendums.map((addendum: AddendumsProps) => (
-            <>
-              <Divider />
-              <Grid item container direction="row" alignItems="center" gap={3}>
-                <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
-                  {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
-                </Typography>
-                <IconButton
-                  sx={{
-                    color: theme.palette.primary.main,
-                    border: `${borders.solid1px} ${theme.palette.primary.main}`,
-                    borderRadius: borderRadius.radius8
-                  }}
-                  onClick={() => goToEditAddendumPage(addendum.id)}
-                >
-                  <EditOutlined />
-                </IconButton>
-              </Grid>
-              <Grid item>
-                <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
-              </Grid>
-              <Grid item container direction="column" sx={{ pt: paddings.top16 }}>
-                <Typography component="h4" variant="h4">
-                  {addendum.author}
-                </Typography>
-                <Typography variant="body1" component="p">
-                  {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-                    addendum.date as Date
-                  )}`}
-                </Typography>
-              </Grid>
-            </>
-          ))}
-        </Grid>
-        <FooterEncounter />
-      </Grid>
-    </EncountersWrapper>
-  ) : (
-    <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-      {isEncountersDetailsLoading && <CircularProgress sx={{ margin: margins.auto }} />}
-    </Box>
+  useEffect(() => {
+    if (currentEncounterId) {
+      dispatch(patientsMiddleware.getEncounterDetailsInformation(currentEncounterId));
+    }
+  }, [currentEncounterId]);
+
+  return (
+    <>
+      {encounterData && !isEncountersDetailsLoading ? (
+        <EncountersWrapper
+          title={
+            <EncounterDetailsPageTitle
+              theme={theme}
+              encounterData={encounterData}
+              handleBack={handleBack}
+              encounterNoteEditedTime={encounterNoteEditedTime}
+            />
+          }
+        >
+          <Grid container direction="column" px={paddings.all4}>
+            <Grid item container pt={paddings.top12} alignItems="center" gap={3}>
+              <Typography variant="h4" sx={{ width: '130px' }}>
+                {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}
+              </Typography>
+              <IconButton
+                sx={{
+                  color: theme.palette.primary.main,
+                  border: `${borders.solid1px} ${theme.palette.primary.main}`,
+                  borderRadius: borderRadius.radius8
+                }}
+                onClick={goToEditEncounterPage}
+              >
+                <EditOutlined />
+              </IconButton>
+            </Grid>
+            <Grid item pt={paddings.top22}>
+              <ParserTypographyWrapper variant="body1">{parse(encounterData.content)}</ParserTypographyWrapper>
+            </Grid>
+            <Grid item pt={paddings.top28}>
+              <Typography variant="h4">{encounterData.author}</Typography>
+              <Typography pt={paddings.top8}>
+                {isEncounterNoteUpdated
+                  ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
+                  : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
+              </Typography>
+            </Grid>
+            <Grid item container direction="column" gap={2} sx={{ pt: paddings.top16 }}>
+              {encounterData.addendums.map((addendum: AddendumsProps) => (
+                <>
+                  <Divider />
+                  <Grid item container direction="row" alignItems="center" gap={3}>
+                    <Typography variant="h4" sx={{ width: '130px' }}>
+                      {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
+                    </Typography>
+                    <IconButton
+                      sx={{
+                        color: theme.palette.primary.main,
+                        border: `${borders.solid1px} ${theme.palette.primary.main}`,
+                        borderRadius: borderRadius.radius8
+                      }}
+                      onClick={() => goToEditAddendumPage(addendum.id)}
+                    >
+                      <EditOutlined />
+                    </IconButton>
+                  </Grid>
+                  <Grid item>
+                    <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
+                  </Grid>
+                  <Grid item container direction="column" sx={{ pt: paddings.top16 }}>
+                    <Typography variant="h4">{addendum.author}</Typography>
+                    <Typography variant="body1">
+                      {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
+                        addendum.date as Date
+                      )}`}
+                    </Typography>
+                  </Grid>
+                </>
+              ))}
+            </Grid>
+            <FooterEncounter />
+          </Grid>
+        </EncountersWrapper>
+      ) : null}
+      {isEncountersDetailsLoading ? (
+        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+          <CircularProgress sx={{ margin: margins.auto }} />
+        </Box>
+      ) : null}
+    </>
   );
 };
 

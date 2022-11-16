@@ -44,7 +44,11 @@ const {
   setPatientAppointmentsList,
   setEncountersDetailsLoadingState,
   setIsProfileTestResultsLoading,
-  setIsTestResultsHistoryLoading
+  setIsTestResultsHistoryLoading,
+  setCreateEncounterNoteLoadingState,
+  setUpdateEncounterNoteLoadingState,
+  setUpdateEncounterAddendumLoadingState,
+  setCreateEncounterAddendumLoadingState
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -137,20 +141,20 @@ const setCurrentEncounterId = (encounterId: string) => async (dispatch: AppDispa
 
 export const createEncounterNote = (encounterNoteData: ICreateEncounterNoteProps) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setEncountersLoadingState(true));
+    dispatch(setCreateEncounterNoteLoadingState(true));
     await API.patients.createEncounterNote(encounterNoteData);
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
-    dispatch(setEncountersLoadingState(false));
+    dispatch(setCreateEncounterNoteLoadingState(false));
   }
 };
 
 export const updateEncounterNote =
   (newEncounterNoteData: IUpdateEncounterNoteProps) => async (dispatch: AppDispatch) => {
     try {
-      dispatch(setEncountersLoadingState(true));
+      dispatch(setUpdateEncounterNoteLoadingState(true));
 
       const response = await API.patients.updateEncounterNote(newEncounterNoteData);
 
@@ -159,7 +163,7 @@ export const updateEncounterNote =
       Sentry.captureException(error);
       dispatch(setError(error));
     } finally {
-      dispatch(setEncountersLoadingState(false));
+      dispatch(setUpdateEncounterNoteLoadingState(false));
     }
   };
 
@@ -253,19 +257,19 @@ const getEncounterDetailsInformation = (encounterId?: string) => async (dispatch
 
 const createEncounterAddendum = (addendumData: ICreateEncounterAddendumRequest) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setEncountersLoadingState(true));
+    dispatch(setCreateEncounterAddendumLoadingState(true));
     await API.patients.createEncounterAddendum(addendumData);
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
-    dispatch(setEncountersLoadingState(false));
+    dispatch(setCreateEncounterAddendumLoadingState(false));
   }
 };
 
 const updateEncounterAddendum = (newAddendumData: IUpdateEncounterAddendumRequest) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setEncountersLoadingState(true));
+    dispatch(setUpdateEncounterAddendumLoadingState(true));
 
     const response = await API.patients.updateEncounterAddendum(newAddendumData);
 
@@ -274,7 +278,7 @@ const updateEncounterAddendum = (newAddendumData: IUpdateEncounterAddendumReques
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
-    dispatch(setEncountersLoadingState(false));
+    dispatch(setUpdateEncounterAddendumLoadingState(false));
   }
 };
 

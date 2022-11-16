@@ -19,10 +19,10 @@ const CurrentAddendum = ({ currentAddendum }: CurrentAddendumProps) => {
 
   return (
     currentAddendum && (
-      <Grid item container direction="column" xs={4} gap={2}>
+      <Grid item container direction="column" gap={2}>
         <Divider variant="fullWidth" />
         <Grid item container direction="row" alignItems="center">
-          <Typography component="h5" variant="h4" sx={{ width: '130px' }}>
+          <Typography variant="h4" sx={{ width: '130px' }}>
             {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
           </Typography>
         </Grid>
@@ -30,10 +30,8 @@ const CurrentAddendum = ({ currentAddendum }: CurrentAddendumProps) => {
           <ParserTypographyWrapper variant="body1">{parse(currentAddendum.content)}</ParserTypographyWrapper>
         </Grid>
         <Grid item container direction="column" mb={margins.bottom16}>
-          <Typography component="h4" variant="h4">
-            {currentAddendum.author}
-          </Typography>
-          <Typography variant="body1" component="p">
+          <Typography variant="h4">{currentAddendum.author}</Typography>
+          <Typography variant="body1">
             {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
               new Date(currentAddendum.date as Date)
             )}`}

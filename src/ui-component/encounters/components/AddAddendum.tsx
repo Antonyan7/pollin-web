@@ -10,12 +10,14 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
+
+import { encountersCustomizedDate } from '../helpers/encountersDate';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -58,10 +60,15 @@ const AddAddendum = () => {
   const router = useRouter();
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
+  const isCreateEncounterAddendumLoading = useAppSelector(patientsSelector.isCreateEncounterAddendumLoading);
   const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const encounterId = router.query.id as string;
   const [t] = useTranslation();
+  const isEncounterNoteUpdated =
+    new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
+  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
+  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
 
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
@@ -110,11 +117,21 @@ const AddAddendum = () => {
           <Grid item>
             <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
           </Grid>
-          <Grid item>
-            {encounterData && (
-              <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
-            )}
-          </Grid>
+          {encounterData && (
+            <>
+              <Grid item>
+                <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
+              </Grid>
+              <Grid item pt={paddings.top28}>
+                <Typography variant="h4">{encounterData.author}</Typography>
+                <Typography pt={paddings.top8}>
+                  {isEncounterNoteUpdated
+                    ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
+                    : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
+                </Typography>
+              </Grid>
+            </>
+          )}
         </Grid>
         <NoteEditor
           handleCancel={handleClose}
@@ -122,6 +139,7 @@ const AddAddendum = () => {
           setEditorValue={setEditorValue}
           handleSave={handleSave}
           mode={SimpleEditorMode.Add_Addendum}
+          loadingButtonState={isCreateEncounterAddendumLoading}
         />
       </Grid>
     </EncountersWrapper>

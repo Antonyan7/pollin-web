@@ -27,6 +27,10 @@ export interface PatientEmrProps {
   isEncountersAddendumLoading: boolean;
   isEncountersFiltersLoading: boolean;
   isEncountersDetailsLoading: boolean;
+  isCreateEncounterNoteLoading: boolean;
+  isUpdateEncounterNoteLoading: boolean;
+  isUpdateEncounterAddendumLoading: boolean;
+  isCreateEncounterAddendumLoading: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;
   patientHighlights: PatientHighlight[] | null;
