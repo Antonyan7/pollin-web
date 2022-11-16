@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
@@ -25,7 +25,7 @@ import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
-import { futureDate180DaysAfter, neutralDateTime } from '@utils/dateUtils';
+import { futureDate180DaysAfter, getCurrentDate, getDate, neutralDateTime } from '@utils/dateUtils';
 
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
@@ -56,10 +56,8 @@ const Appointments = () => {
   const [t] = useTranslation();
   const serviceProviderSelectRef = useRef(null);
   const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
-  const isToday = useMemo(
-    () => new Date(calendarDate).setHours(0, 0, 0, 0) === new Date().setHours(0, 0, 0, 0),
-    [calendarDate]
-  );
+  const currentDay = getCurrentDate();
+  const isToday = getDate(calendarDate) === getDate(currentDay);
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddResourceAppointmentModal, props: {} }));
   }, []);
@@ -78,7 +76,7 @@ const Appointments = () => {
     dispatch(bookingMiddleware.applyResource(event.target ? `${event.target.value}` : ''));
   }, []);
   const onTodayClick = useCallback(() => {
-    dispatch(bookingMiddleware.setDateValue(format(new Date(), 'yyyy-MM-dd')));
+    dispatch(bookingMiddleware.setDateValue(getDate(getCurrentDate())));
   }, []);
   const onServiceProviderScroll = (event: React.UIEvent<HTMLDivElement, UIEvent>) => {
     const eventTarget = event.target as HTMLDivElement;

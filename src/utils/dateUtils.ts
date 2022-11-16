@@ -80,11 +80,10 @@ export const changeDateSameTime = (oldDate: string, newDate: Date) => {
   return `${year}-${month}-${day}${oldDate.slice(10)}`;
 };
 
-export const getTimezoneOffset = () => {
-  const { currentDate } = store.getState().core.clinicConfig;
+export const getCurrentDate = () => store.getState().core.clinicConfig.currentDate;
 
-  return currentDate.slice(-6);
-};
+export const getDate = (date: string) => date.slice(0, 10);
+export const getTimezoneOffset = () => getCurrentDate().slice(-6);
 
 export const calculateTimeInUTC = (date: string | Date) => {
   const timezoneOffset = getTimezoneOffset();
