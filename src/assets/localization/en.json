@@ -119,7 +119,6 @@
   "page.encounters.update.label": "Saving",
   "page.results.title": "External Results",
   "page.results.list.field.search": "Patient Name/ID Search",
-  "page.results.list.item.status": "Not Received",
   "page.results.list.item.days": "days",
   "page.results.cells.test.panel": "Test/Panel",
   "page.results.cells.patient.info": "Patient Information",

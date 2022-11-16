@@ -37,7 +37,7 @@ const PendingTestResultRow = ({ row, index }: IExternalResultsTableRow) => {
         <Typography variant="subtitle2">{row.patient.dateOfBirth}</Typography>
       </TableCell>
       <TableCell align="left">{row.labName}</TableCell>
-      <TableCell align="left">{t(Translation.PAGE_RESULTS_LIST_ITEM_STATUS)}</TableCell>
+      <TableCell align="left">{row.status}</TableCell>
       <TableCell align="center">
         <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
       </TableCell>

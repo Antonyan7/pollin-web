@@ -121,7 +121,6 @@ export enum Translation {
   PAGE_ENCOUNTERS_UPDATE_LABEL = 'page.encounters.update.label',
   PAGE_RESULTS_TITLE = 'page.results.title',
   PAGE_RESULTS_LIST_FIELD_SEARCH = 'page.results.list.field.search',
-  PAGE_RESULTS_LIST_ITEM_STATUS = 'page.results.list.item.status',
   PAGE_RESULTS_LIST_ITEM_DAYS = 'page.results.list.item.days',
   PAGE_RESULTS_CELLS_TEST_PANEL = 'page.results.cells.test.panel',
   PAGE_RESULTS_CELLS_PATIENT_INFO = 'page.results.cells.patient.info',

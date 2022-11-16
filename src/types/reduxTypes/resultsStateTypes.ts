@@ -85,6 +85,13 @@ export interface ITestResultsDetails {
   attachments: ITestResultAttachment[];
 }
 
+export enum IResultListPatientStatus {
+  Pending = 'Pending',
+  NotReceived = 'NotReceived',
+  Completed = 'Completed',
+  Reported = 'Reported'
+}
+
 export interface IResultListPatient {
   id: string;
   name: string;
@@ -95,6 +102,7 @@ export interface IPatientContactInformationModalProps {
   id: string;
   age: number;
   labName: string;
+  status: IResultListPatientStatus;
   title: string;
   patient: IResultListPatient;
 }
