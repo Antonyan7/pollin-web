@@ -9,7 +9,7 @@ import * as Sentry from '@sentry/nextjs';
 import store, { AppDispatch } from 'redux/store';
 import { IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
-import { calculateTimeInUTC, toLocalIsoString } from '@utils/dateUtils';
+import { calculateTimeInUTC, convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
 import slice from './slice';
@@ -253,7 +253,7 @@ const editAppointment =
       const { appointmentStatus } = store.getState().booking;
 
       appointmentValues.appointment.date = calculateTimeInUTC(
-        toLocalIsoString(appointmentValues.appointment.date as Date)
+        convertToLocale(appointmentValues.appointment.date as string)
       );
       await API.booking.editAppointment(appointmentId, appointmentValues);
       dispatch(

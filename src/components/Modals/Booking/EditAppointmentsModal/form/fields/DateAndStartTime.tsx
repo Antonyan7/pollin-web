@@ -41,8 +41,6 @@ const DateAndStartTime: React.FC = () => {
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
 
-  const initialValue = convertToLocale(value as string);
-
   useEffect(() => {
     if (
       field.value &&
@@ -65,7 +63,7 @@ const DateAndStartTime: React.FC = () => {
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
         maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
-        value={initialValue}
+        value={convertToLocale(field.value as string)}
         minutesStep={10}
         DialogProps={{
           sx: {

@@ -8,11 +8,14 @@ import { bookingMiddleware } from '@redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
+import { calculateWeekDays } from 'helpers/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { IAppliedDay, IApplyScheduleDay } from 'types/apply-schedule';
 import { IApplyScheduleData, ISingleTemplate } from 'types/create-schedule';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
+
+import { calculateTimeInUTC } from '@utils/dateUtils';
 
 import { SeveritiesType } from '../types';
 
@@ -67,9 +70,9 @@ const ApplyScheduleForm = () => {
       resourceId: resource.id,
       templateId: scheduleTemplate.id,
       repeatWeeksCount: repeatWeeks.id,
-      applyDays,
-      startDate,
-      endDate
+      applyDays: calculateWeekDays(applyDays),
+      startDate: startDate ? calculateTimeInUTC(startDate) : startDate,
+      endDate: endDate ? calculateTimeInUTC(endDate) : endDate
     };
 
     if (resource.id && scheduleTemplate.id && repeatWeeks && applyDays.length && startDate && endDate) {

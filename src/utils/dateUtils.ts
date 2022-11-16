@@ -86,7 +86,7 @@ export const getTimezoneOffset = () => {
   return currentDate.slice(-6);
 };
 
-export const calculateTimeInUTC = (date: string) => {
+export const calculateTimeInUTC = (date: string | Date) => {
   const timezoneOffset = getTimezoneOffset();
 
   if (timezoneOffset[0] === '-') {

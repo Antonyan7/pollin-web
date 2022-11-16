@@ -2,7 +2,7 @@ import { IApplyScheduleDay } from 'types/apply-schedule';
 
 export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-export const longWeekDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+export const longWeekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'NoShow', 'CheckedIn'];
 
