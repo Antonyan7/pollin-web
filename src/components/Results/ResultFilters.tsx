@@ -48,7 +48,7 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
 
   const adaptedGroupedOptions = () =>
     filtersList?.flatMap((item) =>
-      item.options.map((option: IResultsFilterOption) => ({ ...option, type: item.type }))
+      item.options.map((option: IResultsFilterOption) => ({ ...option, type: option.type }))
     );
 
   const onSearchChange = useCallback(

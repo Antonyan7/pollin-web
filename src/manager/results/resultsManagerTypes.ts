@@ -3,10 +3,10 @@ import { ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 export enum TestResultsListSortFields {
-  COLLECTION_AGE = 'Collection Age',
+  COLLECTION_AGE = 'CollectionAge',
   STATUS = 'Status',
   LAB = 'Lab',
-  PATIENT_NAME = 'Patient Name'
+  PATIENT_NAME = 'PatientName'
 }
 
 export interface IResultsReqBody {

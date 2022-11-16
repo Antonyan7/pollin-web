@@ -16,6 +16,14 @@ export enum TestResultsStats {
   LessThanOrEqual15Days = 'LessThanOrEqual15Days'
 }
 
+export enum TestResultsFilters {
+  Status = 'Status',
+  CollectionAge = 'CollectionAge',
+  Lab = 'Lab',
+  TestPanel = 'TestPanel',
+  TestType = 'TestType'
+}
+
 export enum FinalResultChipColor {
   Normal = 'active',
   Abnormal = 'inActive',
