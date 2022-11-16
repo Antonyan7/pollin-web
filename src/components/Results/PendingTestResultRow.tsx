@@ -4,8 +4,9 @@ import { TableCell, TableRow, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'types/modals';
-import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
+import { IPatientContactInformationModalProps, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
+import ContextMenu from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 
 import { Translation } from '../../constants/translations';
@@ -13,9 +14,10 @@ import { Translation } from '../../constants/translations';
 interface IExternalResultsTableRow {
   row: IPatientContactInformationModalProps;
   index: number;
+  actions: SpecimenActionsValues[];
 }
 
-const PendingTestResultRow = ({ row, index }: IExternalResultsTableRow) => {
+const PendingTestResultRow = ({ row, index, actions }: IExternalResultsTableRow) => {
   const labelId = `enhanced-table-checkbox-${index}`;
   const [t] = useTranslation();
 
@@ -40,6 +42,9 @@ const PendingTestResultRow = ({ row, index }: IExternalResultsTableRow) => {
       <TableCell align="left">{row.status}</TableCell>
       <TableCell align="center">
         <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
+      </TableCell>
+      <TableCell align="left" onClick={(e) => e.stopPropagation()}>
+        <ContextMenu actions={actions} />
       </TableCell>
     </TableRow>
   );

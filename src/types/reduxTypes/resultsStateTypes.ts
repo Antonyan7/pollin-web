@@ -14,6 +14,7 @@ export interface IResultsProps {
   testResultsDetails: TestResultsDetails[];
   error: Error | null;
   labMachines: LabMachine[];
+  specimenActions: SpecimenActions[];
   isResultsListLoading: boolean;
   isResultsFiltersLoading: boolean;
   isPendingTestStatsLoading: boolean;
@@ -24,6 +25,20 @@ export interface IResultsProps {
 }
 
 export interface LabMachine {
+  id: string;
+  title: string;
+}
+
+export interface SpecimenActionsList {
+  variations: SpecimenActions[];
+}
+
+export interface SpecimenActions {
+  actions: SpecimenActionsValues[];
+  status: string;
+}
+
+export interface SpecimenActionsValues {
   id: string;
   title: string;
 }

@@ -13,6 +13,7 @@ const isTestResultsDetailsLoading = createSelector([selector], (state) => state.
 const testResultsDetails = createSelector([selector], (state) => state.testResultsDetails);
 const labMachines = createSelector([selector], (state) => state.labMachines);
 const islabMachinesLoading = createSelector([selector], (state) => state.islabMachinesLoading);
+const specimenActions = createSelector([selector], (state) => state.specimenActions);
 const isPendingSpecimenStatsLoading = createSelector([selector], (state) => state.isPendingSpecimenStatsLoading);
 const pendingSpecimenStats = createSelector([selector], (state) => state.pendingSpecimenStats);
 
@@ -27,6 +28,7 @@ export default {
   testResultsDetails,
   labMachines,
   islabMachinesLoading,
+  specimenActions,
   isPendingSpecimenStatsLoading,
   pendingSpecimenStats
 };

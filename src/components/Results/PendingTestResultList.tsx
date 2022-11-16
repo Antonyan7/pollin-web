@@ -68,6 +68,12 @@ const PendingTestResultList = () => {
     dispatch(resultsMiddleware.getResultsList(data));
   }, [filters, page, searchValue, sortField, sortOrder]);
 
+  useEffect(() => {
+    dispatch(resultsMiddleware.getSpecimenActions());
+  }, []);
+
+  const specimenActions = useAppSelector(resultsSelector.specimenActions);
+
   return (
     <PatientListStyled>
       <Box sx={{ marginBottom: margins.bottom32 }}>
@@ -92,9 +98,18 @@ const PendingTestResultList = () => {
           </TableHead>
 
           <TableBody>
-            {resultsList?.testResults?.map((row: IPatientContactInformationModalProps, index: number) => (
-              <PendingTestResultRow row={row} index={index} key={row.id} />
-            ))}
+            {resultsList?.testResults?.map((row: IPatientContactInformationModalProps, index: number) => {
+              const actions = specimenActions.filter((item) => item.status === row.status);
+
+              return (
+                <PendingTestResultRow
+                  row={row}
+                  index={index}
+                  key={row.id}
+                  actions={actions.length ? actions[0].actions : []}
+                />
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

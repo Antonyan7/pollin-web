@@ -5,7 +5,8 @@ import {
   IPendingTestResultStats,
   IResultsList,
   ITestResultsDetails,
-  LabMachine
+  LabMachine,
+  SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFiltersResponse } from 'types/results';
 
@@ -44,6 +45,11 @@ const resultsManager = {
   },
   getLabMachines() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
+  },
+  getSpecimenActions() {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(
+      `${baseURL}/v1/specimen/actions`
+    );
   },
   getPendingSpecimenStats() {
     return axiosInstance.get<IPendingTestResultStats, IAxiosResponse<IPendingTestResultStats>>(

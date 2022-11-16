@@ -6,6 +6,7 @@ import {
   IResultsList,
   IResultsProps,
   LabMachine,
+  SpecimenActions,
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
 
@@ -35,6 +36,9 @@ const reducers = createReducer({
   },
   setTestResultsDetails(state, action: IAction<TestResultsDetails[]>) {
     state.testResultsDetails = action.payload;
+  },
+  setSpecimenActions(state, action: IAction<SpecimenActions[]>) {
+    state.specimenActions = action.payload;
   },
   setLabMachines(state, action: IAction<LabMachine[]>) {
     state.labMachines = action.payload;

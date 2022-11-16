@@ -15,6 +15,7 @@ const {
   setPendingTestStats,
   setPendingTestStatsLoadingState,
   setTestResultsDetails,
+  setSpecimenActions,
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
@@ -105,6 +106,17 @@ const getTestResultsDetails = (testResultsParams: ITestResultsParams) => async (
   }
 };
 
+const getSpecimenActions = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.getSpecimenActions();
+
+    dispatch(setSpecimenActions(response.data.data.variations));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const getLabMachines = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLabMachinesLoading(true));
@@ -142,5 +154,6 @@ export default {
   removeTestResultsAttachment,
   getTestResultsDetails,
   getLabMachines,
+  getSpecimenActions,
   getPendingSpecimenStats
 };
