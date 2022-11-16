@@ -28,7 +28,7 @@ export interface IAppointmentTypesData {
   serviceTypes: IServiceType[];
 }
 
-export interface ICreatedAppointmentBody {
+export interface ICreateAppointmentBody {
   resourceId?: string;
   serviceTypeId: string;
   patientId: string;

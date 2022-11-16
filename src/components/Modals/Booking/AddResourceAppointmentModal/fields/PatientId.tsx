@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { AutocompleteInputChangeReason, Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -26,7 +26,7 @@ const PatientId = () => {
   const isLoading = useAppSelector(patientsSelector.isPatientsListLoading);
   const patientOptions = useMemo(() => createOptionsGroupPatients(patients), [patients]);
 
-  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { control } = useFormContext<ICreateAppointmentBody>();
   const { field, fieldState } = useController({ name: patientIdFieldName, control });
   const { onBlur, onChange, ...fieldProps } = field;
   const { error } = fieldState;

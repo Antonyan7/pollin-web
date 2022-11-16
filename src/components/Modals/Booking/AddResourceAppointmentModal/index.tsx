@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -13,7 +13,7 @@ import { addAppointmentsValidationSchema } from 'validation/appointments/add_app
 
 import AddAppointmentsModalForm from './form';
 
-const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreatedAppointmentBody => ({
+const getInitialValues = (bookAppointmentDateStartTime?: Date): ICreateAppointmentBody => ({
   serviceTypeId: '',
   patientId: '',
   description: '',
@@ -29,7 +29,7 @@ const AddAppointmentsModal = ({ start }: AddResourceAppointmentModalProps) => {
     dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
     dispatch(bookingMiddleware.getPatientAlerts());
   }, []);
-  const methods = useForm<ICreatedAppointmentBody>({
+  const methods = useForm<ICreateAppointmentBody>({
     defaultValues: getInitialValues(start),
     resolver: yupResolver(addAppointmentsValidationSchema)
   });

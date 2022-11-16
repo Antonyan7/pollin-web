@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
@@ -19,7 +19,7 @@ const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minut
 type DateAndStartTimeType = Date | null;
 
 const DateAndStartTime: React.FC = () => {
-  const { control, formState, getValues } = useFormContext<ICreatedAppointmentBody>();
+  const { control, formState, getValues } = useFormContext<ICreateAppointmentBody>();
   const { errors } = formState;
   const [t] = useTranslation();
   const actualDate = getValues('date');

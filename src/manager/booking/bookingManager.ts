@@ -5,7 +5,7 @@ import {
   IAppointmentListResponse,
   IAppointmentTypesData,
   ICancelAppointmentReqBody,
-  ICreatedAppointmentBody,
+  ICreateAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
   IGetPatientAppointmentsListFiltersResponse,
@@ -45,7 +45,7 @@ const bookingManager = {
       }
     );
   },
-  createAppointment(appointmentValues: ICreatedAppointmentBody) {
+  createAppointment(appointmentValues: ICreateAppointmentBody) {
     return axiosInstance.post<ICreatedAppointmentResponse, IAxiosResponse<ICreatedAppointmentResponse>>(
       `${baseURL}/v1/appointment`,
       {

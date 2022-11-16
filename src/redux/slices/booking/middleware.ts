@@ -1,6 +1,6 @@
 import API from '@axios/API';
 import {
-  ICreatedAppointmentBody,
+  ICreateAppointmentBody,
   IEditAppointmentBody,
   IServiceTypesReqParams
 } from '@axios/booking/managerBookingTypes';
@@ -201,9 +201,12 @@ const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
   );
 };
 
-const createAppointment = (appointmentValues: ICreatedAppointmentBody) => async (dispatch: AppDispatch) => {
+const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (dispatch: AppDispatch) => {
   try {
-    const providerId = store.getState().booking.currentServiceProviderId;
+    const providerId = appointmentValues.providerId
+      ? appointmentValues.providerId
+      : store.getState().booking.currentServiceProviderId;
+
     const calendarDate = store.getState().booking.date;
     const { appointmentStatus } = store.getState().booking;
 

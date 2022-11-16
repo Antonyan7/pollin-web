@@ -1,13 +1,13 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 
 const AppointmentDescription = () => {
   const [t] = useTranslation();
-  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { control } = useFormContext<ICreateAppointmentBody>();
 
   const descriptionFieldName = 'description';
   const addDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION);

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback,useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
@@ -22,6 +22,8 @@ import { Translation } from 'constants/translations';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'types/modals';
 import { AppointmentType } from 'types/patientProfile';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -46,6 +48,10 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
 
   const onViewAllClick = () => navigateTo(PatientProfilePageName.AppointmentsList);
 
+  const onOpenAppointmentsModalAdd = useCallback(() => {
+    dispatch(viewsMiddleware.openModal({ name: ModalName.AddPatientAppointmentsModal, props: {} }));
+  }, []);
+
   return (
     <SubCardStyled
       title={t(
@@ -56,7 +62,7 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
       secondary={
         appointmentType === AppointmentType.Upcoming && (
           <IconButton>
-            <AddIcon />
+            <AddIcon onClick={onOpenAppointmentsModalAdd} />
           </IconButton>
         )
       }

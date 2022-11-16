@@ -1,7 +1,7 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
@@ -13,7 +13,7 @@ import { validateInputChange } from 'validation/validationHelpers';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const ServiceType = () => {
-  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { control } = useFormContext<ICreateAppointmentBody>();
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
   const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);

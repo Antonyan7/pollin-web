@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
@@ -13,19 +13,19 @@ import { validateInputChange } from 'validation/validationHelpers';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const AppointmentType = () => {
-  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { control } = useFormContext<ICreateAppointmentBody>();
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
   const serviceTypeIdFieldName = 'serviceTypeId';
-  const resorceFieldName = 'resourceId';
+  const resourceIdFieldName = 'providerId';
   const serviceTypeSelectLabel = t(Translation.MODAL_PATIENT_APPOINTMENTS_SELECT_SERVICE_TYPE);
   const { field, fieldState } = useController({
     name: serviceTypeIdFieldName,
     control
   });
   const { field: resorceField } = useController({
-    name: resorceFieldName
+    name: resourceIdFieldName
   });
   const { onChange, onBlur, ...fieldProps } = field;
   const { error } = fieldState;

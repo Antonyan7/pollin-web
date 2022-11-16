@@ -1,9 +1,10 @@
 import React from 'react';
 import { useFormContext } from 'react-hook-form';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Divider } from '@mui/material';
+import { patientsSelector } from '@redux/slices/patients';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { bookingMiddleware } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -12,18 +13,18 @@ import FormActions from './FormActions';
 import FormBody from './FormBody';
 
 const AddAppointmentsModalForm = () => {
-  const { handleSubmit } = useFormContext<ICreatedAppointmentBody>();
-  const providerId = useAppSelector(bookingSelector.serviceProviderId);
+  const { handleSubmit } = useFormContext<ICreateAppointmentBody>();
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
 
   const onClose = () => {
     dispatch(viewsMiddleware.closeModal(ModalName.AddPatientAppointmentsModal));
     dispatch(bookingMiddleware.getPatients(null));
   };
 
-  const onSubmit = (values: ICreatedAppointmentBody) => {
-    const body: ICreatedAppointmentBody = {
+  const onSubmit = (values: ICreateAppointmentBody) => {
+    const body: ICreateAppointmentBody = {
       ...values,
-      providerId
+      patientId: currentPatientId
     };
 
     dispatch(bookingMiddleware.createAppointment(body));

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { coreSelector } from '@redux/slices/core';
 import { Translation } from 'constants/translations';
@@ -17,8 +17,8 @@ import FormBody from './FormBody';
 import FormHeader from './FormHeader';
 
 const AddAppointmentsModalForm = () => {
-  const { handleSubmit } = useFormContext<ICreatedAppointmentBody>();
-  const { control } = useFormContext<ICreatedAppointmentBody>();
+  const { handleSubmit } = useFormContext<ICreateAppointmentBody>();
+  const { control } = useFormContext<ICreateAppointmentBody>();
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
   const { workingHours } = useAppSelector(coreSelector.clinicConfigs);
   const [t] = useTranslation();
@@ -55,8 +55,8 @@ const AddAppointmentsModalForm = () => {
   }, [isDuplicatePatientName]);
 
   const onSubmit = useCallback(
-    (values: ICreatedAppointmentBody) => {
-      const body: ICreatedAppointmentBody = {
+    (values: ICreateAppointmentBody) => {
+      const body: ICreateAppointmentBody = {
         ...values,
         providerId
       };
