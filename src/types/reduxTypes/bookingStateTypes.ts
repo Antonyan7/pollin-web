@@ -51,6 +51,11 @@ export interface IUniqueItem {
   title: string;
 }
 
+export interface IUniqueItemPatient {
+  id: string;
+  name: string;
+}
+
 export interface IServiceProviders extends IPagination {
   providers: IServiceProvider[];
 }

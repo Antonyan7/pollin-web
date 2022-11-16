@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { ICreatedAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { AutocompleteInputChangeReason, Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
-import { patientsMiddleware } from '@redux/slices/patients';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { createOptionsGroup } from 'helpers/berryFunctions';
+import { createOptionsGroupPatients } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { bookingMiddleware } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { validateInputChange } from 'validation/validationHelpers';
 
@@ -21,9 +21,10 @@ const PatientId = () => {
   const [openAutocompleteList, setOpenAutocompleteList] = useState(false);
   const patientIdFieldName = 'patientId';
 
-  const patientsList = useAppSelector(bookingSelector.patientList);
-  const { patients, isLoading } = patientsList;
-  const patientOptions = useMemo(() => createOptionsGroup(patients), [patients]);
+  const patientsList = useAppSelector(patientsSelector.patientsList);
+  const { patients } = patientsList;
+  const isLoading = useAppSelector(patientsSelector.isPatientsListLoading);
+  const patientOptions = useMemo(() => createOptionsGroupPatients(patients), [patients]);
 
   const { control } = useFormContext<ICreatedAppointmentBody>();
   const { field, fieldState } = useController({ name: patientIdFieldName, control });
@@ -78,7 +79,7 @@ const PatientId = () => {
         id={patientIdFieldName}
         options={patientOptions}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-        getOptionLabel={(option) => option.item.title}
+        getOptionLabel={(option) => option.item.name}
         onChange={(_, value) => {
           if (value?.item.id) {
             onChange(value.item.id);

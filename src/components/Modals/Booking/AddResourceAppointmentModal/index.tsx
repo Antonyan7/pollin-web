@@ -37,7 +37,6 @@ const AddAppointmentsModal = ({ start }: AddResourceAppointmentModalProps) => {
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
-    dispatch(bookingMiddleware.getPatients({ name: '', page: 1 }));
   }, [serviceProviderId]);
 
   return (

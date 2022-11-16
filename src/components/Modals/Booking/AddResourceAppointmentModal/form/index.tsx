@@ -37,7 +37,6 @@ const AddAppointmentsModalForm = () => {
 
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
-    dispatch(bookingMiddleware.getPatients(null));
     dispatch(bookingMiddleware.getPatientAlerts(''));
   }, []);
 

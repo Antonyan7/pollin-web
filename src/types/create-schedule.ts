@@ -1,6 +1,10 @@
-import { IUniqueItem } from './reduxTypes/bookingStateTypes';
+import { IUniqueItem, IUniqueItemPatient } from './reduxTypes/bookingStateTypes';
 
 export interface OptionsReturnProps<T extends IUniqueItem> {
+  firstLetter: string;
+  item: T;
+}
+export interface OptionsReturnPropsPatient<T extends IUniqueItemPatient> {
   firstLetter: string;
   item: T;
 }
