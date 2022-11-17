@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { coreSelector } from '@redux/slices/core';
 import { Translation } from 'constants/translations';
-import { calculateWeekDays } from 'helpers/scheduling';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
@@ -78,8 +77,6 @@ const EditTemplate = () => {
           );
           reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(convertToLocale(rest.endTime)), currentDate);
         }
-
-        reqBody.days = calculateWeekDays(rest.days);
 
         return reqBody;
       })

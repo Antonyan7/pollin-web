@@ -8,7 +8,6 @@ import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { coreSelector } from '@redux/slices/core';
 import { Translation } from 'constants/translations';
-import { calculateWeekDays } from 'helpers/scheduling';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
@@ -68,8 +67,6 @@ const CreateTemplate = () => {
         if (item.periodType === PeriodType.ServiceType) {
           reqBody.serviceTypes = serviceTypes;
         }
-
-        reqBody.days = calculateWeekDays(rest.days);
 
         if (rest.startTime && rest.endTime) {
           reqBody.startTime = changeDateSameTimeString(calculateTimeInUTC(rest.startTime), currentDate);

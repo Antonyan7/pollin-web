@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Checkbox, CheckboxProps, FormControl, FormControlLabel, FormHelperText } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
+import { calculateWeekByNumber } from 'helpers/scheduling';
 import { ISingleTemplate, ITemplateGroup } from 'types/create-schedule';
 
 interface IWeekdaysFieldProps {
@@ -32,6 +33,8 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
           : values.map((item) => Number(item)).filter((item) => item !== indexOfDay)
       );
 
+  const isChecked = (indexOfDay: number) => values.includes(calculateWeekByNumber(indexOfDay));
+
   return (
     <span className="week-days schedule-inputs schedule-days-checkbox">
       <FormControl error={!!weekDayError}>
@@ -40,12 +43,12 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
             <FormControlLabel
               key={`${day}-${singleTemplate.id}`}
               label={day}
-              value={indexOfDay}
+              value={calculateWeekByNumber(indexOfDay)}
               control={
                 <Checkbox
                   {...register(field.name, { required: true })}
-                  checked={values.map((item) => Number(item)).includes(indexOfDay)}
-                  onChange={onWeekDaysChange(indexOfDay)}
+                  checked={isChecked(indexOfDay)}
+                  onChange={onWeekDaysChange(calculateWeekByNumber(indexOfDay))}
                 />
               }
               sx={{
