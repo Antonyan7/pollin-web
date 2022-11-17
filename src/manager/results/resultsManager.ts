@@ -1,4 +1,9 @@
-import { IResultsReqBody, ITestResultsDetailsBody, ITestResultsParams } from '@axios/results/resultsManagerTypes';
+import {
+  IAddMachineforSpecimen,
+  IResultsReqBody,
+  ITestResultsDetailsBody,
+  ITestResultsParams
+} from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
@@ -55,6 +60,15 @@ const resultsManager = {
     return axiosInstance.get<IPendingTestResultStats, IAxiosResponse<IPendingTestResultStats>>(
       // Url to be changed
       `${baseURL}/v1/test-result/stats/pending`
+    );
+  },
+  addMachineforSpecimen(specimenIds: string[], machineId: string) {
+    return axiosInstance.patch<IPendingTestResultStats, IAxiosResponse<IAddMachineforSpecimen>>(
+      `${baseURL}/v1/specimen/add-machine`,
+      {
+        specimenIds,
+        machineId
+      }
     );
   }
 };

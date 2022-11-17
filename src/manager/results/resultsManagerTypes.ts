@@ -1,3 +1,4 @@
+import { IEmptyResponse } from 'manager/common';
 import { SortOrder } from 'types/patient';
 import { ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
@@ -29,3 +30,5 @@ export interface ITestResultsParams {
 export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }
+
+export interface IAddMachineforSpecimen extends IEmptyResponse {}

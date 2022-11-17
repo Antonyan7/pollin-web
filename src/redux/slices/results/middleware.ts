@@ -147,6 +147,15 @@ const getPendingSpecimenStats = () => async (dispatch: AppDispatch) => {
   dispatch(setPendingSpecimenStatsLoadingState(false));
 };
 
+const addMachineforSpecimen = (specimenIds: string[], machineId: string) => async (dispatch: AppDispatch) => {
+  try {
+    await API.results.addMachineforSpecimen(specimenIds, machineId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getResultsList,
   getResultsFilters,
@@ -155,5 +164,6 @@ export default {
   getTestResultsDetails,
   getLabMachines,
   getSpecimenActions,
-  getPendingSpecimenStats
+  getPendingSpecimenStats,
+  addMachineforSpecimen
 };

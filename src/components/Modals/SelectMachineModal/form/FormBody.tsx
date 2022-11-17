@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback,useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DialogActions, DialogContent, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -32,6 +34,11 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
 
   const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
   const [machineVal, setMachineVal] = useState('');
+
+  const onClick = useCallback(() => {
+    dispatch(resultsMiddleware.addMachineforSpecimen(specimenIds, machineVal));
+    dispatch(viewsMiddleware.closeModal(ModalName.SelectMachineModal));
+  }, [specimenIds, machineVal]);
 
   return (
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>
@@ -84,8 +91,8 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
                 }}
                 isLoading={isConfirmationLoading}
                 variant="contained"
-                type="submit"
                 disabled={!machineVal}
+                onClick={onClick}
               >
                 {addButtonLabel}
               </ButtonWithLoading>

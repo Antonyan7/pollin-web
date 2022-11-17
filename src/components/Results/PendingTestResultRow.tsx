@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TableCell, TableRow, Typography } from '@mui/material';
+import { Checkbox, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'types/modals';
@@ -13,13 +13,15 @@ import { Translation } from '../../constants/translations';
 
 interface IExternalResultsTableRow {
   row: IPatientContactInformationModalProps;
-  index: number;
   actions: SpecimenActionsValues[];
+  isItemSelected: boolean;
+  onClick: (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => void;
+  labelId: string;
 }
 
-const PendingTestResultRow = ({ row, index, actions }: IExternalResultsTableRow) => {
-  const labelId = `enhanced-table-checkbox-${index}`;
+const PendingTestResultRow = ({ row, actions, isItemSelected, onClick, labelId }: IExternalResultsTableRow) => {
   const [t] = useTranslation();
+  const theme = useTheme();
 
   return (
     <TableRow
@@ -32,6 +34,22 @@ const PendingTestResultRow = ({ row, index, actions }: IExternalResultsTableRow)
       tabIndex={-1}
       key={row.id}
     >
+      <TableCell
+        padding="checkbox"
+        onClick={(event) => {
+          event.stopPropagation();
+          onClick(event, row.patient.name);
+        }}
+      >
+        <Checkbox
+          sx={{ color: theme.palette.primary.main }}
+          checked={isItemSelected}
+          inputProps={{
+            'aria-labelledby': labelId
+          }}
+          key={row.id}
+        />
+      </TableCell>
       <TableCell>{row.title}</TableCell>
       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography variant="subtitle1">{row.patient.name}</Typography>
@@ -44,7 +62,7 @@ const PendingTestResultRow = ({ row, index, actions }: IExternalResultsTableRow)
         <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actions={actions} />
+        <ContextMenu actions={actions} row={row} />
       </TableCell>
     </TableRow>
   );
