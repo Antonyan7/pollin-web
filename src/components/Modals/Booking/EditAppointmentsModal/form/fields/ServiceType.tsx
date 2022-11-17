@@ -1,13 +1,13 @@
 import React, { useEffect, useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { borders } from 'themes/themeConstants';
-import { validateInputChange } from 'validation/validationHelpers';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -65,7 +65,7 @@ const ServiceType = () => {
         groupBy={(option) => option.firstLetter}
         getOptionLabel={(option) => option.item.title}
         onBlur={onBlur}
-        onInputChange={(event, value, reason) => onChange(validateInputChange(event, value, reason))}
+        clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
         renderInputProps={{
           label: serviceTypeSelectLabel,
           helperText: serviceTypeIdHelperText,
