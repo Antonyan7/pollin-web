@@ -302,7 +302,7 @@ const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDi
   try {
     const response = await API.patients.getProfileTestResultLatest(patientId);
 
-    dispatch(setLatestTestResults(response.data.data));
+    dispatch(setLatestTestResults(response.data.data.testResults));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

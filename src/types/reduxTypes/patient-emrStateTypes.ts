@@ -103,6 +103,9 @@ export interface ITestResultLatest {
   result: LatestTestResultType;
 }
 
+export interface ILatestTestResult {
+  testResults: ITestResultLatest[];
+}
 export interface IFilterCategory {
   type: PatientListFilterType;
   title: string;

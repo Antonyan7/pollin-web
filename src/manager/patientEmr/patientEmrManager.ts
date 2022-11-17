@@ -23,7 +23,7 @@ import {
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmrTypes';
 import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse, ITestResultLatest } from 'types/reduxTypes/patient-emrStateTypes';
+import { IEncounterDetailsResponse, ILatestTestResult } from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
 const baseURLTestsResults = '/clinic-test-results';
@@ -135,7 +135,7 @@ const patientEmrManager = {
     );
   },
   getProfileTestResultLatest(patientId: string) {
-    return axiosInstance.get<ITestResultLatest[], IAxiosResponse<ITestResultLatest[]>>(
+    return axiosInstance.get<ILatestTestResult, IAxiosResponse<ILatestTestResult>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/latest`
     );
   },
