@@ -58,7 +58,8 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
           {Object.entries(data).map(([key, values]) => (
             <Grid container key={key} rowGap={1.5}>
               {values.map((value, index) => (
-                <React.Fragment key={`${key}-${typeof value === 'string' ? value : value.text}`}>
+                // eslint-disable-next-line react/no-array-index-key
+                <React.Fragment key={index}>
                   <Grid item xs={5}>
                     <Typography fontWeight="bold" color={theme.palette.common.black}>
                       {index === 0 && `${key}:`}

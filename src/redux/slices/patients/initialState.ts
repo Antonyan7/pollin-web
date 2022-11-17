@@ -28,6 +28,21 @@ export const getInitialState = (): PatientEmrProps => ({
   },
   error: null,
   patientProfile: null,
+  isPatientHighlightsLoading: false,
+  patientHighlightHeader: {
+    contact: {
+      uiid: '',
+      title: ''
+    },
+    ohip: {
+      uiid: '',
+      title: ''
+    },
+    doctor: {
+      uiid: '',
+      title: ''
+    }
+  },
   patientHighlights: null,
   latestTestResults: [],
   profile: {

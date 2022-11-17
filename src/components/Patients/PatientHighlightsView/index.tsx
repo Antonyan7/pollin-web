@@ -16,13 +16,14 @@ const PatientHighlightsView = () => {
 
   const patientId = useSelector(patientsSelector.currentPatientId);
   const patientProfile = useSelector(patientsSelector.patientProfile);
+  const isPatientHighlightsLoading = useSelector(patientsSelector.isPatientHighlightsDetailsLoading);
   const patientHighlights = useSelector(patientsSelector.patientHighlights);
 
   useEffect(() => {
-    if (patientId) {
+    if (patientId && !isPatientHighlightsLoading) {
       dispatch(patientsMiddleware.getPatientHighlight(patientId));
     }
-  }, [patientId]);
+  }, [isPatientHighlightsLoading, patientId]);
 
   const patientHighlightColumns = patientHighlights
     ? [

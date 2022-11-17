@@ -33,6 +33,8 @@ export interface PatientEmrProps {
   isCreateEncounterAddendumLoading: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;
+  isPatientHighlightsLoading: boolean;
+  patientHighlightHeader: PatientHighlightHeader;
   patientHighlights: PatientHighlight[] | null;
   patientAppointments: IPatientAppointmentsProps;
   latestTestResults: ITestResultLatest[];
@@ -51,6 +53,21 @@ export interface IItem {
 export interface PatientProfileOverview {
   widgetTitle: string;
   items: IItem[];
+}
+
+export interface PatientHighlightHeader {
+  contact: {
+    uiid: string;
+    title: string;
+  };
+  ohip: {
+    uiid: string;
+    title: string;
+  };
+  doctor: {
+    uiid: string;
+    title: string;
+  };
 }
 
 export interface PatientHighlight {

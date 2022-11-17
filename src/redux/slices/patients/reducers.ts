@@ -17,6 +17,7 @@ import {
   ITestResultLatest,
   PatientEmrProps,
   PatientHighlight,
+  PatientHighlightHeader,
   PatientProfile,
   PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
@@ -71,6 +72,12 @@ const reducers = createReducer({
   },
   setPatientProfile(state, action: IAction<PatientProfile>) {
     state.patientProfile = action.payload;
+  },
+  setPatientHighlightsLoadingState(state, action: IAction<boolean>) {
+    state.isPatientHighlightsLoading = action.payload;
+  },
+  setPatientHighlightHeader(state, action: IAction<PatientHighlightHeader>) {
+    state.patientHighlightHeader = action.payload;
   },
   setPatientHighlights(state, action: IAction<PatientHighlight[]>) {
     state.patientHighlights = action.payload;

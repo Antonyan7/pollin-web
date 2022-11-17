@@ -8,6 +8,7 @@ import {
   IFilterCategory,
   IPatientListData,
   PatientHighlight,
+  PatientHighlightHeader,
   PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
 
@@ -109,6 +110,7 @@ export interface IPatientProfileResponse {
 }
 
 export interface IPatientHighlightResponse {
+  header: PatientHighlightHeader;
   highlights: PatientHighlight[];
 }
 

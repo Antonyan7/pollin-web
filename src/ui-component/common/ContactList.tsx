@@ -1,12 +1,18 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import API from '@axios/API';
+import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import EarbudsIcon from '@mui/icons-material/Earbuds';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import { Avatar, Box, Button, Grid, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonProps, Grid, Tooltip, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { dispatch } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 
 const avatarImage = '/assets/images/users';
 
@@ -22,6 +28,21 @@ interface ContactListProps {
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
   const avatarProfile = avatar && `${avatarImage}/${avatar}`;
+
+  const patientId = useSelector(patientsSelector.currentPatientId);
+  const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
+
+  const onButtonClick =
+    (uiid: string): ButtonProps['onClick'] =>
+    async () => {
+      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uiid);
+
+      if (patientHighlightDetails) {
+        const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
+
+        dispatch(viewsMiddleware.openModal(modalParams));
+      }
+    };
 
   return (
     <Box py="15px" borderBottom={`1px solid ${theme.palette.grey[100]}!important`}>
@@ -48,19 +69,31 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                 </Grid>
                 <Grid container spacing={0} justifyContent="center" alignItems="center">
                   <Grid item xs={4}>
-                    <Button startIcon={<CallOutlinedIcon />}>
-                      <Typography variant="caption">Contact Info</Typography>
+                    <Button
+                      startIcon={<CallOutlinedIcon />}
+                      disabled={!patientHighlightHeader.contact.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
+                    >
+                      <Typography variant="caption">{patientHighlightHeader.contact.title}</Typography>
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button startIcon={<ContentPasteIcon />}>
-                      <Typography variant="caption">OHIP Info</Typography>
+                    <Button
+                      startIcon={<ContentPasteIcon />}
+                      disabled={!patientHighlightHeader.ohip.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
+                    >
+                      <Typography variant="caption">{patientHighlightHeader.ohip.title}</Typography>
                     </Button>
                   </Grid>
                   <Grid item xs={4}>
-                    <Button startIcon={<EarbudsIcon />}>
+                    <Button
+                      startIcon={<EarbudsIcon />}
+                      disabled={!patientHighlightHeader.doctor.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
+                    >
                       {/* change icon */}
-                      <Typography variant="caption">Doctor Info</Typography>
+                      <Typography variant="caption">{patientHighlightHeader.doctor.title}</Typography>
                     </Button>
                   </Grid>
                 </Grid>

@@ -34,6 +34,8 @@ const {
   setEncountersType,
   setEncounterDetailsInfo,
   setPatientProfile,
+  setPatientHighlightsLoadingState,
+  setPatientHighlightHeader,
   setPatientHighlights,
   setEncountersFiltersLoadingState,
   setCurrentEncounterID,
@@ -230,10 +232,18 @@ const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch)
   try {
     const response = await API.patients.getPatientHighlights(patientId);
 
+    dispatch(setPatientHighlightsLoadingState(true));
+
+    if (response.data.data.header) {
+      dispatch(setPatientHighlightHeader(response.data.data.header));
+    }
+
     dispatch(setPatientHighlights(response.data.data.highlights));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setPatientHighlightsLoadingState(false));
   }
 };
 
