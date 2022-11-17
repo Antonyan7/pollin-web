@@ -6,7 +6,7 @@
   "page.patient.encounters.modal.title": "Cancel Encounter Creation",
   "page.patient.encounters.modal.subtitle": "Are you sure you want to cancel? Any changes made will be lost.",
   "page.patient.profile.appointments.list.title": "Appointments",
-  "page.patient.profile.appointments.list.table.header.appointment": "Appointment",
+  "page.patient.profile.appointments.list.table.header.appointment": "Appointment Type",
   "page.patient.latest.test.result.title": "Latest Test Result",
   "page.patient.latest.test.result.table.header.test": "Test",
   "page.patient.latest.test.result.table.header.date.collected": "Date Collected",

@@ -105,6 +105,9 @@ const reducers = createReducer({
   setEncountersDetailsLoadingState(state, action: IAction<boolean>) {
     state.isEncountersDetailsLoading = action.payload;
   },
+  setCurrentAppointmentFilterType(state, action: IAction<string>) {
+    state.currentPatientAppointmentFilterField = action.payload;
+  },
   setCreateEncounterNoteLoadingState(state, action: IAction<boolean>) {
     state.isCreateEncounterNoteLoading = action.payload;
   },

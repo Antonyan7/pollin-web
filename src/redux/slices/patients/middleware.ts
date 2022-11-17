@@ -1,6 +1,6 @@
 import API from '@axios/API';
 import bookingHelpers from '@axios/booking/bookingHelpers';
-import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
@@ -45,6 +45,7 @@ const {
   setEncountersDetailsLoadingState,
   setIsProfileTestResultsLoading,
   setIsTestResultsHistoryLoading,
+  setCurrentAppointmentFilterType,
   setCreateEncounterNoteLoadingState,
   setUpdateEncounterNoteLoadingState,
   setUpdateEncounterAddendumLoadingState,
@@ -359,19 +360,19 @@ const getInitialPatientAppointments = () => async (dispatch: AppDispatch) => {
 const getPatientAppointments =
   (
     search: string,
-    filterId: string,
     page: number,
     order: SortOrder | null,
-    orderBy: Exclude<keyof IPatientAppointment, 'time'> | null
+    orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
+    filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[]
   ) =>
   async (dispatch: AppDispatch) => {
     try {
       const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
         search,
-        filterId,
         page,
         order,
-        orderBy
+        orderBy,
+        filters
       });
 
       dispatch(
@@ -385,7 +386,7 @@ const getPatientAppointments =
           order,
           orderBy,
           search,
-          filterId
+          filters
         })
       );
     } catch (error) {
@@ -393,6 +394,10 @@ const getPatientAppointments =
       dispatch(setError(error));
     }
   };
+
+const setCurrentAppointmentType = (appointmentType: string) => async (dispatch: AppDispatch) => {
+  dispatch(setCurrentAppointmentFilterType(appointmentType));
+};
 
 export default {
   getPatientsList,
@@ -418,5 +423,6 @@ export default {
   getProfileTestResults,
   getInitialPatientAppointments,
   getPatientAppointments,
-  cleanEncountersList
+  cleanEncountersList,
+  setCurrentAppointmentType
 };

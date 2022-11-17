@@ -45,9 +45,10 @@ export const getInitialState = (): PatientEmrProps => ({
       currentPage: 0,
       totalItems: 0
     },
-    filterId: 'allFilterId',
+    filters: [],
     search: '',
     order: SortOrder.Desc,
     orderBy: PatientAppointmentsSortField.Date
-  }
+  },
+  currentPatientAppointmentFilterField: ''
 });

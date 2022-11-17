@@ -1,4 +1,5 @@
 import { IEmptyResponse } from 'manager/common';
+import { ISortOrder } from 'types/patient';
 import { IAppointment, IPatientInfo, IServiceProvider, IServiceType } from 'types/reduxTypes/bookingStateTypes';
 
 export interface IAppointmentListReqParams {
@@ -79,10 +80,10 @@ export enum PatientAppointmentsSortField {
 
 export interface IGetPatientAppointmentsListReqBody {
   searchString: string;
-  filterId?: string;
   page: number;
-  sortOrder: 'Asc' | 'Desc';
-  sortByField: 'Type' | 'Date' | 'Status';
+  sortOrder: ISortOrder;
+  sortByField: PatientAppointmentsFields;
+  filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];
 }
 
 export interface IPatientAppointment {
@@ -97,11 +98,28 @@ export interface IGetPatientAppointmentsListResponse {
   appointments: IPatientAppointment[];
 }
 
-export interface IPatientAppointmentsListFilter {
+export interface IPatientAppointmentsListFilterOptions {
   id: string;
   title: string;
 }
 
+export interface IPatientAppointmentsListFilter {
+  title: string;
+  options: IPatientAppointmentsListFilterOptions[];
+}
+
 export interface IGetPatientAppointmentsListFiltersResponse {
   filters: IPatientAppointmentsListFilter[];
+}
+
+export interface PatientAppointmentsFilterOptions {
+  title: string;
+  type: string;
+  id: string;
+}
+
+export enum PatientAppointmentsFields {
+  Type = 'Type',
+  Date = 'Date',
+  Status = 'Status'
 }

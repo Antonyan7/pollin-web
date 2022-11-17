@@ -46,7 +46,15 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
     }
   }, [appointmentsList]);
 
-  const onViewAllClick = () => navigateTo(PatientProfilePageName.AppointmentsList);
+  const currentAppointmentType =
+    appointmentType === AppointmentType.Upcoming
+      ? t(Translation.PAGE_PATIENT_PROFILE_UPCOMING_APPOINTMENTS)
+      : t(Translation.PAGE_PATIENT_PROFILE_PAST_APPOINTMENTS);
+
+  const onViewAllClick = () => {
+    navigateTo(PatientProfilePageName.AppointmentsList);
+    dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
+  };
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddPatientAppointmentsModal, props: {} }));
@@ -54,11 +62,7 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
 
   return (
     <SubCardStyled
-      title={t(
-        appointmentType === AppointmentType.Upcoming
-          ? Translation.PAGE_PATIENT_PROFILE_UPCOMING_APPOINTMENTS
-          : Translation.PAGE_PATIENT_PROFILE_PAST_APPOINTMENTS
-      )}
+      title={currentAppointmentType}
       secondary={
         appointmentType === AppointmentType.Upcoming && (
           <IconButton>

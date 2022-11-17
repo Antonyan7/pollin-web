@@ -101,6 +101,11 @@ export enum SimpleEditorMode {
   Edit_Addendum = 'edit_addendum'
 }
 
+export enum ISortOrder {
+  Asc = 'Asc',
+  Desc = 'Desc'
+}
+
 export interface SimpleEditorProps {
   editorValue: string;
   setEditorValue: React.Dispatch<SetStateAction<string>>;
