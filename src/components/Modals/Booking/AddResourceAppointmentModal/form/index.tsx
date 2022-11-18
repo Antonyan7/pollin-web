@@ -21,6 +21,7 @@ const AddAppointmentsModalForm = () => {
   const { control } = useFormContext<ICreateAppointmentBody>();
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
   const { workingHours } = useAppSelector(coreSelector.clinicConfigs);
+  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const [t] = useTranslation();
 
   const isDuplicatePatientName = useMemo(() => {
@@ -77,12 +78,16 @@ const AddAppointmentsModalForm = () => {
       } else {
         dispatch(bookingMiddleware.createAppointment(body));
       }
-
-      onClose();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [onClose, providerId, workingHours.end, workingHours.start]
+    [providerId, workingHours.end, workingHours.start]
   );
+
+  useEffect(() => {
+    if (appointmentStatus.create.success) {
+      onClose();
+    }
+  }, [appointmentStatus.create.success, onClose]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

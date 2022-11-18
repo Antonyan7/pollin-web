@@ -9,8 +9,10 @@ import { Translation } from 'constants/translations';
 const useAppointmentStatusState = () => {
   const [t] = useTranslation();
   const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
+  const createAppointmentErrorState = useAppSelector(bookingSelector.createAppointmentErrorState);
   const resetBookingStatus = useCallback(() => {
     dispatch(bookingMiddleware.resetAppointmentStatus());
+    dispatch(bookingMiddleware.clearCreateAppointmentErrorState());
   }, []);
 
   useEffect(() => {
@@ -50,12 +52,25 @@ const useAppointmentStatusState = () => {
       );
     }
 
+    if (appointmentStatus.create.fail && createAppointmentErrorState.message) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: createAppointmentErrorState.message
+          }
+        })
+      );
+    }
+
     resetBookingStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     appointmentStatus.create.success,
     appointmentStatus.edit.success,
     appointmentStatus.cancel.success,
+    createAppointmentErrorState.message,
     resetBookingStatus
   ]);
 };

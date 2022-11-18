@@ -27,6 +27,11 @@ export interface AppointmentStatusState {
   cancel: AppointmentStatusProps;
 }
 
+export interface IAppointmentErrorState {
+  message: string;
+  code: string;
+}
+
 export interface BookingProps {
   appointments: IAppointment[];
   date: string;
@@ -44,6 +49,7 @@ export interface BookingProps {
   isAppointmentLoading: boolean;
   isSaveButtonDisabled: boolean;
   appointmentStatus: AppointmentStatusState;
+  createAppointmentError: IAppointmentErrorState;
 }
 
 export interface IUniqueItem {

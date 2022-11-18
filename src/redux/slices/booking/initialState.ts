@@ -27,5 +27,9 @@ export const getInitialState = (): BookingProps => ({
     create: { fail: false, success: false },
     edit: { fail: false, success: false },
     cancel: { fail: false, success: false }
+  },
+  createAppointmentError: {
+    code: '',
+    message: ''
   }
 });

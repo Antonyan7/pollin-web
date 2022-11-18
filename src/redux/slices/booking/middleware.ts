@@ -6,8 +6,9 @@ import {
 } from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
+import axios from 'axios';
 import store, { AppDispatch } from 'redux/store';
-import { IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
+import { IAppointmentErrorState, IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
 import { calculateTimeInUTC, convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
@@ -32,7 +33,8 @@ const {
   setPatientAlerts,
   setAppointmentLoading,
   setSaveButtonDisabled,
-  setAppointmentStatus
+  setAppointmentStatus,
+  setCreateAppointmentErrorState
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -201,14 +203,24 @@ const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
   );
 };
 
+const clearCreateAppointmentErrorState = () => async (dispatch: AppDispatch) => {
+  dispatch(
+    setCreateAppointmentErrorState({
+      message: '',
+      code: ''
+    })
+  );
+};
+
 const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (dispatch: AppDispatch) => {
+  const { appointmentStatus } = store.getState().booking;
+
   try {
     const providerId = appointmentValues.providerId
       ? appointmentValues.providerId
       : store.getState().booking.currentServiceProviderId;
 
     const calendarDate = store.getState().booking.date;
-    const { appointmentStatus } = store.getState().booking;
 
     dispatch(setAppointmentLoading(true));
 
@@ -227,7 +239,19 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
+
+    if (axios.isAxiosError(error)) {
+      dispatch(setCreateAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
+      dispatch(
+        setAppointmentStatus({
+          ...appointmentStatus,
+          create: {
+            fail: true,
+            success: false
+          }
+        })
+      );
+    }
   } finally {
     dispatch(setAppointmentLoading(false));
   }
@@ -333,5 +357,6 @@ export default {
   clearAppointmentDetails,
   getPatientAlerts,
   setEditSaveButtonDisabled,
-  resetAppointmentStatus
+  resetAppointmentStatus,
+  clearCreateAppointmentErrorState
 };

@@ -5,6 +5,7 @@ import {
   AppointmentStatusState,
   BookingProps,
   IAppointment,
+  IAppointmentErrorState,
   IPatientList,
   IServiceProviders,
   IServiceType
@@ -74,6 +75,9 @@ const reducers = createReducer({
   },
   setAppointmentStatus(state, action: IAction<AppointmentStatusState>) {
     state.appointmentStatus = action.payload;
+  },
+  setCreateAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
+    state.createAppointmentError = action.payload;
   }
 });
 
