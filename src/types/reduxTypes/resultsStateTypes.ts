@@ -7,6 +7,13 @@ export interface ISpecimenProps {
   error: Error | null;
 }
 
+export enum IStatus {
+  Pending = 'Pending',
+  NotReceived = 'NotReceived',
+  Completed = 'Completed',
+  Reported = 'Reported'
+}
+
 export interface IResultsProps {
   resultsList: IResultsList;
   resultFilters: IResultsFilterCategory[];
@@ -22,6 +29,8 @@ export interface IResultsProps {
   islabMachinesLoading: boolean;
   pendingSpecimenStats: IPendingTestStats[];
   isPendingSpecimenStatsLoading: boolean;
+  specimensList: ISpecimensList;
+  isSpecimensListLoading: boolean;
 }
 
 export interface LabMachine {
@@ -46,6 +55,19 @@ export interface SpecimenActionsValues {
 export interface IResultsList extends IPagination {
   testResults: IPatientContactInformationModalProps[];
 }
+
+export interface ISpecimensListItem {
+  id: string;
+  titles: string[];
+  machine: string;
+  status: IStatus;
+  age: number;
+}
+
+export interface ISpecimensList extends IPagination {
+  specimens: ISpecimensListItem[];
+}
+
 export interface IPendingTestStats {
   title: string;
   type: TestResultsStats;
@@ -54,6 +76,10 @@ export interface IPendingTestStats {
 
 export interface IPendingTestResultStats {
   testResultStats: IPendingTestStats[];
+}
+
+export interface IPendingSpecimensStats {
+  stats: IPendingTestStats[];
 }
 
 export enum TestResultMeasurementType {
@@ -100,13 +126,6 @@ export interface ITestResultsDetails {
   attachments: ITestResultAttachment[];
 }
 
-export enum IResultListPatientStatus {
-  Pending = 'Pending',
-  NotReceived = 'NotReceived',
-  Completed = 'Completed',
-  Reported = 'Reported'
-}
-
 export interface IResultListPatient {
   id: string;
   name: string;
@@ -117,7 +136,7 @@ export interface IPatientContactInformationModalProps {
   id: string;
   age: number;
   labName: string;
-  status: IResultListPatientStatus;
+  status: IStatus;
   title: string;
   patient: IResultListPatient;
 }

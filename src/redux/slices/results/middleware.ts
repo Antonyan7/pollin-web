@@ -1,10 +1,15 @@
 import API from '@axios/API';
-import { IResultsReqBody, IResultsReqBodyWithSortOrder, ITestResultsParams } from '@axios/results/resultsManagerTypes';
+import {
+  IResultsReqBody,
+  IResultsReqBodyWithSortOrder,
+  ISpecimensListReqBody,
+  ITestResultsParams
+} from '@axios/results/resultsManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/results/slice';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
-import { IResultsList } from 'types/reduxTypes/resultsStateTypes';
+import { IResultsList, ISpecimensList } from 'types/reduxTypes/resultsStateTypes';
 
 const {
   setResultsList,
@@ -20,7 +25,9 @@ const {
   setLabMachines,
   setIsLabMachinesLoading,
   setPendingSpecimenStatsLoadingState,
-  setPendingSpecimenStats
+  setPendingSpecimenStats,
+  setSpecimensList,
+  setIsSpecimensListLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -138,13 +145,40 @@ const getPendingSpecimenStats = () => async (dispatch: AppDispatch) => {
 
     const response = await API.results.getPendingSpecimenStats();
 
-    dispatch(setPendingSpecimenStats(response.data.data.testResultStats));
+    dispatch(setPendingSpecimenStats(response.data.data.stats));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
 
   dispatch(setPendingSpecimenStatsLoadingState(false));
+};
+
+const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsSpecimensListLoading(true));
+
+    const body = (
+      specimensListData.sortOrder !== null ? sortOrderTransformer(specimensListData) : specimensListData
+    ) as ISpecimensListReqBody;
+
+    const response = await API.results.getSpecimens(body);
+    const { totalItems, currentPage, pageSize } = response.data;
+
+    const results: ISpecimensList = {
+      totalItems,
+      currentPage,
+      pageSize,
+      specimens: response.data.data.specimens
+    };
+
+    dispatch(setSpecimensList(results));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsSpecimensListLoading(false));
+  }
 };
 
 const addMachineforSpecimen = (specimenIds: string[], machineId: string) => async (dispatch: AppDispatch) => {
@@ -163,7 +197,8 @@ export default {
   removeTestResultsAttachment,
   getTestResultsDetails,
   getLabMachines,
-  getSpecimenActions,
   getPendingSpecimenStats,
+  getSpecimensList,
+  getSpecimenActions,
   addMachineforSpecimen
 };

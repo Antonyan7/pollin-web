@@ -1,14 +1,17 @@
 import {
   IAddMachineforSpecimen,
   IResultsReqBody,
+  ISpecimensListReqBody,
   ITestResultsDetailsBody,
   ITestResultsParams
 } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
+  IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
+  ISpecimensList,
   ITestResultsDetails,
   LabMachine,
   SpecimenActionsList
@@ -57,13 +60,18 @@ const resultsManager = {
     );
   },
   getPendingSpecimenStats() {
-    return axiosInstance.get<IPendingTestResultStats, IAxiosResponse<IPendingTestResultStats>>(
-      // Url to be changed
-      `${baseURL}/v1/test-result/stats/pending`
+    return axiosInstance.get<IPendingSpecimensStats, IAxiosResponse<IPendingSpecimensStats>>(
+      `${baseURL}/v1/specimen/stats/pending`
+    );
+  },
+  getSpecimens(data: ISpecimensListReqBody) {
+    return axiosInstance.post<ISpecimensList, IAxiosResponsePaginated<ISpecimensList>>(
+      `${baseURL}/v1/specimen/pending`,
+      data
     );
   },
   addMachineforSpecimen(specimenIds: string[], machineId: string) {
-    return axiosInstance.patch<IPendingTestResultStats, IAxiosResponse<IAddMachineforSpecimen>>(
+    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
       `${baseURL}/v1/specimen/add-machine`,
       {
         specimenIds,

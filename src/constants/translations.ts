@@ -222,7 +222,10 @@ export enum Translation {
   COMMON_BUTTON_CONFIRM_LABEL = 'common.button.confirm.label',
   COMMON_MODAL_HEADER_CANCEL_CONFIRMATION = 'common.modal.header.cancel.confirmation',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY1 = 'page.in.house.results.test.cancel.modal.body1',
-  PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY2 = 'page.in.house.results.test.cancel.modal.body2'
+  PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY2 = 'page.in.house.results.test.cancel.modal.body2',
+  PAGE_IN_HOUSE_SPECIMENS_CELLS_TITLE = 'page.in.house.specimens.cells.title',
+  PAGE_IN_HOUSE_SPECIMENS_CELLS_ID = 'page.in.house.specimens.cells.id',
+  PAGE_IN_HOUSE_SPECIMENS_CELLS_MACHINE = 'page.in.house.specimens.cells.machine'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

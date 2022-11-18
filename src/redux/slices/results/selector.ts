@@ -16,6 +16,8 @@ const islabMachinesLoading = createSelector([selector], (state) => state.islabMa
 const specimenActions = createSelector([selector], (state) => state.specimenActions);
 const isPendingSpecimenStatsLoading = createSelector([selector], (state) => state.isPendingSpecimenStatsLoading);
 const pendingSpecimenStats = createSelector([selector], (state) => state.pendingSpecimenStats);
+const specimensList = createSelector([selector], (state) => state.specimensList);
+const isSpecimensListLoading = createSelector([selector], (state) => state.isSpecimensListLoading);
 
 export default {
   resultsList,
@@ -30,5 +32,7 @@ export default {
   islabMachinesLoading,
   specimenActions,
   isPendingSpecimenStatsLoading,
-  pendingSpecimenStats
+  pendingSpecimenStats,
+  specimensList,
+  isSpecimensListLoading
 };

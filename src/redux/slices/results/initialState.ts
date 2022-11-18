@@ -19,5 +19,12 @@ export const getInitialState = (): IResultsProps => ({
   islabMachinesLoading: false,
   specimenActions: [],
   pendingSpecimenStats: [],
-  isPendingSpecimenStatsLoading: false
+  isPendingSpecimenStatsLoading: false,
+  specimensList: {
+    specimens: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  },
+  isSpecimensListLoading: false
 });

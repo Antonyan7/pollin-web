@@ -10,12 +10,24 @@ export enum TestResultsListSortFields {
   PATIENT_NAME = 'PatientName'
 }
 
+export enum SpecimensListSortFields {
+  COLLECTION_AGE = 'CollectionAge'
+}
+
 export interface IResultsReqBody {
   page: number;
   searchString?: string;
   sortOrder?: SortOrder;
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: TestResultsListSortFields;
+}
+
+export interface ISpecimensListReqBody {
+  page: number;
+  specimenIds?: string[];
+  sortOrder?: SortOrder;
+  filters?: Omit<IResultsFilterOption, 'title'>[];
+  sortByField?: SpecimensListSortFields;
 }
 
 export interface IResultsReqBodyWithSortOrder extends IResultsReqBody {
