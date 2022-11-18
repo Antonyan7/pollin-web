@@ -10,6 +10,7 @@ import {
   IEncounterTypesResponse,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
+  IPatientContactInformationResponse,
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
@@ -142,6 +143,11 @@ const patientEmrManager = {
   getProfileTestResultsHistory(patientId: string, testTypeId: string) {
     return axiosInstance.get<ITestResultHistoryResponse, IAxiosResponse<ITestResultHistoryResponse>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}/testType/${testTypeId}/history`
+    );
+  },
+  getContactInformation(patientId: string) {
+    return axiosInstance.get<IPatientContactInformationResponse, IAxiosResponse<IPatientContactInformationResponse>>(
+      `${baseURL}/v1/profile/${patientId}/confirmation`
     );
   }
 };

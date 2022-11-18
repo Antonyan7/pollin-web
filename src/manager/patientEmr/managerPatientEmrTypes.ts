@@ -163,6 +163,18 @@ export interface ITestResultHistoryResponse {
   testResultsHistory: ITestResultHistory;
 }
 
+export interface IPatientContactInformation {
+  id: string;
+  name: string;
+  dateOfBirth: string;
+  ohipNumber: string;
+  ohipVersionCode: string;
+}
+
+export interface IPatientContactInformationResponse {
+  information: IPatientContactInformation;
+}
+
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
 export interface IUpdateEncounterNoteRequest {
   id: string;

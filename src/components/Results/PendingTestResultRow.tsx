@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
@@ -23,11 +24,14 @@ const PendingTestResultRow = ({ row, actions, isItemSelected, onClick, labelId }
   const [t] = useTranslation();
   const theme = useTheme();
 
+  const onContactInformationModalOpen = () => {
+    dispatch(viewsMiddleware.openModal({ name: ModalName.PatientContactInformation, props: row }));
+    dispatch(patientsMiddleware.getPatientContactInformation(row.patient.id));
+  };
+
   return (
     <TableRow
-      onClick={() => {
-        dispatch(viewsMiddleware.openModal({ name: ModalName.PatientContactInformation, props: row }));
-      }}
+      onClick={onContactInformationModalOpen}
       sx={{ cursor: 'pointer' }}
       hover
       role="checkbox"

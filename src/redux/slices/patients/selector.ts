@@ -40,6 +40,11 @@ const isCreateEncounterNoteLoading = createSelector([selector], (state) => state
 const isUpdateEncounterNoteLoading = createSelector([selector], (state) => state.isUpdateEncounterNoteLoading);
 const isUpdateEncounterAddendumLoading = createSelector([selector], (state) => state.isUpdateEncounterAddendumLoading);
 const isCreateEncounterAddendumLoading = createSelector([selector], (state) => state.isCreateEncounterAddendumLoading);
+const patientContactInformation = createSelector([selector], (state) => state.contactInformation);
+const isPatientContactInformationLoading = createSelector(
+  [selector],
+  (state) => state.isPatientContactInformationLoading
+);
 
 export default {
   isTestResultsHistoryLoading,
@@ -75,5 +80,7 @@ export default {
   isCreateEncounterNoteLoading,
   isUpdateEncounterNoteLoading,
   isUpdateEncounterAddendumLoading,
-  isCreateEncounterAddendumLoading
+  isCreateEncounterAddendumLoading,
+  patientContactInformation,
+  isPatientContactInformationLoading
 };

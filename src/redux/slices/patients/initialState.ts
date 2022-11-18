@@ -20,6 +20,7 @@ export const getInitialState = (): PatientEmrProps => ({
   isUpdateEncounterNoteLoading: false,
   isUpdateEncounterAddendumLoading: false,
   isCreateEncounterAddendumLoading: false,
+  isPatientContactInformationLoading: false,
   encounters: {
     list: { encounters: [], pageSize: 0, currentPage: 0, totalItems: 0 },
     filters: [],
@@ -65,5 +66,12 @@ export const getInitialState = (): PatientEmrProps => ({
     order: SortOrder.Desc,
     orderBy: PatientAppointmentsSortField.Date
   },
-  currentPatientAppointmentFilterField: ''
+  currentPatientAppointmentFilterField: '',
+  contactInformation: {
+    id: '',
+    name: '',
+    dateOfBirth: '',
+    ohipNumber: '',
+    ohipVersionCode: ''
+  }
 });

@@ -1,5 +1,6 @@
 import {
   IEncounterDetailsProps,
+  IPatientContactInformation,
   IProfileTestResults,
   ITestResultHistory
 } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -126,6 +127,12 @@ const reducers = createReducer({
   },
   setCreateEncounterAddendumLoadingState(state, action: IAction<boolean>) {
     state.isCreateEncounterAddendumLoading = action.payload;
+  },
+  setPatientContactInformation(state, action: IAction<IPatientContactInformation>) {
+    state.contactInformation = action.payload;
+  },
+  setPatientContactInformationLoadingState(state, action: IAction<boolean>) {
+    state.isPatientContactInformationLoading = action.payload;
   }
 });
 

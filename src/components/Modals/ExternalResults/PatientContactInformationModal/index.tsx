@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import Actions from '@components/Modals/ExternalResults/PatientContactInformationModal/Actions';
 import Body from '@components/Modals/ExternalResults/PatientContactInformationModal/Body';
 import { DialogContent, Divider, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { PatientInformationContext } from 'context/PatientInformationContext';
@@ -14,14 +16,18 @@ import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsSt
 import BaseModal from '@ui-component/Modal/BaseModal';
 
 const PatientContactInformationModal = (row: IPatientContactInformationModalProps) => {
-  const [modalLoading] = useState(false);
+  const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const [t] = useTranslation();
   const patientContactInformationTitleLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_TITLE);
 
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
 
   return (
-    <BaseModal isLoading={modalLoading} title={patientContactInformationTitleLabel} onClose={onClose}>
+    <BaseModal
+      isLoading={isPatientContactInformationLoading}
+      title={patientContactInformationTitleLabel}
+      onClose={onClose}
+    >
       <Grid>
         <DialogContent sx={{ p: 1.5 }}>
           <PatientInformationContext>

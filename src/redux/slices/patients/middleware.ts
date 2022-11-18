@@ -51,7 +51,9 @@ const {
   setCreateEncounterNoteLoadingState,
   setUpdateEncounterNoteLoadingState,
   setUpdateEncounterAddendumLoadingState,
-  setCreateEncounterAddendumLoadingState
+  setCreateEncounterAddendumLoadingState,
+  setPatientContactInformation,
+  setPatientContactInformationLoadingState
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -367,6 +369,21 @@ const getInitialPatientAppointments = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getPatientContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setPatientContactInformationLoadingState(true));
+
+  try {
+    const response = await API.patients.getContactInformation(patientId);
+
+    dispatch(setPatientContactInformation(response.data.data.information));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setPatientContactInformationLoadingState(false));
+  }
+};
+
 const getPatientAppointments =
   (
     search: string,
@@ -434,5 +451,6 @@ export default {
   getInitialPatientAppointments,
   getPatientAppointments,
   cleanEncountersList,
-  setCurrentAppointmentType
+  setCurrentAppointmentType,
+  getPatientContactInformation
 };

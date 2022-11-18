@@ -1,9 +1,12 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Box, Grid, Typography } from '@mui/material';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 
 const PatientInformation = () => {
+  const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
   const [t] = useTranslation();
 
   return (
@@ -27,12 +30,11 @@ const PatientInformation = () => {
           </Typography>
         </Grid>
         <Grid item xs={6}>
-          {/* TODO: Here we have hardcoded values since endpoint is not ready yet */}
-          <Typography variant="subtitle1">Jane Doe</Typography>
-          <Typography variant="subtitle1">123456789</Typography>
-          <Typography variant="subtitle1">Jan 1, 1990</Typography>
-          <Typography variant="subtitle1">0000-123456-00</Typography>
-          <Typography variant="subtitle1">PF</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.name}</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.id}</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.dateOfBirth}</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.ohipNumber}</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.ohipVersionCode}</Typography>
         </Grid>
       </Grid>
     </Box>

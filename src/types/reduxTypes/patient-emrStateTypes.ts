@@ -2,6 +2,7 @@ import { IPagination } from '@axios/axiosTypes';
 import { IPatientAppointment, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IPatientContactInformation,
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
@@ -31,6 +32,7 @@ export interface PatientEmrProps {
   isUpdateEncounterNoteLoading: boolean;
   isUpdateEncounterAddendumLoading: boolean;
   isCreateEncounterAddendumLoading: boolean;
+  isPatientContactInformationLoading: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;
   isPatientHighlightsLoading: boolean;
@@ -40,6 +42,7 @@ export interface PatientEmrProps {
   latestTestResults: ITestResultLatest[];
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
+  contactInformation: IPatientContactInformation;
 }
 
 export interface IItem {
