@@ -8,7 +8,7 @@ import { bookingMiddleware } from '@redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
-import { calculateWeekDays } from 'helpers/scheduling';
+import { calculateWeekByNumber } from 'helpers/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { IAppliedDay, IApplyScheduleDay } from 'types/apply-schedule';
 import { IApplyScheduleData, ISingleTemplate } from 'types/create-schedule';
@@ -40,7 +40,7 @@ const getUniqueTimePeriodsApplyDates = (scheduleApplyTemplates: { name: string; 
 const getApplyDaysToDisplay = (uniqueTimePeriodsApplyDates: number[]): IAppliedDay[] =>
   // Logic For showing apply days checkboxes
   weekDays
-    .filter((_, index) => uniqueTimePeriodsApplyDates.includes(index))
+    .filter((_, index) => uniqueTimePeriodsApplyDates.includes(calculateWeekByNumber(index)))
     .map((item, index) => ({ dayNum: index, dayLabel: item }));
 
 const ApplyScheduleForm = () => {
@@ -70,7 +70,7 @@ const ApplyScheduleForm = () => {
       resourceId: resource.id,
       templateId: scheduleTemplate.id,
       repeatWeeksCount: repeatWeeks.id,
-      applyDays: calculateWeekDays(applyDays),
+      applyDays,
       startDate: startDate ? calculateTimeInUTC(startDate) : startDate,
       endDate: endDate ? calculateTimeInUTC(endDate) : endDate
     };
