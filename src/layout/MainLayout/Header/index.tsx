@@ -41,7 +41,7 @@ const Header = () => {
           }
         }}
       >
-        <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
+        <Box component="span" sx={{ display: { md: 'block' }, flexGrow: 1 }}>
           <LogoSection />
         </Box>
         <StyledAvatar
@@ -57,13 +57,13 @@ const Header = () => {
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
       {process.env.NEXT_PUBLIC_ENVIRONMENT === 'dev' ? <DevSection /> : null}
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Box sx={{ display: { sm: 'block' } }}>
         <CheckSection />
       </Box>
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Box sx={{ display: { sm: 'block' } }}>
         <NotificationSection />
       </Box>
-      <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+      <Box sx={{ display: { sm: 'block' } }}>
         <ProfileSection />
       </Box>
     </>

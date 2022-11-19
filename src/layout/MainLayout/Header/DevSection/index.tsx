@@ -34,7 +34,7 @@ const DevSection = () => {
   }, []);
 
   return (
-    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+    <Box sx={{ display: { sm: 'block' } }}>
       <Box
         sx={{
           mr: 2,

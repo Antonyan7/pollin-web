@@ -40,7 +40,8 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(({
       marginLeft: margins.left12,
       width: `calc(100% - ${drawerWidth}px)`,
       padding: paddings.all16,
-      marginRight: margins.right12
+      marginRight: margins.right12,
+      paddingTop: paddings.top40
     }
   }),
   ...(open && {
