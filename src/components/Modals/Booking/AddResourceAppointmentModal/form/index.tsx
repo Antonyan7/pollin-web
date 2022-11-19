@@ -63,7 +63,7 @@ const AddAppointmentsModalForm = () => {
       };
 
       const formattedTime = customizedTimeForWorkingHours(values.date as string);
-      const isSubmittingTimeInvalid = formattedTime < workingHours.start || formattedTime > workingHours.end;
+      const isSubmittingTimeInvalid = formattedTime < workingHours.start || formattedTime >= workingHours.end;
 
       if (isSubmittingTimeInvalid) {
         dispatch(
