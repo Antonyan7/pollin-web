@@ -79,7 +79,6 @@ export enum PatientAppointmentsSortField {
 }
 
 export interface IGetPatientAppointmentsListReqBody {
-  searchString: string;
   page: number;
   sortOrder: ISortOrder;
   sortByField: PatientAppointmentsFields;

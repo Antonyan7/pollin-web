@@ -62,7 +62,6 @@ export const getInitialState = (): PatientEmrProps => ({
       totalItems: 0
     },
     filters: [],
-    search: '',
     order: SortOrder.Desc,
     orderBy: PatientAppointmentsSortField.Date
   },

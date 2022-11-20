@@ -13,7 +13,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 const AppointmentListFilter = () => {
   const theme = useTheme();
   const [t] = useTranslation();
-  const { list, orderBy, order, search } = useAppSelector(patientsSelector.patientAppointments);
+  const { list, orderBy, order } = useAppSelector(patientsSelector.patientAppointments);
   const { currentPage } = list;
   const currentPatientAppointmentFilterField = useAppSelector(patientsSelector.currentPatientAppointmentFilterField);
 
@@ -40,9 +40,9 @@ const AppointmentListFilter = () => {
     setSelectedFilters(appointmentFilters);
 
     if (excludeTitleFilters.length) {
-      dispatch(patientsMiddleware.getPatientAppointments(search, currentPage, order, orderBy, excludeTitleFilters));
+      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, excludeTitleFilters));
     } else {
-      dispatch(patientsMiddleware.getPatientAppointments(search, currentPage, order, orderBy));
+      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy));
     }
   };
 

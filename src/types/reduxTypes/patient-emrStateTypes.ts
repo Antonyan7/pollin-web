@@ -195,7 +195,6 @@ export interface IPatientAppointmentsList extends IPagination {
 
 export interface IPatientAppointmentsProps {
   list: IPatientAppointmentsList;
-  search: string;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
   order: SortOrder | null;
   filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];

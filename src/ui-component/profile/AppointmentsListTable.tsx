@@ -46,7 +46,7 @@ const headCells: HeadCell[] = [
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
 
-  const { list, orderBy, order, search, filters } = useAppSelector(patientsSelector.patientAppointments);
+  const { list, orderBy, order, filters } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
   useEffect(() => {
@@ -60,7 +60,6 @@ const AppointmentsListTable = () => {
 
     dispatch(
       patientsMiddleware.getPatientAppointments(
-        search,
         currentPage,
         orderBy === newOrderBy ? newOrder : SortOrder.Asc,
         newOrderBy,
@@ -70,7 +69,7 @@ const AppointmentsListTable = () => {
   };
 
   const onTablePageChange: TablePaginationProps['onPageChange'] = async (_e, newPage) => {
-    dispatch(patientsMiddleware.getPatientAppointments(search, newPage + 1, order, orderBy, filters));
+    dispatch(patientsMiddleware.getPatientAppointments(newPage + 1, order, orderBy, filters));
   };
 
   return (

@@ -386,7 +386,6 @@ const getPatientContactInformation = (patientId: string) => async (dispatch: App
 
 const getPatientAppointments =
   (
-    search: string,
     page: number,
     order: SortOrder | null,
     orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
@@ -395,7 +394,6 @@ const getPatientAppointments =
   async (dispatch: AppDispatch) => {
     try {
       const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
-        search,
         page,
         order,
         orderBy,
@@ -412,7 +410,6 @@ const getPatientAppointments =
           },
           order,
           orderBy,
-          search,
           filters
         })
       );
