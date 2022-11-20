@@ -52,58 +52,6 @@ const PendingTestResultList = () => {
     dispatch(resultsMiddleware.getResultsList(data));
   }, [filters, page, searchValue, sortField, sortOrder]);
 
-  useEffect(() => {
-    dispatch(resultsMiddleware.getSpecimenActions());
-  }, []);
-
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelectedId = resultsList.testResults.map((n) => n.id);
-      const newSelectedStatus = resultsList.testResults.map((n) => n.status);
-
-      setSelected(newSelectedId);
-      setSelectedStatuses(newSelectedStatus);
-
-      return;
-    }
-
-    setSelected([]);
-    setSelectedStatuses([]);
-  };
-
-  const onClick = (event: React.MouseEvent, id: string, status: string) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: string[] = [];
-    let newSelectedStatus: string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses, status);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-      newSelectedStatus = newSelectedStatus.concat(
-        selectedStatuses.slice(0, selectedIndex),
-        selectedStatuses.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-    setSelectedStatuses(newSelectedStatus);
-  };
-
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
-  const numSelected = selected.length;
-  const rowCount = resultsList.testResults.length;
-
   return (
     <PatientListStyled>
       <Box sx={{ marginBottom: margins.bottom32 }}>
@@ -111,19 +59,7 @@ const PendingTestResultList = () => {
       </Box>
       <ResultFilters setSearchValue={setSearchValue} setFiltersChange={handleFiltersUpdate} />
       <TableContainer>
-        <Table
-          selected={selected}
-          selectedStatuses={selectedStatuses}
-          isSelected={isSelected}
-          numSelected={numSelected}
-          rowCount={rowCount}
-          onClick={onClick}
-          handleSelectAllClick={handleSelectAllClick}
-          setSortField={setSortField}
-          setSortOrder={setSortOrder}
-          sortField={sortField}
-          sortOrder={sortOrder}
-        />
+        <Table setSortField={setSortField} setSortOrder={setSortOrder} sortField={sortField} sortOrder={sortOrder} />
       </TableContainer>
       {isResultsLoading ? (
         <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
