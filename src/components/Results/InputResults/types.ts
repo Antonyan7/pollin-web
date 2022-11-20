@@ -1,5 +1,9 @@
 import { Control } from 'react-hook-form';
-import { ITestResultsDetails, TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
+import {
+  ITestResultAttachment,
+  ITestResultsDetails,
+  TestResultMeasurementType
+} from 'types/reduxTypes/resultsStateTypes';
 
 export enum InputResultTestType {
   InHouse = 'inHouse',
@@ -26,7 +30,17 @@ export interface InputTestResultsHeaderProps extends Partial<ITestResultsDetails
 }
 
 export interface IMeasurementsFieldValues {
-  [data: string]: { resultType?: TestResultMeasurementType; dateReceived: string; result: string }[];
+  [data: `${string}`]: {
+    items: {
+      id: string;
+      resultType?: TestResultMeasurementType;
+      dateReceived: string;
+      result: string;
+    };
+    id: string;
+    comment?: string;
+    attachments?: ITestResultAttachment[];
+  };
 }
 
 export interface IMeasurementsControl extends Control<IMeasurementsFieldValues> {}
@@ -34,6 +48,8 @@ export interface IMeasurementsControl extends Control<IMeasurementsFieldValues> 
 export interface IMeasurementListField {
   name:
     | `${string}`
+    | `${string}.items`
+    // | `${string}.attachments`
     | `${string}.${number}`
     | `${string}.${number}.result`
     | `${string}.${number}.dateReceived`

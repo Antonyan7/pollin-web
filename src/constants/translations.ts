@@ -223,6 +223,7 @@ export enum Translation {
   COMMON_MODAL_HEADER_CANCEL_CONFIRMATION = 'common.modal.header.cancel.confirmation',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY1 = 'page.in.house.results.test.cancel.modal.body1',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY2 = 'page.in.house.results.test.cancel.modal.body2',
+  FILE_ATTACHMENT_MAXIMUM_LIMIT_REACHED_OUT = 'file.attachment.maximum.limit.reached.out',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_TITLE = 'page.in.house.specimens.cells.title',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_ID = 'page.in.house.specimens.cells.id',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_MACHINE = 'page.in.house.specimens.cells.machine'

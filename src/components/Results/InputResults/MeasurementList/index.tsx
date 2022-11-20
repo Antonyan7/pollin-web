@@ -1,8 +1,6 @@
 import React from 'react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { useTranslation } from 'react-i18next';
-import { IMeasurementsControl, IMeasurementsFieldValues } from '@components/Results/InputResults/types';
 import {
   Paper,
   styled,
@@ -40,12 +38,13 @@ export interface MeasurementListProps {
 const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName }) => {
   const [t] = useTranslation();
 
-  const { register, control }: { register: UseFormRegister<IMeasurementsFieldValues>; control: IMeasurementsControl } =
-    useFormContext();
+  const { register, control } = useFormContext();
+
+  const currentFormFieldDataItems = `${currentFormFieldName}.items`;
 
   const { fields } = useFieldArray({
     control,
-    name: currentFormFieldName
+    name: currentFormFieldDataItems
   });
 
   return (
@@ -80,15 +79,15 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
               <StyledTableCell>{listItems[index].unit}</StyledTableCell>
               <StyledTableCell>
                 <TextField
-                  {...register(`${currentFormFieldName}.${index}.result`)}
+                  {...register(`${currentFormFieldDataItems}.${index}.result`)}
                   label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT)}
                 />
               </StyledTableCell>
               <StyledTableCell>
-                <DateReceivedField name={`${currentFormFieldName}.${index}.dateReceived`} control={control} />
+                <DateReceivedField name={`${currentFormFieldDataItems}.${index}.dateReceived`} control={control} />
               </StyledTableCell>
               <StyledTableCell>
-                <ResultTypeField name={`${currentFormFieldName}.${index}.resultType`} control={control} />
+                <ResultTypeField name={`${currentFormFieldDataItems}.${index}.resultType`} control={control} />
               </StyledTableCell>
             </TableRow>
           ))}

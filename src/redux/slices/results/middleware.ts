@@ -3,6 +3,7 @@ import {
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
+  ITestResultsData,
   ITestResultsParams
 } from '@axios/results/resultsManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
@@ -24,6 +25,7 @@ const {
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
+  setIsTestResultsSubmitLoading,
   setPendingSpecimenStatsLoadingState,
   setPendingSpecimenStats,
   setSpecimensList,
@@ -139,6 +141,19 @@ const getLabMachines = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const submitTestResults = (data: ITestResultsData[], testResultId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTestResultsSubmitLoading(true));
+
+    await API.results.submitTestResults(data, testResultId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTestResultsSubmitLoading(false));
+  }
+};
+
 const getPendingSpecimenStats = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setPendingSpecimenStatsLoadingState(true));
@@ -197,8 +212,10 @@ export default {
   removeTestResultsAttachment,
   getTestResultsDetails,
   getLabMachines,
-  getPendingSpecimenStats,
-  getSpecimensList,
   getSpecimenActions,
+  submitTestResults,
+  getPendingSpecimenStats,
+  setIsTestResultsSubmitLoading,
+  getSpecimensList,
   addMachineforSpecimen
 };

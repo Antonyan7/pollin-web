@@ -2,6 +2,7 @@ import {
   IAddMachineforSpecimen,
   IResultsReqBody,
   ISpecimensListReqBody,
+  ITestResultsData,
   ITestResultsDetailsBody,
   ITestResultsParams
 } from '@axios/results/resultsManagerTypes';
@@ -53,6 +54,14 @@ const resultsManager = {
   },
   getLabMachines() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
+  },
+  submitTestResults(testResults: ITestResultsData[], testResultId: string) {
+    return axiosInstance.put<ITestResultsData, IAxiosResponse<ITestResultsData[]>>(
+      `${baseURL}/v1/test-result/${testResultId}`,
+      {
+        testResults
+      }
+    );
   },
   getSpecimenActions() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(

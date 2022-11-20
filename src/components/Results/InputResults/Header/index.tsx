@@ -29,10 +29,10 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
 
   const initialResultValue = useMemo(() => t(Translation.MODAL_EXTERNAL_RESULTS_RESULT_TEXT), [t]);
 
-  const measurements = useWatch({ name: currentFormFieldName, control });
+  const { items } = useWatch({ name: currentFormFieldName, control });
 
   const detectedStatusType = useMemo(() => {
-    const allElementsWithNormalStatus = measurements.map((item: { resultType: TestResultMeasurementType }) => {
+    const allElementsWithNormalStatus = items.map((item: { resultType: TestResultMeasurementType }) => {
       // Here we are setting falsy value for the cases when nothing was returned from the backend
       if (!item.resultType) {
         return 0;
@@ -56,7 +56,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
     }
 
     return TestResultMeasurementType.Abnormal;
-  }, [measurements, initialResultValue]);
+  }, [items, initialResultValue]);
 
   const getChipColor = () => {
     switch (detectedStatusType) {

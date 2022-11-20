@@ -50,6 +50,9 @@ const reducers = createReducer({
   setIsTestResultsDetailsLoading(state, action: IAction<boolean>) {
     state.isTestResultsDetailsLoading = action.payload;
   },
+  setIsTestResultsSubmitLoading(state, action: IAction<boolean>) {
+    state.isTestResultsSubmitLoading = action.payload;
+  },
   setPendingSpecimenStats(state, action: IAction<IPendingTestStats[]>) {
     state.pendingSpecimenStats = action.payload;
   },

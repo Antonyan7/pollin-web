@@ -27,6 +27,7 @@ export interface IResultsProps {
   isPendingTestStatsLoading: boolean;
   isTestResultsDetailsLoading: boolean;
   islabMachinesLoading: boolean;
+  isTestResultsSubmitLoading: boolean;
   pendingSpecimenStats: IPendingTestStats[];
   isPendingSpecimenStatsLoading: boolean;
   specimensList: ISpecimensList;
@@ -109,10 +110,12 @@ export interface ITestResultItem {
   resultType?: TestResultMeasurementType;
 }
 
-interface ITestResultAttachment {
+export interface ITestResultAttachment {
   id: string;
   title: string;
   note?: string;
+  // Case when we have local new attached file
+  file?: File;
 }
 
 export interface ITestResultsDetails {

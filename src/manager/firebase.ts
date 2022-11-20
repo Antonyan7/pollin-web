@@ -85,6 +85,7 @@ export class FirebaseManager {
 
   static uploadFile(file: File, path: string, setProgress?: React.Dispatch<React.SetStateAction<number>>) {
     const fileExtension = getFileExtension(file.name);
+
     const storageRef = ref(this.storage, `${path}/${v4()}${fileExtension}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
 

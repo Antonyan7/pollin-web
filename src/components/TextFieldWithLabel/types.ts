@@ -6,4 +6,5 @@ export interface TextFieldWithLabelProps {
   containerStyles?: SxProps;
   labelStyles?: SxProps;
   textFieldProps?: TextFieldProps;
+  currentFormFieldName: string;
 }

@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, Fragment, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import AttachFile from '@components/AttachFile';
@@ -70,10 +70,10 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
             // Pick last item of test results and show save button
             const shouldShowSaveButton = index === testResultsDetails.length - 1;
             // Is multiple test results
-            const shouldShowSaveAsCompleted = formDefaultFieldsNames.length > 1;
+            const shouldShowSaveAsCompleted = !!specimenId;
 
             return (
-              <>
+              <Fragment key={testResultDetails.id}>
                 <InputResultsHeader
                   title={testResultDetails.title}
                   dates={testResultDetails.dates}
@@ -89,11 +89,12 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                   <TextFieldWithLabel
                     label={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
                     placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
+                    currentFormFieldName={currentFormFieldName}
                   />
                   {testResultDetails.isAttachmentRequired && (
                     <>
                       <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
-                      <AttachFile />
+                      <AttachFile currentFormFieldName={currentFormFieldName} />
                     </>
                   )}
                 </Grid>
@@ -109,7 +110,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                     </Stack>
                   </Grid>
                 )}
-              </>
+              </Fragment>
             );
           })}
         </FormProvider>

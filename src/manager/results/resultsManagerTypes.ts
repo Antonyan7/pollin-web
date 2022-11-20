@@ -1,6 +1,6 @@
 import { IEmptyResponse } from 'manager/common';
 import { SortOrder } from 'types/patient';
-import { ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
+import { ITestResultsDetails, TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 export enum TestResultsListSortFields {
@@ -39,6 +39,24 @@ export interface ITestResultsParams {
   specimenId?: string;
 }
 
+interface ITestResultAttachmentData {
+  id?: string;
+  title: string;
+  note?: string;
+  url?: string;
+}
+
+export interface ITestResultsData {
+  id: string;
+  comment: string;
+  items: {
+    id: string;
+    resultType?: TestResultMeasurementType;
+    dateReceived: string;
+    result: string;
+  };
+  attachments: ITestResultAttachmentData[];
+}
 export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }

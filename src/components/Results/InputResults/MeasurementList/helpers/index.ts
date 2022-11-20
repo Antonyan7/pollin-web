@@ -2,18 +2,26 @@ import { ITestResultItem, TestResultsDetails } from 'types/reduxTypes/resultsSta
 
 const extractFormDataFromTestResultsDetails = (testResultsDetails: TestResultsDetails[]) => {
   const formFieldNames: string[] = [];
-  const formDefaultValues = testResultsDetails.reduce((defaultValues, currentValue) => {
-    const formFieldName = `data_${currentValue.id}`;
+  const formDefaultValues = testResultsDetails.reduce((defaultValues, currentTestDetail) => {
+    const formFieldName = `data_${currentTestDetail.id}`;
 
     formFieldNames.push(formFieldName);
 
     return {
       ...defaultValues,
-      [formFieldName]: currentValue.items?.map((item: ITestResultItem) => ({
-        resultType: item.resultType,
-        dateReceived: item.dateReceived,
-        result: item.result
-      }))
+      [formFieldName]: {
+        id: currentTestDetail.id,
+        items: currentTestDetail.items?.map((item: ITestResultItem) => ({
+          id: item.id,
+          resultType: item.resultType,
+          dateReceived: item.dateReceived,
+          result: item?.result ?? ''
+        })),
+        comment: '',
+        ...(currentTestDetail.isAttachmentRequired && {
+          attachments: currentTestDetail?.attachments ?? []
+        })
+      }
     };
   }, {});
 
