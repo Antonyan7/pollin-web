@@ -39,7 +39,7 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
           border: `${borders.solid2px} ${theme.palette.primary.main}`
         }
       }}
-      onChange={(event, filters) => onFilterUpdate(filters)}
+      onChange={(event, filters) => onFilterUpdate(filters as IResultsFilterOption[])}
       getOptionDisabled={(option) => {
         if (option && selectedFilters.length > 0) {
           return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
@@ -49,7 +49,7 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
       }}
       options={filtersList.length ? adaptedGroupedOptions() : []}
       groupBy={(option) => option.type}
-      getOptionLabel={(option) => option.title}
+      getOptionLabel={(option) => (typeof option === 'object' ? option.title ?? '' : option)}
       renderInputProps={{ label }}
     />
   );
