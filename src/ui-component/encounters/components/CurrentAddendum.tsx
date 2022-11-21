@@ -16,6 +16,9 @@ interface CurrentAddendumProps {
 
 const CurrentAddendum = ({ currentAddendum }: CurrentAddendumProps) => {
   const [t] = useTranslation();
+  const isEditedTitle = currentAddendum?.isEdited
+    ? t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)
+    : t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON);
 
   return (
     currentAddendum && (
@@ -32,9 +35,7 @@ const CurrentAddendum = ({ currentAddendum }: CurrentAddendumProps) => {
         <Grid item container direction="column" mb={margins.bottom16}>
           <Typography variant="h4">{currentAddendum.author}</Typography>
           <Typography variant="body1">
-            {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-              new Date(currentAddendum.date as Date)
-            )}`}
+            {`${isEditedTitle} ${encountersCustomizedDate(new Date(currentAddendum.date as Date))}`}
           </Typography>
         </Grid>
       </Grid>

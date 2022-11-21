@@ -169,37 +169,41 @@ const EncounterDetailsPage = () => {
               </Typography>
             </Grid>
             <Grid item container direction="column" gap={2} sx={{ pt: paddings.top16 }}>
-              {encounterData.addendums.map((addendum: AddendumsProps) => (
-                <>
-                  <Divider />
-                  <Grid item container direction="row" alignItems="center" gap={3}>
-                    <Typography variant="h4" sx={{ width: '130px' }}>
-                      {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
-                    </Typography>
-                    <IconButton
-                      sx={{
-                        color: theme.palette.primary.main,
-                        border: `${borders.solid1px} ${theme.palette.primary.main}`,
-                        borderRadius: borderRadius.radius8
-                      }}
-                      onClick={() => goToEditAddendumPage(addendum.id)}
-                    >
-                      <EditOutlined />
-                    </IconButton>
-                  </Grid>
-                  <Grid item>
-                    <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
-                  </Grid>
-                  <Grid item container direction="column" sx={{ pt: paddings.top16 }}>
-                    <Typography variant="h4">{addendum.author}</Typography>
-                    <Typography variant="body1">
-                      {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-                        addendum.date as Date
-                      )}`}
-                    </Typography>
-                  </Grid>
-                </>
-              ))}
+              {encounterData.addendums.map((addendum: AddendumsProps) => {
+                const isEditedTitle = addendum?.isEdited
+                  ? t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)
+                  : t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON);
+
+                return (
+                  <>
+                    <Divider />
+                    <Grid item container direction="row" alignItems="center" gap={3}>
+                      <Typography variant="h4" sx={{ width: '130px' }}>
+                        {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
+                      </Typography>
+                      <IconButton
+                        sx={{
+                          color: theme.palette.primary.main,
+                          border: `${borders.solid1px} ${theme.palette.primary.main}`,
+                          borderRadius: borderRadius.radius8
+                        }}
+                        onClick={() => goToEditAddendumPage(addendum.id)}
+                      >
+                        <EditOutlined />
+                      </IconButton>
+                    </Grid>
+                    <Grid item>
+                      <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
+                    </Grid>
+                    <Grid item container direction="column" sx={{ pt: paddings.top16 }}>
+                      <Typography variant="h4">{addendum.author}</Typography>
+                      <Typography variant="body1">
+                        {`${isEditedTitle} ${encountersCustomizedDate(addendum.date as Date)}`}
+                      </Typography>
+                    </Grid>
+                  </>
+                );
+              })}
             </Grid>
             <FooterEncounter />
           </Grid>
