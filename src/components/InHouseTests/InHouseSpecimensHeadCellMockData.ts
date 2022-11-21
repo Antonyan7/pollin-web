@@ -1,3 +1,4 @@
+import { SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { Translation } from 'constants/translations';
 import { TFunction } from 'i18next';
 import { paddings } from 'themes/themeConstants';
@@ -32,7 +33,7 @@ export const headCellsData = (t: TFunction) => [
     isSortable: false
   },
   {
-    id: 'age',
+    id: SpecimensListSortFields.COLLECTION_AGE,
     label: t(Translation.PAGE_RESULTS_CELLS_AGE),
     align: 'center',
     paddingLeft: paddings.left20,

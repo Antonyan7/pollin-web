@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ISpecimensListReqBody } from '@axios/results/resultsManagerTypes';
+import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import {
   Box,
@@ -21,7 +21,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { margins } from 'themes/themeConstants';
-import { IHeadCell } from 'types/patient';
+import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
@@ -38,6 +38,8 @@ import SearchBox from './SearchBox';
 const InHouseSpecimensList = () => {
   const [page, setPage] = useState<number>(0);
   const [ids, setIds] = useState<string[]>([]);
+  const [sortField, setSortField] = useState<SpecimensListSortFields | null>(null);
+  const [sortOrder, setSortOrder] = useState<SortOrder | null>(null);
   const [selectedFilters, setSelectedFilters] = useState<ISpecimensFilterOptions[]>([]);
   const pendingSpecimenStats = useAppSelector(resultsSelector.pendingSpecimenStats);
   const specimensList = useAppSelector(resultsSelector.specimensList);
@@ -58,11 +60,13 @@ const InHouseSpecimensList = () => {
     const data: ISpecimensListReqBody = {
       ...(ids.length > 0 ? { specimenIds: ids } : {}),
       ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
+      ...(sortField ? { sortByField: sortField } : {}),
+      ...(sortOrder ? { sortOrder } : {}),
       page: page + 1
     };
 
     dispatch(resultsMiddleware.getSpecimensList(data));
-  }, [page, ids, selectedFilters]);
+  }, [page, ids, selectedFilters, sortField, sortOrder]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -172,7 +176,17 @@ const InHouseSpecimensList = () => {
                   />
                 </TableCell>
               )}
-              {numSelected <= 0 && headCells.map((headCell) => <InHouseSpecimensHeadCell headCell={headCell} />)}
+              {numSelected <= 0 &&
+                headCells.map((headCell) => (
+                  <InHouseSpecimensHeadCell
+                    headCell={headCell}
+                    key={headCell.id}
+                    sortOrder={sortOrder}
+                    sortField={sortField}
+                    setSortOrder={setSortOrder}
+                    setSortField={setSortField}
+                  />
+                ))}
             </TableRow>
           </TableHead>
 
