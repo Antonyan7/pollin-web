@@ -91,7 +91,6 @@ const CreateTemplate = () => {
 
   const { errors } = methods.formState;
   const errorMessage =
-    (error && error.response && error.response.data?.status?.message) ||
     (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
     (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
   const { append } = useFieldArray({

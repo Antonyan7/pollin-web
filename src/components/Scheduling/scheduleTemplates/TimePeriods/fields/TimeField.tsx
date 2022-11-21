@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
@@ -21,7 +21,7 @@ interface ITimeFieldProps {
 const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const [t] = useTranslation();
   const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
-  const { control, formState, getValues } = useFormContext<ITemplateGroup>();
+  const { control, formState, getValues, clearErrors, watch } = useFormContext<ITemplateGroup>();
   const {
     errors: { timePeriods }
   } = formState;
@@ -29,29 +29,47 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const { onChange, ...fieldProps } = field;
   const theme = useTheme();
   const timeFieldError = timePeriods?.[index]?.[fieldName];
-  let errorMessage = '';
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  switch (timeFieldError?.type) {
-    case 'required':
-      errorMessage =
+  useEffect(() => {
+    if (timeFieldError?.type === 'required') {
+      const getError =
         fieldName === 'startTime'
           ? t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR)
           : t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR);
-      break;
-    case 'startTimeBefore':
-      errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
-      break;
-    case 'endTimeAfter':
-      errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
-      break;
-    default:
-      break;
-  }
+
+      setErrorMessage(getError);
+    }
+  }, [fieldName, t, timeFieldError?.type]);
+
+  useEffect(() => {
+    watch(() => {
+      const getStartTimeValue = convertToLocale(getValues().timePeriods?.[index]?.startTime ?? '');
+      const getEndTimeValue = convertToLocale(getValues().timePeriods?.[index]?.endTime ?? '');
+      const isStartTimeAfterEndTime = getStartTimeValue && getEndTimeValue && getStartTimeValue >= getEndTimeValue;
+      const isEndTimeBeforeStartTime = getStartTimeValue && getEndTimeValue && getStartTimeValue < getEndTimeValue;
+
+      if (isStartTimeAfterEndTime) {
+        if (fieldName === 'startTime') {
+          setErrorMessage(t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR));
+        } else {
+          setErrorMessage(t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR));
+        }
+      } else {
+        setErrorMessage('');
+      }
+
+      if (isEndTimeBeforeStartTime) {
+        clearErrors(`timePeriods.${index}.startTime`);
+        clearErrors(`timePeriods.${index}.endTime`);
+      }
+    });
+  }, [clearErrors, watch, fieldName, getValues, index, t]);
 
   const onTimeFieldChange = (newTime: Date | null) => {
     onChange(toLocalIsoString(newTime));
   };
-  const timeFieldValue = getValues().timePeriods[index]?.[fieldName];
+  const timeFieldValue = getValues().timePeriods?.[index]?.[fieldName];
   const initialValue = convertToLocale(timeFieldValue ?? '');
 
   return (
@@ -91,8 +109,8 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
                 svg: { color: theme.palette.primary.main }
               }}
               {...fieldProps}
-              helperText={timeFieldError?.message && errorMessage}
-              error={Boolean(timeFieldError)}
+              helperText={errorMessage}
+              error={Boolean(errorMessage)}
               onKeyDown={(e) => e.preventDefault()}
               onClick={() => setOpenTimePicker(true)}
             />

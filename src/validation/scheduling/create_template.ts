@@ -13,7 +13,7 @@ export const createTemplateValidationSchema = object({
           const endTime = new Date(testContext.parent.endTime);
           const startTime = new Date(value as string);
 
-          return endTime.getTime() > startTime.getTime();
+          return endTime.getTime() >= startTime.getTime();
         }),
       endTime: string()
         .required()
@@ -22,7 +22,7 @@ export const createTemplateValidationSchema = object({
           const endTime = new Date(testContext.parent.startTime);
           const startTime = new Date(value as string);
 
-          return endTime.getTime() < startTime.getTime();
+          return endTime.getTime() <= startTime.getTime();
         }),
       periodType: string().required(),
       serviceTypes: array().test('serviceTypes', (value, testContext) => {

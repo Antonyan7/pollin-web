@@ -141,13 +141,33 @@ const ApplyScheduleForm = () => {
   const isEndDateLowerThanToday = endDateTime && endDateTime < curDateTime;
   const isStartDateGreaterThanEndDate = startDateTime && endDateTime && startDateTime > endDateTime;
 
-  const startDateErrorMessage = isStartDateLowerThanToday
-    ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_BEFORE_TODAY_ERROR)
-    : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_AFTER_END_DATE_ERROR)) || '';
+  const [startDateErrorMessage, setStartDateErrorMessage] = useState('');
+  const [endDateErrorMessage, setEndDateErrorMessage] = useState('');
 
-  const endDateErrorMessage = isEndDateLowerThanToday
-    ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_TODAY_ERROR)
-    : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_START_DATE_ERROR)) || '';
+  const clearErrorMessage = () => {
+    setStartDateErrorMessage('');
+    setEndDateErrorMessage('');
+
+    return '';
+  };
+
+  useEffect(() => {
+    const startDateError = isStartDateLowerThanToday
+      ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_BEFORE_TODAY_ERROR)
+      : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_AFTER_END_DATE_ERROR)) ||
+        clearErrorMessage();
+
+    setStartDateErrorMessage(startDateError);
+  }, [isStartDateGreaterThanEndDate, isStartDateLowerThanToday, t]);
+
+  useEffect(() => {
+    const endDateError = isEndDateLowerThanToday
+      ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_TODAY_ERROR)
+      : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_START_DATE_ERROR)) ||
+        clearErrorMessage();
+
+    setEndDateErrorMessage(endDateError);
+  }, [isEndDateLowerThanToday, isStartDateGreaterThanEndDate, t]);
 
   return (
     <ScheduleBoxWrapper>

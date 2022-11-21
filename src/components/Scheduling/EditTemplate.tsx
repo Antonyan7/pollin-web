@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
@@ -37,14 +37,11 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
-
   const error = useAppSelector(schedulingSelector.scheduleError);
-
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const [t] = useTranslation();
   const router = useRouter();
   const { scheduleId } = router.query;
-
   const scheduleTemplateID = scheduleId as string;
 
   useEffect(() => {
@@ -95,10 +92,17 @@ const EditTemplate = () => {
   const { watch } = methods;
 
   const { errors } = methods.formState;
-  const errorMessage =
-    (error && error.response && error.response.data?.status?.message) ||
-    (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
-    (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const getErrorMessage =
+      (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
+      (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR)) ||
+      '';
+
+    setErrorMessage(getErrorMessage);
+  }, [error, errors.name?.type, t]);
 
   const { setValue, handleSubmit, register } = methods;
 
