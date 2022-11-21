@@ -1,7 +1,12 @@
 export const extractContent = (markupContent: string) => {
   const span = document.createElement('span');
+  let htmlContent = markupContent;
 
-  span.innerHTML = markupContent;
+  if (markupContent.includes('<br>')) {
+    htmlContent = markupContent.replaceAll('<br>', '\n');
+  }
+
+  span.innerHTML = htmlContent;
 
   return span.textContent ?? span.innerText;
 };
