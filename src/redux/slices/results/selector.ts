@@ -18,6 +18,8 @@ const isPendingSpecimenStatsLoading = createSelector([selector], (state) => stat
 const pendingSpecimenStats = createSelector([selector], (state) => state.pendingSpecimenStats);
 const specimensList = createSelector([selector], (state) => state.specimensList);
 const isSpecimensListLoading = createSelector([selector], (state) => state.isSpecimensListLoading);
+const specimensFiltersList = createSelector([selector], (state) => state.specimensFilters);
+const isSpecimensFiltersLoading = createSelector([selector], (state) => state.isSpecimensFiltersLoading);
 
 const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
 
@@ -37,5 +39,7 @@ export default {
   isPendingSpecimenStatsLoading,
   pendingSpecimenStats,
   specimensList,
-  isSpecimensListLoading
+  isSpecimensListLoading,
+  specimensFiltersList,
+  isSpecimensFiltersLoading
 };

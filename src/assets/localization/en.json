@@ -224,5 +224,7 @@
   "file.attachment.maximum.limit.reached.out": "You have reached maximum number of attachments",
   "page.in.house.specimens.cells.title": "Test Name",
   "page.in.house.specimens.cells.id": "Specimen ID",
-  "page.in.house.specimens.cells.machine": "Machine"
+  "page.in.house.specimens.cells.machine": "Machine",
+  "page.in.house.specimens.search.placeholder": "Scan Barcode",
+  "page.in.house.specimens.filter.label": "Filter Specimens"
 }

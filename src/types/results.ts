@@ -1,7 +1,11 @@
-import { IResultsFilterCategory } from 'types/reduxTypes/resultsStateTypes';
+import { IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
 
 export interface IResultsFiltersResponse {
   filters: IResultsFilterCategory[];
+}
+
+export interface ISpecimensFiltersResponse {
+  filters: ISpecimensFilterCategory[];
 }
 
 export interface IResultsFilterOption {
@@ -9,6 +13,8 @@ export interface IResultsFilterOption {
   id: string;
   title: string;
 }
+
+export interface ISpecimensFilterOptions extends IResultsFilterOption {}
 
 export enum TestResultsStats {
   GreaterThan30Days = 'GreaterThan30Days',

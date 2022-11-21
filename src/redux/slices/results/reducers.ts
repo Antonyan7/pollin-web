@@ -5,6 +5,7 @@ import {
   IResultsFilterCategory,
   IResultsList,
   IResultsProps,
+  ISpecimensFilterCategory,
   ISpecimensList,
   LabMachine,
   SpecimenActions,
@@ -64,6 +65,12 @@ const reducers = createReducer({
   },
   setIsSpecimensListLoading(state, action: IAction<boolean>) {
     state.isSpecimensListLoading = action.payload;
+  },
+  setSpecimensFilters(state, action: IAction<ISpecimensFilterCategory[]>) {
+    state.specimensFilters = action.payload;
+  },
+  setSpecimensFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isSpecimensFiltersLoading = action.payload;
   }
 });
 

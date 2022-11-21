@@ -17,7 +17,7 @@ import {
   LabMachine,
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
-import { IResultsFiltersResponse } from 'types/results';
+import { IResultsFiltersResponse, ISpecimensFiltersResponse } from 'types/results';
 
 const baseURL = '/clinic-test-results';
 
@@ -86,6 +86,11 @@ const resultsManager = {
         specimenIds,
         machineId
       }
+    );
+  },
+  getSpecimensFilters() {
+    return axiosInstance.get<ISpecimensFiltersResponse, IAxiosResponse<ISpecimensFiltersResponse>>(
+      `${baseURL}/v1/specimen/filter`
     );
   }
 };

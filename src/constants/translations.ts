@@ -226,7 +226,9 @@ export enum Translation {
   FILE_ATTACHMENT_MAXIMUM_LIMIT_REACHED_OUT = 'file.attachment.maximum.limit.reached.out',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_TITLE = 'page.in.house.specimens.cells.title',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_ID = 'page.in.house.specimens.cells.id',
-  PAGE_IN_HOUSE_SPECIMENS_CELLS_MACHINE = 'page.in.house.specimens.cells.machine'
+  PAGE_IN_HOUSE_SPECIMENS_CELLS_MACHINE = 'page.in.house.specimens.cells.machine',
+  PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER = 'page.in.house.specimens.search.placeholder',
+  PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL = 'page.in.house.specimens.filter.label'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

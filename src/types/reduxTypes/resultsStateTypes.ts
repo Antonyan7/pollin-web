@@ -32,6 +32,8 @@ export interface IResultsProps {
   isPendingSpecimenStatsLoading: boolean;
   specimensList: ISpecimensList;
   isSpecimensListLoading: boolean;
+  specimensFilters: ISpecimensFilterCategory[];
+  isSpecimensFiltersLoading: boolean;
 }
 
 export interface LabMachine {
@@ -149,5 +151,7 @@ export interface IResultsFilterCategory {
   title: string;
   options: IResultsFilterOption[];
 }
+
+export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 
 export interface TestResultsDetails extends ITestResultsDetails {}

@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ISpecimensListReqBody } from '@axios/results/resultsManagerTypes';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import {
   Box,
   Checkbox,
   CircularProgress,
+  Grid,
   Table,
   TableBody,
   TableCell,
@@ -16,45 +18,64 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell } from 'types/patient';
 import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensFilterOptions } from 'types/results';
 
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhacnedTableToolbarExternalResults';
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
+import AutocompleteWrapper from './AutocompleteWrapper';
 import { InHouseSpecimensHeadCell } from './InHouseSpecimensHeadCell';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
+import SearchBox from './SearchBox';
 
+// eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
-  const [page, setPage] = React.useState<number>(0);
+  const [page, setPage] = useState<number>(0);
+  const [ids, setIds] = useState<string[]>([]);
+  const [selectedFilters, setSelectedFilters] = useState<ISpecimensFilterOptions[]>([]);
   const pendingSpecimenStats = useAppSelector(resultsSelector.pendingSpecimenStats);
   const specimensList = useAppSelector(resultsSelector.specimensList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
+  const filtersList = useAppSelector(resultsSelector.specimensFiltersList);
+  const isFiltersLoading = useAppSelector(resultsSelector.isSpecimensFiltersLoading);
   const theme = useTheme();
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
 
   useEffect(() => {
     dispatch(resultsMiddleware.getPendingSpecimenStats());
+    dispatch(resultsMiddleware.getSpecimensFilters());
+    dispatch(resultsMiddleware.getSpecimenActions());
   }, []);
 
   useEffect(() => {
-    const data = {
+    const data: ISpecimensListReqBody = {
+      ...(ids.length > 0 ? { specimenIds: ids } : {}),
+      ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
       page: page + 1
     };
 
     dispatch(resultsMiddleware.getSpecimensList(data));
-  }, [page]);
+  }, [page, ids, selectedFilters]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
 
-  useEffect(() => {
-    dispatch(resultsMiddleware.getSpecimenActions());
+  const searchByIdsHandler = useCallback((idArr: string[]) => {
+    setPage(0);
+    setIds(idArr);
+  }, []);
+
+  const filterChangeHandler = useCallback((curFilters: ISpecimensFilterOptions[]) => {
+    setPage(0);
+    setSelectedFilters(curFilters);
   }, []);
 
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
@@ -112,6 +133,23 @@ const InHouseSpecimensList = () => {
       <Box sx={{ marginBottom: margins.bottom32 }}>
         <SpecimensStatsView stats={pendingSpecimenStats} />
       </Box>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={6}>
+          <SearchBox
+            onSearch={searchByIdsHandler}
+            placeholder={t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER)}
+          />
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <AutocompleteWrapper
+            onChange={filterChangeHandler}
+            label={t(Translation.PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL)}
+            filtersList={filtersList}
+            loading={isFiltersLoading}
+          />
+        </Grid>
+      </Grid>
+
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>

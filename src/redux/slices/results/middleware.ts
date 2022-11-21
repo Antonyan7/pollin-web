@@ -29,7 +29,9 @@ const {
   setPendingSpecimenStatsLoadingState,
   setPendingSpecimenStats,
   setSpecimensList,
-  setIsSpecimensListLoading
+  setIsSpecimensListLoading,
+  setSpecimensFilters,
+  setSpecimensFiltersLoadingState
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -204,6 +206,20 @@ const addMachineforSpecimen = (specimenIds: string[], machineId: string) => asyn
     dispatch(setError(error));
   }
 };
+const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setSpecimensFiltersLoadingState(true));
+
+    const response = await API.results.getSpecimensFilters();
+
+    dispatch(setSpecimensFilters(response.data.data.filters));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setSpecimensFiltersLoadingState(false));
+  }
+};
 
 export default {
   getResultsList,
@@ -213,9 +229,10 @@ export default {
   getTestResultsDetails,
   getLabMachines,
   getSpecimenActions,
+  addMachineforSpecimen,
+  getSpecimensFilters,
   submitTestResults,
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
-  getSpecimensList,
-  addMachineforSpecimen
+  getSpecimensList
 };
