@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
+import CloseIcon from '@mui/icons-material/Close';
 import { FormControl, Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
@@ -37,12 +38,17 @@ const ResourceField = () => {
           isLoading={false}
           id={fieldName}
           options={optionsGroup}
-          onChange={(_, value) => onChange(value?.item.id)}
+          onChange={(_, value) => {
+            if (value && typeof value === 'object' && 'item' in value) {
+              onChange(value.item.id);
+            }
+          }}
           inputValue={optionsGroup.find((item) => item.item.id === providerId)?.item.title ?? ''}
           isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-          getOptionLabel={(option) => option.item.title}
+          getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
           groupBy={(option) => option.firstLetter}
           onBlur={onBlur}
+          clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
           renderInputProps={{
             ...fieldProps,
             label: fieldLabel,

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl } from '@mui/material';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -49,8 +50,10 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
         inputValue={scheduleTemplate.name}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         options={scheduleTemplates.templates}
-        onChange={(e, value: SchedulingTemplateProps | null) => {
-          handleSelectTemplate(value);
+        onChange={(e, value) => {
+          if (value && typeof value === 'object' && 'id' in value) {
+            handleSelectTemplate(value);
+          }
         }}
         ListboxProps={{
           style: {
@@ -59,7 +62,8 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
           onScroll: (event) => onScheduleTemplateScroll(event)
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(itemTemplate) => itemTemplate.name}
+        getOptionLabel={(itemTemplate) => (typeof itemTemplate === 'object' ? itemTemplate.name : itemTemplate)}
+        clearIcon={<CloseIcon onClick={() => handleSelectTemplate(null)} fontSize="small" />}
         renderInputProps={{
           label
         }}

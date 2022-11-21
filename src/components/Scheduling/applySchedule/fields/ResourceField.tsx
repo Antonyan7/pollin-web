@@ -1,4 +1,5 @@
 import React from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl } from '@mui/material';
 import { useAppSelector } from 'redux/hooks';
@@ -33,11 +34,14 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
         inputValue={resource.title}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         onChange={(e, value) => {
-          onSelectResourceUpdate(value);
+          if (value && typeof value !== 'string' && 'id' in value) {
+            onSelectResourceUpdate(value);
+          }
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         options={serviceProviders.providers}
-        getOptionLabel={(itemResource) => itemResource.title}
+        getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
+        clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
         renderInputProps={{ label }}
       />
     </FormControl>

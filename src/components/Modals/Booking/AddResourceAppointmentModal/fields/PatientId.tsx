@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { AutocompleteInputChangeReason, Grid } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
@@ -10,7 +11,6 @@ import { createOptionsGroupPatients } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
-import { validateInputChange } from 'validation/validationHelpers';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -79,17 +79,17 @@ const PatientId = () => {
         id={patientIdFieldName}
         options={patientOptions}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-        getOptionLabel={(option) => option.item.name}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.item.name : option)}
         onChange={(_, value) => {
-          if (value?.item.id) {
+          if (value && typeof value === 'object' && 'item' in value) {
             onChange(value.item.id);
-            dispatch(bookingMiddleware.getPatientAlerts(value?.item.id));
+            dispatch(bookingMiddleware.getPatientAlerts(value.item.id));
           }
         }}
         groupBy={(option) => option.firstLetter}
         onBlur={onBlur}
-        onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) => {
-          onChange(validateInputChange(event, value, reason));
+        clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
+        onInputChange={(event: React.SyntheticEvent, value: string) => {
           onInputChange(event, value);
         }}
         renderInputProps={{

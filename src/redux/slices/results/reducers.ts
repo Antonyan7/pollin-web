@@ -46,7 +46,7 @@ const reducers = createReducer({
     state.labMachines = action.payload;
   },
   setIsLabMachinesLoading(state, action: IAction<boolean>) {
-    state.islabMachinesLoading = action.payload;
+    state.isLabMachinesLoading = action.payload;
   },
   setIsTestResultsDetailsLoading(state, action: IAction<boolean>) {
     state.isTestResultsDetailsLoading = action.payload;

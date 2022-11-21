@@ -26,7 +26,7 @@ export interface IResultsProps {
   isResultsFiltersLoading: boolean;
   isPendingTestStatsLoading: boolean;
   isTestResultsDetailsLoading: boolean;
-  islabMachinesLoading: boolean;
+  isLabMachinesLoading: boolean;
   isTestResultsSubmitLoading: boolean;
   pendingSpecimenStats: IPendingTestStats[];
   isPendingSpecimenStatsLoading: boolean;

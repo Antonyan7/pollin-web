@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useRef } from 'react';
 import {
   Autocomplete,
@@ -6,7 +7,6 @@ import {
   CircularProgress,
   FormControl,
   InputLabel,
-  InputProps,
   Select,
   SelectProps,
   TextField,
@@ -16,13 +16,13 @@ import {
 import BottomBarLoading from './BottomBarLoading';
 import Listbox, { BaseDropdownWithLoadingContext } from './Listbox';
 
-interface BaseDropdownWithLoadingProps
-  extends Omit<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    AutocompleteProps<any, boolean, boolean, boolean>,
-    'renderInput'
-  > {
-  renderInputProps?: TextFieldProps | InputProps;
+interface BaseDropdownWithLoadingProps<
+  T,
+  Multiple extends boolean | undefined,
+  DisableClearable extends boolean | undefined,
+  FreeSolo extends boolean | undefined
+> extends Omit<AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>, 'renderInput'> {
+  renderInputProps?: TextFieldProps;
   isLoading: boolean;
 }
 
@@ -37,11 +37,20 @@ const EndAdornmentLoading = () => (
   />
 );
 
-const BaseDropdownWithLoading = ({ isLoading, renderInputProps, ...otherProps }: BaseDropdownWithLoadingProps) => {
-  let { current: isFirstLoading } = useRef(true);
+const BaseDropdownWithLoading = <
+  T,
+  Multiple extends boolean | undefined,
+  DisableClearable extends boolean | undefined,
+  FreeSolo extends boolean | undefined
+>({
+  isLoading,
+  renderInputProps,
+  ...otherProps
+}: BaseDropdownWithLoadingProps<T, Multiple, DisableClearable, FreeSolo>) => {
+  const isFirstLoading = useRef(true);
 
-  if (isFirstLoading && isLoading) {
-    isFirstLoading = false;
+  if (isFirstLoading.current && isLoading) {
+    isFirstLoading.current = false;
   }
 
   return (
@@ -58,19 +67,16 @@ const BaseDropdownWithLoading = ({ isLoading, renderInputProps, ...otherProps }:
           id: 'listBox'
         }}
         ListboxComponent={Listbox}
-        renderInput={(params: AutocompleteRenderInputParams) => {
-          const props = { ...params, ...renderInputProps } as AutocompleteRenderInputParams;
-
-          return (
+        renderInput={(params: AutocompleteRenderInputParams) => (
             <TextField
-              {...props}
+              {...params}
+              {...renderInputProps}
               InputProps={{
                 ...params.InputProps,
                 endAdornment: isFirstLoading && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
               }}
             />
-          );
-        }}
+          )}
       />
     </BaseDropdownWithLoadingContext.Provider>
   );

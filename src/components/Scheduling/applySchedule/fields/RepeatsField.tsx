@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl } from '@mui/material';
 import { repeatWeeksList } from 'helpers/constants';
@@ -33,10 +34,13 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
         popupIcon={<KeyboardArrowDownIcon />}
         options={weeksList}
         onChange={(e, value) => {
-          onRepeatWeeksUpdate(value);
+          if (value && typeof value === 'object' && 'item' in value) {
+            onRepeatWeeksUpdate(value);
+          }
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(itemRepeat) => itemRepeat.name}
+        getOptionLabel={(itemRepeat) => (typeof itemRepeat === 'object' ? itemRepeat.name : itemRepeat)}
+        clearIcon={<CloseIcon onClick={() => onRepeatWeeksUpdate(null)} fontSize="small" />}
         renderInputProps={{ label }}
       />
     </FormControl>

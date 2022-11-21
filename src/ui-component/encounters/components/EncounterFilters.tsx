@@ -144,13 +144,16 @@ const EncounterFilters = ({ page }: { page: number }) => {
         isLoading={isEncountersFiltersLoading}
         options={reformattedFilterResults(encounterFilters as [])}
         groupBy={(option) => option.options.type as string}
-        getOptionLabel={(option) => option.options.title as string}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.options.title ?? '' : option)}
         isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
-        value={selectedFilterResults}
-        onChange={(_, selectedOption: GroupedByTitlesProps[]) => {
-          onAutoCompleteChange(selectedOption);
+        value={[...selectedFilterResults]}
+        onChange={(_, selectedOption) => {
+          onAutoCompleteChange(
+            selectedOption.filter((option): option is GroupedByTitlesProps => typeof option === 'object')
+          );
         }}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
+        clearIcon={<CloseIcon onClick={() => onAutoCompleteChange([])} fontSize="small" />}
         renderInputProps={{
           label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
         }}

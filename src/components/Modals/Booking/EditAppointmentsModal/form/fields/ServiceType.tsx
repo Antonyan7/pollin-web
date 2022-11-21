@@ -57,13 +57,15 @@ const ServiceType = () => {
         }}
         id="serviceType"
         onChange={(_, value) => {
-          onChange(value?.item.id);
+          if (value && typeof value === 'object' && 'item' in value) {
+            onChange(value.item.id);
+          }
         }}
         defaultValue={defaultServiceTypeOption}
         isOptionEqualToValue={(option, value) => option.item.id === value?.item.id}
         options={serviceTypeOptions}
         groupBy={(option) => option.firstLetter}
-        getOptionLabel={(option) => option.item.title}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
         onBlur={onBlur}
         clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
         renderInputProps={{

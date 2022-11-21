@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DialogActions, DialogContent, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -25,12 +26,12 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
   }, []);
 
   const labMachines = useAppSelector(resultsSelector.labMachines);
-  const islabMachinesLoading = useAppSelector(resultsSelector.islabMachinesLoading);
+  const isLabMachinesLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
   const labMachinesOptions = createOptionsGroup(labMachines);
   const theme = useTheme();
   const machineSelectLabel = t(Translation.MODAL_CONFIRM_MACHINE_VALUE);
 
-  const isConfirmationLoading = useAppSelector(resultsSelector.islabMachinesLoading);
+  const isConfirmationLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
 
   const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
   const [machineVal, setMachineVal] = useState('');
@@ -58,7 +59,7 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
         </Grid>
         <Grid item xs={12}>
           <BaseDropdownWithLoading
-            isLoading={islabMachinesLoading}
+            isLoading={isLabMachinesLoading}
             ListboxProps={{
               style: {
                 maxHeight: 260,
@@ -67,10 +68,15 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
               }
             }}
             isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-            onChange={(_, value) => setMachineVal(value?.item.id)}
+            onChange={(_, value) => {
+              if (value && typeof value === 'object' && 'item' in value) {
+                setMachineVal(value.item.id);
+              }
+            }}
             options={labMachinesOptions}
             groupBy={(option) => option.firstLetter}
-            getOptionLabel={(option) => option.item.title}
+            getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
+            clearIcon={<CloseIcon onClick={() => setMachineVal('')} fontSize="small" />}
             popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
             renderInputProps={{
               label: machineSelectLabel

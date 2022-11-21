@@ -16,7 +16,7 @@ export const getInitialState = (): IResultsProps => ({
   isResultsFiltersLoading: false,
   isPendingTestStatsLoading: false,
   isTestResultsDetailsLoading: false,
-  islabMachinesLoading: false,
+  isLabMachinesLoading: false,
   isTestResultsSubmitLoading: false,
   specimenActions: [],
   pendingSpecimenStats: [],

@@ -1,12 +1,13 @@
 import React, { createContext, PropsWithChildren, useContext } from 'react';
-import { Box } from '@mui/material';
+import { Box, BoxProps } from '@mui/material';
 
 import BottomBarLoading from './BottomBarLoading';
 
 export const BaseDropdownWithLoadingContext = createContext(false);
 
-// eslint-disable-next-line react/prop-types
-const Listbox: React.FC<PropsWithChildren> = React.forwardRef(({ children, ...otherProps }, ref) => {
+export interface ListboxProps extends PropsWithChildren, BoxProps {}
+
+const Listbox = React.forwardRef(({ children, ...otherProps }: ListboxProps, ref) => {
   const isLoading = useContext(BaseDropdownWithLoadingContext);
 
   return (

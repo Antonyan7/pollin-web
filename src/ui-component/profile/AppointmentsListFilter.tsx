@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import bookingManager from '@axios/booking/bookingManager';
 import { IPatientAppointmentsListFilter, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
+import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -60,7 +61,14 @@ const AppointmentListFilter = () => {
             border: `${borders.solid2px} ${theme.palette.primary.main}`
           }
         }}
-        onChange={(_event, appointmentFilters) => onAppointmentRecencyChange(appointmentFilters)}
+        onChange={(_event, appointmentFilters) =>
+          onAppointmentRecencyChange(
+            appointmentFilters.filter(
+              (appointmentFilter): appointmentFilter is { type: string; id: string; title: string } =>
+                typeof appointmentFilter === 'object'
+            )
+          )
+        }
         getOptionDisabled={(option) => {
           if (option && selectedFilters.length > 0) {
             return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
@@ -70,8 +78,9 @@ const AppointmentListFilter = () => {
         }}
         options={filters.length ? adaptedGroupedOptions() : []}
         groupBy={(option) => option.type}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
         isOptionEqualToValue={(option, value) => option.id === value.id}
+        clearIcon={<CloseIcon onClick={() => onAppointmentRecencyChange([])} fontSize="small" />}
         renderInputProps={{
           label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS),
           name: currentPatientAppointmentFilterField

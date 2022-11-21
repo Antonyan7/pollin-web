@@ -1,12 +1,12 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { AutocompleteInputChangeReason, Grid } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { AppointmentDetailsProps } from 'types/reduxTypes/bookingStateTypes';
-import { validateInputChange } from 'validation/validationHelpers';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -36,14 +36,17 @@ const PatientId = () => {
       <BaseDropdownWithLoading
         isLoading={isLoading}
         id={patientIdFieldName}
+        onChange={(_, value) => {
+          if (value && typeof value === 'object' && 'id' in value) {
+            onChange(value.id);
+          }
+        }}
         disabled
         defaultValue={details?.patient}
         options={[details?.patient]}
         isOptionEqualToValue={(option, value) => option === value}
-        getOptionLabel={(option) => option.name}
-        onInputChange={(event: React.SyntheticEvent, value: string, reason: AutocompleteInputChangeReason) =>
-          onChange(validateInputChange(event, value, reason))
-        }
+        getOptionLabel={(option) => (typeof option === 'object' ? option.name : option)}
+        clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
         renderInputProps={{
           label: patientIdSelectLabel,
           helperText: patientIdHelperText,
