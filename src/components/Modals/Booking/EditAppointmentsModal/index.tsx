@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -58,7 +58,10 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const [modalLoading, setModalLoading] = useState(true);
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
+  const onClose = useCallback(() => {
+    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
+    dispatch(bookingMiddleware.getAppointmentDetails());
+  }, []);
 
   const methods = useForm({
     defaultValues: getFormState(),

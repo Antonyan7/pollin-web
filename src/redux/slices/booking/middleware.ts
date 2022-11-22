@@ -257,11 +257,15 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
   }
 };
 
-const getAppointmentDetails = (appointmentId: string) => async (dispatch: AppDispatch) => {
+const getAppointmentDetails = (appointmentId?: string) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.booking.getAppointmentDetails(appointmentId);
+    if (appointmentId) {
+      const response = await API.booking.getAppointmentDetails(appointmentId);
 
-    dispatch(setAppointmentDetails(response.data.data));
+      dispatch(setAppointmentDetails(response.data.data));
+    } else {
+      dispatch(setAppointmentDetails(null));
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));
