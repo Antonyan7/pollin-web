@@ -34,8 +34,8 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
         popupIcon={<KeyboardArrowDownIcon />}
         options={weeksList}
         onChange={(e, value) => {
-          if (value && typeof value === 'object' && 'item' in value) {
-            onRepeatWeeksUpdate(value);
+          if (value && typeof value === 'object') {
+            onRepeatWeeksUpdate(value as IApplyScheduleDay);
           }
         }}
         isOptionEqualToValue={(option, value) => option.id === value.id}
