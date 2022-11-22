@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TableCell, TableRow, Typography } from '@mui/material';
+import { TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { Translation } from 'constants/translations';
+import { getChipColor } from 'helpers/resultsChipColor';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
-
-import { Translation } from '../../constants/translations';
 
 interface IExternalResultsTableRow {
   row: IPatientContactInformationModalProps;
@@ -18,6 +18,13 @@ interface IExternalResultsTableRow {
 
 const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
   const [t] = useTranslation();
+  const theme = useTheme();
+
+  const chipColor = useMemo(
+    () => getChipColor(row.age, theme.palette),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [row.age]
+  );
 
   const onContactInformationModalOpen = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.PatientContactInformation, props: row }));
@@ -42,7 +49,12 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
       <TableCell align="left">{row.labName}</TableCell>
       <TableCell align="left">{row.status}</TableCell>
       <TableCell align="center">
-        <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
+        <Chip
+          sx={{ background: chipColor.light, color: chipColor.dark }}
+          label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`}
+          size="small"
+          chipColor="notActive"
+        />
       </TableCell>
     </TableRow>
   );

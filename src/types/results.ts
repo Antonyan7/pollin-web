@@ -22,6 +22,11 @@ export enum TestResultsStats {
   LessThanOrEqual15Days = 'LessThanOrEqual15Days'
 }
 
+export enum TestResultsStatsNumbers {
+  Days30 = 30,
+  Days15 = 15
+}
+
 export enum TestResultsFilters {
   Status = 'Status',
   CollectionAge = 'CollectionAge',
