@@ -25,7 +25,8 @@ export const getInitialState = (): IResultsProps => ({
     specimens: [],
     currentPage: 1,
     pageSize: 10,
-    totalItems: 0
+    totalItems: 0,
+    notFoundIds: []
   },
   isSpecimensListLoading: false,
   specimensFilters: [],

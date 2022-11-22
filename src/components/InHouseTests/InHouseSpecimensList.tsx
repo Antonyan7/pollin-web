@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
+import { SeveritiesType } from '@components/Scheduling/types';
 import {
   Box,
   Checkbox,
@@ -18,6 +19,7 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { margins } from 'themes/themeConstants';
@@ -33,6 +35,19 @@ import { InHouseSpecimensHeadCell } from './InHouseSpecimensHeadCell';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
 import SearchBox from './SearchBox';
+
+const generateDescription = (ids: string[], headerText: string) => {
+  const listElements = ids.map((id) => `<li>${id}</li>`).join('');
+
+  return `
+    <div>
+      <p>${headerText}</p>
+      <ul>
+        ${listElements}
+      </ul>
+    </div>
+  `;
+};
 
 // eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
@@ -67,6 +82,38 @@ const InHouseSpecimensList = () => {
 
     dispatch(resultsMiddleware.getSpecimensList(data));
   }, [page, ids, selectedFilters, sortField, sortOrder]);
+
+  React.useEffect(() => {
+    const shouldShowToast = ids.length > 0 && !isSpecimensListLoading && page === 0;
+
+    if (shouldShowToast) {
+      if (specimensList.notFoundIds.length > 0) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.error,
+              description: generateDescription(
+                specimensList.notFoundIds,
+                t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL)
+              )
+            }
+          })
+        );
+      } else {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_SUCCESS)
+            }
+          })
+        );
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, specimensList.notFoundIds, isSpecimensListLoading]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);

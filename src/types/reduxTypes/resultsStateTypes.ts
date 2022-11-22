@@ -69,6 +69,7 @@ export interface ISpecimensListItem {
 
 export interface ISpecimensList extends IPagination {
   specimens: ISpecimensListItem[];
+  notFoundIds: string[];
 }
 
 export interface IPendingTestStats {

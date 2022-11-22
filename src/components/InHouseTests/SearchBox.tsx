@@ -1,7 +1,34 @@
 import React, { KeyboardEvent, useCallback, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import SearchIcon from '@mui/icons-material/Search';
-import { Chip, IconButton, InputAdornment, OutlinedInput, useTheme } from '@mui/material';
+import { Chip, IconButton, InputAdornment, OutlinedInput, OutlinedInputProps, styled, useTheme } from '@mui/material';
+
+const StyledOutlinedInput = styled(OutlinedInput)<OutlinedInputProps>(({ theme }) => ({
+  '.MuiInputAdornment-root': {
+    height: '100%',
+    maxHeight: '100%',
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, max-content)'
+  },
+  '.chips-container': {
+    height: '100%',
+    maxWidth: 500,
+    overflowX: 'overlay',
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'default',
+    '::-webkit-scrollbar': {
+      height: 5
+    },
+    '::-webkit-scrollbar-thumb': {
+      background: theme.palette.grey[500]
+    },
+
+    '::-webkit-scrollbar-thumb:hover': {
+      background: theme.palette.grey[700]
+    }
+  }
+}));
 
 interface SearchBoxProps {
   onSearch: (values: string[]) => void;
@@ -70,7 +97,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder }) => {
 
   return (
     <form onSubmit={submitHandler}>
-      <OutlinedInput
+      <StyledOutlinedInput
         id="input-search-patients"
         value={searchValue}
         placeholder={placeholder}
@@ -82,16 +109,18 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder }) => {
             <IconButton type="submit">
               <SearchIcon color="primary" />
             </IconButton>
-            {currentSearchboxValues.map((value) => (
-              <Chip
-                color="primary"
-                variant="outlined"
-                sx={{ ml: theme.spacing(1) }}
-                key={value}
-                label={value}
-                onDelete={() => searchboxValueDeleteHandler(value)}
-              />
-            ))}
+            <div className="chips-container">
+              {currentSearchboxValues.map((value) => (
+                <Chip
+                  color="primary"
+                  variant="outlined"
+                  sx={{ ml: theme.spacing(1) }}
+                  key={value}
+                  label={value}
+                  onDelete={() => searchboxValueDeleteHandler(value)}
+                />
+              ))}
+            </div>
           </InputAdornment>
         }
         endAdornment={

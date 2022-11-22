@@ -1,3 +1,4 @@
+/* eslint-disable react/no-danger */
 import React, { useCallback } from 'react';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import CloseIcon from '@mui/icons-material/Close';
@@ -60,7 +61,7 @@ export const ToastNotification = React.forwardRef(() => {
         }
       >
         <Typography sx={{ fontWeight: 600, color: (theme) => theme.palette.common.white }}>
-          {toastNotificationPopUp.props.description}
+          <div dangerouslySetInnerHTML={{ __html: toastNotificationPopUp.props.description }} />
         </Typography>
       </Alert>
     </Snackbar>

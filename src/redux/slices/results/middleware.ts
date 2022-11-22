@@ -180,13 +180,19 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
     ) as ISpecimensListReqBody;
 
     const response = await API.results.getSpecimens(body);
-    const { totalItems, currentPage, pageSize } = response.data;
+    const {
+      totalItems,
+      currentPage,
+      pageSize,
+      data: { specimens, notFoundIds }
+    } = response.data;
 
     const results: ISpecimensList = {
       totalItems,
       currentPage,
       pageSize,
-      specimens: response.data.data.specimens
+      specimens,
+      notFoundIds
     };
 
     dispatch(setSpecimensList(results));

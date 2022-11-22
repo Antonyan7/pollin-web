@@ -234,7 +234,9 @@ export enum Translation {
   PAGE_IN_HOUSE_SPECIMENS_CELLS_ID = 'page.in.house.specimens.cells.id',
   PAGE_IN_HOUSE_SPECIMENS_CELLS_MACHINE = 'page.in.house.specimens.cells.machine',
   PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER = 'page.in.house.specimens.search.placeholder',
-  PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL = 'page.in.house.specimens.filter.label'
+  PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL = 'page.in.house.specimens.filter.label',
+  PAGE_IN_HOUSE_SPECIMENS_SEARCH_SUCCESS = 'page.in.house.specimens.search.success',
+  PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL = 'page.in.house.specimens.search.fail'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
