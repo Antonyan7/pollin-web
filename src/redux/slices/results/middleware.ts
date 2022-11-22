@@ -143,11 +143,11 @@ const getLabMachines = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const submitTestResults = (data: ITestResultsData[], testResultId: string) => async (dispatch: AppDispatch) => {
+const submitTestResults = (data: ITestResultsData[]) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsTestResultsSubmitLoading(true));
 
-    await API.results.submitTestResults(data, testResultId);
+    await API.results.submitTestResults(data);
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

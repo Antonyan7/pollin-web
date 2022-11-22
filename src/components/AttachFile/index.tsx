@@ -34,7 +34,7 @@ const AttachFile: FC<AttachedFileProps> = ({ currentFormFieldName }) => {
     control
   });
 
-  const isFileAttachmentLimitReachedOut = attachments.length >= MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT;
+  const isFileAttachmentLimitReachedOut = attachments && attachments.length >= MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT;
 
   const handleFileAttachment = (e: ChangeEvent<HTMLInputElement>) => {
     const newAttachedFiles = Object.values(e?.target?.files ?? []).map((item) => ({

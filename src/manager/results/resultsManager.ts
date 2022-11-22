@@ -3,8 +3,7 @@ import {
   IResultsReqBody,
   ISpecimensListReqBody,
   ITestResultsData,
-  ITestResultsDetailsBody,
-  ITestResultsParams
+  ITestResultsDetailsBody
 } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
@@ -18,6 +17,8 @@ import {
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFiltersResponse, ISpecimensFiltersResponse } from 'types/results';
+
+import { ITestResultsParams } from './resultsManagerTypes';
 
 const baseURL = '/clinic-test-results';
 
@@ -55,13 +56,10 @@ const resultsManager = {
   getLabMachines() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
   },
-  submitTestResults(testResults: ITestResultsData[], testResultId: string) {
-    return axiosInstance.put<ITestResultsData, IAxiosResponse<ITestResultsData[]>>(
-      `${baseURL}/v1/test-result/${testResultId}`,
-      {
-        testResults
-      }
-    );
+  submitTestResults(testResults: ITestResultsData[]) {
+    return axiosInstance.put<ITestResultsData[], IAxiosResponse<ITestResultsData[]>>(`${baseURL}/v1/test-result`, {
+      testResults
+    });
   },
   getSpecimenActions() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(

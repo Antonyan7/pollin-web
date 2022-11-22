@@ -24,7 +24,7 @@ const AttachedFilesDetails: React.FC<IAttachedFilesDetailsProps> = ({
 
   return (
     <Stack my={margins.top24} sx={{ width: '100%' }} spacing={3}>
-      {fields.map((field, index) => (
+      {fields?.map((field, index) => (
         <Box key={field.id} display="flex" alignItems="center" gap={4}>
           <Box
             display="flex"
@@ -63,7 +63,11 @@ const AttachedFilesDetails: React.FC<IAttachedFilesDetailsProps> = ({
             <TextField
               label={t(Translation.PAGE_INPUT_RESULTS_TEST_ATTACH_FILE_NOTES_FORM_LAB)}
               sx={{ background: theme.palette.secondary.light, borderRadius: borderRadius.radius12, width: '100%' }}
-              inputProps={{ sx: { pt: paddings.top12, color: theme.palette.secondary[800] } }}
+              inputProps={{
+                sx: {
+                  color: theme.palette.secondary[800]
+                }
+              }}
               {...register(`${currentFormFieldAttachments}.${index}.note`)}
             />
           </Box>

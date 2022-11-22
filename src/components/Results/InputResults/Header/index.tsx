@@ -1,19 +1,18 @@
-import React, { useMemo } from 'react';
-import { useFormContext, useWatch } from 'react-hook-form';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { CircularProgress, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { margins, paddings } from 'themes/themeConstants';
-import { TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
-import { FinalResultChipColor } from 'types/results';
 
 import Chip from '@ui-component/patient/Chip';
 
+import TestResultsLoading from '../TestResultsLoader';
 import { InputTestResultsHeaderProps } from '../types';
 
+import useTestResultStatusData from './hooks/useTestResultStatus';
 import InputResultsHeaderSection from './InputResultsHeaderSection';
 
 const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
@@ -25,49 +24,9 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
 }) => {
   const [t] = useTranslation();
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
-  const { control } = useFormContext();
 
-  const initialResultValue = useMemo(() => t(Translation.MODAL_EXTERNAL_RESULTS_RESULT_TEXT), [t]);
+  const { testResultStatusLabel, testResultStatusColor } = useTestResultStatusData(currentFormFieldName);
 
-  const { items } = useWatch({ name: currentFormFieldName, control });
-
-  const detectedStatusType = useMemo(() => {
-    const allElementsWithNormalStatus = items.map((item: { resultType: TestResultMeasurementType }) => {
-      // Here we are setting falsy value for the cases when nothing was returned from the backend
-      if (!item.resultType) {
-        return 0;
-      }
-
-      // If Result type will be something different from normal we will get falsy value
-      return item.resultType === TestResultMeasurementType.Normal;
-    });
-
-    const allStatusesAreEmpty = allElementsWithNormalStatus.every((every: boolean | number) => every === 0);
-    const allStatusesHaveFilledWithNormal = allElementsWithNormalStatus.every(
-      (every: boolean | number) => every === true
-    );
-
-    if (allStatusesAreEmpty) {
-      return initialResultValue;
-    }
-
-    if (allStatusesHaveFilledWithNormal) {
-      return TestResultMeasurementType.Normal;
-    }
-
-    return TestResultMeasurementType.Abnormal;
-  }, [items, initialResultValue]);
-
-  const getChipColor = () => {
-    switch (detectedStatusType) {
-      case TestResultMeasurementType.Normal:
-        return FinalResultChipColor.Normal;
-      case TestResultMeasurementType.Abnormal:
-        return FinalResultChipColor.Abnormal;
-      default:
-        return FinalResultChipColor.Initial;
-    }
-  };
   const { customizedDate: formattedOrderedDate } = timeAdjuster(dates?.ordered ?? '');
   const { customizedDate: formattedCollectedDate } = timeAdjuster(dates?.ordered ?? '');
 
@@ -121,11 +80,11 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
             />
             <Grid alignSelf="center">
               <Chip
-                chipColor={getChipColor()}
+                chipColor={testResultStatusColor}
                 sx={{
                   height: '33px'
                 }}
-                label={detectedStatusType}
+                label={testResultStatusLabel}
               />
             </Grid>
           </Grid>
@@ -137,9 +96,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
           />
         </>
       ) : (
-        <Grid item display="flex" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%' }}>
-          <CircularProgress />
-        </Grid>
+        <TestResultsLoading />
       )}
     </Grid>
   );

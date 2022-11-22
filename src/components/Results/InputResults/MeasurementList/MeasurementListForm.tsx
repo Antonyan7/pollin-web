@@ -18,6 +18,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 import ResultsCancelButton from '../CancelButton';
 import InputResultsHeader from '../Header';
+import TestResultsLoader from '../TestResultsLoader';
 import { MeasurementListFormProps } from '../types';
 
 import extractFormDataFromTestResultsDetails from './helpers';
@@ -25,8 +26,8 @@ import extractFormDataFromTestResultsDetails from './helpers';
 const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) => {
   const [t] = useTranslation();
   const router = useRouter();
+  const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
   const testResultsDetails = useAppSelector(resultsSelector.testResultsDetails);
-
   const { formDefaultFieldValues, formDefaultFieldsNames } = useMemo(
     () => extractFormDataFromTestResultsDetails(testResultsDetails),
     [testResultsDetails]
@@ -61,7 +62,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
         </Box>
       }
     >
-      {testResultsDetails.length > 0 && (
+      {!isTestResultsDetailsLoading ? (
         <FormProvider {...form}>
           {testResultsDetails.map((testResultDetails, index) => {
             const currentFormFieldName = `data_${testResultDetails.id}`;
@@ -91,12 +92,8 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                     placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
                     currentFormFieldName={currentFormFieldName}
                   />
-                  {testResultDetails.isAttachmentRequired && (
-                    <>
-                      <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
-                      <AttachFile currentFormFieldName={currentFormFieldName} />
-                    </>
-                  )}
+                  <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
+                  <AttachFile currentFormFieldName={currentFormFieldName} />
                 </Grid>
                 <Divider sx={{ mt: margins.top12 }} />
                 {shouldShowSaveButton && (
@@ -114,6 +111,8 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
             );
           })}
         </FormProvider>
+      ) : (
+        <TestResultsLoader />
       )}
     </SubCardStyled>
   );

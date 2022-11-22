@@ -55,8 +55,9 @@ export interface ITestResultsData {
     dateReceived: string;
     result: string;
   };
-  attachments: ITestResultAttachmentData[];
+  attachments?: ITestResultAttachmentData[];
 }
+
 export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }

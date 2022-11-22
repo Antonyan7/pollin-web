@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
 import ContextMenu from '@ui-component/contextMenu';
@@ -18,12 +19,22 @@ interface InHouseSpecimensRowProps {
 export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected, labelId }: InHouseSpecimensRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
+  const router = useRouter();
+
+  const navigateToTestResultsPage = () => {
+    const currentPath = router.asPath;
+    const specimenId = row.id;
+    const inHouseTestResultsPagePath = `${currentPath}/input-results/${specimenId}`;
+
+    router.push(inHouseTestResultsPagePath);
+  };
 
   return (
-    <TableRow hover role="checkbox" key={row.id}>
+    <TableRow role="checkbox" hover key={row.id} onClick={navigateToTestResultsPage}>
       <TableCell
         padding="checkbox"
         onClick={(event) => {
+          event.stopPropagation();
           onClick(event, row.id);
         }}
       >
