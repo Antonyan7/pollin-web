@@ -5,7 +5,6 @@ import { ArrowBackIos, EditOutlined, PrintOutlined, ShareOutlined } from '@mui/i
 import { Box, CircularProgress, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/system';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -21,14 +20,14 @@ interface EncounterDetailsPageTitleProps {
   theme: Theme;
   encounterData: IEncounterDetailsProps;
   handleBack: () => void;
-  encounterNoteEditedTime: string;
+  encounterNoteCreatedTime: string;
 }
 
 const EncounterDetailsPageTitle = ({
   theme,
   encounterData,
   handleBack,
-  encounterNoteEditedTime
+  encounterNoteCreatedTime
 }: EncounterDetailsPageTitleProps) => (
   <Grid container alignItems="center" justifyContent="space-between" xs={12}>
     <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
@@ -44,7 +43,7 @@ const EncounterDetailsPageTitle = ({
       </Grid>
     </Grid>
     <Grid container item xs={4} justifyContent="flex-end" pr={paddings.right16}>
-      <Typography variant="h4">{encounterNoteEditedTime}</Typography>
+      <Typography variant="h4">{encounterNoteCreatedTime}</Typography>
     </Grid>
   </Grid>
 );
@@ -101,7 +100,6 @@ const EncounterDetailsPage = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const encounterNoteEditedTime = timeAdjuster(new Date(encounterData?.updatedOn as Date)).customizedDate;
   const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
   const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
   const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.id}/edit-note`);
@@ -137,7 +135,7 @@ const EncounterDetailsPage = () => {
               theme={theme}
               encounterData={encounterData}
               handleBack={handleBack}
-              encounterNoteEditedTime={encounterNoteEditedTime}
+              encounterNoteCreatedTime={encounterNoteCreatedTime}
             />
           }
         >
