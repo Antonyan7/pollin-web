@@ -60,7 +60,7 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
   const [modalLoading, setModalLoading] = useState(true);
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-    dispatch(bookingMiddleware.getAppointmentDetails());
+    dispatch(bookingMiddleware.clearAppointmentDetails());
   }, []);
 
   const methods = useForm({

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
@@ -16,7 +16,10 @@ const EditAppointmentsModalForm = () => {
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const appointmentId = details?.appointment.id ?? '';
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
+  const onClose = useCallback(() => {
+    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
+    dispatch(bookingMiddleware.clearAppointmentDetails());
+  }, []);
 
   const onSubmit = (values: IFormValues) => {
     onClose();
