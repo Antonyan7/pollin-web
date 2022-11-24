@@ -49,27 +49,32 @@ const EditEncounterNoteAddendums = () => {
 
   return encounterData ? (
     <Grid item container direction="column" gap={3} sx={{ pt: paddings.top16, ml: margins.left16 }}>
-      {encounterData.addendums.map((addendum: AddendumsProps, addendumIndex: number) => (
-        <>
-          <Grid item container direction="row" alignItems="center">
-            <Typography variant="h4" sx={{ width: '130px' }}>
-              {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
-            </Typography>
-          </Grid>
-          <Grid item>
-            <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
-          </Grid>
-          <Grid item container direction="column" mb={margins.bottom16}>
-            <Typography variant="h4">{addendum.author}</Typography>
-            <Typography variant="body1">
-              {`${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encountersCustomizedDate(
-                new Date(addendum.date as Date)
-              )}`}
-            </Typography>
-          </Grid>
-          <Divider sx={{ display: addendumIndex === encounterData.addendums.length - 1 ? 'none' : 'block' }} />
-        </>
-      ))}
+      {encounterData.addendums.map((addendum: AddendumsProps, addendumIndex: number) => {
+        const isEditedTitle = addendum?.isEdited
+          ? t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)
+          : t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON);
+        const isLatestAddendum = addendumIndex === encounterData.addendums.length - 1;
+
+        return (
+          <>
+            <Grid item container direction="row" alignItems="center">
+              <Typography variant="h4" sx={{ width: '130px' }}>
+                {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <ParserTypographyWrapper variant="body1">{parse(addendum.content)}</ParserTypographyWrapper>
+            </Grid>
+            <Grid item container direction="column" mb={margins.bottom16}>
+              <Typography variant="h4">{addendum.author}</Typography>
+              <Typography variant="body1">
+                {`${isEditedTitle} ${encountersCustomizedDate(new Date(addendum.date as Date))}`}
+              </Typography>
+            </Grid>
+            {!isLatestAddendum ? <Divider /> : null}
+          </>
+        );
+      })}
     </Grid>
   ) : null;
 };
