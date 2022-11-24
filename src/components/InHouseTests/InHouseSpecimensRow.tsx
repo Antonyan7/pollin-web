@@ -48,7 +48,7 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected, lab
         />
       </TableCell>
       <TableCell>{row.titles?.join(', ')}</TableCell>
-      <TableCell>{row.id}</TableCell>
+      <TableCell>{row.identifier}</TableCell>
       <TableCell>{row.machine}</TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="center">

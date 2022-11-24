@@ -61,6 +61,7 @@ export interface IResultsList extends IPagination {
 
 export interface ISpecimensListItem {
   id: string;
+  identifier: string;
   titles: string[];
   machine: string;
   status: IStatus;

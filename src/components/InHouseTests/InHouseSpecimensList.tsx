@@ -36,8 +36,8 @@ import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
 import SearchBox from './SearchBox';
 
-const generateDescription = (ids: string[], headerText: string) => {
-  const listElements = ids.map((id) => `<li>${id}</li>`).join('');
+const generateDescription = (identifiers: string[], headerText: string) => {
+  const listElements = identifiers.map((id) => `<li>${id}</li>`).join('');
 
   return `
     <div>
@@ -52,10 +52,11 @@ const generateDescription = (ids: string[], headerText: string) => {
 // eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
   const [page, setPage] = useState<number>(0);
-  const [ids, setIds] = useState<string[]>([]);
-  const [sortField, setSortField] = useState<SpecimensListSortFields | null>(null);
-  const [sortOrder, setSortOrder] = useState<SortOrder | null>(null);
+  const [identifiers, setIdentifiers] = useState<string[]>([]);
+  const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
+  const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [selectedFilters, setSelectedFilters] = useState<ISpecimensFilterOptions[]>([]);
+  const [toastHasBeenShown, setToasHasBeenShown] = useState(false);
   const pendingSpecimenStats = useAppSelector(resultsSelector.pendingSpecimenStats);
   const specimensList = useAppSelector(resultsSelector.specimensList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
@@ -73,7 +74,7 @@ const InHouseSpecimensList = () => {
 
   useEffect(() => {
     const data: ISpecimensListReqBody = {
-      ...(ids.length > 0 ? { specimenIds: ids } : {}),
+      ...(identifiers.length > 0 ? { specimens: identifiers.map((identifier) => ({ identifier })) } : {}),
       ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {}),
@@ -81,13 +82,19 @@ const InHouseSpecimensList = () => {
     };
 
     dispatch(resultsMiddleware.getSpecimensList(data));
-  }, [page, ids, selectedFilters, sortField, sortOrder]);
+  }, [page, identifiers, selectedFilters, sortField, sortOrder]);
 
-  React.useEffect(() => {
-    const shouldShowToast = ids.length > 0 && !isSpecimensListLoading && page === 0;
+  useEffect(() => {
+    setToasHasBeenShown(false);
+  }, [identifiers]);
+
+  useEffect(() => {
+    const shouldShowToast = identifiers.length > 0 && !isSpecimensListLoading && page === 0 && !toastHasBeenShown;
 
     if (shouldShowToast) {
-      if (specimensList.notFoundIds.length > 0) {
+      setToasHasBeenShown(true);
+
+      if (specimensList.notFoundIds?.length > 0) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
@@ -113,7 +120,7 @@ const InHouseSpecimensList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, specimensList.notFoundIds, isSpecimensListLoading]);
+  }, [page, specimensList.notFoundIds, isSpecimensListLoading, toastHasBeenShown]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -121,7 +128,7 @@ const InHouseSpecimensList = () => {
 
   const searchByIdsHandler = useCallback((idArr: string[]) => {
     setPage(0);
-    setIds(idArr);
+    setIdentifiers(idArr);
   }, []);
 
   const filterChangeHandler = useCallback((curFilters: ISpecimensFilterOptions[]) => {

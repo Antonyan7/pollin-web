@@ -24,7 +24,9 @@ export interface IResultsReqBody {
 
 export interface ISpecimensListReqBody {
   page: number;
-  specimenIds?: string[];
+  specimens?: {
+    identifier: string;
+  }[];
   sortOrder?: SortOrder;
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: SpecimensListSortFields;
