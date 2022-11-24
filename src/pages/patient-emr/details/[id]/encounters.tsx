@@ -13,7 +13,6 @@ const EncountersTab = () => {
   useEffect(() => {
     if (router.query.id) {
       dispatch(patientsMiddleware.setCurrentPatient(router.query.id as string));
-      dispatch(patientsMiddleware.getPatientProfile(router.query.id as string));
     }
   }, [router.query.id]);
 

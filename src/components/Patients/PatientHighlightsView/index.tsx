@@ -21,6 +21,7 @@ const PatientHighlightsView = () => {
 
   useEffect(() => {
     if (patientId && !isPatientHighlightsLoading) {
+      dispatch(patientsMiddleware.getPatientProfile(patientId));
       dispatch(patientsMiddleware.getPatientHighlight(patientId));
     }
   }, [isPatientHighlightsLoading, patientId]);
