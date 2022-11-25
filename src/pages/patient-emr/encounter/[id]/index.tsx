@@ -14,7 +14,10 @@ import { borderRadius, borders, margins, paddings } from 'themes/themeConstants'
 import { ButtonWithIcon } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 import EncountersWrapper from '@ui-component/encounters/components/EncountersWrapper';
-import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
+import {
+  encountersCustomizedDate,
+  encountersCustomizedDateWithoutTime
+} from '@ui-component/encounters/helpers/encountersDate';
 
 interface EncounterDetailsPageTitleProps {
   theme: Theme;
@@ -100,7 +103,7 @@ const EncounterDetailsPage = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
+  const encounterNoteCreatedTime = encountersCustomizedDateWithoutTime(new Date(encounterData?.createdOn as Date));
   const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
   const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.id}/edit-note`);
   const goToEditAddendumPage = (addendumId: string) =>

@@ -156,7 +156,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
 
   return (
     <EncountersWrapper
-      title={<EditEncounterAddendumTitle handleClose={handleClose} mode={mode} updatedOn={encounterData?.updatedOn} />}
+      title={<EditEncounterAddendumTitle handleClose={handleClose} mode={mode} updatedOn={encounterData?.createdOn} />}
     >
       <Grid container spacing={3} pt={paddings.top32}>
         <Grid item container xs={12} spacing={1} direction="column">
