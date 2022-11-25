@@ -4,7 +4,7 @@ import { PatientPartnersModalProps } from '@components/Patients/PatientModals/Pa
 
 import { AddAppointmentDuplicatePatientModalProps } from './Booking/AddAppointmentDuplicatePatientModal';
 import { AddResourceAppointmentModalProps } from './Booking/AddResourceAppointmentModal';
-import { CancelAppointmentModalProps } from './Booking/CancelAppointmentModal';
+import { CancelAppointmentModalProps } from './Booking/CancelAppointmentModal/types';
 import { EditAppointmentModalProps } from './Booking/EditAppointmentsModal';
 import { ScheduleTemplatesErrorModalProps } from './Scheduling/ScheduleTemplatesErrorModal';
 

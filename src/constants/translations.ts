@@ -135,6 +135,7 @@ export enum Translation {
   PAGE_RESULTS_CELLS_AGE = 'page.results.cells.age',
   PAGE_ENCOUNTERS_CANCEL_CHANGES_BUTTON = 'page.encounters.cancel.changes.button',
   MODAL_CANCEL = 'modal.cancel',
+  MODAL_OK = 'modal.ok',
   MODAL_MARK_AS_IN_PROGRESS_CONFIRM_MACHINE = 'modal.mark.as.in_progress.confirm.machine',
   MODAL_CONFIRM_MACHINE_SPECIMEN_ID = 'modal.confirm.machine.specimen.id',
   MODAL_CONFIRM_MACHINE_LOCATED_IN = 'modal.confirm.machine.located.in',

@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -33,6 +34,7 @@ const ServiceType = () => {
   const serviceTypeIdHelperText = (isTouched ? error?.message : '') ?? '';
   const isServiceTypeError = !!error?.message && isTouched;
   const serviceTypeSelectLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_SELECT_SERVICE_TYPE);
+  const serviceTypeSelectLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_SELECT_SERVICE_TYPE;
 
   const defaultServiceTypeOption = useMemo(
     () => serviceTypeOptions.find((option) => option.item.id === fieldProps.value) ?? null,
@@ -64,6 +66,7 @@ const ServiceType = () => {
         defaultValue={defaultServiceTypeOption}
         isOptionEqualToValue={(option, value) => option.item.id === value?.item.id}
         options={serviceTypeOptions}
+        data-cy={serviceTypeSelectLabelCyId}
         groupBy={(option) => option.firstLetter}
         getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
         onBlur={onBlur}

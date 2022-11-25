@@ -16,6 +16,7 @@ const BaseModalTitle = ({ children, onClose, ...other }: DialogTitleProps) => (
         top: 20,
         color: (theme) => theme.palette.grey[500]
       }}
+      data-cy={other.dataCy}
     >
       <CloseIcon />
     </IconButton>

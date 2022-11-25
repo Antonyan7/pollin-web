@@ -5,6 +5,7 @@ import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
+import { CypressIds } from 'constants/cypressIds';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { UTCTimezone } from 'helpers/constants';
@@ -25,6 +26,8 @@ const DateAndStartTime: React.FC = () => {
   const actualDate = getValues('date');
   const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
   const initialDate: DateAndStartTimeType = toRoundupTime(actualDate);
+  const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER);
+  const dateAndStartTimeCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DATE_AND_START_TIME;
   const dateFieldName = 'date';
 
   const { field } = useController({
@@ -44,13 +47,14 @@ const DateAndStartTime: React.FC = () => {
         views={dateTimeViewOptions}
         toolbarFormat="yyyy, MMM dd"
         disablePast
+        data-cy={dateAndStartTimeCyId}
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
         onClose={() => setMobileDateTimePickerOpen(false)}
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}
         maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
-        label={t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER)}
+        label={dateAndStartTimeLabel}
         value={initialDate}
         onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
         minutesStep={10}

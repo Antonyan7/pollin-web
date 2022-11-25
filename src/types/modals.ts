@@ -3,6 +3,7 @@ import { SxProps, Theme } from '@mui/material/styles';
 
 export interface DialogTitleProps {
   id: string;
+  dataCy?: string;
   children?: React.ReactNode;
   sx?: SxProps<Theme>;
   onClose: () => void;

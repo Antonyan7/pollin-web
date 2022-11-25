@@ -12,6 +12,7 @@ import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
@@ -94,6 +95,7 @@ const Appointments = () => {
   return (
     <Box>
       <MainBreadcrumb
+        data-cy={CypressIds.PAGE_APPOINTMENTS_TITLE}
         currentPage={t(Translation.PAGE_APPOINTMENTS_TITLE)}
         navigation={{
           basePath: '/',
@@ -110,6 +112,7 @@ const Appointments = () => {
           <Box sx={formControlStyle}>
             <BaseSelectWithLoading
               isLoading={isServiceProvidersLoading}
+              data-cy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
               MenuProps={{
                 style: { maxHeight: 260 },
                 PaperProps: {
@@ -136,7 +139,12 @@ const Appointments = () => {
             </BaseSelectWithLoading>
           </Box>
           <Box sx={dateFormControlStyle}>
-            <StyledButtonNew variant="outlined" onClick={onTodayClick} disabled={isToday}>
+            <StyledButtonNew
+              variant="outlined"
+              onClick={onTodayClick}
+              disabled={isToday}
+              data-cy={CypressIds.PAGE_APPOINTMENTS_BUTTON_TODAY}
+            >
               <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
                 {t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}
               </Typography>
@@ -144,6 +152,7 @@ const Appointments = () => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
+                  data-cy={CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER}
                   disableMaskedInput
                   maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
                   open={datePickerOpen}
@@ -173,6 +182,7 @@ const Appointments = () => {
           </Box>
           <StyledButtonNew
             disabled={!serviceProviderId}
+            data-cy={CypressIds.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT}
             theme={theme}
             variant="outlined"
             endIcon={<AddIcon />}

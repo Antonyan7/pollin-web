@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 
 const AppointmentDescription = () => {
@@ -11,12 +12,14 @@ const AppointmentDescription = () => {
 
   const descriptionFieldName = 'description';
   const addDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION);
+  const addDescriptionCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION;
 
   const { field } = useController({ control, name: descriptionFieldName });
 
   return (
     <Grid item xs={12}>
       <TextField
+        data-cy={addDescriptionCyId}
         {...field}
         fullWidth
         id={descriptionFieldName}

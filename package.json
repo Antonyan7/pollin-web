@@ -20,7 +20,8 @@
     "view:cov": "open ./coverage/lcov-report/index.html",
     "cypress:report-html": "yarn run cypress:open && yarn run view:cov",
     "coverage": "nyc yarn run cypress:run",
-    "translations": "npx ts-node ./scripts/generateTranslationKeysEnum.ts"
+    "generate:translations": "npx ts-node ./scripts/generateTranslationKeysEnum.ts",
+    "generate:cypress-ids": "npx ts-node ./scripts/genereateCypressIdsEnum.ts"
   },
   "dependencies": {
     "@emotion/cache": "^11.10.5",

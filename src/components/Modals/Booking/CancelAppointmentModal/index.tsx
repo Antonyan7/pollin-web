@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloseOutlined } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -10,56 +10,34 @@ import {
   Grid,
   IconButton,
   MenuItem,
-  SelectChangeEvent,
   TextField,
   Typography
 } from '@mui/material';
 import { Stack } from '@mui/system';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { cancellationReasons } from 'helpers/constants';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { viewsMiddleware } from 'redux/slices/views';
+import { useAppSelector } from 'redux/hooks';
+import { bookingSelector } from 'redux/slices/booking';
 import { margins } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-export interface CancelAppointmentModalProps {
-  appointmentId: string;
-}
+import useCancelAppointmentControls from './hooks/useCancelAppointmentControls';
+import { CancelAppointmentModalProps } from './types';
 
 const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) => {
-  const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
-  const [cancellationReason, setCancellationReason] = useState<string>('');
   const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
 
   const [t] = useTranslation();
+  const { onConfirm, onReasonChange, onClose, onSelectButtonChange, openOtherReasonField, cancellationReason } =
+    useCancelAppointmentControls(appointmentId);
+  const cancelConfirmSelectReasonLabel = t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON);
+  const cancelConfirmButtonLabel = t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM);
 
-  const onSelectButtonChange = useCallback((event: SelectChangeEvent<string>) => {
-    const { value } = event.target;
-    const isOtherField = value === cancellationReasons[cancellationReasons.length - 1];
-
-    setOpenOtherReasonField(isOtherField);
-    setCancellationReason(isOtherField ? '' : value);
-  }, []);
-
-  const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.CancelAppointmentModal));
-  }, []);
-
-  const onConfirm = useCallback(() => {
-    setOpenOtherReasonField(false);
-    dispatch(bookingMiddleware.cancelAppointment(appointmentId, cancellationReason));
-    dispatch(bookingMiddleware.clearAppointmentDetails());
-    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-    onClose();
-  }, [onClose, appointmentId, cancellationReason]);
-
-  const onReasonChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setCancellationReason(event.target.value);
-  }, []);
+  const cancelConfirmSelectReasonLabelCyId = CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON;
+  const cancelConfirmButtonLabelCyId = CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM;
 
   return (
     <Dialog open onClose={onClose}>
@@ -77,7 +55,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
               </Typography>
             </Grid>
             <Grid item>
-              <IconButton onClick={onClose}>
+              <IconButton onClick={onClose} data-cy={CypressIds.MODAL_APPOINTMENTS_CANCEL_CLOSE_ICON}>
                 <CloseOutlined />
               </IconButton>
             </Grid>
@@ -93,7 +71,8 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
                 IconComponent={KeyboardArrowDownIcon}
                 id="cancel-appointment-label"
                 labelId="cancel-appointment-label"
-                label={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON)}
+                label={cancelConfirmSelectReasonLabel}
+                data-cy={cancelConfirmSelectReasonLabelCyId}
                 onChange={onSelectButtonChange}
               >
                 {cancellationReasons.map((reasonItem) => (
@@ -130,13 +109,14 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
                   isLoading={isConfirmationLoading}
                   variant="contained"
                   disabled={!cancellationReason}
+                  data-cy={cancelConfirmButtonLabelCyId}
                   onClick={onConfirm}
                   sx={{
                     width: '80px',
                     height: '40px'
                   }}
                 >
-                  {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM)}
+                  {cancelConfirmButtonLabel}
                 </ButtonWithLoading>
               </Stack>
             </Grid>

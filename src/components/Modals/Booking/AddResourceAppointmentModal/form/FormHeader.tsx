@@ -5,6 +5,7 @@ import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -33,6 +34,7 @@ const FormHeader = () => {
             top: 20,
             color: (theme) => theme.palette.primary.main
           }}
+          data-cy={CypressIds.MODAL_APPOINTMENTS_ADD_CLOSE_ICON}
         >
           <CloseIcon />
         </IconButton>

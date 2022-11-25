@@ -5,6 +5,7 @@ import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, Grid, MenuItem } from '@mui/material';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { appointmentStatusData } from 'helpers/constants';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -23,6 +24,7 @@ const StatusAppointmentLabel = () => {
   const [t] = useTranslation();
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
   const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
+  const statusAppointmentLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS;
 
   useEffect(() => {
     if (field.value && !(details?.appointment?.status === field.value)) {
@@ -38,6 +40,7 @@ const StatusAppointmentLabel = () => {
         <FormControl fullWidth>
           <StyledInputLabel id="status-appointment-label">{statusAppointmentLabel}</StyledInputLabel>
           <StyledSelectButton
+            data-cy={statusAppointmentLabelCyId}
             MenuProps={{
               style: { maxHeight: 260 },
               PaperProps: {

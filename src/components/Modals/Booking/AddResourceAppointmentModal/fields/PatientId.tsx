@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { createOptionsGroupPatients } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -34,6 +35,7 @@ const PatientId = () => {
   const patientIdHelperText = error?.message;
   const patientIdErrorText = !!error?.message;
   const patientIdSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT);
+  const patientIdSelectCyId = CypressIds.MODAL_APPOINTMENTS_ADD_SELECT_PATIENT;
   const patientsListCurrentPage = useRef(INITIAL_PAGE_NUMBER);
   const patientsListRef = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef(0);
@@ -64,6 +66,7 @@ const PatientId = () => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
+        data-cy={patientIdSelectCyId}
         freeSolo
         inputValue={inputValue}
         isLoading={isLoading}

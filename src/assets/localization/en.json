@@ -133,6 +133,7 @@
   "page.results.cells.age": "Collection Age",
   "page.encounters.cancel.changes.button": "Close",
   "modal.cancel": "Cancel",
+  "modal.ok": "OK",
   "modal.mark.as.in_progress.confirm.machine": "Mark as In-Progress: Confirm Machine",
   "modal.confirm.machine.specimen.id": "Specimen ID",
   "modal.confirm.machine.located.in": "Please confirm the machine the specimen is located in:",

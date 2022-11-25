@@ -4,6 +4,7 @@ import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponen
 import AddIcon from '@mui/icons-material/Add';
 import { Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { CypressIds } from 'constants/cypressIds';
 import { margins } from 'themes/themeConstants';
 
 import { Translation } from '../../constants/translations';
@@ -16,6 +17,8 @@ const AppointmentsHeader = () => {
     window.open(window.location.href, '_blank');
   }, []);
 
+  const AppointmentsNewCalendarButtonCyId = CypressIds.PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR;
+
   return (
     <header
       style={{
@@ -24,6 +27,7 @@ const AppointmentsHeader = () => {
       }}
     >
       <StyledButtonNew
+        data-cy={AppointmentsNewCalendarButtonCyId}
         sx={{
           marginTop: margins.top16,
           '& > span > svg': {

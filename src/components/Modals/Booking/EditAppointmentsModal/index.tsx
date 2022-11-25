@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { getTimezoneOffset } from 'date-fns-tz';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -91,7 +92,12 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
 
   return (
     <FormProvider {...methods}>
-      <BaseModal isLoading={modalLoading} title={editTitleLabel} onClose={onClose}>
+      <BaseModal
+        dataCy={CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON}
+        isLoading={modalLoading}
+        title={editTitleLabel}
+        onClose={onClose}
+      >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <EditAppointmentsModalForm />
         </LocalizationProvider>

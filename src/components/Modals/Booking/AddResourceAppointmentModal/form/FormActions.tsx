@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins } from 'themes/themeConstants';
 
@@ -17,6 +18,7 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
   const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
 
   const addButtonLabel = t(Translation.MODAL_APPOINTMENTS_ADD_BUTTON_ADD);
+  const addButtonLabelCyId = CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD;
 
   return (
     <DialogActions sx={{ p: 4, marginTop: margins.top4 }}>
@@ -30,6 +32,7 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
                   backgroundColor: (theme) => theme.palette.grey[200]
                 }
               }}
+              data-cy={addButtonLabelCyId}
               isLoading={isConfirmationLoading}
               variant="contained"
               type="submit"

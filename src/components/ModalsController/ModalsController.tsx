@@ -5,7 +5,8 @@ import AddAppointmentDuplicatePatientModal, {
 import AddResourceAppointmentModal, {
   AddResourceAppointmentModalProps
 } from '@components/Modals/Booking/AddResourceAppointmentModal';
-import CancelAppointmentModal, { CancelAppointmentModalProps } from '@components/Modals/Booking/CancelAppointmentModal';
+import CancelAppointmentModal from '@components/Modals/Booking/CancelAppointmentModal';
+import { CancelAppointmentModalProps } from '@components/Modals/Booking/CancelAppointmentModal/types';
 import DetailsAppointmentModal, {
   DetailsAppointmentModalProps
 } from '@components/Modals/Booking/DetailsAppointmentModal';

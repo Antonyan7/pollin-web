@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
@@ -20,6 +21,7 @@ const ServiceType = () => {
   const [t] = useTranslation();
   const serviceTypeIdFieldName = 'serviceTypeId';
   const serviceTypeSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE);
+  const serviceTypeSelectCyId = CypressIds.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE;
   const { field, fieldState } = useController({
     name: serviceTypeIdFieldName,
     control
@@ -33,6 +35,7 @@ const ServiceType = () => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
+        data-cy={serviceTypeSelectCyId}
         isLoading={isServiceTypesLoading}
         ListboxProps={{
           style: {

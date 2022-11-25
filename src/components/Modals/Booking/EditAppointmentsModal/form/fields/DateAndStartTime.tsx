@@ -5,6 +5,7 @@ import { Grid, TextField, TextFieldProps } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { CypressIds } from 'constants/cypressIds';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { UTCTimezone } from 'helpers/constants';
@@ -40,6 +41,7 @@ const DateAndStartTime: React.FC = () => {
   const getMobileDateTime = (date: DateAndStartTimeType) => toLocalIsoString(toRoundupTime(date));
 
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
+  const dateAndStartTimeLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_TIME_PICKER;
 
   useEffect(() => {
     if (
@@ -59,6 +61,7 @@ const DateAndStartTime: React.FC = () => {
           ActionBar: DatePickerActionBar
         }}
         label={dateAndStartTimeLabel}
+        data-cy={dateAndStartTimeLabelCyId}
         disablePast
         minTime={MIN_SELECTABLE_DATE_TIME}
         maxTime={MAX_SELECTABLE_DATE_TIME}

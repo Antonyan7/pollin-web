@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { DialogActions, Grid } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
@@ -25,16 +26,25 @@ const FormActions = () => {
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL);
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
 
+  const cancelButtonLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL;
+  const saveButtonLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE;
+
   return (
     <DialogActions sx={{ padding: `${paddings.top32} ${paddings.right8} ${paddings.bottom24} ${paddings.left8}` }}>
       <Grid container justifyContent="space-between">
         <Grid item>
-          <StyledButton sx={{ width: '160px' }} variant="outlined" onClick={onCancelAppointmentClick}>
+          <StyledButton
+            data-cy={cancelButtonLabelCyId}
+            sx={{ width: '160px' }}
+            variant="outlined"
+            onClick={onCancelAppointmentClick}
+          >
             {cancelButtonLabel}
           </StyledButton>
         </Grid>
         <Grid item>
           <ButtonWithLoading
+            data-cy={saveButtonLabelCyId}
             disabled={isSaveButtonDisabled}
             isLoading={isConfirmationLoading}
             sx={{ width: '60px', borderRadius: borderRadius.radius8 }}

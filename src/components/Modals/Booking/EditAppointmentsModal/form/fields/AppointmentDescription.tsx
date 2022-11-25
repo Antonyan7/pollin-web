@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, TextField } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 
 import { IFormValues } from '../types';
@@ -18,6 +19,7 @@ const AppointmentDescription = () => {
     control
   });
   const editDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION);
+  const editDescriptionLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION;
 
   useEffect(() => {
     if (field.value && !(details?.appointment?.description === field.value)) {
@@ -30,6 +32,7 @@ const AppointmentDescription = () => {
   return (
     <Grid item xs={12}>
       <TextField
+        data-cy={editDescriptionLabelCyId}
         id={descriptionFieldName}
         label={editDescriptionLabel}
         placeholder={editDescriptionLabel}
