@@ -16,14 +16,13 @@ import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { calculateTimeInUTC, linkDateAndTime } from '@utils/dateUtils';
+import { calculateTimeInUTC } from '@utils/dateUtils';
 
 import { SeveritiesType } from '../types';
 
 import AutoCompleteTextField from './fields/AutoCompleteTextField';
 import DateField from './fields/DateField';
 import TextInputField from './fields/TextInputField';
-import TimeField from './fields/TimeField';
 import BlockScheduleFormRow from './form/BlockScheduleFormRow';
 import { IFieldRowProps } from './form/IFieldRowProps';
 import { IBlockScheduleForm, initialValues } from './form/initialValues';
@@ -40,19 +39,9 @@ const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowPro
     Component: DateField
   },
   {
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_TIME_START,
-    fieldName: 'startTime',
-    Component: TimeField
-  },
-  {
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_END,
     fieldName: 'endDate',
     Component: DateField
-  },
-  {
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_TIME_END,
-    fieldName: 'endTime',
-    Component: TimeField
   },
   {
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
@@ -78,8 +67,8 @@ const BlockTemplates = () => {
   const onSubmit = (values: IBlockScheduleForm) => {
     const sendingBlockValues = {
       resourceId: values.resourceId,
-      startDate: calculateTimeInUTC(linkDateAndTime(values.startDate, values.startTime)),
-      endDate: calculateTimeInUTC(linkDateAndTime(values.endDate, values.endTime)),
+      startDate: calculateTimeInUTC(values.startDate),
+      endDate: calculateTimeInUTC(values.endDate),
       placeholderLabel: values.placeholderLabel
     };
 

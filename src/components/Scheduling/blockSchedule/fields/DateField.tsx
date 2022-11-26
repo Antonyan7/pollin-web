@@ -1,36 +1,36 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TextField, useTheme } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
+import { MobileDateTimePicker } from '@mui/x-date-pickers';
+import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
+import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
+import { UTCTimezone } from 'helpers/constants';
+import { toRoundupTime } from 'helpers/time';
+
+import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
+import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
+import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
 
-const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
-  const [t] = useTranslation();
+const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
-  const { control, formState, getValues, watch, clearErrors } = useFormContext<IBlockScheduleForm>();
-  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
+type DateAndStartTimeType = Date | null;
 
-  const onDateDatePickerOpen = useCallback(() => {
-    setDatePickerOpen(true);
-  }, []);
-
-  const onDateDatePickerClose = useCallback(() => {
-    setDatePickerOpen(false);
-  }, []);
-
+const DateField = ({ fieldName }: IFieldRowProps) => {
+  const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
+  const [t] = useTranslation();
   const theme = useTheme();
-
+  const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
     control
   });
   const { onChange, value, ...fieldProps } = field;
-
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -55,50 +55,79 @@ const DateField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
     }
   }, [clearErrors, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
-  useEffect(() => {
-    watch(() => {
-      const getValuesStartDate = getValues().startDate;
-      const getValuesStartEnd = getValues().endDate;
-      const isStartDateBeforeEndDate =
-        getValuesStartDate && getValuesStartEnd && getValuesStartDate <= getValuesStartEnd;
+  const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
 
-      if (isStartDateBeforeEndDate) {
-        clearErrors('endDate');
-        clearErrors('startDate');
-        setErrorMessage('');
-      }
-    });
-  }, [clearErrors, getValues, watch]);
+  const initialDate: DateAndStartTimeType = toRoundupTime(value);
 
   return (
-    <DesktopDatePicker
-      open={datePickerOpen}
-      onOpen={onDateDatePickerOpen}
-      onClose={onDateDatePickerClose}
-      label={fieldLabel}
-      inputFormat="MMM dd, yyy"
-      disableMaskedInput
-      disablePast
-      value={value}
-      onChange={(date: Date | null) => date && onChange(date)}
-      renderInput={(params) => (
-        <TextField
-          fullWidth
-          {...params}
-          id={fieldName}
-          onClick={() => setDatePickerOpen(true)}
-          onKeyDown={(event) => {
-            event.preventDefault();
-          }}
-          sx={{
-            svg: { color: theme.palette.primary.main }
-          }}
-          helperText={errors[fieldName]?.message && errorMessage}
-          error={Boolean(errors[fieldName])}
-          {...fieldProps}
-        />
-      )}
-    />
+    <Grid item xs={12}>
+      <MobileDateTimePicker
+        components={{
+          ActionBar: DatePickerActionBar
+        }}
+        ampm={false}
+        views={dateTimeViewOptions}
+        toolbarFormat="yyyy, MMM dd"
+        disablePast
+        open={mobileDateTimePickerOpen}
+        onOpen={() => setMobileDateTimePickerOpen(true)}
+        onClose={() => setMobileDateTimePickerOpen(false)}
+        minTime={MIN_SELECTABLE_DATE_TIME}
+        maxTime={MAX_SELECTABLE_DATE_TIME}
+        maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
+        label={
+          fieldName === 'startDate'
+            ? t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)
+            : t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)
+        }
+        value={initialDate}
+        onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
+        minutesStep={10}
+        DialogProps={{
+          sx: {
+            '& .MuiPickersToolbar-penIconButton': { display: 'none' },
+            '& .MuiClock-clock': {
+              '& .MuiClockNumber-root': {
+                color: theme.palette.common.black
+              },
+              '& .Mui-disabled': {
+                color: theme.palette.grey[500]
+              }
+            }
+          }
+        }}
+        renderInput={(params: TextFieldProps) => {
+          const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
+
+          const formattedParams = {
+            ...params,
+            inputProps: {
+              ...params.inputProps,
+              value: formattedDate
+            }
+          };
+
+          return (
+            <TextField
+              {...fieldProps}
+              {...formattedParams}
+              fullWidth
+              sx={{
+                '& input, svg': {
+                  cursor: 'pointer'
+                }
+              }}
+              onClick={() => setMobileDateTimePickerOpen(true)}
+              helperText={errors[fieldName]?.message && errorMessage}
+              error={Boolean(errors[fieldName])}
+              InputProps={{
+                endAdornment: <CalendarIcon />
+              }}
+            />
+          );
+        }}
+      />
+    </Grid>
   );
 };
 

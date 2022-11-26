@@ -85,7 +85,7 @@ export const getCurrentDate = () => store.getState().core.clinicConfig.currentDa
 export const getDate = (date: string) => date.slice(0, 10);
 export const getTimezoneOffset = () => getCurrentDate().slice(-6);
 
-export const calculateTimeInUTC = (date: string | Date) => {
+export const calculateTimeInUTC = (date: string | Date | null) => {
   const timezoneOffset = getTimezoneOffset();
 
   if (timezoneOffset[0] === '-') {
