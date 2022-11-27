@@ -54,6 +54,10 @@ const PatientList = () => {
     dispatch(patientsMiddleware.getPatientsList(data));
   }, [filters, page, searchValue, sortField, sortOrder]);
 
+  useEffect(() => {
+    setPage(0);
+  }, [filters]);
+
   return (
     <PatientListStyled>
       <PatientFilters setSearchValue={setSearchValue} setFiltersChange={setFilters} />
