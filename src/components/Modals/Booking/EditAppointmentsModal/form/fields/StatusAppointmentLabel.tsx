@@ -1,30 +1,33 @@
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyledButton, StyledInputLabel, StyledSelectButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, Grid, MenuItem } from '@mui/material';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { appointmentStatusData } from 'helpers/constants';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { ICancelStatusItem } from 'types/reduxTypes/bookingStateTypes';
+
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 
 import { IFormValues } from '../types';
 
 const StatusAppointmentLabel = () => {
-  const appointmentStatusFieldName = 'appointment.status';
+  const [t] = useTranslation();
   const details = useAppSelector(bookingSelector.appointmentDetails);
+  const appointmentStatusFieldName = 'appointment.status';
+  const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
+  const statusAppointmentLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS;
   const { control, getValues } = useFormContext<IFormValues>();
   const { field } = useController<IFormValues>({ name: appointmentStatusFieldName, control });
   const { value, ...fieldProps } = field;
-  const [t] = useTranslation();
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-  const statusAppointmentLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS);
-  const statusAppointmentLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS;
+  const appointmentStatusData = getValues('statusVariations');
 
   useEffect(() => {
     if (field.value && !(details?.appointment?.status === field.value)) {
@@ -38,8 +41,7 @@ const StatusAppointmentLabel = () => {
     <Grid container spacing={3} sx={{ marginTop: margins.top0, paddingLeft: paddings.left24 }}>
       <Grid item xs={getValues('serviceType.isVirtual') ? 6 : 12}>
         <FormControl fullWidth>
-          <StyledInputLabel id="status-appointment-label">{statusAppointmentLabel}</StyledInputLabel>
-          <StyledSelectButton
+          <BaseSelectWithLoading
             data-cy={statusAppointmentLabelCyId}
             MenuProps={{
               style: { maxHeight: 260 },
@@ -51,15 +53,15 @@ const StatusAppointmentLabel = () => {
             id="status-appointment-label"
             labelId="status-appointment-label"
             label={statusAppointmentLabel}
-            defaultValue={value}
+            value={field.value as string}
             {...fieldProps}
           >
-            {appointmentStatusData.map((statusItem) => (
-              <MenuItem value={statusItem} key={statusItem.toString()}>
-                {statusItem}
+            {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
+              <MenuItem value={statusItem.title} key={statusItem.id}>
+                {statusItem.title}
               </MenuItem>
             ))}
-          </StyledSelectButton>
+          </BaseSelectWithLoading>
         </FormControl>
       </Grid>
       {getValues('serviceType.isVirtual') && (

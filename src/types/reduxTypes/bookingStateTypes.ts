@@ -14,6 +14,7 @@ export interface AppointmentDetailsProps {
   appointment: IAppointmentDetails;
   patient: IPatientInfo;
   serviceType?: IServiceType;
+  statusVariations: ICancelStatusItem[];
 }
 
 export interface AppointmentStatusProps {
@@ -56,6 +57,8 @@ export interface IUniqueItem {
   id: string;
   title: string;
 }
+
+export interface ICancelStatusItem extends IUniqueItem {}
 
 export interface IUniqueItemPatient {
   id: string;

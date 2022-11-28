@@ -1,6 +1,12 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder } from 'types/patient';
-import { IAppointment, IPatientInfo, IServiceProvider, IServiceType } from 'types/reduxTypes/bookingStateTypes';
+import {
+  IAppointment,
+  ICancelStatusItem,
+  IPatientInfo,
+  IServiceProvider,
+  IServiceType
+} from 'types/reduxTypes/bookingStateTypes';
 
 export interface IAppointmentListReqParams {
   resourceId: string;
@@ -62,6 +68,7 @@ export interface IAppointmentDetailsResponse {
   appointment: IAppointmentDetails;
   patient: IPatientInfo;
   serviceType?: IServiceType;
+  statusVariations: ICancelStatusItem[];
 }
 
 export interface ICancelAppointmentReqBody {

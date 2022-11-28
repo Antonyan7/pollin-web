@@ -47,7 +47,8 @@ const getFormState = (details?: AppointmentDetailsProps | null): IFormValues => 
     id: details?.serviceType?.id ?? '',
     title: details?.serviceType?.title ?? '',
     ...(details?.serviceType?.isVirtual ? { isVirtual: details?.serviceType?.isVirtual } : {})
-  }
+  },
+  statusVariations: []
 });
 
 export interface EditAppointmentModalProps {
