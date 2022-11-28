@@ -68,9 +68,13 @@ export interface ISpecimensListItem {
   age: number;
 }
 
+export interface ISpecimensListItemShort {
+  identifier: string;
+}
+
 export interface ISpecimensList extends IPagination {
   specimens: ISpecimensListItem[];
-  notFoundIds: string[];
+  notFound: ISpecimensListItemShort[];
 }
 
 export interface IPendingTestStats {

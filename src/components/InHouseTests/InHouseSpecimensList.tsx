@@ -24,7 +24,7 @@ import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhacnedTableToolbarExternalResults';
@@ -36,8 +36,8 @@ import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
 import SearchBox from './SearchBox';
 
-const generateDescription = (identifiers: string[], headerText: string) => {
-  const listElements = identifiers.map((id) => `<li>${id}</li>`).join('');
+const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensListItemShort[] = []) => {
+  const listElements = notFoundSpecimens.map((specimen) => `<li>${specimen.identifier}</li>`).join('');
 
   return `
     <div>
@@ -94,15 +94,15 @@ const InHouseSpecimensList = () => {
     if (shouldShowToast) {
       setToasHasBeenShown(true);
 
-      if (specimensList.notFoundIds?.length > 0) {
+      if (specimensList.notFound?.length > 0) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
             props: {
               severityType: SeveritiesType.error,
               description: generateDescription(
-                specimensList.notFoundIds,
-                t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL)
+                t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
+                specimensList.notFound
               )
             }
           })
@@ -120,7 +120,7 @@ const InHouseSpecimensList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, specimensList.notFoundIds, isSpecimensListLoading, toastHasBeenShown]);
+  }, [page, specimensList.notFound, isSpecimensListLoading, toastHasBeenShown]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);

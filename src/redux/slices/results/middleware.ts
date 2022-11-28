@@ -184,7 +184,7 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
       totalItems,
       currentPage,
       pageSize,
-      data: { specimens, notFoundIds }
+      data: { specimens, notFound }
     } = response.data;
 
     const results: ISpecimensList = {
@@ -192,7 +192,7 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
       currentPage,
       pageSize,
       specimens,
-      notFoundIds
+      notFound
     };
 
     dispatch(setSpecimensList(results));

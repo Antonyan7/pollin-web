@@ -1,6 +1,10 @@
 import { IEmptyResponse } from 'manager/common';
 import { SortOrder } from 'types/patient';
-import { ITestResultsDetails, TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
+import {
+  ISpecimensListItemShort,
+  ITestResultsDetails,
+  TestResultMeasurementType
+} from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 export enum TestResultsListSortFields {
@@ -24,9 +28,7 @@ export interface IResultsReqBody {
 
 export interface ISpecimensListReqBody {
   page: number;
-  specimens?: {
-    identifier: string;
-  }[];
+  specimens?: ISpecimensListItemShort[];
   sortOrder?: SortOrder;
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: SpecimensListSortFields;
