@@ -35,9 +35,12 @@ const EnhancedTableToolbarExternalResults = ({
     (actionIndex: number) => {
       const element = options?.actions.find((_, index) => index === actionIndex);
 
-      if (element?.id === 'InProgress') {
-        dispatch(viewsMiddleware.openModal({ name: ModalName.SelectMachineModal, props: { specimenIds: selected } }));
-      }
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.SelectMachineModal,
+          props: { specimenIds: selected, actionType: element?.id }
+        })
+      );
     },
     [options?.actions, selected]
   );

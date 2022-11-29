@@ -18,6 +18,11 @@ export enum SpecimensListSortFields {
   COLLECTION_AGE = 'CollectionAge'
 }
 
+export enum ActionType {
+  Retest = 'Retest',
+  Recollect = 'Recollect',
+  InProgress = 'InProgress'
+}
 export interface IResultsReqBody {
   page: number;
   searchString?: string;

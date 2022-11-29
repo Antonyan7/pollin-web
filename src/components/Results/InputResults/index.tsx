@@ -23,7 +23,7 @@ const InputResults: React.FC<InputResultsProps> = ({ testType }) => {
     }
   }, [currentTestResultPageId, isInHouseTest]);
 
-  return testResultsDetails.length ? (
+  return testResultsDetails?.length ? (
     <MeasurementListForm {...(isInHouseTest && { specimenId: currentTestResultPageId })} />
   ) : null;
 };

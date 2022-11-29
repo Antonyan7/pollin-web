@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DialogActions, DialogContent, Grid, Stack, Typography, useTheme } from '@mui/material';
@@ -16,30 +17,73 @@ import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface FormBodyProps {
   specimenIds: string[];
+  actionType: string;
 }
 
-const FormBody = ({ specimenIds }: FormBodyProps) => {
+const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
   const [t] = useTranslation();
+  const theme = useTheme();
+  const [modalTexts, setModalTexts] = useState({
+    selectReasonText: '',
+    selectLabel: ''
+  });
+
+  const setModalNames = useCallback(() => {
+    switch (actionType) {
+      case ActionType.InProgress:
+        setModalTexts({
+          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE),
+          selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_LOCATED_IN)
+        });
+        break;
+      case ActionType.Retest:
+        setModalTexts({
+          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RETEST),
+          selectLabel: t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST_REQUIRED)
+        });
+        break;
+      case ActionType.Recollect:
+        setModalTexts({
+          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RECOLLECT),
+          selectLabel: t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT_REQUIRED)
+        });
+        break;
+      default:
+        break;
+    }
+  }, [actionType, t]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getLabMachines());
-  }, []);
+    dispatch(resultsMiddleware.getLabMachines(actionType));
+    setModalNames();
+  }, [actionType, setModalNames]);
 
   const labMachines = useAppSelector(resultsSelector.labMachines);
   const isLabMachinesLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
   const labMachinesOptions = createOptionsGroup(labMachines);
-  const theme = useTheme();
-  const machineSelectLabel = t(Translation.MODAL_CONFIRM_MACHINE_VALUE);
 
   const isConfirmationLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
 
   const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
   const [machineVal, setMachineVal] = useState('');
 
-  const onClick = useCallback(() => {
-    dispatch(resultsMiddleware.addMachineforSpecimen(specimenIds, machineVal));
+  const onConfirmClick = useCallback(() => {
+    switch (actionType) {
+      case ActionType.InProgress:
+        dispatch(resultsMiddleware.addMachineforSpecimen(specimenIds, machineVal));
+        break;
+      case ActionType.Retest:
+        dispatch(resultsMiddleware.applyRetestAction(specimenIds, machineVal));
+        break;
+      case ActionType.Recollect:
+        dispatch(resultsMiddleware.applyRecollectAction(specimenIds, machineVal));
+        break;
+      default:
+        break;
+    }
+
     dispatch(viewsMiddleware.closeModal(ModalName.SelectMachineModal));
-  }, [specimenIds, machineVal]);
+  }, [specimenIds, machineVal, actionType]);
 
   return (
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>
@@ -55,7 +99,7 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
           ))}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="caption">{t(Translation.MODAL_CONFIRM_MACHINE_LOCATED_IN)}</Typography>
+          <Typography variant="caption">{modalTexts.selectReasonText}</Typography>
         </Grid>
         <Grid item xs={12}>
           <BaseDropdownWithLoading
@@ -79,7 +123,7 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
             clearIcon={<CloseIcon onClick={() => setMachineVal('')} fontSize="small" />}
             popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
             renderInputProps={{
-              label: machineSelectLabel
+              label: modalTexts.selectLabel
             }}
           />
         </Grid>
@@ -98,7 +142,7 @@ const FormBody = ({ specimenIds }: FormBodyProps) => {
                 isLoading={isConfirmationLoading}
                 variant="contained"
                 disabled={!machineVal}
-                onClick={onClick}
+                onClick={onConfirmClick}
               >
                 {addButtonLabel}
               </ButtonWithLoading>

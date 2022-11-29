@@ -24,9 +24,12 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     (actionIndex: number) => {
       const element = actions.find((_, index) => index === actionIndex);
 
-      if (element?.id === 'InProgress') {
-        dispatch(viewsMiddleware.openModal({ name: ModalName.SelectMachineModal, props: { specimenIds: [row.id] } }));
-      }
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.SelectMachineModal,
+          props: { specimenIds: [row.id], actionType: element?.id }
+        })
+      );
     },
     [row.id, actions]
   );

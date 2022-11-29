@@ -106,6 +106,9 @@ export interface IPendingTestResultStats {
 export interface IPendingSpecimensStats {
   stats: IPendingTestStats[];
 }
+export interface IRetestRecollectData {
+  id: string;
+}
 
 export enum TestResultMeasurementType {
   Normal = 'Normal',

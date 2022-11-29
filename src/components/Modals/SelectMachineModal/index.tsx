@@ -10,9 +10,10 @@ import SelectMachineModalForm from './form';
 
 export interface SelectMachineModalProps {
   specimenIds: string[];
+  actionType: string;
 }
 
-const SelectMachineModal = ({ specimenIds }: SelectMachineModalProps) => {
+const SelectMachineModal = ({ specimenIds, actionType }: SelectMachineModalProps) => {
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.SelectMachineModal));
   }, []);
@@ -20,7 +21,7 @@ const SelectMachineModal = ({ specimenIds }: SelectMachineModalProps) => {
   return (
     <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <SelectMachineModalForm specimenIds={specimenIds} />
+        <SelectMachineModalForm specimenIds={specimenIds} actionType={actionType} />
       </LocalizationProvider>
     </Dialog>
   );

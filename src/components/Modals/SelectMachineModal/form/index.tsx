@@ -5,12 +5,13 @@ import FormHeader from './FormHeader';
 
 interface SelectMachineModalFormProps {
   specimenIds: string[];
+  actionType: string;
 }
 
-const SelectMachineModalForm = ({ specimenIds }: SelectMachineModalFormProps) => (
+const SelectMachineModalForm = ({ specimenIds, actionType }: SelectMachineModalFormProps) => (
   <form>
-    <FormHeader />
-    <FormBody specimenIds={specimenIds} />
+    <FormHeader actionType={actionType} />
+    <FormBody specimenIds={specimenIds} actionType={actionType} />
   </form>
 );
 

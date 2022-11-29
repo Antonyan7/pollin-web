@@ -1,5 +1,6 @@
 import API from '@axios/API';
 import {
+  ActionType,
   IAllTestsSpecimensReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
@@ -131,11 +132,14 @@ const getSpecimenActions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getLabMachines = () => async (dispatch: AppDispatch) => {
+const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLabMachinesLoading(true));
 
-    const response = await API.results.getLabMachines();
+    const response =
+      actionType === ActionType.InProgress
+        ? await API.results.getLabMachines()
+        : await API.results.getRetestRecollect(actionType);
 
     dispatch(setLabMachines(response.data.data));
   } catch (error) {
@@ -207,9 +211,30 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
   }
 };
 
-const addMachineforSpecimen = (specimenIds: string[], machineId: string) => async (dispatch: AppDispatch) => {
+const addMachineforSpecimen = (specimens: string[], machineId: string) => async (dispatch: AppDispatch) => {
   try {
-    await API.results.addMachineforSpecimen(specimenIds, machineId);
+    await API.results.addMachineforSpecimen(specimens, machineId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const applyRetestAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
+
+    await API.results.applyRetestAction(specimenData, reasonId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+const applyRecollectAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
+
+    await API.results.applyRecollectAction(specimenData, reasonId);
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -270,6 +295,8 @@ export default {
   getLabMachines,
   getSpecimenActions,
   addMachineforSpecimen,
+  applyRetestAction,
+  applyRecollectAction,
   getSpecimensFilters,
   submitTestResults,
   getPendingSpecimenStats,

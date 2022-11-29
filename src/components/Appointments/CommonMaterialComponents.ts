@@ -107,4 +107,5 @@ export {
   StyledButtonNew,
   StyledInputLabel,
   StyledSelectButton,
-  StyledTextareaAutosize};
+  StyledTextareaAutosize
+};

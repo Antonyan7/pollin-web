@@ -54,7 +54,7 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected, lab
       <TableCell align="center">
         <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
       </TableCell>
-      <TableCell align="left">
+      <TableCell align="left" onClick={(e) => e.stopPropagation()}>
         <ContextMenu actions={actions} row={row} />
       </TableCell>
     </TableRow>

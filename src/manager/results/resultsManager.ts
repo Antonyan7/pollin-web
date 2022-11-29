@@ -13,6 +13,7 @@ import {
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
+  IRetestRecollectData,
   ISpecimensList,
   ITestResultsDetails,
   LabMachine,
@@ -58,6 +59,11 @@ const resultsManager = {
   getLabMachines() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
   },
+  getRetestRecollect(action: string) {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(
+      `${baseURL}/v1/specimen/incompletion-reasons/?action=${action}`
+    );
+  },
   submitTestResults(testResults: ITestResultsData[]) {
     return axiosInstance.put<ITestResultsData[], IAxiosResponse<ITestResultsData[]>>(`${baseURL}/v1/test-result`, {
       testResults
@@ -85,6 +91,24 @@ const resultsManager = {
       {
         specimenIds,
         machineId
+      }
+    );
+  },
+  applyRetestAction(specimenData: IRetestRecollectData[], reasonId: string) {
+    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+      `${baseURL}/v1/specimen/retest`,
+      {
+        specimens: specimenData,
+        reasonId
+      }
+    );
+  },
+  applyRecollectAction(specimenData: IRetestRecollectData[], reasonId: string) {
+    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+      `${baseURL}/v1/specimen/recollect`,
+      {
+        specimens: specimenData,
+        reasonId
       }
     );
   },

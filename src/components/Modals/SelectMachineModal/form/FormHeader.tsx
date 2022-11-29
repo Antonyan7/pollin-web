@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -8,8 +9,25 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-const FormHeader = () => {
+interface FormHeaderProps {
+  actionType: string;
+}
+
+const FormHeader = ({ actionType }: FormHeaderProps) => {
   const [t] = useTranslation();
+
+  const modalName = useMemo(() => {
+    switch (actionType) {
+      case ActionType.InProgress:
+        return t(Translation.MODAL_MARK_AS_IN_PROGRESS_CONFIRM_MACHINE);
+      case ActionType.Retest:
+        return t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST);
+      case ActionType.Recollect:
+        return t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT);
+      default:
+        return '';
+    }
+  }, [actionType, t]);
 
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.SelectMachineModal));
@@ -19,7 +37,7 @@ const FormHeader = () => {
     <>
       <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: margins.top8, marginLeft: margins.left8 }}>
         <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
-          {t(Translation.MODAL_MARK_AS_IN_PROGRESS_CONFIRM_MACHINE)}
+          {modalName}
         </DialogTitle>
         <IconButton
           aria-label="close"
