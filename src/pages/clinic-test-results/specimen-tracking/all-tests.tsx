@@ -1,7 +1,8 @@
 import React from 'react';
+import AllTestsList from '@components/Specimens/AllTestsSpecimens/AllTestsList';
 import SpecimensTrackingLayout from 'layout/SpecimensTrackingLayout';
 
-const AllTests = () => <div>All Tests</div>;
+const AllTests = () => <AllTestsList />;
 
 AllTests.PageLayout = SpecimensTrackingLayout;
 

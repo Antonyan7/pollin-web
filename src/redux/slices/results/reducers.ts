@@ -1,6 +1,7 @@
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
+  IAllTestsSpecimensList,
   IPendingTestStats,
   IResultsFilterCategory,
   IResultsList,
@@ -71,6 +72,12 @@ const reducers = createReducer({
   },
   setSpecimensFiltersLoadingState(state, action: IAction<boolean>) {
     state.isSpecimensFiltersLoading = action.payload;
+  },
+  setAllTestsSpecimensList(state, action: IAction<IAllTestsSpecimensList>) {
+    state.allTestsSpecimensList = action.payload;
+  },
+  setIsAllTestsSpecimensListLoading(state, action: IAction<boolean>) {
+    state.isAllTestsSpecimensListLoading = action.payload;
   }
 });
 

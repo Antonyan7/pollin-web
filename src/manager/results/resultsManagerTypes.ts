@@ -34,6 +34,13 @@ export interface ISpecimensListReqBody {
   sortByField?: SpecimensListSortFields;
 }
 
+export interface IAllTestsSpecimensReqBody {
+  page: number;
+  specimens?: ISpecimensListItemShort[];
+  sortOrder?: SortOrder;
+  sortByField?: SpecimensListSortFields;
+}
+
 export interface IResultsReqBodyWithSortOrder extends IResultsReqBody {
   sortOrder: SortOrder;
 }

@@ -23,6 +23,8 @@ const specimensFiltersList = createSelector([selector], (state) => state.specime
 const isSpecimensFiltersLoading = createSelector([selector], (state) => state.isSpecimensFiltersLoading);
 
 const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
+const allTestsSpecimensList = createSelector([selector], (state) => state.allTestsSpecimensList);
+const isAllTestsSpecimensListLoading = createSelector([selector], (state) => state.isAllTestsSpecimensListLoading);
 
 export default {
   resultsList,
@@ -43,5 +45,7 @@ export default {
   isSpecimensListLoading,
   isTestResultsError,
   specimensFiltersList,
-  isSpecimensFiltersLoading
+  isSpecimensFiltersLoading,
+  allTestsSpecimensList,
+  isAllTestsSpecimensListLoading
 };

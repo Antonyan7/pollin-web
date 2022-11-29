@@ -238,5 +238,6 @@
   "page.specimens.tracking.title": "Specimen Tracking",
   "page.specimens.collection.title": "Specimen Collection",
   "page.specimens.tracking.all.tests.title": "All Tests",
-  "page.specimens.tracking.transports.title": "Transports"
+  "page.specimens.tracking.transports.title": "Transports",
+  "page.specimens.lab.name": "Lab Name"
 }

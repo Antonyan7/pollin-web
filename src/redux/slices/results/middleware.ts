@@ -1,5 +1,6 @@
 import API from '@axios/API';
 import {
+  IAllTestsSpecimensReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
@@ -10,7 +11,7 @@ import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransfor
 import slice from '@redux/slices/results/slice';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
-import { IResultsList, ISpecimensList } from 'types/reduxTypes/resultsStateTypes';
+import { IAllTestsSpecimensList, IResultsList, ISpecimensList } from 'types/reduxTypes/resultsStateTypes';
 
 const {
   setResultsList,
@@ -31,7 +32,9 @@ const {
   setSpecimensList,
   setIsSpecimensListLoading,
   setSpecimensFilters,
-  setSpecimensFiltersLoadingState
+  setSpecimensFiltersLoadingState,
+  setIsAllTestsSpecimensListLoading,
+  setAllTestsSpecimensList
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -227,6 +230,37 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getALLTestsSpecimensList = (payload: IAllTestsSpecimensReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsAllTestsSpecimensListLoading(true));
+
+    const body = (payload.sortOrder !== null ? sortOrderTransformer(payload) : payload) as IAllTestsSpecimensReqBody;
+
+    const response = await API.results.getAllTestsSpecimensList(body);
+    const {
+      totalItems,
+      currentPage,
+      pageSize,
+      data: { specimens, notFound }
+    } = response.data;
+
+    const results: IAllTestsSpecimensList = {
+      totalItems,
+      currentPage,
+      pageSize,
+      specimens,
+      notFound
+    };
+
+    dispatch(setAllTestsSpecimensList(results));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsAllTestsSpecimensListLoading(false));
+  }
+};
+
 export default {
   getResultsList,
   getResultsFilters,
@@ -240,5 +274,6 @@ export default {
   submitTestResults,
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
-  getSpecimensList
+  getSpecimensList,
+  getALLTestsSpecimensList
 };

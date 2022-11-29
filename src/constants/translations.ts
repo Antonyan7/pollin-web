@@ -240,7 +240,8 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TITLE = 'page.specimens.tracking.title',
   PAGE_SPECIMENS_COLLECTION_TITLE = 'page.specimens.collection.title',
   PAGE_SPECIMENS_TRACKING_ALL_TESTS_TITLE = 'page.specimens.tracking.all.tests.title',
-  PAGE_SPECIMENS_TRACKING_TRANSPORTS_TITLE = 'page.specimens.tracking.transports.title'
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_TITLE = 'page.specimens.tracking.transports.title',
+  PAGE_SPECIMENS_LAB_NAME = 'page.specimens.lab.name'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

@@ -30,5 +30,13 @@ export const getInitialState = (): IResultsProps => ({
   },
   isSpecimensListLoading: false,
   specimensFilters: [],
-  isSpecimensFiltersLoading: false
+  isSpecimensFiltersLoading: false,
+  allTestsSpecimensList: {
+    specimens: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0,
+    notFound: []
+  },
+  isAllTestsSpecimensListLoading: false
 });

@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import { Link } from '@components/index';
-import { Tab, TabProps, Tabs, useTheme } from '@mui/material';
+import { Box, Tab, TabProps, Tabs, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
@@ -57,7 +57,7 @@ const SpecimensTrackingLayout = ({ children }: PropsWithChildren) => {
             label={t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_TITLE)}
           />
         </Tabs>
-        {children}
+        <Box mt={4}>{children}</Box>
       </Main>
     </>
   );

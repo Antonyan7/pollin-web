@@ -34,6 +34,8 @@ export interface IResultsProps {
   isSpecimensListLoading: boolean;
   specimensFilters: ISpecimensFilterCategory[];
   isSpecimensFiltersLoading: boolean;
+  allTestsSpecimensList: IAllTestsSpecimensList;
+  isAllTestsSpecimensListLoading: boolean;
 }
 
 export interface LabMachine {
@@ -68,12 +70,26 @@ export interface ISpecimensListItem {
   age: number;
 }
 
+export interface IAllTestsSpecimensListItem {
+  id: string;
+  identifier: string;
+  titles: string[];
+  labName: string;
+  status: IStatus;
+  age: number;
+}
+
 export interface ISpecimensListItemShort {
   identifier: string;
 }
 
 export interface ISpecimensList extends IPagination {
   specimens: ISpecimensListItem[];
+  notFound: ISpecimensListItemShort[];
+}
+
+export interface IAllTestsSpecimensList extends IPagination {
+  specimens: IAllTestsSpecimensListItem[];
   notFound: ISpecimensListItemShort[];
 }
 

@@ -1,5 +1,6 @@
 import {
   IAddMachineforSpecimen,
+  IAllTestsSpecimensReqBody,
   IResultsReqBody,
   ISpecimensListReqBody,
   ITestResultsData,
@@ -8,6 +9,7 @@ import {
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
+  IAllTestsSpecimensList,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
@@ -89,6 +91,12 @@ const resultsManager = {
   getSpecimensFilters() {
     return axiosInstance.get<ISpecimensFiltersResponse, IAxiosResponse<ISpecimensFiltersResponse>>(
       `${baseURL}/v1/specimen/filter`
+    );
+  },
+  getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {
+    return axiosInstance.post<IAllTestsSpecimensList, IAxiosResponsePaginated<IAllTestsSpecimensList>>(
+      `${baseURL}/v1/specimen/collected`,
+      data
     );
   }
 };
