@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormProvider, useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButton } from '@components/Appointments/CommonMaterialComponents';
@@ -17,6 +17,7 @@ import { v4 } from 'uuid';
 import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
 import { calculateTimeInUTC, changeDateSameTimeString } from '@utils/dateUtils';
 
+import { isAllDaysFilled } from '../../helpers/scheduling';
 import { createTemplateValidationSchema } from '../../validation/scheduling/create_template';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
@@ -39,7 +40,7 @@ const CreateTemplate = () => {
 
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
-
+  const [isPlusButtonDisabled, setIsPlusButtonDisabled] = useState<boolean>(false);
   const error = useAppSelector(schedulingSelector.scheduleError);
 
   useEffect(() => {
@@ -87,7 +88,7 @@ const CreateTemplate = () => {
     resolver: yupResolver(createTemplateValidationSchema)
   });
 
-  const { watch } = methods;
+  const { watch, getValues } = methods;
 
   const { errors } = methods.formState;
   const errorMessage =
@@ -107,6 +108,16 @@ const CreateTemplate = () => {
       dispatch(schedulingMiddleware.cleanError());
     });
   }, [watch]);
+
+  useEffect(() => {
+    const subscription = watch(() => {
+      const { timePeriods } = getValues();
+
+      setIsPlusButtonDisabled(isAllDaysFilled(timePeriods));
+    });
+
+    return () => subscription.unsubscribe();
+  }, [getValues, isPlusButtonDisabled, watch]);
 
   return (
     <ScheduleBoxWrapper>
@@ -132,7 +143,7 @@ const CreateTemplate = () => {
               <TimePeriods />
             </Grid>
             <Grid item xs={12}>
-              <PlusIconButton onClick={onPlusClick} />
+              <PlusIconButton isPlusButtonDisabled={isPlusButtonDisabled} onClick={onPlusClick} />
             </Grid>
             <Grid item xs={12} container justifyContent="flex-end">
               <StyledButton

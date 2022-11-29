@@ -5,13 +5,13 @@ import { LoadingButton } from '@mui/lab';
 import { Box, Button, ButtonProps, CircularProgress, Fab, Grid, SxProps, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
-export const PlusIconButton = (props: { onClick: () => void }) => {
-  const { onClick } = props;
+export const PlusIconButton = (props: { isPlusButtonDisabled?: boolean; onClick: () => void }) => {
+  const { onClick, isPlusButtonDisabled } = props;
 
   return (
     <Grid container direction="row-reverse">
       <Grid item>
-        <Fab color="primary" onClick={onClick}>
+        <Fab disabled={isPlusButtonDisabled} color="primary" onClick={onClick}>
           <AddRoundedIcon fontSize="medium" />
         </Fab>
       </Grid>
