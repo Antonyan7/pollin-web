@@ -44,6 +44,8 @@ const EditTemplate = () => {
   const { scheduleId } = router.query;
   const scheduleTemplateID = scheduleId as string;
 
+  const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
+
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
   }, []);
@@ -140,7 +142,7 @@ const EditTemplate = () => {
                 fullWidth
                 helperText={(errors.name?.message || error) && errorMessage}
                 error={Boolean(errors.name?.message) || Boolean(error)}
-                placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
+                placeholder={nameFieldPlaceholder}
               />
             </Grid>
             <Grid item xs={12}>

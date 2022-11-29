@@ -5,7 +5,7 @@
 cypress/tools/node_modules
 /.pnp
 .pnp.js
-
+/tsconfig.tsbuildinfo
 # IDE
 .idea
 

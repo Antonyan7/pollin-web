@@ -56,7 +56,8 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
     dispatch(patientsMiddleware.getPatientSearchFilters());
   }, []);
 
-  const { t } = useTranslation();
+  const [t] = useTranslation();
+  const searchPlaceholder = t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH);
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +95,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
     <Box display="flex">
       <StyledOutlinedInput
         id="input-search-patients"
-        placeholder={t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH)}
+        placeholder={searchPlaceholder}
         onChange={onSearchChange}
         startAdornment={
           <InputAdornment position="start">

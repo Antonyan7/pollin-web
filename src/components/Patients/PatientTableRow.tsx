@@ -21,6 +21,8 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
   const router = useRouter();
   const [t] = useTranslation();
 
+  const chipLabel = t(Translation.CYCLE_STATUS_NOT_ACTIVE);
+
   const onRowClick = (id: string) => {
     router.push(`/patient-emr/details/${id}/profile`);
   };
@@ -49,7 +51,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
       </TableCell>
       <TableCell align="center">{row.dateOfBirth}</TableCell>
       <TableCell align="center">
-        <Chip label={t(Translation.CYCLE_STATUS_NOT_ACTIVE)} size="small" chipColor="notActive" />
+        <Chip label={chipLabel} size="small" chipColor="notActive" />
       </TableCell>
     </TableRow>
   );

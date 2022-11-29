@@ -15,11 +15,15 @@ const SpecimensStatsView: React.FC<SpecimensStatsViewProps> = ({ stats }) => {
   const theme = useTheme();
   const [t] = useTranslation();
 
+  const statsGreaterThan30 = t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_30);
+  const statsGreaterThan15 = t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_15);
+  const statsLessThan15 = t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_LESS_15);
+
   return (
     <Grid item container direction="row" justifyContent="center" alignItems="center" xs={12} spacing={2}>
       <Grid item xs={4}>
         <TestResultCard
-          primary={t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_30)}
+          primary={statsGreaterThan30}
           secondary={stats.find((stat) => stat.type === TestResultsStats.GreaterThan30Days)?.count}
           color={theme.palette.orange.dark}
           backgroundColor={theme.palette.orange.light}
@@ -27,7 +31,7 @@ const SpecimensStatsView: React.FC<SpecimensStatsViewProps> = ({ stats }) => {
       </Grid>
       <Grid item xs={4}>
         <TestResultCard
-          primary={t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_15)}
+          primary={statsGreaterThan15}
           secondary={stats.find((stat) => stat.type === TestResultsStats.GreaterThan15Days)?.count}
           color={theme.palette.warning.dark}
           backgroundColor={theme.palette.warning.light}
@@ -35,7 +39,7 @@ const SpecimensStatsView: React.FC<SpecimensStatsViewProps> = ({ stats }) => {
       </Grid>
       <Grid item xs={4}>
         <TestResultCard
-          primary={t(Translation.PAGE_PATIENT_PENDING_TEST_RESULTS_LESS_15)}
+          primary={statsLessThan15}
           secondary={stats.find((stat) => stat.type === TestResultsStats.LessThanOrEqual15Days)?.count}
           color={theme.palette.success.dark}
           backgroundColor={theme.palette.success.light}

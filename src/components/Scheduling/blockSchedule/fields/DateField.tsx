@@ -33,26 +33,32 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
   const { onChange, value, ...fieldProps } = field;
   const [errorMessage, setErrorMessage] = useState('');
 
+  const startDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_START_DATE_ERROR);
+  const endDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_END_DATE_ERROR);
+  const startBeforeEndMessage = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_BEFORE_END_ERROR);
+  const startAfterEndMessage = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_AFTER_END_ERROR);
+
   useEffect(() => {
     switch (errors[fieldName]?.type) {
       case 'required':
         if (fieldName === 'startDate') {
-          setErrorMessage(t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_START_DATE_ERROR));
+          setErrorMessage(startDateErrorMessage);
         } else {
-          setErrorMessage(t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_END_DATE_ERROR));
+          setErrorMessage(endDateErrorMessage);
         }
 
         break;
       case 'max':
-        setErrorMessage(t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_BEFORE_END_ERROR));
+        setErrorMessage(startBeforeEndMessage);
         break;
       case 'min':
-        setErrorMessage(t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_AFTER_END_ERROR));
+        setErrorMessage(startAfterEndMessage);
         break;
 
       default:
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearErrors, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);

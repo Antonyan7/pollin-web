@@ -27,7 +27,7 @@ import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
-import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhacnedTableToolbarExternalResults';
+import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
 import AutocompleteWrapper from './AutocompleteWrapper';
@@ -65,6 +65,9 @@ const InHouseSpecimensList = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
+
+  const searchLabel = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
+  const filterLabel = t(Translation.PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getPendingSpecimenStats());
@@ -193,15 +196,12 @@ const InHouseSpecimensList = () => {
       </Box>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <SearchBox
-            onSearch={searchByIdsHandler}
-            placeholder={t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER)}
-          />
+          <SearchBox onSearch={searchByIdsHandler} placeholder={searchLabel} />
         </Grid>
         <Grid item xs={12} md={6}>
           <AutocompleteWrapper
             onChange={filterChangeHandler}
-            label={t(Translation.PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL)}
+            label={filterLabel}
             filtersList={filtersList}
             loading={isFiltersLoading}
           />

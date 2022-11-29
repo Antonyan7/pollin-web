@@ -46,6 +46,8 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
   const isFiltersLoading = useAppSelector(resultsSelector.isResultsFiltersLoading);
   const [selectedFilters, setSelectedFilters] = useState<IResultsFilterOption[]>([]);
 
+  const filterPlaceholder = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
+
   const adaptedGroupedOptions = () =>
     filtersList?.flatMap((item) =>
       item.options.map((option: IResultsFilterOption) => ({ ...option, type: option.type }))
@@ -73,7 +75,7 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
     <Box display="flex">
       <StyledOutlinedInputResultsFilter
         id="input-search-patients"
-        placeholder={t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH)}
+        placeholder={filterPlaceholder}
         onChange={onSearchChange}
         startAdornment={
           <InputAdornment position="start">

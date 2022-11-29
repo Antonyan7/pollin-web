@@ -13,6 +13,7 @@ const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
     errors: { timePeriods }
   } = formState;
   const placeholderError = timePeriods?.[index]?.placeholderName;
+  const placeholderField = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER);
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER_ERROR);
   const placeholderValue = getValues().timePeriods[index]?.placeholderName;
 
@@ -24,7 +25,7 @@ const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
       id="outlined-email-address"
       helperText={placeholderError?.message && errorMessage}
       error={Boolean(placeholderError)}
-      placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)}
+      placeholder={placeholderField}
       {...field}
       value={placeholderValue}
     />

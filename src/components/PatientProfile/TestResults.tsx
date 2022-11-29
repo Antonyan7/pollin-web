@@ -12,6 +12,8 @@ const TestResults = () => {
   const profileTestResults = useAppSelector(patientsSelector.profileTestResults);
   const isPatientProfileOverviewLoading = useAppSelector(patientsSelector.isPatientProfileOverviewLoading);
 
+  const emptyWidgetTitle = t(Translation.PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE);
+
   useEffect(() => {
     if (currentPatientId) {
       dispatch(patientsMiddleware.getProfileTestResults(currentPatientId));
@@ -21,7 +23,7 @@ const TestResults = () => {
   return (
     <WidgetLayout
       data={profileTestResults?.patient}
-      emptyWidgetTitle={t(Translation.PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE)}
+      emptyWidgetTitle={emptyWidgetTitle}
       loading={isPatientProfileOverviewLoading}
     />
   );

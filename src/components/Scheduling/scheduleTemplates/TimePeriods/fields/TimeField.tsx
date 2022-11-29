@@ -31,6 +31,9 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
   const timeFieldError = timePeriods?.[index]?.[fieldName];
   const [errorMessage, setErrorMessage] = useState<string>('');
 
+  const startBeforeEndError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
+  const endBeforeStartError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
+
   useEffect(() => {
     if (timeFieldError?.type === 'required') {
       const getError =
@@ -51,9 +54,9 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
 
       if (isStartTimeAfterEndTime) {
         if (fieldName === 'startTime') {
-          setErrorMessage(t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR));
+          setErrorMessage(startBeforeEndError);
         } else {
-          setErrorMessage(t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR));
+          setErrorMessage(endBeforeStartError);
         }
       } else {
         setErrorMessage('');
@@ -64,6 +67,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
         clearErrors(`timePeriods.${index}.endTime`);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearErrors, watch, fieldName, getValues, index, t]);
 
   const onTimeFieldChange = (newTime: Date | null) => {

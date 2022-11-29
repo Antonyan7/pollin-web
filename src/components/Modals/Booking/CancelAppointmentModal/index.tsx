@@ -35,6 +35,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
     useCancelAppointmentControls(appointmentId);
   const cancelConfirmSelectReasonLabel = t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON);
   const cancelConfirmButtonLabel = t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM);
+  const cancelTextFieldLabel = t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON);
 
   const cancelConfirmSelectReasonLabelCyId = CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON;
   const cancelConfirmButtonLabelCyId = CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM;
@@ -94,7 +95,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
                   inputProps={{
                     maxLength: 250
                   }}
-                  placeholder={t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON)}
+                  placeholder={cancelTextFieldLabel}
                   onChange={onReasonChange}
                 />
               </Grid>

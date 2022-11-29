@@ -36,6 +36,8 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
 
+  const searchFieldPlaceholder = t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH);
+
   const handleThrottleSearch = useCallback((data: IEncountersReqBody) => {
     dispatch(patientsMiddleware.getEncounterList(data));
   }, []);
@@ -120,7 +122,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
         onChange={handleSearchValueChange}
         id="input-search-encounters"
         value={searchValue}
-        placeholder={t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH)}
+        placeholder={searchFieldPlaceholder}
         startAdornment={
           <InputAdornment position="start">
             <SearchIcon sx={{ color: theme.palette.primary.main }} />

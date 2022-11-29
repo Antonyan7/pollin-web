@@ -17,6 +17,8 @@ const PartnerProfileOverview = () => {
   const [t] = useTranslation();
   const router = useRouter();
 
+  const emptyWidgetTitle = t(Translation.PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE);
+
   useEffect(() => {
     if (!profileTestResults && currentPatientId) {
       dispatch(patientsMiddleware.getProfileTestResults(currentPatientId));
@@ -57,10 +59,7 @@ const PartnerProfileOverview = () => {
           );
         })
       ) : (
-        <WidgetLayout
-          loading={isPatientProfileOverviewLoading}
-          emptyWidgetTitle={t(Translation.PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE)}
-        />
+        <WidgetLayout loading={isPatientProfileOverviewLoading} emptyWidgetTitle={emptyWidgetTitle} />
       )}
     </Box>
   );

@@ -40,6 +40,7 @@ const CreateTemplate = () => {
 
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
+  const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
   const [isPlusButtonDisabled, setIsPlusButtonDisabled] = useState<boolean>(false);
   const error = useAppSelector(schedulingSelector.scheduleError);
 
@@ -135,7 +136,7 @@ const CreateTemplate = () => {
                 fullWidth
                 helperText={(errors.name?.message || error) && errorMessage}
                 error={Boolean(errors.name?.message) || Boolean(error)}
-                placeholder={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)}
+                placeholder={nameFieldPlaceholder}
               />
             </Grid>
             <Grid item xs={12}>
