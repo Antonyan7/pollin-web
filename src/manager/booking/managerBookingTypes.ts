@@ -3,6 +3,7 @@ import { ISortOrder } from 'types/patient';
 import {
   IAppointment,
   ICancelStatusItem,
+  IGroupedServiceProvider,
   IPatientInfo,
   IServiceProvider,
   IServiceType
@@ -19,12 +20,22 @@ export interface IServiceProvidersReqParams {
   page: number;
 }
 
+export interface IGroupedServiceProvidersParams {
+  page: number;
+  searchString?: string;
+  specimenCollection?: boolean;
+}
+
 export interface IAppointmentListResponse {
   slots: IAppointment[];
 }
 
 export interface IServiceProvidersListResponse {
   providers: IServiceProvider[];
+}
+
+export interface IGroupedServiceProvidersListResponse {
+  providers: IGroupedServiceProvider[];
 }
 
 export interface IPatientNamesResponseData {
@@ -123,6 +134,8 @@ export interface PatientAppointmentsFilterOptions {
   type: string;
   id: string;
 }
+
+export interface GroupedServiceProvidersOptions extends PatientAppointmentsFilterOptions {}
 
 export enum PatientAppointmentsFields {
   Type = 'Type',

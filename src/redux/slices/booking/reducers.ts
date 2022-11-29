@@ -6,6 +6,7 @@ import {
   BookingProps,
   IAppointment,
   IAppointmentErrorState,
+  IGroupedServiceProviders,
   IPatientList,
   IServiceProviders,
   IServiceType
@@ -24,14 +25,23 @@ const reducers = createReducer({
   updateServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders.providers = [...state.serviceProviders.providers, ...action.payload.providers];
   },
+  updateGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.groupedServiceProviders.providers = [...state.groupedServiceProviders.providers, ...action.payload.providers];
+  },
   setIsServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isServiceProvidersLoading = action.payload;
+  },
+  setIsGroupedServiceProvidersLoading(state, action: IAction<boolean>) {
+    state.isGroupedServiceProvidersLoading = action.payload;
   },
   setIsServiceTypesLoading(state, action: IAction<boolean>) {
     state.isServiceTypesLoading = action.payload;
   },
   setServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders = action.payload;
+  },
+  setGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.groupedServiceProviders = action.payload;
   },
   setCurrentServiceProviderId(state, action: IAction<string>) {
     state.currentServiceProviderId = action.payload;

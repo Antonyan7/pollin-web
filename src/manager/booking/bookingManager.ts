@@ -11,6 +11,8 @@ import {
   IGetPatientAppointmentsListFiltersResponse,
   IGetPatientAppointmentsListReqBody,
   IGetPatientAppointmentsListResponse,
+  IGroupedServiceProvidersListResponse,
+  IGroupedServiceProvidersParams,
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
   IServiceTypesReqParams,
@@ -36,6 +38,12 @@ const bookingManager = {
         params
       }
     );
+  },
+  getGroupedServiceProviders(serviceProvidersData: IGroupedServiceProvidersParams) {
+    return axiosInstance.post<
+      IGroupedServiceProvidersListResponse,
+      IAxiosResponsePaginated<IGroupedServiceProvidersListResponse>
+    >(`${baseURL}/v2/provider`, serviceProvidersData);
   },
   getServiceTypes(params?: IServiceTypesReqParams) {
     return axiosInstance.get<IAppointmentTypesData, IAxiosResponse<IAppointmentTypesData>>(

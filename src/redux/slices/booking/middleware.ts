@@ -2,13 +2,18 @@ import API from '@axios/API';
 import {
   ICreateAppointmentBody,
   IEditAppointmentBody,
+  IGroupedServiceProvidersParams,
   IServiceTypesReqParams
 } from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
 import axios from 'axios';
 import store, { AppDispatch } from 'redux/store';
-import { IAppointmentErrorState, IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
+import {
+  IAppointmentErrorState,
+  IGroupedServiceProviders,
+  IServiceProviders
+} from 'types/reduxTypes/bookingStateTypes';
 
 import { calculateTimeInUTC, convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
@@ -17,8 +22,11 @@ import slice from './slice';
 
 const {
   updateServiceProviders,
+  updateGroupedServiceProviders,
   setIsServiceProvidersLoading,
+  setIsGroupedServiceProvidersLoading,
   setServiceProviders,
+  setGroupedServiceProviders,
   setError,
   setDate,
   setAppointments,
@@ -66,6 +74,28 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   }
 };
 
+const getGroupedServiceProviders =
+  (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
+    dispatch(setIsGroupedServiceProvidersLoading(true));
+
+    try {
+      const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
+      const data: IGroupedServiceProviders = {
+        totalItems: response.data.totalItems,
+        currentPage: response.data.currentPage,
+        pageSize: response.data.pageSize,
+        providers: response.data.data.providers
+      };
+
+      dispatch(setGroupedServiceProviders(data));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error as string));
+    }
+
+    dispatch(setIsGroupedServiceProvidersLoading(false));
+  };
+
 const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsServiceProvidersLoading(true));
@@ -85,6 +115,28 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
     dispatch(setError(error as string));
   }
 };
+
+const getNewGroupedServiceProviders =
+  (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsGroupedServiceProvidersLoading(true));
+
+      const response = await API.booking.getGroupedServiceProviders({ page: serviceProvidersData.page });
+      const data: IGroupedServiceProviders = {
+        totalItems: response.data.totalItems,
+        currentPage: response.data.currentPage,
+        pageSize: response.data.pageSize,
+        providers: response.data.data.providers
+      };
+
+      dispatch(updateGroupedServiceProviders(data));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error as string));
+    }
+
+    dispatch(setIsGroupedServiceProvidersLoading(false));
+  };
 
 const getAppointments = (resourceId: string, date: string) => async (dispatch: AppDispatch) => {
   try {
@@ -347,7 +399,9 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
 
 export default {
   getNewServiceProviders,
+  getNewGroupedServiceProviders,
   getServiceProviders,
+  getGroupedServiceProviders,
   setDateValue,
   getAppointments,
   cancelAppointment,

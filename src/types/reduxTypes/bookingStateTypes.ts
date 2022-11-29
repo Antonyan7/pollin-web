@@ -37,7 +37,9 @@ export interface BookingProps {
   appointments: IAppointment[];
   date: string;
   serviceProviders: IServiceProviders;
+  groupedServiceProviders: IGroupedServiceProviders;
   isServiceProvidersLoading: boolean;
+  isGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
   currentServiceProviderId: string;
   isCalendarLoading: boolean;
@@ -69,6 +71,15 @@ export interface IServiceProviders extends IPagination {
   providers: IServiceProvider[];
 }
 export interface IServiceProvider extends IUniqueItem {}
+
+export interface IGroupedServiceProviders extends IPagination {
+  providers: IGroupedServiceProvider[];
+}
+export interface IGroupedServiceProvider {
+  groupId: string;
+  groupTitle: string;
+  items: IUniqueItem[];
+}
 
 export interface IPatientInfo {
   id: string;
