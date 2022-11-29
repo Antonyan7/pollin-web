@@ -5,6 +5,7 @@ import {
   ButtonProps,
   InputLabel,
   InputLabelProps,
+  Popper,
   Select,
   SelectProps,
   styled,
@@ -89,7 +90,15 @@ const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
   backgroundColor: theme.palette.background.paper
 }));
 
+const GroupedServiceProvidersPopper = styled(Popper)(({ theme }) => ({
+  '& .MuiAutocomplete-groupLabel': {
+    fontWeight: 600,
+    color: theme.palette.common.black
+  }
+}));
+
 export {
+  GroupedServiceProvidersPopper,
   InternalButton,
   ScheduleBoxWrapper,
   StyledAddButton,
@@ -98,5 +107,4 @@ export {
   StyledButtonNew,
   StyledInputLabel,
   StyledSelectButton,
-  StyledTextareaAutosize
-};
+  StyledTextareaAutosize};

@@ -2,11 +2,12 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedServiceProvidersOptions } from '@axios/booking/managerBookingTypes';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Divider, Popper, Stack, styled, Typography } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Box, Divider, Stack, styled, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { BoxProps } from '@mui/system';
@@ -46,13 +47,6 @@ const dateFormControlStyle = {
   marginTop: margins.top32,
   marginRight: margins.right12
 };
-
-const GroupedServiceProvidersPopper = styled(Popper)(({ theme }) => ({
-  '& .MuiAutocomplete-groupLabel': {
-    fontWeight: 600,
-    color: theme.palette.common.black
-  }
-}));
 
 // eslint-disable-next-line max-lines-per-function
 const Appointments = () => {
@@ -137,6 +131,7 @@ const Appointments = () => {
               isLoading={isGroupedServiceProvidersLoading}
               data-cy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
               PopperComponent={GroupedServiceProvidersPopper}
+              popupIcon={<KeyboardArrowDownIcon color="primary" />}
               ListboxProps={{
                 style: {
                   border: `${borders.solid2px} ${theme.palette.primary.main}`,
