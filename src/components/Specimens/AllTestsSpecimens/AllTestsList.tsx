@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IAllTestsSpecimensReqBody } from '@axios/results/resultsManagerTypes';
+import { IAllTestsSpecimensReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import {
   Box,
   Checkbox,
@@ -17,7 +17,7 @@ import {
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { margins } from 'themes/themeConstants';
-import { IHeadCell } from 'types/patient';
+import { IHeadCell, SortOrder } from 'types/patient';
 import { IAllTestsSpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 
 import { AllTestsHeadCell } from './AllTestsHeadCell';
@@ -26,6 +26,8 @@ import { AllTestsRow } from './AllTestsRow';
 
 const AllTestsList = () => {
   const [page, setPage] = useState<number>(0);
+  const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
+  const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const allTestsSpecimensList = useAppSelector(resultsSelector.allTestsSpecimensList);
   const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
   const theme = useTheme();
@@ -34,11 +36,13 @@ const AllTestsList = () => {
 
   useEffect(() => {
     const data: IAllTestsSpecimensReqBody = {
+      ...(sortField ? { sortByField: sortField } : {}),
+      ...(sortOrder ? { sortOrder } : {}),
       page: page + 1
     };
 
     dispatch(resultsMiddleware.getALLTestsSpecimensList(data));
-  }, [page]);
+  }, [page, sortField, sortOrder]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -55,7 +59,14 @@ const AllTestsList = () => {
               </TableCell>
 
               {headCells.map((headCell) => (
-                <AllTestsHeadCell headCell={headCell} key={headCell.id} />
+                <AllTestsHeadCell
+                  headCell={headCell}
+                  key={headCell.id}
+                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  setSortOrder={setSortOrder}
+                  setSortField={setSortField}
+                />
               ))}
             </TableRow>
           </TableHead>
