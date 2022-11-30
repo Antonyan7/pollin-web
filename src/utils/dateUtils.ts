@@ -160,7 +160,7 @@ export const dateInputValue = (date: string) => {
 
   const initialDate = convertToLocale(date);
 
-  return dayjs(initialDate).format(`MMM DD, YYYY HH:mm a [${TIME_CONFIG || ''}]`);
+  return dayjs(initialDate).format(`MMM DD, YYYY HH:mm [${TIME_CONFIG || ''}]`);
 };
 
 export const customizedTimeForWorkingHours = (time: string | Date) => format(time, 'HH:mm:ss');
