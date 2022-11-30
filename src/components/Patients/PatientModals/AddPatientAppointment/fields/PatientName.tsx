@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -11,19 +11,26 @@ const PatientName = () => {
   const [t] = useTranslation();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const patientIdSelectLabel = t(Translation.MODAL_PATIENT_APPOINTMENTS_PATIENT_NAME);
+  const [isPatientNameLoading, setIsPatientNameLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isPatientNameLoading) {
+      setIsPatientNameLoading(true);
+    }
+  }, [isPatientNameLoading]);
 
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
-        isLoading={!!patientProfile}
-        id="readOnly"
+        isLoading={isPatientNameLoading}
+        id="patient-name-read-only"
         readOnly
-        freeSolo
         options={[]}
-        defaultValue={patientProfile?.title}
-        value={patientProfile?.title}
+        disabled
+        inputValue={patientProfile?.title}
         renderInputProps={{
-          label: patientIdSelectLabel
+          label: patientIdSelectLabel,
+          name: patientIdSelectLabel
         }}
       />
     </Grid>
