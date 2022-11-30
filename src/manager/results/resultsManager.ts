@@ -19,7 +19,13 @@ import {
   LabMachine,
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
-import { IResultsFiltersResponse, ISpecimensFiltersResponse } from 'types/results';
+import {
+  ICreateTransportFolderReqBody,
+  ICreateTransportFolderResponse,
+  ILabsResponse,
+  IResultsFiltersResponse,
+  ISpecimensFiltersResponse
+} from 'types/results';
 
 import { ITestResultsParams } from './resultsManagerTypes';
 
@@ -120,6 +126,15 @@ const resultsManager = {
   getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {
     return axiosInstance.post<IAllTestsSpecimensList, IAxiosResponsePaginated<IAllTestsSpecimensList>>(
       `${baseURL}/v1/specimen/collected`,
+      data
+    );
+  },
+  getLabs() {
+    return axiosInstance.get<ILabsResponse, IAxiosResponse<ILabsResponse>>(`${baseURL}/v1/labs`);
+  },
+  createTransportFolder(data: ICreateTransportFolderReqBody) {
+    return axiosInstance.post<ICreateTransportFolderResponse, IAxiosResponsePaginated<ICreateTransportFolderResponse>>(
+      `${baseURL}/v1/transport`,
       data
     );
   }

@@ -247,7 +247,11 @@ export enum Translation {
   PAGE_SPECIMENS_COLLECTION_TITLE = 'page.specimens.collection.title',
   PAGE_SPECIMENS_TRACKING_ALL_TESTS_TITLE = 'page.specimens.tracking.all.tests.title',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_TITLE = 'page.specimens.tracking.transports.title',
-  PAGE_SPECIMENS_LAB_NAME = 'page.specimens.lab.name'
+  PAGE_SPECIMENS_LAB_NAME = 'page.specimens.lab.name',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.transport.folder.modal.title',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_NAME = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.name',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB = 'page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

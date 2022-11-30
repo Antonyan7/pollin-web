@@ -36,9 +36,17 @@ export interface IResultsProps {
   isSpecimensFiltersLoading: boolean;
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
+  labs: ILab[];
+  isLabsLoading: boolean;
+  isCreatingTransportFolder: boolean;
 }
 
 export interface LabMachine {
+  id: string;
+  title: string;
+}
+
+export interface ILab {
   id: string;
   title: string;
 }
@@ -169,6 +177,10 @@ export interface IPatientContactInformationModalProps {
   status: IStatus;
   title: string;
   patient: IResultListPatient;
+}
+
+export interface IAddNewContactModalProps {
+  transportId: string;
 }
 
 export interface IResultsFilterCategory {

@@ -21,10 +21,13 @@ const isSpecimensListLoading = createSelector([selector], (state) => state.isSpe
 const isTestResultsError = createSelector([selector], (state) => state.error);
 const specimensFiltersList = createSelector([selector], (state) => state.specimensFilters);
 const isSpecimensFiltersLoading = createSelector([selector], (state) => state.isSpecimensFiltersLoading);
+const isLabsLoading = createSelector([selector], (state) => state.isLabsLoading);
+const testResultLabs = createSelector([selector], (state) => state.labs);
 
 const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
 const allTestsSpecimensList = createSelector([selector], (state) => state.allTestsSpecimensList);
 const isAllTestsSpecimensListLoading = createSelector([selector], (state) => state.isAllTestsSpecimensListLoading);
+const isCreatingTransportFolder = createSelector([selector], (state) => state.isCreatingTransportFolder);
 
 export default {
   resultsList,
@@ -47,5 +50,8 @@ export default {
   specimensFiltersList,
   isSpecimensFiltersLoading,
   allTestsSpecimensList,
-  isAllTestsSpecimensListLoading
+  isAllTestsSpecimensListLoading,
+  isLabsLoading,
+  testResultLabs,
+  isCreatingTransportFolder
 };

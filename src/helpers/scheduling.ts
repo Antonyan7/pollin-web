@@ -1,3 +1,4 @@
+// @ts-ignore
 import chunk from 'lodash.chunk';
 import { ISingleTemplate } from 'types/create-schedule';
 

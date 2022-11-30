@@ -245,5 +245,9 @@
   "page.specimens.collection.title": "Specimen Collection",
   "page.specimens.tracking.all.tests.title": "All Tests",
   "page.specimens.tracking.transports.title": "Transports",
-  "page.specimens.lab.name": "Lab Name"
+  "page.specimens.lab.name": "Lab Name",
+  "page.specimens.tracking.transports.add.new.transport.folder.modal.title": "Add New Transport Folder",
+  "page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id": "Transport Folder ID",
+  "page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.name": "Transport Folder Name",
+  "page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab": "Destination Lab"
 }

@@ -1,4 +1,4 @@
-import { IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
+import { ILab, IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
 
 export interface IResultsFiltersResponse {
   filters: IResultsFilterCategory[];
@@ -6,6 +6,22 @@ export interface IResultsFiltersResponse {
 
 export interface ISpecimensFiltersResponse {
   filters: ISpecimensFilterCategory[];
+}
+
+export interface ILabsResponse {
+  labs: ILab[];
+}
+
+export interface IGroupedLabOptions extends ILab {}
+
+export interface ICreateTransportFolderReqBody {
+  name: string;
+  labId: string;
+  date: string;
+}
+
+export interface ICreateTransportFolderResponse {
+  uuid: string;
 }
 
 export interface IResultsFilterOption {

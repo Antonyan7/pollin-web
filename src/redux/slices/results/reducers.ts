@@ -2,6 +2,7 @@ import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
   IAllTestsSpecimensList,
+  ILab,
   IPendingTestStats,
   IResultsFilterCategory,
   IResultsList,
@@ -78,6 +79,15 @@ const reducers = createReducer({
   },
   setIsAllTestsSpecimensListLoading(state, action: IAction<boolean>) {
     state.isAllTestsSpecimensListLoading = action.payload;
+  },
+  setLabsLoadingState(state, action: IAction<boolean>) {
+    state.isLabsLoading = action.payload;
+  },
+  setLabs(state, action: IAction<ILab[]>) {
+    state.labs = action.payload;
+  },
+  setIsCreatingTransportFolderLoading(state, action: IAction<boolean>) {
+    state.isCreatingTransportFolder = action.payload;
   }
 });
 

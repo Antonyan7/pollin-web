@@ -13,6 +13,7 @@ import slice from '@redux/slices/results/slice';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { IAllTestsSpecimensList, IResultsList, ISpecimensList } from 'types/reduxTypes/resultsStateTypes';
+import { ICreateTransportFolderReqBody } from 'types/results';
 
 const {
   setResultsList,
@@ -35,7 +36,10 @@ const {
   setSpecimensFilters,
   setSpecimensFiltersLoadingState,
   setIsAllTestsSpecimensListLoading,
-  setAllTestsSpecimensList
+  setAllTestsSpecimensList,
+  setLabs,
+  setLabsLoadingState,
+  setIsCreatingTransportFolderLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -286,6 +290,34 @@ const getALLTestsSpecimensList = (payload: IAllTestsSpecimensReqBody) => async (
   }
 };
 
+const getLabs = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setLabsLoadingState(true));
+
+    const response = await API.results.getLabs();
+
+    dispatch(setLabs(response.data.data.labs));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setLabsLoadingState(false));
+  }
+};
+
+const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCreatingTransportFolderLoading(true));
+
+    await API.results.createTransportFolder(data);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsCreatingTransportFolderLoading(false));
+  }
+};
+
 export default {
   getResultsList,
   getResultsFilters,
@@ -302,5 +334,7 @@ export default {
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
   getSpecimensList,
-  getALLTestsSpecimensList
+  getALLTestsSpecimensList,
+  getLabs,
+  createTransportFolder
 };

@@ -19,6 +19,7 @@ import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
+import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -32,7 +33,7 @@ import PatientPartnersModal, {
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
-import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
+import { IAddNewContactModalProps, IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 
 // <BOOKING>
@@ -70,6 +71,10 @@ const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesEr
 // <EXTERNAL RESULTS>
 const getExternalResultsPatientInformationModal = (modal: IOpenedModal<IPatientContactInformationModalProps>) => (
   <PatientContactInformationModal key={modal.name} {...modal.props} />
+);
+// <SPECIMENS>f
+const getAddNewTransportFolderModal = (modal: IOpenedModal<IAddNewContactModalProps>) => (
+  <AddNewTransportFolderModal key={modal.name} {...modal.props} />
 );
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
@@ -120,6 +125,9 @@ export const ModalsController = () => {
           // <EXTERNAL RESULTS>
           case ModalName.PatientContactInformation:
             return getExternalResultsPatientInformationModal(modal);
+          // <SPECIMENS>
+          case ModalName.AddNewTransportFolderModal:
+            return getAddNewTransportFolderModal(modal);
           // profile highlight
           case ModalName.PatientLineItemsModal:
             return getPatientListItemsModal(modal);
