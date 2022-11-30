@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import { SeveritiesType } from '@components/Scheduling/types';
+import SearchBox from '@components/SearchBox';
 import {
   Box,
   Checkbox,
@@ -34,7 +35,6 @@ import AutocompleteWrapper from './AutocompleteWrapper';
 import { InHouseSpecimensHeadCell } from './InHouseSpecimensHeadCell';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
-import SearchBox from './SearchBox';
 
 const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensListItemShort[] = []) => {
   const listElements = notFoundSpecimens.map((specimen) => `<li>${specimen.identifier}</li>`).join('');
