@@ -111,12 +111,11 @@ const AllTestsList = () => {
     setIdentifiers(idArr);
   }, []);
 
+  const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
+
   return (
     <>
-      <SearchBox
-        onSearch={searchByIdsHandler}
-        placeholder={t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER)}
-      />
+      <SearchBox onSearch={searchByIdsHandler} placeholder={inHouseSpecimensSearchPlaceholder} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>

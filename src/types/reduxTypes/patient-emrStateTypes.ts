@@ -22,6 +22,7 @@ interface IProfileProps {
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
   encounters: IEncountersProps;
+  isPatientProfileLoading: boolean;
   isPatientsListLoading: boolean;
   isEncountersListLoading: boolean;
   isPatientsFiltersLoading: boolean;
@@ -60,21 +61,21 @@ export interface PatientProfileOverview {
 
 export interface PatientHighlightHeader {
   contact: {
-    uiid: string;
+    uuid: string;
     title: string;
   };
   ohip: {
-    uiid: string;
+    uuid: string;
     title: string;
   };
   doctor: {
-    uiid: string;
+    uuid: string;
     title: string;
   };
 }
 
 export interface PatientHighlight {
-  uiid?: string;
+  uuid?: string;
   title: string;
   items: string[];
 }

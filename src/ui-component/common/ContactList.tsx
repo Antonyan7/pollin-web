@@ -33,9 +33,9 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
 
   const onButtonClick =
-    (uiid: string): ButtonProps['onClick'] =>
+    (uuid: string): ButtonProps['onClick'] =>
     async () => {
-      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uiid);
+      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uuid);
 
       if (patientHighlightDetails) {
         const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
@@ -71,8 +71,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<CallOutlinedIcon />}
-                      disabled={!patientHighlightHeader.contact.uiid}
-                      onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
+                      disabled={!patientHighlightHeader.contact.uuid}
+                      onClick={onButtonClick(patientHighlightHeader.contact.uuid)}
                     >
                       <Typography variant="caption">{patientHighlightHeader.contact.title}</Typography>
                     </Button>
@@ -80,8 +80,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<ContentPasteIcon />}
-                      disabled={!patientHighlightHeader.ohip.uiid}
-                      onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
+                      disabled={!patientHighlightHeader.ohip.uuid}
+                      onClick={onButtonClick(patientHighlightHeader.ohip.uuid)}
                     >
                       <Typography variant="caption">{patientHighlightHeader.ohip.title}</Typography>
                     </Button>
@@ -89,8 +89,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<EarbudsIcon />}
-                      disabled={!patientHighlightHeader.doctor.uiid}
-                      onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
+                      disabled={!patientHighlightHeader.doctor.uuid}
+                      onClick={onButtonClick(patientHighlightHeader.doctor.uuid)}
                     >
                       {/* change icon */}
                       <Typography variant="caption">{patientHighlightHeader.doctor.title}</Typography>

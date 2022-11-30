@@ -46,6 +46,8 @@ const isPatientContactInformationLoading = createSelector(
   (state) => state.isPatientContactInformationLoading
 );
 
+const isPatientProfileLoading = createSelector([selector], (state) => state.isPatientProfileLoading);
+
 export default {
   isTestResultsHistoryLoading,
   isProfileTestResultsLoading,
@@ -53,6 +55,7 @@ export default {
   patientsList,
   isPatientsFiltersLoading,
   isPatientsListLoading,
+  isPatientProfileLoading,
   patientsErrors,
   filtersList,
   patientAlertDetails,

@@ -11,6 +11,7 @@ export const getInitialState = (): PatientEmrProps => ({
     currentEncounterId: ''
   },
   isPatientsListLoading: false,
+  isPatientProfileLoading: false,
   isEncountersListLoading: false,
   isPatientsFiltersLoading: false,
   isEncountersAddendumLoading: false,
@@ -32,15 +33,15 @@ export const getInitialState = (): PatientEmrProps => ({
   isPatientHighlightsLoading: false,
   patientHighlightHeader: {
     contact: {
-      uiid: '',
+      uuid: '',
       title: ''
     },
     ohip: {
-      uiid: '',
+      uuid: '',
       title: ''
     },
     doctor: {
-      uiid: '',
+      uuid: '',
       title: ''
     }
   },

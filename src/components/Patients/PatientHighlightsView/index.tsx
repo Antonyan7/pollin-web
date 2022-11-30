@@ -21,10 +21,19 @@ const PatientHighlightsView = () => {
 
   useEffect(() => {
     if (patientId && !isPatientHighlightsLoading) {
-      dispatch(patientsMiddleware.getPatientProfile(patientId));
       dispatch(patientsMiddleware.getPatientHighlight(patientId));
     }
   }, [isPatientHighlightsLoading, patientId]);
+
+  useEffect(() => {
+    if (patientId) {
+      dispatch(patientsMiddleware.getPatientProfile(patientId));
+    }
+
+    return () => {
+      dispatch(patientsMiddleware.getPatientProfile());
+    };
+  }, [patientId]);
 
   const patientHighlightColumns = patientHighlights
     ? [
@@ -35,9 +44,9 @@ const PatientHighlightsView = () => {
     : [[], [], []];
 
   const onDetailsClick =
-    (uiid: string): TypographyProps['onClick'] =>
+    (uuid: string): TypographyProps['onClick'] =>
     async () => {
-      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uiid);
+      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uuid);
 
       if (patientHighlightDetails) {
         const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
@@ -63,7 +72,7 @@ const PatientHighlightsView = () => {
             {patientHighlightColumns.map((patientHighlightColumn, index) => (
               // eslint-disable-next-line react/no-array-index-key
               <Grid container item xs={12} sm={4} key={index} rowGap={1.5} justifyContent="center">
-                {patientHighlightColumn.map(({ uiid, title, items }) => (
+                {patientHighlightColumn.map(({ uuid, title, items }) => (
                   <React.Fragment key={title}>
                     <Grid item xs={12} sm={4}>
                       <Typography fontWeight="bold" color={theme.palette.common.black}>
@@ -76,12 +85,12 @@ const PatientHighlightsView = () => {
                           {item}
                         </Typography>
                       ))}
-                      {uiid && (
+                      {uuid && (
                         <Typography
                           fontWeight="bolder"
                           color={theme.palette.common.black}
                           sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
-                          onClick={onDetailsClick(uiid)}
+                          onClick={onDetailsClick(uuid)}
                         >
                           View Details
                         </Typography>

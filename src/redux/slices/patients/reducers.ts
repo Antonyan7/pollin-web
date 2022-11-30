@@ -71,8 +71,11 @@ const reducers = createReducer({
   setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps | null>) {
     state.encounters.encounterDetails = action.payload;
   },
-  setPatientProfile(state, action: IAction<PatientProfile>) {
+  setPatientProfile(state, action: IAction<PatientProfile | null>) {
     state.patientProfile = action.payload;
+  },
+  setIsPatientProfileLoading(state, action: IAction<boolean>) {
+    state.isPatientProfileLoading = action.payload;
   },
   setPatientHighlightsLoadingState(state, action: IAction<boolean>) {
     state.isPatientHighlightsLoading = action.payload;

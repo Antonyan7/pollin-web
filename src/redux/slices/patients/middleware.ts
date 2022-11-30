@@ -34,6 +34,7 @@ const {
   setEncountersType,
   setEncounterDetailsInfo,
   setPatientProfile,
+  setIsPatientProfileLoading,
   setPatientHighlightsLoadingState,
   setPatientHighlightHeader,
   setPatientHighlights,
@@ -219,14 +220,25 @@ const getEncountersTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) => {
+const getPatientProfile = (patientId?: string) => async (dispatch: AppDispatch) => {
+  // Cleanup for patientProfile after component unmounting
+  if (!patientId) {
+    dispatch(setPatientProfile(null));
+
+    return;
+  }
+
   try {
     const response = await API.patients.getPatientProfile(patientId);
 
+    dispatch(setIsPatientProfileLoading(true));
     dispatch(setPatientProfile(response.data.data));
   } catch (error) {
+    dispatch(setPatientProfile(null));
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setIsPatientProfileLoading(false));
   }
 };
 

@@ -111,10 +111,10 @@ const patientEmrManager = {
       `${baseURL}/v1/profile/${patientId}/highlight`
     );
   },
-  getPatientHighlightDetails(patientId: string, uiid: string) {
+  getPatientHighlightDetails(patientId: string, uuid: string) {
     return axiosInstance
       .get<IPatientHighlightDetailsResponse, IAxiosResponse<IPatientHighlightDetailsResponse>>(
-        `${baseURL}/v1/profile/${patientId}/highlight/${uiid}`
+        `${baseURL}/v1/profile/${patientId}/highlight/${uuid}`
       )
       .then(
         ({ data }) => data.data,
