@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, Typography } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
@@ -29,21 +30,25 @@ import { IBlockScheduleForm, initialValues } from './form/initialValues';
 
 const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowProps> })[] = [
   {
+    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_RESOURCE,
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_RESOURCE,
     fieldName: 'resourceId',
     Component: AutoCompleteTextField
   },
   {
+    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_DATE_START,
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_START,
     fieldName: 'startDate',
     Component: DateField
   },
   {
+    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_DATE_END,
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_END,
     fieldName: 'endDate',
     Component: DateField
   },
   {
+    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
     fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
     fieldName: 'placeholderLabel',
     Component: TextInputField
@@ -63,6 +68,7 @@ const BlockTemplates = () => {
   });
 
   const { reset, handleSubmit } = methods;
+  const applyButtonCyId = CypressIds.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY;
 
   const onSubmit = (values: IBlockScheduleForm) => {
     const sendingBlockValues = {
@@ -114,13 +120,14 @@ const BlockTemplates = () => {
         <ScheduleBoxWrapper>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
-              {fieldRows.map(({ Component, fieldLabel, fieldName }) => (
-                <BlockScheduleFormRow title={t(fieldLabel)} key={fieldName}>
-                  <Component fieldLabel={t(fieldLabel)} fieldName={fieldName} />
+              {fieldRows.map(({ Component, fieldLabel, fieldName, dataCyId }) => (
+                <BlockScheduleFormRow dataCyId={dataCyId} title={t(fieldLabel)} key={fieldName}>
+                  <Component dataCyId={dataCyId} fieldLabel={t(fieldLabel)} fieldName={fieldName} />
                 </BlockScheduleFormRow>
               ))}
               <Grid item xs={12} display="flex">
                 <ButtonWithLoading
+                  data-cy={applyButtonCyId}
                   isLoading={isScheduleLoading}
                   color="primary"
                   type="submit"

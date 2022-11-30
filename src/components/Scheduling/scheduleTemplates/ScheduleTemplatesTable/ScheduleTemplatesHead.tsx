@@ -9,6 +9,8 @@ import { EnhancedTableHeadProps, HeadCell } from 'types';
 import { SortOrder } from 'types/patient';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
 
+import { CypressIds } from '../../../../constants/cypressIds';
+
 // table header options
 const headCells: HeadCell[] = [
   {
@@ -60,12 +62,14 @@ const ScheduleTemplatesHead = ({
 
   const { selected } = useScheduleTemplatesContext();
   const numSelected = selected.length;
+  const allTemplatesSelectCheckboxCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_CHECKBOX_SELECT_ALL;
 
   return (
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
           <Checkbox
+            data-cy={allTemplatesSelectCheckboxCyId}
             sx={{ color: theme.palette.primary.main }}
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowsPerPage}

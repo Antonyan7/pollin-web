@@ -7,18 +7,19 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { coreSelector } from '@redux/slices/core';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 import { v4 } from 'uuid';
+import { createTemplateValidationSchema } from 'validation/scheduling/create_template';
 
 import { ButtonWithLoading, PlusIconButton } from '@ui-component/common/buttons';
 import { calculateTimeInUTC, changeDateSameTimeString } from '@utils/dateUtils';
 
 import { isAllDaysFilled } from '../../helpers/scheduling';
-import { createTemplateValidationSchema } from '../../validation/scheduling/create_template';
 
 const getDefaultTimePeriodState = (): ISingleTemplate => ({
   id: v4(),
@@ -37,12 +38,15 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
 
 const CreateTemplate = () => {
   const [t] = useTranslation();
-
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
   const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
   const [isPlusButtonDisabled, setIsPlusButtonDisabled] = useState<boolean>(false);
   const error = useAppSelector(schedulingSelector.scheduleError);
+  const templateNameCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME;
+  const cancelButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL;
+  const saveButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE;
+  const plusIconButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_PLUS;
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
@@ -57,7 +61,6 @@ const CreateTemplate = () => {
       })
     );
   };
-
   const handleSaveClick = (values: ITemplateGroup) => {
     const body: ITemplateGroup = {
       ...values,
@@ -81,16 +84,13 @@ const CreateTemplate = () => {
 
     dispatch(schedulingMiddleware.createScheduleTemplate(body));
   };
-
   const methods = useForm({
     defaultValues: getEmptyTemplateState(),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     resolver: yupResolver(createTemplateValidationSchema)
   });
-
   const { watch, getValues } = methods;
-
   const { errors } = methods.formState;
   const errorMessage =
     (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
@@ -130,6 +130,7 @@ const CreateTemplate = () => {
             </Grid>
             <Grid item xs={12} lg={9}>
               <TextField
+                data-cy={templateNameCyId}
                 {...methods.register('name')}
                 className="schedule-inputs"
                 color="primary"
@@ -144,10 +145,15 @@ const CreateTemplate = () => {
               <TimePeriods />
             </Grid>
             <Grid item xs={12}>
-              <PlusIconButton isPlusButtonDisabled={isPlusButtonDisabled} onClick={onPlusClick} />
+              <PlusIconButton
+                data-cy={plusIconButtonCyId}
+                isPlusButtonDisabled={isPlusButtonDisabled}
+                onClick={onPlusClick}
+              />
             </Grid>
             <Grid item xs={12} container justifyContent="flex-end">
               <StyledButton
+                data-cy={cancelButtonCyId}
                 color="primary"
                 onClick={onCancelClick}
                 variant="outlined"
@@ -157,6 +163,7 @@ const CreateTemplate = () => {
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL)}
               </StyledButton>
               <ButtonWithLoading
+                data-cy={saveButtonCyId}
                 isLoading={isScheduleLoading}
                 color="primary"
                 variant="contained"

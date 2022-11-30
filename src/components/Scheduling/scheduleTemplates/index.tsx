@@ -4,6 +4,7 @@ import { ScheduleBoxWrapper, StyledButtonNew } from '@components/Appointments/Co
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 import { TablePagination, Typography, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { ScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { rowsPerPage } from 'helpers/constants';
@@ -25,6 +26,7 @@ const ScheduleTemplates = () => {
 
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
   const isScheduleTemplatesLoading = useAppSelector(schedulingSelector.scheduleListLoadingStatus);
+  const newTemplateButtonCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE;
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(page + 1));
@@ -47,9 +49,10 @@ const ScheduleTemplates = () => {
 
   return (
     <>
-      {/* to do //add header compoenent */}
+      {/* to do //add header component */}
       <ScheduleBoxWrapper>
         <StyledButtonNew
+          data-cy={newTemplateButtonCyId}
           theme={theme}
           variant="contained"
           endIcon={<AddIcon sx={{ color: theme.palette.primary.contrastText }} />}

@@ -35,6 +35,7 @@ const StyledListItemButton = styled(ListItemButton, { shouldForwardProp: (prop) 
 const NavItem = ({ item, level }: NavItemProps) => {
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+  const listItemCyId = item?.title;
 
   const { openItem } = useAppSelector(viewsSelector.menu);
 
@@ -76,7 +77,7 @@ const NavItem = ({ item, level }: NavItemProps) => {
   }, [item.id]);
 
   return (
-    <ListItemLink item={item} itemTarget={itemTarget}>
+    <ListItemLink data-cy={listItemCyId} item={item} itemTarget={itemTarget}>
       <StyledListItemButton
         theme={theme}
         level={level}

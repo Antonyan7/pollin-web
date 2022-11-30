@@ -22,3 +22,9 @@
   page.appointments.select.resource
   common.time.picker.button.save
   common.time.picker.button.cancel
+  schedule.templates.delete.icon
+  page.scheduling.templates.checkbox.select.all
+  page.scheduling.templates.checkbox.select
+  page.scheduling.templates.visibility.icon
+  page.scheduling.create.templates.checkbox.weekdays
+  page.scheduling.create.templates.button.plus

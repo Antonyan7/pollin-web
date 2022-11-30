@@ -4,6 +4,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, IconButton, Toolbar, Tooltip, Typography } from '@mui/material';
 import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 
+import { CypressIds } from '../../constants/cypressIds';
+
 const EnhancedTableToolbar = () => {
   const [open, setOpen] = useState(false);
 
@@ -13,6 +15,7 @@ const EnhancedTableToolbar = () => {
 
   const { selected } = useScheduleTemplatesContext();
   const numSelected = selected.length;
+  const deleteIconCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_BUTTON_DELETE;
 
   return (
     <>
@@ -40,6 +43,7 @@ const EnhancedTableToolbar = () => {
           <Tooltip title="Delete">
             <IconButton size="large">
               <DeleteIcon
+                data-cy={deleteIconCyId}
                 fontSize="medium"
                 sx={{ color: (theme) => theme.palette.primary.main }}
                 onClick={handleOpenClose}

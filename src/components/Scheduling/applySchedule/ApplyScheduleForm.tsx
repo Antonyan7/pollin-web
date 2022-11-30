@@ -6,6 +6,7 @@ import { FormControl, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
 import { calculateWeekByNumber } from 'helpers/scheduling';
@@ -143,6 +144,11 @@ const ApplyScheduleForm = () => {
 
   const [startDateErrorMessage, setStartDateErrorMessage] = useState('');
   const [endDateErrorMessage, setEndDateErrorMessage] = useState('');
+  const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
+  const scheduleTemplateCyId = CypressIds.PAGE_SCHEDULING_APPLY_TEMPLATE;
+  const repeatCyId = CypressIds.PAGE_SCHEDULING_APPLY_EVERY;
+  const startDateCyId = CypressIds.PAGE_SCHEDULING_APPLY_DATE_START;
+  const endDateCyId = CypressIds.PAGE_SCHEDULING_APPLY_DATE_END;
 
   const clearErrorMessage = () => {
     setStartDateErrorMessage('');
@@ -175,6 +181,7 @@ const ApplyScheduleForm = () => {
         <Grid container spacing={3}>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}>
             <ResourceField
+              data-cy={resourceCyId}
               setResource={setResource}
               resource={resource}
               label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}
@@ -182,6 +189,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}>
             <ScheduleTemplateField
+              data-cy={scheduleTemplateCyId}
               scheduleTemplate={scheduleTemplate}
               setScheduleTemplate={setScheduleTemplate}
               label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}
@@ -199,6 +207,7 @@ const ApplyScheduleForm = () => {
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_REPEATS)}>
             <FormControl fullWidth>
               <RepeatsField
+                data-cy={repeatCyId}
                 repeatWeeks={repeatWeeks}
                 setRepeatWeeks={setRepeatWeeks}
                 label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)}
@@ -207,6 +216,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}>
             <DatePickerField
+              data-cy={startDateCyId}
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
               value={startDate}
               setDate={setStartDate}
@@ -215,6 +225,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}>
             <DatePickerField
+              data-cy={endDateCyId}
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
               value={endDate}
               setDate={setEndDate}

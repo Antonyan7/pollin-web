@@ -92,6 +92,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
                   row={row}
                   onClick={(e) => onClick(e, row.id)}
                   labelId={labelId}
+                  index={index}
                 />
               );
             })}

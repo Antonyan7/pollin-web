@@ -5,6 +5,8 @@ import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from 
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 
+import { CypressIds } from '../../../../constants/cypressIds';
+
 import { ITableRow } from './Table';
 
 interface TableComponentProps {
@@ -12,11 +14,15 @@ interface TableComponentProps {
   row: ITableRow;
   onClick: (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => void;
   labelId: string;
+  index: number;
 }
 
-const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableComponentProps) => {
+const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId, index }: TableComponentProps) => {
   const theme = useTheme();
   const router = useRouter();
+  const templateSelectCheckboxCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_CHECKBOX_SELECT;
+  const templateVisibilityIconCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_VISIBILITY_ICON;
+  const templateEditIconCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_EDIT_ICON;
   const onViewClick = useCallback(
     (id: string) => {
       router.push({ pathname: '/scheduling/view-schedule', query: { scheduleId: id } });
@@ -35,6 +41,7 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
     <TableRow hover role="checkbox" aria-checked={isItemSelected} tabIndex={-1} selected={isItemSelected}>
       <TableCell padding="checkbox" onClick={(event) => onClick(event, row.name)}>
         <Checkbox
+          data-cy={`${templateSelectCheckboxCyId}-${index}`}
           sx={{ color: theme.palette.primary.main }}
           checked={isItemSelected}
           inputProps={{
@@ -59,10 +66,10 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId }: TableCo
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
         <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
-          <VisibilityOutlinedIcon sx={{ fontSize: '1.3rem' }} />
+          <VisibilityOutlinedIcon data-cy={`${templateVisibilityIconCyId}-${index}`} sx={{ fontSize: '1.3rem' }} />
         </IconButton>
         <IconButton sx={{ color: theme.palette.primary.main }} size="large" onClick={() => onEditClick(row.id)}>
-          <EditOutlinedIcon sx={{ fontSize: '1.3rem' }} />
+          <EditOutlinedIcon data-cy={`${templateEditIconCyId}-${index}`} sx={{ fontSize: '1.3rem' }} />
         </IconButton>
       </TableCell>
     </TableRow>

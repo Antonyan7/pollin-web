@@ -2,6 +2,7 @@ import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box, Checkbox, CheckboxProps, FormControl, FormControlLabel, FormHelperText } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
 import { calculateWeekByNumber } from 'helpers/scheduling';
@@ -23,6 +24,7 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
   const { onChange } = field;
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT_ERROR);
   const values = getValues().timePeriods[index]?.days.map((item) => Number(item));
+  const weekDayCheckboxCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS;
 
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
@@ -46,6 +48,7 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
               value={calculateWeekByNumber(indexOfDay)}
               control={
                 <Checkbox
+                  data-cy={`${weekDayCheckboxCyId}-${indexOfDay}`}
                   {...register(field.name, { required: true })}
                   checked={isChecked(indexOfDay)}
                   onChange={onWeekDaysChange(calculateWeekByNumber(indexOfDay))}

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { ITemplateGroup } from 'types/create-schedule';
@@ -29,9 +30,11 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
 
   const { error: serviceTypesError } = fieldState;
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES_ERROR);
+  const serviceTypesCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES;
 
   return (
     <BaseDropdownWithLoading
+      data-cy={serviceTypesCyId}
       isLoading={isServiceTypesLoading}
       className="schedule-inputs"
       multiple

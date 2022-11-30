@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Box, Divider } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 
@@ -39,6 +40,8 @@ const ServiceTypesRow: React.FC<{ index: number }> = ({ index }) => {
 export const TimePeriods = () => {
   const [t] = useTranslation();
   const { getValues } = useFormContext<ITemplateGroup>();
+  const startTimeCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_START;
+  const endTimeCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_END;
 
   return (
     <>
@@ -53,6 +56,7 @@ export const TimePeriods = () => {
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}>
                   <TimeField
+                    data-cy={startTimeCyId}
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}
                     fieldName="startTime"
                     index={index}
@@ -60,6 +64,7 @@ export const TimePeriods = () => {
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}>
                   <TimeField
+                    data-cy={endTimeCyId}
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}
                     fieldName="endTime"
                     index={index}
