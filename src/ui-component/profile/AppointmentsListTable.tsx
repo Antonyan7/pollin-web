@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import bookingHelpers from '@axios/booking/bookingHelpers';
 import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   Table,
@@ -14,10 +15,14 @@ import {
   Typography
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { patientsMiddleware, patientsSelector, patientsSlice } from '@redux/slices/patients';
+import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
+import { useRouter } from 'next/router';
 import { SortOrder } from 'types/patient';
+
+const { setPatientAppointments, setError } = patientsSlice.actions;
 
 interface HeadCell {
   id: keyof IPatientAppointment;
@@ -45,31 +50,97 @@ const headCells: HeadCell[] = [
 
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
-
-  const { list, orderBy, order, filters } = useAppSelector(patientsSelector.patientAppointments);
+  const router = useRouter();
+  const { list, orderBy, order, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
   useEffect(() => {
-    if (tableData === null) {
-      dispatch(patientsMiddleware.getInitialPatientAppointments());
+    if (tableData === null && currentPage) {
+      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, selectedFilters));
     }
-  }, [tableData]);
+  }, [currentPage, selectedFilters, order, orderBy, tableData]);
 
   const onTableHeadCellClick = async (newOrderBy: Exclude<HeadCell['id'], 'time'>) => {
-    const newOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
+    try {
+      const switchOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
+      const newOrder = orderBy === newOrderBy ? switchOrder : SortOrder.Asc;
+      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
 
-    dispatch(
-      patientsMiddleware.getPatientAppointments(
-        currentPage,
-        orderBy === newOrderBy ? newOrder : SortOrder.Asc,
-        newOrderBy,
-        filters
-      )
-    );
+      const { data, ...metaData } = await bookingHelpers.getAppointmentsListFromParams({
+        page: currentPage,
+        order: newOrder,
+        orderBy: newOrderBy,
+        filters: excludeTitleFilters
+      });
+
+      router.replace(
+        {
+          query: {
+            ...router.query,
+            page: metaData.currentPage - 1,
+            order: newOrder,
+            orderBy: newOrderBy
+          }
+        },
+        undefined,
+        { scroll: false }
+      );
+
+      dispatch(
+        setPatientAppointments({
+          list: {
+            appointments: data.appointments,
+            currentPage: metaData.currentPage,
+            pageSize: metaData.pageSize,
+            totalItems: metaData.totalItems
+          },
+          order: newOrder,
+          orderBy: newOrderBy,
+          selectedFilters
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
   };
 
   const onTablePageChange: TablePaginationProps['onPageChange'] = async (_e, newPage) => {
-    dispatch(patientsMiddleware.getPatientAppointments(newPage + 1, order, orderBy, filters));
+    try {
+      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
+
+      const { data, ...metaData } = await bookingHelpers.getAppointmentsListFromParams({
+        page: newPage + 1,
+        order,
+        orderBy,
+        filters: excludeTitleFilters
+      });
+
+      router.replace(
+        {
+          query: {
+            ...router.query,
+            page: metaData.currentPage - 1
+          }
+        },
+        undefined,
+        { scroll: false }
+      );
+
+      dispatch(
+        setPatientAppointments({
+          list: {
+            appointments: data.appointments,
+            currentPage: metaData.currentPage,
+            pageSize: metaData.pageSize,
+            totalItems: metaData.totalItems
+          }
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
   };
 
   return (

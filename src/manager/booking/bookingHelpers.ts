@@ -2,7 +2,7 @@ import bookingManager from '@axios/booking/bookingManager';
 import {
   IPatientAppointment,
   PatientAppointmentsFields,
-  PatientAppointmentsFilterOptions,
+  PatientAppointmentsFilterOption,
   PatientAppointmentsSortField
 } from '@axios/booking/managerBookingTypes';
 import { ISortOrder, SortOrder } from 'types/patient';
@@ -13,23 +13,17 @@ interface AppointmentsListParams {
   page: number;
   order: SortOrder | null;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
-  filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];
+  filters?: Omit<PatientAppointmentsFilterOption, 'title'>[];
 }
 
 interface AppointmentsListRequestBody {
   page: number;
   sortOrder: ISortOrder;
   sortByField: PatientAppointmentsFields;
-  filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];
+  filters?: Omit<PatientAppointmentsFilterOption, 'title'>[];
 }
 
-const getAppointmentsListFromParams = async (
-  params: AppointmentsListParams = {
-    page: 1,
-    order: SortOrder.Desc,
-    orderBy: PatientAppointmentsSortField.Date
-  }
-) => {
+const getAppointmentsListFromParams = async (params: AppointmentsListParams) => {
   const sortOrder = capitalizeFirst<ISortOrder>(params.order ?? SortOrder.Desc);
   const sortByField = capitalizeFirst<PatientAppointmentsFields>(params.orderBy ?? PatientAppointmentsSortField.Date);
 
@@ -37,7 +31,7 @@ const getAppointmentsListFromParams = async (
     page: params.page,
     sortOrder,
     sortByField,
-    ...(params.filters?.length ? { filters: params.filters } : {})
+    ...(params.filters && params.filters.length ? { filters: params.filters } : {})
   };
 
   return bookingManager.getAppointmentList(requestBody);

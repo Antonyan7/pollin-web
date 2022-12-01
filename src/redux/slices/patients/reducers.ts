@@ -107,11 +107,32 @@ const reducers = createReducer({
   setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
     state.latestTestResults = action.payload;
   },
-  setPatientAppointments(state, action: IAction<IPatientAppointmentsProps>) {
-    state.patientAppointments = action.payload;
+  setPatientAppointments(state, action: IAction<Partial<IPatientAppointmentsProps>>) {
+    state.patientAppointments = {
+      ...state.patientAppointments,
+      ...action.payload
+    };
   },
   setPatientAppointmentsList(state, action: IAction<IPatientAppointmentsList>) {
     state.patientAppointments.list = action.payload;
+  },
+  setPatientAppointmentsOrderBy(state, action: IAction<IPatientAppointmentsProps['orderBy']>) {
+    state.patientAppointments.orderBy = action.payload;
+  },
+  setPatientAppointmentsOrder(state, action: IAction<IPatientAppointmentsProps['order']>) {
+    state.patientAppointments.order = action.payload;
+  },
+  setPatientAppointmentsFilters(state, action: IAction<IPatientAppointmentsProps['filters']>) {
+    state.patientAppointments.filters = action.payload;
+  },
+  setPatientAppointmentsFiltersLoading(state, action: IAction<boolean>) {
+    state.isPatientAppointmentFiltersLoading = action.payload;
+  },
+  setPatientAppointmentsSelectedFilters(state, action: IAction<IPatientAppointmentsProps['selectedFilters']>) {
+    state.patientAppointments.selectedFilters = action.payload;
+  },
+  setPatientAppointmentsListPage(state, action: IAction<IPatientAppointmentsList['currentPage']>) {
+    state.patientAppointments.list.currentPage = action.payload;
   },
   setEncountersDetailsLoadingState(state, action: IAction<boolean>) {
     state.isEncountersDetailsLoading = action.payload;

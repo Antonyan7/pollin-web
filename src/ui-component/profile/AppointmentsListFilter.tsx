@@ -1,49 +1,71 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import bookingManager from '@axios/booking/bookingManager';
-import { IPatientAppointmentsListFilter, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
+import bookingHelpers from '@axios/booking/bookingHelpers';
+import { PatientAppointmentsFilterOption } from '@axios/booking/managerBookingTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { patientsSelector, patientsSlice } from '@redux/slices/patients';
+import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
+const { setPatientAppointments, setError } = patientsSlice.actions;
+
 const AppointmentListFilter = () => {
   const theme = useTheme();
   const [t] = useTranslation();
-  const { list, orderBy, order } = useAppSelector(patientsSelector.patientAppointments);
+  const isAppointmentFiltersLoading = useAppSelector(patientsSelector.isPatientAppointmentFiltersLoading);
+  const { list, orderBy, order, filters, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
   const { currentPage } = list;
   const currentPatientAppointmentFilterField = useAppSelector(patientsSelector.currentPatientAppointmentFilterField);
 
-  const [filters, setFilters] = useState<IPatientAppointmentsListFilter[]>([]);
-  const [isAppointmentFiltersLoading, setIsAppointmentFiltersLoading] = useState(false);
-  const [selectedFilters, setSelectedFilters] = useState<PatientAppointmentsFilterOptions[]>([]);
+  const router = useRouter();
 
   const adaptedGroupedOptions = () =>
-    filters?.flatMap((item) => item?.options.map((option) => ({ ...option, type: item.title })));
+    filters && filters.length > 0
+      ? filters?.flatMap((item) => item?.options.map((option) => ({ ...option, type: item.title })))
+      : [];
 
-  useEffect(() => {
-    if (!filters.length) {
-      setIsAppointmentFiltersLoading(true);
-      bookingManager.getAppointmentListFilters().then(({ data }) => {
-        setFilters(data.filters);
+  const onAppointmentRecencyChange = async (appointmentFilters: PatientAppointmentsFilterOption[]) => {
+    try {
+      const { data, ...metaData } = await bookingHelpers.getAppointmentsListFromParams({
+        page: currentPage,
+        order,
+        orderBy,
+        filters: appointmentFilters?.map(({ id, type }) => ({ id, type }))
       });
-      setIsAppointmentFiltersLoading(false);
-    }
-  }, [filters.length]);
 
-  const onAppointmentRecencyChange = (appointmentFilters: PatientAppointmentsFilterOptions[]) => {
-    const excludeTitleFilters = appointmentFilters.map(({ id, type }) => ({ id, type }));
+      router.replace(
+        {
+          query: {
+            ...router.query,
+            filterIds: appointmentFilters.map(({ id }) => id)
+          }
+        },
+        undefined,
+        { scroll: false }
+      );
 
-    setSelectedFilters(appointmentFilters);
-
-    if (excludeTitleFilters.length) {
-      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, excludeTitleFilters));
-    } else {
-      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy));
+      dispatch(
+        setPatientAppointments({
+          list: {
+            appointments: data.appointments,
+            currentPage: metaData.currentPage,
+            pageSize: metaData.pageSize,
+            totalItems: metaData.totalItems
+          },
+          order,
+          orderBy,
+          selectedFilters: appointmentFilters
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
     }
   };
 
@@ -76,7 +98,8 @@ const AppointmentListFilter = () => {
 
           return false;
         }}
-        options={filters.length ? adaptedGroupedOptions() : []}
+        value={[...selectedFilters]}
+        options={adaptedGroupedOptions()}
         groupBy={(option) => option.type}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
         isOptionEqualToValue={(option, value) => option.id === value.id}

@@ -1,6 +1,6 @@
 import API from '@axios/API';
 import bookingHelpers from '@axios/booking/bookingHelpers';
-import { IPatientAppointment, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment, PatientAppointmentsFilterOption } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
@@ -44,7 +44,6 @@ const {
   setTestResultsHistory,
   setProfileTestResults,
   setPatientAppointments,
-  setPatientAppointmentsList,
   setEncountersDetailsLoadingState,
   setIsProfileTestResultsLoading,
   setIsTestResultsHistoryLoading,
@@ -363,24 +362,6 @@ const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatc
   }
 };
 
-const getInitialPatientAppointments = () => async (dispatch: AppDispatch) => {
-  try {
-    const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams();
-
-    dispatch(
-      setPatientAppointmentsList({
-        appointments: data.appointments,
-        currentPage,
-        pageSize,
-        totalItems
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-};
-
 const getPatientContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setPatientContactInformationLoadingState(true));
 
@@ -401,15 +382,17 @@ const getPatientAppointments =
     page: number,
     order: SortOrder | null,
     orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
-    filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[]
+    selectedFilters?: PatientAppointmentsFilterOption[]
   ) =>
   async (dispatch: AppDispatch) => {
     try {
+      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
+
       const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
         page,
         order,
         orderBy,
-        filters
+        filters: excludeTitleFilters
       });
 
       dispatch(
@@ -422,7 +405,7 @@ const getPatientAppointments =
           },
           order,
           orderBy,
-          filters
+          selectedFilters
         })
       );
     } catch (error) {
@@ -457,7 +440,6 @@ export default {
   getProfileTestResultLatest,
   getProfileTestResultsHistory,
   getProfileTestResults,
-  getInitialPatientAppointments,
   getPatientAppointments,
   cleanEncountersList,
   setCurrentAppointmentType,

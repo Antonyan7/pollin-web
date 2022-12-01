@@ -1,5 +1,6 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
@@ -16,8 +17,8 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { dispatch } from '@redux/hooks';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
@@ -30,21 +31,14 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 interface Props {
   appointmentType: AppointmentType;
+  appointmentsList: IPatientAppointment[] | null;
+  filterId: string;
 }
 
-const AppointmentsCard = ({ appointmentType }: Props) => {
+const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const { navigateTo } = usePatientProfileNavigatorContext();
-
-  const { list } = useAppSelector(patientsSelector.patientAppointments);
-  const { appointments: appointmentsList } = list;
-
-  useEffect(() => {
-    if (appointmentsList === null) {
-      dispatch(patientsMiddleware.getInitialPatientAppointments());
-    }
-  }, [appointmentsList]);
 
   const currentAppointmentType =
     appointmentType === AppointmentType.Upcoming
@@ -52,7 +46,9 @@ const AppointmentsCard = ({ appointmentType }: Props) => {
       : t(Translation.PAGE_PATIENT_PROFILE_PAST_APPOINTMENTS);
 
   const onViewAllClick = () => {
-    navigateTo(PatientProfilePageName.AppointmentsList);
+    navigateTo(PatientProfilePageName.AppointmentsList, {
+      filterIds: filterId
+    });
     dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
   };
 

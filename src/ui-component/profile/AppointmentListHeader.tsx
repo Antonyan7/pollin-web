@@ -10,9 +10,13 @@ const AppointmentsListHeader = () => {
 
   const { navigateBack } = usePatientProfileNavigatorContext();
 
+  const onBackClick = () => {
+    navigateBack();
+  };
+
   return (
     <Grid container item xs={12} columnGap={1} direction="row" justifyItems="center">
-      <IconButton onClick={navigateBack}>
+      <IconButton onClick={onBackClick}>
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">

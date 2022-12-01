@@ -62,10 +62,12 @@ export const getInitialState = (): PatientEmrProps => ({
       currentPage: 0,
       totalItems: 0
     },
-    filters: [],
+    filters: null,
+    selectedFilters: [],
     order: SortOrder.Desc,
     orderBy: PatientAppointmentsSortField.Date
   },
+  isPatientAppointmentFiltersLoading: false,
   currentPatientAppointmentFilterField: '',
   contactInformation: {
     id: '',

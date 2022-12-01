@@ -8,6 +8,7 @@ import {
   ICreateAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
+  IGetPatientAppointments,
   IGetPatientAppointmentsListFiltersResponse,
   IGetPatientAppointmentsListReqBody,
   IGetPatientAppointmentsListResponse,
@@ -89,6 +90,13 @@ const bookingManager = {
     return axiosInstance
       .get<IGetPatientAppointmentsListFiltersResponse, IAxiosResponse<IGetPatientAppointmentsListFiltersResponse>>(
         `${baseURL}/v1/appointment/filter`
+      )
+      .then(({ data }) => data);
+  },
+  getPatientAppointments(patientId: string) {
+    return axiosInstance
+      .get<IGetPatientAppointments, IAxiosResponse<IGetPatientAppointments>>(
+        `${baseURL}/v1/profile-appointment/${patientId}`
       )
       .then(({ data }) => data);
   }

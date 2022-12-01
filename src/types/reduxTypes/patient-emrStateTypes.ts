@@ -1,5 +1,9 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IPatientAppointment, PatientAppointmentsFilterOptions } from '@axios/booking/managerBookingTypes';
+import {
+  IPatientAppointment,
+  IPatientAppointmentsListFilter,
+  PatientAppointmentsFilterOption
+} from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
   IPatientContactInformation,
@@ -40,6 +44,7 @@ export interface PatientEmrProps {
   patientHighlightHeader: PatientHighlightHeader;
   patientHighlights: PatientHighlight[] | null;
   patientAppointments: IPatientAppointmentsProps;
+  isPatientAppointmentFiltersLoading: boolean;
   latestTestResults: ITestResultLatest[];
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
@@ -198,7 +203,8 @@ export interface IPatientAppointmentsProps {
   list: IPatientAppointmentsList;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
   order: SortOrder | null;
-  filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];
+  filters: IPatientAppointmentsListFilter[] | null;
+  selectedFilters: PatientAppointmentsFilterOption[];
 }
 
 export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}

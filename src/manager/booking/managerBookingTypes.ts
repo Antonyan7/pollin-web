@@ -100,7 +100,7 @@ export interface IGetPatientAppointmentsListReqBody {
   page: number;
   sortOrder: ISortOrder;
   sortByField: PatientAppointmentsFields;
-  filters?: Omit<PatientAppointmentsFilterOptions, 'title'>[];
+  filters?: Omit<PatientAppointmentsFilterOption, 'title'>[];
 }
 
 export interface IPatientAppointment {
@@ -129,16 +129,27 @@ export interface IGetPatientAppointmentsListFiltersResponse {
   filters: IPatientAppointmentsListFilter[];
 }
 
-export interface PatientAppointmentsFilterOptions {
+export interface PatientAppointmentsFilterOption {
+  id: string;
   title: string;
   type: string;
-  id: string;
 }
 
-export interface GroupedServiceProvidersOptions extends PatientAppointmentsFilterOptions {}
+export interface GroupedServiceProvidersOptions extends PatientAppointmentsFilterOption {}
 
 export enum PatientAppointmentsFields {
   Type = 'Type',
   Date = 'Date',
   Status = 'Status'
+}
+
+export interface IGetPatientAppointments {
+  upcoming: {
+    filter: string;
+    appointments: IPatientAppointment[];
+  };
+  past: {
+    filter: string;
+    appointments: IPatientAppointment[];
+  };
 }

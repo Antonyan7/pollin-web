@@ -32,10 +32,7 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
   };
 
   useEffect(() => {
-    const splitPaths = router.asPath.split('/');
-    const currentPagePath = splitPaths[splitPaths.length - 1];
-
-    const currentIndex = patientListTabLinks.findIndex((tabLink) => tabLink.href === currentPagePath);
+    const currentIndex = patientListTabLinks.findIndex((tabLink) => router.asPath.includes(tabLink.href));
 
     setCurrentTabIndex(currentIndex);
   }, [router]);

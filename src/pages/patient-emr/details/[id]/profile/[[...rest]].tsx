@@ -1,13 +1,13 @@
 import React from 'react';
-import { PatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
+import { PatientProfileNavigatorContextProvider } from 'context/PatientProfileNavigatorContext';
 import PatientEmrLayout from 'layout/PatientEmrLayout';
 
 import PatientProfile from '@ui-component/profile/PatientProfile';
 
 const PatientProfileTab = () => (
-  <PatientProfileNavigatorContext>
+  <PatientProfileNavigatorContextProvider>
     <PatientProfile />
-  </PatientProfileNavigatorContext>
+  </PatientProfileNavigatorContextProvider>
 );
 
 PatientProfileTab.PageLayout = PatientEmrLayout;

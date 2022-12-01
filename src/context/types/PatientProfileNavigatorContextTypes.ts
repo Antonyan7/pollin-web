@@ -5,7 +5,7 @@ export class PatientProfileNavigatorContextActionTypes {
 }
 
 export enum PatientProfilePageName {
-  AppointmentsList = 'AppointmentsList'
+  AppointmentsList = 'appointments-list'
 }
 
 export interface IPatientProfileNavigatorState {
