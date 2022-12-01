@@ -10,14 +10,14 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TextField,
   Typography
 } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
-import { ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
+import { IPossibleResultOptions, ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 
 import DateReceivedField from './fields/DateReceivedField';
+import PossibleResultOptionsField from './fields/PossibleResultOptionsField';
 import ResultTypeField from './fields/ResultTypeField';
 import MEASUREMENT_LIST_TABLE_HEADERS from './data';
 
@@ -56,10 +56,10 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
       >
         <TableHead>
           <TableRow>
-            {MEASUREMENT_LIST_TABLE_HEADERS.map((header) => (
-              <TableCell sx={{ border: 0 }} key={header.key} width={header.width}>
+            {MEASUREMENT_LIST_TABLE_HEADERS.map(({ width, key }) => (
+              <TableCell sx={{ border: 0 }} key={key} width={width}>
                 <Typography fontWeight={600} component="h4">
-                  {t(header.key)}
+                  {t(key)}
                 </Typography>
               </TableCell>
             ))}
@@ -73,24 +73,36 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
               </Typography>
             </StyledTableCell>
           </StyledTableRow>
-          {fields.map((item, index) => (
-            <TableRow key={item.id}>
-              <StyledTableCell>{listItems[index].type}</StyledTableCell>
-              <StyledTableCell>{listItems[index].unit}</StyledTableCell>
-              <StyledTableCell>
-                <TextField
-                  {...register(`${currentFormFieldDataItems}.${index}.result`)}
-                  label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT)}
-                />
-              </StyledTableCell>
-              <StyledTableCell>
-                <DateReceivedField name={`${currentFormFieldDataItems}.${index}.dateReceived`} control={control} />
-              </StyledTableCell>
-              <StyledTableCell>
-                <ResultTypeField name={`${currentFormFieldDataItems}.${index}.resultType`} control={control} />
-              </StyledTableCell>
-            </TableRow>
-          ))}
+          {fields.map((field, fieldIndex) => {
+            const showResultOptionsDropdown = !!(
+              listItems[fieldIndex].possibleResultOptions && listItems[fieldIndex].possibleResultOptions?.length
+            );
+
+            return (
+              <TableRow key={field.id}>
+                <StyledTableCell>{listItems[fieldIndex].type}</StyledTableCell>
+                <StyledTableCell>{listItems[fieldIndex].unit}</StyledTableCell>
+                <StyledTableCell>
+                  <PossibleResultOptionsField
+                    showResultOptionsDropdown={showResultOptionsDropdown}
+                    name={`${currentFormFieldDataItems}.${fieldIndex}.result`}
+                    control={control}
+                    resultOptions={listItems[fieldIndex].possibleResultOptions as IPossibleResultOptions[]}
+                    register={register}
+                  />
+                </StyledTableCell>
+                <StyledTableCell>
+                  <DateReceivedField
+                    name={`${currentFormFieldDataItems}.${fieldIndex}.dateReceived`}
+                    control={control}
+                  />
+                </StyledTableCell>
+                <StyledTableCell>
+                  <ResultTypeField name={`${currentFormFieldDataItems}.${fieldIndex}.resultType`} control={control} />
+                </StyledTableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </TableContainer>

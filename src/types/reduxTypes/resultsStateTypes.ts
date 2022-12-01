@@ -136,6 +136,10 @@ interface ITestResultLab {
   doctorName: string;
 }
 
+export interface IPossibleResultOptions {
+  title: string;
+}
+
 export interface ITestResultItem {
   id: string;
   type: string;
@@ -143,6 +147,7 @@ export interface ITestResultItem {
   result: string;
   dateReceived: string;
   resultType?: TestResultMeasurementType;
+  possibleResultOptions?: IPossibleResultOptions[];
 }
 
 export interface ITestResultAttachment {
