@@ -23,6 +23,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
+import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
@@ -144,47 +145,6 @@ const InHouseSpecimensList = () => {
   const [selected, setSelected] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelectedId = specimensList?.specimens.map((specimen) => specimen.id);
-      const newSelectedStatus = specimensList?.specimens.map((specimen) => specimen.status);
-
-      setSelected(newSelectedId);
-      setSelectedStatuses(newSelectedStatus);
-
-      return;
-    }
-
-    setSelected([]);
-    setSelectedStatuses([]);
-  };
-
-  const onClickCheckbox = (event: React.MouseEvent, id: string, status: string) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected: string[] = [];
-    let newSelectedStatus: string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses, status);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-      newSelectedStatus = newSelectedStatus.concat(selectedStatuses.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(selected.slice(0, selectedIndex), selected.slice(selectedIndex + 1));
-      newSelectedStatus = newSelectedStatus.concat(
-        selectedStatuses.slice(0, selectedIndex),
-        selectedStatuses.slice(selectedIndex + 1)
-      );
-    }
-
-    setSelected(newSelected);
-    setSelectedStatuses(newSelectedStatus);
-  };
-
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
   const numSelected = selected.length;
   const rowCount = specimensList?.specimens.length;
@@ -217,7 +177,7 @@ const InHouseSpecimensList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={handleSelectAllClick}
+                  onChange={(e) => handleSelectAllClick(e, specimensList, setSelected, setSelectedStatuses)}
                 />
               </TableCell>
               {numSelected > 0 && (
@@ -256,7 +216,7 @@ const InHouseSpecimensList = () => {
                   key={row.id}
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
                   isItemSelected={isItemSelected}
-                  onClick={(e) => onClickCheckbox(e, row.id, row.status)}
+                  onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
                   labelId={labelId}
                 />
               );

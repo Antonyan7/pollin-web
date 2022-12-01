@@ -60,7 +60,7 @@ const EnhancedTableToolbarExternalResults = ({
           </Typography>
         </Grid>
       )}
-      {numSelected && !hasSameStatues && (
+      {numSelected && !hasSameStatues && options?.actions && (
         <Grid item xs={3}>
           <BaseSelectWithLoading
             IconComponent={KeyboardArrowDownIcon}

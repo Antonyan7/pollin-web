@@ -4,11 +4,15 @@ import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
-import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IAllTestsSpecimensListItem,
+  ISpecimensListItem,
+  SpecimenActionsValues
+} from 'types/reduxTypes/resultsStateTypes';
 
 interface ContextMenuProps {
   actions: SpecimenActionsValues[];
-  row: ISpecimensListItem;
+  row: ISpecimensListItem | IAllTestsSpecimensListItem;
 }
 
 const ContextMenu = ({ actions, row }: ContextMenuProps) => {

@@ -67,7 +67,12 @@ const resultsManager = {
   },
   getRetestRecollect(action: string) {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(
-      `${baseURL}/v1/specimen/incompletion-reasons/?action=${action}`
+      `${baseURL}/v1/specimen/incompletion-reasons`,
+      {
+        params: {
+          action
+        }
+      }
     );
   },
   submitTestResults(testResults: ITestResultsData[]) {

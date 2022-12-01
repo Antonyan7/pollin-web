@@ -32,7 +32,7 @@ const StyledOutlinedInput = styled(OutlinedInput)<OutlinedInputProps>(({ theme }
 
 interface SearchBoxProps {
   onSearch: (values: string[]) => void;
-  placeholder?: string;
+  placeholder: string;
 }
 
 const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder }) => {
