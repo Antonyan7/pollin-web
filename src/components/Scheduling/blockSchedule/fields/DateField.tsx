@@ -19,6 +19,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
 type DateAndStartTimeType = Date | null;
+type ErrorMessageType = string | null;
 
 const DateField = ({ fieldName }: IFieldRowProps) => {
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
@@ -31,35 +32,56 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
     control
   });
   const { onChange, value, ...fieldProps } = field;
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState<ErrorMessageType>(null);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const startDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_START_DATE_ERROR);
   const endDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_END_DATE_ERROR);
   const startBeforeEndMessage = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_BEFORE_END_ERROR);
   const startAfterEndMessage = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_AFTER_END_ERROR);
+  const startTime = new Date(getValues('startDate') as Date).getTime();
+  const endTime = new Date(getValues('endDate') as Date).getTime();
+  const showDateError = (message: string) => {
+    setErrorMessage(message);
+    setShowErrorMessage(true);
+  };
+  const clearDateError = () => {
+    setErrorMessage(null);
+    setShowErrorMessage(false);
+  };
 
   useEffect(() => {
     switch (errors[fieldName]?.type) {
       case 'required':
         if (fieldName === 'startDate') {
-          setErrorMessage(startDateErrorMessage);
+          showDateError(startDateErrorMessage);
         } else {
-          setErrorMessage(endDateErrorMessage);
+          showDateError(endDateErrorMessage);
         }
 
         break;
       case 'max':
-        setErrorMessage(startBeforeEndMessage);
+        showDateError(startBeforeEndMessage);
+
+        if (startTime < endTime) {
+          clearDateError();
+        }
+
         break;
       case 'min':
-        setErrorMessage(startAfterEndMessage);
+        showDateError(startAfterEndMessage);
+
+        if (endTime > startTime) {
+          clearDateError();
+        }
+
         break;
 
       default:
         break;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearErrors, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
+  }, [clearErrors, endTime, startTime, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
 
@@ -125,7 +147,7 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
               }}
               onClick={() => setMobileDateTimePickerOpen(true)}
               helperText={errors[fieldName]?.message && errorMessage}
-              error={Boolean(errors[fieldName])}
+              error={Boolean(errors[fieldName]?.message) && showErrorMessage}
               InputProps={{
                 endAdornment: <CalendarIcon />
               }}
