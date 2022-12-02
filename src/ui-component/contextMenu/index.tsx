@@ -7,12 +7,12 @@ import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensListItem,
   ISpecimensListItem,
-  SpecimenActionsValues
-} from 'types/reduxTypes/resultsStateTypes';
+  ITransportListFolderProps,
+  SpecimenActionsValues} from 'types/reduxTypes/resultsStateTypes';
 
 interface ContextMenuProps {
   actions: SpecimenActionsValues[];
-  row: ISpecimensListItem | IAllTestsSpecimensListItem;
+  row: ISpecimensListItem | IAllTestsSpecimensListItem | ITransportListFolderProps;
 }
 
 const ContextMenu = ({ actions, row }: ContextMenuProps) => {

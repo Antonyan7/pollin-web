@@ -252,7 +252,12 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.transport.folder.modal.title',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_NAME = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.name',
-  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB = 'page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab'
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB = 'page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_FOLDER = 'page.specimens.tracking.transports.cells.folder',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DATE_TIME_CREATED = 'page.specimens.tracking.transports.cells.date.time.created',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_LAB_DESTINATION = 'page.specimens.tracking.transports.cells.lab.destination',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME = 'page.specimens.tracking.transports.cells.driver.name',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_STATUS = 'page.specimens.tracking.transports.cells.status'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

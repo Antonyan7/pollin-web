@@ -16,6 +16,7 @@ export enum IStatus {
 
 export interface IResultsProps {
   resultsList: IResultsList;
+  transportList: ITransportList;
   resultFilters: IResultsFilterCategory[];
   pendingTestStats: IPendingTestStats[];
   testResultsDetails: TestResultsDetails[];
@@ -34,11 +35,29 @@ export interface IResultsProps {
   isSpecimensListLoading: boolean;
   specimensFilters: ISpecimensFilterCategory[];
   isSpecimensFiltersLoading: boolean;
+  isTransportListLoading: boolean;
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;
+}
+
+export enum ITransportFolderStatus {
+  ReadyForTransport = 'ReadyForTransport',
+  InTransit = 'InTransit'
+}
+
+export interface ITransportListFolderProps {
+  date: Date | string;
+  id: string;
+  title: string;
+  labName: string;
+  driver: { name: string };
+  status: ITransportFolderStatus;
+}
+export interface ITransportListProps {
+  folders: ITransportListFolderProps[];
 }
 
 export interface LabMachine {
@@ -68,7 +87,9 @@ export interface SpecimenActionsValues {
 export interface IResultsList extends IPagination {
   testResults: IPatientContactInformationModalProps[];
 }
-
+export interface ITransportList extends IPagination {
+  folders: ITransportListFolderProps[];
+}
 export interface ISpecimensListItem {
   id: string;
   identifier: string;

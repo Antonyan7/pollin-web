@@ -7,12 +7,19 @@ export const getInitialState = (): IResultsProps => ({
     pageSize: 10,
     totalItems: 0
   },
+  transportList: {
+    folders: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  },
   resultFilters: [],
   pendingTestStats: [],
   testResultsDetails: [],
   labMachines: [],
   error: null,
   isResultsListLoading: false,
+  isTransportListLoading: false,
   isResultsFiltersLoading: false,
   isPendingTestStatsLoading: false,
   isTestResultsDetailsLoading: false,

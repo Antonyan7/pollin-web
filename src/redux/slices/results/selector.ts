@@ -4,6 +4,7 @@ import { RootState } from 'redux/store';
 const selector = (state: RootState) => state.results;
 
 const resultsList = createSelector([selector], (state) => state.resultsList);
+const transportList = createSelector([selector], (state) => state.transportList);
 const resultsFiltersList = createSelector([selector], (state) => state.resultFilters);
 const isResultsLoading = createSelector([selector], (state) => state.isResultsListLoading);
 const isResultsFiltersLoading = createSelector([selector], (state) => state.isResultsFiltersLoading);
@@ -31,6 +32,7 @@ const isCreatingTransportFolder = createSelector([selector], (state) => state.is
 
 export default {
   resultsList,
+  transportList,
   isResultsLoading,
   isResultsFiltersLoading,
   resultsFiltersList,

@@ -250,5 +250,10 @@
   "page.specimens.tracking.transports.add.new.transport.folder.modal.title": "Add New Transport Folder",
   "page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id": "Transport Folder ID",
   "page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.name": "Transport Folder Name",
-  "page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab": "Destination Lab"
+  "page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab": "Destination Lab",
+  "page.specimens.tracking.transports.cells.folder": "Transport Folder",
+  "page.specimens.tracking.transports.cells.date.time.created": "Date & Time Created",
+  "page.specimens.tracking.transports.cells.lab.destination": "Lab Destination",
+  "page.specimens.tracking.transports.cells.driver.name": "Driver Name",
+  "page.specimens.tracking.transports.cells.status": "Status"
 }

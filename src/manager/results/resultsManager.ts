@@ -4,7 +4,8 @@ import {
   IResultsReqBody,
   ISpecimensListReqBody,
   ITestResultsData,
-  ITestResultsDetailsBody
+  ITestResultsDetailsBody,
+  ITransportListReqBody
 } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
@@ -16,6 +17,7 @@ import {
   IRetestRecollectData,
   ISpecimensList,
   ITestResultsDetails,
+  ITransportListProps,
   LabMachine,
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
@@ -126,6 +128,12 @@ const resultsManager = {
   getSpecimensFilters() {
     return axiosInstance.get<ISpecimensFiltersResponse, IAxiosResponse<ISpecimensFiltersResponse>>(
       `${baseURL}/v1/specimen/filter`
+    );
+  },
+  getTransportList(data: ITransportListReqBody) {
+    return axiosInstance.post<ITransportListProps, IAxiosResponsePaginated<ITransportListProps>>(
+      `${baseURL}/v1/transport/list`,
+      data
     );
   },
   getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {

@@ -14,6 +14,17 @@ export enum TestResultsListSortFields {
   PATIENT_NAME = 'PatientName'
 }
 
+export enum TransportsSortFields {
+  STATUS = 'ReadyForTransport'
+}
+export interface ITransportListReqBody {
+  date: Date | string;
+  page: number;
+  specimens?: { identifier: string }[];
+  sortOrder?: SortOrder;
+  sortByField?: TransportsSortFields;
+}
+
 export enum SpecimensListSortFields {
   COLLECTION_AGE = 'CollectionAge'
 }

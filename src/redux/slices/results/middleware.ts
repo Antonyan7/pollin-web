@@ -6,13 +6,19 @@ import {
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
   ITestResultsData,
-  ITestResultsParams
+  ITestResultsParams,
+  ITransportListReqBody
 } from '@axios/results/resultsManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/results/slice';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
-import { IAllTestsSpecimensList, IResultsList, ISpecimensList } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IAllTestsSpecimensList,
+  IResultsList,
+  ISpecimensList,
+  ITransportList
+} from 'types/reduxTypes/resultsStateTypes';
 import { ICreateTransportFolderReqBody } from 'types/results';
 
 const {
@@ -39,7 +45,9 @@ const {
   setAllTestsSpecimensList,
   setLabs,
   setLabsLoadingState,
-  setIsCreatingTransportFolderLoading
+  setIsCreatingTransportFolderLoading,
+  setTransportList,
+  setIsTransportListLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -259,6 +267,37 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getTransportList = (resultsListData: ITransportListReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTransportListLoading(true));
+
+    let testResultsReqBody = resultsListData;
+
+    if (resultsListData.sortOrder !== null) {
+      testResultsReqBody = sortOrderTransformer(
+        resultsListData as IResultsReqBodyWithSortOrder
+      ) as ITransportListReqBody;
+    }
+
+    const response = await API.results.getTransportList(testResultsReqBody);
+    const { totalItems, currentPage, pageSize } = response.data;
+
+    const results: ITransportList = {
+      totalItems,
+      currentPage,
+      pageSize,
+      folders: response.data.data.folders
+    };
+
+    dispatch(setTransportList(results));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTransportListLoading(false));
+  }
+};
+
 const getALLTestsSpecimensList = (payload: IAllTestsSpecimensReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsAllTestsSpecimensListLoading(true));
@@ -320,6 +359,7 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
 
 export default {
   getResultsList,
+  getTransportList,
   getResultsFilters,
   getPendingTestStats,
   removeTestResultsAttachment,
