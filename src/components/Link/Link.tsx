@@ -21,8 +21,11 @@ interface LinkProps {
 }
 
 // Refer to this example https://mui.com/material-ui/guides/composition/#with-typescript
-const ComposedMuiLink = (props: MuiLinkProps<typeof NextLinkComposed, { component: typeof NextLinkComposed }>) => (
-  <MuiLink {...props} />
+const ComposedMuiLink = React.forwardRef(
+  (
+    props: MuiLinkProps<typeof NextLinkComposed, { component: typeof NextLinkComposed }>,
+    ref?: React.Ref<HTMLAnchorElement>
+  ) => <MuiLink {...props} ref={ref} />
 );
 
 const Link = React.forwardRef(

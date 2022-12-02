@@ -1,5 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IAppointmentDetails } from '@axios/booking/managerBookingTypes';
+import { IAppointmentDetails, SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
 import { IPatientsData } from '@axios/patientEmr/managerPatientEmrTypes';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
@@ -53,6 +53,7 @@ export interface BookingProps {
   isSaveButtonDisabled: boolean;
   appointmentStatus: AppointmentStatusState;
   createAppointmentError: IAppointmentErrorState;
+  specimenAppointments: ISpecimenAppointmentsState;
 }
 
 export interface IUniqueItem {
@@ -111,4 +112,16 @@ export interface ICalendarSlot {
   color: string;
   end: string;
   start: string;
+}
+
+export interface ISpecimenAppointmentsFilter {
+  title: string;
+  type: string;
+  options: IUniqueItem[];
+}
+
+export interface ISpecimenAppointmentsState {
+  filters: ISpecimenAppointmentsFilter[];
+  selectedFilters: SpecimenCollectionFilterOption[];
+  isFiltersArrayLoading: boolean;
 }

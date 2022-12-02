@@ -86,14 +86,14 @@ const AppointmentListFilter = () => {
         onChange={(_event, appointmentFilters) =>
           onAppointmentRecencyChange(
             appointmentFilters.filter(
-              (appointmentFilter): appointmentFilter is { type: string; id: string; title: string } =>
+              (appointmentFilter): appointmentFilter is PatientAppointmentsFilterOption =>
                 typeof appointmentFilter === 'object'
             )
           )
         }
         getOptionDisabled={(option) => {
           if (option && selectedFilters.length > 0) {
-            return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
+            return !!selectedFilters.find((item) => item.type === option.type);
           }
 
           return false;

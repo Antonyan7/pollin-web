@@ -42,7 +42,9 @@ const {
   setAppointmentLoading,
   setSaveButtonDisabled,
   setAppointmentStatus,
-  setCreateAppointmentErrorState
+  setCreateAppointmentErrorState,
+  setSpecimenAppointmentsFilters,
+  setSpecimenAppointmentsFiltersArrayLoading
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -76,9 +78,9 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
 
 const getGroupedServiceProviders =
   (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
-    dispatch(setIsGroupedServiceProvidersLoading(true));
-
     try {
+      dispatch(setIsGroupedServiceProvidersLoading(true));
+
       const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
       const data: IGroupedServiceProviders = {
         totalItems: response.data.totalItems,
@@ -91,9 +93,9 @@ const getGroupedServiceProviders =
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
+    } finally {
+      dispatch(setIsGroupedServiceProvidersLoading(false));
     }
-
-    dispatch(setIsGroupedServiceProvidersLoading(false));
   };
 
 const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
@@ -133,9 +135,9 @@ const getNewGroupedServiceProviders =
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
+    } finally {
+      dispatch(setIsGroupedServiceProvidersLoading(false));
     }
-
-    dispatch(setIsGroupedServiceProvidersLoading(false));
   };
 
 const getAppointments = (resourceId: string, date: string) => async (dispatch: AppDispatch) => {
@@ -397,6 +399,20 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
   }
 };
 
+const getSpecimenAppointmentsFilters = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setSpecimenAppointmentsFiltersArrayLoading(true));
+
+    const { data } = await API.booking.getCollectionCalendarAppointmentFilters();
+
+    dispatch(setSpecimenAppointmentsFilters(data.filters));
+  } catch (error) {
+    dispatch(setError(error as string));
+  } finally {
+    dispatch(setSpecimenAppointmentsFiltersArrayLoading(false));
+  }
+};
+
 export default {
   getNewServiceProviders,
   getNewGroupedServiceProviders,
@@ -416,5 +432,6 @@ export default {
   getPatientAlerts,
   setEditSaveButtonDisabled,
   resetAppointmentStatus,
-  clearCreateAppointmentErrorState
+  clearCreateAppointmentErrorState,
+  getSpecimenAppointmentsFilters
 };

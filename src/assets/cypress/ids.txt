@@ -28,3 +28,41 @@
   page.scheduling.templates.visibility.icon
   page.scheduling.create.templates.checkbox.weekdays
   page.scheduling.create.templates.button.plus
+  page.scheduling.block.title
+  page.scheduling.block.resource
+  page.scheduling.block.date.start
+  page.scheduling.block.date.end
+  page.scheduling.block.placeholder
+  page.scheduling.block.button.apply
+  page.scheduling.block.templates.start.date.error
+  page.scheduling.block.templates.end.date.error
+  page.scheduling.block.date.start.before.end.error
+  page.scheduling.block.date.start.after.end.error
+  page.scheduling.block.time.start.after.end.error
+  page.scheduling.block.time.end.after.end.error
+  page.scheduling.apply.button.apply
+  page.scheduling.apply.resource
+  page.scheduling.apply.title
+  page.scheduling.apply.every
+  page.scheduling.apply.template
+  page.scheduling.apply.applied.days
+  page.scheduling.apply.repeats
+  page.scheduling.apply.date.start
+  page.scheduling.apply.date.end
+  page.scheduling.create.templates.name
+  page.scheduling.create.templates.button.save
+  page.scheduling.create.templates.button.cancel
+  page.scheduling.templates.edit.icon
+  page.scheduling.create.templates.placeholder
+  page.scheduling.create.templates.service.type
+  page.scheduling.create.templates.service.types
+  page.scheduling.create.templates.block
+  page.scheduling.create.templates.start
+  page.scheduling.create.templates.end
+  page.scheduling.templates.button.create
+  page.scheduling.templates.button.delete
+  page.specimen.collection.title
+  page.specimen.collection.button.today
+  page.specimen.collection.desktop.date.picker
+  page.specimen.collection.select.resource
+  page.specimen.collection.select.filters

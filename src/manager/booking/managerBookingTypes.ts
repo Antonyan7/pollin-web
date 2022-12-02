@@ -135,7 +135,7 @@ export interface PatientAppointmentsFilterOption {
   type: string;
 }
 
-export interface GroupedServiceProvidersOptions extends PatientAppointmentsFilterOption {}
+export interface GroupedServiceProvidersOption extends PatientAppointmentsFilterOption {}
 
 export enum PatientAppointmentsFields {
   Type = 'Type',
@@ -152,4 +152,25 @@ export interface IGetPatientAppointments {
     filter: string;
     appointments: IPatientAppointment[];
   };
+}
+
+export interface SpecimenCollectionFilterOption {
+  id: string;
+  title: string;
+  type: string;
+}
+
+export interface ICollectionCalendarAppointmentFilterOption {
+  id: string;
+  title: string;
+}
+
+export interface ICollectionCalendarAppointmentFilter {
+  title: string;
+  type: string;
+  options: ICollectionCalendarAppointmentFilterOption[];
+}
+
+export interface IGetCollectionCalendarAppointmentFilters {
+  filters: ICollectionCalendarAppointmentFilter[];
 }

@@ -1,3 +1,4 @@
+import { SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -9,7 +10,8 @@ import {
   IGroupedServiceProviders,
   IPatientList,
   IServiceProviders,
-  IServiceType
+  IServiceType,
+  ISpecimenAppointmentsFilter
 } from 'types/reduxTypes/bookingStateTypes';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
@@ -88,6 +90,15 @@ const reducers = createReducer({
   },
   setCreateAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
     state.createAppointmentError = action.payload;
+  },
+  setSpecimenAppointmentsFilters(state, action: IAction<ISpecimenAppointmentsFilter[]>) {
+    state.specimenAppointments.filters = action.payload;
+  },
+  setSelectedSpecimenAppointmentsFilters(state, action: IAction<SpecimenCollectionFilterOption[]>) {
+    state.specimenAppointments.selectedFilters = action.payload;
+  },
+  setSpecimenAppointmentsFiltersArrayLoading(state, action: IAction<boolean>) {
+    state.specimenAppointments.isFiltersArrayLoading = action.payload;
   }
 });
 

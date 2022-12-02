@@ -30,7 +30,9 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
       const element = actions.find((_, index) => index === actionIndex);
 
       // Todo add modal for MarkInTransit
-      if (element?.id === 'MarkInTransit') {return;}
+      if (element?.id === 'MarkInTransit') {
+        return;
+      }
 
       dispatch(
         viewsMiddleware.openModal({

@@ -33,5 +33,10 @@ export const getInitialState = (): BookingProps => ({
   createAppointmentError: {
     code: '',
     message: ''
+  },
+  specimenAppointments: {
+    filters: [],
+    selectedFilters: [],
+    isFiltersArrayLoading: false
   }
 });

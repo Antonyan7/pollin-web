@@ -12,7 +12,8 @@ import {
   TableHead,
   TablePagination,
   TableRow,
-  useTheme} from '@mui/material';
+  useTheme
+} from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { rowsPerPage } from 'helpers/constants';

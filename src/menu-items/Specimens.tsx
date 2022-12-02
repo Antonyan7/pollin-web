@@ -25,7 +25,7 @@ const Specimens: SpecimensProps = {
   children: [
     {
       id: 'specimenCollection',
-      title: t(Translation.PAGE_SPECIMENS_COLLECTION_TITLE),
+      title: t(Translation.PAGE_SPECIMEN_COLLECTION_TITLE),
       type: 'item',
       url: '/clinic-test-results/specimen-collection',
       icon: ScienceOutlined,
