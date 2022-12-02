@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
-import { FormControl, Grid, useTheme } from '@mui/material';
+import { FormControl, Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { createOptionsGroup } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const ResourceField = () => {
   const [t] = useTranslation();
-  const theme = useTheme();
-  const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
-  const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
-  const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
+  const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
+  const optionsGroup = createOptionsGroup(scheduleResources.providers);
+  // const theme = useTheme();
+  // const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
+  // const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
+  // const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
 
   const fieldLabel = t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE);
   const fieldName = 'providerId';
@@ -31,30 +32,53 @@ const ResourceField = () => {
   const providerIdErrorText = !!error?.message;
   const { onChange, onBlur, value: providerId, ...fieldProps } = field;
 
-  const adaptedGroupedOptions = () =>
-    groupedResourceProviders.providers.flatMap((provider) =>
-      provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
-    );
+  // const adaptedGroupedOptions = () =>
+  //   groupedResourceProviders.providers.flatMap((provider) =>
+  //     provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
+  //   );
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
+    dispatch(bookingMiddleware.getServiceProviders(1));
+    // dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 
-  const onServiceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
-    const eventTarget = event.target as HTMLDivElement;
+  // const onServiceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
+  //   const eventTarget = event.target as HTMLDivElement;
 
-    if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
-      if (groupedResourceProviders.pageSize * serviceProviderCurrentPage <= groupedResourceProviders.totalItems) {
-        setServiceProviderCurrentPage(serviceProviderCurrentPage + 1);
-        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: serviceProviderCurrentPage }));
-      }
-    }
-  };
+  //   if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
+  //     if (groupedResourceProviders.pageSize * serviceProviderCurrentPage <= groupedResourceProviders.totalItems) {
+  //       setServiceProviderCurrentPage(serviceProviderCurrentPage + 1);
+  //       dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: serviceProviderCurrentPage }));
+  //     }
+  //   }
+  // };
 
   return (
     <Grid item xs={12}>
       <FormControl fullWidth>
         <BaseDropdownWithLoading
+          isLoading={false}
+          id={fieldName}
+          onChange={(_, value) => {
+            if (value && typeof value === 'object' && 'item' in value) {
+              onChange(value.item.id);
+            }
+          }}
+          options={optionsGroup}
+          inputValue={optionsGroup.find((item) => item.item.id === providerId)?.item.title ?? ''}
+          isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+          getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
+          groupBy={(option) => option.firstLetter}
+          onBlur={onBlur}
+          clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
+          renderInputProps={{
+            ...fieldProps,
+            label: fieldLabel,
+            helperText: providerIdHelperText,
+            error: providerIdErrorText
+          }}
+        />
+        {/* <BaseDropdownWithLoading
           isLoading={isGroupedResourceProvidersLoading}
           id={fieldName}
           options={adaptedGroupedOptions()}
@@ -83,7 +107,7 @@ const ResourceField = () => {
             helperText: providerIdHelperText,
             error: providerIdErrorText
           }}
-        />
+        /> */}
       </FormControl>
     </Grid>
   );
