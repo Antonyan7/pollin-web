@@ -252,9 +252,7 @@ const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch)
       dispatch(setPatientHighlightHeader(response.data.data.header));
     }
 
-    if (response.data.data.isIntakeComplete) {
-      dispatch(setIsPatientHighlightIntakeComplete(response.data.data.isIntakeComplete));
-    }
+    dispatch(setIsPatientHighlightIntakeComplete(response.data.data.isIntakeComplete));
 
     dispatch(setPatientHighlights(response.data.data.highlights));
   } catch (error) {

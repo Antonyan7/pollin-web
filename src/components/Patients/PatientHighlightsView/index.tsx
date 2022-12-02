@@ -5,7 +5,7 @@ import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
 import { Collapse, Divider, Grid, Paper, Typography, TypographyProps, useTheme } from '@mui/material';
 import { viewsMiddleware } from '@redux/slices/views';
 import { dispatch } from 'redux/hooks';
-import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { patientsMiddleware, patientsSelector, patientsSlice } from 'redux/slices/patients';
 
 import ContactList from '@ui-component/common/ContactList';
 
@@ -31,6 +31,8 @@ const PatientHighlightsView = () => {
     }
 
     return () => {
+      // Clean previous highlightInTakeComplete status after component unmount
+      dispatch(patientsSlice.actions.setIsPatientHighlightIntakeComplete(false));
       dispatch(patientsMiddleware.getPatientProfile());
     };
   }, [patientId]);
