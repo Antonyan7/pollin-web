@@ -141,7 +141,9 @@ const AllTestsList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) => handleSelectAllClick(e, allTestsSpecimensList, setSelected, setSelectedStatuses)}
+                  onChange={(e) =>
+                    handleSelectAllClick(e, allTestsSpecimensList.specimens, setSelected, setSelectedStatuses)
+                  }
                 />
               </TableCell>
 

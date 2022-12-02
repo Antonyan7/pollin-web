@@ -177,7 +177,7 @@ const InHouseSpecimensList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) => handleSelectAllClick(e, specimensList, setSelected, setSelectedStatuses)}
+                  onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelected, setSelectedStatuses)}
                 />
               </TableCell>
               {numSelected > 0 && (

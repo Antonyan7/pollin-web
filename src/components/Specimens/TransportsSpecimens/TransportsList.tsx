@@ -3,19 +3,25 @@ import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import {
   Box,
+  Checkbox,
   CircularProgress,
   Table,
   TableBody,
+  TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
-} from '@mui/material';
+  TableRow,
+  useTheme} from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { rowsPerPage } from 'helpers/constants';
+import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
+
+import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 
 import { headCellsData } from './headCellsData';
 import { TransportsHeadCell } from './TransportsHeadCell';
@@ -42,14 +48,19 @@ const TransportsList = () => {
   }, [page, sortField, sortOrder]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getSpecimenActions());
+    dispatch(resultsMiddleware.getTransportActions());
   }, []);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
-
-  const specimenActions = useAppSelector(resultsSelector.specimenActions);
+  const transportActions = useAppSelector(resultsSelector.transportActions);
+  const [selected, setSelected] = useState<string[]>([]);
+  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const numSelected = selected.length;
+  const rowCount = transportList?.folders.length;
+  const isSelected = (id: string) => selected.indexOf(id) !== -1;
+  const theme = useTheme();
 
   return (
     <>
@@ -57,28 +68,54 @@ const TransportsList = () => {
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
             <TableRow>
-              {headCells.map((headCell) => (
-                <TransportsHeadCell
-                  headCell={headCell}
-                  key={headCell.id}
-                  sortOrder={sortOrder}
-                  sortField={sortField}
-                  setSortOrder={setSortOrder}
-                  setSortField={setSortField}
+              <TableCell padding="checkbox">
+                <Checkbox
+                  sx={{ color: theme.palette.primary.main }}
+                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  checked={rowCount > 0 && numSelected === rowsPerPage}
+                  onChange={(e) => handleSelectAllClick(e, transportList.folders, setSelected, setSelectedStatuses)}
                 />
-              ))}
+              </TableCell>
+
+              {numSelected > 0 ? (
+                <TableCell padding="none" colSpan={6}>
+                  <EnhancedTableToolbarExternalResults
+                    numSelected={numSelected}
+                    specimenActions={transportActions}
+                    selectedStatuses={selectedStatuses}
+                    selected={selected}
+                  />
+                </TableCell>
+              ) : null}
+
+              {numSelected <= 0 &&
+                headCells.map((headCell) => (
+                  <TransportsHeadCell
+                    headCell={headCell}
+                    key={headCell.id}
+                    sortOrder={sortOrder}
+                    sortField={sortField}
+                    setSortOrder={setSortOrder}
+                    setSortField={setSortField}
+                  />
+                ))}
             </TableRow>
           </TableHead>
           <TableBody>
             <TableBody />
-            {transportList?.folders?.map((row: ITransportListFolderProps) => {
-              const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
+            {transportList?.folders?.map((row: ITransportListFolderProps, index: number) => {
+              const filteredSpecimenActions = transportActions.find((item) => item.status === row.status);
+              const isItemSelected = isSelected(row.id);
+              const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
                 <TransportsListRow
                   row={row}
                   key={row.id}
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
+                  isItemSelected={isItemSelected}
+                  onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
+                  labelId={labelId}
                 />
               );
             })}

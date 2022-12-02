@@ -136,6 +136,11 @@ const resultsManager = {
       data
     );
   },
+  getTransportActions() {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(
+      `${baseURL}/v1/transport/actions`
+    );
+  },
   getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {
     return axiosInstance.post<IAllTestsSpecimensList, IAxiosResponsePaginated<IAllTestsSpecimensList>>(
       `${baseURL}/v1/specimen/collected`,

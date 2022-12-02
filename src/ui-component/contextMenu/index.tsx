@@ -8,7 +8,8 @@ import {
   IAllTestsSpecimensListItem,
   ISpecimensListItem,
   ITransportListFolderProps,
-  SpecimenActionsValues} from 'types/reduxTypes/resultsStateTypes';
+  SpecimenActionsValues
+} from 'types/reduxTypes/resultsStateTypes';
 
 interface ContextMenuProps {
   actions: SpecimenActionsValues[];
@@ -27,6 +28,9 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
   const onMenuItemClick = useCallback(
     (actionIndex: number) => {
       const element = actions.find((_, index) => index === actionIndex);
+
+      // Todo add modal for MarkInTransit
+      if (element?.id === 'MarkInTransit') {return;}
 
       dispatch(
         viewsMiddleware.openModal({

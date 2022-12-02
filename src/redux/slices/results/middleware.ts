@@ -31,6 +31,7 @@ const {
   setPendingTestStatsLoadingState,
   setTestResultsDetails,
   setSpecimenActions,
+  setTransportActions,
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
@@ -138,6 +139,17 @@ const getSpecimenActions = () => async (dispatch: AppDispatch) => {
     const response = await API.results.getSpecimenActions();
 
     dispatch(setSpecimenActions(response.data.data.variations));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const getTransportActions = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.getTransportActions();
+
+    dispatch(setTransportActions(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -371,6 +383,7 @@ export default {
   applyRecollectAction,
   getSpecimensFilters,
   submitTestResults,
+  getTransportActions,
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
   getSpecimensList,
