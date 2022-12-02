@@ -1,7 +1,7 @@
 import React from 'react';
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { AppCheck, getToken, initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
-import { Auth, getAuth, onAuthStateChanged, SAMLAuthProvider, signInWithPopup } from 'firebase/auth';
+import { Auth, getAuth, getIdToken, onAuthStateChanged, SAMLAuthProvider, signInWithPopup, User } from 'firebase/auth';
 import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadBytesResumable } from 'firebase/storage';
 import { dispatchAuthError, dispatchIsAuthChecked, dispatchLoginUser } from 'layout/MainLayout/Login/loginHelpers';
 import { v4 } from 'uuid';
@@ -17,10 +17,16 @@ export class FirebaseManager {
 
   private static storage: FirebaseStorage;
 
+  private static user: User;
+
   private static initializeAuth() {
     this.auth = getAuth(this.app);
     this.auth.tenantId = process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID ?? '';
     onAuthStateChanged(this.auth, (user) => {
+      if (user) {
+        this.user = user;
+      }
+
       dispatchIsAuthChecked(true);
       dispatchLoginUser(user);
     });
@@ -129,5 +135,27 @@ export class FirebaseManager {
     }
 
     return token;
+  }
+
+  static async getIdToken(): Promise<string> {
+    let idToken = '';
+
+    if (!FirebaseManager.appCheck) {
+      // eslint-disable-next-line no-console
+      console.error('App check not initiated');
+
+      return '';
+    }
+
+    try {
+      const tokenResult = await getIdToken(this.user);
+
+      idToken = tokenResult;
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error(e);
+    }
+
+    return idToken;
   }
 }
