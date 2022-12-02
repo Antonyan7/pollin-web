@@ -194,6 +194,7 @@ export enum Translation {
   MODAL_EXTERNAL_RESULTS_CONFIRM_DETAILS = 'modal.external.results.confirm.details',
   MODAL_EXTERNAL_RESULTS_OHIP_INFORMATION = 'modal.external.results.ohip.information',
   MODAL_EXTERNAL_RESULTS_RESULT_TEXT = 'modal.external.results.result.text',
+  MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE = 'modal.external.results.patient.edit.profile',
   GOOGLE_SIGN_IN_BUTTON = 'google.sign.in.button',
   GOOGLE_SIGN_UP_BUTTON = 'google.sign.up.button',
   GOOGLE_LOGIN_TITLE = 'google.login.title',

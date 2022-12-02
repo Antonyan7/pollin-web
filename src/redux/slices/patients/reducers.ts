@@ -157,6 +157,9 @@ const reducers = createReducer({
   },
   setPatientContactInformationLoadingState(state, action: IAction<boolean>) {
     state.isPatientContactInformationLoading = action.payload;
+  },
+  setIsPatientHighlightIntakeComplete(state, action: IAction<boolean>) {
+    state.isPatientHighlightIntakeComplete = action.payload;
   }
 });
 

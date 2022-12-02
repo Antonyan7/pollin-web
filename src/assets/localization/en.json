@@ -192,6 +192,7 @@
   "modal.external.results.confirm.details": "Please confirm the following details:",
   "modal.external.results.ohip.information": "OHIP Information (Health Number/Version Code)",
   "modal.external.results.result.text": "Final Result Type",
+  "modal.external.results.patient.edit.profile": "Edit Profile",
   "google.sign.in.button": "Sign In With Google",
   "google.sign.up.button": "Sign Up With Google",
   "google.login.title": "Hi, Welcome Back",

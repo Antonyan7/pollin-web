@@ -23,6 +23,7 @@ const patientProfile = createSelector([selector], (state) => state.patientProfil
 const isPatientHighlightsLoading = createSelector([selector], (state) => state.isPatientHighlightsLoading);
 const patientHighlightHeader = createSelector([selector], (state) => state.patientHighlightHeader);
 const patientHighlights = createSelector([selector], (state) => state.patientHighlights);
+const isPatientHighlightIntakeComplete = createSelector([selector], (state) => state.isPatientHighlightIntakeComplete);
 const latestTestResults = createSelector([selector], (state) => state.latestTestResults);
 const patientProfileOverview = createSelector([selector], (state) => state.profile.overview);
 const isPatientProfileOverviewLoading = createSelector([selector], (state) => state.profile.isOverviewLoading);
@@ -90,5 +91,6 @@ export default {
   isUpdateEncounterAddendumLoading,
   isCreateEncounterAddendumLoading,
   patientContactInformation,
-  isPatientContactInformationLoading
+  isPatientContactInformationLoading,
+  isPatientHighlightIntakeComplete
 };

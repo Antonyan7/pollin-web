@@ -46,6 +46,7 @@ export const getInitialState = (): PatientEmrProps => ({
     }
   },
   patientHighlights: null,
+  isPatientHighlightIntakeComplete: false,
   latestTestResults: [],
   profile: {
     isOverviewLoading: false,

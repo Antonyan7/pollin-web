@@ -49,6 +49,7 @@ export interface PatientEmrProps {
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
   contactInformation: IPatientContactInformation;
+  isPatientHighlightIntakeComplete: boolean;
 }
 
 export interface IItem {

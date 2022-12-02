@@ -53,7 +53,8 @@ const {
   setUpdateEncounterAddendumLoadingState,
   setCreateEncounterAddendumLoadingState,
   setPatientContactInformation,
-  setPatientContactInformationLoadingState
+  setPatientContactInformationLoadingState,
+  setIsPatientHighlightIntakeComplete
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -249,6 +250,10 @@ const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch)
 
     if (response.data.data.header) {
       dispatch(setPatientHighlightHeader(response.data.data.header));
+    }
+
+    if (response.data.data.isIntakeComplete) {
+      dispatch(setIsPatientHighlightIntakeComplete(response.data.data.isIntakeComplete));
     }
 
     dispatch(setPatientHighlights(response.data.data.highlights));

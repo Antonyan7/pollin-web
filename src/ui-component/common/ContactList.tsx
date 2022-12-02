@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import API from '@axios/API';
 import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
@@ -13,6 +14,7 @@ import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { Translation } from 'constants/translations';
 
 const avatarImage = '/assets/images/users';
 
@@ -27,10 +29,13 @@ interface ContactListProps {
 
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
+  const [t] = useTranslation();
   const avatarProfile = avatar && `${avatarImage}/${avatar}`;
 
   const patientId = useSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
+
+  const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
 
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
@@ -43,6 +48,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
         dispatch(viewsMiddleware.openModal(modalParams));
       }
     };
+  const editPatientProfileLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE);
 
   return (
     <Box py="15px" borderBottom={`1px solid ${theme.palette.grey[100]}!important`}>
@@ -107,21 +113,23 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
             spacing={1}
             sx={{ justifyContent: 'flex-end', [theme.breakpoints.down('md')]: { justifyContent: 'flex-start' } }}
           >
-            <Grid item>
-              <Tooltip placement="top" title="Message">
-                <Button
-                  sx={{ minWidth: 32, height: 32, margin: '10px 10px' }}
-                  startIcon={<ModeEditOutlinedIcon fontSize="small" />}
-                >
-                  Edit Profile
-                </Button>
-              </Tooltip>
-              <Tooltip placement="top" title="Message">
-                <Button sx={{ minWidth: 32, height: 32 }} onClick={() => setOpen(!open)}>
-                  {open ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
-                </Button>
-              </Tooltip>
-            </Grid>
+            {isPatientHighlightIntakeComplete && (
+              <Grid item>
+                <Tooltip placement="top" title="Message">
+                  <Button
+                    sx={{ minWidth: 32, height: 32, margin: '10px 10px' }}
+                    startIcon={<ModeEditOutlinedIcon fontSize="small" />}
+                  >
+                    {editPatientProfileLabel}
+                  </Button>
+                </Tooltip>
+                <Tooltip placement="top" title="Message">
+                  <Button sx={{ minWidth: 32, height: 32 }} onClick={() => setOpen(!open)}>
+                    {open ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
+                  </Button>
+                </Tooltip>
+              </Grid>
+            )}
           </Grid>
         </Grid>
       </Grid>

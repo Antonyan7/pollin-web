@@ -112,6 +112,7 @@ export interface IPatientProfileResponse {
 export interface IPatientHighlightResponse {
   header: PatientHighlightHeader;
   highlights: PatientHighlight[];
+  isIntakeComplete: boolean;
 }
 
 export interface IPatientPartnerData {
