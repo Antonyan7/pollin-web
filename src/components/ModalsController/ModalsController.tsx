@@ -20,6 +20,9 @@ import ScheduleTemplatesErrorModal, {
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
+import HandoffConfirmation, {
+  HandoffConfirmationModalProps
+} from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -88,6 +91,9 @@ const getPatientPartnersModal = (modal: IOpenedModal<PatientPartnersModalProps>)
 );
 
 const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
+const getHandoffConfirmationModal = (modal: IOpenedModal<HandoffConfirmationModalProps>) => (
+  <HandoffConfirmation key={modal.name} {...modal.props} />
+);
 
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
@@ -137,6 +143,8 @@ export const ModalsController = () => {
             return getPatientPartnersModal(modal);
           case ModalName.InHouseTestResults:
             return getInHouseTestResultsModal();
+          case ModalName.HandoffConfirmation:
+            return getHandoffConfirmationModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

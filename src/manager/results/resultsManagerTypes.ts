@@ -34,12 +34,24 @@ export enum ActionType {
   Recollect = 'Recollect',
   InProgress = 'InProgress'
 }
+
+export enum TransportActionType {
+  MarkInTransit = 'MarkInTransit'
+}
+
 export interface IResultsReqBody {
   page: number;
   searchString?: string;
   sortOrder?: SortOrder;
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: TestResultsListSortFields;
+}
+
+export interface IMarkInTransitActionReqBody {
+  actionType: string;
+  transportFolderId: string;
+  driverName: string;
+  comment?: string;
 }
 
 export interface ISpecimensListReqBody {

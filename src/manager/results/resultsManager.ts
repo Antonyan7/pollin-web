@@ -1,6 +1,7 @@
 import {
   IAddMachineforSpecimen,
   IAllTestsSpecimensReqBody,
+  IMarkInTransitActionReqBody,
   IResultsReqBody,
   ISpecimensListReqBody,
   ITestResultsData,
@@ -104,6 +105,14 @@ const resultsManager = {
       {
         specimenIds,
         machineId
+      }
+    );
+  },
+  markInTransitAction(reqBody: IMarkInTransitActionReqBody) {
+    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+      `${baseURL}/v1/transport/in-transit`,
+      {
+        ...reqBody
       }
     );
   },

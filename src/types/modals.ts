@@ -27,6 +27,7 @@ export enum ModalName {
   PatientContactInformation = 'PatientInformationModal',
   SelectMachineModal = 'SelectMachineModal',
   InHouseTestResults = 'InHouseTestResults',
+  HandoffConfirmation = 'HandoffConfirmation',
   AddNewTransportFolderModal = 'AddNewTransportFolderModal'
 }
 

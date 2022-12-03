@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { dispatch } from 'redux/hooks';
@@ -29,8 +30,14 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     (actionIndex: number) => {
       const element = actions.find((_, index) => index === actionIndex);
 
-      // Todo add modal for MarkInTransit
-      if (element?.id === 'MarkInTransit') {
+      if (element?.id === TransportActionType.MarkInTransit) {
+        dispatch(
+          viewsMiddleware.openModal({
+            name: ModalName.HandoffConfirmation,
+            props: { row }
+          })
+        );
+
         return;
       }
 
@@ -41,7 +48,7 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
         })
       );
     },
-    [row.id, actions]
+    [actions, row]
   );
 
   return (

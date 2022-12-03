@@ -2,6 +2,7 @@ import API from '@axios/API';
 import {
   ActionType,
   IAllTestsSpecimensReqBody,
+  IMarkInTransitActionReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
@@ -243,6 +244,14 @@ const addMachineforSpecimen = (specimens: string[], machineId: string) => async 
     dispatch(setError(error));
   }
 };
+const markInTransitAction = (reqBody: IMarkInTransitActionReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    await API.results.markInTransitAction(reqBody);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
 
 const applyRetestAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
   try {
@@ -379,6 +388,7 @@ export default {
   getLabMachines,
   getSpecimenActions,
   addMachineforSpecimen,
+  markInTransitAction,
   applyRetestAction,
   applyRecollectAction,
   getSpecimensFilters,
