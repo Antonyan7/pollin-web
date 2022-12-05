@@ -60,7 +60,7 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
 
   const labMachines = useAppSelector(resultsSelector.labMachines);
   const isLabMachinesLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
-  const labMachinesOptions = createOptionsGroup(labMachines);
+  const labMachinesOptions = createOptionsGroup(labMachines.machines);
 
   const isConfirmationLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
 

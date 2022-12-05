@@ -66,10 +66,10 @@ const resultsManager = {
     return axiosInstance.delete<void, IAxiosResponse<void>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);
   },
   getLabMachines() {
-    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(`${baseURL}/v1/lab-machines`);
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine>>(`${baseURL}/v1/lab-machines`);
   },
   getRetestRecollect(action: string) {
-    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine[]>>(
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<LabMachine>>(
       `${baseURL}/v1/specimen/incompletion-reasons`,
       {
         params: {

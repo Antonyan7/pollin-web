@@ -21,7 +21,7 @@ export interface IResultsProps {
   pendingTestStats: IPendingTestStats[];
   testResultsDetails: TestResultsDetails[];
   error: Error | null;
-  labMachines: LabMachine[];
+  labMachines: LabMachine;
   specimenActions: SpecimenActions[];
   transportActions: TransportActions[];
   isResultsListLoading: boolean;
@@ -61,11 +61,13 @@ export interface ITransportListProps {
   folders: ITransportListFolderProps[];
 }
 
-export interface LabMachine {
+export interface LabMachineProps {
   id: string;
   title: string;
 }
-
+export interface LabMachine {
+  machines: LabMachineProps[];
+}
 export interface ILab {
   id: string;
   title: string;
