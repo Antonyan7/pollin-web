@@ -37,3 +37,12 @@ export enum PeriodType {
   ServiceType = 'ServiceType',
   Block = 'Block'
 }
+
+export interface ITemplateOverlap {
+  data: { title: string; data: number[]; message: string };
+}
+
+export enum ScheduleTemplateErrorMessages {
+  CreateTemplateOverlapMessage = 'Error: Overlapping Service Types and Blocks',
+  EditTemplateOverlapMessage = 'Error: Overlapping Service Types and Blocks'
+}

@@ -1,7 +1,13 @@
 import API from '@axios/API';
 import * as Sentry from '@sentry/nextjs';
+import { AxiosError } from 'axios';
 import { AppDispatch } from 'redux/store';
-import { IApplyScheduleData, ITemplateGroup } from 'types/create-schedule';
+import {
+  IApplyScheduleData,
+  ITemplateGroup,
+  ITemplateOverlap,
+  ScheduleTemplateErrorMessages
+} from 'types/create-schedule';
 import { ModalName } from 'types/modals';
 import {
   BlockSchedulingProps,
@@ -198,16 +204,20 @@ const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async
         })
       );
       dispatch(setError(null));
-    } else {
-      dispatch(setScheduleOverrides(response.data.data.data));
+    }
+  } catch (originalError) {
+    const error = originalError as AxiosError<ITemplateOverlap>;
+
+    if (error?.response?.data?.data.title === ScheduleTemplateErrorMessages.EditTemplateOverlapMessage) {
+      dispatch(setScheduleOverrides(error.response.data.data.data));
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.ScheduleTemplatesErrorModal,
-          props: { title: response.data.data.title, message: response.data.data.message }
+          props: { title: error.response.data.data.title, message: error.response.data.data.message }
         })
       );
     }
-  } catch (error) {
+
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
@@ -244,16 +254,20 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
         })
       );
       dispatch(setError(null));
-    } else {
-      dispatch(setScheduleOverrides(response.data.data.data));
+    }
+  } catch (originalError) {
+    const error = originalError as AxiosError<ITemplateOverlap>;
+
+    if (error?.response?.data?.data.title === ScheduleTemplateErrorMessages.CreateTemplateOverlapMessage) {
+      dispatch(setScheduleOverrides(error.response.data.data.data));
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.ScheduleTemplatesErrorModal,
-          props: { title: response.data.data.title, message: response.data.data.message }
+          props: { title: error.response.data.data.title, message: error.response.data.data.message }
         })
       );
     }
-  } catch (error) {
+
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
