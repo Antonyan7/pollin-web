@@ -152,6 +152,7 @@ const Calendar = () => {
               timeZone={timeZone}
               displayEventTime={false}
               slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
+              eventTimeFormat={{ hour: 'numeric', minute: '2-digit', hour12: false }}
               allDaySlot={false}
               slotMinTime="07:00:00"
               slotMaxTime="18:10:00"
