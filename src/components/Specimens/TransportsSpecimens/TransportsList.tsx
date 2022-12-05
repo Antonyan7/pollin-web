@@ -4,28 +4,21 @@ import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resu
 import { SeveritiesType } from '@components/Scheduling/types';
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Table,
   TableBody,
-  TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow,
-  useTheme
+  TableRow
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { rowsPerPage } from 'helpers/constants';
-import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
-
-import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 
 import { headCellsData } from './headCellsData';
 import { TransportsHeadCell } from './TransportsHeadCell';
@@ -60,12 +53,6 @@ const TransportsList = () => {
   };
   const transportActions = useAppSelector(resultsSelector.transportActions);
   const testResultStateStatus = useAppSelector(resultsSelector.testResultStateStatus);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const numSelected = selected.length;
-  const rowCount = transportList?.folders.length;
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
-  const theme = useTheme();
 
   useEffect(() => {
     if (testResultStateStatus.success) {
@@ -100,54 +87,28 @@ const TransportsList = () => {
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
             <TableRow>
-              <TableCell padding="checkbox">
-                <Checkbox
-                  sx={{ color: theme.palette.primary.main }}
-                  indeterminate={numSelected > 0 && numSelected < rowCount}
-                  checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) => handleSelectAllClick(e, transportList.folders, setSelected, setSelectedStatuses)}
+              {headCells.map((headCell) => (
+                <TransportsHeadCell
+                  headCell={headCell}
+                  key={headCell.id}
+                  sortOrder={sortOrder}
+                  sortField={sortField}
+                  setSortOrder={setSortOrder}
+                  setSortField={setSortField}
                 />
-              </TableCell>
-
-              {numSelected > 0 ? (
-                <TableCell padding="none" colSpan={6}>
-                  <EnhancedTableToolbarExternalResults
-                    numSelected={numSelected}
-                    specimenActions={transportActions}
-                    selectedStatuses={selectedStatuses}
-                    selected={selected}
-                  />
-                </TableCell>
-              ) : null}
-
-              {numSelected <= 0 &&
-                headCells.map((headCell) => (
-                  <TransportsHeadCell
-                    headCell={headCell}
-                    key={headCell.id}
-                    sortOrder={sortOrder}
-                    sortField={sortField}
-                    setSortOrder={setSortOrder}
-                    setSortField={setSortField}
-                  />
-                ))}
+              ))}
             </TableRow>
           </TableHead>
           <TableBody>
             <TableBody />
-            {transportList?.folders?.map((row: ITransportListFolderProps, index: number) => {
+            {transportList?.folders?.map((row: ITransportListFolderProps) => {
               const filteredSpecimenActions = transportActions.find((item) => item.status === row.status);
-              const isItemSelected = isSelected(row.id);
-              const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
                 <TransportsListRow
                   row={row}
                   key={row.id}
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
-                  isItemSelected={isItemSelected}
-                  onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
-                  labelId={labelId}
                 />
               );
             })}

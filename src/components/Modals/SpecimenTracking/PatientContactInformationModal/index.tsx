@@ -6,7 +6,7 @@ import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { margins , paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
