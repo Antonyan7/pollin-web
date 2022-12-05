@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
+import { SeveritiesType } from '@components/Scheduling/types';
 import {
   Box,
   Checkbox,
@@ -16,6 +17,8 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { viewsMiddleware } from '@redux/slices/views';
+import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
@@ -56,12 +59,40 @@ const TransportsList = () => {
     setPage(newPage);
   };
   const transportActions = useAppSelector(resultsSelector.transportActions);
+  const testResultStateStatus = useAppSelector(resultsSelector.testResultStateStatus);
   const [selected, setSelected] = useState<string[]>([]);
   const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
   const numSelected = selected.length;
   const rowCount = transportList?.folders.length;
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
   const theme = useTheme();
+
+  useEffect(() => {
+    if (testResultStateStatus.success) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)
+          }
+        })
+      );
+    } else if (testResultStateStatus.fail) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
+          }
+        })
+      );
+    }
+
+    dispatch(resultsMiddleware.resetTestResultsState());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testResultStateStatus.success, testResultStateStatus.fail]);
 
   return (
     <>

@@ -14,6 +14,7 @@ import {
   SpecimenActions,
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
+import { SchedulingStateStatusProps } from 'types/reduxTypes/schedulingStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<IResultsProps>>(reducer: T) => ({ ...reducer });
 
@@ -95,6 +96,9 @@ const reducers = createReducer({
   },
   setIsCreatingTransportFolderLoading(state, action: IAction<boolean>) {
     state.isCreatingTransportFolder = action.payload;
+  },
+  setTestResultsState(state, action: IAction<SchedulingStateStatusProps>) {
+    state.testResultStateStatus = action.payload;
   },
   setIsTransportListLoading(state, action: IAction<boolean>) {
     state.isTransportListLoading = action.payload;

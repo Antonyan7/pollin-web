@@ -1,6 +1,8 @@
 import { IPagination } from '@axios/axiosTypes';
 import { IResultsFilterOption, TestResultsStats } from 'types/results';
 
+import { SchedulingStateStatusProps } from './schedulingStateTypes';
+
 export interface ISpecimenProps {
   pendingSpecimenStats: IPendingTestStats[];
   isPendingSpecimenStatsLoading: boolean;
@@ -42,6 +44,7 @@ export interface IResultsProps {
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;
+  testResultStateStatus: SchedulingStateStatusProps;
 }
 
 export enum ITransportFolderStatus {

@@ -48,6 +48,10 @@ export const getInitialState = (): IResultsProps => ({
     totalItems: 0,
     notFound: []
   },
+  testResultStateStatus: {
+    success: false,
+    fail: false
+  },
   isAllTestsSpecimensListLoading: false,
   labs: [],
   isLabsLoading: false,

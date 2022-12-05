@@ -27,10 +27,12 @@ const testResultLabs = createSelector([selector], (state) => state.labs);
 const transportActions = createSelector([selector], (state) => state.transportActions);
 const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
 const allTestsSpecimensList = createSelector([selector], (state) => state.allTestsSpecimensList);
+const testResultStateStatus = createSelector([selector], (state) => state.testResultStateStatus);
 const isAllTestsSpecimensListLoading = createSelector([selector], (state) => state.isAllTestsSpecimensListLoading);
 const isCreatingTransportFolder = createSelector([selector], (state) => state.isCreatingTransportFolder);
 
 export default {
+  testResultStateStatus,
   resultsList,
   transportList,
   isResultsLoading,

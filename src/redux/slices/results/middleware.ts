@@ -49,6 +49,7 @@ const {
   setLabsLoadingState,
   setIsCreatingTransportFolderLoading,
   setTransportList,
+  setTestResultsState,
   setIsTransportListLoading
 } = slice.actions;
 
@@ -244,12 +245,34 @@ const addMachineforSpecimen = (specimens: string[], machineId: string) => async 
     dispatch(setError(error));
   }
 };
+
+export const resetTestResultsState = () => async (dispatch: AppDispatch) => {
+  dispatch(
+    setTestResultsState({
+      success: false,
+      fail: false
+    })
+  );
+};
+
 const markInTransitAction = (reqBody: IMarkInTransitActionReqBody) => async (dispatch: AppDispatch) => {
   try {
     await API.results.markInTransitAction(reqBody);
+    dispatch(
+      setTestResultsState({
+        success: true,
+        fail: false
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+    dispatch(
+      setTestResultsState({
+        success: false,
+        fail: true
+      })
+    );
   }
 };
 
@@ -380,6 +403,7 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
 
 export default {
   getResultsList,
+  resetTestResultsState,
   getTransportList,
   getResultsFilters,
   getPendingTestStats,

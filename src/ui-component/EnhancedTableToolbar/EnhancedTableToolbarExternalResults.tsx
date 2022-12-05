@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid, MenuItem, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -30,6 +31,7 @@ const EnhancedTableToolbarExternalResults = ({
     () => specimenActions.find((item: SpecimenActions) => item.status === checkSameStatues[0]),
     [specimenActions, checkSameStatues]
   );
+  const showOptions = options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit);
 
   const onMenuItemClick = useCallback(
     (actionIndex: number) => {
@@ -60,7 +62,7 @@ const EnhancedTableToolbarExternalResults = ({
           </Typography>
         </Grid>
       )}
-      {numSelected && !hasSameStatues && options?.actions && (
+      {numSelected && !hasSameStatues && options?.actions && showOptions && (
         <Grid item xs={3}>
           <BaseSelectWithLoading
             IconComponent={KeyboardArrowDownIcon}
