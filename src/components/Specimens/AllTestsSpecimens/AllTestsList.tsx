@@ -74,7 +74,7 @@ const AllTestsList = () => {
   }, [identifiers]);
 
   useEffect(() => {
-    const shouldShowToast = identifiers.length > 0 && !allTestsSpecimensListLoading && page === 0 && !toastHasBeenShown;
+    const shouldShowToast = identifiers.length > 0 && !allTestsSpecimensListLoading && !toastHasBeenShown;
 
     if (shouldShowToast) {
       setToasHasBeenShown(true);
@@ -105,7 +105,7 @@ const AllTestsList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, allTestsSpecimensList.notFound, allTestsSpecimensListLoading, toastHasBeenShown]);
+  }, [allTestsSpecimensList.notFound, allTestsSpecimensListLoading, toastHasBeenShown]);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getSpecimenActions());

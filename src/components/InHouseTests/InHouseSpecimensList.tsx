@@ -93,7 +93,7 @@ const InHouseSpecimensList = () => {
   }, [identifiers]);
 
   useEffect(() => {
-    const shouldShowToast = identifiers.length > 0 && !isSpecimensListLoading && page === 0 && !toastHasBeenShown;
+    const shouldShowToast = identifiers.length > 0 && !isSpecimensListLoading && !toastHasBeenShown;
 
     if (shouldShowToast) {
       setToasHasBeenShown(true);
@@ -124,7 +124,7 @@ const InHouseSpecimensList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, specimensList.notFound, isSpecimensListLoading, toastHasBeenShown]);
+  }, [specimensList.notFound, isSpecimensListLoading, toastHasBeenShown]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
