@@ -102,3 +102,4 @@ export interface ITestResultsDetailsBody {
 }
 
 export interface IAddMachineforSpecimen extends IEmptyResponse {}
+export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}

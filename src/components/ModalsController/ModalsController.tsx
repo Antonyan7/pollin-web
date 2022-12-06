@@ -19,6 +19,7 @@ import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
+import AddNewExistingTransportModal from '@components/Modals/Specimens/AddNewExistingTransport';
 import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
@@ -36,7 +37,11 @@ import PatientPartnersModal, {
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
-import { IAddNewContactModalProps, IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IAddNewContactModalProps,
+  IAddNewExistingTransportModalProps,
+  IPatientContactInformationModalProps
+} from 'types/reduxTypes/resultsStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 
 // <BOOKING>
@@ -75,9 +80,12 @@ const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesEr
 const getExternalResultsPatientInformationModal = (modal: IOpenedModal<IPatientContactInformationModalProps>) => (
   <PatientContactInformationModal key={modal.name} {...modal.props} />
 );
-// <SPECIMENS>f
+// <SPECIMENS>
 const getAddNewTransportFolderModal = (modal: IOpenedModal<IAddNewContactModalProps>) => (
   <AddNewTransportFolderModal key={modal.name} {...modal.props} />
+);
+const getAddNewExistingTransportModal = (modal: IOpenedModal<IAddNewExistingTransportModalProps>) => (
+  <AddNewExistingTransportModal key={modal.name} {...modal.props} />
 );
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
@@ -134,6 +142,8 @@ export const ModalsController = () => {
           // <SPECIMENS>
           case ModalName.AddNewTransportFolderModal:
             return getAddNewTransportFolderModal(modal);
+          case ModalName.AddNewExistingTransportModal:
+            return getAddNewExistingTransportModal(modal);
           // profile highlight
           case ModalName.PatientLineItemsModal:
             return getPatientListItemsModal(modal);

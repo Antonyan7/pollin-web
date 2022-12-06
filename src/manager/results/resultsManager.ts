@@ -1,5 +1,6 @@
 import {
   IAddMachineforSpecimen,
+  IAddSpecimenToTransportFolder,
   IAllTestsSpecimensReqBody,
   IMarkInTransitActionReqBody,
   IResultsReqBody,
@@ -25,6 +26,8 @@ import {
 import {
   ICreateTransportFolderReqBody,
   ICreateTransportFolderResponse,
+  IGetTransportFoldersReqBody,
+  IGetTransportFoldersResponse,
   ILabsResponse,
   IResultsFiltersResponse,
   ISpecimensFiltersResponse
@@ -163,6 +166,21 @@ const resultsManager = {
     return axiosInstance.post<ICreateTransportFolderResponse, IAxiosResponsePaginated<ICreateTransportFolderResponse>>(
       `${baseURL}/v1/transport`,
       data
+    );
+  },
+  getTransportFolders(data: IGetTransportFoldersReqBody) {
+    return axiosInstance.post<IGetTransportFoldersResponse, IAxiosResponsePaginated<IGetTransportFoldersResponse>>(
+      `${baseURL}/v1/transport/list`,
+      data
+    );
+  },
+  addSpecimenToTransportFolder(specimens: IRetestRecollectData[], transportFolderId: string) {
+    return axiosInstance.patch<IAddSpecimenToTransportFolder, IAxiosResponse<IAddSpecimenToTransportFolder>>(
+      `${baseURL}/v1/specimen/add-to-transport`,
+      {
+        specimens,
+        transportFolderId
+      }
     );
   }
 };

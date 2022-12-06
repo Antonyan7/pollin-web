@@ -66,6 +66,7 @@ const AddNewTransportFolderModal = () => {
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
+    dispatch(viewsMiddleware.closeModal(ModalName.AddNewTransportFolderModal));
   };
 
   return (

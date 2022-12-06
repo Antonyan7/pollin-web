@@ -28,7 +28,8 @@ export enum ModalName {
   SelectMachineModal = 'SelectMachineModal',
   InHouseTestResults = 'InHouseTestResults',
   HandoffConfirmation = 'HandoffConfirmation',
-  AddNewTransportFolderModal = 'AddNewTransportFolderModal'
+  AddNewTransportFolderModal = 'AddNewTransportFolderModal',
+  AddNewExistingTransportModal = 'AddNewExistingTransportModal'
 }
 
 export enum OpenModalReason {

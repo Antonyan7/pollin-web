@@ -55,5 +55,7 @@ export const getInitialState = (): IResultsProps => ({
   isAllTestsSpecimensListLoading: false,
   labs: [],
   isLabsLoading: false,
-  isCreatingTransportFolder: false
+  isCreatingTransportFolder: false,
+  transportFolders: [],
+  isTransportFoldersLoading: false
 });

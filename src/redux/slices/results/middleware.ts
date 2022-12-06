@@ -10,17 +10,22 @@ import {
   ITestResultsParams,
   ITransportListReqBody
 } from '@axios/results/resultsManagerTypes';
+import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/results/slice';
+import { viewsMiddleware } from '@redux/slices/views';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import {
   IAllTestsSpecimensList,
   IResultsList,
+  IRetestRecollectData,
   ISpecimensList,
   ITransportList
 } from 'types/reduxTypes/resultsStateTypes';
-import { ICreateTransportFolderReqBody } from 'types/results';
+import { ICreateTransportFolderReqBody, IGetTransportFoldersReqBody } from 'types/results';
 
 const {
   setResultsList,
@@ -50,7 +55,9 @@ const {
   setIsCreatingTransportFolderLoading,
   setTransportList,
   setTestResultsState,
-  setIsTransportListLoading
+  setIsTransportListLoading,
+  setTransportFolders,
+  setIsTransportFoldersLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -398,8 +405,56 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
     dispatch(setError(error));
   } finally {
     dispatch(setIsCreatingTransportFolderLoading(false));
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(
+            Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_FOLDER_CREATE_SUCCESS_MESSAGE
+          )
+        }
+      })
+    );
   }
 };
+
+const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTransportFoldersLoading(true));
+
+    const response = await API.results.getTransportFolders(data);
+
+    dispatch(setTransportFolders(response.data.data.folders));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTransportFoldersLoading(false));
+  }
+};
+
+const addSpecimenToTransportFolder =
+  (specimens: IRetestRecollectData[], transportFolderId: string) => async (dispatch: AppDispatch) => {
+    try {
+      await API.results.addSpecimenToTransportFolder(specimens, transportFolderId);
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(
+              Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE
+            )
+          }
+        })
+      );
+    }
+  };
 
 export default {
   getResultsList,
@@ -423,5 +478,7 @@ export default {
   getSpecimensList,
   getALLTestsSpecimensList,
   getLabs,
-  createTransportFolder
+  createTransportFolder,
+  getTransportFolders,
+  addSpecimenToTransportFolder
 };

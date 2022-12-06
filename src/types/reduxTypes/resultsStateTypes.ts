@@ -1,5 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IResultsFilterOption, TestResultsStats } from 'types/results';
+import { IResultsFilterOption, ITransportFolder, TestResultsStats } from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
@@ -44,6 +44,8 @@ export interface IResultsProps {
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;
+  transportFolders: ITransportFolder[];
+  isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
 }
 
@@ -216,6 +218,10 @@ export interface IPatientContactInformationModalProps {
 }
 
 export interface IAddNewContactModalProps {
+  transportId: string;
+}
+
+export interface IAddNewExistingTransportModalProps {
   transportId: string;
 }
 

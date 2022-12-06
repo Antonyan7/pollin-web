@@ -1,3 +1,4 @@
+import { ISortOrder } from 'types/patient';
 import { ILab, IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
 
 export interface IResultsFiltersResponse {
@@ -12,16 +13,43 @@ export interface ILabsResponse {
   labs: ILab[];
 }
 
-export interface IGroupedLabOptions extends ILab {}
-
 export interface ICreateTransportFolderReqBody {
   name: string;
   labId: string;
   date: string;
 }
 
+export interface IIdentifier {
+  identifier: string;
+}
+
+export interface IGetTransportFoldersReqBody {
+  date: string;
+  specimens?: IIdentifier[];
+  page: number;
+  sortByField: TransportStatus;
+  sortOrder: ISortOrder;
+}
+
 export interface ICreateTransportFolderResponse {
   uuid: string;
+}
+
+export interface ITransportFolderDriver {
+  name: string;
+}
+
+export interface ITransportFolder {
+  id: string;
+  title: string;
+  labName: string;
+  driver: ITransportFolderDriver;
+  status: TransportFolderStatus;
+  age: number;
+}
+
+export interface IGetTransportFoldersResponse {
+  folders: ITransportFolder[];
 }
 
 export interface IResultsFilterOption {
@@ -36,6 +64,16 @@ export enum TestResultsStats {
   GreaterThan30Days = 'GreaterThan30Days',
   GreaterThan15Days = 'GreaterThan15Days',
   LessThanOrEqual15Days = 'LessThanOrEqual15Days'
+}
+
+export enum TransportStatus {
+  ReadyForTransport = 'ReadyForTransport',
+  InTransit = 'InTransit'
+}
+
+export enum TransportFolderStatus {
+  ReadyForTransport = 'Ready for transport',
+  InTransit = 'In transit'
 }
 
 export enum TestResultsStatsNumbers {
