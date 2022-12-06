@@ -18,9 +18,17 @@ const ResultsSaveButton: React.FC<ResultsSaveButtonProps> = ({ shouldSaveAsCompl
   const { saveButtonLabel, areAllRequiredFieldsFilled } = useMemo(() => {
     if (measurements?.length > 0) {
       const results = measurements
-        .map((measurement) => [
-          ...measurement.items.map((item: ITestResultItem) => !!(item.resultType && item.result && item.dateReceived))
-        ])
+        .map((measurement) => {
+          if (measurement.items?.length > 0) {
+            return [
+              ...measurement.items.map(
+                (item: ITestResultItem) => !!(item.resultType && item.result && item.dateReceived)
+              )
+            ];
+          }
+
+          return [];
+        })
         .flat();
 
       // For external results attachment is required!

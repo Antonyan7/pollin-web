@@ -73,7 +73,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
               </Typography>
             </StyledTableCell>
           </StyledTableRow>
-          {fields.map((field, fieldIndex) => {
+          {fields?.map((field, fieldIndex) => {
             const showResultOptionsDropdown = !!(
               listItems[fieldIndex].possibleResultOptions && listItems[fieldIndex].possibleResultOptions?.length
             );

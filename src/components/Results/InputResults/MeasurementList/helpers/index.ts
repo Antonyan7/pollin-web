@@ -17,7 +17,7 @@ const extractFormDataFromTestResultsDetails = (testResultsDetails: TestResultsDe
           dateReceived: item.dateReceived,
           result: item?.result ?? ''
         })),
-        comment: '',
+        comment: currentTestDetails.comment ?? '',
         attachments: currentTestDetails?.attachments ?? []
       }
     };
