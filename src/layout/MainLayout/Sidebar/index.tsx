@@ -1,6 +1,4 @@
 import React, { memo, useMemo } from 'react';
-// third-party
-import PerfectScrollbar from 'react-perfect-scrollbar';
 import { Box, Drawer, useMediaQuery } from '@mui/material';
 // material-ui
 import { styled, useTheme } from '@mui/material/styles';
@@ -49,16 +47,15 @@ const Sidebar = ({ window }: SidebarProps) => {
 
   const drawer = useMemo(
     () => (
-      <PerfectScrollbar
-        component="div"
-        style={{
+      <Box
+        sx={{
           height: !matchUpMd ? 'calc(100vh - 56px)' : 'calc(100vh - 88px)',
-          paddingLeft: paddings.left16,
-          paddingRight: paddings.right16
+          overflow: 'auto',
+          px: paddings.leftRight16
         }}
       >
         <MenuList />
-      </PerfectScrollbar>
+      </Box>
     ),
     [matchUpMd]
   );

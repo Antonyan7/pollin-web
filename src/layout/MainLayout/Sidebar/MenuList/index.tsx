@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import menuItem from 'menu-items';
 
 import NavGroup from './NavGroup';
@@ -18,7 +18,7 @@ const MenuList = () => {
     }
   });
 
-  return <div>{navItems}</div>;
+  return <Box>{navItems}</Box>;
 };
 
 export default memo(MenuList);
