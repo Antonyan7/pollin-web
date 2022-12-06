@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import API from '@axios/API';
@@ -10,10 +10,12 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { Avatar, Box, Button, ButtonProps, Grid, Tooltip, Typography } from '@mui/material';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
 
 const avatarImage = '/assets/images/users';
@@ -27,16 +29,16 @@ interface ContactListProps {
   open: boolean;
 }
 
+// eslint-disable-next-line max-lines-per-function
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const avatarProfile = avatar && `${avatarImage}/${avatar}`;
-
   const patientId = useSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
-
   const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
-
+  const isPatientHighlightIntakeReminderActive = useSelector(patientsSelector.isPatientHighlightIntakeReminderActive);
+  const [isSendIntakeTooltipOpen, setIsSendIntakeTooltipOpen] = useState(false);
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
     async () => {
@@ -48,7 +50,15 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
         dispatch(viewsMiddleware.openModal(modalParams));
       }
     };
-  const editPatientProfileLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE);
+  const onSendIntakeButtonClick = () => {
+    dispatch(
+      patientsMiddleware.sendPatientIntakeReminder(
+        patientId,
+        t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_SUCCESS),
+        t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_FAIL)
+      )
+    );
+  };
 
   return (
     <Box py="15px" borderBottom={`1px solid ${theme.palette.grey[100]}!important`}>
@@ -113,14 +123,14 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
             spacing={1}
             sx={{ justifyContent: 'flex-end', [theme.breakpoints.down('md')]: { justifyContent: 'flex-start' } }}
           >
-            {isPatientHighlightIntakeComplete && (
+            {isPatientHighlightIntakeComplete ? (
               <Grid item>
                 <Tooltip placement="top" title="Message">
                   <Button
                     sx={{ minWidth: 32, height: 32, margin: '10px 10px' }}
                     startIcon={<ModeEditOutlinedIcon fontSize="small" />}
                   >
-                    {editPatientProfileLabel}
+                    {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE)}
                   </Button>
                 </Tooltip>
                 <Tooltip placement="top" title="Message">
@@ -128,6 +138,42 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                     {open ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
                   </Button>
                 </Tooltip>
+              </Grid>
+            ) : (
+              <Grid item>
+                <ClickAwayListener onClickAway={() => setIsSendIntakeTooltipOpen(false)}>
+                  <Tooltip
+                    placement="bottom-start"
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          background: theme.palette.primary.main,
+                          color: theme.palette.common.white,
+                          padding: theme.spacing(1)
+                        }
+                      }
+                    }}
+                    title={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE)}
+                    onClose={() => setIsSendIntakeTooltipOpen(false)}
+                    open={!isPatientHighlightIntakeReminderActive && isSendIntakeTooltipOpen}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                  >
+                    <Box
+                      sx={{ display: 'inline' }}
+                      onClick={() => !isPatientHighlightIntakeReminderActive && setIsSendIntakeTooltipOpen(true)}
+                    >
+                      <Button
+                        startIcon={<IconBell />}
+                        disabled={!isPatientHighlightIntakeReminderActive}
+                        onClick={onSendIntakeButtonClick}
+                      >
+                        {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
+                      </Button>
+                    </Box>
+                  </Tooltip>
+                </ClickAwayListener>
               </Grid>
             )}
           </Grid>

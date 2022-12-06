@@ -160,6 +160,9 @@ const reducers = createReducer({
   },
   setIsPatientHighlightIntakeComplete(state, action: IAction<boolean>) {
     state.isPatientHighlightIntakeComplete = action.payload;
+  },
+  setIsPatientHighlightIntakeReminderActive(state, action: IAction<boolean>) {
+    state.isPatientHighlightIntakeReminderActive = action.payload;
   }
 });
 

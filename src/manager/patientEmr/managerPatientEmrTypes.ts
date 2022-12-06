@@ -110,9 +110,10 @@ export interface IPatientProfileResponse {
 }
 
 export interface IPatientHighlightResponse {
+  isIntakeComplete: boolean;
+  isIntakeReminderActive: boolean;
   header: PatientHighlightHeader;
   highlights: PatientHighlight[];
-  isIntakeComplete: boolean;
 }
 
 export interface IPatientPartnerData {

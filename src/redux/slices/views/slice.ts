@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import actions from './actions';
 import { getInitialState } from './initialState';
+import reducers from './reducers';
 
 const slice = createSlice({
   name: 'views',
   initialState: getInitialState(),
-  reducers: actions
+  reducers
 });
 
 export default slice;

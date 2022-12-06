@@ -1,5 +1,5 @@
 /* eslint-disable react/no-danger */
-import React, { useCallback } from 'react';
+import React from 'react';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import CloseIcon from '@mui/icons-material/Close';
 import { Typography } from '@mui/material';
@@ -32,14 +32,13 @@ export const ToastNotification = React.forwardRef(() => {
   const classes = useStyles();
   const toastNotificationPopUp = useAppSelector(viewsSelector.toastNotificationPopUp);
 
-  const onClose = useCallback(() => {
+  const onClose = () =>
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: false,
         props: {}
       })
     );
-  }, []);
 
   return (
     <Snackbar

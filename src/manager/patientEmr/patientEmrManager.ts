@@ -149,6 +149,11 @@ const patientEmrManager = {
     return axiosInstance.get<IPatientContactInformationResponse, IAxiosResponse<IPatientContactInformationResponse>>(
       `${baseURL}/v1/profile/${patientId}/confirmation`
     );
+  },
+  sendIntakeReminder(patientId: string) {
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/notification/send-intake-reminder`, {
+      patientId
+    });
   }
 };
 

@@ -1,8 +1,11 @@
-import { IAction, SliceReducers } from 'redux/store';
+import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
+import { IAction } from 'redux/store';
 import { ModalName } from 'types/modals';
 import { IOpenedAlert, IOpenedModal, RedirectionProps, ViewsProps } from 'types/reduxTypes/viewsStateTypes';
 
-const actions: SliceReducers<ViewsProps> = {
+const createReducer = <T extends SliceCaseReducers<ViewsProps>>(reducer: T) => ({ ...reducer });
+
+const reducers = createReducer({
   setRedirection(state, action: IAction<RedirectionProps>) {
     state.redirection = action.payload;
   },
@@ -24,6 +27,6 @@ const actions: SliceReducers<ViewsProps> = {
   updateToastNotificationState<P>(state: ViewsProps, action: IAction<IOpenedAlert<P>>) {
     state.toastNotificationPopUp = action.payload ? action.payload : { open: false, props: {} };
   }
-};
+});
 
-export default actions;
+export default reducers;

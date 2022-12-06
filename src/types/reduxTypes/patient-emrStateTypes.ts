@@ -41,6 +41,8 @@ export interface PatientEmrProps {
   error: Error | null;
   patientProfile: PatientProfile | null;
   isPatientHighlightsLoading: boolean;
+  isPatientHighlightIntakeComplete: boolean;
+  isPatientHighlightIntakeReminderActive: boolean;
   patientHighlightHeader: PatientHighlightHeader;
   patientHighlights: PatientHighlight[] | null;
   patientAppointments: IPatientAppointmentsProps;
@@ -49,7 +51,6 @@ export interface PatientEmrProps {
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
   contactInformation: IPatientContactInformation;
-  isPatientHighlightIntakeComplete: boolean;
 }
 
 export interface IItem {
