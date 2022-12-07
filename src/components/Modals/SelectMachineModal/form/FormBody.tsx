@@ -11,6 +11,7 @@ import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { LabMachineProps } from 'types/reduxTypes/resultsStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -60,7 +61,8 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
 
   const labMachines = useAppSelector(resultsSelector.labMachines);
   const isLabMachinesLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
-  const labMachinesOptions = createOptionsGroup(labMachines.machines);
+  const options = labMachines.machines ? labMachines.machines : labMachines;
+  const labMachinesOptions = createOptionsGroup(options as LabMachineProps[]);
 
   const isConfirmationLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
 
