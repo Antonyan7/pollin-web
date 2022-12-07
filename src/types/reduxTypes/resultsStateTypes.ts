@@ -44,6 +44,8 @@ export interface IResultsProps {
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;
+  specimensInTransportList: ISpecimensInTransportList;
+  isSpecimensInTransportListLoading: boolean;
   transportFolders: ITransportFolder[];
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
@@ -132,6 +134,18 @@ export interface ISpecimensList extends IPagination {
 export interface IAllTestsSpecimensList extends IPagination {
   specimens: IAllTestsSpecimensListItem[];
   notFound: ISpecimensListItemShort[];
+}
+
+export interface ISpecimensInTransportListItem {
+  id: string;
+  identifier: string;
+  patientName: string;
+  status: IStatus;
+  age: number;
+}
+
+export interface ISpecimensInTransportList extends IPagination {
+  specimens: ISpecimensInTransportListItem[];
 }
 
 export interface IPendingTestStats {

@@ -7,6 +7,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensListItem,
+  ISpecimensInTransportListItem,
   ISpecimensListItem,
   ITransportListFolderProps,
   SpecimenActionsValues
@@ -14,7 +15,7 @@ import {
 
 interface ContextMenuProps {
   actions: SpecimenActionsValues[];
-  row: ISpecimensListItem | IAllTestsSpecimensListItem | ITransportListFolderProps;
+  row: ISpecimensListItem | IAllTestsSpecimensListItem | ITransportListFolderProps | ISpecimensInTransportListItem;
 }
 
 const ContextMenu = ({ actions, row }: ContextMenuProps) => {

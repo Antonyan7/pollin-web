@@ -277,5 +277,7 @@
   "page.specimens.tracking.transports.cells.date.time.created": "Date & Time Created",
   "page.specimens.tracking.transports.cells.lab.destination": "Lab Destination",
   "page.specimens.tracking.transports.cells.driver.name": "Driver Name",
-  "page.specimens.tracking.transports.cells.status": "Status"
+  "page.specimens.tracking.transports.cells.status": "Status",
+  "page.specimens.tracking.transports.go.back": "Go to Specimen Tracking",
+  "page.specimens.tracking.transports.download.manifest": "Download Manifest"
 }

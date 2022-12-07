@@ -1,6 +1,8 @@
 import { ISortOrder } from 'types/patient';
 import { ILab, IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
 
+import { SortOrder } from './patient';
+
 export interface IResultsFiltersResponse {
   filters: IResultsFilterCategory[];
 }
@@ -19,6 +21,11 @@ export interface ICreateTransportFolderReqBody {
   date: string;
 }
 
+export interface IGetSpecimensInTransportListParams {
+  sortOrder?: SortOrder;
+  sortByField?: string;
+  page: number;
+}
 export interface IIdentifier {
   identifier: string;
 }

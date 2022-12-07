@@ -22,10 +22,15 @@ import {
   IAllTestsSpecimensList,
   IResultsList,
   IRetestRecollectData,
+  ISpecimensInTransportList,
   ISpecimensList,
   ITransportList
 } from 'types/reduxTypes/resultsStateTypes';
-import { ICreateTransportFolderReqBody, IGetTransportFoldersReqBody } from 'types/results';
+import {
+  ICreateTransportFolderReqBody,
+  IGetSpecimensInTransportListParams,
+  IGetTransportFoldersReqBody
+} from 'types/results';
 
 const {
   setResultsList,
@@ -54,8 +59,10 @@ const {
   setLabsLoadingState,
   setIsCreatingTransportFolderLoading,
   setTransportList,
-  setTestResultsState,
   setIsTransportListLoading,
+  setSpecimensInTransportList,
+  setIsSpecimensInTransportListLoading,
+  setTestResultsState,
   setTransportFolders,
   setIsTransportFoldersLoading
 } = slice.actions;
@@ -419,6 +426,40 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
   }
 };
 
+const getSpecimensInTransportList =
+  (options: IGetSpecimensInTransportListParams, transportId: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsSpecimensInTransportListLoading(true));
+
+      const params = (
+        options.sortOrder !== null ? sortOrderTransformer(options) : options
+      ) as IGetSpecimensInTransportListParams;
+
+      const response = await API.results.getSpecimensInTransport(params, transportId);
+
+      const {
+        totalItems,
+        currentPage,
+        pageSize,
+        data: { specimens }
+      } = response.data;
+
+      const results: ISpecimensInTransportList = {
+        totalItems,
+        currentPage,
+        pageSize,
+        specimens
+      };
+
+      dispatch(setSpecimensInTransportList(results));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsSpecimensInTransportListLoading(false));
+    }
+  };
+
 const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsTransportFoldersLoading(true));
@@ -479,6 +520,7 @@ export default {
   getALLTestsSpecimensList,
   getLabs,
   createTransportFolder,
+  getSpecimensInTransportList,
   getTransportFolders,
   addSpecimenToTransportFolder
 };

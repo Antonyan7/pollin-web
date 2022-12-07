@@ -17,6 +17,7 @@ import {
   IPendingTestResultStats,
   IResultsList,
   IRetestRecollectData,
+  ISpecimensInTransportList,
   ISpecimensList,
   ITestResultsDetails,
   ITransportListProps,
@@ -26,6 +27,7 @@ import {
 import {
   ICreateTransportFolderReqBody,
   ICreateTransportFolderResponse,
+  IGetSpecimensInTransportListParams,
   IGetTransportFoldersReqBody,
   IGetTransportFoldersResponse,
   ILabsResponse,
@@ -168,6 +170,15 @@ const resultsManager = {
       data
     );
   },
+  getSpecimensInTransport(params: IGetSpecimensInTransportListParams, transportId: string) {
+    return axiosInstance.get<ISpecimensInTransportList, IAxiosResponsePaginated<ISpecimensInTransportList>>(
+      `${baseURL}/v1/specimen/in-transport/${transportId}`,
+      {
+        params
+      }
+    );
+  },
+
   getTransportFolders(data: IGetTransportFoldersReqBody) {
     return axiosInstance.post<IGetTransportFoldersResponse, IAxiosResponsePaginated<IGetTransportFoldersResponse>>(
       `${baseURL}/v1/transport/list`,

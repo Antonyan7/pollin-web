@@ -278,6 +278,8 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_LAB_DESTINATION = 'page.specimens.tracking.transports.cells.lab.destination',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME = 'page.specimens.tracking.transports.cells.driver.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_STATUS = 'page.specimens.tracking.transports.cells.status',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK = 'page.specimens.tracking.transports.go.back',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id'
 }
 

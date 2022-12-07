@@ -8,6 +8,7 @@ import {
   IResultsList,
   IResultsProps,
   ISpecimensFilterCategory,
+  ISpecimensInTransportList,
   ISpecimensList,
   ITransportList,
   LabMachine,
@@ -103,6 +104,12 @@ const reducers = createReducer({
   },
   setIsTransportListLoading(state, action: IAction<boolean>) {
     state.isTransportListLoading = action.payload;
+  },
+  setSpecimensInTransportList(state, action: IAction<ISpecimensInTransportList>) {
+    state.specimensInTransportList = action.payload;
+  },
+  setIsSpecimensInTransportListLoading(state, action: IAction<boolean>) {
+    state.isSpecimensInTransportListLoading = action.payload;
   },
   setTransportFolders(state, action: IAction<ITransportFolder[]>) {
     state.transportFolders = action.payload;

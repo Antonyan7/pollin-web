@@ -1,13 +1,18 @@
 import { SetStateAction } from 'react-transition-group/node_modules/@types/react';
 import {
   IAllTestsSpecimensListItem,
+  ISpecimensInTransportListItem,
   ISpecimensListItem,
   ITransportListFolderProps
 } from 'types/reduxTypes/resultsStateTypes';
 
 export const handleSelectAllClick = (
   event: React.ChangeEvent<HTMLInputElement>,
-  specimensList: IAllTestsSpecimensListItem[] | ISpecimensListItem[] | ITransportListFolderProps[],
+  specimensList:
+    | IAllTestsSpecimensListItem[]
+    | ISpecimensListItem[]
+    | ITransportListFolderProps[]
+    | ISpecimensInTransportListItem[],
   setSelected: (item: string[]) => void,
   setSelectedStatuses: (item: string[]) => void
 ) => {
