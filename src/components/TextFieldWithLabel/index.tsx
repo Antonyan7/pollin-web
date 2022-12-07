@@ -28,7 +28,7 @@ const TextFieldWithLabel: React.FC<TextFieldWithLabelProps> = ({
   const { control } = useFormContext();
 
   const { field } = useController({
-    name: `${currentFormFieldName}.comment`,
+    name: currentFormFieldName,
     control
   });
 

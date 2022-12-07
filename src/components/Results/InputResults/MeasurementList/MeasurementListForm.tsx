@@ -66,8 +66,9 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
         <FormProvider {...form}>
           {testResultsDetails.map((testResultDetails, index) => {
             const currentFormFieldName = `data_${testResultDetails.id}`;
+            const currentFormCommentFieldName = `${currentFormFieldName}.comment`;
             // Show specimenId only when it is available and when it is first test result;
-            const shouldShowSpeicmenId = index === 0 && specimenId;
+            const shouldShowSpecimenId = index === 0 && specimenId;
             // Pick last item of test results and show save button
             const shouldShowSaveButton = index === testResultsDetails.length - 1;
             // Is multiple test results
@@ -80,7 +81,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                   dates={testResultDetails.dates}
                   lab={testResultDetails.lab}
                   currentFormFieldName={currentFormFieldName}
-                  {...(shouldShowSpeicmenId && { specimenId })}
+                  {...(shouldShowSpecimenId && { specimenId })}
                 />
                 {testResultDetails.items.length > 0 && (
                   <MeasurementList listItems={testResultDetails.items} currentFormFieldName={currentFormFieldName} />
@@ -90,7 +91,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                   <TextFieldWithLabel
                     label={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
                     placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
-                    currentFormFieldName={currentFormFieldName}
+                    currentFormFieldName={currentFormCommentFieldName}
                   />
                   <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
                   <AttachFile currentFormFieldName={currentFormFieldName} />
