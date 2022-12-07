@@ -29,6 +29,10 @@ export enum SpecimensListSortFields {
   COLLECTION_AGE = 'CollectionAge'
 }
 
+export enum SpecimensInTransportListSortFields {
+  PATIENT_NAME = 'PatientName'
+}
+
 export enum ActionType {
   Retest = 'Retest',
   Recollect = 'Recollect',

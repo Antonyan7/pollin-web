@@ -1,3 +1,4 @@
+import { SpecimensInTransportListSortFields } from '@axios/results/resultsManagerTypes';
 import { Translation } from 'constants/translations';
 import { TFunction } from 'i18next';
 import { paddings } from 'themes/themeConstants';
@@ -11,11 +12,11 @@ export const headCellsData = (t: TFunction) => [
     isSortable: false
   },
   {
-    id: 'patientName',
+    id: SpecimensInTransportListSortFields.PATIENT_NAME,
     label: t(Translation.PAGE_RESULTS_CELLS_PATIENT_NAME),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
     id: 'age',

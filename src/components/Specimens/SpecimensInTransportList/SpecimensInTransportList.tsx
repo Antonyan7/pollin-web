@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { SpecimensInTransportListSortFields } from '@axios/results/resultsManagerTypes';
 import {
   Box,
   Checkbox,
@@ -19,7 +20,7 @@ import { rowsPerPage } from 'helpers/constants';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
-import { IHeadCell } from 'types/patient';
+import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensInTransportListItem } from 'types/reduxTypes/resultsStateTypes';
 import { IGetSpecimensInTransportListParams } from 'types/results';
 
@@ -31,6 +32,10 @@ import { SpecimensInTransportListRow } from './SpecimensInTransportListRow';
 
 const SpecimensInTransportList = () => {
   const [page, setPage] = useState<number>(0);
+  const [sortField, setSortField] = useState<SpecimensInTransportListSortFields>(
+    SpecimensInTransportListSortFields.PATIENT_NAME
+  );
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
   const specimensInTransportList = useAppSelector(resultsSelector.specimensInTransportList);
   const specimensInTransportListLoading = useAppSelector(resultsSelector.isSpecimensInTransportListLoading);
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
@@ -41,11 +46,13 @@ const SpecimensInTransportList = () => {
 
   useEffect(() => {
     const params: IGetSpecimensInTransportListParams = {
-      page: page + 1
+      page: page + 1,
+      sortByField: sortField,
+      sortOrder
     };
 
     dispatch(resultsMiddleware.getSpecimensInTransportList(params, transportId));
-  }, [transportId, page]);
+  }, [transportId, page, sortField, sortOrder]);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getSpecimenActions());
@@ -93,7 +100,14 @@ const SpecimensInTransportList = () => {
               {numSelected <= 0 && (
                 <>
                   {headCells.map((headCell) => (
-                    <SpecimensInTransportListHeadCell headCell={headCell} key={headCell.id} />
+                    <SpecimensInTransportListHeadCell
+                      headCell={headCell}
+                      key={headCell.id}
+                      sortOrder={sortOrder}
+                      sortField={sortField}
+                      setSortOrder={setSortOrder}
+                      setSortField={setSortField}
+                    />
                   ))}
                   <TableCell padding="none" colSpan={6} />
                 </>
