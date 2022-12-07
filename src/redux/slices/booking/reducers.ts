@@ -1,4 +1,7 @@
-import { SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
+import {
+  IProvidersCollectionCalendarAppointment,
+  SpecimenCollectionFilterOption
+} from '@axios/booking/managerBookingTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -99,6 +102,9 @@ const reducers = createReducer({
   },
   setSpecimenAppointmentsFiltersArrayLoading(state, action: IAction<boolean>) {
     state.specimenAppointments.isFiltersArrayLoading = action.payload;
+  },
+  setSpecimenAppointments(state, action: IAction<IProvidersCollectionCalendarAppointment[]>) {
+    state.specimenAppointments.list = action.payload;
   }
 });
 

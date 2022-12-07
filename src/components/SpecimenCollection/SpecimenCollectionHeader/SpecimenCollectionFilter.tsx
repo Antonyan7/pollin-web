@@ -19,13 +19,13 @@ const SpecimenCollectionFilter = () => {
   const selectedSpecimenAppointmentsFilters = useAppSelector(bookingSelector.selectedSpecimenAppointmentsFilters);
 
   useEffect(() => {
-    if (specimenAppointmentsFilters.length === 0 && !isFiltersArrayLoading) {
+    if (specimenAppointmentsFilters === null) {
       dispatch(bookingMiddleware.getSpecimenAppointmentsFilters());
     }
-  }, [specimenAppointmentsFilters, isFiltersArrayLoading]);
+  }, [specimenAppointmentsFilters]);
 
   const adaptedGroupedOptions = () =>
-    specimenAppointmentsFilters.flatMap(({ options, type }) => options.map((option) => ({ ...option, type })));
+    (specimenAppointmentsFilters ?? []).flatMap(({ options, type }) => options.map((option) => ({ ...option, type })));
 
   const onSpecimenAppointmentsFiltersChange = (newSpecimenAppointmentsFilters: SpecimenCollectionFilterOption[]) => {
     dispatch(setSelectedSpecimenAppointmentsFilters(newSpecimenAppointmentsFilters));

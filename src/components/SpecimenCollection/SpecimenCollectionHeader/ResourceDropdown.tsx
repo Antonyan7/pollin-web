@@ -31,9 +31,12 @@ const ResourceDropdown = () => {
 
   useEffect(() => {
     if (serviceProviderId) {
-      setGroupedServiceProvidersOptions({ ...groupedServiceProvidersOptions, id: serviceProviderId });
+      setGroupedServiceProvidersOptions((prevGroupedServiceProvidersOptions) => ({
+        ...prevGroupedServiceProvidersOptions,
+        id: serviceProviderId
+      }));
     }
-  }, [serviceProviderId, groupedServiceProvidersOptions]);
+  }, [serviceProviderId]);
 
   useEffect(() => {
     if (groupedServiceProvidersList.providers.length === 0 && groupedServiceProvidersList.currentPage === 0) {

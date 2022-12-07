@@ -3,7 +3,8 @@ import {
   ICreateAppointmentBody,
   IEditAppointmentBody,
   IGroupedServiceProvidersParams,
-  IServiceTypesReqParams
+  IServiceTypesReqParams,
+  ProvidersCollectionCalendarAppointmentsReqBodyFilter
 } from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import * as Sentry from '@sentry/nextjs';
@@ -44,7 +45,8 @@ const {
   setAppointmentStatus,
   setCreateAppointmentErrorState,
   setSpecimenAppointmentsFilters,
-  setSpecimenAppointmentsFiltersArrayLoading
+  setSpecimenAppointmentsFiltersArrayLoading,
+  setSpecimenAppointments
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -413,6 +415,24 @@ const getSpecimenAppointmentsFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getSpecimenAppointments =
+  (resourceId: string, date: string, filters: ProvidersCollectionCalendarAppointmentsReqBodyFilter[]) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setCalendarLoadingState(true));
+
+      const response = await API.booking.getProvidersCollectionCalendarAppointments({ resourceId, date, filters });
+
+      dispatch(setSpecimenAppointments(response.data.appointments));
+      dispatch(setCalendarLoadingState(false));
+    } catch (error) {
+      dispatch(setAppointments([]));
+      dispatch(setCalendarLoadingState(false));
+      Sentry.captureException(error);
+      dispatch(setError(error as string));
+    }
+  };
+
 export default {
   getNewServiceProviders,
   getNewGroupedServiceProviders,
@@ -433,5 +453,6 @@ export default {
   setEditSaveButtonDisabled,
   resetAppointmentStatus,
   clearCreateAppointmentErrorState,
-  getSpecimenAppointmentsFilters
+  getSpecimenAppointmentsFilters,
+  getSpecimenAppointments
 };

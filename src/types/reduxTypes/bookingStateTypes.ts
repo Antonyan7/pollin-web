@@ -1,5 +1,9 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IAppointmentDetails, SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
+import {
+  IAppointmentDetails,
+  IProvidersCollectionCalendarAppointment,
+  SpecimenCollectionFilterOption
+} from '@axios/booking/managerBookingTypes';
 import { IPatientsData } from '@axios/patientEmr/managerPatientEmrTypes';
 import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
@@ -121,7 +125,8 @@ export interface ISpecimenAppointmentsFilter {
 }
 
 export interface ISpecimenAppointmentsState {
-  filters: ISpecimenAppointmentsFilter[];
+  list: IProvidersCollectionCalendarAppointment[];
+  filters: ISpecimenAppointmentsFilter[] | null;
   selectedFilters: SpecimenCollectionFilterOption[];
   isFiltersArrayLoading: boolean;
 }

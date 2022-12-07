@@ -35,7 +35,8 @@ export const getInitialState = (): BookingProps => ({
     message: ''
   },
   specimenAppointments: {
-    filters: [],
+    list: [],
+    filters: null,
     selectedFilters: [],
     isFiltersArrayLoading: false
   }

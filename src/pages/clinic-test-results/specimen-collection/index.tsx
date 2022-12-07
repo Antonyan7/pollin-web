@@ -5,7 +5,10 @@ import SpecimenCollectionHeader from '@components/SpecimenCollection/SpecimenCol
 import { Paper, Stack } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import dynamic from 'next/dynamic';
 import { margins, paddings } from 'themes/themeConstants';
+
+const SpecimenCollectionCalendar = dynamic(() => import('@components/SpecimenCollection/SpecimenCollectionCalendar'));
 
 const SpecimenCollection = () => {
   const [t] = useTranslation();
@@ -28,6 +31,9 @@ const SpecimenCollection = () => {
       <Paper elevation={0}>
         <Stack px={paddings.all24} py={paddings.all12} gap={8}>
           <SpecimenCollectionHeader />
+        </Stack>
+        <Stack px={paddings.all24}>
+          <SpecimenCollectionCalendar />
         </Stack>
       </Paper>
     </Stack>

@@ -174,3 +174,26 @@ export interface ICollectionCalendarAppointmentFilter {
 export interface IGetCollectionCalendarAppointmentFilters {
   filters: ICollectionCalendarAppointmentFilter[];
 }
+
+export interface IProvidersCollectionCalendarAppointment {
+  id: string;
+  startTime: string;
+  timeUnits: number;
+  title: string;
+  isEditable: boolean;
+  color?: string;
+}
+
+export interface IGetProvidersCollectionCalendarAppointments {
+  appointments: IProvidersCollectionCalendarAppointment[];
+}
+
+export interface ProvidersCollectionCalendarAppointmentsReqBodyFilter {
+  id: string;
+}
+
+export interface IGetProvidersCollectionCalendarAppointmentsReqBody {
+  resourceId: string;
+  date: string;
+  filters: ProvidersCollectionCalendarAppointmentsReqBodyFilter[];
+}

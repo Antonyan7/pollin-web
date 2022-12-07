@@ -262,6 +262,7 @@ export enum Translation {
   PAGE_SPECIMEN_COLLECTION_DESKTOP_DATE_PICKER = 'page.specimen.collection.desktop.date.picker',
   PAGE_SPECIMEN_COLLECTION_SELECT_RESOURCE = 'page.specimen.collection.select.resource',
   PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS = 'page.specimen.collection.select.filters',
+  PAGE_SPECIMEN_COLLECTION_CALENDAR_TITLE_DISABLED = 'page.specimen.collection.calendar.title.disabled',
   PAGE_SPECIMENS_LAB_NAME = 'page.specimens.lab.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.transport.folder.modal.title',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.title',
