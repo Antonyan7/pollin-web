@@ -27,7 +27,7 @@ const StatusAppointmentLabel = () => {
   const { field } = useController<IFormValues>({ name: appointmentStatusFieldName, control });
   const { value, ...fieldProps } = field;
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-  const appointmentStatusData = getValues('statusVariations');
+  const appointmentStatusData = details?.statusVariations;
 
   useEffect(() => {
     if (field.value && !(details?.appointment?.status === field.value)) {
@@ -53,7 +53,6 @@ const StatusAppointmentLabel = () => {
             id="status-appointment-label"
             labelId="status-appointment-label"
             label={statusAppointmentLabel}
-            value={field.value as string}
             {...fieldProps}
           >
             {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
