@@ -52,7 +52,10 @@ const useAppointmentStatusState = () => {
       );
     }
 
-    if (appointmentStatus.create.fail && createAppointmentErrorState.message) {
+    const isAppointmentActionFailed =
+      (appointmentStatus.create.fail || appointmentStatus.edit.fail) && createAppointmentErrorState.message;
+
+    if (isAppointmentActionFailed) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,

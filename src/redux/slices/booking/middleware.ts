@@ -334,10 +334,11 @@ const clearAppointmentDetails = () => (dispatch: AppDispatch) => {
 
 const editAppointment =
   (appointmentId: string, appointmentValues: IEditAppointmentBody) => async (dispatch: AppDispatch) => {
+    const { appointmentStatus } = store.getState().booking;
+
     try {
       const providerId = store.getState().booking.currentServiceProviderId;
       const calendarDate = store.getState().booking.date;
-      const { appointmentStatus } = store.getState().booking;
 
       appointmentValues.appointment.date = calculateTimeInUTC(
         convertToLocale(appointmentValues.appointment.date as string)
@@ -356,6 +357,20 @@ const editAppointment =
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
+
+      if (axios.isAxiosError(error)) {
+        dispatch(setCreateAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
+
+        dispatch(
+          setAppointmentStatus({
+            ...appointmentStatus,
+            edit: {
+              fail: true,
+              success: false
+            }
+          })
+        );
+      }
     }
   };
 
