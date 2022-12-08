@@ -94,7 +94,8 @@ const EditAppointmentsModal = ({ appointmentId }: EditAppointmentModalProps) => 
   return (
     <FormProvider {...methods}>
       <BaseModal
-        dataCy={CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON}
+        closeIconDataCy={CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON}
+        dialogContentCy={CypressIds.MODAL_APPOINTMENTS_EDIT_DIALOG}
         isLoading={modalLoading}
         title={editTitleLabel}
         onClose={onClose}

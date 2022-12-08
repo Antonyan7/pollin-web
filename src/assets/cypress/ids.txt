@@ -14,14 +14,22 @@
   modal.appointments.edit.button.status
   modal.appointments.edit.close.icon
   modal.appointments.cancel.close.icon
+  modal.appointments.add.dialog
+  modal.appointments.edit.dialog
+  modal.appointments.add.dialog.form
+  modal.appointments.edit.dialog.form
   page.appointments.button.new.calendar
   page.appointments.button.new.appointment
   page.appointments.title
   page.appointments.button.today
   page.appointments.desktop.date.picker
   page.appointments.select.resource
+  common.full.calendar.loading.indicator
+  common.full.calendar.component
   common.time.picker.button.save
   common.time.picker.button.cancel
+  common.time.picker.modal.dialog
+  common.time.picker.modal.dialog.component
   schedule.templates.delete.icon
   page.scheduling.templates.checkbox.select.all
   page.scheduling.templates.checkbox.select

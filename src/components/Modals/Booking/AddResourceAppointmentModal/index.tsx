@@ -5,6 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Dialog } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { CypressIds } from 'constants/cypressIds';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
@@ -39,9 +40,18 @@ const AddAppointmentsModal = ({ start }: AddResourceAppointmentModalProps) => {
     dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
   }, [serviceProviderId]);
 
+  const addAppointmentDialogCypressId = CypressIds.MODAL_APPOINTMENTS_ADD_DIALOG;
+
   return (
     <FormProvider {...methods}>
-      <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
+      <Dialog
+        open
+        onClose={onClose}
+        maxWidth="sm"
+        fullWidth
+        sx={{ '& .MuiDialog-paper': { p: 0 } }}
+        data-cy={addAppointmentDialogCypressId}
+      >
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <AddAppointmentsModalForm />
         </LocalizationProvider>

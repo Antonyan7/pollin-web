@@ -7,18 +7,19 @@ import { BaseModalStyled } from '@ui-component/Modal/BaseModal/BaseModalStyled';
 
 export interface BaseModalProps {
   title: string;
-  dataCy?: string;
+  closeIconDataCy?: string;
+  dialogContentCy?: string;
   isLoading?: boolean;
   children?: JSX.Element;
   onClose: () => void;
 }
 
-const BaseModal = ({ children, isLoading, dataCy, title, onClose }: BaseModalProps) => (
+const BaseModal = ({ children, isLoading, closeIconDataCy, dialogContentCy, title, onClose }: BaseModalProps) => (
   <BaseModalStyled open onClose={onClose} aria-labelledby="customized-dialog-title">
-    <BaseModalTitle dataCy={dataCy} id="customized-dialog-title" onClose={onClose}>
+    <BaseModalTitle dataCy={closeIconDataCy} id="customized-dialog-title" onClose={onClose}>
       {title}
     </BaseModalTitle>
-    <DialogContent dividers>
+    <DialogContent dividers data-cy={dialogContentCy}>
       {isLoading ? (
         <Box className="Dialog-box">
           <CircularProgress sx={{ margin: 'auto' }} />

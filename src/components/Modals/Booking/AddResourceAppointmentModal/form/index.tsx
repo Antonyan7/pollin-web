@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { coreSelector } from '@redux/slices/core';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
@@ -89,8 +90,10 @@ const AddAppointmentsModalForm = () => {
     }
   }, [appointmentStatus.create.success, onClose]);
 
+  const addAppointmentDialogFormCypressId = CypressIds.MODAL_APPOINTMENTS_ADD_DIALOG_FORM;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} data-cy={addAppointmentDialogFormCypressId}>
       <FormHeader />
       <FormBody />
       <FormActions isActionButtonDisabled={isDuplicatePatientName} />

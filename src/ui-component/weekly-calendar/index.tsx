@@ -17,6 +17,7 @@ import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 import { isValid, setHours } from 'date-fns';
 import { coreSelector } from '@redux/slices/core';
+import { CypressIds } from 'constants/cypressIds';
 import Toolbar from './ToolBar';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 
@@ -131,8 +132,10 @@ const Calendar = () => {
     }
   }, [router.query]);
 
+  const fullCalendarComponentCypressId = CypressIds.COMMON_FULL_CALENDAR_COMPONENT;
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} data-cy={fullCalendarComponentCypressId}>
       <FullCalendarWrapper>
         {isValid(initialDate) && (
           <>

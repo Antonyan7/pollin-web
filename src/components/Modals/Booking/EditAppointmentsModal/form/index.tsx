@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { CypressIds } from 'constants/cypressIds';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
@@ -32,8 +33,10 @@ const EditAppointmentsModalForm = () => {
     }
   }, [isSubmitSuccessful, reset]);
 
+  const editAppointmentDialogFormCypressId = CypressIds.MODAL_APPOINTMENTS_EDIT_DIALOG_FORM;
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} data-cy={editAppointmentDialogFormCypressId}>
       <FormBody />
       <FormActions />
     </form>

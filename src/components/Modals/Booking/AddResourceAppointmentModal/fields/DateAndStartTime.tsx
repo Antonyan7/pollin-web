@@ -28,6 +28,9 @@ const DateAndStartTime: React.FC = () => {
   const initialDate: DateAndStartTimeType = toRoundupTime(actualDate);
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER);
   const dateAndStartTimeCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DATE_AND_START_TIME;
+  const dateAndStartTimeDialogCyId = CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG;
+  const dateAndStartTimeDialogComponentCyId = CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT;
+
   const dateFieldName = 'date';
 
   const { field } = useController({
@@ -47,7 +50,6 @@ const DateAndStartTime: React.FC = () => {
         views={dateTimeViewOptions}
         toolbarFormat="yyyy, MMM dd"
         disablePast
-        data-cy={dateAndStartTimeCyId}
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
         onClose={() => setMobileDateTimePickerOpen(false)}
@@ -59,6 +61,10 @@ const DateAndStartTime: React.FC = () => {
         onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
         minutesStep={10}
         DialogProps={{
+          PaperProps: {
+            'data-cy': dateAndStartTimeDialogComponentCyId
+          },
+          'data-cy': dateAndStartTimeDialogCyId,
           sx: {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
@@ -75,7 +81,8 @@ const DateAndStartTime: React.FC = () => {
             ...params,
             inputProps: {
               ...params.inputProps,
-              value: formattedDate
+              value: formattedDate,
+              'data-cy': dateAndStartTimeCyId
             }
           };
 
