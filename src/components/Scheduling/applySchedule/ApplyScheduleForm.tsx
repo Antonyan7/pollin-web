@@ -64,6 +64,17 @@ const ApplyScheduleForm = () => {
     setStartDate(null);
     setEndDate(null);
   };
+
+  //
+  const isAllowedToApplySchedule = !!(
+    resource.id !== '' &&
+    scheduleTemplate.id !== '' &&
+    repeatWeeks &&
+    applyDays.length > 0 &&
+    startDate &&
+    endDate
+  );
+
   const handleApplyClick = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -76,7 +87,7 @@ const ApplyScheduleForm = () => {
       endDate: endDate ? calculateTimeInUTC(endDate) : endDate
     };
 
-    if (resource.id && scheduleTemplate.id && repeatWeeks && applyDays.length && startDate && endDate) {
+    if (isAllowedToApplySchedule) {
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
     } else {
       dispatch(
@@ -234,8 +245,10 @@ const ApplyScheduleForm = () => {
             />
           </ApplyScheduleFormRow>
           <Grid item xs={12}>
-            {' '}
-            <ActionsField submitButtonText={t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)} />{' '}
+            <ActionsField
+              isAllowedToApplySchedule={isAllowedToApplySchedule}
+              submitButtonText={t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)}
+            />
           </Grid>
         </Grid>
       </form>

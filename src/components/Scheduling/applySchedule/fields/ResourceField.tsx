@@ -49,6 +49,7 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
   return (
     <FormControl fullWidth>
       <BaseDropdownWithLoading
+        key={resource.id}
         isLoading={isServiceProvidersLoading}
         inputValue={resource.title}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}

@@ -46,6 +46,7 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
   return (
     <FormControl fullWidth>
       <BaseDropdownWithLoading
+        key={scheduleTemplate.id}
         isLoading={isScheduleTemplatesLoading}
         inputValue={scheduleTemplate.name}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}

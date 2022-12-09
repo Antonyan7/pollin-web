@@ -9,9 +9,10 @@ import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface Props {
   submitButtonText: string;
+  isAllowedToApplySchedule: boolean;
 }
 
-const ActionsField = ({ submitButtonText }: Props) => {
+const ActionsField = ({ submitButtonText, isAllowedToApplySchedule }: Props) => {
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const applyButtonCyId = CypressIds.PAGE_SCHEDULING_APPLY_BUTTON_APPLY;
 
@@ -23,6 +24,7 @@ const ActionsField = ({ submitButtonText }: Props) => {
         <ButtonWithLoading
           data-cy={applyButtonCyId}
           isLoading={isScheduleLoading}
+          disabled={!isAllowedToApplySchedule}
           type="submit"
           color="primary"
           variant="contained"
