@@ -27,7 +27,12 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
   );
 
   const onContactInformationModalOpen = () => {
-    dispatch(viewsMiddleware.openModal({ name: ModalName.PatientContactInformation, props: row }));
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.PatientContactInformation,
+        props: { ...row, shouldBeRedirected: true }
+      })
+    );
     dispatch(patientsMiddleware.getPatientContactInformation(row.patient.id));
   };
 

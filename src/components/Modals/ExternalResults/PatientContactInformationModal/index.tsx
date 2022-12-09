@@ -5,6 +5,7 @@ import Actions from '@components/Modals/ExternalResults/PatientContactInformatio
 import Body from '@components/Modals/ExternalResults/PatientContactInformationModal/Body';
 import { DialogContent, Divider, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
@@ -20,7 +21,10 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
   const [t] = useTranslation();
   const patientContactInformationTitleLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_TITLE);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
+  const onClose = () => {
+    dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
+    dispatch(bookingMiddleware.getAppointmentDetails());
+  };
 
   return (
     <BaseModal

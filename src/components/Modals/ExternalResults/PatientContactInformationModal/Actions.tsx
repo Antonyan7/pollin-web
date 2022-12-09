@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { usePatientInfoContext } from 'context/PatientInformationContext';
@@ -23,13 +24,16 @@ const Actions = ({ row }: IPatientInfoProps) => {
   const { patientInfo } = usePatientInfoContext();
 
   const redirectToTestResultsDetailsPage = () => {
+    if (row.shouldBeRedirected) {
+      const currentPath = router.asPath;
+      const testResultId = row.id;
+      const inputTestPageURL = `${currentPath}/input-results/${testResultId}`;
+
+      router.push(inputTestPageURL);
+    }
+
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
-
-    const currentPath = router.asPath;
-    const testResultId = row.id;
-    const inputTestPageURL = `${currentPath}/input-results/${testResultId}`;
-
-    router.push(inputTestPageURL);
+    dispatch(bookingMiddleware.getAppointmentDetails());
   };
 
   return (

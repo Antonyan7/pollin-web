@@ -14,6 +14,8 @@ import { coreSelector } from '@redux/slices/core';
 
 import FULL_CALENDAR_DEFAULT_PROPS from '@ui-component/calendar/constants/fullCalendarDefaultProps';
 
+import useOnSpecimenCollectionEventClick from './hooks/useOnSpecimenCollectionEventClick';
+
 interface Props {
   slots: ISpecimenCollectionSlot[];
   calendarRef: Ref<FullCalendar>;
@@ -27,9 +29,7 @@ const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarD
     // TODO: open modal
   };
 
-  const onEventClick: CalendarOptions['eventClick'] = () => {
-    // TODO: pop the proper modal
-  };
+  const onEventClick: CalendarOptions['eventClick'] = useOnSpecimenCollectionEventClick();
 
   return (
     <FullCalendar

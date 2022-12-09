@@ -229,6 +229,7 @@ export interface IPatientContactInformationModalProps {
   status: IStatus;
   title: string;
   patient: IResultListPatient;
+  shouldBeRedirected?: boolean;
 }
 
 export interface IAddNewContactModalProps {
