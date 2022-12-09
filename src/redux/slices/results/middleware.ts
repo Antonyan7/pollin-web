@@ -43,6 +43,7 @@ const {
   setTestResultsDetails,
   setSpecimenActions,
   setTransportActions,
+  setTestResultReviewedDate,
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
@@ -188,6 +189,17 @@ const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => 
     dispatch(setError(error));
   } finally {
     dispatch(setIsLabMachinesLoading(false));
+  }
+};
+
+const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
+
+    dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
   }
 };
 
@@ -522,6 +534,7 @@ export default {
   getSpecimensFilters,
   submitTestResults,
   getTransportActions,
+  makeTestResultReviewed,
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
   getSpecimensList,

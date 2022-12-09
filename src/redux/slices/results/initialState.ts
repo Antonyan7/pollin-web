@@ -29,6 +29,7 @@ export const getInitialState = (): IResultsProps => ({
   isTestResultsSubmitLoading: false,
   specimenActions: [],
   transportActions: [],
+  reviewDate: '',
   pendingSpecimenStats: [],
   isPendingSpecimenStatsLoading: false,
   specimensList: {

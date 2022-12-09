@@ -41,6 +41,7 @@ export interface IResultsProps {
   isTransportListLoading: boolean;
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
+  reviewDate: string;
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;

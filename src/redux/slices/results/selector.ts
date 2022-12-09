@@ -25,6 +25,7 @@ const isSpecimensFiltersLoading = createSelector([selector], (state) => state.is
 const isLabsLoading = createSelector([selector], (state) => state.isLabsLoading);
 const testResultLabs = createSelector([selector], (state) => state.labs);
 const transportActions = createSelector([selector], (state) => state.transportActions);
+const resultReviewedDate = createSelector([selector], (state) => state.reviewDate);
 const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
 const allTestsSpecimensList = createSelector([selector], (state) => state.allTestsSpecimensList);
 const testResultStateStatus = createSelector([selector], (state) => state.testResultStateStatus);
@@ -54,6 +55,7 @@ export default {
   isTestResultsSubmitLoading,
   specimenActions,
   transportActions,
+  resultReviewedDate,
   isPendingSpecimenStatsLoading,
   pendingSpecimenStats,
   specimensList,

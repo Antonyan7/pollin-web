@@ -14,6 +14,7 @@ import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Mo
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
+import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
@@ -87,6 +88,9 @@ const getAddNewTransportFolderModal = (modal: IOpenedModal<IAddNewContactModalPr
 const getAddNewExistingTransportModal = (modal: IOpenedModal<IAddNewExistingTransportModalProps>) => (
   <AddNewExistingTransportModal key={modal.name} {...modal.props} />
 );
+const getTestResultReviewConfirmation = (modal: IOpenedModal<IAddNewExistingTransportModalProps>) => (
+  <TestResultReviewConfirmationModal key={modal.name} {...modal.props} />
+);
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
   <PatientLineItemsModal key={modal.name} {...modal.props} />
@@ -153,6 +157,8 @@ export const ModalsController = () => {
             return getPatientPartnersModal(modal);
           case ModalName.InHouseTestResults:
             return getInHouseTestResultsModal();
+          case ModalName.TestResultReviewConfirmation:
+            return getTestResultReviewConfirmation(modal);
           case ModalName.HandoffConfirmation:
             return getHandoffConfirmationModal(modal);
           // dev

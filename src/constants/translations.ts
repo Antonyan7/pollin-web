@@ -205,6 +205,9 @@ export enum Translation {
   MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_SUCCESS = 'modal.external.results.patient.sent.reminder.message.success',
   MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_FAIL = 'modal.external.results.patient.sent.reminder.message.fail',
   MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE = 'modal.external.results.patient.sent.reminder.message',
+  MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MARK_AS_REVIEWS = 'modal.test.result.review.confirmation.mark.as.reviews',
+  MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE = 'modal.test.result.review.confirmation.message',
+  MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE_UNDONE = 'modal.test.result.review.confirmation.message.undone',
   GOOGLE_SIGN_IN_BUTTON = 'google.sign.in.button',
   GOOGLE_SIGN_UP_BUTTON = 'google.sign.up.button',
   GOOGLE_LOGIN_TITLE = 'google.login.title',
@@ -272,6 +275,8 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_DATE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.date',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.success.message',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_FOLDER_CREATE_SUCCESS_MESSAGE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.folder.create.success.message',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_NAME = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.name',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_NAME = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB = 'page.specimens.tracking.transports.add.new.transport.folder.modal.destination.lab',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_FOLDER = 'page.specimens.tracking.transports.cells.folder',
@@ -280,8 +285,7 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME = 'page.specimens.tracking.transports.cells.driver.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_STATUS = 'page.specimens.tracking.transports.cells.status',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK = 'page.specimens.tracking.transports.go.back',
-  PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest',
-  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id'
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

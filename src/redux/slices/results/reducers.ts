@@ -54,6 +54,9 @@ const reducers = createReducer({
   setTransportActions(state, action: IAction<SpecimenActions[]>) {
     state.transportActions = action.payload;
   },
+  setTestResultReviewedDate(state, action: IAction<string>) {
+    state.reviewDate = action.payload;
+  },
   setLabMachines(state, action: IAction<LabMachine>) {
     state.labMachines = action.payload;
   },

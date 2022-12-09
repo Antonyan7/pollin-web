@@ -60,6 +60,9 @@ export interface IMarkInTransitActionReqBody {
   comment?: string;
 }
 
+export interface IMakeTestResultReviewed {
+  reviewDate: string;
+}
 export interface ISpecimensListReqBody {
   page: number;
   specimens?: ISpecimensListItemShort[];
