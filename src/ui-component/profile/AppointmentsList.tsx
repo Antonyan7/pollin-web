@@ -49,7 +49,7 @@ const AppointmentsList = () => {
   useEffect(() => {
     if (filtersShouldLoad.current && !isPatientAppointmentFiltersLoading) {
       filtersShouldLoad.current = false;
-      dispatch(setPatientAppointmentsListPage(0));
+      dispatch(setPatientAppointmentsListPage(1));
       dispatch(setPatientAppointmentsFiltersLoading(true));
       bookingManager
         .getAppointmentListFilters()

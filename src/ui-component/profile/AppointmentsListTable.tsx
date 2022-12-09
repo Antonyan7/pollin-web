@@ -51,14 +51,14 @@ const headCells: HeadCell[] = [
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
   const router = useRouter();
-  const { list, orderBy, order, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
+  const { list, orderBy, order, selectedFilters, filters } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
   useEffect(() => {
-    if (tableData === null && currentPage) {
+    if (tableData === null && filters !== null && currentPage) {
       dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, selectedFilters));
     }
-  }, [currentPage, selectedFilters, order, orderBy, tableData]);
+  }, [currentPage, selectedFilters, order, orderBy, tableData, filters]);
 
   const onTableHeadCellClick = async (newOrderBy: Exclude<HeadCell['id'], 'time'>) => {
     try {

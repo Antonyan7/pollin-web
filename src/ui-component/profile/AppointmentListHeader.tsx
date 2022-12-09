@@ -1,9 +1,15 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography } from '@mui/material';
+import { dispatch } from '@redux/hooks';
+import { patientsSlice } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
+import { SortOrder } from 'types/patient';
+
+const { setPatientAppointments } = patientsSlice.actions;
 
 const AppointmentsListHeader = () => {
   const [t] = useTranslation();
@@ -12,6 +18,20 @@ const AppointmentsListHeader = () => {
 
   const onBackClick = () => {
     navigateBack();
+    dispatch(
+      setPatientAppointments({
+        list: {
+          appointments: null,
+          pageSize: 0,
+          currentPage: 0,
+          totalItems: 0
+        },
+        filters: null,
+        selectedFilters: [],
+        order: SortOrder.Desc,
+        orderBy: PatientAppointmentsSortField.Date
+      })
+    );
   };
 
   return (
