@@ -65,6 +65,7 @@
   page.scheduling.create.templates.service.type
   page.scheduling.create.templates.service.types
   page.scheduling.create.templates.block
+  page.scheduling.templates.loading.indicator
   page.scheduling.create.templates.start
   page.scheduling.create.templates.end
   page.scheduling.templates.button.create

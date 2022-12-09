@@ -16,9 +16,10 @@ interface ITimeFieldProps {
   index: number;
   fieldLabel: string;
   fieldName: 'startTime' | 'endTime';
+  dataCy?: string;
 }
 
-const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
+const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) => {
   const [t] = useTranslation();
   const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
   const { control, formState, getValues, clearErrors, watch } = useFormContext<ITemplateGroup>();
@@ -107,6 +108,7 @@ const TimeField = ({ index, fieldLabel, fieldName }: ITimeFieldProps) => {
           onChange={onTimeFieldChange}
           renderInput={(params: MuiTextFieldPropsType) => (
             <TextField
+              data-cy={dataCy}
               {...params}
               fullWidth
               sx={{

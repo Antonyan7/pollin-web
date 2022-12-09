@@ -68,6 +68,7 @@ export enum CypressIds {
   PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPE = 'page.scheduling.create.templates.service.type',
   PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES = 'page.scheduling.create.templates.service.types',
   PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK = 'page.scheduling.create.templates.block',
+  PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR = 'page.scheduling.templates.loading.indicator',
   PAGE_SCHEDULING_CREATE_TEMPLATES_START = 'page.scheduling.create.templates.start',
   PAGE_SCHEDULING_CREATE_TEMPLATES_END = 'page.scheduling.create.templates.end',
   PAGE_SCHEDULING_TEMPLATES_BUTTON_CREATE = 'page.scheduling.templates.button.create',

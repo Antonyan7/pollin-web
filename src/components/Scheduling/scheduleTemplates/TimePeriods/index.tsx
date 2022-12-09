@@ -56,7 +56,7 @@ export const TimePeriods = () => {
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}>
                   <TimeField
-                    data-cy={startTimeCyId}
+                    dataCy={startTimeCyId}
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START)}
                     fieldName="startTime"
                     index={index}
@@ -64,7 +64,7 @@ export const TimePeriods = () => {
                 </TimePeriodsRow>
                 <TimePeriodsRow title={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}>
                   <TimeField
-                    data-cy={endTimeCyId}
+                    dataCy={endTimeCyId}
                     fieldLabel={t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END)}
                     fieldName="endTime"
                     index={index}

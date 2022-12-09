@@ -9,6 +9,8 @@ import { schedulingSelector } from 'redux/slices/scheduling';
 import { margins } from 'themes/themeConstants';
 import { ArrangementOrder } from 'types';
 
+import { CypressIds } from '../../../../constants/cypressIds';
+
 import ScheduleTemplatesHead from './ScheduleTemplatesHead';
 import ScheduleTemplatesRow from './ScheduleTemplatesRow';
 import { ITableRow } from './Table';
@@ -25,6 +27,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
   const [order, setOrder] = React.useState<ArrangementOrder>('asc');
   const [orderBy, setOrderBy] = React.useState<string>('calories');
   const { selected, setSelected } = useScheduleTemplatesContext();
+  const loadingIndicatorCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR;
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
@@ -101,7 +104,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
       </Table>
       {isScheduleTemplatesLoading && (
         <Box sx={{ textAlign: 'center', marginTop: margins.top24 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
+          <CircularProgress data-cy={loadingIndicatorCyId} sx={{ margin: margins.auto }} />
           <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
         </Box>
       )}

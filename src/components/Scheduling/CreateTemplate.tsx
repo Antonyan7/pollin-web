@@ -146,7 +146,7 @@ const CreateTemplate = () => {
             </Grid>
             <Grid item xs={12}>
               <PlusIconButton
-                data-cy={plusIconButtonCyId}
+                dataCy={plusIconButtonCyId}
                 isPlusButtonDisabled={isPlusButtonDisabled}
                 onClick={onPlusClick}
               />
