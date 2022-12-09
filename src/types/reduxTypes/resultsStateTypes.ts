@@ -47,6 +47,7 @@ export interface IResultsProps {
   specimensInTransportList: ISpecimensInTransportList;
   isSpecimensInTransportListLoading: boolean;
   transportFolders: ITransportFolder[];
+  lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
 }
@@ -237,7 +238,7 @@ export interface IAddNewContactModalProps {
 }
 
 export interface IAddNewExistingTransportModalProps {
-  transportId: string;
+  specimenIds: string[];
 }
 
 export interface IResultsFilterCategory {

@@ -64,6 +64,7 @@ const {
   setIsSpecimensInTransportListLoading,
   setTestResultsState,
   setTransportFolders,
+  setLastCreatedTransportFolderId,
   setIsTransportFoldersLoading
 } = slice.actions;
 
@@ -406,12 +407,10 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
   try {
     dispatch(setIsCreatingTransportFolderLoading(true));
 
-    await API.results.createTransportFolder(data);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsCreatingTransportFolderLoading(false));
+    const response = await API.results.createTransportFolder(data);
+
+    dispatch(setLastCreatedTransportFolderId(response.data.data.uuid));
+
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: true,
@@ -423,7 +422,16 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
         }
       })
     );
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsCreatingTransportFolderLoading(false));
   }
+};
+
+const resetLastCreatedTransportFolderId = () => async (dispatch: AppDispatch) => {
+  dispatch(setLastCreatedTransportFolderId(null));
 };
 
 const getSpecimensInTransportList =
@@ -522,5 +530,6 @@ export default {
   createTransportFolder,
   getSpecimensInTransportList,
   getTransportFolders,
-  addSpecimenToTransportFolder
+  addSpecimenToTransportFolder,
+  resetLastCreatedTransportFolderId
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
@@ -26,6 +26,7 @@ import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { borderRadius, margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -38,9 +39,12 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const NewTransportFolder = () => {
+const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
+  const { specimenIds } = props;
+
   const classes = useStyles();
   const labList = useSelector(resultsSelector.testResultLabs);
+  const lastCreatedTransportFolderId = useAppSelector(resultsSelector.lastCreatedTransportFolderId);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [t] = useTranslation();
   const [labId, setLabId] = useState<string>('');
@@ -54,7 +58,7 @@ const NewTransportFolder = () => {
     setTransportFolderName(name);
   };
 
-  const onConfirmCreateNewTransportFolder = () => {
+  const createNewTransportFolder = useCallback(() => {
     const body = {
       name: transportFolderName,
       labId,
@@ -62,18 +66,34 @@ const NewTransportFolder = () => {
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
+  }, [calendarDate, labId, transportFolderName]);
 
-    // TODO Will be changed after root component integration (for getting specimens)
-    const transportFolderId = 'transport-uuid-1';
-    const specimens = [
-      {
-        id: '1'
-      }
-    ];
+  const addSpecimenToAlreadyCreatedTransportFolder = useCallback(() => {
+    const specimens = specimenIds.map((specimenId: string) => ({
+      id: specimenId
+    }));
 
-    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolderId));
-    dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
-  };
+    if (lastCreatedTransportFolderId) {
+      dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolderId));
+      dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
+    }
+  }, [lastCreatedTransportFolderId, specimenIds]);
+
+  const onConfirmCreateNewTransportFolder = useCallback(() => {
+    createNewTransportFolder();
+  }, [createNewTransportFolder]);
+
+  useEffect(() => {
+    dispatch(resultsMiddleware.getLabs());
+  }, []);
+
+  useEffect(() => {
+    if (lastCreatedTransportFolderId) {
+      addSpecimenToAlreadyCreatedTransportFolder();
+      dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastCreatedTransportFolderId]);
 
   return (
     <Grid container spacing={3}>

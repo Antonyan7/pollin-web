@@ -64,5 +64,6 @@ export const getInitialState = (): IResultsProps => ({
   },
   isSpecimensInTransportListLoading: false,
   transportFolders: [],
+  lastCreatedTransportFolderId: null,
   isTransportFoldersLoading: false
 });

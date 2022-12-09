@@ -114,6 +114,9 @@ const reducers = createReducer({
   setTransportFolders(state, action: IAction<ITransportFolder[]>) {
     state.transportFolders = action.payload;
   },
+  setLastCreatedTransportFolderId(state, action: IAction<string | null>) {
+    state.lastCreatedTransportFolderId = action.payload;
+  },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.isTransportFoldersLoading = action.payload;
   }

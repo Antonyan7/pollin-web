@@ -24,6 +24,7 @@ import { format } from 'date-fns';
 import { borderRadius, margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { ISortOrder } from 'types/patient';
+import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 import { ITransportFolder, TransportStatus } from 'types/results';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -34,7 +35,8 @@ const useStyles = makeStyles(() => ({
   }
 }));
 
-const ExistingTransportFolder = () => {
+const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
+  const { specimenIds } = props;
   const classes = useStyles();
   const transportFolders = useAppSelector(resultsSelector.transportFolders);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
@@ -47,15 +49,11 @@ const ExistingTransportFolder = () => {
   };
 
   const onConfirmAddToNewExistingTransport = () => {
-    const transportFolderId = transportFolder;
-    // TODO Will be changed after root component integration (for getting specimens)
-    const specimens = [
-      {
-        id: '1'
-      }
-    ];
+    const specimens = specimenIds.map((specimenId: string) => ({
+      id: specimenId
+    }));
 
-    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolderId));
+    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder));
     dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
   };
 

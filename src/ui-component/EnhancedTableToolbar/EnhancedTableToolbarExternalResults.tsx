@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid, MenuItem, Typography } from '@mui/material';
+import { resultsMiddleware } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
@@ -33,17 +34,35 @@ const EnhancedTableToolbarExternalResults = ({
   );
   const showOptions = options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit);
 
-  const onMenuItemClick = useCallback(
-    (actionIndex: number) => {
-      const element = options?.actions.find((_, index) => index === actionIndex);
+  const handleMoveToTransportAction = () => {
+    dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
+    dispatch(
+      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: selected } })
+    );
+  };
 
-      dispatch(
-        viewsMiddleware.openModal({
-          name: ModalName.SelectMachineModal,
-          props: { specimenIds: selected, actionType: element?.id }
-        })
-      );
+  const onMenuItemClick = useCallback(
+    (optionType: TransportActionType, actionIndex: number) => {
+      if (
+        optionType === TransportActionType.MoveToAnotherTransport ||
+        optionType === TransportActionType.MoveToTransport
+      ) {
+        handleMoveToTransportAction();
+      }
+      // TODO @Sirusho: Please take a look on this case and make sure that everything should be like this
+      else {
+        const element = options?.actions.find((_, index) => index === actionIndex);
+
+        dispatch(
+          viewsMiddleware.openModal({
+            name: ModalName.SelectMachineModal,
+            props: { specimenIds: selected, actionType: element?.id }
+          })
+        );
+      }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [options?.actions, selected]
   );
 
@@ -75,8 +94,7 @@ const EnhancedTableToolbarExternalResults = ({
                 key={item.title}
                 value={item.title}
                 onClick={() => {
-                  // handleClose();
-                  onMenuItemClick(index);
+                  onMenuItemClick(item.id as TransportActionType, index);
                 }}
               >
                 {item.title}

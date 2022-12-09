@@ -36,6 +36,7 @@ const isSpecimensInTransportListLoading = createSelector(
   (state) => state.isSpecimensInTransportListLoading
 );
 const transportFolders = createSelector([selector], (state) => state.transportFolders);
+const lastCreatedTransportFolderId = createSelector([selector], (state) => state.lastCreatedTransportFolderId);
 
 export default {
   testResultStateStatus,
@@ -67,5 +68,6 @@ export default {
   isCreatingTransportFolder,
   specimensInTransportList,
   isSpecimensInTransportListLoading,
-  transportFolders
+  transportFolders,
+  lastCreatedTransportFolderId
 };

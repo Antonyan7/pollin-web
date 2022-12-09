@@ -10,10 +10,12 @@ import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { ModalName } from 'types/modals';
+import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import BaseModal from '@ui-component/Modal/BaseModal';
 
-const AddNewExistingTransportModal = () => {
+const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps) => {
+  const { specimenIds } = props;
   const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const [t] = useTranslation();
   const addNewTransportFolderModalTitleLabel = t(
@@ -62,10 +64,10 @@ const AddNewExistingTransportModal = () => {
               </Tabs>
             </Box>
             <TabPanel value={activePageValue} index={0}>
-              <NewTransportFolder />
+              <NewTransportFolder specimenIds={specimenIds} />
             </TabPanel>
             <TabPanel value={activePageValue} index={1}>
-              <ExistingTransportFolder />
+              <ExistingTransportFolder specimenIds={specimenIds} />
             </TabPanel>
           </Box>
         </DialogContent>

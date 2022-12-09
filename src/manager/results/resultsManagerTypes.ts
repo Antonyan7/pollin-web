@@ -40,7 +40,9 @@ export enum ActionType {
 }
 
 export enum TransportActionType {
-  MarkInTransit = 'MarkInTransit'
+  MarkInTransit = 'MarkInTransit',
+  MoveToAnotherTransport = 'MoveToAnotherTransport',
+  MoveToTransport = 'MoveToTransport'
 }
 
 export interface IResultsReqBody {
