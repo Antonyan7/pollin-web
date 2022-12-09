@@ -87,8 +87,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<CallOutlinedIcon />}
-                      disabled={!patientHighlightHeader.contact.uuid}
-                      onClick={onButtonClick(patientHighlightHeader.contact.uuid)}
+                      disabled={!patientHighlightHeader.contact.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
                     >
                       <Typography variant="caption">{patientHighlightHeader.contact.title}</Typography>
                     </Button>
@@ -96,8 +96,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<ContentPasteIcon />}
-                      disabled={!patientHighlightHeader.ohip.uuid}
-                      onClick={onButtonClick(patientHighlightHeader.ohip.uuid)}
+                      disabled={!patientHighlightHeader.ohip.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
                     >
                       <Typography variant="caption">{patientHighlightHeader.ohip.title}</Typography>
                     </Button>
@@ -105,8 +105,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Grid item xs={4}>
                     <Button
                       startIcon={<EarbudsIcon />}
-                      disabled={!patientHighlightHeader.doctor.uuid}
-                      onClick={onButtonClick(patientHighlightHeader.doctor.uuid)}
+                      disabled={!patientHighlightHeader.doctor.uiid}
+                      onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
                     >
                       {/* change icon */}
                       <Typography variant="caption">{patientHighlightHeader.doctor.title}</Typography>

@@ -68,21 +68,21 @@ export interface PatientProfileOverview {
 
 export interface PatientHighlightHeader {
   contact: {
-    uuid: string;
+    uiid: string;
     title: string;
   };
   ohip: {
-    uuid: string;
+    uiid: string;
     title: string;
   };
   doctor: {
-    uuid: string;
+    uiid: string;
     title: string;
   };
 }
 
 export interface PatientHighlight {
-  uuid?: string;
+  uiid?: string;
   title: string;
   items: string[];
 }

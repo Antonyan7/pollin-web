@@ -35,15 +35,15 @@ export const getInitialState = (): PatientEmrProps => ({
   isPatientHighlightIntakeReminderActive: false,
   patientHighlightHeader: {
     contact: {
-      uuid: '',
+      uiid: '',
       title: ''
     },
     ohip: {
-      uuid: '',
+      uiid: '',
       title: ''
     },
     doctor: {
-      uuid: '',
+      uiid: '',
       title: ''
     }
   },
