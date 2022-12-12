@@ -63,6 +63,9 @@ export interface IMarkInTransitActionReqBody {
 export interface IMakeTestResultReviewed {
   reviewDate: string;
 }
+export interface IMakeTestResultReleased {
+  releaseDate: string;
+}
 export interface ISpecimensListReqBody {
   page: number;
   specimens?: ISpecimensListItemShort[];

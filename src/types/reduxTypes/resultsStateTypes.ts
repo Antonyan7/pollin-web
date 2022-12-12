@@ -42,6 +42,9 @@ export interface IResultsProps {
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
   reviewDate: string;
+  releaseDate: string;
+  isTestResultReviewed: boolean;
+  isTestResultReleased: boolean;
   labs: ILab[];
   isLabsLoading: boolean;
   isCreatingTransportFolder: boolean;
@@ -59,6 +62,10 @@ export enum ITransportFolderStatus {
   InTransit = 'InTransit'
 }
 
+export interface IMakeTestResultReviewReq {
+  testResultId: string;
+  reviewerComment?: string;
+}
 export interface ITransportListFolderProps {
   date: Date | string;
   id: string;

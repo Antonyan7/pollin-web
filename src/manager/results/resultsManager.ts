@@ -2,6 +2,7 @@ import {
   IAddMachineforSpecimen,
   IAddSpecimenToTransportFolder,
   IAllTestsSpecimensReqBody,
+  IMakeTestResultReleased,
   IMakeTestResultReviewed,
   IMarkInTransitActionReqBody,
   IResultsReqBody,
@@ -74,6 +75,14 @@ const resultsManager = {
       {
         testResultId,
         reviewerComment
+      }
+    );
+  },
+  makeTestResultReleased(testResultId: string) {
+    return axiosInstance.patch<IMakeTestResultReleased, IAxiosResponse<IMakeTestResultReleased>>(
+      `${baseURL}/v1/test-result/release`,
+      {
+        testResultId
       }
     );
   },

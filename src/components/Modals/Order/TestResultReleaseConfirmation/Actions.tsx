@@ -10,15 +10,14 @@ import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface ActionsProps {
   testResultId: string;
-  reviewerComment?: string;
 }
 
-const Actions = ({ testResultId, reviewerComment }: ActionsProps) => {
+const Actions = ({ testResultId }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.COMMON_BUTTON_CONFIRM_LABEL);
-  const isTestResultReviewed = useAppSelector(resultsSelector.isTestResultReviewed);
+  const isTestResultReleased = useAppSelector(resultsSelector.isTestResultReleased);
   const onClickConfirm = () => {
-    dispatch(resultsMiddleware.makeTestResultReviewed(testResultId, reviewerComment));
+    dispatch(resultsMiddleware.makeTestResultReleased(testResultId));
   };
 
   return (
@@ -27,7 +26,7 @@ const Actions = ({ testResultId, reviewerComment }: ActionsProps) => {
         <Grid item xs={12}>
           <Stack direction="row" alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
-              isLoading={isTestResultReviewed}
+              isLoading={isTestResultReleased}
               sx={{
                 borderRadius: borderRadius.radius8,
                 py: paddings.top12,

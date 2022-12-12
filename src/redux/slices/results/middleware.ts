@@ -18,6 +18,7 @@ import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
+import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
   IResultsList,
@@ -44,6 +45,9 @@ const {
   setSpecimenActions,
   setTransportActions,
   setTestResultReviewedDate,
+  setIsTestResultReviewed,
+  setIsTestResultReleased,
+  setTestResultReleasedDate,
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
@@ -194,14 +198,35 @@ const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => 
 };
 
 const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsTestResultReviewed(true));
+
   try {
     const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
 
     dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
+    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
+
+  dispatch(setIsTestResultReviewed(true));
+};
+
+const makeTestResultReleased = (testResultId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsTestResultReleased(true));
+
+  try {
+    const response = await API.results.makeTestResultReleased(testResultId);
+
+    dispatch(setTestResultReleasedDate(response.data.data.releaseDate));
+    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsTestResultReleased(false));
 };
 
 const submitTestResults = (data: ITestResultsData[]) => async (dispatch: AppDispatch) => {
@@ -538,6 +563,7 @@ export default {
   submitTestResults,
   getTransportActions,
   makeTestResultReviewed,
+  makeTestResultReleased,
   getPendingSpecimenStats,
   setIsTestResultsSubmitLoading,
   getSpecimensList,

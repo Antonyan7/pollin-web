@@ -14,6 +14,7 @@ import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Mo
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
+import TestResultReleaseConfirmationModal from '@components/Modals/Order/TestResultReleaseConfirmation';
 import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import ScheduleTemplatesErrorModal, {
@@ -41,6 +42,7 @@ import { ModalName } from 'types/modals';
 import {
   IAddNewContactModalProps,
   IAddNewExistingTransportModalProps,
+  IMakeTestResultReviewReq,
   IPatientContactInformationModalProps
 } from 'types/reduxTypes/resultsStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
@@ -88,8 +90,11 @@ const getAddNewTransportFolderModal = (modal: IOpenedModal<IAddNewContactModalPr
 const getAddNewExistingTransportModal = (modal: IOpenedModal<IAddNewExistingTransportModalProps>) => (
   <AddNewExistingTransportModal key={modal.name} {...modal.props} />
 );
-const getTestResultReviewConfirmation = (modal: IOpenedModal<IAddNewExistingTransportModalProps>) => (
+const getTestResultReviewConfirmation = (modal: IOpenedModal<IMakeTestResultReviewReq>) => (
   <TestResultReviewConfirmationModal key={modal.name} {...modal.props} />
+);
+const getTestResultReleaseConfirmation = (modal: IOpenedModal<IMakeTestResultReviewReq>) => (
+  <TestResultReleaseConfirmationModal key={modal.name} {...modal.props} />
 );
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
@@ -159,6 +164,8 @@ export const ModalsController = () => {
             return getInHouseTestResultsModal();
           case ModalName.TestResultReviewConfirmation:
             return getTestResultReviewConfirmation(modal);
+          case ModalName.TestResultReleaseConfirmation:
+            return getTestResultReleaseConfirmation(modal);
           case ModalName.HandoffConfirmation:
             return getHandoffConfirmationModal(modal);
           // dev

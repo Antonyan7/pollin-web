@@ -12,15 +12,14 @@ import BaseModal from '@ui-component/Modal/BaseModal';
 import Actions from './Actions';
 import Body from './Body';
 
-interface TestResultReviewConfirmationProps {
+interface TestResultReleaseConfirmationProps {
   testResultId: string;
-  reviewerComment?: string;
 }
 
-const TestResultReviewConfirmationModal = ({ testResultId, reviewerComment }: TestResultReviewConfirmationProps) => {
+const TestResultReleaseConfirmationModal = ({ testResultId }: TestResultReleaseConfirmationProps) => {
   const [modalLoading] = useState(false);
   const [t] = useTranslation();
-  const modalTitle = t(Translation.MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MARK_AS_REVIEWS);
+  const modalTitle = t(Translation.MODAL_TEST_RESULT_CONFIRM_RELEASE_TO_PATIENT);
 
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
 
@@ -33,7 +32,7 @@ const TestResultReviewConfirmationModal = ({ testResultId, reviewerComment }: Te
               <Body />
             </Grid>
             <Grid item xs={12}>
-              <Actions testResultId={testResultId} reviewerComment={reviewerComment} />
+              <Actions testResultId={testResultId} />
             </Grid>
           </Grid>
         </DialogContent>
@@ -42,4 +41,4 @@ const TestResultReviewConfirmationModal = ({ testResultId, reviewerComment }: Te
   );
 };
 
-export default TestResultReviewConfirmationModal;
+export default TestResultReleaseConfirmationModal;

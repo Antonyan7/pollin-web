@@ -57,6 +57,15 @@ const reducers = createReducer({
   setTestResultReviewedDate(state, action: IAction<string>) {
     state.reviewDate = action.payload;
   },
+  setIsTestResultReviewed(state, action: IAction<boolean>) {
+    state.isTestResultReviewed = action.payload;
+  },
+  setIsTestResultReleased(state, action: IAction<boolean>) {
+    state.isTestResultReleased = action.payload;
+  },
+  setTestResultReleasedDate(state, action: IAction<string>) {
+    state.releaseDate = action.payload;
+  },
   setLabMachines(state, action: IAction<LabMachine>) {
     state.labMachines = action.payload;
   },
