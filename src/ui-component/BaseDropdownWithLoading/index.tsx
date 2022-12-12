@@ -24,6 +24,7 @@ interface BaseDropdownWithLoadingProps<
 > extends Omit<AutocompleteProps<T, Multiple, DisableClearable, FreeSolo>, 'renderInput'> {
   renderInputProps?: TextFieldProps;
   isLoading: boolean;
+  dataCy?: string;
 }
 
 const EndAdornmentLoading = () => (
@@ -45,6 +46,7 @@ const BaseDropdownWithLoading = <
 >({
   isLoading,
   renderInputProps,
+  dataCy,
   ...otherProps
 }: BaseDropdownWithLoadingProps<T, Multiple, DisableClearable, FreeSolo>) => {
   const isFirstLoading = useRef(true);
@@ -68,15 +70,16 @@ const BaseDropdownWithLoading = <
         }}
         ListboxComponent={Listbox}
         renderInput={(params: AutocompleteRenderInputParams) => (
-            <TextField
-              {...params}
-              {...renderInputProps}
-              InputProps={{
-                ...params.InputProps,
-                endAdornment: isFirstLoading && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
-              }}
-            />
-          )}
+          <TextField
+            data-cy={dataCy ?? ''}
+            {...params}
+            {...renderInputProps}
+            InputProps={{
+              ...params.InputProps,
+              endAdornment: isFirstLoading && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
+            }}
+          />
+        )}
       />
     </BaseDropdownWithLoadingContext.Provider>
   );

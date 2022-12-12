@@ -14,9 +14,10 @@ interface Props {
   setResource: React.Dispatch<React.SetStateAction<IServiceProvider>>;
   label: string;
   resource: IServiceProvider;
+  dataCy?: string;
 }
 
-const ResourceField = ({ setResource, label, resource }: Props) => {
+const ResourceField = ({ setResource, label, resource, dataCy }: Props) => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
   // const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
@@ -49,6 +50,7 @@ const ResourceField = ({ setResource, label, resource }: Props) => {
   return (
     <FormControl fullWidth>
       <BaseDropdownWithLoading
+        dataCy={dataCy}
         key={resource.id}
         isLoading={isServiceProvidersLoading}
         inputValue={resource.title}

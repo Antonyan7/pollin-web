@@ -10,9 +10,10 @@ interface Props {
   value: string | Date | null;
   setDate: (value: React.SetStateAction<string | Date | null>) => void;
   errorText: string;
+  dataCy?: string;
 }
 
-const DatePickerField = ({ label, value, setDate, errorText }: Props) => {
+const DatePickerField = ({ label, value, setDate, errorText, dataCy }: Props) => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const theme = useTheme();
   const onDateDatePickerOpen = () => {
@@ -40,6 +41,7 @@ const DatePickerField = ({ label, value, setDate, errorText }: Props) => {
         value={value}
         renderInput={(params: TextFieldProps) => (
           <TextField
+            data-cy={dataCy ?? ''}
             {...params}
             fullWidth
             sx={{

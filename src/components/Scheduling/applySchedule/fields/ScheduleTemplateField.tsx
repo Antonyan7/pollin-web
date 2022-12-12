@@ -14,9 +14,10 @@ interface Props {
   setScheduleTemplate: (value: React.SetStateAction<SchedulingTemplateProps>) => void;
   label: string;
   scheduleTemplate: SchedulingTemplateProps;
+  dataCy?: string;
 }
 
-const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }: Props) => {
+const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate, dataCy }: Props) => {
   const scheduleTemplates = useAppSelector(schedulingSelector.scheduleTemplates);
   const isScheduleTemplatesLoading = useAppSelector(schedulingSelector.scheduleListLoadingStatus);
   const [scheduleTemplateRequestCurrentPage, setScheduleTemplateRequestCurrentPage] = useState<number>(2);
@@ -46,6 +47,7 @@ const ScheduleTemplateField = ({ setScheduleTemplate, label, scheduleTemplate }:
   return (
     <FormControl fullWidth>
       <BaseDropdownWithLoading
+        dataCy={dataCy}
         key={scheduleTemplate.id}
         isLoading={isScheduleTemplatesLoading}
         inputValue={scheduleTemplate.name}

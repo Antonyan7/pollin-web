@@ -13,9 +13,10 @@ interface Props {
   setRepeatWeeks: (value: React.SetStateAction<IApplyScheduleDay>) => void;
   label: string;
   repeatWeeks: IApplyScheduleDay;
+  dataCy?: string;
 }
 
-const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
+const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks, dataCy }: Props) => {
   const onRepeatWeeksUpdate = (repeatWeeksItem: IApplyScheduleDay | null) => {
     if (repeatWeeksItem) {
       setRepeatWeeks(repeatWeeksItem);
@@ -29,6 +30,7 @@ const RepeatsField = ({ setRepeatWeeks, label, repeatWeeks }: Props) => {
   return (
     <FormControl fullWidth>
       <BaseDropdownWithLoading
+        dataCy={dataCy}
         isLoading={false}
         inputValue={repeatWeeks.name}
         popupIcon={<KeyboardArrowDownIcon />}

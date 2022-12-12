@@ -193,7 +193,7 @@ const ApplyScheduleForm = () => {
         <Grid container spacing={3}>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}>
             <ResourceField
-              data-cy={resourceCyId}
+              dataCy={resourceCyId}
               setResource={setResource}
               resource={resource}
               label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}
@@ -201,7 +201,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}>
             <ScheduleTemplateField
-              data-cy={scheduleTemplateCyId}
+              dataCy={scheduleTemplateCyId}
               scheduleTemplate={scheduleTemplate}
               setScheduleTemplate={setScheduleTemplate}
               label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}
@@ -219,7 +219,7 @@ const ApplyScheduleForm = () => {
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_REPEATS)}>
             <FormControl fullWidth>
               <RepeatsField
-                data-cy={repeatCyId}
+                dataCy={repeatCyId}
                 repeatWeeks={repeatWeeks}
                 setRepeatWeeks={setRepeatWeeks}
                 label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)}
@@ -228,7 +228,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}>
             <DatePickerField
-              data-cy={startDateCyId}
+              dataCy={startDateCyId}
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
               value={startDate}
               setDate={setStartDate}
@@ -237,7 +237,7 @@ const ApplyScheduleForm = () => {
           </ApplyScheduleFormRow>
           <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}>
             <DatePickerField
-              data-cy={endDateCyId}
+              dataCy={endDateCyId}
               label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
               value={endDate}
               setDate={setEndDate}
