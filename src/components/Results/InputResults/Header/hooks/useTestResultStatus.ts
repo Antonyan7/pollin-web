@@ -15,7 +15,7 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
   const initialResultValue = t(Translation.MODAL_EXTERNAL_RESULTS_RESULT_TEXT);
 
   return useMemo(() => {
-    if (!isTestResultsDetailsLoading && measurement) {
+    if (!isTestResultsDetailsLoading && measurement?.items?.length > 0) {
       // Optional used here because during page refresh we can have case when we wait form default data which comes from API
       const allElementsWithNormalStatus = measurement?.items.map((item: { resultType: TestResultMeasurementType }) => {
         // Here we are setting falsy value for the cases when nothing was returned from the backend
@@ -55,8 +55,8 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
     }
 
     return {
-      testResultStatusLabel: '',
-      testResultStatusColor: ''
+      testResultStatusLabel: initialResultValue,
+      testResultStatusColor: FinalResultChipColor.Initial
     };
   }, [isTestResultsDetailsLoading, measurement, initialResultValue]);
 };

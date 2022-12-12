@@ -66,7 +66,8 @@ const {
   setTestResultsState,
   setTransportFolders,
   setLastCreatedTransportFolderId,
-  setIsTransportFoldersLoading
+  setIsTransportFoldersLoading,
+  setIsTestResultsSubmitWentSuccessful
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -208,9 +209,11 @@ const submitTestResults = (data: ITestResultsData[]) => async (dispatch: AppDisp
     dispatch(setIsTestResultsSubmitLoading(true));
 
     await API.results.submitTestResults(data);
+    dispatch(setIsTestResultsSubmitWentSuccessful(true));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+    dispatch(setIsTestResultsSubmitWentSuccessful(false));
   } finally {
     dispatch(setIsTestResultsSubmitLoading(false));
   }
@@ -544,5 +547,6 @@ export default {
   getSpecimensInTransportList,
   getTransportFolders,
   addSpecimenToTransportFolder,
-  resetLastCreatedTransportFolderId
+  resetLastCreatedTransportFolderId,
+  setIsTestResultsSubmitWentSuccessful
 };

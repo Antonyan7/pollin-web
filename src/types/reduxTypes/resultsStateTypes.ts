@@ -51,6 +51,7 @@ export interface IResultsProps {
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
+  isTestResultsSubmitWentSuccessful: boolean | null;
 }
 
 export enum ITransportFolderStatus {

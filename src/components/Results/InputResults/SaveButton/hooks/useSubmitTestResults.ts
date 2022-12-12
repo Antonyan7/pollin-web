@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { FirebaseManager } from '@axios/firebase';
 import { ITestResultsData } from '@axios/results/resultsManagerTypes';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -13,8 +13,23 @@ import { IMeasurementsFieldValues } from '../../types';
 const useSubmitTestResults = () => {
   const defaultTestResults = useAppSelector(resultsSelector.testResultsDetails);
   const isTestResultsSubmitLoading = useAppSelector(resultsSelector.isTestResultsSubmitLoading);
-  const isSubmitHasErrors = useAppSelector(resultsSelector.isTestResultsError);
+  const isTestResultsSubmitWentSuccessful = useAppSelector(resultsSelector.isTestResultsSubmitWentSuccessful);
   const router = useRouter();
+
+  useEffect(() => {
+    const isSubmitWentSuccessful =
+      isTestResultsSubmitWentSuccessful !== null && isTestResultsSubmitWentSuccessful && !isTestResultsSubmitLoading;
+
+    if (isSubmitWentSuccessful) {
+      router.back();
+    }
+
+    return () => {
+      dispatch(resultsMiddleware.setIsTestResultsSubmitWentSuccessful(null));
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isTestResultsSubmitLoading, isTestResultsSubmitWentSuccessful]);
 
   const onTestResultsSubmit = useCallback(
     async (data: IMeasurementsFieldValues) => {
@@ -62,7 +77,7 @@ const useSubmitTestResults = () => {
         }
 
         // Compare default attachments to new attachments which came from useForm hook
-        // If Attachmend came from API but deleted currently send request to remove them
+        // If Attachment which came from API but deleted currently send request to remove them
         if (attachedFilesFormDataIds.length !== defaultAttachedFileIds?.length) {
           // eslint-disable-next-line @typescript-eslint/no-loop-func
           defaultAttachedFileIds?.forEach((defaultAttachedFileId) => {
@@ -82,12 +97,8 @@ const useSubmitTestResults = () => {
       }
 
       await dispatch(resultsMiddleware.submitTestResults(testResults));
-
-      if (!isSubmitHasErrors) {
-        router.back();
-      }
     },
-    [defaultTestResults, isSubmitHasErrors, isTestResultsSubmitLoading, router]
+    [defaultTestResults, isTestResultsSubmitLoading]
   );
 
   return { onTestResultsSubmit, isTestResultsSubmitLoading };

@@ -122,6 +122,9 @@ const reducers = createReducer({
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.isTransportFoldersLoading = action.payload;
+  },
+  setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
+    state.isTestResultsSubmitWentSuccessful = action.payload;
   }
 });
 
