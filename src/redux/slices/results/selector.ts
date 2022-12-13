@@ -28,6 +28,8 @@ const isSpecimensFiltersLoading = createSelector([selector], (state) => state.is
 const isLabsLoading = createSelector([selector], (state) => state.isLabsLoading);
 const testResultLabs = createSelector([selector], (state) => state.labs);
 const transportActions = createSelector([selector], (state) => state.transportActions);
+const cancellationReasons = createSelector([selector], (state) => state.cancellationReasons);
+const isCancellOrderLoading = createSelector([selector], (state) => state.isCancellOrderLoading);
 const resultReviewedDate = createSelector([selector], (state) => state.reviewDate);
 const resultReleaseDate = createSelector([selector], (state) => state.releaseDate);
 const isTestResultReviewed = createSelector([selector], (state) => state.isTestResultReviewed);
@@ -42,6 +44,7 @@ const isSpecimensInTransportListLoading = createSelector(
   [selector],
   (state) => state.isSpecimensInTransportListLoading
 );
+const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
 const transportFolders = createSelector([selector], (state) => state.transportFolders);
 const lastCreatedTransportFolderId = createSelector([selector], (state) => state.lastCreatedTransportFolderId);
 
@@ -61,6 +64,9 @@ export default {
   isTestResultsSubmitLoading,
   specimenActions,
   transportActions,
+  cancellationReasons,
+  isCancellOrderLoading,
+  isCancellationReasonsLoading,
   resultReviewedDate,
   resultReleaseDate,
   isTestResultReviewed,

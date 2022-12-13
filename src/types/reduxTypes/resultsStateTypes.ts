@@ -26,6 +26,9 @@ export interface IResultsProps {
   labMachines: LabMachine;
   specimenActions: SpecimenActions[];
   transportActions: TransportActions[];
+  cancellationReasons: CancellationReasons;
+  isCancellOrderLoading: boolean;
+  isCancellationReasonsLoading: boolean;
   isResultsListLoading: boolean;
   isResultsFiltersLoading: boolean;
   isPendingTestStatsLoading: boolean;
@@ -62,6 +65,13 @@ export enum ITransportFolderStatus {
   InTransit = 'InTransit'
 }
 
+export interface CancellationReasonsProps {
+  id: string;
+  title: string;
+}
+export interface CancellationReasons {
+  reasons: CancellationReasonsProps[];
+}
 export interface IMakeTestResultReviewReq {
   testResultId: string;
   reviewerComment?: string;

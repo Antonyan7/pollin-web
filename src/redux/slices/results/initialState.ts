@@ -29,6 +29,11 @@ export const getInitialState = (): IResultsProps => ({
   isTestResultsSubmitLoading: false,
   specimenActions: [],
   transportActions: [],
+  cancellationReasons: {
+    reasons: []
+  },
+  isCancellOrderLoading: false,
+  isCancellationReasonsLoading: false,
   reviewDate: '',
   releaseDate: '',
   isTestResultReviewed: false,

@@ -51,6 +51,9 @@ const {
   setIsTestResultsDetailsLoading,
   setLabMachines,
   setIsLabMachinesLoading,
+  setCancellationReasons,
+  setIsCancellOrderLoading,
+  setIsCancellationReasonsLoading,
   setIsTestResultsSubmitLoading,
   setPendingSpecimenStatsLoadingState,
   setPendingSpecimenStats,
@@ -178,6 +181,39 @@ const getTransportActions = () => async (dispatch: AppDispatch) => {
     dispatch(setError(error));
   }
 };
+
+const getCancellationReasons = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCancellationReasonsLoading(true));
+
+    const response = await API.results.getCancellationReasons();
+
+    dispatch(setCancellationReasons(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsCancellationReasonsLoading(false));
+  }
+};
+
+const cancellOrder =
+  (orderId: string, reasonId: string, cancellationReason?: string) => async (dispatch: AppDispatch) => {
+    dispatch(setIsCancellOrderLoading(true));
+
+    try {
+      const response = await API.results.cancellOrder(orderId, reasonId, cancellationReason);
+
+      if (response) {
+        dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+
+    dispatch(setIsCancellOrderLoading(false));
+  };
 
 const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => {
   try {
@@ -562,6 +598,8 @@ export default {
   getSpecimensFilters,
   submitTestResults,
   getTransportActions,
+  getCancellationReasons,
+  cancellOrder,
   makeTestResultReviewed,
   makeTestResultReleased,
   getPendingSpecimenStats,

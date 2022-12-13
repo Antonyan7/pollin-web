@@ -1,6 +1,7 @@
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
+  CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
   IPendingTestStats,
@@ -53,6 +54,15 @@ const reducers = createReducer({
   },
   setTransportActions(state, action: IAction<SpecimenActions[]>) {
     state.transportActions = action.payload;
+  },
+  setCancellationReasons(state, action: IAction<CancellationReasons>) {
+    state.cancellationReasons = action.payload;
+  },
+  setIsCancellOrderLoading(state, action: IAction<boolean>) {
+    state.isCancellOrderLoading = action.payload;
+  },
+  setIsCancellationReasonsLoading(state, action: IAction<boolean>) {
+    state.isCancellationReasonsLoading = action.payload;
   },
   setTestResultReviewedDate(state, action: IAction<string>) {
     state.reviewDate = action.payload;

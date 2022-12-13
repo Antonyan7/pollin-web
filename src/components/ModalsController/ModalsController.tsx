@@ -14,6 +14,7 @@ import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Mo
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
+import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import TestResultReleaseConfirmationModal from '@components/Modals/Order/TestResultReleaseConfirmation';
 import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
@@ -111,6 +112,9 @@ const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
 const getHandoffConfirmationModal = (modal: IOpenedModal<HandoffConfirmationModalProps>) => (
   <HandoffConfirmation key={modal.name} {...modal.props} />
 );
+const getOrderCancellationModal = (modal: IOpenedModal<OrderCancellationProps>) => (
+  <OrderCancellation key={modal.name} {...modal.props} />
+);
 
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
@@ -168,6 +172,8 @@ export const ModalsController = () => {
             return getTestResultReleaseConfirmation(modal);
           case ModalName.HandoffConfirmation:
             return getHandoffConfirmationModal(modal);
+          case ModalName.OrderCancellation:
+            return getOrderCancellationModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

@@ -14,6 +14,7 @@ import {
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
+  CancellationReasons,
   IAllTestsSpecimensList,
   IPendingSpecimensStats,
   IPendingTestResultStats,
@@ -172,6 +173,20 @@ const resultsManager = {
   getTransportActions() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(
       `${baseURL}/v1/transport/actions`
+    );
+  },
+  getCancellationReasons() {
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<CancellationReasons>>(
+      `${baseURL}/v1/order/cancellation-reason`
+    );
+  },
+  cancellOrder(orderId: string, reasonId: string, cancellationReason?: string) {
+    return axiosInstance.patch<ITestResultsDetails, IAxiosResponse<CancellationReasons>>(
+      `${baseURL}/v1/order/${orderId}/cancel`,
+      {
+        reasonId,
+        cancellationReason
+      }
     );
   },
   getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {
