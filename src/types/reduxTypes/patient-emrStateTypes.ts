@@ -201,12 +201,19 @@ export interface IPatientAppointmentsList extends IPagination {
   appointments: IPatientAppointment[] | null;
 }
 
+export enum AppointmentResponseStatus {
+  IDLE = 'idle',
+  SUCCESS = 'success',
+  FAIL = 'fail'
+}
+
 export interface IPatientAppointmentsProps {
   list: IPatientAppointmentsList;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
   order: SortOrder | null;
   filters: IPatientAppointmentsListFilter[] | null;
   selectedFilters: PatientAppointmentsFilterOption[];
+  status: AppointmentResponseStatus;
 }
 
 export interface ICreateEncounterNoteProps extends IEncounterNoteProps {}

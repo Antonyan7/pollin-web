@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import bookingHelpers from '@axios/booking/bookingHelpers';
 import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   Table,
@@ -15,14 +14,10 @@ import {
   Typography
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector, patientsSlice } from '@redux/slices/patients';
-import * as Sentry from '@sentry/nextjs';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
-import { useRouter } from 'next/router';
 import { SortOrder } from 'types/patient';
-
-const { setPatientAppointments, setError } = patientsSlice.actions;
 
 interface HeadCell {
   id: keyof IPatientAppointment;
@@ -50,7 +45,6 @@ const headCells: HeadCell[] = [
 
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
-  const router = useRouter();
   const { list, orderBy, order, selectedFilters, filters } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
@@ -61,86 +55,14 @@ const AppointmentsListTable = () => {
   }, [currentPage, selectedFilters, order, orderBy, tableData, filters]);
 
   const onTableHeadCellClick = async (newOrderBy: Exclude<HeadCell['id'], 'time'>) => {
-    try {
-      const switchOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
-      const newOrder = orderBy === newOrderBy ? switchOrder : SortOrder.Asc;
-      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
+    const switchOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
+    const newOrder = orderBy === newOrderBy ? switchOrder : SortOrder.Asc;
 
-      const { data, ...metaData } = await bookingHelpers.getAppointmentsListFromParams({
-        page: currentPage,
-        order: newOrder,
-        orderBy: newOrderBy,
-        filters: excludeTitleFilters
-      });
-
-      router.replace(
-        {
-          query: {
-            ...router.query,
-            page: metaData.currentPage - 1,
-            order: newOrder,
-            orderBy: newOrderBy
-          }
-        },
-        undefined,
-        { scroll: false }
-      );
-
-      dispatch(
-        setPatientAppointments({
-          list: {
-            appointments: data.appointments,
-            currentPage: metaData.currentPage,
-            pageSize: metaData.pageSize,
-            totalItems: metaData.totalItems
-          },
-          order: newOrder,
-          orderBy: newOrderBy,
-          selectedFilters
-        })
-      );
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    }
+    dispatch(patientsMiddleware.getPatientAppointments(currentPage, newOrder, newOrderBy, selectedFilters));
   };
 
   const onTablePageChange: TablePaginationProps['onPageChange'] = async (_e, newPage) => {
-    try {
-      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
-
-      const { data, ...metaData } = await bookingHelpers.getAppointmentsListFromParams({
-        page: newPage + 1,
-        order,
-        orderBy,
-        filters: excludeTitleFilters
-      });
-
-      router.replace(
-        {
-          query: {
-            ...router.query,
-            page: metaData.currentPage - 1
-          }
-        },
-        undefined,
-        { scroll: false }
-      );
-
-      dispatch(
-        setPatientAppointments({
-          list: {
-            appointments: data.appointments,
-            currentPage: metaData.currentPage,
-            pageSize: metaData.pageSize,
-            totalItems: metaData.totalItems
-          }
-        })
-      );
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    }
+    dispatch(patientsMiddleware.getPatientAppointments(newPage + 1, order, orderBy, selectedFilters));
   };
 
   return (

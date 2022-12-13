@@ -122,6 +122,9 @@ const reducers = createReducer({
   setPatientAppointmentsOrder(state, action: IAction<IPatientAppointmentsProps['order']>) {
     state.patientAppointments.order = action.payload;
   },
+  setPatientAppointmentsRequestStatus(state, action: IAction<IPatientAppointmentsProps['status']>) {
+    state.patientAppointments.status = action.payload;
+  },
   setPatientAppointmentsFilters(state, action: IAction<IPatientAppointmentsProps['filters']>) {
     state.patientAppointments.filters = action.payload;
   },

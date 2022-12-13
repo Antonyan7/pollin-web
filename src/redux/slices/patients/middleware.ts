@@ -12,6 +12,7 @@ import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransform
 import { AppDispatch } from 'redux/store';
 import { IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
+  AppointmentResponseStatus,
   ICreateEncounterNoteProps,
   IEncounterList,
   IPatientList,
@@ -57,7 +58,8 @@ const {
   setPatientContactInformation,
   setPatientContactInformationLoadingState,
   setIsPatientHighlightIntakeComplete,
-  setIsPatientHighlightIntakeReminderActive
+  setIsPatientHighlightIntakeReminderActive,
+  setPatientAppointmentsRequestStatus
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -441,11 +443,13 @@ const getPatientAppointments =
           },
           order,
           orderBy,
-          selectedFilters
+          selectedFilters,
+          status: AppointmentResponseStatus.SUCCESS
         })
       );
     } catch (error) {
       Sentry.captureException(error);
+      dispatch(setPatientAppointmentsRequestStatus(AppointmentResponseStatus.FAIL));
       dispatch(setError(error));
     }
   };

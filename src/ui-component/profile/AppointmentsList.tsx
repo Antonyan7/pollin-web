@@ -6,6 +6,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector, patientsSlice } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 import { SortOrder } from 'types/patient';
+import { AppointmentResponseStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import AppointmentsListHeader from '@ui-component/profile/AppointmentListHeader';
 import AppointmentsListFilter from '@ui-component/profile/AppointmentsListFilter';
@@ -20,7 +21,8 @@ const {
   setPatientAppointmentsListPage,
   setPatientAppointmentsFilters,
   setPatientAppointmentsSelectedFilters,
-  setPatientAppointmentsFiltersLoading
+  setPatientAppointmentsFiltersLoading,
+  setPatientAppointmentsRequestStatus
 } = patientsSlice.actions;
 
 const isValidSortOrder = (orderString?: string): orderString is SortOrder =>
@@ -33,7 +35,7 @@ const AppointmentsList = () => {
   const { profilePageName } = usePatientProfileNavigatorContext();
   const filtersShouldLoad = useRef(false);
 
-  const { list, orderBy, order } = useAppSelector(patientsSelector.patientAppointments);
+  const { list, orderBy, order, status, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
   const isPatientAppointmentFiltersLoading = useAppSelector(patientsSelector.isPatientAppointmentFiltersLoading);
   const { currentPage } = list;
 
@@ -87,6 +89,28 @@ const AppointmentsList = () => {
         });
     }
   }, [currentPage, isPatientAppointmentFiltersLoading, order, orderBy, profilePageName, router]);
+
+  useEffect(() => {
+    if (status !== AppointmentResponseStatus.IDLE) {
+      if (status === AppointmentResponseStatus.SUCCESS) {
+        router.replace(
+          {
+            query: {
+              ...router.query,
+              filterIds: selectedFilters.map(({ id }) => id),
+              page: Math.max(0, currentPage - 1),
+              order,
+              orderBy
+            }
+          },
+          undefined,
+          { scroll: false }
+        );
+      }
+
+      dispatch(setPatientAppointmentsRequestStatus(AppointmentResponseStatus.IDLE));
+    }
+  }, [currentPage, order, orderBy, router, selectedFilters, status]);
 
   return (
     <Stack rowGap={1.5}>
