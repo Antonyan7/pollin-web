@@ -34,6 +34,14 @@ export const getInitialState = (): BookingProps => ({
     code: '',
     message: ''
   },
+  editAppointmentErrorState: {
+    code: '',
+    message: ''
+  },
+  cancellAppointmentErrorState: {
+    code: '',
+    message: ''
+  },
   specimenAppointments: {
     list: [],
     filters: null,

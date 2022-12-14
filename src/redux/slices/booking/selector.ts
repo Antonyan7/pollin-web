@@ -23,6 +23,8 @@ export const isSaveButtonDisabled = createSelector([selector], (state) => state.
 export const isServiceTypesLoading = createSelector([selector], (state) => state.isServiceTypesLoading);
 export const appointmentStatus = createSelector([selector], (state) => state.appointmentStatus);
 export const createAppointmentErrorState = createSelector([selector], (state) => state.createAppointmentError);
+export const editAppointmentErrorState = createSelector([selector], (state) => state.editAppointmentErrorState);
+export const cancellAppointmentErrorState = createSelector([selector], (state) => state.cancellAppointmentErrorState);
 export const specimenAppointments = createSelector([selector], (state) => state.specimenAppointments);
 export const specimenAppointmentsFilters = createSelector([specimenAppointments], (state) => state.filters);
 export const selectedSpecimenAppointmentsFilters = createSelector(
@@ -54,6 +56,8 @@ export default {
   isSaveButtonDisabled,
   appointmentStatus,
   createAppointmentErrorState,
+  cancellAppointmentErrorState,
+  editAppointmentErrorState,
   specimenAppointments,
   specimenAppointmentsFilters,
   selectedSpecimenAppointmentsFilters,

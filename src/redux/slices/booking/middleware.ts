@@ -44,6 +44,8 @@ const {
   setSaveButtonDisabled,
   setAppointmentStatus,
   setCreateAppointmentErrorState,
+  setEditAppointmentErrorState,
+  setCancellAppointmentErrorState,
   setSpecimenAppointmentsFilters,
   setSpecimenAppointmentsFiltersArrayLoading,
   setSpecimenAppointments
@@ -227,7 +229,6 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
     dispatch(setError(error as string));
   }
 };
-
 const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsServiceTypesLoading(true));
@@ -359,7 +360,7 @@ const editAppointment =
       dispatch(setError(error as string));
 
       if (axios.isAxiosError(error)) {
-        dispatch(setCreateAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
+        dispatch(setEditAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
 
         dispatch(
           setAppointmentStatus({
@@ -389,10 +390,11 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
 };
 
 const cancelAppointment = (appointmentId: string, cancellationReason: string) => async (dispatch: AppDispatch) => {
+  const { appointmentStatus } = store.getState().booking;
+
   try {
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
-    const { appointmentStatus } = store.getState().booking;
 
     dispatch(setAppointmentLoading(true));
     await API.booking.cancelAppointment(appointmentId, {
@@ -412,7 +414,21 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     );
     dispatch(getAppointments(providerId, calendarDate));
   } catch (error) {
-    dispatch(setError(error as string));
+    Sentry.captureException(error);
+
+    if (axios.isAxiosError(error)) {
+      dispatch(setCancellAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
+
+      dispatch(
+        setAppointmentStatus({
+          ...appointmentStatus,
+          cancel: {
+            fail: true,
+            success: false
+          }
+        })
+      );
+    }
   }
 };
 

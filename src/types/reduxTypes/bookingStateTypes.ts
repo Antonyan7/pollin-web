@@ -57,6 +57,8 @@ export interface BookingProps {
   isSaveButtonDisabled: boolean;
   appointmentStatus: AppointmentStatusState;
   createAppointmentError: IAppointmentErrorState;
+  editAppointmentErrorState: IAppointmentErrorState;
+  cancellAppointmentErrorState: IAppointmentErrorState;
   specimenAppointments: ISpecimenAppointmentsState;
 }
 

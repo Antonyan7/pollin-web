@@ -10,12 +10,18 @@ const useAppointmentStatusState = () => {
   const [t] = useTranslation();
   const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const createAppointmentErrorState = useAppSelector(bookingSelector.createAppointmentErrorState);
+  const editAppointmentErrorState = useAppSelector(bookingSelector.editAppointmentErrorState);
+  const cancellAppointmentErrorState = useAppSelector(bookingSelector.cancellAppointmentErrorState);
   const resetBookingStatus = useCallback(() => {
     dispatch(bookingMiddleware.resetAppointmentStatus());
     dispatch(bookingMiddleware.clearCreateAppointmentErrorState());
   }, []);
 
   useEffect(() => {
+    const isCreateAppointmentActionFailed = appointmentStatus.create.fail && createAppointmentErrorState.message;
+    const isEditAppoitmentActionFailed = appointmentStatus.edit.fail && editAppointmentErrorState.message;
+    const isCancellAppointmentFailed = appointmentStatus.cancel.fail && cancellAppointmentErrorState.message;
+
     if (appointmentStatus.create.success) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
@@ -52,16 +58,37 @@ const useAppointmentStatusState = () => {
       );
     }
 
-    const isAppointmentActionFailed =
-      (appointmentStatus.create.fail || appointmentStatus.edit.fail) && createAppointmentErrorState.message;
-
-    if (isAppointmentActionFailed) {
+    if (isCreateAppointmentActionFailed) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,
             description: createAppointmentErrorState.message
+          }
+        })
+      );
+    }
+
+    if (isEditAppoitmentActionFailed) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: editAppointmentErrorState.message
+          }
+        })
+      );
+    }
+
+    if (isCancellAppointmentFailed) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: cancellAppointmentErrorState.message
           }
         })
       );
@@ -74,6 +101,8 @@ const useAppointmentStatusState = () => {
     appointmentStatus.edit.success,
     appointmentStatus.cancel.success,
     createAppointmentErrorState.message,
+    editAppointmentErrorState.message,
+    cancellAppointmentErrorState.message,
     resetBookingStatus
   ]);
 };

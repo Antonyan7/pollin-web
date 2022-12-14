@@ -94,6 +94,12 @@ const reducers = createReducer({
   setCreateAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
     state.createAppointmentError = action.payload;
   },
+  setEditAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
+    state.editAppointmentErrorState = action.payload;
+  },
+  setCancellAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
+    state.cancellAppointmentErrorState = action.payload;
+  },
   setSpecimenAppointmentsFilters(state, action: IAction<ISpecimenAppointmentsFilter[]>) {
     state.specimenAppointments.filters = action.payload;
   },

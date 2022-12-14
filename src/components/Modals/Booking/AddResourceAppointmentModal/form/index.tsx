@@ -1,17 +1,11 @@
 import React, { useCallback, useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { SeveritiesType } from '@components/Scheduling/types';
-import { coreSelector } from '@redux/slices/core';
 import { CypressIds } from 'constants/cypressIds';
-import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName, OpenModalReason } from 'types/modals';
-
-import { customizedTimeForWorkingHours } from '@utils/dateUtils';
 
 import FormActions from './FormActions';
 import FormBody from './FormBody';
@@ -21,9 +15,7 @@ const AddAppointmentsModalForm = () => {
   const { handleSubmit } = useFormContext<ICreateAppointmentBody>();
   const { control } = useFormContext<ICreateAppointmentBody>();
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
-  const { workingHours } = useAppSelector(coreSelector.clinicConfigs);
   const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
-  const [t] = useTranslation();
 
   const isDuplicatePatientName = useMemo(() => {
     if (!patientAlerts?.length) {
@@ -63,25 +55,10 @@ const AddAppointmentsModalForm = () => {
         providerId
       };
 
-      const formattedTime = customizedTimeForWorkingHours(values.date as string);
-      const isSubmittingTimeInvalid = formattedTime < workingHours.start || formattedTime >= workingHours.end;
-
-      if (isSubmittingTimeInvalid) {
-        dispatch(
-          viewsMiddleware.setToastNotificationPopUpState({
-            open: true,
-            props: {
-              severityType: SeveritiesType.error,
-              description: t(Translation.PAGE_APPOINTMENTS_OUTSIDE_HOURS_FAIL_STATUS)
-            }
-          })
-        );
-      } else {
-        dispatch(bookingMiddleware.createAppointment(body));
-      }
+      dispatch(bookingMiddleware.createAppointment(body));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [providerId, workingHours.end, workingHours.start]
+    [providerId]
   );
 
   useEffect(() => {

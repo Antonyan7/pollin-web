@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { CypressIds } from 'constants/cypressIds';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -14,7 +14,9 @@ import { IFormValues } from './types';
 const EditAppointmentsModalForm = () => {
   const { handleSubmit, formState, reset } = useFormContext<IFormValues>();
   const { isSubmitSuccessful } = formState;
+  const [closeModal, setCloseModal] = useState<boolean>(false);
   const details = useAppSelector(bookingSelector.appointmentDetails);
+  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const appointmentId = details?.appointment.id ?? '';
 
   const onClose = useCallback(() => {
@@ -23,15 +25,21 @@ const EditAppointmentsModalForm = () => {
   }, []);
 
   const onSubmit = (values: IFormValues) => {
-    onClose();
     dispatch(bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(values)));
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful) {
+    if (isSubmitSuccessful && closeModal) {
+      onClose();
       reset();
     }
-  }, [isSubmitSuccessful, reset]);
+  }, [isSubmitSuccessful, reset, closeModal, onClose]);
+
+  useEffect(() => {
+    if (appointmentStatus.edit.success) {
+      setCloseModal(true);
+    }
+  }, [appointmentStatus.edit.success, onClose]);
 
   const editAppointmentDialogFormCypressId = CypressIds.MODAL_APPOINTMENTS_EDIT_DIALOG_FORM;
 
