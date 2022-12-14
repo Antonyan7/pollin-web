@@ -57,6 +57,8 @@ export interface IResultsProps {
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
+  orderResultsFilters: IOrderResultsFilterCategory[];
+  isOrderResultsFiltersLoading: boolean;
   isTestResultsSubmitWentSuccessful: boolean | null;
   ordersList: IOrdersList;
   isOrdersListLoading: boolean;
@@ -293,3 +295,5 @@ export interface IResultsFilterCategory {
 export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 
 export interface TestResultsDetails extends ITestResultsDetails {}
+
+export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}

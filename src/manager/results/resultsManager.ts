@@ -36,6 +36,7 @@ import {
   IGetTransportFoldersReqBody,
   IGetTransportFoldersResponse,
   ILabsResponse,
+  IOrderResultsFiltersResponse,
   IResultsFiltersResponse,
   ISpecimensFiltersResponse
 } from 'types/results';
@@ -164,6 +165,11 @@ const resultsManager = {
   getSpecimensFilters() {
     return axiosInstance.get<ISpecimensFiltersResponse, IAxiosResponse<ISpecimensFiltersResponse>>(
       `${baseURL}/v1/specimen/filter`
+    );
+  },
+  getOrderResultsFilters() {
+    return axiosInstance.get<IOrderResultsFiltersResponse, IAxiosResponse<IOrderResultsFiltersResponse>>(
+      `${baseURL}/v1/test-result/filter/emr`
     );
   },
   getTransportList(data: ITransportListReqBody) {

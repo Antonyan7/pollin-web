@@ -24,6 +24,8 @@ export enum Translation {
   PAGE_PATIENT_PARTNERS_PROFILE_CONTRIBUTION = 'page.patient.partners.profile.contribution',
   PAGE_PATIENT_PROFILE_UPCOMING_APPOINTMENTS = 'page.patient.profile.upcoming.appointments',
   PAGE_PATIENT_PROFILE_PAST_APPOINTMENTS = 'page.patient.profile.past.appointments',
+  PAGE_PATIENT_ORDER_TITLE = 'page.patient.order.title',
+  PAGE_PATIENT_ORDER_RESULTS_TITLE = 'page.patient.order.results.title',
   PAGE_PATIENT_PROFILE_ORDERS = 'page.patient.orders',
   PAGE_PATIENT_PROFILE_RESULTS = 'page.patient.results',
   PAGE_PATIENT_PROFILE_CRETAE_NEW_ORDER = 'page.patient.profile.create.new.order',

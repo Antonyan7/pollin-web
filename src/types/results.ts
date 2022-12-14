@@ -1,5 +1,10 @@
 import { ISortOrder } from 'types/patient';
-import { ILab, IResultsFilterCategory, ISpecimensFilterCategory } from 'types/reduxTypes/resultsStateTypes';
+import {
+  ILab,
+  IOrderResultsFilterCategory,
+  IResultsFilterCategory,
+  ISpecimensFilterCategory
+} from 'types/reduxTypes/resultsStateTypes';
 
 import { SortOrder } from './patient';
 
@@ -11,6 +16,9 @@ export interface ISpecimensFiltersResponse {
   filters: ISpecimensFilterCategory[];
 }
 
+export interface IOrderResultsFiltersResponse {
+  filters: IOrderResultsFilterCategory[];
+}
 export interface ILabsResponse {
   labs: ILab[];
 }
@@ -66,6 +74,7 @@ export interface IResultsFilterOption {
 }
 
 export interface ISpecimensFilterOptions extends IResultsFilterOption {}
+export interface IOrderResultsFilterOptions extends IResultsFilterOption {}
 
 export enum TestResultsStats {
   GreaterThan30Days = 'GreaterThan30Days',

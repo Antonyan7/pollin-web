@@ -30,7 +30,7 @@ export const patientListTabLinks = [
   { linkName: 'Plans', href: 'plans' },
   { linkName: 'Encounters', href: 'encounters' },
   { linkName: 'Medications', href: 'medications' },
-  { linkName: 'Orders & Results', href: 'orders-results' },
+  { linkName: 'Orders & Results', href: 'orders' },
   { linkName: 'Consents', href: 'consents' },
   { linkName: 'Referrals', href: 'referrals' }
 ];

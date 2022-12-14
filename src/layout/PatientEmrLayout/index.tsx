@@ -20,7 +20,7 @@ const allyProps = (index: number) => ({
 // Refer to this example https://mui.com/material-ui/guides/composition/#with-typescript
 const TabWithLink = (props: TabProps<typeof Link, { component: typeof Link }>) => <Tab {...props} />;
 
-const PatientEmrLayout = ({ children }: PropsWithChildren) => {
+const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const theme = useTheme();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
@@ -74,15 +74,12 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
         }}
       >
         {patientListTabLinks.map((link, linkIndex) => {
-          const availableLinks =
-            link.linkName !== AvailablePages.Encounters &&
-            link.linkName !== AvailablePages.Profile &&
-            link.linkName !== AvailablePages.OrdersResults;
+          const isLinkAvailable = Object.values(AvailablePages).includes(link.linkName as AvailablePages);
 
           return (
             currentPatientId && (
               <TabWithLink
-                disabled={availableLinks}
+                disabled={!isLinkAvailable}
                 key={link.linkName}
                 component={Link}
                 href={`/patient-emr/details/${currentPatientId}/${link.href}`}
@@ -98,4 +95,4 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default PatientEmrLayout;
+export default PatientOdersAndResultsLayout;

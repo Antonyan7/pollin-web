@@ -4,6 +4,7 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
+  IOrderResultsFilterCategory,
   IOrdersList,
   IPendingTestStats,
   IResultsFilterCategory,
@@ -142,6 +143,12 @@ const reducers = createReducer({
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.isTransportFoldersLoading = action.payload;
+  },
+  setOrderResultsFilters(state, action: IAction<IOrderResultsFilterCategory[]>) {
+    state.orderResultsFilters = action.payload;
+  },
+  setOrderResultsFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isOrderResultsFiltersLoading = action.payload;
   },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
     state.isTestResultsSubmitWentSuccessful = action.payload;

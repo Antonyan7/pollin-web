@@ -22,6 +22,8 @@
   "page.patient.partners.profile.contribution": "Contribution",
   "page.patient.profile.upcoming.appointments": "Upcoming Appointments",
   "page.patient.profile.past.appointments": "Past Appointments",
+  "page.patient.order.title": "Orders",
+  "page.patient.order.results.title": "Results",
   "page.patient.orders": "Orders",
   "page.patient.results": "Results",
   "page.patient.profile.create.new.order": "Create New Order",
