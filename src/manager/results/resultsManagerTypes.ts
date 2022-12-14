@@ -31,6 +31,15 @@ export enum SpecimensListSortFields {
   COLLECTION_AGE = 'CollectionAge'
 }
 
+export enum OrderResultsSortFields {
+  DATE = 'Date',
+  NAME = 'Name',
+  UNIT = 'Unit',
+  RESULT = 'Result',
+  STATUS = 'Status',
+  FINAL_RESULT_TYPE = 'FinalResultType'
+}
+
 export enum SpecimensInTransportListSortFields {
   PATIENT_NAME = 'PatientName'
 }
@@ -75,6 +84,14 @@ export interface ISpecimensListReqBody {
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: SpecimensListSortFields;
 }
+
+export interface IOrderResultsListReqBody {
+  page: number;
+  sortOrder?: SortOrder;
+  filters?: Omit<IResultsFilterOption, 'title'>[];
+  sortByField?: OrderResultsSortFields;
+}
+
 export interface ISpecimensReqBody {
   id: string;
 }

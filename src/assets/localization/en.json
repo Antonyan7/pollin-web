@@ -299,5 +299,12 @@
   "page.specimens.tracking.transports.cells.driver.name": "Driver Name",
   "page.specimens.tracking.transports.cells.status": "Status",
   "page.specimens.tracking.transports.go.back": "Go to Specimen Tracking",
-  "page.specimens.tracking.transports.download.manifest": "Download Manifest"
+  "page.specimens.tracking.transports.download.manifest": "Download Manifest",
+  "page.patient.order.results.cells.date": "Date Reported",
+  "page.patient.order.results.cells.panelname": "Test/Panel Name",
+  "page.patient.order.results.cells.unit": "Unit",
+  "page.patient.order.results.cells.result": "Result",
+  "page.patient.order.results.cells.status": "Status",
+  "page.patient.order.results.cells.finalresulttype": "Final Result Type",
+  "page.patient.order.results.filter.label": "Filter Results"
 }

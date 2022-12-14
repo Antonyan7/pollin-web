@@ -19,6 +19,20 @@ export interface ISpecimensFiltersResponse {
 export interface IOrderResultsFiltersResponse {
   filters: IOrderResultsFilterCategory[];
 }
+
+export interface OrderResultAction {
+  id: string;
+  title: string;
+}
+
+export interface IOrderResultsStatus {
+  status: OrderResultStatusEnum;
+  title: string;
+  possibleActions: OrderResultAction[];
+}
+export interface IOrderResultsStatusesResponse {
+  items: IOrderResultsStatus[];
+}
 export interface ILabsResponse {
   labs: ILab[];
 }
@@ -75,6 +89,15 @@ export interface IResultsFilterOption {
 
 export interface ISpecimensFilterOptions extends IResultsFilterOption {}
 export interface IOrderResultsFilterOptions extends IResultsFilterOption {}
+
+export enum OrderResultStatusEnum {
+  Pending = 'Pending',
+  NotReceived = 'NotReceived',
+  Completed = 'Completed',
+  Reported = 'Reported',
+  Reviewed = 'Reviewed',
+  Released = 'Released'
+}
 
 export enum TestResultsStats {
   GreaterThan30Days = 'GreaterThan30Days',

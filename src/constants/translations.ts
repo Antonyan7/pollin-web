@@ -301,7 +301,14 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME = 'page.specimens.tracking.transports.cells.driver.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_STATUS = 'page.specimens.tracking.transports.cells.status',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK = 'page.specimens.tracking.transports.go.back',
-  PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest'
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_DATE = 'page.patient.order.results.cells.date',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_PANELNAME = 'page.patient.order.results.cells.panelname',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_UNIT = 'page.patient.order.results.cells.unit',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_RESULT = 'page.patient.order.results.cells.result',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_STATUS = 'page.patient.order.results.cells.status',
+  PAGE_PATIENT_ORDER_RESULTS_CELLS_FINALRESULTTYPE = 'page.patient.order.results.cells.finalresulttype',
+  PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL = 'page.patient.order.results.filter.label'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

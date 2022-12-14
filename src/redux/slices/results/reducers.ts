@@ -5,6 +5,7 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
+  IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
   IOrdersList,
   IPendingTestStats,
@@ -20,7 +21,7 @@ import {
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
 import { SchedulingStateStatusProps } from 'types/reduxTypes/schedulingStateTypes';
-import { ITransportFolder } from 'types/results';
+import { IOrderResultsStatus, ITransportFolder } from 'types/results';
 
 const createReducer = <T extends SliceCaseReducers<IResultsProps>>(reducer: T) => ({ ...reducer });
 
@@ -157,8 +158,17 @@ const reducers = createReducer({
   setOrderResultsFiltersLoadingState(state, action: IAction<boolean>) {
     state.isOrderResultsFiltersLoading = action.payload;
   },
+  setOrderResultsByPatientList(state, action: IAction<IOrderResultsByPatientList>) {
+    state.orderResultsByPatientList = action.payload;
+  },
+  setIsOrderResultsByPatientListLoading(state, action: IAction<boolean>) {
+    state.isOrderResultsByPatientListLoading = action.payload;
+  },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
     state.isTestResultsSubmitWentSuccessful = action.payload;
+  },
+  setOrderResultsStatuses(state, action: IAction<IOrderResultsStatus[]>) {
+    state.orderResultsStatuses = action.payload;
   },
   setOrdersList(state, action: IAction<IOrdersList>) {
     state.ordersList = action.payload;

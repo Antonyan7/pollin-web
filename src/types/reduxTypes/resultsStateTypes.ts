@@ -1,6 +1,12 @@
 import { IPagination } from '@axios/axiosTypes';
 import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
-import { IResultsFilterOption, ITransportFolder, TestResultsStats } from 'types/results';
+import {
+  IOrderResultsStatus,
+  IResultsFilterOption,
+  ITransportFolder,
+  OrderResultStatusEnum,
+  TestResultsStats
+} from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
@@ -15,6 +21,11 @@ export enum IStatus {
   NotReceived = 'NotReceived',
   Completed = 'Completed',
   Reported = 'Reported'
+}
+
+export enum IFinalResultType {
+  Normal = 'Normal',
+  Abnormal = 'Abnormal'
 }
 
 export interface IResultsProps {
@@ -62,7 +73,10 @@ export interface IResultsProps {
   orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
   isOrderResultsFiltersLoading: boolean;
+  orderResultsByPatientList: IOrderResultsByPatientList;
+  isOrderResultsByPatientListLoading: boolean;
   isTestResultsSubmitWentSuccessful: boolean | null;
+  orderResultsStatuses: IOrderResultsStatus[];
   ordersList: IOrdersList;
   isOrdersListLoading: boolean;
 }
@@ -140,6 +154,21 @@ export interface ISpecimensListItem {
   age: number;
 }
 
+export interface IMeasurement {
+  title: string;
+  unit: string;
+  result: string;
+}
+
+export interface IOrderResultsByPatientItem {
+  id: string;
+  status: OrderResultStatusEnum;
+  panelName: string;
+  finalResultType: IFinalResultType;
+  dateReported: string;
+  measurement: IMeasurement[];
+}
+
 export interface IAllTestsSpecimensListItem {
   id: string;
   identifier: string;
@@ -179,6 +208,10 @@ export interface ISpecimensListItemShort {
 export interface ISpecimensList extends IPagination {
   specimens: ISpecimensListItem[];
   notFound: ISpecimensListItemShort[];
+}
+
+export interface IOrderResultsByPatientList extends IPagination {
+  testResults: IOrderResultsByPatientItem[];
 }
 
 export interface IAllTestsSpecimensList extends IPagination {

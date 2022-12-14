@@ -54,6 +54,12 @@ const isSpecimensConfirmationButtonClicked = createSelector(
 const orderStatuses = createSelector([selector], (state) => state.orderStatuses);
 const orderResultsFilters = createSelector([selector], (state) => state.orderResultsFilters);
 const isOrderResultsFiltersLoading = createSelector([selector], (state) => state.isOrderResultsFiltersLoading);
+const orderResultsByPatientList = createSelector([selector], (state) => state.orderResultsByPatientList);
+const isOrderResultsByPatientListLoading = createSelector(
+  [selector],
+  (state) => state.isOrderResultsByPatientListLoading
+);
+const orderResultsStatuses = createSelector([selector], (state) => state.orderResultsStatuses);
 const isOrdersListLoading = createSelector([selector], (state) => state.isOrdersListLoading);
 const ordersList = createSelector([selector], (state) => state.ordersList);
 
@@ -100,6 +106,9 @@ export default {
   orderStatuses,
   orderResultsFilters,
   isOrderResultsFiltersLoading,
+  orderResultsByPatientList,
+  isOrderResultsByPatientListLoading,
+  orderResultsStatuses,
   isOrdersListLoading,
   ordersList
 };

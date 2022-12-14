@@ -3,6 +3,7 @@ import {
   ActionType,
   IAllTestsSpecimensReqBody,
   IMarkInTransitActionReqBody,
+  IOrderResultsListReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
@@ -23,6 +24,7 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
+  IOrderResultsByPatientList,
   IOrdersListResponse,
   IResultsList,
   IRetestRecollectData,
@@ -81,6 +83,9 @@ const {
   setIsTestResultsSubmitWentSuccessful,
   setOrderResultsFilters,
   setOrderResultsFiltersLoadingState,
+  setIsOrderResultsByPatientListLoading,
+  setOrderResultsByPatientList,
+  setOrderResultsStatuses,
   setOrdersList,
   setIsOrdersListLoading,
   setOrdersStatuses
@@ -336,6 +341,37 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
     dispatch(setIsSpecimensListLoading(false));
   }
 };
+
+const getOrderResultsListForPatient =
+  (data: IOrderResultsListReqBody, patientId: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsOrderResultsByPatientListLoading(true));
+
+      const body = (data.sortOrder !== null ? sortOrderTransformer(data) : data) as IOrderResultsListReqBody;
+
+      const response = await API.results.getOrderResultsListForPatient(body, patientId);
+      const {
+        totalItems,
+        currentPage,
+        pageSize,
+        data: { testResults }
+      } = response.data;
+
+      const results: IOrderResultsByPatientList = {
+        totalItems,
+        currentPage,
+        pageSize,
+        testResults
+      };
+
+      dispatch(setOrderResultsByPatientList(results));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsOrderResultsByPatientListLoading(false));
+    }
+  };
 
 const onSpecimentConfirmButtonClicked = () => (dispatch: AppDispatch) => {
   const specimentConfirmButtonStatus = store.getState().results.isSpecimensConfirmationButtonClicked;
@@ -634,6 +670,16 @@ const getOrderResultsFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const getOrderResultsStatuses = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.getOrderResultsStatuses();
+
+    dispatch(setOrderResultsStatuses(response.data.data.items));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
 const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: AppDispatch) => {
   dispatch(setIsOrdersListLoading(true));
 
@@ -695,6 +741,8 @@ export default {
   onSpecimentConfirmButtonClicked,
   getOrderStatuses,
   getOrderResultsFilters,
+  getOrderResultsListForPatient,
+  getOrderResultsStatuses,
   setIsTestResultsSubmitWentSuccessful,
   getOrdersList
 };

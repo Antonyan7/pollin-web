@@ -5,6 +5,7 @@ import {
   IMakeTestResultReleased,
   IMakeTestResultReviewed,
   IMarkInTransitActionReqBody,
+  IOrderResultsListReqBody,
   IOrdersStatuses,
   IResultsReqBody,
   ISpecimensListReqBody,
@@ -19,6 +20,7 @@ import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
+  IOrderResultsByPatientList,
   IOrdersListResponse,
   IPendingSpecimensStats,
   IPendingTestResultStats,
@@ -39,6 +41,7 @@ import {
   IGetTransportFoldersResponse,
   ILabsResponse,
   IOrderResultsFiltersResponse,
+  IOrderResultsStatusesResponse,
   IResultsFiltersResponse,
   ISpecimensFiltersResponse
 } from 'types/results';
@@ -129,6 +132,14 @@ const resultsManager = {
       data
     );
   },
+
+  getOrderResultsListForPatient(data: IOrderResultsListReqBody, patientId: string) {
+    return axiosInstance.post<IOrderResultsByPatientList, IAxiosResponsePaginated<IOrderResultsByPatientList>>(
+      `${baseURL}/v1/test-result`,
+      data,
+      { params: { patientId } }
+    );
+  },
   addMachineForSpecimen(specimenIds: ISpecimensReqBody[], machineId: string) {
     return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
       `${baseURL}/v1/specimen/add-machine`,
@@ -172,6 +183,11 @@ const resultsManager = {
   getOrderResultsFilters() {
     return axiosInstance.get<IOrderResultsFiltersResponse, IAxiosResponse<IOrderResultsFiltersResponse>>(
       `${baseURL}/v1/test-result/filter/emr`
+    );
+  },
+  getOrderResultsStatuses() {
+    return axiosInstance.get<IOrderResultsStatusesResponse, IAxiosResponse<IOrderResultsStatusesResponse>>(
+      `${baseURL}/v1/test-result/status`
     );
   },
   getTransportList(data: ITransportListReqBody) {

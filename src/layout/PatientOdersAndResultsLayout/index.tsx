@@ -6,7 +6,7 @@ import PatientEmrLayout from 'layout/PatientEmrLayout';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 
-const PatientOdersAndResultsSubLayout = ({ children }: PropsWithChildren) => {
+const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
 
   const router = useRouter();
@@ -47,4 +47,4 @@ const PatientOdersAndResultsSubLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default PatientOdersAndResultsSubLayout;
+export default PatientOdersAndResultsLayout;
