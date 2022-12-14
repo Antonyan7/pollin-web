@@ -1,5 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
+import { IOrdersStatusesItems, OrdersFilterOption, OrdersFilterType } from '@axios/results/resultsManagerTypes';
 import {
   IOrderResultsStatus,
   IResultsFilterOption,
@@ -69,6 +69,8 @@ export interface IResultsProps {
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
+  ordersFilters: IOrdersFilterItems[];
+  isOrdersFiltersLoading: boolean;
   isSpecimensConfirmationButtonClicked: boolean;
   orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
@@ -191,6 +193,12 @@ export enum OrdersActions {
   View = 'View',
   Download = 'Download',
   Cancel = 'Cancel'
+}
+
+export interface IOrdersFilterItems {
+  title: string;
+  type: OrdersFilterType;
+  options: OrdersFilterOption[];
 }
 
 export interface IOrdersListItem {

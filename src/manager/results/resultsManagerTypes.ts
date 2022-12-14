@@ -1,6 +1,7 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
 import {
+  IOrdersFilterItems,
   ISpecimensListItemShort,
   ITestResultsDetails,
   OrdersActions,
@@ -147,6 +148,20 @@ export interface IOrdersStatusesItems {
   possibleActions: IOrdersPossibleActions;
   textColor: string;
   backgroundColor: string;
+}
+
+export enum OrdersFilterType {
+  OrderType = 'OrderType',
+  OrderNames = 'OrderNames'
+}
+
+export interface OrdersFilterOption {
+  id: string;
+  title: string;
+}
+
+export interface IOrdersFilters {
+  filters: IOrdersFilterItems[];
 }
 export interface IOrdersStatuses {
   items: IOrdersStatusesItems[];

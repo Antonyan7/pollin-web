@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { OrderListDataFilter, OrderListSortFields, OrdersListDataProps } from '@axios/results/resultsManagerTypes';
+import {
+  OrderListDataFilter,
+  OrderListSortFields,
+  OrdersFilterOption,
+  OrdersListDataProps
+} from '@axios/results/resultsManagerTypes';
 import { Box, CircularProgress, Grid, TableContainer, TablePagination } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
@@ -9,19 +14,27 @@ import { ISortOrder, SortOrder } from 'types/patient';
 import { capitalizeFirst } from '@utils/stringUtils';
 
 import CreateNewOrderButton from './PatientCreateNewOrderButton';
-import PatientOrdersResultFilters from './PatientOrdersResultFilters';
+import PatientOrdersFilters from './PatientOrdersFilters';
 import PatientOrdersTable from './PatientOrdersTable';
 
 const PatientOrdersList = () => {
   const ordersList = useAppSelector(resultsSelector.ordersList);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
   const [sortField, setSortField] = useState<OrderListSortFields>(OrderListSortFields.Status);
-  const [filters] = useState<OrderListDataFilter[]>([]);
+  const [filters, setFilters] = useState<OrderListDataFilter[]>([]);
   const [page, setPage] = useState<number>(0);
   const isOrdersListLoading = useAppSelector(resultsSelector.isOrdersListLoading);
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
+  };
+
+  const handleFiltersUpdate = (updatedFilters: OrdersFilterOption[]) => {
+    const filtersWithoutTitle = updatedFilters.map((filter: OrdersFilterOption) => ({
+      id: filter.id
+    }));
+
+    setFilters(filtersWithoutTitle);
   };
 
   useEffect(() => {
@@ -45,7 +58,7 @@ const PatientOrdersList = () => {
     <Box>
       <Grid container xs={12}>
         <Grid item xs={10} pr={3}>
-          <PatientOrdersResultFilters />
+          <PatientOrdersFilters setFiltersChange={handleFiltersUpdate} />
         </Grid>
         <Grid item xs={2}>
           <CreateNewOrderButton />

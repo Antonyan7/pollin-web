@@ -79,6 +79,8 @@ const {
   setTransportFolders,
   setLastCreatedTransportFolderId,
   setIsTransportFoldersLoading,
+  setIsOrdersFiltersLoadingState,
+  setOrdersFilters,
   setSpecimentConfirmButtonClicked,
   setIsTestResultsSubmitWentSuccessful,
   setOrderResultsFilters,
@@ -644,6 +646,21 @@ const addSpecimenToTransportFolder =
     }
   };
 
+const getOrdersFilters = () => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrdersFiltersLoadingState(true));
+
+  try {
+    const response = await API.results.getOrdersFilters();
+
+    dispatch(setOrdersFilters(response.data.data.filters));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsOrdersFiltersLoadingState(false));
+};
+
 const getOrderStatuses = () => async (dispatch: AppDispatch) => {
   try {
     const response = await API.results.getOrdersStatuses();
@@ -738,6 +755,7 @@ export default {
   getTransportFolders,
   addSpecimenToTransportFolder,
   resetLastCreatedTransportFolderId,
+  getOrdersFilters,
   onSpecimentConfirmButtonClicked,
   getOrderStatuses,
   getOrderResultsFilters,

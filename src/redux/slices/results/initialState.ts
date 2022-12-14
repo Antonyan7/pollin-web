@@ -88,6 +88,8 @@ export const getInitialState = (): IResultsProps => ({
   isOrderResultsByPatientListLoading: false,
   // Initial state of when isTestResultsSubmitWentSuccessful test result is not submitted yet.
   isTestResultsSubmitWentSuccessful: null,
+  ordersFilters: [],
+  isOrdersFiltersLoading: false,
   orderResultsStatuses: [],
   ordersList: {
     orders: [],

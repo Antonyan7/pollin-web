@@ -6,6 +6,7 @@ import {
   IMakeTestResultReviewed,
   IMarkInTransitActionReqBody,
   IOrderResultsListReqBody,
+  IOrdersFilters,
   IOrdersStatuses,
   IResultsReqBody,
   ISpecimensListReqBody,
@@ -253,6 +254,9 @@ const resultsManager = {
         transportFolderId
       }
     );
+  },
+  getOrdersFilters() {
+    return axiosInstance.get<IOrdersFilters, IAxiosResponse<IOrdersFilters>>(`${baseURL}/v1/order/filters`);
   },
   getOrdersStatuses() {
     return axiosInstance.get<IOrdersStatuses, IAxiosResponse<IOrdersStatuses>>(`${baseURL}/v1/order/status`);

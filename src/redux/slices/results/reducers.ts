@@ -7,6 +7,7 @@ import {
   ILab,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
+  IOrdersFilterItems,
   IOrdersList,
   IPendingTestStats,
   IResultsFilterCategory,
@@ -166,6 +167,12 @@ const reducers = createReducer({
   },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
     state.isTestResultsSubmitWentSuccessful = action.payload;
+  },
+  setIsOrdersFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isOrdersFiltersLoading = action.payload;
+  },
+  setOrdersFilters(state, action: IAction<IOrdersFilterItems[]>) {
+    state.ordersFilters = action.payload;
   },
   setOrderResultsStatuses(state, action: IAction<IOrderResultsStatus[]>) {
     state.orderResultsStatuses = action.payload;
