@@ -22,29 +22,15 @@ interface ITimeFieldProps {
 const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) => {
   const [t] = useTranslation();
   const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
-  const { control, formState, getValues, clearErrors, watch } = useFormContext<ITemplateGroup>();
-  const {
-    errors: { timePeriods }
-  } = formState;
-  const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
+  const { control, getValues, clearErrors, watch } = useFormContext<ITemplateGroup>();
+  const { field, fieldState } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, ...fieldProps } = field;
   const theme = useTheme();
-  const timeFieldError = timePeriods?.[index]?.[fieldName];
+  const { error } = fieldState;
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   const startBeforeEndError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
   const endBeforeStartError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
-
-  useEffect(() => {
-    if (timeFieldError?.type === 'required') {
-      const getError =
-        fieldName === 'startTime'
-          ? t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR)
-          : t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR);
-
-      setErrorMessage(getError);
-    }
-  }, [fieldName, t, timeFieldError?.type]);
 
   useEffect(() => {
     watch(() => {
@@ -115,8 +101,8 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
                 svg: { color: theme.palette.primary.main }
               }}
               {...fieldProps}
-              helperText={errorMessage}
-              error={Boolean(errorMessage)}
+              helperText={error?.message ?? errorMessage}
+              error={Boolean(error?.message) || Boolean(errorMessage)}
               onKeyDown={(e) => e.preventDefault()}
               onClick={() => setOpenTimePicker(true)}
             />

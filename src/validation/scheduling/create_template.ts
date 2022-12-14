@@ -1,3 +1,5 @@
+import { Translation } from 'constants/translations';
+import i18next from 'i18next';
 import { PeriodType } from 'types/create-schedule';
 import { array, number, object, string } from 'yup';
 
@@ -7,23 +9,11 @@ export const createTemplateValidationSchema = object({
     object().shape({
       days: array().of(number()).min(1),
       startTime: string()
-        .required()
-        .nullable(true)
-        .test('startTimeBefore', (value, testContext) => {
-          const endTime = new Date(testContext.parent.endTime);
-          const startTime = new Date(value as string);
-
-          return endTime.getTime() >= startTime.getTime();
-        }),
+        .required(i18next.t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_ERROR) as string)
+        .nullable(true),
       endTime: string()
-        .required()
-        .nullable(true)
-        .test('endTimeAfter', (value, testContext) => {
-          const endTime = new Date(testContext.parent.startTime);
-          const startTime = new Date(value as string);
-
-          return endTime.getTime() <= startTime.getTime();
-        }),
+        .required(i18next.t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_ERROR) as string)
+        .nullable(true),
       periodType: string().required(),
       serviceTypes: array().test('serviceTypes', (value, testContext) => {
         const isPeriodServiceType = testContext.parent.periodType === PeriodType.ServiceType;
