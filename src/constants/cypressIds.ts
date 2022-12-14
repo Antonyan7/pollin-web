@@ -77,7 +77,11 @@ export enum CypressIds {
   PAGE_SPECIMEN_COLLECTION_BUTTON_TODAY = 'page.specimen.collection.button.today',
   PAGE_SPECIMEN_COLLECTION_DESKTOP_DATE_PICKER = 'page.specimen.collection.desktop.date.picker',
   PAGE_SPECIMEN_COLLECTION_SELECT_RESOURCE = 'page.specimen.collection.select.resource',
-  PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS = 'page.specimen.collection.select.filters'
+  PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS = 'page.specimen.collection.select.filters',
+  PAGE_CREATE_ORDER_TITLE = 'page.create.order.title',
+  PAGE_CREATE_ORDER_HEADER_TEXT = 'page.create.order.header.text',
+  PAGE_CREATE_ORDER_BUTTON_CREATE_ORDER = 'page.create.order.button.create.order',
+  PAGE_CREATE_ORDER_BUTTON_CANCEL = 'page.create.order.button.cancel'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

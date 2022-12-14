@@ -75,3 +75,7 @@
   page.specimen.collection.desktop.date.picker
   page.specimen.collection.select.resource
   page.specimen.collection.select.filters
+  page.create.order.title
+  page.create.order.header.text
+  page.create.order.button.create.order
+  page.create.order.button.cancel

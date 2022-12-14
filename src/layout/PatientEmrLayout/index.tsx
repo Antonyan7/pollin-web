@@ -34,7 +34,9 @@ const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     const currentIndex = patientListTabLinks.findIndex((tabLink) => router.asPath.includes(tabLink.href));
 
-    setCurrentTabIndex(currentIndex);
+    if (currentIndex !== -1) {
+      setCurrentTabIndex(currentIndex);
+    }
   }, [router]);
 
   useEffect(() => {
