@@ -14,12 +14,14 @@ const AppointmentDescription = () => {
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const descriptionFieldName = 'appointment.description';
   const { control } = useFormContext<IFormValues>();
-  const { field } = useController<IFormValues>({
+  const { field, fieldState } = useController<IFormValues>({
     name: descriptionFieldName,
     control
   });
   const editDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION);
   const editDescriptionLabelCyId = CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION;
+
+  const { error } = fieldState;
 
   useEffect(() => {
     if (field.value && !(details?.appointment?.description === field.value)) {
@@ -40,6 +42,8 @@ const AppointmentDescription = () => {
         fullWidth
         multiline
         {...field}
+        error={!!error?.message}
+        helperText={error?.message}
       />
     </Grid>
   );

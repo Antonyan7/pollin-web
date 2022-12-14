@@ -15,7 +15,7 @@ export const validateInputChange = (_: React.SyntheticEvent, value: string, reas
 export const addAppointmentsValidationSchema = object({
   serviceTypeId: string().required(generateErrorMessage('Appointment type')),
   patientId: string().required(generateErrorMessage('Patient')),
-  description: string().notRequired().max(250, 'Description is too much longer'),
+  description: string().notRequired().max(250, 'Description is too long'),
   date: date()
     .max(futureDate180DaysAfter, "Can't select days for future more than 180 days")
     .required('Date & Start Time are required')

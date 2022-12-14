@@ -4,7 +4,7 @@ import { object, string } from 'yup';
 export const editAppointmentsValidationSchema = object({
   appointment: object({
     id: string(),
-    description: string().notRequired().max(250),
+    description: string().notRequired().max(250, 'Description is too long'),
     date: string().required(generateErrorMessage('Date')).nullable(false),
     status: string().required(generateErrorMessage('Status')),
     cancellationReason: string()
