@@ -6,6 +6,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { maxLength } from 'helpers/constants';
 
 import { IFormValues } from '../types';
 
@@ -42,6 +43,7 @@ const AppointmentDescription = () => {
         fullWidth
         multiline
         {...field}
+        inputProps={{ maxLength }}
         error={!!error?.message}
         helperText={error?.message}
       />

@@ -35,3 +35,5 @@ export const patientListTabLinks = [
   { linkName: 'Referrals', href: 'referrals' }
 ];
 export const rowsPerPage = 10;
+
+export const maxLength = 250;
