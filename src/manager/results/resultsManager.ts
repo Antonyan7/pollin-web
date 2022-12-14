@@ -8,6 +8,7 @@ import {
   IOrdersStatuses,
   IResultsReqBody,
   ISpecimensListReqBody,
+  ISpecimensReqBody,
   ITestResultsData,
   ITestResultsDetailsBody,
   ITransportListReqBody,
@@ -128,11 +129,11 @@ const resultsManager = {
       data
     );
   },
-  addMachineforSpecimen(specimenIds: string[], machineId: string) {
+  addMachineForSpecimen(specimenIds: ISpecimensReqBody[], machineId: string) {
     return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
       `${baseURL}/v1/specimen/add-machine`,
       {
-        specimenIds,
+        specimens: specimenIds,
         machineId
       }
     );

@@ -47,6 +47,10 @@ const isSpecimensInTransportListLoading = createSelector(
 const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
 const transportFolders = createSelector([selector], (state) => state.transportFolders);
 const lastCreatedTransportFolderId = createSelector([selector], (state) => state.lastCreatedTransportFolderId);
+const isSpecimensConfirmationButtonClicked = createSelector(
+  [selector],
+  (state) => state.isSpecimensConfirmationButtonClicked
+);
 const orderStatuses = createSelector([selector], (state) => state.orderStatuses);
 const orderResultsFilters = createSelector([selector], (state) => state.orderResultsFilters);
 const isOrderResultsFiltersLoading = createSelector([selector], (state) => state.isOrderResultsFiltersLoading);
@@ -92,6 +96,7 @@ export default {
   isSpecimensInTransportListLoading,
   transportFolders,
   lastCreatedTransportFolderId,
+  isSpecimensConfirmationButtonClicked,
   orderStatuses,
   orderResultsFilters,
   isOrderResultsFiltersLoading,

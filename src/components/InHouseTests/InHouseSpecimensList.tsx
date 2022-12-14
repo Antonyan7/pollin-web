@@ -63,6 +63,7 @@ const InHouseSpecimensList = () => {
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
   const filtersList = useAppSelector(resultsSelector.specimensFiltersList);
   const isFiltersLoading = useAppSelector(resultsSelector.isSpecimensFiltersLoading);
+  const isSpecimensConfirmationButtonClicked = useAppSelector(resultsSelector.isSpecimensConfirmationButtonClicked);
   const theme = useTheme();
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
@@ -86,7 +87,7 @@ const InHouseSpecimensList = () => {
     };
 
     dispatch(resultsMiddleware.getSpecimensList(data));
-  }, [page, identifiers, selectedFilters, sortField, sortOrder]);
+  }, [page, identifiers, selectedFilters, sortField, sortOrder, isSpecimensConfirmationButtonClicked]);
 
   useEffect(() => {
     setToasHasBeenShown(false);
@@ -203,25 +204,26 @@ const InHouseSpecimensList = () => {
                 ))}
             </TableRow>
           </TableHead>
+          {!isSpecimensListLoading ? (
+            <TableBody>
+              {specimensList?.specimens?.map((row: ISpecimensListItem, index: number) => {
+                const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
+                const isItemSelected = isSelected(row.id);
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-          <TableBody>
-            {specimensList?.specimens?.map((row: ISpecimensListItem, index: number) => {
-              const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
-              const isItemSelected = isSelected(row.id);
-              const labelId = `enhanced-table-checkbox-${index}`;
-
-              return (
-                <InHouseSpecimensRow
-                  row={row}
-                  key={row.id}
-                  actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
-                  isItemSelected={isItemSelected}
-                  onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
-                  labelId={labelId}
-                />
-              );
-            })}
-          </TableBody>
+                return (
+                  <InHouseSpecimensRow
+                    row={row}
+                    key={row.id}
+                    actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
+                    isItemSelected={isItemSelected}
+                    onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
+                    labelId={labelId}
+                  />
+                );
+              })}
+            </TableBody>
+          ) : null}
         </Table>
       </TableContainer>
       {isSpecimensListLoading ? (

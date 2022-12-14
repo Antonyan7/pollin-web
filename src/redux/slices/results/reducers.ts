@@ -145,6 +145,9 @@ const reducers = createReducer({
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.isTransportFoldersLoading = action.payload;
   },
+  setSpecimentConfirmButtonClicked(state, action: IAction<boolean>) {
+    state.isSpecimensConfirmationButtonClicked = action.payload;
+  },
   setOrdersStatuses(state, action: IAction<IOrdersStatusesItems[]>) {
     state.orderStatuses = action.payload;
   },

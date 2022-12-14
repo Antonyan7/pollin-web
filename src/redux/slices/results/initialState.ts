@@ -47,6 +47,7 @@ export const getInitialState = (): IResultsProps => ({
     totalItems: 0,
     notFound: []
   },
+  isSpecimensConfirmationButtonClicked: false,
   isSpecimensListLoading: false,
   specimensFilters: [],
   isSpecimensFiltersLoading: false,

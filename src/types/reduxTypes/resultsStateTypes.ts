@@ -58,6 +58,7 @@ export interface IResultsProps {
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
+  isSpecimensConfirmationButtonClicked: boolean;
   orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
   isOrderResultsFiltersLoading: boolean;

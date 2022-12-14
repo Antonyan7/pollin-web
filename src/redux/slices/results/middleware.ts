@@ -6,6 +6,7 @@ import {
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimensListReqBody,
+  ISpecimensReqBody,
   ITestResultsData,
   ITestResultsParams,
   ITransportListReqBody,
@@ -15,7 +16,7 @@ import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
-import { AppDispatch } from '@redux/store';
+import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
@@ -76,12 +77,13 @@ const {
   setTransportFolders,
   setLastCreatedTransportFolderId,
   setIsTransportFoldersLoading,
+  setSpecimentConfirmButtonClicked,
+  setIsTestResultsSubmitWentSuccessful,
   setOrderResultsFilters,
   setOrderResultsFiltersLoadingState,
   setOrdersList,
   setIsOrdersListLoading,
-  setOrdersStatuses,
-  setIsTestResultsSubmitWentSuccessful
+  setOrdersStatuses
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -335,9 +337,19 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
   }
 };
 
-const addMachineforSpecimen = (specimens: string[], machineId: string) => async (dispatch: AppDispatch) => {
+const onSpecimentConfirmButtonClicked = () => (dispatch: AppDispatch) => {
+  const specimentConfirmButtonStatus = store.getState().results.isSpecimensConfirmationButtonClicked;
+
+  dispatch(setSpecimentConfirmButtonClicked(!specimentConfirmButtonStatus));
+};
+
+const addMachineforSpecimen = (specimens: ISpecimensReqBody[], machineId: string) => async (dispatch: AppDispatch) => {
   try {
-    await API.results.addMachineforSpecimen(specimens, machineId);
+    const response = await API.results.addMachineForSpecimen(specimens, machineId);
+
+    if (response) {
+      dispatch(onSpecimentConfirmButtonClicked());
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -378,7 +390,11 @@ const applyRetestAction = (specimens: string[], reasonId: string) => async (disp
   try {
     const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
 
-    await API.results.applyRetestAction(specimenData, reasonId);
+    const response = await API.results.applyRetestAction(specimenData, reasonId);
+
+    if (response) {
+      dispatch(onSpecimentConfirmButtonClicked());
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -388,7 +404,11 @@ const applyRecollectAction = (specimens: string[], reasonId: string) => async (d
   try {
     const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
 
-    await API.results.applyRecollectAction(specimenData, reasonId);
+    const response = await API.results.applyRecollectAction(specimenData, reasonId);
+
+    if (response) {
+      dispatch(onSpecimentConfirmButtonClicked());
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -672,6 +692,7 @@ export default {
   getTransportFolders,
   addSpecimenToTransportFolder,
   resetLastCreatedTransportFolderId,
+  onSpecimentConfirmButtonClicked,
   getOrderStatuses,
   getOrderResultsFilters,
   setIsTestResultsSubmitWentSuccessful,

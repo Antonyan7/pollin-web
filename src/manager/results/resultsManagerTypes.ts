@@ -75,7 +75,9 @@ export interface ISpecimensListReqBody {
   filters?: Omit<IResultsFilterOption, 'title'>[];
   sortByField?: SpecimensListSortFields;
 }
-
+export interface ISpecimensReqBody {
+  id: string;
+}
 export interface IAllTestsSpecimensReqBody {
   page: number;
   specimens?: ISpecimensListItemShort[];

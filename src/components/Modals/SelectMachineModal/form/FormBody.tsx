@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo,useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
@@ -69,10 +69,12 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
   const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
   const [machineVal, setMachineVal] = useState('');
 
+  const specimens = useMemo(() => specimenIds.map((id) => ({ id })), [specimenIds]);
+
   const onConfirmClick = useCallback(() => {
     switch (actionType) {
       case ActionType.InProgress:
-        dispatch(resultsMiddleware.addMachineforSpecimen(specimenIds, machineVal));
+        dispatch(resultsMiddleware.addMachineforSpecimen(specimens, machineVal));
         break;
       case ActionType.Retest:
         dispatch(resultsMiddleware.applyRetestAction(specimenIds, machineVal));
@@ -85,7 +87,7 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
     }
 
     dispatch(viewsMiddleware.closeModal(ModalName.SelectMachineModal));
-  }, [specimenIds, machineVal, actionType]);
+  }, [specimenIds, machineVal, actionType, specimens]);
 
   return (
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>
