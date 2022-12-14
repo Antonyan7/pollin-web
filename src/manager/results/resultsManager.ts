@@ -5,6 +5,7 @@ import {
   IMakeTestResultReleased,
   IMakeTestResultReviewed,
   IMarkInTransitActionReqBody,
+  IOrdersStatuses,
   IResultsReqBody,
   ISpecimensListReqBody,
   ITestResultsData,
@@ -235,6 +236,9 @@ const resultsManager = {
         transportFolderId
       }
     );
+  },
+  getOrdersStatuses() {
+    return axiosInstance.get<IOrdersStatuses, IAxiosResponse<IOrdersStatuses>>(`${baseURL}/v1/order/status`);
   },
   getOrdersList(ordersListData: OrdersListDataProps) {
     return axiosInstance.post<IOrdersListResponse, IAxiosResponsePaginated<IOrdersListResponse>>(

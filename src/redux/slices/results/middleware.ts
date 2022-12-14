@@ -78,9 +78,10 @@ const {
   setIsTransportFoldersLoading,
   setOrderResultsFilters,
   setOrderResultsFiltersLoadingState,
-  setIsTestResultsSubmitWentSuccessful,
   setOrdersList,
-  setIsOrdersListLoading
+  setIsOrdersListLoading,
+  setOrdersStatuses,
+  setIsTestResultsSubmitWentSuccessful
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -587,6 +588,17 @@ const addSpecimenToTransportFolder =
     }
   };
 
+const getOrderStatuses = () => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.getOrdersStatuses();
+
+    dispatch(setOrdersStatuses(response.data.data.items));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const getOrderResultsFilters = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setOrderResultsFiltersLoadingState(true));
@@ -660,6 +672,7 @@ export default {
   getTransportFolders,
   addSpecimenToTransportFolder,
   resetLastCreatedTransportFolderId,
+  getOrderStatuses,
   getOrderResultsFilters,
   setIsTestResultsSubmitWentSuccessful,
   getOrdersList

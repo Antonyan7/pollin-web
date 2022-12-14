@@ -1,3 +1,4 @@
+import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -143,6 +144,9 @@ const reducers = createReducer({
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.isTransportFoldersLoading = action.payload;
+  },
+  setOrdersStatuses(state, action: IAction<IOrdersStatusesItems[]>) {
+    state.orderStatuses = action.payload;
   },
   setOrderResultsFilters(state, action: IAction<IOrderResultsFilterCategory[]>) {
     state.orderResultsFilters = action.payload;

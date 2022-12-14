@@ -3,6 +3,8 @@ import { ISortOrder, SortOrder } from 'types/patient';
 import {
   ISpecimensListItemShort,
   ITestResultsDetails,
+  OrdersActions,
+  OrdersListItemStatus,
   TestResultMeasurementType
 } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
@@ -116,6 +118,20 @@ export interface ITestResultsDetailsBody {
 export interface IAddMachineforSpecimen extends IEmptyResponse {}
 export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
+export interface IOrdersPossibleActions {
+  id: OrdersActions[];
+}
+
+export interface IOrdersStatusesItems {
+  status: OrdersListItemStatus;
+  title: string;
+  possibleActions: IOrdersPossibleActions;
+  textColor: string;
+  backgroundColor: string;
+}
+export interface IOrdersStatuses {
+  items: IOrdersStatusesItems[];
+}
 export interface OrderListDataFilter {
   id: string;
 }

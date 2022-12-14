@@ -1,4 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
+import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
 import { IResultsFilterOption, ITransportFolder, TestResultsStats } from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
@@ -57,6 +58,7 @@ export interface IResultsProps {
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
+  orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
   isOrderResultsFiltersLoading: boolean;
   isTestResultsSubmitWentSuccessful: boolean | null;
@@ -152,6 +154,13 @@ export enum OrdersListItemStatus {
   AwaitingResults = 'AwaitingResults',
   Completed = 'Completed',
   Cancelled = 'Cancelled'
+}
+
+export enum OrdersActions {
+  ViewAndEdit = 'ViewAndEdit',
+  View = 'View',
+  Download = 'Download',
+  Cancel = 'Cancel'
 }
 
 export interface IOrdersListItem {

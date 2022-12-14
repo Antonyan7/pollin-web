@@ -37,6 +37,10 @@ const PatientOrdersList = () => {
     dispatch(resultsMiddleware.getOrdersList(data));
   }, [filters, page, sortField, sortOrder]);
 
+  useEffect(() => {
+    dispatch(resultsMiddleware.getOrderStatuses());
+  }, []);
+
   return (
     <Box>
       <Grid container xs={12}>
