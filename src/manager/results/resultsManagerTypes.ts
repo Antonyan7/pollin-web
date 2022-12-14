@@ -1,5 +1,5 @@
 import { IEmptyResponse } from 'manager/common';
-import { SortOrder } from 'types/patient';
+import { ISortOrder, SortOrder } from 'types/patient';
 import {
   ISpecimensListItemShort,
   ITestResultsDetails,
@@ -115,3 +115,18 @@ export interface ITestResultsDetailsBody {
 
 export interface IAddMachineforSpecimen extends IEmptyResponse {}
 export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
+
+export interface OrderListDataFilter {
+  id: string;
+}
+
+export enum OrderListSortFields {
+  DateCreated = 'Date',
+  Status = 'Status'
+}
+export interface OrdersListDataProps {
+  page: number;
+  filters?: OrderListDataFilter[];
+  sortOrder: ISortOrder;
+  sortByField: OrderListSortFields;
+}

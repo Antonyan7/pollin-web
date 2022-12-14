@@ -75,7 +75,9 @@ const PatientEmrLayout = ({ children }: PropsWithChildren) => {
       >
         {patientListTabLinks.map((link, linkIndex) => {
           const availableLinks =
-            link.linkName !== AvailablePages.Encounters && link.linkName !== AvailablePages.Profile;
+            link.linkName !== AvailablePages.Encounters &&
+            link.linkName !== AvailablePages.Profile &&
+            link.linkName !== AvailablePages.OrdersResults;
 
           return (
             currentPatientId && (

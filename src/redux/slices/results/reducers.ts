@@ -4,6 +4,7 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
+  IOrdersList,
   IPendingTestStats,
   IResultsFilterCategory,
   IResultsList,
@@ -144,6 +145,12 @@ const reducers = createReducer({
   },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
     state.isTestResultsSubmitWentSuccessful = action.payload;
+  },
+  setOrdersList(state, action: IAction<IOrdersList>) {
+    state.ordersList = action.payload;
+  },
+  setIsOrdersListLoading(state, action: IAction<boolean>) {
+    state.isOrdersListLoading = action.payload;
   }
 });
 

@@ -33,7 +33,8 @@ export enum SortOrder {
 
 export enum AvailablePages {
   Encounters = 'Encounters',
-  Profile = 'Patient Profile'
+  Profile = 'Patient Profile',
+  OrdersResults = 'Orders & Results'
 }
 
 export enum PatientListField {

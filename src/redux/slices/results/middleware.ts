@@ -8,7 +8,8 @@ import {
   ISpecimensListReqBody,
   ITestResultsData,
   ITestResultsParams,
-  ITransportListReqBody
+  ITransportListReqBody,
+  OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
@@ -21,6 +22,7 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
+  IOrdersListResponse,
   IResultsList,
   IRetestRecollectData,
   ISpecimensInTransportList,
@@ -74,7 +76,9 @@ const {
   setTransportFolders,
   setLastCreatedTransportFolderId,
   setIsTransportFoldersLoading,
-  setIsTestResultsSubmitWentSuccessful
+  setIsTestResultsSubmitWentSuccessful,
+  setOrdersList,
+  setIsOrdersListLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -581,6 +585,33 @@ const addSpecimenToTransportFolder =
     }
   };
 
+const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrdersListLoading(true));
+
+  try {
+    const response = await API.results.getOrdersList(ordersListData);
+    const {
+      totalItems,
+      currentPage,
+      pageSize,
+      data: { orders }
+    } = response.data;
+    const listData: IOrdersListResponse = {
+      totalItems,
+      currentPage,
+      pageSize,
+      orders
+    };
+
+    dispatch(setOrdersList(listData));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsOrdersListLoading(false));
+};
+
 export default {
   getResultsList,
   resetTestResultsState,
@@ -612,5 +643,6 @@ export default {
   getTransportFolders,
   addSpecimenToTransportFolder,
   resetLastCreatedTransportFolderId,
-  setIsTestResultsSubmitWentSuccessful
+  setIsTestResultsSubmitWentSuccessful,
+  getOrdersList
 };

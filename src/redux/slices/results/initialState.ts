@@ -76,5 +76,12 @@ export const getInitialState = (): IResultsProps => ({
   lastCreatedTransportFolderId: null,
   isTransportFoldersLoading: false,
   // Initial state of when isTestResultsSubmitWentSuccessful test result is not submitted yet.
-  isTestResultsSubmitWentSuccessful: null
+  isTestResultsSubmitWentSuccessful: null,
+  ordersList: {
+    orders: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  },
+  isOrdersListLoading: false
 });

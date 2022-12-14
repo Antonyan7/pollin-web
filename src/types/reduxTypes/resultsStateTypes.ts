@@ -58,6 +58,8 @@ export interface IResultsProps {
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
   isTestResultsSubmitWentSuccessful: boolean | null;
+  ordersList: IOrdersList;
+  isOrdersListLoading: boolean;
 }
 
 export enum ITransportFolderStatus {
@@ -142,6 +144,22 @@ export interface IAllTestsSpecimensListItem {
   age: number;
 }
 
+export enum OrdersListItemStatus {
+  NotCollected = 'NotCollected',
+  Collecting = 'Collecting',
+  AwaitingResults = 'AwaitingResults',
+  Completed = 'Completed',
+  Cancelled = 'Cancelled'
+}
+
+export interface IOrdersListItem {
+  id: string;
+  createdAt: Date;
+  title: string;
+  orderTypes: string;
+  status: OrdersListItemStatus;
+}
+
 export interface ISpecimensListItemShort {
   identifier: string;
 }
@@ -155,6 +173,12 @@ export interface IAllTestsSpecimensList extends IPagination {
   specimens: IAllTestsSpecimensListItem[];
   notFound: ISpecimensListItemShort[];
 }
+
+export interface IOrdersList extends IPagination {
+  orders: IOrdersListItem[];
+}
+
+export interface IOrdersListResponse extends IOrdersList {}
 
 export interface ISpecimensInTransportListItem {
   id: string;

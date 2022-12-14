@@ -47,6 +47,8 @@ const isSpecimensInTransportListLoading = createSelector(
 const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
 const transportFolders = createSelector([selector], (state) => state.transportFolders);
 const lastCreatedTransportFolderId = createSelector([selector], (state) => state.lastCreatedTransportFolderId);
+const isOrdersListLoading = createSelector([selector], (state) => state.isOrdersListLoading);
+const ordersList = createSelector([selector], (state) => state.ordersList);
 
 export default {
   testResultStateStatus,
@@ -86,5 +88,7 @@ export default {
   specimensInTransportList,
   isSpecimensInTransportListLoading,
   transportFolders,
-  lastCreatedTransportFolderId
+  lastCreatedTransportFolderId,
+  isOrdersListLoading,
+  ordersList
 };

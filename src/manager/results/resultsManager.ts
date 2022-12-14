@@ -9,13 +9,15 @@ import {
   ISpecimensListReqBody,
   ITestResultsData,
   ITestResultsDetailsBody,
-  ITransportListReqBody
+  ITransportListReqBody,
+  OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
+  IOrdersListResponse,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
@@ -226,6 +228,12 @@ const resultsManager = {
         specimens,
         transportFolderId
       }
+    );
+  },
+  getOrdersList(ordersListData: OrdersListDataProps) {
+    return axiosInstance.post<IOrdersListResponse, IAxiosResponsePaginated<IOrdersListResponse>>(
+      `${baseURL}/v1/order/list`,
+      ordersListData
     );
   }
 };
