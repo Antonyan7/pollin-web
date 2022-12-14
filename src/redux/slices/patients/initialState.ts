@@ -75,6 +75,7 @@ export const getInitialState = (): PatientEmrProps => ({
   contactInformation: {
     id: '',
     name: '',
+    patientIdentifier: '',
     dateOfBirth: '',
     ohipNumber: '',
     ohipVersionCode: ''

@@ -31,7 +31,7 @@ const PatientInformation = () => {
         </Grid>
         <Grid item xs={6}>
           <Typography variant="subtitle1">{patientContactInformation.name}</Typography>
-          <Typography variant="subtitle1">{patientContactInformation.id}</Typography>
+          <Typography variant="subtitle1">{patientContactInformation.patientIdentifier}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.dateOfBirth}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.ohipNumber}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.ohipVersionCode}</Typography>

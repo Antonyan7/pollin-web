@@ -167,6 +167,7 @@ export interface ITestResultHistoryResponse {
 
 export interface IPatientContactInformation {
   id: string;
+  patientIdentifier: string;
   name: string;
   dateOfBirth: string;
   ohipNumber: string;
