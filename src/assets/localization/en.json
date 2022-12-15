@@ -30,6 +30,7 @@
   "page.patient.profile.cells.date.title": "Date Created",
   "page.patient.profile.cells.order.name.title": "Order Name(s)",
   "page.patient.profile.cells.order.type": "Order Type(s)",
+  "page.patient.profile.cells.create.order.type": "Order Type",
   "page.patient.profile.cells.status.title": "Status",
   "common.button.view.all": "View All",
   "common.pagination.rows.count": "Rows per page",

@@ -32,6 +32,7 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_CELLS_DATE_TITLE = 'page.patient.profile.cells.date.title',
   PAGE_PATIENT_PROFILE_CELLS_ORDER_NAME_TITLE = 'page.patient.profile.cells.order.name.title',
   PAGE_PATIENT_PROFILE_CELLS_ORDER_TYPE_TITLE = 'page.patient.profile.cells.order.type',
+  PAGE_PATIENT_PROFILE_CELLS_CREATE_ORDER_TYPE = 'page.patient.profile.cells.create.order.type',
   PAGE_PATIENT_PROFILE_CELLS_STATUS_TITLE = 'page.patient.profile.cells.status.title',
   COMMON_BUTTON_VIEW_ALL = 'common.button.view.all',
   COMMON_PAGINATION_ROWS_COUNT = 'common.pagination.rows.count',

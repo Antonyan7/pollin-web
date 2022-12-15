@@ -9,6 +9,7 @@ import {
   IOrderResultsFilterCategory,
   IOrdersFilterItems,
   IOrdersList,
+  IOrderType,
   IPendingTestStats,
   IResultsFilterCategory,
   IResultsList,
@@ -182,6 +183,12 @@ const reducers = createReducer({
   },
   setIsOrdersListLoading(state, action: IAction<boolean>) {
     state.isOrdersListLoading = action.payload;
+  },
+  setOrderTypes(state, action: IAction<IOrderType[]>) {
+    state.orderTypes = action.payload;
+  },
+  setIsOrderTypesLoading(state, action: IAction<boolean>) {
+    state.isOrderTypesLoading = action.payload;
   }
 });
 

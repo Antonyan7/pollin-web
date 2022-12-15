@@ -15,7 +15,7 @@ const CreateNewOrderButton = () => {
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
 
   const onCreateNewOrderButtonClick = () => {
-    router.push(`/patient-emr/${currentPatientId}/orders/create`);
+    router.push(`/patient-emr/details/${currentPatientId}/orders/create`);
   };
 
   return (

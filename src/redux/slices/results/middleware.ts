@@ -90,7 +90,9 @@ const {
   setOrderResultsStatuses,
   setOrdersList,
   setIsOrdersListLoading,
-  setOrdersStatuses
+  setOrdersStatuses,
+  setOrderTypes,
+  setIsOrderTypesLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -724,6 +726,21 @@ const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: 
   dispatch(setIsOrdersListLoading(false));
 };
 
+const getOrderTypes = () => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrderTypesLoading(true));
+
+  try {
+    const response = await API.results.getOrderTypes();
+
+    dispatch(setOrderTypes(response.data.data.orderTypes));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrderTypesLoading(false));
+  }
+};
+
 export default {
   getResultsList,
   resetTestResultsState,
@@ -762,5 +779,6 @@ export default {
   getOrderResultsListForPatient,
   getOrderResultsStatuses,
   setIsTestResultsSubmitWentSuccessful,
-  getOrdersList
+  getOrdersList,
+  getOrderTypes
 };

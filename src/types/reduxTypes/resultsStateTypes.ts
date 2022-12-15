@@ -81,6 +81,8 @@ export interface IResultsProps {
   orderResultsStatuses: IOrderResultsStatus[];
   ordersList: IOrdersList;
   isOrdersListLoading: boolean;
+  orderTypes: IOrderType[];
+  isOrderTypesLoading: boolean;
 }
 
 export enum ITransportFolderStatus {
@@ -348,3 +350,12 @@ export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 export interface TestResultsDetails extends ITestResultsDetails {}
 
 export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}
+
+export interface IOrderType {
+  id: string;
+  title: string;
+}
+
+export interface IOrderTypesList {
+  orderTypes: IOrderType[];
+}

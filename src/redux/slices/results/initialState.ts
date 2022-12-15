@@ -97,5 +97,7 @@ export const getInitialState = (): IResultsProps => ({
     pageSize: 10,
     totalItems: 0
   },
-  isOrdersListLoading: false
+  isOrdersListLoading: false,
+  orderTypes: [],
+  isOrderTypesLoading: false
 });

@@ -23,6 +23,7 @@ import {
   IAllTestsSpecimensList,
   IOrderResultsByPatientList,
   IOrdersListResponse,
+  IOrderTypesList,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
@@ -266,6 +267,9 @@ const resultsManager = {
       `${baseURL}/v1/order/list`,
       ordersListData
     );
+  },
+  getOrderTypes() {
+    return axiosInstance.get<IOrderTypesList, IAxiosResponse<IOrderTypesList>>(`${baseURL}/v1/order/type`);
   }
 };
 

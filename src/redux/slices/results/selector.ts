@@ -64,6 +64,8 @@ const isOrderResultsByPatientListLoading = createSelector(
 const orderResultsStatuses = createSelector([selector], (state) => state.orderResultsStatuses);
 const isOrdersListLoading = createSelector([selector], (state) => state.isOrdersListLoading);
 const ordersList = createSelector([selector], (state) => state.ordersList);
+const orderTypes = createSelector([selector], (state) => state.orderTypes);
+const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
 
 export default {
   testResultStateStatus,
@@ -114,5 +116,7 @@ export default {
   isOrderResultsByPatientListLoading,
   orderResultsStatuses,
   isOrdersListLoading,
-  ordersList
+  ordersList,
+  orderTypes,
+  isOrderTypesLoading
 };
