@@ -4,11 +4,11 @@ import FullCalendar from '@fullcalendar/react';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
+import dayjs from 'dayjs';
 
 import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
 import FullCalendarWrapper from '@ui-component/calendar/FullCalendarWrapper';
 import { StyledDisabledLayer } from '@ui-component/calendar/StyledDisabledLayer';
-import { calculateEndTime } from '@utils/dateUtils';
 
 import { ISpecimenCollectionSlot } from './SpecimenCollectionCalendarTypes';
 import SpecimenCollectionFullCalendarContainer from './SpecimenCollectionFullCalendarContainer';
@@ -54,9 +54,12 @@ const SpecimenCollectionCalendar = () => {
   useEffect(() => {
     const calendarEvents: ISpecimenCollectionSlot[] = specimenAppointments.map((item) => ({
       allDay: false,
-      classNames: ['open-slot', 'font-type'],
+      classNames: ['open-slot'],
       start: item.startTime,
-      end: calculateEndTime(item.startTime, item.timeUnits),
+      end: dayjs(item.startTime)
+        .add(item.timeUnits * 10, 'minutes')
+        .format(),
+      startStr: '',
       title: item.title,
       id: item.id,
       color: item.color ?? 'transparent',

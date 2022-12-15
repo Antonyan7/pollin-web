@@ -41,6 +41,7 @@ const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarD
       eventClick={onEventClick}
       initialDate={calendarDate}
       plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
+      displayEventTime={false}
     />
   );
 };
