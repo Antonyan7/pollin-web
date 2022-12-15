@@ -139,13 +139,13 @@ export interface IAddMachineforSpecimen extends IEmptyResponse {}
 export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
 export interface IOrdersPossibleActions {
-  id: OrdersActions[];
+  id: OrdersActions;
 }
 
 export interface IOrdersStatusesItems {
   status: OrdersListItemStatus;
   title: string;
-  possibleActions: IOrdersPossibleActions;
+  possibleActions: IOrdersPossibleActions[];
   textColor: string;
   backgroundColor: string;
 }
