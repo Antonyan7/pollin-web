@@ -1,9 +1,6 @@
 import { SetStateAction } from 'react';
-import { SelectChangeEvent } from '@mui/material';
 
 import { AddendumsProps } from '../manager/patientEmr/managerPatientEmrTypes';
-
-import { IEncounterType } from './reduxTypes/patient-emrStateTypes';
 
 export interface IPatient {
   id: string;
@@ -83,6 +80,24 @@ export interface IEncountersReqBody {
   filters?: IEncountersFilterOption[];
 }
 
+export interface IEncountersFormBody {
+  content: string;
+  encountersTypeId: string;
+  patientId?: string;
+  id?: string;
+  encounterId?: string;
+}
+
+export interface IEncountersFormDefaultProps {
+  id?: string;
+  content: string;
+}
+
+export enum EncoutnersFormField {
+  EditorContentField = 'content',
+  EncountersTypeField = 'encountersTypeId'
+}
+
 export interface IHeadCell {
   id: string;
   label: string;
@@ -108,13 +123,11 @@ export enum ISortOrder {
 }
 
 export interface SimpleEditorProps {
-  editorValue: string;
+  editorValue?: string;
   setEditorValue: React.Dispatch<SetStateAction<string>>;
   mode: SimpleEditorMode;
   handleCancel?: () => void;
-  handleSave?: () => void;
-  handleEncounterTypeSelect?: (e: SelectChangeEvent) => void;
-  encounterTypes?: IEncounterType[];
+  handleSave?: (values: IEncountersFormBody) => void;
   secondPartAddendums?: AddendumsProps[];
   loadingButtonState?: boolean;
 }

@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
@@ -11,13 +12,14 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins, paddings } from 'themes/themeConstants';
-import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 
 import { encountersCustomizedDate } from '../helpers/encountersDate';
+import { getAddAddendumInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -75,6 +77,10 @@ const AddAddendum = () => {
 
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
+  const methods = useForm({
+    defaultValues: getAddAddendumInitialValues()
+  });
+
   const closeImmediately = (): void => {
     router.push(`/patient-emr/encounter/${currentEncounterId}`);
   };
@@ -89,60 +95,64 @@ const AddAddendum = () => {
     }
   };
 
-  const handleSave = useCallback(() => {
-    if (editorValue && encounterId) {
-      dispatch(
-        patientsMiddleware.createEncounterAddendum({
-          encounterId,
-          content: editorValue
-        })
-      );
-      closeImmediately();
-    }
+  const onSubmit = useCallback(
+    (values: IEncountersFormBody) => {
+      if (values.content && encounterId) {
+        dispatch(
+          patientsMiddleware.createEncounterAddendum({
+            encounterId,
+            content: values.content
+          })
+        );
+        closeImmediately();
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorValue, encounterId]);
+    [editorValue, encounterId]
+  );
 
   return (
-    <EncountersWrapper
-      title={<AddAddendumTitle handleClose={handleClose} encounterNoteEditedTime={encounterNoteEditedTime} />}
-    >
-      <Grid container spacing={3}>
-        <Grid item container xs={12} spacing={1} direction="column">
-          <Grid item>
-            <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
+    <FormProvider {...methods}>
+      <EncountersWrapper
+        title={<AddAddendumTitle handleClose={handleClose} encounterNoteEditedTime={encounterNoteEditedTime} />}
+      >
+        <Grid container>
+          <Grid item container xs={12} spacing={1} direction="column">
+            <Grid item>
+              <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle1">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
+            </Grid>
+            <Grid item>
+              <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
+            </Grid>
+            {encounterData && (
+              <>
+                <Grid item>
+                  <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
+                </Grid>
+                <Grid item pt={paddings.top28}>
+                  <Typography variant="h4">{encounterData.author}</Typography>
+                  <Typography pt={paddings.top8}>
+                    {isEncounterNoteUpdated
+                      ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
+                      : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
+                  </Typography>
+                </Grid>
+              </>
+            )}
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle1">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
-          </Grid>
-          {encounterData && (
-            <>
-              <Grid item>
-                <ParserTypographyWrapper variant="subtitle1">{parse(encounterData.content)}</ParserTypographyWrapper>
-              </Grid>
-              <Grid item pt={paddings.top28}>
-                <Typography variant="h4">{encounterData.author}</Typography>
-                <Typography pt={paddings.top8}>
-                  {isEncounterNoteUpdated
-                    ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
-                    : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
-                </Typography>
-              </Grid>
-            </>
-          )}
+          <NoteEditor
+            handleCancel={handleClose}
+            setEditorValue={setEditorValue}
+            handleSave={onSubmit}
+            mode={SimpleEditorMode.Add_Addendum}
+            loadingButtonState={isCreateEncounterAddendumLoading}
+          />
         </Grid>
-        <NoteEditor
-          handleCancel={handleClose}
-          editorValue={editorValue}
-          setEditorValue={setEditorValue}
-          handleSave={handleSave}
-          mode={SimpleEditorMode.Add_Addendum}
-          loadingButtonState={isCreateEncounterAddendumLoading}
-        />
-      </Grid>
-    </EncountersWrapper>
+      </EncountersWrapper>
+    </FormProvider>
   );
 };
 

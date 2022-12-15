@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Grid, IconButton, SelectChangeEvent, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -9,10 +10,12 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+
+import { getAddEncounterInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -51,11 +54,13 @@ const AddEncounterNote = () => {
   const isCreateEncounterNoteLoading = useAppSelector(patientsSelector.isCreateEncounterNoteLoading);
   const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
-  const [filterTypes, setFilterTypes] = useState<string>('');
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const router = useRouter();
 
-  // Remove all html tags from textVor for compare and decide should show modal or not.
+  const methods = useForm<IEncountersFormBody>({
+    defaultValues: getAddEncounterInitialValues()
+  });
+
   const sanitizedValue: string = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
 
@@ -75,42 +80,38 @@ const AddEncounterNote = () => {
     }
   };
 
-  const handleSave = useCallback(() => {
-    if (filterTypes.length && editorValue) {
-      dispatch(
-        patientsMiddleware.createEncounterNote({
-          patientId,
-          encountersTypeId: filterTypes,
-          content: editorValue
-        })
-      );
-      closeImmediately();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filterTypes, editorValue]);
+  const onSubmit = useCallback(
+    (values: IEncountersFormBody) => {
+      const body = {
+        ...values,
+        patientId
+      };
 
-  const handleEncounterTypeSelect = useCallback((event: SelectChangeEvent) => {
-    setFilterTypes(event.target.value as string);
-  }, []);
+      dispatch(patientsMiddleware.createEncounterNote(body));
+      closeImmediately();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [patientId]
+  );
 
   return (
-    <EncountersWrapper
-      title={<AddEncounterNoteTitle handleClose={handleClose} encounterNoteEditedTime={encounterNoteEditedTime} />}
-    >
-      <Grid container mt={1}>
-        <Grid container>
-          <NoteEditor
-            handleEncounterTypeSelect={handleEncounterTypeSelect}
-            editorValue={editorValue}
-            setEditorValue={setEditorValue}
-            mode={SimpleEditorMode.Add_Note}
-            handleSave={handleSave}
-            handleCancel={handleClose}
-            loadingButtonState={isCreateEncounterNoteLoading}
-          />
+    <FormProvider {...methods}>
+      <EncountersWrapper
+        title={<AddEncounterNoteTitle handleClose={handleClose} encounterNoteEditedTime={encounterNoteEditedTime} />}
+      >
+        <Grid container mt={1}>
+          <Grid container>
+            <NoteEditor
+              setEditorValue={setEditorValue}
+              mode={SimpleEditorMode.Add_Note}
+              handleSave={onSubmit}
+              handleCancel={handleClose}
+              loadingButtonState={isCreateEncounterNoteLoading}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-    </EncountersWrapper>
+      </EncountersWrapper>
+    </FormProvider>
   );
 };
 

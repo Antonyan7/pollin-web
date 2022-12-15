@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { FieldValues, SubmitHandler, useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -9,7 +10,7 @@ import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
-import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { EncoutnersFormField, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -21,6 +22,8 @@ import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encou
 import 'react-quill/dist/quill.snow.css';
 
 const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
+  width: '100%',
+  marginTop: margins.top24,
   '& .quill': {
     borderRadius: borderRadius.radius12,
     '& .ql-toolbar': {
@@ -80,8 +83,6 @@ const EditEncounterNoteAddendums = () => {
 };
 
 const SimpleTextEditor = ({
-  editorValue,
-  handleEncounterTypeSelect,
   setEditorValue,
   mode,
   handleSave,
@@ -92,18 +93,27 @@ const SimpleTextEditor = ({
   const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
   const isEncounterLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const buttonWithLoadingState = loadingButtonState ?? isEncounterLoading;
+  const onSubmit = handleSave as SubmitHandler<FieldValues>;
   const theme = useTheme();
   const [t] = useTranslation();
+  const { handleSubmit, control } = useFormContext();
 
   useEffect(() => {
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
 
   const isEncountersTypeSelectDisabled = mode === SimpleEditorMode.Edit_Note;
+  const encountersTypeFieldName = EncoutnersFormField.EncountersTypeField;
+  const editorFieldName = EncoutnersFormField.EditorContentField;
+
+  const { field: typeField } = useController({ control, name: encountersTypeFieldName });
+  const { field: editorField } = useController({ control, name: editorFieldName });
+  const { value, onChange } = typeField;
+  const { onChange: onEditorFieldChange, ...fieldProps } = editorField;
 
   return (
     <>
-      <StyledGrid item xs={12} theme={theme}>
+      <StyledGrid item xs={12} theme={theme} as="form" onSubmit={handleSubmit(onSubmit)}>
         <SubCardStyled
           sx={{ backgroundColor: theme.palette.secondary[200], border: `${borders.solid1px} inherit`, p: 2 }}
         >
@@ -114,7 +124,8 @@ const SimpleTextEditor = ({
                 labelId="encounter-label"
                 id="encounter-type"
                 label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-                onChange={handleEncounterTypeSelect}
+                value={value}
+                onChange={(event) => onChange(event.target.value)}
               >
                 {encounterTypes?.map((encounterType) => (
                   <MenuItem value={encounterType.id} key={encounterType.toString()}>
@@ -125,9 +136,12 @@ const SimpleTextEditor = ({
             </Grid>
           ) : null}
           <ReactQuill
-            value={editorValue}
             style={{ backgroundColor: theme.palette.common.white }}
-            onChange={setEditorValue}
+            onChange={(event) => {
+              onEditorFieldChange(event);
+              setEditorValue(event);
+            }}
+            {...fieldProps}
           />
           <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
             <StyledButton type="button" variant="outlined" onClick={handleCancel}>
@@ -136,9 +150,8 @@ const SimpleTextEditor = ({
             <ButtonWithLoading
               sx={{ borderRadius: borderRadius.radius8 }}
               isLoading={buttonWithLoadingState}
-              type="button"
+              type="submit"
               variant="contained"
-              onClick={handleSave}
             >
               <Typography mr={buttonWithLoadingState ? margins.right8 : margins.all0}>
                 {!buttonWithLoadingState

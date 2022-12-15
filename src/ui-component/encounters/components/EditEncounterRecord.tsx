@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Grid, IconButton, Typography } from '@mui/material';
+import { Box, CircularProgress, Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
-import parse from 'html-react-parser';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { paddings } from 'themes/themeConstants';
-import { SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { margins } from 'themes/themeConstants';
+import { IEncountersFormBody, IEncountersFormDefaultProps, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
-import ParserTypographyWrapper from '@ui-component/common/Typography';
 
-import { encountersCustomizedDate } from '../helpers/encountersDate';
+import { getEditEncounterInitialValues } from '../helpers/initialValues';
 
 import CurrentAddendum from './CurrentAddendum';
+import EditAddendumHeader from './EditAddendumHeader';
 import EncountersWrapper from './EncountersWrapper';
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
@@ -60,24 +60,39 @@ const EditEncounterAddendumTitle = ({ handleClose, mode, updatedOn }: EditEncoun
   );
 };
 
-const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
+const EditAddednumHeaderTitle = () => {
   const [t] = useTranslation();
+
+  return (
+    <>
+      <Grid item>
+        <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
+      </Grid>
+      <Grid item>
+        <Typography variant="h5">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
+      </Grid>
+    </>
+  );
+};
+
+const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   const router = useRouter();
   const currentAddendumId = router.query.id as string;
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const isUpdateEncounterNoteLoading = useAppSelector(patientsSelector.isUpdateEncounterNoteLoading);
   const isUpdateEncounterAddendumLoading = useAppSelector(patientsSelector.isUpdateEncounterAddendumLoading);
+  const isEncountersDetailsLoading = useAppSelector(patientsSelector.isEncountersDetailsLoading);
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
-  const isEncounterNoteUpdated =
-    new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
   const [currentAddendum, setCurrentAddendum] = useState<AddendumsProps | null>(null);
   const [firstPartAddendums, setFirstPartAddendums] = useState<AddendumsProps[]>([]);
   const [secondPartAddendums, setSecondPartAddendums] = useState<AddendumsProps[]>([]);
   const [editorValue, setEditorValue] = useState<string>('');
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
-  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
-  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
+  const methods = useForm<IEncountersFormBody>({
+    defaultValues: getEditEncounterInitialValues()
+  });
+  const { setValue } = methods;
 
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
@@ -89,12 +104,22 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   }, [currentEncounterId]);
 
   useEffect(() => {
-    if (mode === SimpleEditorMode.Edit_Addendum && currentAddendum) {
-      setEditorValue(currentAddendum.content);
-    } else if (mode === SimpleEditorMode.Edit_Note && encounterData) {
-      setEditorValue(encounterData.content);
+    if (!currentEncounterId && mode === SimpleEditorMode.Edit_Note) {
+      dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
     }
-  }, [mode, currentAddendum, encounterData]);
+  }, [currentEncounterId, mode, router.query.id]);
+
+  useEffect(() => {
+    if (mode === SimpleEditorMode.Edit_Addendum && currentAddendum) {
+      Object.entries(getEditEncounterInitialValues({ content: currentAddendum.content })).map(
+        ([addendumKey, addendumValue]) => setValue(addendumKey as keyof IEncountersFormDefaultProps, addendumValue)
+      );
+    } else if (mode === SimpleEditorMode.Edit_Note && encounterData) {
+      Object.entries(getEditEncounterInitialValues({ content: encounterData.content })).map(([noteKey, noteValue]) =>
+        setValue(noteKey as keyof IEncountersFormDefaultProps, noteValue)
+      );
+    }
+  }, [mode, currentAddendum, encounterData, setValue]);
 
   useEffect(() => {
     if (currentAddendumId && encounterData?.addendums.length) {
@@ -131,80 +156,69 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
     }
   };
 
-  const handleSave = useCallback(() => {
-    if (mode === SimpleEditorMode.Edit_Note) {
-      dispatch(
-        patientsMiddleware.updateEncounterNote({
-          id: currentEncounterId,
-          content: editorValue
-        })
-      );
-    } else if (mode === SimpleEditorMode.Edit_Addendum && currentAddendumId) {
-      dispatch(
-        patientsMiddleware.updateEncounterAddendum({
-          id: currentAddendumId,
-          content: editorValue
-        })
-      );
-    }
+  const onSubmit = useCallback(
+    (values: IEncountersFormDefaultProps) => {
+      if (mode === SimpleEditorMode.Edit_Note) {
+        dispatch(
+          patientsMiddleware.updateEncounterNote({
+            id: currentEncounterId,
+            content: values.content
+          })
+        );
+      } else if (mode === SimpleEditorMode.Edit_Addendum && currentAddendumId) {
+        dispatch(
+          patientsMiddleware.updateEncounterAddendum({
+            id: currentAddendumId,
+            content: values.content
+          })
+        );
+      }
 
-    closeImmediately();
+      closeImmediately();
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editorValue, currentAddendumId, currentEncounterId]);
+    [editorValue, currentAddendumId, currentEncounterId, mode]
+  );
 
   const showFilteredAddendums = firstPartAddendums.length && encounterData;
 
-  return (
-    <EncountersWrapper
-      title={<EditEncounterAddendumTitle handleClose={handleClose} mode={mode} updatedOn={encounterData?.createdOn} />}
-    >
-      <Grid container spacing={3} pt={paddings.top32}>
-        <Grid item container xs={12} spacing={1} direction="column">
-          {encounterData && (
-            <>
-              <Grid item>
-                <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}</Typography>
-              </Grid>
-              <Grid item>
-                <Typography variant="h5">{t(Translation.PAGE_ENCOUNTERS_CONSULTATION_IN_CLINIC)}</Typography>
-              </Grid>
-              {mode === SimpleEditorMode.Edit_Addendum ? (
-                <>
-                  <Grid item>
-                    <Typography variant="subtitle2">{t(Translation.PAGE_ENCOUNTERS_ADDENDUM_NOTE)}</Typography>
-                  </Grid>
-                  <Grid item mt={-1}>
-                    <ParserTypographyWrapper variant="subtitle1">
-                      {parse(encounterData ? encounterData.content : '')}
-                    </ParserTypographyWrapper>
-                  </Grid>
-                  <Grid item container direction="column">
-                    <Typography variant="h4">{encounterData.author}</Typography>
-                    <Typography variant="body1">
-                      {isEncounterNoteUpdated
-                        ? `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)} ${encounterNoteUpdatedTime}`
-                        : `${t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON)} ${encounterNoteCreatedTime}`}
-                    </Typography>
-                  </Grid>
-                </>
-              ) : null}
-            </>
-          )}
-          {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
-            ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} />)
-            : null}
+  return encounterData && !isEncountersDetailsLoading ? (
+    <FormProvider {...methods}>
+      <EncountersWrapper
+        title={
+          <EditEncounterAddendumTitle handleClose={handleClose} mode={mode} updatedOn={encounterData?.createdOn} />
+        }
+      >
+        <Grid container>
+          <Grid item container xs={12} spacing={1} direction="column">
+            <EditAddednumHeaderTitle />
+            <EditAddendumHeader mode={mode} encounterData={encounterData} />
+            {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
+              ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} />)
+              : null}
+          </Grid>
+          <NoteEditor
+            handleCancel={handleClose}
+            handleSave={onSubmit}
+            setEditorValue={setEditorValue}
+            mode={mode}
+            secondPartAddendums={secondPartAddendums}
+            loadingButtonState={isUpdateEncounterNoteLoading ?? isUpdateEncounterAddendumLoading}
+          />
         </Grid>
-        <NoteEditor
-          handleCancel={handleClose}
-          handleSave={handleSave}
-          editorValue={editorValue}
-          setEditorValue={setEditorValue}
-          mode={mode}
-          secondPartAddendums={secondPartAddendums}
-          loadingButtonState={isUpdateEncounterNoteLoading ?? isUpdateEncounterAddendumLoading}
-        />
-      </Grid>
-    </EncountersWrapper>
+      </EncountersWrapper>
+    </FormProvider>
+  ) : (
+    <Box
+      sx={{
+        display: 'grid',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: margins.top16
+      }}
+    >
+      <CircularProgress sx={{ margin: margins.auto }} />
+    </Box>
   );
 };
 
