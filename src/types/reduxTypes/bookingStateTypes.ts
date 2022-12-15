@@ -91,6 +91,12 @@ export interface IGroupedServiceProvider {
 export interface IPatientInfo {
   id: string;
   name: string;
+  dateOfBirth?: string;
+}
+
+export interface IPatientOption {
+  firstLetter: string;
+  item: IPatientInfo;
 }
 
 export interface IServiceType extends IUniqueItem {

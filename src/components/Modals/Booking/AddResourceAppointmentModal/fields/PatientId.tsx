@@ -12,6 +12,7 @@ import { createOptionsGroupPatients } from 'helpers/berryFunctions';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
+import { IPatientOption } from 'types/reduxTypes/bookingStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -40,6 +41,14 @@ const PatientId = () => {
   const patientsListRef = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef(0);
   const theme = useTheme();
+
+  const getOptionLabel = useCallback((option: IPatientOption | string) => {
+    if (typeof option === 'object') {
+      return `${option.item.name} (DOB: ${option.item.dateOfBirth})`;
+    }
+
+    return option;
+  }, []);
 
   useEffect(() => {
     if (!isLoading && patientsListCurrentPage.current > INITIAL_PAGE_NUMBER && patientsListRef.current) {
@@ -82,7 +91,7 @@ const PatientId = () => {
         id={patientIdFieldName}
         options={patientOptions}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-        getOptionLabel={(option) => (typeof option === 'object' ? option.item.name : option)}
+        getOptionLabel={(option) => getOptionLabel(option)}
         onChange={(_, value) => {
           if (value && typeof value === 'object' && 'item' in value) {
             onChange(value.item.id);
