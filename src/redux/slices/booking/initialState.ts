@@ -38,7 +38,7 @@ export const getInitialState = (): BookingProps => ({
     code: '',
     message: ''
   },
-  cancellAppointmentErrorState: {
+  cancelAppointmentErrorState: {
     code: '',
     message: ''
   },

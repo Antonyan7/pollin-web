@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Autocomplete,
   AutocompleteProps,
   AutocompleteRenderInputParams,
   CircularProgress,
   FormControl,
+  InputAdornment,
   InputLabel,
   Select,
   SelectProps,
@@ -49,11 +50,15 @@ const BaseDropdownWithLoading = <
   dataCy,
   ...otherProps
 }: BaseDropdownWithLoadingProps<T, Multiple, DisableClearable, FreeSolo>) => {
-  const isFirstLoading = useRef(true);
+  const isFirstLoading = useRef<boolean | null>(null);
 
-  if (isFirstLoading.current && isLoading) {
-    isFirstLoading.current = false;
-  }
+  useEffect(() => {
+    if (isFirstLoading.current === null && isLoading) {
+      isFirstLoading.current = true;
+    } else if (isFirstLoading.current === true && !isLoading) {
+      isFirstLoading.current = false;
+    }
+  }, [isLoading]);
 
   return (
     <BaseDropdownWithLoadingContext.Provider value={isLoading}>
@@ -76,7 +81,8 @@ const BaseDropdownWithLoading = <
             {...renderInputProps}
             InputProps={{
               ...params.InputProps,
-              endAdornment: isFirstLoading && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
+              endAdornment:
+                isFirstLoading.current && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
             }}
           />
         )}
@@ -85,18 +91,39 @@ const BaseDropdownWithLoading = <
   );
 };
 
-interface BaseSelectWithLoadingProps extends SelectProps<string> {
+const LoadingIconComponent = () => (
+  <InputAdornment position="end" sx={{ right: '12px', pointerEvents: 'none', position: 'absolute' }}>
+    <CircularProgress color="primary" size={20} />
+  </InputAdornment>
+);
+
+interface BaseSelectWithLoadingProps<T> extends SelectProps<T> {
   isLoading?: boolean;
 }
 
-export const BaseSelectWithLoading: React.FC<BaseSelectWithLoadingProps> = ({ isLoading, ...selectProps }) => (
-  <FormControl fullWidth>
-    <InputLabel id={selectProps.labelId}>{selectProps.label}</InputLabel>
-    <Select {...selectProps}>
-      {selectProps.children}
-      {isLoading && <BottomBarLoading />}
-    </Select>
-  </FormControl>
-);
+export const BaseSelectWithLoading = <T,>({ isLoading, ...selectProps }: BaseSelectWithLoadingProps<T>) => {
+  const isFirstLoading = useRef<boolean | null>(null);
+
+  useEffect(() => {
+    if (isFirstLoading.current === null && isLoading) {
+      isFirstLoading.current = true;
+    } else if (isFirstLoading.current === true && !isLoading) {
+      isFirstLoading.current = false;
+    }
+  }, [isLoading]);
+
+  return (
+    <FormControl fullWidth>
+      <InputLabel id={selectProps.labelId}>{selectProps.label}</InputLabel>
+      <Select
+        {...selectProps}
+        IconComponent={isFirstLoading.current && isLoading ? LoadingIconComponent : selectProps.IconComponent}
+      >
+        {selectProps.children}
+        {!isFirstLoading.current && isLoading && <BottomBarLoading />}
+      </Select>
+    </FormControl>
+  );
+};
 
 export default BaseDropdownWithLoading;

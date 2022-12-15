@@ -58,7 +58,7 @@ export interface BookingProps {
   appointmentStatus: AppointmentStatusState;
   createAppointmentError: IAppointmentErrorState;
   editAppointmentErrorState: IAppointmentErrorState;
-  cancellAppointmentErrorState: IAppointmentErrorState;
+  cancelAppointmentErrorState: IAppointmentErrorState;
   specimenAppointments: ISpecimenAppointmentsState;
 }
 

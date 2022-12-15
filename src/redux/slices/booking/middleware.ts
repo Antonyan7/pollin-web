@@ -45,7 +45,7 @@ const {
   setAppointmentStatus,
   setCreateAppointmentErrorState,
   setEditAppointmentErrorState,
-  setCancellAppointmentErrorState,
+  setCancelAppointmentErrorState,
   setSpecimenAppointmentsFilters,
   setSpecimenAppointmentsFiltersArrayLoading,
   setSpecimenAppointments
@@ -65,6 +65,8 @@ const resetPatientData = (dispatch: AppDispatch) => {
 
 const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsServiceProvidersLoading(true));
+
     const response = await API.booking.getServiceProviders({ page });
     const data: IServiceProviders = {
       totalItems: response.data.totalItems,
@@ -77,6 +79,8 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));
+  } finally {
+    dispatch(setIsServiceProvidersLoading(false));
   }
 };
 
@@ -115,10 +119,11 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
     };
 
     dispatch(updateServiceProviders(data));
-    dispatch(setIsServiceProvidersLoading(false));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));
+  } finally {
+    dispatch(setIsServiceProvidersLoading(false));
   }
 };
 
@@ -417,7 +422,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     Sentry.captureException(error);
 
     if (axios.isAxiosError(error)) {
-      dispatch(setCancellAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
+      dispatch(setCancelAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
 
       dispatch(
         setAppointmentStatus({
