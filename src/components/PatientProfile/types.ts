@@ -1,7 +1,7 @@
 import React from 'react';
 import { IProfileData, IProfileTestResults, ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import { BoxProps, TypographyProps } from '@mui/material';
-import { SxProps } from '@mui/system';
+import { MUIStyledCommonProps, SxProps } from '@mui/system';
 import { PatientProfileOverview } from 'types/reduxTypes/patient-emrStateTypes';
 
 export interface WidgetProps {
@@ -36,4 +36,9 @@ export interface ListLayoutProps {
 
 export interface SecondaryLayoutProps {
   loading?: boolean;
+}
+
+export interface TestHistoryHintProps extends MUIStyledCommonProps {
+  testResultId: string;
+  children: React.ReactElement;
 }

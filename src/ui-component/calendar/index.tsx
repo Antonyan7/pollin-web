@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { IAppointment, ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
+import { CypressIds } from 'constants/cypressIds';
 import { CreateSlot } from './Slot';
 import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 import { StyledDisabledLayer } from './StyledDisabledLayer';
@@ -94,8 +95,10 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
     setSlots(calendarEvents);
   }, [appointments]);
 
+  const fullCalendarComponentCypressId = CypressIds.COMMON_FULL_CALENDAR_COMPONENT;
+
   return (
-    <div style={{ position: 'relative' }}>
+    <div style={{ position: 'relative' }} data-cy={fullCalendarComponentCypressId}>
       {isCalendarLoading && <CalendarLoading />}
       <FullCalendarWrapper>
         {serviceProviderId === '' && (

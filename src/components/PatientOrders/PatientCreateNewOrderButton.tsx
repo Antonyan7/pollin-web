@@ -27,7 +27,7 @@ const CreateNewOrderButton = () => {
       onClick={onCreateNewOrderButtonClick}
     >
       <Typography color={theme.palette.common.white} variant="h4">
-        {t(Translation.PAGE_PATIENT_PROFILE_CRETAE_NEW_ORDER)}
+        {t(Translation.PAGE_PATIENT_PROFILE_CREATE_NEW_ORDER)}
       </Typography>
     </StyledButtonNew>
   );

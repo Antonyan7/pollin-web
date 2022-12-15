@@ -1,258 +1,36 @@
-/* eslint-disable max-lines-per-function */
-import React, { FormEvent, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
-import { FormControl, Grid } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
+import { Grid } from '@mui/material';
+import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
-import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
-import { CypressIds } from 'constants/cypressIds';
-import { Translation } from 'constants/translations';
-import { weekDays } from 'helpers/constants';
-import { calculateWeekByNumber } from 'helpers/scheduling';
-import { viewsMiddleware } from 'redux/slices/views';
-import { IAppliedDay, IApplyScheduleDay } from 'types/apply-schedule';
-import { IApplyScheduleData, ISingleTemplate } from 'types/create-schedule';
-import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
-import { SchedulingTemplateProps } from 'types/reduxTypes/schedulingStateTypes';
+import { schedulingMiddleware } from '@redux/slices/scheduling';
 
-import { calculateTimeInUTC } from '@utils/dateUtils';
-
-import { SeveritiesType } from '../types';
-
-import ActionsField from './fields/ActionsField';
-import ApplyDaysField from './fields/ApplyDaysField';
-import DatePickerField from './fields/DatePickerField';
-import RepeatsField from './fields/RepeatsField';
-import ResourceField from './fields/ResourceField';
-import ScheduleTemplateField from './fields/ScheduleTemplateField';
-import ApplyScheduleFormRow from './form/ApplyScheduleFormRow';
-import { defaultRepeatWeeks, defaultResource, defaultScheduleTemplate } from './defaultValues';
-
-const getUniqueTimePeriodsApplyDates = (scheduleApplyTemplates: { name: string; timePeriods?: ISingleTemplate[] }) => {
-  // Logic For Comparing two or more timePeriods
-  const timePeriodsApplyDates: number[] = (scheduleApplyTemplates?.timePeriods ?? [])
-    .map((item: ISingleTemplate) => item.days)
-    .flat();
-
-  return Array.from(new Set(timePeriodsApplyDates));
-};
-
-const getApplyDaysToDisplay = (uniqueTimePeriodsApplyDates: number[]): IAppliedDay[] =>
-  // Logic For showing apply days checkboxes
-  weekDays
-    .filter((_, index) => uniqueTimePeriodsApplyDates.includes(calculateWeekByNumber(index)))
-    .map((item, index) => ({ dayNum: index, dayLabel: item }));
+import { applyScheduleFormInitialValues } from './constants/defaultValues';
+import FormActions from './actions';
+import FormBody from './body';
 
 const ApplyScheduleForm = () => {
-  const [t] = useTranslation();
-  const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  const scheduleApplyStatus = useAppSelector(schedulingSelector.scheduleApplyStatus);
-  const [resource, setResource] = useState<IServiceProvider>({ ...defaultResource });
-  const [scheduleTemplate, setScheduleTemplate] = useState<SchedulingTemplateProps>({ ...defaultScheduleTemplate });
-  const [isAppliedDays, setIsAppliedDays] = useState<boolean>(false);
-  const [repeatWeeks, setRepeatWeeks] = useState<IApplyScheduleDay>({ ...defaultRepeatWeeks });
-  const [startDate, setStartDate] = useState<Date | string | null>(null);
-  const [endDate, setEndDate] = useState<Date | string | null>(null);
-  const [applyDays, setApplyDays] = useState<number[]>([]);
-  const [applyDaysListRendering, setApplyDaysListRendering] = useState<IAppliedDay[]>([]);
-  const resetFormValues = () => {
-    setScheduleTemplate({ ...defaultScheduleTemplate });
-    setResource({ ...defaultResource });
-    setRepeatWeeks({ ...defaultRepeatWeeks });
-    setIsAppliedDays(false);
-    setStartDate(null);
-    setEndDate(null);
-  };
-
-  //
-  const isAllowedToApplySchedule = !!(
-    resource.id !== '' &&
-    scheduleTemplate.id !== '' &&
-    repeatWeeks &&
-    applyDays.length > 0 &&
-    startDate &&
-    endDate
-  );
-
-  const handleApplyClick = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    const applyScheduleTemplateData: IApplyScheduleData = {
-      resourceId: resource.id,
-      templateId: scheduleTemplate.id,
-      repeatWeeksCount: repeatWeeks.id,
-      applyDays,
-      startDate: startDate ? calculateTimeInUTC(startDate) : startDate,
-      endDate: endDate ? calculateTimeInUTC(endDate) : endDate
-    };
-
-    if (isAllowedToApplySchedule) {
-      dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
-    } else {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
-          }
-        })
-      );
-      dispatch(schedulingMiddleware.resetApplyStatusState());
-    }
-  };
+  const methods = useForm({
+    defaultValues: applyScheduleFormInitialValues
+  });
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(1));
     dispatch(bookingMiddleware.getServiceProviders(1));
+    // FOR UPGRADE TO API V2 DON'T REMOVE this
     // dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 
-  useEffect(() => {
-    const uniqueTimePeriodsApplyDates = getUniqueTimePeriodsApplyDates(scheduleApplyTemplates);
-
-    setApplyDays(uniqueTimePeriodsApplyDates);
-    setApplyDaysListRendering(getApplyDaysToDisplay(uniqueTimePeriodsApplyDates));
-    setIsAppliedDays(true);
-    // eslint-disable-next-line
-  }, [scheduleApplyTemplates]);
-
-  useEffect(() => {
-    if (scheduleApplyStatus.success) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)
-          }
-        })
-      );
-      resetFormValues();
-    } else if (scheduleApplyStatus.fail) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
-          }
-        })
-      );
-    }
-
-    dispatch(schedulingMiddleware.resetApplyStatusState());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleApplyStatus.success, scheduleApplyStatus.fail]);
-
-  const startDateTime = startDate && new Date(startDate).setHours(0, 0, 0, 0);
-  const endDateTime = endDate && new Date(endDate).setHours(0, 0, 0, 0);
-  const curDateTime = new Date().setHours(0, 0, 0, 0);
-
-  const isStartDateLowerThanToday = startDateTime && startDateTime < curDateTime;
-  const isEndDateLowerThanToday = endDateTime && endDateTime < curDateTime;
-  const isStartDateGreaterThanEndDate = startDateTime && endDateTime && startDateTime > endDateTime;
-
-  const [startDateErrorMessage, setStartDateErrorMessage] = useState('');
-  const [endDateErrorMessage, setEndDateErrorMessage] = useState('');
-  const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
-  const scheduleTemplateCyId = CypressIds.PAGE_SCHEDULING_APPLY_TEMPLATE;
-  const repeatCyId = CypressIds.PAGE_SCHEDULING_APPLY_EVERY;
-  const startDateCyId = CypressIds.PAGE_SCHEDULING_APPLY_DATE_START;
-  const endDateCyId = CypressIds.PAGE_SCHEDULING_APPLY_DATE_END;
-
-  const clearErrorMessage = () => {
-    setStartDateErrorMessage('');
-    setEndDateErrorMessage('');
-
-    return '';
-  };
-
-  useEffect(() => {
-    const startDateError = isStartDateLowerThanToday
-      ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_BEFORE_TODAY_ERROR)
-      : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_START_AFTER_END_DATE_ERROR)) ||
-        clearErrorMessage();
-
-    setStartDateErrorMessage(startDateError);
-  }, [isStartDateGreaterThanEndDate, isStartDateLowerThanToday, t]);
-
-  useEffect(() => {
-    const endDateError = isEndDateLowerThanToday
-      ? t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_TODAY_ERROR)
-      : (isStartDateGreaterThanEndDate && t(Translation.PAGE_SCHEDULING_APPLY_DATE_END_BEFORE_START_DATE_ERROR)) ||
-        clearErrorMessage();
-
-    setEndDateErrorMessage(endDateError);
-  }, [isEndDateLowerThanToday, isStartDateGreaterThanEndDate, t]);
-
   return (
-    <ScheduleBoxWrapper>
-      <form onSubmit={(event: FormEvent<HTMLFormElement>) => handleApplyClick(event)}>
+    <FormProvider {...methods}>
+      <ScheduleBoxWrapper>
         <Grid container spacing={3}>
-          <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}>
-            <ResourceField
-              dataCy={resourceCyId}
-              setResource={setResource}
-              resource={resource}
-              label={t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE)}
-            />
-          </ApplyScheduleFormRow>
-          <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}>
-            <ScheduleTemplateField
-              dataCy={scheduleTemplateCyId}
-              scheduleTemplate={scheduleTemplate}
-              setScheduleTemplate={setScheduleTemplate}
-              label={t(Translation.PAGE_SCHEDULING_APPLY_TEMPLATE)}
-            />
-          </ApplyScheduleFormRow>
-          {scheduleTemplate.id && isAppliedDays && applyDaysListRendering.length > 0 && (
-            <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_APPLIED_DAYS)}>
-              <ApplyDaysField
-                applyDays={applyDays}
-                setApplyDays={setApplyDays}
-                applyDaysListRendering={applyDaysListRendering}
-              />
-            </ApplyScheduleFormRow>
-          )}
-          <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_REPEATS)}>
-            <FormControl fullWidth>
-              <RepeatsField
-                dataCy={repeatCyId}
-                repeatWeeks={repeatWeeks}
-                setRepeatWeeks={setRepeatWeeks}
-                label={t(Translation.PAGE_SCHEDULING_APPLY_EVERY)}
-              />
-            </FormControl>
-          </ApplyScheduleFormRow>
-          <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}>
-            <DatePickerField
-              dataCy={startDateCyId}
-              label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_START)}
-              value={startDate}
-              setDate={setStartDate}
-              errorText={startDateErrorMessage}
-            />
-          </ApplyScheduleFormRow>
-          <ApplyScheduleFormRow title={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}>
-            <DatePickerField
-              dataCy={endDateCyId}
-              label={t(Translation.PAGE_SCHEDULING_APPLY_DATE_END)}
-              value={endDate}
-              setDate={setEndDate}
-              errorText={endDateErrorMessage}
-            />
-          </ApplyScheduleFormRow>
-          <Grid item xs={12}>
-            <ActionsField
-              isAllowedToApplySchedule={isAllowedToApplySchedule}
-              submitButtonText={t(Translation.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)}
-            />
-          </Grid>
+          <FormBody />
+          <FormActions />
         </Grid>
-      </form>
-    </ScheduleBoxWrapper>
+      </ScheduleBoxWrapper>
+    </FormProvider>
   );
 };
 

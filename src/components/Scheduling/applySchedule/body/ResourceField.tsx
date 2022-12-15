@@ -1,33 +1,40 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
+import { Translation } from 'constants/translations';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-import { defaultResource } from '../defaultValues';
+import ApplyScheduleFormRow from '../common/ApplyScheduleFormRow';
+import { defaultResource } from '../constants/defaultValues';
+import useFieldControl from '../hooks/useFieldControl';
+import { ApplyScheduleFields } from '../types';
 
-interface Props {
-  setResource: React.Dispatch<React.SetStateAction<IServiceProvider>>;
-  label: string;
-  resource: IServiceProvider;
-  dataCy?: string;
-}
-
-const ResourceField = ({ setResource, label, resource, dataCy }: Props) => {
+const ResourceField = () => {
   const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
   const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
+
+  const [t] = useTranslation();
+  const { field } = useFieldControl(ApplyScheduleFields.RESOURCE);
+
+  const resourceLabel = t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE);
+  const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
+
+  /* TO-DO For upgrading V2 API don't remove commented parts */
   // const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
   // const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
   // const [resourceProviderCurrentPage, setResourceProviderCurrentPage] = useState<number>(1);
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
     if (resourceItem) {
-      setResource(resourceItem);
+      field.onChange(resourceItem);
     } else {
-      setResource({ ...defaultResource });
+      field.onChange({ ...defaultResource });
     }
   };
 
@@ -48,25 +55,25 @@ const ResourceField = ({ setResource, label, resource, dataCy }: Props) => {
   // };
 
   return (
-    <FormControl fullWidth>
-      <BaseDropdownWithLoading
-        dataCy={dataCy}
-        key={resource.id}
-        isLoading={isServiceProvidersLoading}
-        inputValue={resource.title}
-        popupIcon={<KeyboardArrowDownIcon color="primary" />}
-        onChange={(e, value) => {
-          if (value && typeof value !== 'string' && 'id' in value) {
-            onSelectResourceUpdate(value);
-          }
-        }}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        options={serviceProviders.providers}
-        getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
-        clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
-        renderInputProps={{ label }}
-      />
-      {/* <BaseDropdownWithLoading
+    <ApplyScheduleFormRow title={resourceLabel}>
+      <FormControl fullWidth>
+        <BaseDropdownWithLoading
+          isLoading={isServiceProvidersLoading}
+          value={field.value}
+          popupIcon={<KeyboardArrowDownIcon color="primary" />}
+          onChange={(e, value) => {
+            if (value && typeof value !== 'string' && 'id' in value) {
+              onSelectResourceUpdate(value);
+            }
+          }}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
+          options={serviceProviders.providers}
+          getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
+          clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
+          renderInputProps={{ label: resourceLabel }}
+          data-cy={resourceCyId}
+        />
+        {/* <BaseDropdownWithLoading
         isLoading={isGroupedResourceProvidersLoading}
         PopperComponent={GroupedServiceProvidersPopper}
         inputValue={resource.title}
@@ -86,7 +93,8 @@ const ResourceField = ({ setResource, label, resource, dataCy }: Props) => {
         clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
         renderInputProps={{ label }}
       /> */}
-    </FormControl>
+      </FormControl>
+    </ApplyScheduleFormRow>
   );
 };
 

@@ -19,7 +19,7 @@ export const headCellsData = (t: TFunction) => [
   },
   {
     id: 'orderType',
-    label: t(Translation.PAGE_PATIENT_PROFILE_CELLS_ORDER_TYPE_TITLE),
+    label: t(Translation.PAGE_PATIENT_PROFILE_CELLS_ORDER_NAME_TITLE),
     align: 'left',
     paddingLeft: paddings.left0,
     isSortable: false
