@@ -8,3 +8,5 @@ export const toRoundupTime = (time: Date | string | null) =>
 
 export const formatDate = (date: Date | null) =>
   date ? format(new Date(date), `MMM dd, yyy hh:mm a '[${TIME_CONFIG || ''}]'`) : '';
+
+export const getCurrentDate = () => new Date().toISOString();

@@ -306,6 +306,7 @@
   "page.specimens.tracking.transports.cells.status": "Status",
   "page.specimens.tracking.transports.go.back": "Go to Specimen Tracking",
   "page.specimens.tracking.transports.download.manifest": "Download Manifest",
+  "page.specimens.tracking.transports.add.new.transport.folder.button.label": "Add New Transport Folder",
   "common.week.label.single": "Week",
   "common.week.label.multiple": "Weeks",
   "page.patient.order.results.cells.date": "Date Reported",

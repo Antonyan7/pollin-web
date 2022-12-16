@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import {
   Box,
+  Button,
   CircularProgress,
+  Grid,
   Table,
   TableBody,
   TableContainer,
@@ -20,18 +23,23 @@ import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
+import useTestResultPopupMessage from './hooks/useTransportsToast';
 import { headCellsData } from './headCellsData';
+import Header from './Header';
 import { TransportsHeadCell } from './TransportsHeadCell';
 import { TransportsListRow } from './TransportsListRow';
 
 const TransportsList = () => {
   const [page, setPage] = useState<number>(0);
+
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const transportList = useAppSelector(resultsSelector.transportList);
   const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
+
+  useTestResultPopupMessage();
 
   useEffect(() => {
     const data: ITransportListReqBody = {
@@ -52,37 +60,13 @@ const TransportsList = () => {
     setPage(newPage);
   };
   const transportActions = useAppSelector(resultsSelector.transportActions);
-  const testResultStateStatus = useAppSelector(resultsSelector.testResultStateStatus);
-
-  useEffect(() => {
-    if (testResultStateStatus.success) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)
-          }
-        })
-      );
-    } else if (testResultStateStatus.fail) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
-          }
-        })
-      );
-    }
-
-    dispatch(resultsMiddleware.resetTestResultsState());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [testResultStateStatus.success, testResultStateStatus.fail]);
+  const handlePageChange = (newPage: number) => {
+    setPage(page);
+  };
 
   return (
     <>
+      <Header handlePageChange={handlePageChange} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
