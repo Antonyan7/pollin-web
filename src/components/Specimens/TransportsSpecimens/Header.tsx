@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchBox from '@components/SearchBox';
 import { Add } from '@mui/icons-material';
 import { Button, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { resultsMiddleware } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
@@ -29,7 +30,13 @@ const Header: React.FC<HeaderProps> = ({ handlePageChange }) => {
     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_BUTTON_LABEL
   );
 
+  useEffect(() => {
+    dispatch(resultsMiddleware.getLabs());
+  }, []);
+
   const onAddTransportNewFolderClick = () => {
+    dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
+
     dispatch(
       viewsMiddleware.openModal({
         name: ModalName.AddNewTransportFolderModal,

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import { resultsMiddleware } from '@redux/slices/results';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
@@ -27,9 +28,25 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     setAnchorElement(null);
   };
 
+  const handleMoveToTransportAction = useCallback(() => {
+    dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
+    dispatch(
+      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: row.id } })
+    );
+  }, [row.id]);
+
   const onMenuItemClick = useCallback(
     (actionIndex: number) => {
       const element = actions.find((_, index) => index === actionIndex);
+
+      if (
+        element?.id === TransportActionType.MoveToAnotherTransport ||
+        element?.id === TransportActionType.MoveToTransport
+      ) {
+        handleMoveToTransportAction();
+
+        return;
+      }
 
       if (element?.id === TransportActionType.MarkInTransit) {
         dispatch(
@@ -49,7 +66,7 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
         })
       );
     },
-    [actions, row]
+    [actions, row, handleMoveToTransportAction]
   );
 
   return (
