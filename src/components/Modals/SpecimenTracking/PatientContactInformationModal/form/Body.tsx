@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import Actions from '@components/Modals/SpecimenTracking/PatientContactInformationModal/form/Actions';
 import { Box, Grid, TextField, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -35,7 +34,6 @@ const Body = ({ row }: BodyProps) => {
     dispatch(viewsMiddleware.closeModal(ModalName.HandoffConfirmation));
     dispatch(
       resultsMiddleware.markInTransitAction({
-        actionType: TransportActionType.MarkInTransit,
         transportFolderId: row.id,
         driverName,
         comment

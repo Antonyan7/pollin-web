@@ -66,7 +66,6 @@ export interface IResultsReqBody {
 }
 
 export interface IMarkInTransitActionReqBody {
-  actionType: string;
   transportFolderId: string;
   driverName: string;
   comment?: string;
