@@ -50,6 +50,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const [labId, setLabId] = useState<string>('');
   const [transportFolderName, setTransportFolderName] = useState<string>('');
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
+  const [specimenIdArray, setSpecimenIdArray] = useState([]);
 
   const handleDestinationLabChange = (event: SelectChangeEvent) => {
     setLabId(event.target.value as string);
@@ -69,7 +70,11 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   }, [calendarDate, labId, transportFolderName]);
 
   const addSpecimenToAlreadyCreatedTransportFolder = useCallback(() => {
-    const specimens = specimenIds.map((specimenId: string) => ({
+    if (!Array.isArray(specimenIds)) {
+      setSpecimenIdArray([specimenIds]);
+    }
+
+    const specimens = specimenIdArray.map((specimenId: string) => ({
       id: specimenId
     }));
 
@@ -77,7 +82,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolderId));
       dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
     }
-  }, [lastCreatedTransportFolderId, specimenIds]);
+  }, [lastCreatedTransportFolderId, specimenIds, specimenIdArray]);
 
   const onConfirmCreateNewTransportFolder = useCallback(() => {
     createNewTransportFolder();

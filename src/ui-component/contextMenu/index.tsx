@@ -31,9 +31,9 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
   const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     dispatch(
-      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: row.id } })
+      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: row.status } })
     );
-  }, [row.id]);
+  }, [row.status]);
 
   const onMenuItemClick = useCallback(
     (actionIndex: number) => {

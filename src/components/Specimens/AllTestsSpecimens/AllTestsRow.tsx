@@ -39,11 +39,11 @@ export const AllTestsRow = ({ row, actions, isItemSelected, onClick, labelId }: 
       </TableCell>
       <TableCell>{row.titles?.join(', ')}</TableCell>
       <TableCell>{row.identifier}</TableCell>
-      <TableCell>{row.status}</TableCell>
       <TableCell>{row.labName}</TableCell>
       <TableCell align="center">
         <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
       </TableCell>
+      <TableCell>{row.status}</TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
         <ContextMenu actions={actions} row={row} />
       </TableCell>
