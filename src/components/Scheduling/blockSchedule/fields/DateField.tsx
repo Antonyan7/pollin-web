@@ -113,6 +113,9 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
         minutesStep={10}
         DialogProps={{
           sx: {
+            '& .MuiTypography-overline': {
+              textTransform: 'capitalize'
+            },
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
               '& .MuiClockNumber-root': {
