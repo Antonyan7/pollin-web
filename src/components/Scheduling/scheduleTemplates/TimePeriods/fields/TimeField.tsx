@@ -77,7 +77,7 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
             sx: {
               '& > div > div > div > div > div + div > div': {
                 '& .Mui-disabled': {
-                  display: 'none'
+                  color: theme.palette.primary.light
                 }
               }
             }

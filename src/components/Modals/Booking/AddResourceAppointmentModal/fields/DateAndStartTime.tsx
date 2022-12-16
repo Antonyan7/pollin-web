@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { Grid, TextField, TextFieldProps } from '@mui/material';
+import { Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
 import { CypressIds } from 'constants/cypressIds';
@@ -30,7 +30,7 @@ const DateAndStartTime: React.FC = () => {
   const dateAndStartTimeCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DATE_AND_START_TIME;
   const dateAndStartTimeDialogCyId = CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG;
   const dateAndStartTimeDialogComponentCyId = CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT;
-
+  const theme = useTheme();
   const dateFieldName = 'date';
 
   const { field } = useController({
@@ -47,6 +47,7 @@ const DateAndStartTime: React.FC = () => {
         components={{
           ActionBar: DatePickerActionBar
         }}
+        ampm={false}
         views={dateTimeViewOptions}
         toolbarFormat="yyyy, MMM dd"
         disablePast
@@ -69,7 +70,7 @@ const DateAndStartTime: React.FC = () => {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
               '& .Mui-disabled': {
-                display: 'none'
+                color: theme.palette.primary.light
               }
             }
           }

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Grid, TextField, TextFieldProps } from '@mui/material';
+import { Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
@@ -29,7 +29,7 @@ type DateAndStartTimeType = Date | null;
 const DateAndStartTime: React.FC = () => {
   const dateFieldName = 'appointment.date';
   const details = useAppSelector(bookingSelector.appointmentDetails);
-
+  const theme = useTheme();
   const [t] = useTranslation();
   const { control } = useFormContext<IFormValues>();
   const { field } = useController<IFormValues>({
@@ -60,6 +60,7 @@ const DateAndStartTime: React.FC = () => {
         components={{
           ActionBar: DatePickerActionBar
         }}
+        ampm={false}
         label={dateAndStartTimeLabel}
         data-cy={dateAndStartTimeLabelCyId}
         disablePast
@@ -73,7 +74,7 @@ const DateAndStartTime: React.FC = () => {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
               '& .Mui-disabled': {
-                display: 'none'
+                color: theme.palette.primary.light
               }
             }
           }
