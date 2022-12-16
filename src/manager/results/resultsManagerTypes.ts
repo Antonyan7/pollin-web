@@ -135,7 +135,44 @@ export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }
 
-export interface IAddMachineforSpecimen extends IEmptyResponse {}
+export interface IAddMachineForSpecimen extends IEmptyResponse {}
+
+export interface ISpecimenForAppointment {
+  id: string;
+  identifier: string;
+  tests: {
+    title: string;
+  }[];
+  vialColor: {
+    code: string;
+    title: string;
+  };
+}
+
+export interface ISpecimensForAppointment {
+  totalVialsCount: number;
+  collectionDate: string;
+  specimens: ISpecimenForAppointment[];
+}
+
+export interface ISpecimenLocation {
+  id: string;
+  title: string;
+}
+
+export interface ISpecimenLocations {
+  locations: ISpecimenLocation[];
+}
+
+export interface ISpecimenCollection {
+  specimenId: string;
+  storageLocationId: ISpecimenLocation['id'];
+}
+
+export interface ISpecimenCollectionData {
+  appointmentId: string;
+  collections: ISpecimenCollection[];
+}
 export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
 export interface IOrdersPossibleActions {

@@ -49,7 +49,6 @@ export interface IMeasurementListField {
   name:
     | `${string}`
     | `${string}.items`
-    // | `${string}.attachments`
     | `${string}.${number}`
     | `${string}.${number}.result`
     | `${string}.${number}.dateReceived`

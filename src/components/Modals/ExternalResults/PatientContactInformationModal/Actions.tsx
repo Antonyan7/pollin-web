@@ -33,6 +33,19 @@ const Actions = ({ row }: IPatientInfoProps) => {
     }
 
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
+
+    // Check is specimenTrackings patientResults Modal
+    if ('isEditable' in row) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.SpecimenTrackingCollection,
+          props: {
+            appointmentId: row.id
+          }
+        })
+      );
+    }
+
     dispatch(bookingMiddleware.getAppointmentDetails());
   };
 

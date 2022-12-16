@@ -24,6 +24,8 @@ import ScheduleTemplatesErrorModal, {
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import AddNewExistingTransportModal from '@components/Modals/Specimens/AddNewExistingTransport';
 import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
+import SpecimenTrackingCollectionModal from '@components/Modals/SpecimenTracking/Collection';
+import { SpecimenTrackingCollectionModalProps } from '@components/Modals/SpecimenTracking/Collection/types';
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
 } from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
@@ -116,6 +118,10 @@ const getOrderCancellationModal = (modal: IOpenedModal<OrderCancellationProps>) 
   <OrderCancellation key={modal.name} {...modal.props} />
 );
 
+const getSpecimenTrackingCollectionModal = (modal: IOpenedModal<SpecimenTrackingCollectionModalProps>) => (
+  <SpecimenTrackingCollectionModal key={modal.name} appointmentId={modal.props.appointmentId} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
 
@@ -166,6 +172,8 @@ export const ModalsController = () => {
             return getPatientPartnersModal(modal);
           case ModalName.InHouseTestResults:
             return getInHouseTestResultsModal();
+          case ModalName.SpecimenTrackingCollection:
+            return getSpecimenTrackingCollectionModal(modal);
           case ModalName.TestResultReviewConfirmation:
             return getTestResultReviewConfirmation(modal);
           case ModalName.TestResultReleaseConfirmation:

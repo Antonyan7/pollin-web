@@ -1,5 +1,11 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IOrdersStatusesItems, OrdersFilterOption, OrdersFilterType } from '@axios/results/resultsManagerTypes';
+import {
+  IOrdersStatusesItems,
+  ISpecimenLocation,
+  ISpecimensForAppointment,
+  OrdersFilterOption,
+  OrdersFilterType
+} from '@axios/results/resultsManagerTypes';
 import {
   IOrderResultsStatus,
   IResultsFilterOption,
@@ -56,6 +62,11 @@ export interface IResultsProps {
   isTransportListLoading: boolean;
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
+  appointmentSpecimens: ISpecimensForAppointment | null;
+  isAppointmentSpecimensLoading: boolean;
+  specimenStorageLocations: ISpecimenLocation[];
+  isSpecimenStorageLocationsLoading: boolean;
+  isSendingSpecimenCollectionData: boolean;
   reviewDate: string;
   releaseDate: string;
   isTestResultReviewed: boolean;

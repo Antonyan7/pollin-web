@@ -29,6 +29,7 @@ export enum ModalName {
   TestResultReviewConfirmation = 'TestResultReviewConfirmation',
   TestResultReleaseConfirmation = 'TestResultReleaseConfirmation',
   InHouseTestResults = 'InHouseTestResults',
+  SpecimenTrackingCollection = 'SpecimenTrackingCollection',
   HandoffConfirmation = 'HandoffConfirmation',
   OrderCancellation = 'OrderCancellation',
   AddNewTransportFolderModal = 'AddNewTransportFolderModal',

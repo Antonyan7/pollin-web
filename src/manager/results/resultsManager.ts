@@ -1,5 +1,5 @@
 import {
-  IAddMachineforSpecimen,
+  IAddMachineForSpecimen,
   IAddSpecimenToTransportFolder,
   IAllTestsSpecimensReqBody,
   IMakeTestResultReleased,
@@ -9,6 +9,9 @@ import {
   IOrdersFilters,
   IOrdersStatuses,
   IResultsReqBody,
+  ISpecimenCollectionData,
+  ISpecimenLocations,
+  ISpecimensForAppointment,
   ISpecimensListReqBody,
   ISpecimensReqBody,
   ITestResultsData,
@@ -143,7 +146,7 @@ const resultsManager = {
     );
   },
   addMachineForSpecimen(specimenIds: ISpecimensReqBody[], machineId: string) {
-    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/add-machine`,
       {
         specimens: specimenIds,
@@ -152,7 +155,7 @@ const resultsManager = {
     );
   },
   markInTransitAction(reqBody: IMarkInTransitActionReqBody) {
-    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/transport/in-transit`,
       {
         ...reqBody
@@ -160,7 +163,7 @@ const resultsManager = {
     );
   },
   applyRetestAction(specimenData: IRetestRecollectData[], reasonId: string) {
-    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/retest`,
       {
         specimens: specimenData,
@@ -169,7 +172,7 @@ const resultsManager = {
     );
   },
   applyRecollectAction(specimenData: IRetestRecollectData[], reasonId: string) {
-    return axiosInstance.patch<IAddMachineforSpecimen, IAxiosResponse<IAddMachineforSpecimen>>(
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/recollect`,
       {
         specimens: specimenData,
@@ -220,6 +223,22 @@ const resultsManager = {
   getAllTestsSpecimensList(data: IAllTestsSpecimensReqBody) {
     return axiosInstance.post<IAllTestsSpecimensList, IAxiosResponsePaginated<IAllTestsSpecimensList>>(
       `${baseURL}/v1/specimen/collected`,
+      data
+    );
+  },
+  getSpecimensForAppointment(appointmentId: string) {
+    return axiosInstance.get<ISpecimensForAppointment, IAxiosResponse<ISpecimensForAppointment>>(
+      `${baseURL}/v1/specimen/appointment/${appointmentId}`
+    );
+  },
+  getSpecimenStorageLocations() {
+    return axiosInstance.get<ISpecimenLocations, IAxiosResponse<ISpecimenLocations>>(
+      `${baseURL}/v1/specimen-storage-location`
+    );
+  },
+  submitSpecimenCollections(data: ISpecimenCollectionData) {
+    return axiosInstance.patch<ISpecimenCollectionData, IAxiosResponse<ISpecimenCollectionData>>(
+      `${baseURL}/v1/specimen/collect`,
       data
     );
   },

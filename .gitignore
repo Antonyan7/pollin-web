@@ -8,6 +8,7 @@ cypress/tools/node_modules
 /tsconfig.tsbuildinfo
 # IDE
 .idea
+.vscode
 
 # testing
 /coverage

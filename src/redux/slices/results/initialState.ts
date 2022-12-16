@@ -63,6 +63,11 @@ export const getInitialState = (): IResultsProps => ({
     fail: false
   },
   isAllTestsSpecimensListLoading: false,
+  appointmentSpecimens: null,
+  isAppointmentSpecimensLoading: false,
+  specimenStorageLocations: [],
+  isSpecimenStorageLocationsLoading: false,
+  isSendingSpecimenCollectionData: false,
   labs: [],
   isLabsLoading: false,
   isCreatingTransportFolder: false,

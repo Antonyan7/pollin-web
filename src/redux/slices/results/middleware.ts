@@ -6,6 +6,7 @@ import {
   IOrderResultsListReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
+  ISpecimenCollectionData,
   ISpecimensListReqBody,
   ISpecimensReqBody,
   ITestResultsData,
@@ -68,6 +69,11 @@ const {
   setSpecimensFiltersLoadingState,
   setIsAllTestsSpecimensListLoading,
   setAllTestsSpecimensList,
+  setAppointmentSpecimens,
+  setIsAppointmentSpecimensLoading,
+  setSpecimenStorageLocations,
+  setIsSpecimenStorageLocationsLoading,
+  setIsSendingSpecimenCollectionData,
   setLabs,
   setLabsLoadingState,
   setIsCreatingTransportFolderLoading,
@@ -383,7 +389,7 @@ const onSpecimentConfirmButtonClicked = () => (dispatch: AppDispatch) => {
   dispatch(setSpecimentConfirmButtonClicked(!specimentConfirmButtonStatus));
 };
 
-const addMachineforSpecimen = (specimens: ISpecimensReqBody[], machineId: string) => async (dispatch: AppDispatch) => {
+const addMachineForSpecimen = (specimens: ISpecimensReqBody[], machineId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.results.addMachineForSpecimen(specimens, machineId);
 
@@ -531,6 +537,20 @@ const getALLTestsSpecimensList = (payload: IAllTestsSpecimensReqBody) => async (
   }
 };
 
+const getSpecimensForAppointment = (appointmentId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsAppointmentSpecimensLoading(true));
+
+    const response = await API.results.getSpecimensForAppointment(appointmentId);
+
+    dispatch(setAppointmentSpecimens(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsAppointmentSpecimensLoading(false));
+  }
+};
 const getLabs = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setLabsLoadingState(true));
@@ -543,6 +563,45 @@ const getLabs = () => async (dispatch: AppDispatch) => {
     dispatch(setError(error));
   } finally {
     dispatch(setLabsLoadingState(false));
+  }
+};
+
+const getSpecimenStorageLocations = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsSpecimenStorageLocationsLoading(true));
+
+    const response = await API.results.getSpecimenStorageLocations();
+
+    dispatch(setSpecimenStorageLocations(response.data.data.locations));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+    dispatch(setSpecimenStorageLocations([]));
+  } finally {
+    dispatch(setIsSpecimenStorageLocationsLoading(false));
+  }
+};
+
+const submitSpecimenCollections = (data: ISpecimenCollectionData) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsSendingSpecimenCollectionData(true));
+    await API.results.submitSpecimenCollections(data);
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECT_SUCCESS_MESSAGE, {
+            appointmentId: data.appointmentId
+          })
+        }
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsSendingSpecimenCollectionData(false));
   }
 };
 
@@ -751,7 +810,7 @@ export default {
   getTestResultsDetails,
   getLabMachines,
   getSpecimenActions,
-  addMachineforSpecimen,
+  addMachineForSpecimen,
   markInTransitAction,
   applyRetestAction,
   applyRecollectAction,
@@ -766,6 +825,9 @@ export default {
   setIsTestResultsSubmitLoading,
   getSpecimensList,
   getALLTestsSpecimensList,
+  getSpecimensForAppointment,
+  getSpecimenStorageLocations,
+  submitSpecimenCollections,
   getLabs,
   createTransportFolder,
   getSpecimensInTransportList,

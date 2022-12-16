@@ -1,4 +1,4 @@
-import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
+import { IOrdersStatusesItems, ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
@@ -117,6 +117,21 @@ const reducers = createReducer({
   },
   setIsAllTestsSpecimensListLoading(state, action: IAction<boolean>) {
     state.isAllTestsSpecimensListLoading = action.payload;
+  },
+  setAppointmentSpecimens(state, action: IAction<ISpecimensForAppointment>) {
+    state.appointmentSpecimens = action.payload;
+  },
+  setIsAppointmentSpecimensLoading(state, action: IAction<boolean>) {
+    state.isAppointmentSpecimensLoading = action.payload;
+  },
+  setSpecimenStorageLocations(state, action: IAction<ISpecimenLocation[]>) {
+    state.specimenStorageLocations = action.payload;
+  },
+  setIsSpecimenStorageLocationsLoading(state, action: IAction<boolean>) {
+    state.isSpecimenStorageLocationsLoading = action.payload;
+  },
+  setIsSendingSpecimenCollectionData(state, action: IAction<boolean>) {
+    state.isSendingSpecimenCollectionData = action.payload;
   },
   setLabsLoadingState(state, action: IAction<boolean>) {
     state.isLabsLoading = action.payload;

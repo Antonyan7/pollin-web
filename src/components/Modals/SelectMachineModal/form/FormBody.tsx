@@ -74,7 +74,7 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
   const onConfirmClick = useCallback(() => {
     switch (actionType) {
       case ActionType.InProgress:
-        dispatch(resultsMiddleware.addMachineforSpecimen(specimens, machineVal));
+        dispatch(resultsMiddleware.addMachineForSpecimen(specimens, machineVal));
         break;
       case ActionType.Retest:
         dispatch(resultsMiddleware.applyRetestAction(specimenIds, machineVal));

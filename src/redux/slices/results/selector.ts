@@ -25,6 +25,9 @@ const isTestResultsSubmitWentSuccessful = createSelector(
 );
 const specimensFiltersList = createSelector([selector], (state) => state.specimensFilters);
 const isSpecimensFiltersLoading = createSelector([selector], (state) => state.isSpecimensFiltersLoading);
+const appointmentSpecimens = createSelector([selector], (state) => state.appointmentSpecimens);
+const isAppointmentSpecimensLoading = createSelector([selector], (state) => state.isAppointmentSpecimensLoading);
+
 const isLabsLoading = createSelector([selector], (state) => state.isLabsLoading);
 const testResultLabs = createSelector([selector], (state) => state.labs);
 const transportActions = createSelector([selector], (state) => state.transportActions);
@@ -67,6 +70,13 @@ const ordersList = createSelector([selector], (state) => state.ordersList);
 const orderTypes = createSelector([selector], (state) => state.orderTypes);
 const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
 
+const specimenStorageLocations = createSelector([selector], (state) => state.specimenStorageLocations);
+const isSpecimenStorageLocationsLoading = createSelector(
+  [selector],
+  (state) => state.isSpecimenStorageLocationsLoading
+);
+const isSendingSpecimenCollectionData = createSelector([selector], (state) => state.isSendingSpecimenCollectionData);
+
 export default {
   testResultStateStatus,
   resultsList,
@@ -99,6 +109,11 @@ export default {
   isSpecimensFiltersLoading,
   allTestsSpecimensList,
   isAllTestsSpecimensListLoading,
+  appointmentSpecimens,
+  isAppointmentSpecimensLoading,
+  specimenStorageLocations,
+  isSpecimenStorageLocationsLoading,
+  isSendingSpecimenCollectionData,
   isLabsLoading,
   testResultLabs,
   isCreatingTransportFolder,
