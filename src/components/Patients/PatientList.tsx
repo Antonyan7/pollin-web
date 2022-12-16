@@ -56,7 +56,7 @@ const PatientList = () => {
 
   useEffect(() => {
     setPage(0);
-  }, [filters]);
+  }, [filters, searchValue]);
 
   return (
     <PatientListStyled>
