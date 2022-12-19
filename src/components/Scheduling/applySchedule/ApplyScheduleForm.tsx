@@ -18,7 +18,6 @@ const ApplyScheduleForm = () => {
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(1));
     dispatch(bookingMiddleware.getServiceProviders(1));
-    // FOR UPGRADE TO API V2 DON'T REMOVE this
     // dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 

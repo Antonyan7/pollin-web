@@ -83,7 +83,6 @@ export interface IGroupedServiceProviders extends IPagination {
   providers: IGroupedServiceProvider[];
 }
 export interface IGroupedServiceProvider {
-  groupId: string;
   groupTitle: string;
   items: IUniqueItem[];
 }
