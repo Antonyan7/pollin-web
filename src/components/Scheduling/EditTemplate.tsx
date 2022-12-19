@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { Divider, Grid, TextField, Typography } from '@mui/material';
 import { coreSelector } from '@redux/slices/core';
 import { Translation } from 'constants/translations';
+import { isAllDaysFilled } from 'helpers/scheduling';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
@@ -28,12 +29,10 @@ const getDefaultTimePeriodState = (): ISingleTemplate => ({
   serviceTypes: [],
   placeholderName: ''
 });
-
 const getEmptyTemplateState = (): ITemplateGroup => ({
   name: '',
   timePeriods: [getDefaultTimePeriodState()]
 });
-
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
@@ -43,21 +42,11 @@ const EditTemplate = () => {
   const router = useRouter();
   const { scheduleId } = router.query;
   const scheduleTemplateID = scheduleId as string;
-
+  const [isPlusButtonDisabled, setIsPlusButtonDisabled] = useState<boolean>(false);
   const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
-
-  useEffect(() => {
-    dispatch(schedulingMiddleware.getServiceTypes());
-  }, []);
-
-  useEffect(() => {
-    dispatch(schedulingMiddleware.getSingleSchedule(scheduleTemplateID));
-  }, [scheduleId, scheduleTemplateID]);
-
   const onOpenModalClick = () => {
     router.back();
   };
-
   const handleSaveClick = (values: ITemplateGroup) => {
     const body: ITemplateGroup = {
       name: values.name,
@@ -83,19 +72,23 @@ const EditTemplate = () => {
 
     dispatch(schedulingMiddleware.updateSingleSchedule(scheduleTemplateID, body));
   };
-
   const methods = useForm<ITemplateGroup>({
     defaultValues: getEmptyTemplateState(),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     resolver: yupResolver(createTemplateValidationSchema)
   });
-
-  const { watch } = methods;
-
+  const { watch, getValues } = methods;
   const { errors } = methods.formState;
-
   const [errorMessage, setErrorMessage] = useState('');
+  const { setValue, handleSubmit, register } = methods;
+  const { append } = useFieldArray({
+    control: methods.control,
+    name: 'timePeriods'
+  });
+  const onPlusClick = () => {
+    append({ ...getDefaultTimePeriodState(), id: v4() });
+  };
 
   useEffect(() => {
     const getErrorMessage =
@@ -105,17 +98,23 @@ const EditTemplate = () => {
 
     setErrorMessage(getErrorMessage);
   }, [error, errors.name?.type, t]);
+  useEffect(() => {
+    const subscription = watch(() => {
+      const { timePeriods } = getValues();
 
-  const { setValue, handleSubmit, register } = methods;
+      setIsPlusButtonDisabled(isAllDaysFilled(timePeriods));
+    });
 
-  const { append } = useFieldArray({
-    control: methods.control,
-    name: 'timePeriods'
-  });
+    return () => subscription.unsubscribe();
+  }, [getValues, isPlusButtonDisabled, watch]);
 
-  const onPlusClick = () => {
-    append({ ...getDefaultTimePeriodState(), id: v4() });
-  };
+  useEffect(() => {
+    dispatch(schedulingMiddleware.getServiceTypes());
+  }, []);
+
+  useEffect(() => {
+    dispatch(schedulingMiddleware.getSingleSchedule(scheduleTemplateID));
+  }, [scheduleId, scheduleTemplateID]);
 
   useEffect(() => {
     watch(() => {
@@ -150,7 +149,7 @@ const EditTemplate = () => {
               <TimePeriods />
             </Grid>
             <Grid item xs={12}>
-              <PlusIconButton onClick={onPlusClick} />
+              <PlusIconButton onClick={onPlusClick} isPlusButtonDisabled={isPlusButtonDisabled} />
             </Grid>
             <Grid item xs={12} display="flex">
               <StyledButton
