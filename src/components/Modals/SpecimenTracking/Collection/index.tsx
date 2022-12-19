@@ -13,6 +13,7 @@ import BaseModal from '@ui-component/Modal/BaseModal';
 
 import Actions from './Actions';
 import Body from './Body';
+import extractDefaultFormFieldsFromSpecimens from './helpers';
 import { SpecimenTrackingCollectionModalProps } from './types';
 
 const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalProps> = ({ appointmentId }) => {
@@ -21,16 +22,7 @@ const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalP
   const isSpecimensForAppointmentLoading = useAppSelector(resultsSelector.isAppointmentSpecimensLoading);
   const specimensForAppointment = useAppSelector(resultsSelector.appointmentSpecimens);
 
-  const methods = useForm({
-    defaultValues: {
-      locations: specimensForAppointment?.specimens.map((specimen) => ({
-        identifier: specimen.identifier,
-        specimenId: specimen.id,
-        storageLocationId: '',
-        id: specimen.identifier
-      }))
-    }
-  });
+  const methods = useForm();
 
   const { reset } = methods;
 
@@ -41,9 +33,9 @@ const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalP
   }, [appointmentId]);
 
   useEffect(() => {
-    // Make sure that we have initial fields
-    if (specimensForAppointment) {
-      reset();
+    /* Set initial form fields after getting specimensForAppointment  */
+    if (specimensForAppointment && !isSpecimensForAppointmentLoading) {
+      reset({ ...extractDefaultFormFieldsFromSpecimens(specimensForAppointment.specimens) });
     }
   }, [reset, specimensForAppointment, isSpecimensForAppointmentLoading]);
 

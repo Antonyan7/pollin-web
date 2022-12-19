@@ -51,7 +51,7 @@ const AllTestsList = () => {
   const [identifiers, setIdentifiers] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
-  const [toastHasBeenShown, setToasHasBeenShown] = useState(false);
+  const [toastHasBeenShown, setToastHasBeenShown] = useState(false);
   const allTestsSpecimensList = useAppSelector(resultsSelector.allTestsSpecimensList);
   const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
   const theme = useTheme();
@@ -70,14 +70,14 @@ const AllTestsList = () => {
   }, [page, identifiers, sortField, sortOrder]);
 
   useEffect(() => {
-    setToasHasBeenShown(false);
+    setToastHasBeenShown(false);
   }, [identifiers]);
 
   useEffect(() => {
     const shouldShowToast = identifiers.length > 0 && !allTestsSpecimensListLoading && !toastHasBeenShown;
 
     if (shouldShowToast) {
-      setToasHasBeenShown(true);
+      setToastHasBeenShown(true);
 
       if (allTestsSpecimensList.notFound?.length > 0) {
         dispatch(

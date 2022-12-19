@@ -33,7 +33,8 @@ export enum ModalName {
   HandoffConfirmation = 'HandoffConfirmation',
   OrderCancellation = 'OrderCancellation',
   AddNewTransportFolderModal = 'AddNewTransportFolderModal',
-  AddNewExistingTransportModal = 'AddNewExistingTransportModal'
+  AddNewExistingTransportModal = 'AddNewExistingTransportModal',
+  PatientPartnerModal = 'PatientPartnerModal'
 }
 
 export enum OpenModalReason {

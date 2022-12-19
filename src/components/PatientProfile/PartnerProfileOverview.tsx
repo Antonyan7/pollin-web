@@ -5,8 +5,9 @@ import { IconButton } from '@mui/material';
 import { Box } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { useRouter } from 'next/router';
+import { ModalName } from 'types/modals';
 
 import WidgetLayout from './Layout';
 
@@ -15,7 +16,6 @@ const PartnerProfileOverview = () => {
   const profileTestResults = useAppSelector(patientsSelector.profileTestResults);
   const isPatientProfileOverviewLoading = useAppSelector(patientsSelector.isPatientProfileOverviewLoading);
   const [t] = useTranslation();
-  const router = useRouter();
 
   const emptyWidgetTitle = t(Translation.PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE);
 
@@ -27,10 +27,14 @@ const PartnerProfileOverview = () => {
 
   const goToPartnerProfile = (patientId: string) => {
     if (patientId) {
-      const partnerProfileURL = router.pathname.replace('[id]', patientId);
-
-      dispatch(patientsMiddleware.setCurrentPatient(patientId));
-      router.push(partnerProfileURL);
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.PatientPartnerModal,
+          props: {
+            patientId
+          }
+        })
+      );
     }
   };
 

@@ -57,7 +57,7 @@ const InHouseSpecimensList = () => {
   const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [selectedFilters, setSelectedFilters] = useState<ISpecimensFilterOptions[]>([]);
-  const [toastHasBeenShown, setToasHasBeenShown] = useState(false);
+  const [toastHasBeenShown, setToastHasBeenShown] = useState(false);
   const pendingSpecimenStats = useAppSelector(resultsSelector.pendingSpecimenStats);
   const specimensList = useAppSelector(resultsSelector.specimensList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
@@ -90,14 +90,14 @@ const InHouseSpecimensList = () => {
   }, [page, identifiers, selectedFilters, sortField, sortOrder, isSpecimensConfirmationButtonClicked]);
 
   useEffect(() => {
-    setToasHasBeenShown(false);
+    setToastHasBeenShown(false);
   }, [identifiers]);
 
   useEffect(() => {
     const shouldShowToast = identifiers.length > 0 && !isSpecimensListLoading && !toastHasBeenShown;
 
     if (shouldShowToast) {
-      setToasHasBeenShown(true);
+      setToastHasBeenShown(true);
 
       if (specimensList.notFound?.length > 0) {
         dispatch(
