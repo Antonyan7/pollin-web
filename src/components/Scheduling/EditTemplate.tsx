@@ -33,10 +33,16 @@ const getEmptyTemplateState = (): ITemplateGroup => ({
   name: '',
   timePeriods: [getDefaultTimePeriodState()]
 });
+const loadingButtonStyles = {
+  paddingLeft: paddings.left4,
+  paddingRight: paddings.right4,
+  borderRadius: borderRadius.radius8,
+  height: heights.height45
+};
 const EditTemplate = () => {
   const scheduleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
-  const error = useAppSelector(schedulingSelector.scheduleError);
+  const error = useAppSelector(schedulingSelector.scheduleError)?.response?.data.status.message;
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
   const [t] = useTranslation();
   const router = useRouter();
@@ -91,13 +97,14 @@ const EditTemplate = () => {
   };
 
   useEffect(() => {
-    const getErrorMessage =
+    const scheduleEditErrorMessage =
       (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
       (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR)) ||
       '';
 
-    setErrorMessage(getErrorMessage);
+    setErrorMessage(scheduleEditErrorMessage);
   }, [error, errors.name?.type, t]);
+
   useEffect(() => {
     const subscription = watch(() => {
       const { timePeriods } = getValues();
@@ -110,6 +117,7 @@ const EditTemplate = () => {
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getServiceTypes());
+    dispatch(schedulingMiddleware.cleanError());
   }, []);
 
   useEffect(() => {
@@ -166,12 +174,7 @@ const EditTemplate = () => {
                 color="primary"
                 variant="contained"
                 type="submit"
-                sx={{
-                  paddingLeft: paddings.left4,
-                  paddingRight: paddings.right4,
-                  borderRadius: borderRadius.radius8,
-                  height: heights.height45
-                }}
+                sx={{ ...loadingButtonStyles }}
               >
                 {t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)}
               </ButtonWithLoading>

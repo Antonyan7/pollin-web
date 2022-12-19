@@ -42,16 +42,11 @@ const CreateTemplate = () => {
   const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
   const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
   const [isPlusButtonDisabled, setIsPlusButtonDisabled] = useState<boolean>(false);
-  const error = useAppSelector(schedulingSelector.scheduleError);
+  const error = useAppSelector(schedulingSelector.scheduleError)?.response?.data.status.message;
   const templateNameCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME;
   const cancelButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL;
   const saveButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE;
   const plusIconButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_PLUS;
-
-  useEffect(() => {
-    dispatch(schedulingMiddleware.getServiceTypes());
-  }, []);
-
   const onCancelClick = () => {
     dispatch(
       viewsMiddleware.setRedirectionState({
@@ -93,13 +88,13 @@ const CreateTemplate = () => {
   const { watch, getValues } = methods;
   const { errors } = methods.formState;
   const errorMessage =
+    error ||
     (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
     (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
   const { append } = useFieldArray({
     control: methods.control,
     name: 'timePeriods'
   });
-
   const onPlusClick = () => {
     append({ ...getDefaultTimePeriodState(), id: v4() });
   };
@@ -119,6 +114,11 @@ const CreateTemplate = () => {
 
     return () => subscription.unsubscribe();
   }, [getValues, isPlusButtonDisabled, watch]);
+
+  useEffect(() => {
+    dispatch(schedulingMiddleware.getServiceTypes());
+    dispatch(schedulingMiddleware.cleanError());
+  }, []);
 
   return (
     <ScheduleBoxWrapper>

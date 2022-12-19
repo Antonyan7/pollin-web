@@ -208,7 +208,7 @@ const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async
   } catch (originalError) {
     const error = originalError as AxiosError<ITemplateOverlap>;
 
-    if (error?.response?.data?.data.title === ScheduleTemplateErrorMessages.EditTemplateOverlapMessage) {
+    if (error?.response?.data?.data?.title === ScheduleTemplateErrorMessages.EditTemplateOverlapMessage) {
       dispatch(setScheduleOverrides(error.response.data.data.data));
       dispatch(
         viewsMiddleware.openModal({
@@ -258,7 +258,7 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
   } catch (originalError) {
     const error = originalError as AxiosError<ITemplateOverlap>;
 
-    if (error?.response?.data?.data.title === ScheduleTemplateErrorMessages.CreateTemplateOverlapMessage) {
+    if (error?.response?.data?.data?.title === ScheduleTemplateErrorMessages.CreateTemplateOverlapMessage) {
       dispatch(setScheduleOverrides(error.response.data.data.data));
       dispatch(
         viewsMiddleware.openModal({
