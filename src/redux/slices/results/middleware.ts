@@ -76,6 +76,7 @@ const {
   setIsSendingSpecimenCollectionData,
   setLabs,
   setLabsLoadingState,
+  setIsTransportFolderDownloaded,
   setIsCreatingTransportFolderLoading,
   setTransportList,
   setIsTransportListLoading,
@@ -758,6 +759,20 @@ const getOrderResultsStatuses = () => async (dispatch: AppDispatch) => {
     dispatch(setError(error));
   }
 };
+
+const downloadTransportFolderManifest = (transportFolderId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsTransportFolderDownloaded(true));
+
+  try {
+    await API.results.downloadTransportFolderManifest(transportFolderId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsTransportFolderDownloaded(false));
+};
+
 const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: AppDispatch) => {
   dispatch(setIsOrdersListLoading(true));
 
@@ -814,6 +829,7 @@ export default {
   markInTransitAction,
   applyRetestAction,
   applyRecollectAction,
+  downloadTransportFolderManifest,
   getSpecimensFilters,
   submitTestResults,
   getTransportActions,

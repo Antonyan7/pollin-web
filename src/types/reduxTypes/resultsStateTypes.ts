@@ -37,6 +37,7 @@ export enum IFinalResultType {
 export interface IResultsProps {
   resultsList: IResultsList;
   transportList: ITransportList;
+  isTransportFolderDownloaded: boolean;
   resultFilters: IResultsFilterCategory[];
   pendingTestStats: IPendingTestStats[];
   testResultsDetails: TestResultsDetails[];

@@ -77,6 +77,7 @@ export const getInitialState = (): IResultsProps => ({
     pageSize: 10,
     totalItems: 0
   },
+  isTransportFolderDownloaded: false,
   isSpecimensInTransportListLoading: false,
   transportFolders: [],
   lastCreatedTransportFolderId: null,

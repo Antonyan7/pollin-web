@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import SpecimensInTransportList from '@components/Specimens/SpecimensInTransportList/SpecimensInTransportList';
 import { ArrowBackIos } from '@mui/icons-material';
 import DownloadIcon from '@mui/icons-material/Download';
-import { Box, Button, Divider, IconButton, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Typography } from '@mui/material';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
+
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 const SpecimensInTransport = () => {
   const router = useRouter();
   const transportId = router.query.id as string;
   const { t } = useTranslation();
+
+  const handleDownloadClick = useCallback((transportFolderId: string) => {
+    dispatch(resultsMiddleware.downloadTransportFolderManifest(transportFolderId));
+  }, []);
+  const isTransportFolderDownloaded = useAppSelector(resultsSelector.isTransportFolderDownloaded);
 
   return (
     <>
@@ -51,9 +60,16 @@ const SpecimensInTransport = () => {
           <Typography variant="h4" fontWeight={600} color="primary">
             {transportId}
           </Typography>
-          <Button color="primary" variant="contained" size="large" endIcon={<DownloadIcon />}>
+          <ButtonWithLoading
+            isLoading={isTransportFolderDownloaded}
+            color="primary"
+            variant="contained"
+            size="large"
+            endIcon={<DownloadIcon />}
+            onClick={() => handleDownloadClick(transportId)}
+          >
             {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST)}
-          </Button>
+          </ButtonWithLoading>
         </Box>
         <SpecimensInTransportList />
       </Main>

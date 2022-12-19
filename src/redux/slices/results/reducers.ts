@@ -136,6 +136,9 @@ const reducers = createReducer({
   setLabsLoadingState(state, action: IAction<boolean>) {
     state.isLabsLoading = action.payload;
   },
+  setIsTransportFolderDownloaded(state, action: IAction<boolean>) {
+    state.isTransportFolderDownloaded = action.payload;
+  },
   setLabs(state, action: IAction<ILab[]>) {
     state.labs = action.payload;
   },

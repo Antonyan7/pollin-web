@@ -162,6 +162,11 @@ const resultsManager = {
       }
     );
   },
+  downloadTransportFolderManifest(transportFolderId: string) {
+    return axiosInstance.get<void, IAxiosResponse<void>>(
+      `${baseURL}/v1/transport/${transportFolderId}/download-manifest`
+    );
+  },
   applyRetestAction(specimenData: IRetestRecollectData[], reasonId: string) {
     return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/retest`,
