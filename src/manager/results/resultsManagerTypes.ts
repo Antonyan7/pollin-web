@@ -51,6 +51,11 @@ export enum ActionType {
   InProgress = 'InProgress'
 }
 
+export enum OrderResultActionType {
+  Review = 'Review',
+  Release = 'Release'
+}
+
 export enum TransportActionType {
   MarkInTransit = 'MarkInTransit',
   MoveToAnotherTransport = 'MoveToAnotherTransport',

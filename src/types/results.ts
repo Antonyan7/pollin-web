@@ -1,3 +1,4 @@
+import { OrderResultActionType } from '@axios/results/resultsManagerTypes';
 import { ISortOrder } from 'types/patient';
 import {
   ILab,
@@ -21,7 +22,7 @@ export interface IOrderResultsFiltersResponse {
 }
 
 export interface OrderResultAction {
-  id: string;
+  id: OrderResultActionType;
   title: string;
 }
 

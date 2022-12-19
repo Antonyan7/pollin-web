@@ -21,7 +21,7 @@ const TestResultReleaseConfirmationModal = ({ testResultId }: TestResultReleaseC
   const [t] = useTranslation();
   const modalTitle = t(Translation.MODAL_TEST_RESULT_CONFIRM_RELEASE_TO_PATIENT);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.TestResultReleaseConfirmation));
 
   return (
     <BaseModal isLoading={modalLoading} title={modalTitle} onClose={onClose}>

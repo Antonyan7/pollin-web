@@ -29,7 +29,7 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => (
       />
     </TableCell>
     <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-      <ContextMenu actions={actions} />
+      <ContextMenu actions={actions} row={row} />
     </TableCell>
   </TableRow>
 );
