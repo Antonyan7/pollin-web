@@ -1,5 +1,6 @@
 {
   "page.patient.list.title": "Patient List",
+  "page.patient.list.title.emr": "Patient List/EMR",
   "page.patient.list.field.search": "Search Patients",
   "page.patient.list.field.filters": "Filter Results",
   "page.patient.list.alert.count": "None",
@@ -336,5 +337,6 @@
   "page.patient.order.results.cells.result": "Result",
   "page.patient.order.results.cells.status": "Status",
   "page.patient.order.results.cells.finalresulttype": "Final Result Type",
-  "page.patient.order.results.filter.label": "Filter Results"
+  "page.patient.order.results.filter.label": "Filter Results",
+  "page.patient.order.results.details.title": "Order Details"
 }

@@ -2,6 +2,7 @@
 
 export enum Translation {
   PAGE_PATIENT_LIST_TITLE = 'page.patient.list.title',
+  PAGE_PATIENT_LIST_TITLE_EMR = 'page.patient.list.title.emr',
   PAGE_PATIENT_LIST_FIELD_SEARCH = 'page.patient.list.field.search',
   PAGE_PATIENT_LIST_FIELD_FILTERS = 'page.patient.list.field.filters',
   PAGE_PATIENT_LIST_ALERT_COUNT = 'page.patient.list.alert.count',
@@ -338,7 +339,8 @@ export enum Translation {
   PAGE_PATIENT_ORDER_RESULTS_CELLS_RESULT = 'page.patient.order.results.cells.result',
   PAGE_PATIENT_ORDER_RESULTS_CELLS_STATUS = 'page.patient.order.results.cells.status',
   PAGE_PATIENT_ORDER_RESULTS_CELLS_FINALRESULTTYPE = 'page.patient.order.results.cells.finalresulttype',
-  PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL = 'page.patient.order.results.filter.label'
+  PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL = 'page.patient.order.results.filter.label',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TITLE = 'page.patient.order.results.details.title'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
