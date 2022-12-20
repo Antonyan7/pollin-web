@@ -24,11 +24,11 @@ const schedulingManager = {
       data
     );
   },
-  getTemplatesList(pageSize: number) {
+  getTemplatesList(pageSize: number, complete?: boolean) {
     return axiosInstance.get<IScheduleTemplatesListResponse, IAxiosResponsePaginated<IScheduleTemplatesListResponse>>(
       `${baseURL}/v1/templates`,
       {
-        params: { page: pageSize }
+        params: { page: pageSize, complete }
       }
     );
   },

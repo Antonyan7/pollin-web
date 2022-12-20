@@ -54,11 +54,11 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getSchedulingTemplates = (pageSize: number) => async (dispatch: AppDispatch) => {
+const getSchedulingTemplates = (pageSize: number, complete?: boolean) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setSchedulingListLoadingStatus(true));
 
-    const response = await API.scheduling.getTemplatesList(pageSize);
+    const response = await API.scheduling.getTemplatesList(pageSize, complete);
     const data: IScheduleTemplatesList = {
       totalItems: response.data.totalItems,
       pageSize: response.data.pageSize,
@@ -79,7 +79,7 @@ const getNewSchedulingTemplates = (pageSize: number) => async (dispatch: AppDisp
   try {
     dispatch(setSchedulingListLoadingStatus(true));
 
-    const response = await API.scheduling.getTemplatesList(pageSize);
+    const response = await API.scheduling.getTemplatesList(pageSize, false);
 
     const data: IScheduleTemplatesList = {
       totalItems: response.data.totalItems,
