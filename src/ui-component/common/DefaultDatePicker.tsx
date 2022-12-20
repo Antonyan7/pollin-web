@@ -12,18 +12,17 @@ import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
-import { getCurrentDate } from 'helpers/time';
 import { margins } from 'themes/themeConstants';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
-import { futureDate180DaysAfter, getDate, neutralDateTime } from '@utils/dateUtils';
+import { futureDate180DaysAfter, getCurrentDate, getDate, neutralDateTime } from '@utils/dateUtils';
 
 const DefaultDatePicker = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [datePickerOpen, setDatePickerOpen] = useState(false);
-
+  const currentDay = getCurrentDate();
   const onDateDatePickerOpen = () => {
     setDatePickerOpen(true);
   };
@@ -42,12 +41,15 @@ const DefaultDatePicker = () => {
     dispatch(bookingMiddleware.setDateValue(getDate(getCurrentDate())));
   };
 
+  const isToday = getDate(calendarDate) === getDate(currentDay);
+
   return (
     <Stack direction="row" justifyContent="space-between" gap={margins.all16}>
       <StyledButtonNew
         variant="outlined"
         data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_BUTTON_TODAY}
         onClick={onTodayClick}
+        disabled={isToday}
       >
         <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
           {t(Translation.PAGE_SPECIMEN_COLLECTION_BUTTON_TODAY)}

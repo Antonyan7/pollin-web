@@ -16,9 +16,11 @@ import {
   TableRow
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
+import { format } from 'date-fns';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
@@ -35,6 +37,7 @@ const TransportsList = () => {
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const transportList = useAppSelector(resultsSelector.transportList);
+  const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
@@ -43,14 +46,14 @@ const TransportsList = () => {
 
   useEffect(() => {
     const data: ITransportListReqBody = {
-      date: '2020-12-12T16:53:10+01:00',
+      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
       page: page + 1,
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {})
     };
 
     dispatch(resultsMiddleware.getTransportList(data));
-  }, [page, sortField, sortOrder]);
+  }, [calendarDate, page, sortField, sortOrder]);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getTransportActions());
