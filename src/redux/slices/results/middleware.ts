@@ -95,6 +95,7 @@ const {
   setIsOrderResultsByPatientListLoading,
   setOrderResultsByPatientList,
   setOrderResultsStatuses,
+  setIsRequisitionDownloaded,
   setOrdersList,
   setIsOrdersListLoading,
   setOrdersStatuses,
@@ -708,6 +709,19 @@ const addSpecimenToTransportFolder =
     }
   };
 
+const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsRequisitionDownloaded(true));
+
+  try {
+    await API.results.downloadRequisition(orderId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsRequisitionDownloaded(false));
+};
+
 const getOrdersFilters = () => async (dispatch: AppDispatch) => {
   dispatch(setIsOrdersFiltersLoadingState(true));
 
@@ -853,6 +867,7 @@ export default {
   getOrdersFilters,
   onSpecimentConfirmButtonClicked,
   getOrderStatuses,
+  downloadRequisition,
   getOrderResultsFilters,
   getOrderResultsListForPatient,
   getOrderResultsStatuses,

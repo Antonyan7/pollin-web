@@ -190,6 +190,9 @@ const reducers = createReducer({
   setIsOrdersFiltersLoadingState(state, action: IAction<boolean>) {
     state.isOrdersFiltersLoading = action.payload;
   },
+  setIsRequisitionDownloaded(state, action: IAction<boolean>) {
+    state.isRequisitionDownloaded = action.payload;
+  },
   setOrdersFilters(state, action: IAction<IOrdersFilterItems[]>) {
     state.ordersFilters = action.payload;
   },

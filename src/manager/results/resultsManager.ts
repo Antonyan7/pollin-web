@@ -280,6 +280,9 @@ const resultsManager = {
       }
     );
   },
+  downloadRequisition(orderId: string) {
+    return axiosInstance.get<void, IAxiosResponse<void>>(`${baseURL}/v1/order/${orderId}/download-requisition`);
+  },
   getOrdersFilters() {
     return axiosInstance.get<IOrdersFilters, IAxiosResponse<IOrdersFilters>>(`${baseURL}/v1/order/filters`);
   },

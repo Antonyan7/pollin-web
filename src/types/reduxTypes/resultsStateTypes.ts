@@ -87,6 +87,7 @@ export interface IResultsProps {
   orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
   isOrderResultsFiltersLoading: boolean;
+  isRequisitionDownloaded: boolean;
   orderResultsByPatientList: IOrderResultsByPatientList;
   isOrderResultsByPatientListLoading: boolean;
   isTestResultsSubmitWentSuccessful: boolean | null;

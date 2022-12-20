@@ -26,7 +26,7 @@ const OrderCancellationModal = ({ orderId }: OrderCancellationProps) => {
   const [t] = useTranslation();
   const modalTitle = t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_TITLE);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
 
   return (
     <BaseModal isLoading={cancellationReasonsLoading} title={modalTitle} onClose={onClose}>
