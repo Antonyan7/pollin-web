@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Box, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -23,43 +24,47 @@ const TestHistoryTooltipContent = ({ testResultId }: Omit<TestHistoryHintProps, 
     if (shouldFetchTestResult) {
       dispatch(patientsMiddleware.getProfileTestResultsHistory(currentPatientId, testResultId));
     }
-  }, [testResultId, currentPatientId]);
 
-  return !testResultsHistory && !isTestResultsHistoryLoading ? (
+    return () => {
+      dispatch(patientsMiddleware.cleanTestResultsHistory());
+    };
+  }, [currentPatientId, testResultId]);
+
+  const areThereNotAnyAvailableTestResults = testResultsHistory.length === 0 && !isTestResultsHistoryLoading;
+
+  return (
     <Box
       sx={{
-        width: '205px'
+        width: 205,
+        ...(!areThereNotAnyAvailableTestResults && { pb: paddings.bottom8 })
       }}
     >
-      <Typography variant="body1">{testResultHistoryNoTrendsLabel}</Typography>
-    </Box>
-  ) : (
-    <Box
-      sx={{
-        width: '205px',
-        pb: paddings.bottom8
-      }}
-    >
-      <ListLayout
-        items={testResultsHistory?.items as IListLayoutItem[]}
-        title={testResultsHistory?.widgetTitle}
-        renderAsList
-        componentProps={{
-          list: {
-            py: 0,
-            px: paddings.leftRight20,
-            sx: {
-              margin: 0
-            }
-          },
-          title: {
-            sx: {
-              pt: paddings.top8,
-              m: 0
-            }
-          }
-        }}
-      />
+      {areThereNotAnyAvailableTestResults ? (
+        <Typography variant="body1">{testResultHistoryNoTrendsLabel}</Typography>
+      ) : (
+        testResultsHistory.map((testResultHistory: ITestResultHistory) => (
+          <ListLayout
+            items={testResultHistory?.items as IListLayoutItem[]}
+            title={testResultHistory?.widgetTitle}
+            renderAsList
+            componentProps={{
+              list: {
+                py: 0,
+                px: paddings.leftRight20,
+                sx: {
+                  margin: 0
+                }
+              },
+              title: {
+                sx: {
+                  pt: paddings.top8,
+                  m: 0
+                }
+              }
+            }}
+          />
+        ))
+      )}
     </Box>
   );
 };

@@ -162,7 +162,7 @@ export interface IPatientProfileOverviewResponse {
 }
 
 export interface ITestResultHistoryResponse {
-  testResultsHistory: ITestResultHistory;
+  testResultsHistory: ITestResultHistory[];
 }
 
 export interface IPatientContactInformation {

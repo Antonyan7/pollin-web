@@ -370,9 +370,13 @@ const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDi
   }
 };
 
+const cleanTestResultsHistory = () => async (dispatch: AppDispatch) => {
+  dispatch(setTestResultsHistory([]));
+};
+
 const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setIsProfileTestResultsLoading(true));
+    dispatch(setIsTestResultsHistoryLoading(true));
 
     const response = await API.patients.getProfileTestResultsHistory(patientId, testTypeId);
 
@@ -380,14 +384,15 @@ const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => 
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+    dispatch(setTestResultsHistory([]));
   } finally {
-    dispatch(setIsProfileTestResultsLoading(false));
+    dispatch(setIsTestResultsHistoryLoading(false));
   }
 };
 
 const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setIsTestResultsHistoryLoading(true));
+    dispatch(setIsProfileTestResultsLoading(true));
 
     const response = await API.patients.getProfileTestResults(patientId);
 
@@ -396,7 +401,7 @@ const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatc
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
-    dispatch(setIsTestResultsHistoryLoading(false));
+    dispatch(setIsProfileTestResultsLoading(false));
   }
 };
 
@@ -484,5 +489,6 @@ export default {
   cleanEncountersList,
   setCurrentAppointmentType,
   getPatientContactInformation,
-  sendPatientIntakeReminder
+  sendPatientIntakeReminder,
+  cleanTestResultsHistory
 };

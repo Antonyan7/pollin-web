@@ -92,7 +92,7 @@ const reducers = createReducer({
   setIsPatientProfileOverviewLoading(state, action: IAction<boolean>) {
     state.profile.isOverviewLoading = action.payload;
   },
-  setTestResultsHistory(state, action: IAction<ITestResultHistory>) {
+  setTestResultsHistory(state, action: IAction<ITestResultHistory[]>) {
     state.profile.testResultsHistory = action.payload;
   },
   setIsTestResultsHistoryLoading(state, action: IAction<boolean>) {
