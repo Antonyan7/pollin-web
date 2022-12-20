@@ -72,6 +72,9 @@ const ordersList = createSelector([selector], (state) => state.ordersList);
 const orderTypes = createSelector([selector], (state) => state.orderTypes);
 const isRequisitionDownloaded = createSelector([selector], (state) => state.isRequisitionDownloaded);
 const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
+const selectedOrderType = createSelector([selector], (state) => state.selectedOrderType);
+const orderGroups = createSelector([selector], (state) => state.orderGroups);
+const isOrderGroupsLoading = createSelector([selector], (state) => state.isOrderGroupsLoading);
 
 const specimenStorageLocations = createSelector([selector], (state) => state.specimenStorageLocations);
 const isSpecimenStorageLocationsLoading = createSelector(
@@ -138,5 +141,8 @@ export default {
   isOrdersListLoading,
   ordersList,
   orderTypes,
-  isOrderTypesLoading
+  isOrderTypesLoading,
+  selectedOrderType,
+  orderGroups,
+  isOrderGroupsLoading
 };

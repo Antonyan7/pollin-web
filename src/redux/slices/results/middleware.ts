@@ -100,7 +100,10 @@ const {
   setIsOrdersListLoading,
   setOrdersStatuses,
   setOrderTypes,
-  setIsOrderTypesLoading
+  setSelectedOrderType,
+  setIsOrderTypesLoading,
+  setOrderGroups,
+  setIsOrderGroupsLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -829,6 +832,25 @@ const getOrderTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
+  dispatch(setSelectedOrderType(orderType));
+};
+
+const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrderGroupsLoading(true));
+
+  try {
+    const response = await API.results.getOrderGroups(orderType);
+
+    dispatch(setOrderGroups(response.data.data.groups));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrderGroupsLoading(false));
+  }
+};
+
 export default {
   getResultsList,
   resetTestResultsState,
@@ -873,5 +895,7 @@ export default {
   getOrderResultsStatuses,
   setIsTestResultsSubmitWentSuccessful,
   getOrdersList,
-  getOrderTypes
+  getOrderTypes,
+  updateSelectedOrderType,
+  getOrderGroups
 };

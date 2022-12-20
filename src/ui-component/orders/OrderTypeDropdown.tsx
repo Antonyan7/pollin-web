@@ -29,7 +29,14 @@ const OrderTypeDropdown = () => {
       justifyContent="end"
       borderTop={`1px solid ${theme.palette.primary.light}`}
     >
-      <Stack direction="row" alignItems="center" justifyContent="flex-start" px={paddings.all12}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        justifyContent="flex-start"
+        px={paddings.all12}
+        pb={paddings.all24}
+        borderBottom={`1px solid ${theme.palette.primary.light}`}
+      >
         <Typography sx={{ flexGrow: 1, width: '240px', fontSize: '16px', color: theme.palette.secondary[800] }}>
           {label}
         </Typography>
@@ -38,6 +45,11 @@ const OrderTypeDropdown = () => {
           fullWidth
           popupIcon={<KeyboardArrowDownIcon color="primary" />}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          onChange={(_, value) => {
+            if (value && typeof value === 'object' && 'id' in value) {
+              dispatch(resultsMiddleware.updateSelectedOrderType(value.id));
+            }
+          }}
           options={orderTypes}
           getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
           renderInputProps={{ label }}

@@ -5,6 +5,7 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
+  IOrderGroup,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
   IOrdersFilterItems,
@@ -210,6 +211,15 @@ const reducers = createReducer({
   },
   setIsOrderTypesLoading(state, action: IAction<boolean>) {
     state.isOrderTypesLoading = action.payload;
+  },
+  setSelectedOrderType(state, action: IAction<string>) {
+    state.selectedOrderType = action.payload;
+  },
+  setOrderGroups(state, action: IAction<IOrderGroup[]>) {
+    state.orderGroups = action.payload;
+  },
+  setIsOrderGroupsLoading(state, action: IAction<boolean>) {
+    state.isOrderGroupsLoading = action.payload;
   }
 });
 

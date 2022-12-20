@@ -96,6 +96,9 @@ export interface IResultsProps {
   isOrdersListLoading: boolean;
   orderTypes: IOrderType[];
   isOrderTypesLoading: boolean;
+  selectedOrderType: string;
+  orderGroups: IOrderGroup[];
+  isOrderGroupsLoading: boolean;
 }
 
 export enum ITransportFolderStatus {
@@ -371,4 +374,29 @@ export interface IOrderType {
 
 export interface IOrderTypesList {
   orderTypes: IOrderType[];
+}
+
+export enum TestType {
+  OrderGroup = 'Pollin Blood Test Group',
+  TestPanel = 'Panel',
+  TestType = 'TestType'
+}
+
+export interface IGroupItem {
+  id: string;
+  title: string;
+  type: TestType;
+  label?: string;
+  selected?: boolean;
+  groupItems?: IGroupItem[];
+}
+
+export interface IOrderGroup {
+  id: string;
+  title: string;
+  groupItems: IGroupItem[];
+}
+
+export interface IOrderGroupsList {
+  groups: IOrderGroup[];
 }

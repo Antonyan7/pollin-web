@@ -24,6 +24,7 @@ import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
+  IOrderGroupsList,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IOrderTypesList,
@@ -297,6 +298,13 @@ const resultsManager = {
   },
   getOrderTypes() {
     return axiosInstance.get<IOrderTypesList, IAxiosResponse<IOrderTypesList>>(`${baseURL}/v1/order/type`);
+  },
+  getOrderGroups(orderType: string) {
+    return axiosInstance.get<IOrderGroupsList, IAxiosResponse<IOrderGroupsList>>(`${baseURL}/v1/order/group`, {
+      params: {
+        orderType
+      }
+    });
   }
 };
 

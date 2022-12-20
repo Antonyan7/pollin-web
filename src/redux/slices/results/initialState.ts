@@ -106,5 +106,8 @@ export const getInitialState = (): IResultsProps => ({
   },
   isOrdersListLoading: false,
   orderTypes: [],
-  isOrderTypesLoading: false
+  isOrderTypesLoading: false,
+  selectedOrderType: '',
+  orderGroups: [],
+  isOrderGroupsLoading: false
 });
