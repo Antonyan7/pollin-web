@@ -5,11 +5,7 @@ import {
   TestResultMeasurementType
 } from 'types/reduxTypes/resultsStateTypes';
 
-export enum InputResultTestType {
-  InHouse = 'inHouse',
-  External = 'external'
-}
-
+// Interfaces
 export interface InputResultsProps {
   testType: InputResultTestType;
 }
@@ -62,11 +58,21 @@ export interface ResultsSaveButtonProps {
 }
 
 export interface MeasurementListFormProps {
-  specimenId?: string;
+  testType?: string;
 }
+export interface ListHeaderProps {
+  isInHouseTest: boolean;
+}
+
+// Enums
 
 export enum InputResultsSubmitButtonStates {
   Completed = 'completed',
   Pending = 'pending',
   Final = 'final'
+}
+
+export enum InputResultTestType {
+  InHouse = 'inHouse',
+  External = 'external'
 }

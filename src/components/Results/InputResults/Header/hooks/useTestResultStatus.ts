@@ -18,7 +18,7 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
     if (!isTestResultsDetailsLoading && measurement?.items?.length > 0) {
       // Optional used here because during page refresh we can have case when we wait form default data which comes from API
       const allElementsWithNormalStatus = measurement?.items.map((item: { resultType: TestResultMeasurementType }) => {
-        // Here we are setting falsy value for the cases when nothing was returned from the backend
+        // Here we are setting falsy value for the cases when nothing was returned from API
         if (!item.resultType) {
           return 0;
         }
@@ -27,21 +27,21 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
         return item.resultType === TestResultMeasurementType.Normal;
       });
 
-      const allStatusesAreEmpty = allElementsWithNormalStatus?.every(
+      const allTestResultsStatusesAreEmpty = allElementsWithNormalStatus?.every(
         (elementStatus: boolean | number) => elementStatus === 0
       );
-      const allStatusesHaveFilledWithNormal = allElementsWithNormalStatus?.every(
+      const allTestResultStatusesFilledAsNormal = allElementsWithNormalStatus?.every(
         (elementStatus: boolean | number) => elementStatus === true
       );
 
-      if (allStatusesAreEmpty) {
+      if (allTestResultsStatusesAreEmpty) {
         return {
           testResultStatusLabel: initialResultValue,
           testResultStatusColor: FinalResultChipColor.Initial
         };
       }
 
-      if (allStatusesHaveFilledWithNormal) {
+      if (allTestResultStatusesFilledAsNormal) {
         return {
           testResultStatusLabel: TestResultMeasurementType.Normal,
           testResultStatusColor: FinalResultChipColor.Normal

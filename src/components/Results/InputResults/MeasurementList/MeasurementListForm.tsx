@@ -1,78 +1,82 @@
-import React, { FC, Fragment, useMemo } from 'react';
+import React, { FC, Fragment, useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import AttachFile from '@components/AttachFile';
 import MeasurementList from '@components/Results/InputResults/MeasurementList';
 import ResultsSaveButton from '@components/Results/InputResults/SaveButton';
 import TextFieldWithLabel from '@components/TextFieldWithLabel';
-import { ArrowBackIos } from '@mui/icons-material';
-import { Divider, Grid, IconButton, Stack, Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import { useAppSelector } from '@redux/hooks';
-import { resultsSelector } from '@redux/slices/results';
+import { Divider, Grid, Stack } from '@mui/material';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import CircularLoading from '@ui-component/circular-loading';
 
 import ResultsCancelButton from '../CancelButton';
 import InputResultsHeader from '../Header';
-import TestResultsLoader from '../TestResultsLoader';
-import { MeasurementListFormProps } from '../types';
+import { InputResultTestType, MeasurementListFormProps } from '../types';
 
+import ListHeader from './header';
 import extractFormDataFromTestResultsDetails from './helpers';
 
-const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) => {
+const MeasurementListForm: FC<MeasurementListFormProps> = ({ testType = '' }) => {
+  const testResultsDetails = useAppSelector(resultsSelector.testResultsDetails);
+  const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
+
   const [t] = useTranslation();
   const router = useRouter();
-  const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
-  const testResultsDetails = useAppSelector(resultsSelector.testResultsDetails);
-  const { formDefaultFieldValues, formDefaultFieldsNames } = useMemo(
-    () => extractFormDataFromTestResultsDetails(testResultsDetails),
-    [testResultsDetails]
-  );
 
-  const inputResultsBackToPageLabel = specimenId
-    ? t(Translation.PAGE_IN_HOUSE_RESULTS_BACK_TO_IN_HOUSE_TESTS)
-    : t(Translation.PAGE_INPUT_RESULTS_BACK_TO_EXTERNAL_RESULTS);
+  const currentTestResultPageId = `${router.query.id}`;
+  const isInHouseTest = testType === InputResultTestType.InHouse;
+  const methods = useForm();
 
-  const form = useForm({
-    defaultValues: {
+  useEffect(() => {
+    if (currentTestResultPageId) {
+      const currentPageRequestParams = isInHouseTest
+        ? { specimenId: currentTestResultPageId }
+        : { testResultId: currentTestResultPageId };
+
+      dispatch(resultsMiddleware.getTestResultsDetails(currentPageRequestParams));
+    }
+  }, [currentTestResultPageId, isInHouseTest]);
+
+  const formFieldNames = useMemo(() => {
+    const { formDefaultFieldValues, formDefaultFieldsNames } =
+      extractFormDataFromTestResultsDetails(testResultsDetails);
+
+    methods.reset({
       ...formDefaultFieldValues
-    },
-    shouldUnregister: false
-  });
+    });
 
-  const handleBackToPreviousPage = () => router.back();
+    return formDefaultFieldsNames;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [testResultsDetails]);
 
   return (
     <SubCardStyled
       sx={{
         mt: margins.top20
       }}
-      title={
-        <Box component="span" display="flex" alignItems="center">
-          <IconButton color="primary" onClick={handleBackToPreviousPage}>
-            <ArrowBackIos fontSize="small" />
-          </IconButton>
-          <Typography variant="h4" fontWeight={500}>
-            {inputResultsBackToPageLabel}
-          </Typography>
-        </Box>
-      }
+      title={<ListHeader isInHouseTest={isInHouseTest} />}
     >
-      {!isTestResultsDetailsLoading ? (
-        <FormProvider {...form}>
+      {isTestResultsDetailsLoading ? (
+        <Grid p={paddings.all24}>
+          <CircularLoading />
+        </Grid>
+      ) : (
+        <FormProvider {...methods}>
           {testResultsDetails.map((testResultDetails, index) => {
             const currentFormFieldName = `data_${testResultDetails.id}`;
             const currentFormCommentFieldName = `${currentFormFieldName}.comment`;
             // Show specimenId only when it is available and when it is first test result;
-            const shouldShowSpecimenId = index === 0 && specimenId;
+            const shouldShowSpecimenId = index === 0 && isInHouseTest;
             // Pick last item of test results and show save button
             const shouldShowSaveButton = index === testResultsDetails.length - 1;
             // Is multiple test results
-            const shouldShowSaveAsCompleted = !!specimenId;
+            const shouldShowSaveAsCompleted = !!isInHouseTest;
 
             return (
               <Fragment key={testResultDetails.id}>
@@ -81,7 +85,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                   dates={testResultDetails.dates}
                   lab={testResultDetails.lab}
                   currentFormFieldName={currentFormFieldName}
-                  {...(shouldShowSpecimenId && { specimenId })}
+                  {...(shouldShowSpecimenId && { currentTestResultPageId })}
                 />
                 {testResultDetails.items.length > 0 && (
                   <MeasurementList listItems={testResultDetails.items} currentFormFieldName={currentFormFieldName} />
@@ -103,7 +107,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
                       {shouldShowSaveAsCompleted && <ResultsCancelButton />}
                       <ResultsSaveButton
                         shouldSaveAsCompleted={shouldShowSaveAsCompleted}
-                        currentFormFieldNames={formDefaultFieldsNames}
+                        currentFormFieldNames={formFieldNames}
                       />
                     </Stack>
                   </Grid>
@@ -112,8 +116,6 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ specimenId = '' }) 
             );
           })}
         </FormProvider>
-      ) : (
-        <TestResultsLoader />
       )}
     </SubCardStyled>
   );

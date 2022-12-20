@@ -7,9 +7,9 @@ import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { margins, paddings } from 'themes/themeConstants';
 
+import CircularLoading from '@ui-component/circular-loading';
 import Chip from '@ui-component/patient/Chip';
 
-import TestResultsLoading from '../TestResultsLoader';
 import { InputTestResultsHeaderProps } from '../types';
 
 import useTestResultStatusData from './hooks/useTestResultStatus';
@@ -96,7 +96,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
           />
         </>
       ) : (
-        <TestResultsLoading />
+        <CircularLoading />
       )}
     </Grid>
   );
