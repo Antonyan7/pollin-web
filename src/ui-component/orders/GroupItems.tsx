@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Checkbox, Collapse, FormControlLabel, FormGroup, Stack } from '@mui/material';
+import { Checkbox, Collapse, FormControlLabel, Stack } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
 import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
 
-import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
-import TestTypeChip from '@ui-component/orders/TestTypeChip';
+import PollinBloodTestGroupCheckbox from '@ui-component/orders/checkboxes/PollinBloodTestGroupCheckbox';
+import SingleItemCheckbox from '@ui-component/orders/checkboxes/SingleItemCheckbox';
+import TestGroupSingleItemCheckbox from '@ui-component/orders/checkboxes/TestGroupSingleItemCheckbox';
+import TestPanelGroupCheckbox from '@ui-component/orders/checkboxes/TestPanelGroupCheckbox';
 
 import CheckedCircleIcon from './CheckCircleIcon';
 
@@ -22,8 +24,9 @@ const GroupItems = (props: IGroupItemsProps) => {
   const { orderGroup, isEvenItemsShouldBeDisplayed } = props;
   const [collapsesList, setCollapsesList] = useState<ICollapseProps[]>([]);
 
-  const onCollapseClick = (event: React.MouseEvent<HTMLLabelElement>, collapseId: string) => {
+  const onCollapseClick = (event: React.MouseEvent<HTMLDivElement>, collapseId: string) => {
     event.preventDefault();
+    event.stopPropagation();
 
     const collapse = collapsesList.find((collapseItem: ICollapseProps) => collapseItem.id === collapseId);
 
@@ -47,57 +50,53 @@ const GroupItems = (props: IGroupItemsProps) => {
         (groupItem: IGroupItem, index: number) =>
           (isEvenItemsShouldBeDisplayed ? (index as number) % 2 === 0 : (index as number) % 2 !== 0) &&
           (groupItem?.groupItems?.length === 0 ? (
-            <FormGroup>
-              <FormControlLabel control={<Checkbox checked={false} />} label={groupItem.title} />
-            </FormGroup>
+            <SingleItemCheckbox orderGroup={orderGroup} defaultGroupItem={groupItem} key={groupItem.id} />
           ) : (
             <>
               <Stack>
-                <FormGroup sx={{ position: 'relative' }}>
-                  <FormControlLabel
-                    label={groupItem.title}
-                    onClick={(event) => onCollapseClick(event, groupItem.id)}
-                    control={
-                      <>
-                        <Checkbox checked indeterminate={false} />
-                        <TestTypeChip type={groupItem.type} />
-                        <CollapseMenuArrowDownIcon isOpen={isCollapseOpen(groupItem.id)} />
-                      </>
-                    }
-                  />
-                </FormGroup>
+                <PollinBloodTestGroupCheckbox
+                  orderGroup={orderGroup}
+                  defaultGroupItem={groupItem}
+                  key={groupItem.id}
+                  onCollapseClick={onCollapseClick}
+                  isCollapseOpen={isCollapseOpen}
+                />
               </Stack>
               <Collapse in={isCollapseOpen(groupItem.id)} timeout="auto" unmountOnExit>
-                {groupItem?.groupItems?.map((secondaryGroupItems: IGroupItem) =>
-                  secondaryGroupItems?.groupItems?.length === 0 ? (
+                {groupItem?.groupItems?.map((secondaryGroupItem: IGroupItem) =>
+                  secondaryGroupItem?.groupItems?.length === 0 ? (
                     <Stack ml={3}>
-                      <FormControlLabel label={secondaryGroupItems.title} control={<Checkbox checked />} />
+                      <TestGroupSingleItemCheckbox
+                        orderGroup={orderGroup}
+                        secondaryGroupItem={secondaryGroupItem}
+                        parentGroupId={groupItem.id}
+                      />
                     </Stack>
                   ) : (
                     <>
                       <Stack>
-                        <FormGroup sx={{ position: 'relative', ml: 3 }}>
-                          <FormControlLabel
-                            label={secondaryGroupItems.title}
-                            onClick={(event) => onCollapseClick(event, secondaryGroupItems.id)}
-                            control={
-                              <>
-                                <Checkbox checked indeterminate={false} />
-                                <TestTypeChip type={secondaryGroupItems.type} />
-                                <CollapseMenuArrowDownIcon isOpen={isCollapseOpen(secondaryGroupItems.id)} />
-                              </>
-                            }
-                          />
-                        </FormGroup>
+                        <TestPanelGroupCheckbox
+                          orderGroup={orderGroup}
+                          parentGroupId={groupItem.id}
+                          secondaryGroupItem={secondaryGroupItem}
+                          onCollapseClick={onCollapseClick}
+                          isCollapseOpen={isCollapseOpen}
+                        />
                       </Stack>
-                      <Collapse in={isCollapseOpen(secondaryGroupItems.id)} timeout="auto" unmountOnExit>
-                        {secondaryGroupItems.groupItems?.map((panelGroupItems: IGroupItem) => (
+                      <Collapse in={isCollapseOpen(secondaryGroupItem.id)} timeout="auto" unmountOnExit>
+                        {secondaryGroupItem.groupItems?.map((panelGroupItems: IGroupItem) => (
                           <Stack ml={6}>
                             <FormControlLabel
                               label={panelGroupItems.title}
                               sx={{ margin: `${margins.all8} ${margins.all0}` }}
                               disabled
-                              control={<Checkbox checked checkedIcon={<CheckedCircleIcon />} />}
+                              control={
+                                <Checkbox
+                                  checked={secondaryGroupItem.selected}
+                                  checkedIcon={<CheckedCircleIcon />}
+                                  icon={<CheckedCircleIcon />}
+                                />
+                              }
                             />
                           </Stack>
                         ))}

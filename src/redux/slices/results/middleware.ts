@@ -25,6 +25,7 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
+  IOrderGroup,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IResultsList,
@@ -851,6 +852,10 @@ const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
   }
 };
 
+const updateOrderGroups = (orderGroups: IOrderGroup[]) => async (dispatch: AppDispatch) => {
+  dispatch(setOrderGroups(orderGroups));
+};
+
 export default {
   getResultsList,
   resetTestResultsState,
@@ -897,5 +902,6 @@ export default {
   getOrdersList,
   getOrderTypes,
   updateSelectedOrderType,
-  getOrderGroups
+  getOrderGroups,
+  updateOrderGroups
 };

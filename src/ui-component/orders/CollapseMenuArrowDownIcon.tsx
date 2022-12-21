@@ -11,7 +11,6 @@ const CollapseMenuArrowDownIcon = (props: { isOpen: boolean }) => {
   return (
     <KeyboardArrowDownIcon
       sx={{
-        order: 3,
         marginLeft: margins.left32,
         color: theme.palette.primary.main,
         rotate: `${isOpen ? 180 : 0}deg`
