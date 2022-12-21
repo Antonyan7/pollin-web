@@ -43,6 +43,8 @@ const PartnerProfileOverview = () => {
     profileTestResults?.partners?.length &&
     !isPatientProfileOverviewLoading;
 
+  const patientProfileListItemsTitle = t(Translation.PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE);
+
   return (
     <Box display="flex" flexDirection="column" rowGap={3}>
       {isProfilePartnersInformationAvailable ? (
@@ -59,6 +61,7 @@ const PartnerProfileOverview = () => {
                   <ArrowForwardIos fontSize="small" color="primary" />
                 </IconButton>
               }
+              listItemsHeading={patientProfileListItemsTitle}
             />
           );
         })

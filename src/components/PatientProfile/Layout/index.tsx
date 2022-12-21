@@ -11,7 +11,7 @@ import { WidgetProps } from '../types';
 import ListLayout from './List';
 import SecondaryLayout from './SecondaryLayout';
 
-const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading }: WidgetProps) => {
+const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading, listItemsHeading }: WidgetProps) => {
   const [t] = useTranslation();
   const listData = data ? transformDataForListLayout(data) : null;
 
@@ -53,7 +53,11 @@ const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading 
           <Divider />
         </>
       )}
-      {listData ? <ListLayout items={listData} /> : <SecondaryLayout loading={loading} />}
+      {listData ? (
+        <ListLayout items={listData} listItemsHeading={listItemsHeading} />
+      ) : (
+        <SecondaryLayout loading={loading} />
+      )}
     </SubCardStyled>
   );
 };

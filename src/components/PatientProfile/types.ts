@@ -11,6 +11,7 @@ export interface WidgetProps {
   profile?: IProfileData;
   emptyWidgetTitle?: string;
   loading?: boolean;
+  listItemsHeading?: string;
 }
 
 export interface IListSubItem {
@@ -24,6 +25,7 @@ export interface IListLayoutItem {
 }
 
 export interface ListLayoutProps {
+  listItemsHeading?: string;
   items: IListLayoutItem[];
   title?: string;
   renderAsList?: boolean;

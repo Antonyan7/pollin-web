@@ -5,7 +5,7 @@ import { paddings } from 'themes/themeConstants';
 import TestHistoryHint from '../TestHistoryHint';
 import { ListLayoutProps } from '../types';
 
-const ListLayout = ({ items, title, renderAsList, componentProps }: ListLayoutProps) => (
+const ListLayout = ({ items, title, renderAsList, componentProps, listItemsHeading }: ListLayoutProps) => (
   <Box {...componentProps?.listWrapper}>
     {title && (
       <Typography variant="body1" {...componentProps?.title}>
@@ -20,6 +20,11 @@ const ListLayout = ({ items, title, renderAsList, componentProps }: ListLayoutPr
       {...(renderAsList && { component: 'ul' })}
       {...componentProps?.list}
     >
+      {listItemsHeading && (
+        <Typography pb={paddings.bottom16} component="h5" variant="h5" fontWeight={600}>
+          {listItemsHeading}
+        </Typography>
+      )}
       {items?.map((item, index) => {
         const itemKey = item.title;
         const shouldAddPaddingForNextItem = index > 0 && !renderAsList;
