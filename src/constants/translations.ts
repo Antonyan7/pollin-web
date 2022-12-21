@@ -343,7 +343,25 @@ export enum Translation {
   PAGE_PATIENT_ORDER_RESULTS_CELLS_STATUS = 'page.patient.order.results.cells.status',
   PAGE_PATIENT_ORDER_RESULTS_CELLS_FINALRESULTTYPE = 'page.patient.order.results.cells.finalresulttype',
   PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL = 'page.patient.order.results.filter.label',
-  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TITLE = 'page.patient.order.results.details.title'
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TITLE = 'page.patient.order.results.details.title',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_LAB_INFORMATION = 'page.patient.order.results.details.lab.information',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_DATE = 'page.patient.order.results.details.date',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TYPE = 'page.patient.order.results.details.type',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_UNIT = 'page.patient.order.results.details.unit',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_RESULT = 'page.patient.order.results.details.result',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_DATE_RECEIVED = 'page.patient.order.results.details.date.received',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_RESULT_TYPE = 'page.patient.order.results.details.result.type',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_COMMENTS = 'page.patient.order.results.details.comments',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS = 'page.patient.order.results.details.practitioner.comments',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS_OPTIONAL = 'page.patient.order.results.details.practitioner.comments.optional',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEW = 'page.patient.order.results.details.review',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT = 'page.patient.order.results.details.release.to.patient',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_MARK_AS_REVIEWED = 'page.patient.order.results.details.mark.as.reviewed',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_REVIEWED = 'page.patient.order.results.details.not.yet.reviewed',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED = 'page.patient.order.results.details.not.yet.released',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON = 'page.patient.order.results.details.reviewed.on',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON = 'page.patient.order.results.details.released.on',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TEST_NAME = 'page.patient.order.results.details.test.name'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

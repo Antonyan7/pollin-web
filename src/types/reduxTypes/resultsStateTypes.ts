@@ -29,6 +29,15 @@ export enum IStatus {
   Reported = 'Reported'
 }
 
+export enum ITestResultStatus {
+  Pending = 'Pending',
+  NotReceived = 'NotReceived',
+  Completed = 'Completed',
+  Reported = 'Reported',
+  Reviewed = 'Reviewed',
+  Released = 'Released'
+}
+
 export enum IFinalResultType {
   Normal = 'Normal',
   Abnormal = 'Abnormal'
@@ -320,15 +329,24 @@ export interface ITestResultAttachment {
   file?: File;
 }
 
+export interface ITestResultDetailsReport {
+  comment: string;
+  reviewDate: string;
+  releaseDate: string;
+}
+
 export interface ITestResultsDetails {
   id: string;
   isAttachmentRequired: boolean;
+  status: ITestResultStatus;
   title: string;
+  finalResultType: IFinalResultType;
   comment?: string;
   dates: ITestResultDates;
   lab: ITestResultLab;
   items: ITestResultItem[];
   attachments: ITestResultAttachment[];
+  report?: ITestResultDetailsReport;
 }
 
 export interface IResultListPatient {

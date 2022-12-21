@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import TestResultDetails from '@components/TestResultDetails';
 import { ArrowBackIos } from '@mui/icons-material';
-import { Box, Card, CardActions, CardContent, CardHeader, IconButton, Typography } from '@mui/material';
+import { Box, Card, CardActions, CardContent, CardHeader, IconButton, Stack, Typography } from '@mui/material';
 import Divider from '@mui/material/Divider/Divider';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -33,7 +34,7 @@ const TestResultDetailsPage = () => {
   return (
     <Box>
       <MainBreadcrumb
-        currentPage="Order Details"
+        currentPage={t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_TITLE)}
         navigation={{
           basePath: '/',
           items: [
@@ -49,21 +50,25 @@ const TestResultDetailsPage = () => {
       <Card sx={{ marginTop: margins.top20 }}>
         <CardHeader
           title={
-            <Box component="div" display="flex" alignItems="center">
-              <IconButton
-                color="primary"
-                onClick={() => router.push(`/patient-emr/details/${currentPatientId}/orders/results`)}
-              >
-                <ArrowBackIos fontSize="small" />
-              </IconButton>
-              <Typography variant="h4" fontWeight={600}>
-                {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.title}`)}
-              </Typography>
-            </Box>
+            patientProfile?.title && (
+              <Stack direction="row" alignItems="center">
+                <IconButton
+                  color="primary"
+                  onClick={() => router.push(`/patient-emr/details/${currentPatientId}/orders/results`)}
+                >
+                  <ArrowBackIos fontSize="small" />
+                </IconButton>
+                <Typography variant="h4" fontWeight={600}>
+                  {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.title}`)}
+                </Typography>
+              </Stack>
+            )
           }
         />
         <Divider />
-        <CardContent>{/* <TestResultDetails /> */}</CardContent>
+        <CardContent>
+          <TestResultDetails />
+        </CardContent>
         <Divider />
         <CardActions />
       </Card>
