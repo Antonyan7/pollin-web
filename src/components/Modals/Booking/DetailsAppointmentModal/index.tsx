@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
 import { DialogActions, DialogContent, Grid, Stack } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
@@ -46,7 +47,12 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
   }, [onClose, details, router]);
 
   return (
-    <BaseModal isLoading={modalLoading} title={t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)} onClose={onClose}>
+    <BaseModal
+      isLoading={modalLoading}
+      dataCy={CypressIds.MODAL_APPOINTMENTS_DETAILS_POPUP}
+      title={t(Translation.MODAL_APPOINTMENTS_DETAILS_TITLE)}
+      onClose={onClose}
+    >
       <Grid>
         <DialogContent sx={{ p: 1.5 }}>
           <Grid container spacing={3}>
@@ -83,7 +89,11 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-                <StyledButton onClick={onViewProfileClick} variant="contained">
+                <StyledButton
+                  data-cy={CypressIds.MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW}
+                  onClick={onViewProfileClick}
+                  variant="contained"
+                >
                   {t(Translation.MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW)}
                 </StyledButton>
               </Stack>

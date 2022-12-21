@@ -6,6 +6,8 @@
   modal.appointments.add.close.icon
   modal.appointments.confirm.cancel.select.reason
   modal.appointments.confirm.cancel.button.confirm
+  modal.appointments.details.button.view
+  modal.appointments.details.popup
   modal.appointments.edit.button.cancel
   modal.appointments.edit.button.save
   modal.appointments.edit.description

@@ -12,10 +12,19 @@ export interface BaseModalProps {
   isLoading?: boolean;
   children?: JSX.Element;
   onClose: () => void;
+  dataCy?: string;
 }
 
-const BaseModal = ({ children, isLoading, closeIconDataCy, dialogContentCy, title, onClose }: BaseModalProps) => (
-  <BaseModalStyled open onClose={onClose} aria-labelledby="customized-dialog-title">
+const BaseModal = ({
+  children,
+  isLoading,
+  closeIconDataCy,
+  dialogContentCy,
+  title,
+  onClose,
+  dataCy
+}: BaseModalProps) => (
+  <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby="customized-dialog-title">
     <BaseModalTitle dataCy={closeIconDataCy} id="customized-dialog-title" onClose={onClose}>
       {title}
     </BaseModalTitle>

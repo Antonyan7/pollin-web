@@ -9,6 +9,8 @@ export enum CypressIds {
   MODAL_APPOINTMENTS_ADD_CLOSE_ICON = 'modal.appointments.add.close.icon',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON = 'modal.appointments.confirm.cancel.select.reason',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM = 'modal.appointments.confirm.cancel.button.confirm',
+  MODAL_APPOINTMENTS_DETAILS_BUTTON_VIEW = 'modal.appointments.details.button.view',
+  MODAL_APPOINTMENTS_DETAILS_POPUP = 'modal.appointments.details.popup',
   MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL = 'modal.appointments.edit.button.cancel',
   MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE = 'modal.appointments.edit.button.save',
   MODAL_APPOINTMENTS_EDIT_DESCRIPTION = 'modal.appointments.edit.description',
