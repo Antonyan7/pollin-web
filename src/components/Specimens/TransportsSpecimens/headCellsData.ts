@@ -12,18 +12,18 @@ export const headCellsData = (t: TFunction) => [
     isSortable: false
   },
   {
-    id: 'dateAndTimeCreated',
+    id: TransportsSortFields.DATE,
     label: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DATE_TIME_CREATED),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
-    id: 'labDestination',
+    id: TransportsSortFields.LAB_DESTINATION,
     label: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_LAB_DESTINATION),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
     id: 'driverName',

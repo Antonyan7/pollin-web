@@ -1,13 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
-import { SeveritiesType } from '@components/Scheduling/types';
 import {
   Box,
-  Button,
   CircularProgress,
-  Grid,
   Table,
   TableBody,
   TableContainer,
@@ -18,8 +14,6 @@ import {
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { viewsMiddleware } from '@redux/slices/views';
-import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
@@ -33,7 +27,6 @@ import { TransportsListRow } from './TransportsListRow';
 
 const TransportsList = () => {
   const [page, setPage] = useState<number>(0);
-
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const transportList = useAppSelector(resultsSelector.transportList);
@@ -63,7 +56,7 @@ const TransportsList = () => {
     setPage(newPage);
   };
   const transportActions = useAppSelector(resultsSelector.transportActions);
-  const handlePageChange = (newPage: number) => {
+  const handlePageChange = () => {
     setPage(page);
   };
 

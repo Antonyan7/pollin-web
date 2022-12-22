@@ -1,7 +1,4 @@
-// All comments and eslint-disable will be deleted by PCP-1262
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchBox from '@components/SearchBox';
 import { Add } from '@mui/icons-material';
@@ -19,11 +16,8 @@ import { HeaderProps } from './types';
 
 const Header: React.FC<HeaderProps> = ({ handlePageChange }) => {
   const [t] = useTranslation();
-  // To-do
-  const [_, setIdentifiers] = useState<string[]>([]);
-  const searchByIdsHandler = (ids: string[]) => {
+  const searchByIdsHandler = () => {
     handlePageChange(0);
-    setIdentifiers(ids);
   };
 
   const scanBarcodeLabel = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);

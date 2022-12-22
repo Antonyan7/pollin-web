@@ -18,7 +18,9 @@ export enum TestResultsListSortFields {
 }
 
 export enum TransportsSortFields {
-  STATUS = 'ReadyForTransport'
+  STATUS = 'ReadyForTransport',
+  LAB_DESTINATION = 'LabDestination',
+  DATE = 'Date'
 }
 export interface ITransportListReqBody {
   date: Date | string;
