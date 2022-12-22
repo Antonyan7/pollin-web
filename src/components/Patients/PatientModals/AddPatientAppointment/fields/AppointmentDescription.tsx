@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { maxLength } from 'helpers/constants';
 
 const AppointmentDescription = () => {
   const [t] = useTranslation();
@@ -21,6 +22,7 @@ const AppointmentDescription = () => {
         id={descriptionFieldName}
         label={addDescriptionLabel}
         rows={4}
+        inputProps={{ maxLength }}
         placeholder={addDescriptionLabel}
         multiline
       />
