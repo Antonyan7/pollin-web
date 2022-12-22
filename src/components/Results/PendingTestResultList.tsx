@@ -41,6 +41,10 @@ const PendingTestResultList = () => {
   }, []);
 
   useEffect(() => {
+    setPage(0);
+  }, [filters, searchValue]);
+
+  useEffect(() => {
     const data: IResultsReqBody = {
       ...(searchValue ? { searchString: searchValue } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
