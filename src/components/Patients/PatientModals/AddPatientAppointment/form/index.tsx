@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import { Divider } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware } from 'redux/slices/booking';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -15,6 +15,7 @@ import FormBody from './FormBody';
 const AddAppointmentsModalForm = () => {
   const { handleSubmit } = useFormContext<ICreateAppointmentBody>();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
+  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
 
   const onClose = () => {
     dispatch(viewsMiddleware.closeModal(ModalName.AddPatientAppointmentsModal));
@@ -28,8 +29,13 @@ const AddAppointmentsModalForm = () => {
     };
 
     dispatch(bookingMiddleware.createAppointment(body));
-    onClose();
   };
+
+  useEffect(() => {
+    if (appointmentStatus.create.success) {
+      onClose();
+    }
+  }, [appointmentStatus.create.success]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

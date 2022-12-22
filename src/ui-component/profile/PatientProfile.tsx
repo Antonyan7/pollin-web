@@ -11,6 +11,7 @@ import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigat
 import { paddings } from 'themes/themeConstants';
 import { AppointmentType } from 'types/patientProfile';
 
+import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsCard from '@ui-component/profile/AppointmentsCard';
 import LatestTestResults from '@ui-component/profile/LatestTestResult';
 
@@ -26,6 +27,8 @@ const PatientProfile = () => {
       });
     }
   }, [patientAppointments, patientId]);
+
+  useAppointmentStatusState();
 
   return (
     <Box width="100%" overflow="hidden">
