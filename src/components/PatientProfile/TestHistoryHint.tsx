@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import { Box, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import ListLayout from 'components/PatientProfile/Layout/List';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
+
+import CircularLoading from '@ui-component/circular-loading';
 
 import StyledTooltip from './StyledTooltip';
 import { IListLayoutItem, TestHistoryHintProps } from './types';
@@ -31,6 +33,20 @@ const TestHistoryTooltipContent = ({ testResultId }: Omit<TestHistoryHintProps, 
   }, [currentPatientId, testResultId]);
 
   const areThereNotAnyAvailableTestResults = testResultsHistory.length === 0 && !isTestResultsHistoryLoading;
+
+  if (isTestResultsHistoryLoading) {
+    return (
+      <Grid pr={paddings.right32} width={205}>
+        <CircularLoading
+          loadingProps={{
+            sx: {
+              color: (theme) => theme.palette.common.white
+            }
+          }}
+        />
+      </Grid>
+    );
+  }
 
   return (
     <Box

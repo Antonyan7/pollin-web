@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -7,27 +6,11 @@ import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
-import { calculateWeekByNumber } from 'helpers/scheduling';
-import { ISingleTemplate } from 'types/create-schedule';
 
 import ApplyScheduleFormRow from '../common/ApplyScheduleFormRow';
+import { getApplyDaysToDisplay, getUniqueTimePeriodsApplyDates } from '../helpers';
 import useFieldControl from '../hooks/useFieldControl';
 import { ApplyScheduleFields } from '../types';
-
-const getUniqueTimePeriodsApplyDates = (scheduleApplyTemplates: { name: string; timePeriods?: ISingleTemplate[] }) => {
-  // Extract unique time periods from schedule template
-  const timePeriodsApplyDates: number[] = (scheduleApplyTemplates?.timePeriods ?? [])
-    .map((item: ISingleTemplate) => item.days)
-    .flat();
-
-  return Array.from(new Set(timePeriodsApplyDates));
-};
-
-const getApplyDaysToDisplay = (uniqueTimePeriodsApplyDates: number[]) =>
-  // Pick all weekdays which includes current in scheduleTemplate
-  weekDays
-    .filter((_, index) => uniqueTimePeriodsApplyDates.includes(calculateWeekByNumber(index)))
-    .map((_, index) => index);
 
 const SelectedWeekdaysForSchedule = () => {
   const scheduleApplyTemplates = useAppSelector(schedulingSelector.scheduleSingleTemplate);
@@ -41,25 +24,25 @@ const SelectedWeekdaysForSchedule = () => {
     name: [ApplyScheduleFields.SCHEDULE_TEMPLATE, ApplyScheduleFields.SELECTED_WEEKDAYS_TO_APPLY],
     control
   });
-
+  const { onChange, value } = field;
   const applyDaysListRendering = useMemo(() => {
     const uniqueTimePeriodsApplyDates = getUniqueTimePeriodsApplyDates(scheduleApplyTemplates);
 
-    return getApplyDaysToDisplay(uniqueTimePeriodsApplyDates);
+    return getApplyDaysToDisplay(uniqueTimePeriodsApplyDates) as number[];
   }, [scheduleApplyTemplates]);
 
   useEffect(() => {
     // To discuss with team about this functional, now it's written like previous version for avoiding to break default worked logic.
-    field.onChange(applyDaysListRendering);
-  }, [applyDaysListRendering]);
+    onChange(applyDaysListRendering);
+  }, [applyDaysListRendering, onChange]);
 
   const onApplyDays = (isChecked: boolean, day: number) => {
-    if (isChecked && !field.value.includes(day)) {
-      field.onChange([...field.value, day]);
+    if (isChecked && !value.includes(day)) {
+      onChange([...value, day]);
     } else {
-      const newAppliedDays = field.value?.filter((appliedDay: number) => appliedDay !== day);
+      const newAppliedDays = value?.filter((appliedDay: number) => appliedDay !== day);
 
-      field.onChange(newAppliedDays);
+      onChange(newAppliedDays);
     }
   };
 
