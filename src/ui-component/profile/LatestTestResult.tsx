@@ -45,62 +45,70 @@ const LatestTestResults = () => {
       }}
       content={false}
     >
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>
-                <Typography fontWeight="bold">
-                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="bold">
-                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}
-                </Typography>
-              </TableCell>
-              <TableCell>
-                <Typography fontWeight="bold">
-                  {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT)}
-                </Typography>
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {latestTestResults?.map((latestTestResult) => {
-              const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? 'active' : 'inActive';
-
-              return (
-                <TableRow hover key={latestTestResult.title}>
+      {latestTestResults.length ? (
+        <>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
                   <TableCell>
-                    <Typography fontWeight="bold" variant="h5">
-                      {latestTestResult.title}
+                    <Typography fontWeight="bold">
+                      {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}
                     </Typography>
                   </TableCell>
-                  <TableCell>{timeAdjuster(new Date(latestTestResult.dateCollected)).customizedDate}</TableCell>
-                  <TableCell width={30}>
-                    <Chip
-                      sx={{
-                        mr: margins.right64
-                      }}
-                      chipColor={cellChipColor}
-                      label={latestTestResult.result}
-                    />
+                  <TableCell>
+                    <Typography fontWeight="bold">
+                      {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography fontWeight="bold">
+                      {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT)}
+                    </Typography>
                   </TableCell>
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <CardActions>
-        <Grid container justifyContent="right">
-          <Button variant="text">
-            {t(Translation.COMMON_BUTTON_VIEW_ALL)}
-            <ChevronRightOutlinedIcon />
-          </Button>
-        </Grid>
-      </CardActions>
+              </TableHead>
+              <TableBody>
+                {latestTestResults?.map((latestTestResult) => {
+                  const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? 'active' : 'inActive';
+
+                  return (
+                    <TableRow hover key={latestTestResult.title}>
+                      <TableCell>
+                        <Typography fontWeight="bold" variant="h5">
+                          {latestTestResult.title}
+                        </Typography>
+                      </TableCell>
+                      <TableCell>{timeAdjuster(new Date(latestTestResult.dateCollected)).customizedDate}</TableCell>
+                      <TableCell width={30}>
+                        <Chip
+                          sx={{
+                            mr: margins.right64
+                          }}
+                          chipColor={cellChipColor}
+                          label={latestTestResult.result}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <CardActions>
+            <Grid container justifyContent="right">
+              <Button variant="text">
+                {t(Translation.COMMON_BUTTON_VIEW_ALL)}
+                <ChevronRightOutlinedIcon />
+              </Button>
+            </Grid>
+          </CardActions>
+        </>
+      ) : (
+        <Typography py={paddings.topBottom24} textAlign="center">
+          {t(Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE)}
+        </Typography>
+      )}
     </SubCardStyled>
   );
 };
