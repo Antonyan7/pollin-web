@@ -24,6 +24,7 @@ import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigat
 import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { viewsMiddleware } from 'redux/slices/views';
+import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { AppointmentType } from 'types/patientProfile';
 
@@ -68,45 +69,53 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
       }
       content={false}
     >
-      <TableContainer>
-        <Table>
-          <TableBody>
-            {appointmentsList &&
-              appointmentsList.slice(0, 3).map(({ id, status, type, date, time }) => (
-                <TableRow hover key={id}>
-                  <TableCell width="65%" sx={{ verticalAlign: 'middle' }}>
-                    <Typography variant="h5">{type}</Typography>
-                    <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
-                      {status}
-                    </Typography>
-                  </TableCell>
-                  <TableCell width="25%" sx={{ verticalAlign: 'middle' }}>
-                    <Typography variant="h5">{timeAdjuster(new Date(date)).customizedDate}</Typography>
-                    <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
-                      @ {time}
-                    </Typography>
-                  </TableCell>
-                  <TableCell width="10%">
-                    <Stack>
-                      <IconButton disableRipple>
-                        <ChevronRightOutlinedIcon />
-                      </IconButton>
-                    </Stack>
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {appointmentsList && appointmentsList.length > 0 && (
-        <CardActions>
-          <Grid container justifyContent="right">
-            <Button variant="text" onClick={onViewAllClick}>
-              {t(Translation.COMMON_BUTTON_VIEW_ALL)}
-              <ChevronRightOutlinedIcon />
-            </Button>
-          </Grid>
-        </CardActions>
+      {appointmentsList?.length ? (
+        <>
+          <TableContainer>
+            <Table>
+              <TableBody>
+                {appointmentsList &&
+                  appointmentsList.slice(0, 3).map(({ id, status, type, date, time }) => (
+                    <TableRow hover key={id}>
+                      <TableCell width="65%" sx={{ verticalAlign: 'middle' }}>
+                        <Typography variant="h5">{type}</Typography>
+                        <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
+                          {status}
+                        </Typography>
+                      </TableCell>
+                      <TableCell width="25%" sx={{ verticalAlign: 'middle' }}>
+                        <Typography variant="h5">{timeAdjuster(new Date(date)).customizedDate}</Typography>
+                        <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
+                          {time}
+                        </Typography>
+                      </TableCell>
+                      <TableCell width="10%">
+                        <Stack>
+                          <IconButton disableRipple>
+                            <ChevronRightOutlinedIcon />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          {appointmentsList && appointmentsList.length > 0 && (
+            <CardActions>
+              <Grid container justifyContent="right">
+                <Button variant="text" onClick={onViewAllClick}>
+                  {t(Translation.COMMON_BUTTON_VIEW_ALL)}
+                  <ChevronRightOutlinedIcon />
+                </Button>
+              </Grid>
+            </CardActions>
+          )}
+        </>
+      ) : (
+        <Typography py={paddings.topBottom24} textAlign="center">
+          {t(Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE)}
+        </Typography>
       )}
     </SubCardStyled>
   );
