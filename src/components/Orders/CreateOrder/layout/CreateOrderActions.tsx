@@ -1,14 +1,17 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mui/material';
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 const CreateOrderActions = () => {
   const [t] = useTranslation();
   const onCancelClick = () => {
-    // TODO: implement order cancelation
+    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
   const onCreateOrderClick = () => {

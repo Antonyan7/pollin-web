@@ -15,6 +15,7 @@ import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
+import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import TestResultReleaseConfirmationModal from '@components/Modals/Order/TestResultReleaseConfirmation';
 import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
@@ -127,6 +128,9 @@ const getPatientPartnerModal = (modal: IOpenedModal<PatientPartnerModalProps>) =
   <PatientPartnerModal key={modal.name} patientId={modal.props.patientId} />
 );
 
+// Patient Partner confirmation (Are you want to go to profile partners profile)
+const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
+
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
 
@@ -190,6 +194,9 @@ export const ModalsController = () => {
           // PatientPartnerModal
           case ModalName.PatientPartnerModal:
             return getPatientPartnerModal(modal);
+          // Cancel Order creation Modal
+          case ModalName.CancelOrderCreationModal:
+            return getOrderCreationCancelModal();
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();
