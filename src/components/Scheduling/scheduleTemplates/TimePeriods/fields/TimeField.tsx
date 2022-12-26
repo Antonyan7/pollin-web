@@ -76,8 +76,14 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
           PopperProps={{
             sx: {
               '& > div > div > div > div > div + div > div': {
+                '& .MuiClockNumber-root': {
+                  color: theme.palette.primary[800]
+                },
                 '& .Mui-disabled': {
-                  color: theme.palette.primary.light
+                  color: theme.palette.primary[200]
+                },
+                '& .Mui-selected': {
+                  color: theme.palette.secondary.light
                 }
               }
             }

@@ -73,8 +73,14 @@ const DateAndStartTime: React.FC = () => {
           sx: {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
+              '& .MuiClockNumber-root': {
+                color: theme.palette.primary[800]
+              },
               '& .Mui-disabled': {
-                color: theme.palette.primary.light
+                color: theme.palette.primary[200]
+              },
+              '& .Mui-selected': {
+                color: theme.palette.secondary.light
               }
             }
           }
