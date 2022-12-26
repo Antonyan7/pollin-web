@@ -53,7 +53,8 @@ const StyledTextareaAutosize = styled(TextareaAutosize)<TextareaAutosizeProps>((
   maxHeight: '150px',
   minHeight: '50px',
   width: '100%',
-  height: '200px'
+  height: '200px',
+  padding: `${paddings.topBottom8} ${paddings.leftRight16}`
 }));
 
 const StyledButtonNew = styled(Button)<ButtonProps>(() => ({

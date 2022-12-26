@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
-const SingleItemCheckbox = (props: { orderGroup: IOrderGroup; defaultGroupItem: IGroupItem }) => {
+const SingleItemCheckbox = (props: { orderGroup: IOrderGroup; defaultGroupItem: IOrderGroupItem }) => {
   const { orderGroup, defaultGroupItem } = props;
   const orderGroups = useSelector(resultsSelector.orderGroups);
 

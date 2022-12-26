@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, Collapse, FormControlLabel, Stack } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
-import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
 import PollinBloodTestGroupCheckbox from '@ui-component/orders/checkboxes/PollinBloodTestGroupCheckbox';
 import SingleItemCheckbox from '@ui-component/orders/checkboxes/SingleItemCheckbox';
@@ -47,8 +47,8 @@ const GroupItems = (props: IGroupItemsProps) => {
   return (
     <Stack direction="column" justifyContent="flex-start" px={paddings.all12}>
       {orderGroup.groupItems.map(
-        (groupItem: IGroupItem, index: number) =>
-          (isEvenItemsShouldBeDisplayed ? (index as number) % 2 === 0 : (index as number) % 2 !== 0) &&
+        (groupItem: IOrderGroupItem, index: number) =>
+          (isEvenItemsShouldBeDisplayed ? index % 2 === 0 : index % 2 !== 0) &&
           (groupItem?.groupItems?.length === 0 ? (
             <SingleItemCheckbox orderGroup={orderGroup} defaultGroupItem={groupItem} key={groupItem.id} />
           ) : (
@@ -63,7 +63,7 @@ const GroupItems = (props: IGroupItemsProps) => {
                 />
               </Stack>
               <Collapse in={isCollapseOpen(groupItem.id)} timeout="auto" unmountOnExit>
-                {groupItem?.groupItems?.map((secondaryGroupItem: IGroupItem) =>
+                {groupItem?.groupItems?.map((secondaryGroupItem: IOrderGroupItem) =>
                   secondaryGroupItem?.groupItems?.length === 0 ? (
                     <Stack ml={3}>
                       <TestGroupSingleItemCheckbox
@@ -84,7 +84,7 @@ const GroupItems = (props: IGroupItemsProps) => {
                         />
                       </Stack>
                       <Collapse in={isCollapseOpen(secondaryGroupItem.id)} timeout="auto" unmountOnExit>
-                        {secondaryGroupItem.groupItems?.map((panelGroupItems: IGroupItem) => (
+                        {secondaryGroupItem.groupItems?.map((panelGroupItems: IOrderGroupItem) => (
                           <Stack ml={6}>
                             <FormControlLabel
                               label={panelGroupItems.title}

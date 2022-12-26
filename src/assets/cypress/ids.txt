@@ -81,3 +81,13 @@
   page.create.order.header.text
   page.create.order.button.create.order
   page.create.order.button.cancel
+  page.order.details.title
+  page.order.details.header.text
+  page.order.details.order.sets
+  page.order.details.individual.tests
+  page.order.details.comments
+  page.order.details.comments.placeholder
+  page.order.details.button.edit
+  page.order.details.button.download.requisitions
+  page.order.details.button.confirm
+  page.order.details.button.cancel

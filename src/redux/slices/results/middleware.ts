@@ -25,14 +25,17 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
+  IOrderDetailsData,
   IOrderGroup,
+  IOrderGroupItem,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IResultsList,
   IRetestRecollectData,
   ISpecimensInTransportList,
   ISpecimensList,
-  ITransportList
+  ITransportList,
+  UpdateOrderGroupItem
 } from 'types/reduxTypes/resultsStateTypes';
 import {
   ICreateTransportFolderReqBody,
@@ -104,7 +107,9 @@ const {
   setSelectedOrderType,
   setIsOrderTypesLoading,
   setOrderGroups,
-  setIsOrderGroupsLoading
+  setIsOrderGroupsLoading,
+  setOrderDetails,
+  setIsOrderDetailsLoading
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -856,6 +861,45 @@ const updateOrderGroups = (orderGroups: IOrderGroup[]) => async (dispatch: AppDi
   dispatch(setOrderGroups(orderGroups));
 };
 
+const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsOrderDetailsLoading(true));
+
+    const { data } = await API.results.getOrderDetails(orderId);
+
+    dispatch(setOrderDetails(data.order));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrderDetailsLoading(false));
+  }
+};
+
+const updateOrder = (orderId: string, orderDetailsData: IOrderDetailsData) => async (dispatch: AppDispatch) => {
+  try {
+    const parseGroupItems = (orderGroupItems: IOrderGroupItem[]): UpdateOrderGroupItem[] =>
+      orderGroupItems.map(({ id, groupItems }) =>
+        groupItems === undefined ? { id } : { id, groupItems: parseGroupItems(groupItems) }
+      );
+
+    const body = {
+      order: {
+        ...(orderDetailsData.comment !== undefined ? { comment: orderDetailsData.comment } : {}),
+        groups: (orderDetailsData.groups ?? []).map(({ id, groupItems }) => ({
+          id,
+          groupItems: parseGroupItems(groupItems)
+        }))
+      }
+    };
+
+    await API.results.updateOrder(orderId, body);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getResultsList,
   resetTestResultsState,
@@ -903,5 +947,7 @@ export default {
   getOrderTypes,
   updateSelectedOrderType,
   getOrderGroups,
+  getOrderDetails,
+  updateOrder,
   updateOrderGroups
 };

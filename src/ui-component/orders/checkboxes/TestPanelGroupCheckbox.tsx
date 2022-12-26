@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
 import TestTypeChip from '@ui-component/orders/TestTypeChip';
@@ -11,7 +11,7 @@ import TestTypeChip from '@ui-component/orders/TestTypeChip';
 const TestPanelGroupCheckbox = (props: {
   orderGroup: IOrderGroup;
   parentGroupId: string;
-  secondaryGroupItem: IGroupItem;
+  secondaryGroupItem: IOrderGroupItem;
   onCollapseClick: (event: React.MouseEvent<HTMLDivElement>, collapseId: string) => void;
   isCollapseOpen: (collapseId: string) => boolean;
 }) => {

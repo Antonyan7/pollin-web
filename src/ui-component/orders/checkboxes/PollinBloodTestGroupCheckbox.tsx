@@ -3,24 +3,24 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
 import TestTypeChip from '@ui-component/orders/TestTypeChip';
 
 const PollinBloodTestGroupCheckbox = (props: {
   orderGroup: IOrderGroup;
-  defaultGroupItem: IGroupItem;
+  defaultGroupItem: IOrderGroupItem;
   onCollapseClick: (event: React.MouseEvent<HTMLDivElement>, collapseId: string) => void;
   isCollapseOpen: (collapseId: string) => boolean;
 }) => {
   const { orderGroup, defaultGroupItem, onCollapseClick, isCollapseOpen } = props;
   const orderGroups = useSelector(resultsSelector.orderGroups);
 
-  const isEverythingSelectedInGroupItems = (groupItem: IGroupItem) =>
+  const isEverythingSelectedInGroupItems = (groupItem: IOrderGroupItem) =>
     groupItem?.groupItems?.find((childGroupItem) => childGroupItem?.selected === false)?.selected !== false;
 
-  const atLeastOneSelectedItemInGroupItems = (groupItem: IGroupItem) =>
+  const atLeastOneSelectedItemInGroupItems = (groupItem: IOrderGroupItem) =>
     !isEverythingSelectedInGroupItems(groupItem) &&
     groupItem?.groupItems?.find((childGroupItem) => childGroupItem?.selected === true)?.selected === true;
 

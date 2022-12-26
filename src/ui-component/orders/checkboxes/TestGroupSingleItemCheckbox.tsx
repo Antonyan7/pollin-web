@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IGroupItem, IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
 const TestGroupSingleItemCheckbox = (props: {
   orderGroup: IOrderGroup;
-  secondaryGroupItem: IGroupItem;
+  secondaryGroupItem: IOrderGroupItem;
   parentGroupId: string;
 }) => {
   const { orderGroup, secondaryGroupItem, parentGroupId } = props;

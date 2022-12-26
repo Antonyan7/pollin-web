@@ -5,6 +5,7 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
+  IOrderDetailsData,
   IOrderGroup,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
@@ -220,6 +221,12 @@ const reducers = createReducer({
   },
   setIsOrderGroupsLoading(state, action: IAction<boolean>) {
     state.isOrderGroupsLoading = action.payload;
+  },
+  setOrderDetails(state, action: IAction<IOrderDetailsData>) {
+    state.orderDetails = action.payload;
+  },
+  setIsOrderDetailsLoading(state, action: IAction<boolean>) {
+    state.isOrderDetailsLoading = action.payload;
   }
 });
 

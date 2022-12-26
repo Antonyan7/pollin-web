@@ -24,6 +24,7 @@ import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
+  IGetOrderDetailsResponse,
   IOrderGroupsList,
   IOrderResultsByPatientList,
   IOrdersListResponse,
@@ -36,6 +37,7 @@ import {
   ISpecimensList,
   ITestResultsDetails,
   ITransportListProps,
+  IUpdateOrderReqBody,
   LabMachine,
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';
@@ -305,6 +307,14 @@ const resultsManager = {
         orderType
       }
     });
+  },
+  getOrderDetails(orderId: string) {
+    return axiosInstance
+      .get<IGetOrderDetailsResponse, IAxiosResponse<IGetOrderDetailsResponse>>(`${baseURL}/v1/order/${orderId}`)
+      .then(({ data }) => data);
+  },
+  updateOrder(orderId: string, body: IUpdateOrderReqBody) {
+    return axiosInstance.put<IUpdateOrderReqBody, IAxiosResponse<null>>(`${baseURL}/v1/order/${orderId}`, body);
   }
 };
 
