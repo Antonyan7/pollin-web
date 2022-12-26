@@ -86,8 +86,11 @@ const EditTemplate = () => {
   });
   const { watch, getValues } = methods;
   const { errors } = methods.formState;
-  const [errorMessage, setErrorMessage] = useState('');
   const { setValue, handleSubmit, register } = methods;
+  const errorMessage =
+    error ||
+    (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
+    (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR));
   const { append } = useFieldArray({
     control: methods.control,
     name: 'timePeriods'
@@ -95,15 +98,6 @@ const EditTemplate = () => {
   const onPlusClick = () => {
     append({ ...getDefaultTimePeriodState(), id: v4() });
   };
-
-  useEffect(() => {
-    const scheduleEditErrorMessage =
-      (errors.name?.type === 'required' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_ERROR)) ||
-      (errors.name?.type === 'max' && t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME_LENGTH_ERROR)) ||
-      '';
-
-    setErrorMessage(scheduleEditErrorMessage);
-  }, [error, errors.name?.type, t]);
 
   useEffect(() => {
     const subscription = watch(() => {
