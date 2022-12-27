@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Alert, Box, ListItem, styled, Typography, useTheme } from '@mui/material';
+import Button from '@mui/material/Button';
+import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -12,6 +16,8 @@ const PatientAlertView = () => {
   const rowId = router.query.id as string;
   const theme = useTheme();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
+  const [open, setOpen] = useState(true);
+  const [t] = useTranslation();
 
   const StyledDiv = styled('div')(() => ({
     color: theme.palette.warning.dark,
@@ -25,9 +31,24 @@ const PatientAlertView = () => {
     }
   }, [rowId]);
 
-  return patientAlertDetails?.length ? (
+  return patientAlertDetails?.length && open ? (
     <Box sx={{ width: '100%' }}>
-      <Alert sx={{ mb: 2, background: theme.palette.warning.light }}>
+      <Alert
+        sx={{ mb: 2, background: theme.palette.warning.light }}
+        action={
+          <Button
+            sx={{
+              color: theme.palette.warning.main,
+              marginBottom: margins.all24
+            }}
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {t(Translation.PAGE_PATIENT_ALERT_DISMISS)}
+            <CloseIcon sx={{ fontSize: '12px', margin: margins.all4 }} />
+          </Button>
+        }
+      >
         {patientAlertDetails.map((titleContent: AlertDetailsProps) => (
           <React.Fragment key={titleContent.id}>
             <StyledDiv>

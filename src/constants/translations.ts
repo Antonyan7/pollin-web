@@ -15,6 +15,7 @@ export enum Translation {
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED = 'page.patient.latest.test.result.table.header.date.collected',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT = 'page.patient.latest.test.result.table.header.result',
   PAGE_PATIENT_RESULT_BUTTON = 'page.patient.result.button',
+  PAGE_PATIENT_ALERT_DISMISS = 'page.patient.alert.dismiss',
   PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_30 = 'page.patient.pending.test.results.greater.30',
   PAGE_PATIENT_PENDING_TEST_RESULTS_GREATER_15 = 'page.patient.pending.test.results.greater.15',
   PAGE_PATIENT_PENDING_TEST_RESULTS_LESS_15 = 'page.patient.pending.test.results.less.15',
