@@ -53,6 +53,15 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
     dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
   };
 
+  const onRowClick = (id: string) => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.EditAppointmentModal,
+        props: { appointmentId: id }
+      })
+    );
+  };
+
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddPatientAppointmentsModal, props: {} }));
   }, []);
@@ -91,7 +100,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
                       </TableCell>
                       <TableCell width="10%">
                         <Stack>
-                          <IconButton disableRipple>
+                          <IconButton onClick={() => onRowClick(id)}>
                             <ChevronRightOutlinedIcon />
                           </IconButton>
                         </Stack>
