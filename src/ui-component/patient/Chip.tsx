@@ -11,7 +11,6 @@ interface IChipProps extends ChipProps {
   label?: string;
   avatar?: React.ReactElement;
   onDelete?: () => void;
-  onClick?: () => void;
 }
 
 const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) => {

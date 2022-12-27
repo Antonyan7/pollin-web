@@ -52,7 +52,7 @@ const GroupItems = (props: IGroupItemsProps) => {
           (groupItem?.groupItems?.length === 0 ? (
             <SingleItemCheckbox orderGroup={orderGroup} defaultGroupItem={groupItem} key={groupItem.id} />
           ) : (
-            <>
+            <React.Fragment key={groupItem.id}>
               <Stack>
                 <PollinBloodTestGroupCheckbox
                   orderGroup={orderGroup}
@@ -65,7 +65,7 @@ const GroupItems = (props: IGroupItemsProps) => {
               <Collapse in={isCollapseOpen(groupItem.id)} timeout="auto" unmountOnExit>
                 {groupItem?.groupItems?.map((secondaryGroupItem: IOrderGroupItem) =>
                   secondaryGroupItem?.groupItems?.length === 0 ? (
-                    <Stack ml={3}>
+                    <Stack ml={3} key={secondaryGroupItem.id}>
                       <TestGroupSingleItemCheckbox
                         orderGroup={orderGroup}
                         secondaryGroupItem={secondaryGroupItem}
@@ -73,7 +73,7 @@ const GroupItems = (props: IGroupItemsProps) => {
                       />
                     </Stack>
                   ) : (
-                    <>
+                    <React.Fragment key={secondaryGroupItem.id}>
                       <Stack>
                         <TestPanelGroupCheckbox
                           orderGroup={orderGroup}
@@ -85,7 +85,7 @@ const GroupItems = (props: IGroupItemsProps) => {
                       </Stack>
                       <Collapse in={isCollapseOpen(secondaryGroupItem.id)} timeout="auto" unmountOnExit>
                         {secondaryGroupItem.groupItems?.map((panelGroupItems: IOrderGroupItem) => (
-                          <Stack ml={6}>
+                          <Stack ml={6} key={panelGroupItems.id}>
                             <FormControlLabel
                               label={panelGroupItems.title}
                               sx={{ margin: `${margins.all8} ${margins.all0}` }}
@@ -101,11 +101,11 @@ const GroupItems = (props: IGroupItemsProps) => {
                           </Stack>
                         ))}
                       </Collapse>
-                    </>
+                    </React.Fragment>
                   )
                 )}
               </Collapse>
-            </>
+            </React.Fragment>
           ))
       )}
     </Stack>

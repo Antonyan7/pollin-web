@@ -1,100 +1,82 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, FormGroup, Grid, Stack } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
 
-import GroupItems from '@ui-component/orders/GroupItems';
+import OrderGroupItem from '@ui-component/orders/OrderGroupItem';
 
-const GroupItemsWrapper = (props: { orderGroup: IOrderGroup }) => {
+import { isAllGroupItemSelected, isAnyGroupItemSelected } from './helpers';
+
+interface GroupItemsWrapperProps {
+  orderGroup: IOrderGroup;
+}
+
+const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const theme = useTheme();
-  const { orderGroup } = props;
   const orderGroups = useSelector(resultsSelector.orderGroups);
 
-  const isEverythingSelected = () => {
-    const flatMapOfGroupItems = orderGroup.groupItems.flatMap((groupItem) => groupItem);
-    const flatMapOfGroupItemsChildren = orderGroup.groupItems.flatMap((groupItem) => groupItem.groupItems);
+  const isEverythingSelected = useMemo(() => isAllGroupItemSelected(orderGroup.groupItems), [orderGroup.groupItems]);
 
-    if (
-      flatMapOfGroupItems.find((groupItem) => groupItem?.selected === false)?.selected === false ||
-      flatMapOfGroupItemsChildren.find((groupItem) => groupItem?.selected === false)?.selected === false
-    ) {
-      return false;
-    }
+  const atLeastOneSelectedItemExists = useMemo(
+    () => isAnyGroupItemSelected(orderGroup.groupItems),
+    [orderGroup.groupItems]
+  );
 
-    return true;
-  };
-
-  const atLeastOneSelectedItemExists = () => {
-    const flatMapOfGroupItems = orderGroup.groupItems.flatMap((groupItem) => groupItem);
-    const flatMapOfGroupItemsChildren = orderGroup.groupItems.flatMap((groupItem) => groupItem.groupItems);
-
-    if (
-      !isEverythingSelected() &&
-      (flatMapOfGroupItems.find((groupItem) => groupItem?.selected === true)?.selected === true ||
-        flatMapOfGroupItemsChildren.find((groupItem) => groupItem?.selected === true)?.selected === true)
-    ) {
-      return true;
-    }
-
-    return false;
-  };
-
-  const handleSelectUnselectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAllSelection = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { checked } = event.target;
 
-    const updatedOrderGroups = orderGroups.map((defaultOrderGroup) => {
-      if (defaultOrderGroup.id === orderGroup.id) {
-        return {
-          ...defaultOrderGroup,
-          groupItems: defaultOrderGroup.groupItems.map((groupItem) => ({
-            ...groupItem,
-            selected: checked,
-            groupItems: groupItem?.groupItems?.map((childGroupItem) => ({
-              ...childGroupItem,
-              selected: checked,
-              groupItems: childGroupItem?.groupItems?.map((panelChildItem) => ({
-                ...panelChildItem,
-                selected: checked
-              }))
-            }))
-          }))
-        };
-      }
+    const updateGroupItems = (groupItems: IOrderGroupItem[]): IOrderGroupItem[] =>
+      groupItems.map((groupItem) => ({
+        ...groupItem,
+        selected: checked,
+        ...(groupItem.groupItems !== undefined ? { groupItems: updateGroupItems(groupItem.groupItems) } : {})
+      }));
 
-      return defaultOrderGroup;
-    });
+    const updatedOrderGroups = orderGroups.map((defaultOrderGroup) =>
+      defaultOrderGroup.id === orderGroup.id
+        ? {
+            ...defaultOrderGroup,
+            groupItems: updateGroupItems(defaultOrderGroup.groupItems)
+          }
+        : defaultOrderGroup
+    );
 
     dispatch(resultsMiddleware.updateOrderGroups(updatedOrderGroups));
   };
 
   return (
-    <Stack borderBottom={`1px solid ${theme.palette.primary.light}`}>
-      <Grid container xs={12} justifyItems="center" spacing={2} px={paddings.all24} py={paddings.all12}>
-        <Grid item xs={2}>
-          <FormGroup>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={!!orderGroup?.id && isEverythingSelected()}
-                  indeterminate={atLeastOneSelectedItemExists()}
-                  onChange={handleSelectUnselectAll}
-                />
-              }
-              label={orderGroup.title}
-            />
-          </FormGroup>
-        </Grid>
-        <Grid item xs={5}>
-          <GroupItems orderGroup={orderGroup} key={1} isEvenItemsShouldBeDisplayed />
-        </Grid>
-        <Grid item xs={5}>
-          <GroupItems orderGroup={orderGroup} key={2} isEvenItemsShouldBeDisplayed={false} />
-        </Grid>
-      </Grid>
+    <Stack
+      direction="row"
+      borderBottom={`1px solid ${theme.palette.primary.light}`}
+      px={paddings.all24}
+      py={paddings.all12}
+      gap={2}
+    >
+      <Stack direction="row" flexBasis={2} flexGrow={2}>
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={!!orderGroup?.id && isEverythingSelected}
+                indeterminate={!(!!orderGroup?.id && isEverythingSelected) ? atLeastOneSelectedItemExists : undefined}
+                onChange={handleAllSelection}
+              />
+            }
+            label={orderGroup.title}
+          />
+        </FormGroup>
+      </Stack>
+      <Stack direction="row" flexBasis={10} flexGrow={10} flexWrap="wrap">
+        {orderGroup.groupItems.map((groupItem) => (
+          <Stack flexBasis="50%" key={groupItem.id}>
+            <OrderGroupItem groupItem={groupItem} orderGroupId={orderGroup.id} />
+          </Stack>
+        ))}
+      </Stack>
     </Stack>
   );
 };

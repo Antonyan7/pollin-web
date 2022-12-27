@@ -29,7 +29,7 @@ const OrderGroups = () => {
       ) : (
         <div>
           {orderGroups.map((orderGroup: IOrderGroup) => (
-            <GroupItemsWrapper orderGroup={orderGroup} />
+            <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
           ))}
         </div>
       )}

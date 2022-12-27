@@ -1,4 +1,5 @@
 import React from 'react';
+import { ChipProps } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { margins, paddings } from 'themes/themeConstants';
 import { TestType } from 'types/reduxTypes/resultsStateTypes';
@@ -8,6 +9,10 @@ import Chip from '@ui-component/patient/Chip';
 const TestTypeChip = (props: { type: TestType }) => {
   const { type } = props;
   const theme = useTheme();
+  const onClick: ChipProps['onClick'] = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
   return (
     // TODO: hardcoded colors should be refactored once palette will be updated
@@ -15,6 +20,8 @@ const TestTypeChip = (props: { type: TestType }) => {
       label={type}
       size="small"
       chipColor="notActive"
+      onClick={onClick}
+      clickable={false}
       sx={{
         order: 2,
         marginLeft: margins.left8,

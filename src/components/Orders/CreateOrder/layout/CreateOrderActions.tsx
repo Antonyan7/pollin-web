@@ -21,7 +21,7 @@ const CreateOrderActions = () => {
   return (
     <Stack direction="row" gap={2} py={paddings.all12} px={paddings.all24} justifyContent="end">
       <Button
-        data-cy={t(CypressIds.PAGE_CREATE_ORDER_BUTTON_CANCEL)}
+        data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_CANCEL}
         color="primary"
         onClick={onCancelClick}
         variant="outlined"
@@ -30,7 +30,7 @@ const CreateOrderActions = () => {
         {t(Translation.PAGE_CREATE_ORDER_BUTTON_CANCEL)}
       </Button>
       <Button
-        data-cy={t(CypressIds.PAGE_CREATE_ORDER_BUTTON_CREATE_ORDER)}
+        data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_CREATE_ORDER}
         color="primary"
         onClick={onCreateOrderClick}
         variant="contained"
