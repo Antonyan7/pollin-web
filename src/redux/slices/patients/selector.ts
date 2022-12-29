@@ -24,6 +24,7 @@ const isPatientHighlightsLoading = createSelector([selector], (state) => state.i
 const patientHighlightHeader = createSelector([selector], (state) => state.patientHighlightHeader);
 const patientHighlights = createSelector([selector], (state) => state.patientHighlights);
 const isPatientHighlightIntakeComplete = createSelector([selector], (state) => state.isPatientHighlightIntakeComplete);
+const isPatientAlertViewOpen = createSelector([selector], (state) => state.isPatientAlertViewOpen);
 const isPatientHighlightIntakeReminderActive = createSelector(
   [selector],
   (state) => state.isPatientHighlightIntakeReminderActive
@@ -68,6 +69,7 @@ export default {
   patientsErrors,
   filtersList,
   patientAlertDetails,
+  isPatientAlertViewOpen,
   encountersList,
   encounterFilters,
   isEncountersListLoading,

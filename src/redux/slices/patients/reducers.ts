@@ -59,6 +59,9 @@ const reducers = createReducer({
   setEncountersAddendumLoadingState(state, action: IAction<boolean>) {
     state.isEncountersAddendumLoading = action.payload;
   },
+  setPatientAlertViewState(state, action: IAction<boolean>) {
+    state.isPatientAlertViewOpen = action.payload;
+  },
   setEncountersList(state, action: IAction<IEncounterList>) {
     state.encounters.list = action.payload;
   },

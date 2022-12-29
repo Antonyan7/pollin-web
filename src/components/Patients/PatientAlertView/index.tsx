@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -16,7 +16,7 @@ const PatientAlertView = () => {
   const rowId = router.query.id as string;
   const theme = useTheme();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
-  const [open, setOpen] = useState(true);
+  const isPatientAlertViewOpen = useAppSelector(patientsSelector.isPatientAlertViewOpen);
   const [t] = useTranslation();
 
   const StyledDiv = styled('div')(() => ({
@@ -31,7 +31,7 @@ const PatientAlertView = () => {
     }
   }, [rowId]);
 
-  return patientAlertDetails?.length && open ? (
+  return patientAlertDetails?.length && isPatientAlertViewOpen ? (
     <Box sx={{ width: '100%' }}>
       <Alert
         sx={{ mb: 2, background: theme.palette.warning.light }}
@@ -42,7 +42,7 @@ const PatientAlertView = () => {
               marginBottom: margins.all24
             }}
             size="small"
-            onClick={() => setOpen(!open)}
+            onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen())}
           >
             {t(Translation.PAGE_PATIENT_ALERT_DISMISS)}
             <CloseIcon sx={{ fontSize: '12px', margin: margins.all4 }} />
