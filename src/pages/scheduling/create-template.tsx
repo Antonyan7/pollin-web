@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
-import CreateTemplate from '@components/Scheduling/CreateTemplate';
+import ScheduleTemplateForm from '@components/Scheduling/scheduleTemplateForm';
 import { Box } from '@mui/material';
 import { Translation } from 'constants/translations';
 
@@ -20,7 +20,7 @@ const CreateSchedulingTemplate = () => {
           ]
         }}
       />
-      <CreateTemplate />
+      <ScheduleTemplateForm />
     </Box>
   );
 };

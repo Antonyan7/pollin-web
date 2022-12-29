@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { FormControlLabel, Radio, RadioGroup, RadioGroupProps, styled, useTheme } from '@mui/material';
@@ -9,8 +9,8 @@ import { ITemplateGroup, PeriodType } from 'types/create-schedule';
 const ServiceField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { control, watch } = useFormContext<ITemplateGroup>();
-  const [radioGroupValue, setRadioGroupValue] = useState<string>(PeriodType.ServiceType);
+  const { control } = useFormContext<ITemplateGroup>();
+
   const { field } = useController({ name: `timePeriods.${index}.periodType`, control });
   const { onChange, ...fieldProps } = field;
   const serviceTypesRadioButtonCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPE;
@@ -24,16 +24,15 @@ const ServiceField: React.FC<{ index: number }> = ({ index }) => {
     }
   }));
 
-  useEffect(() => {
-    const subscription = watch((item) => {
-      setRadioGroupValue(item.timePeriods?.[index]?.periodType ?? '');
-    });
-
-    return () => subscription.unsubscribe();
-  }, [index, watch]);
-
   return (
-    <RadioGroup {...fieldProps} className="schedule-inputs" value={radioGroupValue} row onChange={onServiceFieldChange}>
+    <RadioGroup
+      {...fieldProps}
+      className="schedule-inputs"
+      value={field.value}
+      row
+      onChange={onServiceFieldChange}
+      ref={field.ref}
+    >
       <FormControlLabel
         data-cy={serviceTypesRadioButtonCyId}
         value={PeriodType.ServiceType}

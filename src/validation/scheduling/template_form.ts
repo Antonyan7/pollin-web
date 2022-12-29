@@ -3,7 +3,7 @@ import i18next from 'i18next';
 import { PeriodType } from 'types/create-schedule';
 import { array, number, object, string } from 'yup';
 
-export const createTemplateValidationSchema = object({
+export const scheduleTemplateFormValidationSchema = object({
   name: string().max(50).required(),
   timePeriods: array().of(
     object().shape({

@@ -19,6 +19,7 @@ import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
 import { viewsMiddleware } from '../views';
 
+import { defaultScheduleTemplateDetails } from './initialState';
 import slice from './slice';
 
 const {
@@ -173,6 +174,10 @@ const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => asy
   }
 };
 
+const clearSingleSchedule = () => (dispatch: AppDispatch) => {
+  dispatch(setSingleScheduleTemplate(defaultScheduleTemplateDetails));
+};
+
 const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setCalendarLoadingState(true));
@@ -287,6 +292,7 @@ export default {
   applyScheduleTemplate,
   getSingleSchedule,
   updateSingleSchedule,
+  clearSingleSchedule,
   resetApplyStatusState,
   resetOverrides,
   resetBlockStatusState,

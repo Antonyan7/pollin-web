@@ -17,7 +17,7 @@ import { IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/p
 interface IProfileProps {
   isOverviewLoading: boolean;
   overview: PatientProfileOverview | null;
-  testResultsHistory: ITestResultHistory[];
+  testResultsHistory: ITestResultHistory | null;
   profileTestResults: IProfileTestResults | null;
   isTestResultsHistoryLoading: boolean;
   isProfileTestResultsLoading: boolean;

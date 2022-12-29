@@ -42,8 +42,8 @@ class RequestManager {
     axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
       const requestConfig = config;
 
-      const captchaToken = await FirebaseManager.getToken();
-      const idToken = await FirebaseManager.getIdToken();
+      const captchaToken = await FirebaseManager?.getToken();
+      const idToken = await FirebaseManager?.getIdToken();
 
       requestConfig.headers = {
         'x-pollin-device-id': getOrGenerateDeviceId(),

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { TextField } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
@@ -22,51 +22,63 @@ interface ITimeFieldProps {
 const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) => {
   const [t] = useTranslation();
   const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
-  const { control, getValues, clearErrors, watch } = useFormContext<ITemplateGroup>();
-  const { field, fieldState } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
+  const { control, clearErrors, setError, formState } = useFormContext<ITemplateGroup>();
+  const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, ...fieldProps } = field;
   const theme = useTheme();
-  const { error } = fieldState;
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const startBeforeEndError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
-  const endBeforeStartError = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
+  const { errors } = formState;
+  const currentFieldValue = field.value;
+
+  // Choose opposite time field for current time field;
+  const watchedFieldName = fieldName === 'endTime' ? 'startTime' : 'endTime';
+
+  const watchedTimeFieldValue = useWatch({
+    name: `timePeriods.${index}.${watchedFieldName}`
+  });
+
+  const startBeforeEndErrorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_START_BEFORE_END_ERROR);
+  const endBeforeStartErrorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_END_AFTER_ERROR);
+
+  const startTimeFieldValue = fieldName === 'startTime' ? field.value : watchedTimeFieldValue;
+  const endTimeFieldValue = fieldName === 'endTime' ? field.value : watchedTimeFieldValue;
+
+  const getStartTimeValue = convertToLocale(startTimeFieldValue ?? '');
+  const getEndTimeValue = convertToLocale(endTimeFieldValue ?? '');
+  const isStartTimeAfterEndTime = getStartTimeValue && getEndTimeValue && getStartTimeValue >= getEndTimeValue;
 
   useEffect(() => {
-    watch(() => {
-      const getStartTimeValue = convertToLocale(getValues().timePeriods?.[index]?.startTime ?? '');
-      const getEndTimeValue = convertToLocale(getValues().timePeriods?.[index]?.endTime ?? '');
-      const isStartTimeAfterEndTime = getStartTimeValue && getEndTimeValue && getStartTimeValue >= getEndTimeValue;
-      const isEndTimeBeforeStartTime = getStartTimeValue && getEndTimeValue && getStartTimeValue < getEndTimeValue;
-
-      if (isStartTimeAfterEndTime) {
-        if (fieldName === 'startTime') {
-          setErrorMessage(startBeforeEndError);
-        } else {
-          setErrorMessage(endBeforeStartError);
-        }
-      } else {
-        setErrorMessage('');
+    if (isStartTimeAfterEndTime) {
+      if (fieldName === 'startTime' && !errors?.timePeriods?.[index]?.startTime?.message) {
+        setError(`timePeriods.${index}.startTime`, {
+          type: 'invalidTime',
+          message: startBeforeEndErrorMessage
+        });
+      } else if (!errors?.timePeriods?.[index]?.endTime?.message) {
+        setError(`timePeriods.${index}.endTime`, {
+          type: 'invalidTime',
+          message: endBeforeStartErrorMessage
+        });
       }
-
-      if (isEndTimeBeforeStartTime) {
-        clearErrors(`timePeriods.${index}.startTime`);
-        clearErrors(`timePeriods.${index}.endTime`);
-      }
-    });
+    } else if (errors?.timePeriods?.[index]?.endTime?.message) {
+      clearErrors(`timePeriods.${index}.endTime`);
+    } else if (errors?.timePeriods?.[index]?.startTime?.message) {
+      clearErrors(`timePeriods.${index}.startTime`);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [clearErrors, watch, fieldName, getValues, index, t]);
+  }, [isStartTimeAfterEndTime, watchedTimeFieldValue]);
 
   const onTimeFieldChange = (newTime: Date | null) => {
     onChange(toLocalIsoString(newTime));
   };
-  const timeFieldValue = getValues().timePeriods?.[index]?.[fieldName];
+  const timeFieldValue = currentFieldValue;
   const initialValue = convertToLocale(timeFieldValue ?? '');
 
   return (
     <div className="schedule-inputs">
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <TimePicker
+          inputRef={field.ref}
           open={openTimePicker}
           onOpen={() => setOpenTimePicker(true)}
           onClose={() => setOpenTimePicker(false)}
@@ -107,8 +119,8 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
                 svg: { color: theme.palette.primary.main }
               }}
               {...fieldProps}
-              helperText={error?.message ?? errorMessage}
-              error={Boolean(error?.message) || Boolean(errorMessage)}
+              helperText={errors?.timePeriods?.[index]?.[fieldName]?.message}
+              error={Boolean(errors?.timePeriods?.[index]?.[fieldName]?.message)}
               onKeyDown={(e) => e.preventDefault()}
               onClick={() => setOpenTimePicker(true)}
             />

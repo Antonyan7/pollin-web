@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import useTimePeriodsContext from '@components/Scheduling/scheduleTemplateForm/hooks/useTimePeriodsContext';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Box, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { Translation } from 'constants/translations';
-import { ITemplateGroup } from 'types/create-schedule';
 
 import { MinusIconButton } from '@ui-component/common/buttons';
 
@@ -17,13 +16,12 @@ interface ITimePeriodsTitleProps {
 const TimePeriodsTitle = ({ timePeriodNumber }: ITimePeriodsTitleProps) => {
   const overrides: number[] = useAppSelector(schedulingSelector.scheduleOverrides);
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext<ITemplateGroup>();
+
+  const { remove } = useTimePeriodsContext();
   const theme = useTheme();
 
   const onMinusClick = (timePeriodIndex: number) => {
-    const timePeriods = getValues('timePeriods');
-
-    setValue('timePeriods', [...timePeriods.slice(0, timePeriodIndex), ...timePeriods.slice(timePeriodIndex + 1)]);
+    remove(timePeriodIndex);
   };
 
   useEffect(() => {

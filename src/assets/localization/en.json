@@ -84,6 +84,8 @@
   "page.scheduling.create.templates.placeholder.error": "Placeholder Label is required",
   "page.scheduling.create.templates.button.save": "Save",
   "page.scheduling.create.templates.button.cancel": "Cancel",
+  "page.scheduling.edit.templates.button.save": "Save",
+  "page.scheduling.edit.templates.button.cancel": "Cancel",
   "page.scheduling.block.title": "Block Schedule",
   "page.scheduling.block.resource": "Resource",
   "page.scheduling.block.date.start": "Start Date & Time",

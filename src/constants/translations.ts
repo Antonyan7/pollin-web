@@ -86,6 +86,8 @@ export enum Translation {
   PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER_ERROR = 'page.scheduling.create.templates.placeholder.error',
   PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE = 'page.scheduling.create.templates.button.save',
   PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_CANCEL = 'page.scheduling.create.templates.button.cancel',
+  PAGE_SCHEDULING_EDIT_TEMPLATES_BUTTON_SAVE = 'page.scheduling.edit.templates.button.save',
+  PAGE_SCHEDULING_EDIT_TEMPLATES_BUTTON_CANCEL = 'page.scheduling.edit.templates.button.cancel',
   PAGE_SCHEDULING_BLOCK_TITLE = 'page.scheduling.block.title',
   PAGE_SCHEDULING_BLOCK_RESOURCE = 'page.scheduling.block.resource',
   PAGE_SCHEDULING_BLOCK_DATE_START = 'page.scheduling.block.date.start',

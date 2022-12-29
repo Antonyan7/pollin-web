@@ -62,6 +62,9 @@
   page.scheduling.create.templates.name
   page.scheduling.create.templates.button.save
   page.scheduling.create.templates.button.cancel
+  page.scheduling.edit.templates.name
+  page.scheduling.edit.templates.button.save
+  page.scheduling.edit.templates.button.cancel
   page.scheduling.templates.edit.icon
   page.scheduling.create.templates.placeholder
   page.scheduling.create.templates.service.type

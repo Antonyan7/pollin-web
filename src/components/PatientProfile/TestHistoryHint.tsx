@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ITestResultHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Box, Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -32,7 +31,7 @@ const TestHistoryTooltipContent = ({ testResultId }: Omit<TestHistoryHintProps, 
     };
   }, [currentPatientId, testResultId]);
 
-  const areThereNotAnyAvailableTestResults = testResultsHistory.length === 0 && !isTestResultsHistoryLoading;
+  const areThereNotAnyAvailableTestResults = !testResultsHistory && !isTestResultsHistoryLoading;
 
   if (isTestResultsHistoryLoading) {
     return (
@@ -58,28 +57,26 @@ const TestHistoryTooltipContent = ({ testResultId }: Omit<TestHistoryHintProps, 
       {areThereNotAnyAvailableTestResults ? (
         <Typography variant="body1">{testResultHistoryNoTrendsLabel}</Typography>
       ) : (
-        testResultsHistory.map((testResultHistory: ITestResultHistory) => (
-          <ListLayout
-            items={testResultHistory?.items as IListLayoutItem[]}
-            title={testResultHistory?.widgetTitle}
-            renderAsList
-            componentProps={{
-              list: {
-                py: 0,
-                px: paddings.leftRight20,
-                sx: {
-                  margin: 0
-                }
-              },
-              title: {
-                sx: {
-                  pt: paddings.top8,
-                  m: 0
-                }
+        <ListLayout
+          items={testResultsHistory?.items as IListLayoutItem[]}
+          title={testResultsHistory?.widgetTitle}
+          renderAsList
+          componentProps={{
+            list: {
+              py: 0,
+              px: paddings.leftRight20,
+              sx: {
+                margin: 0
               }
-            }}
-          />
-        ))
+            },
+            title: {
+              sx: {
+                pt: paddings.top8,
+                m: 0
+              }
+            }
+          }}
+        />
       )}
     </Box>
   );

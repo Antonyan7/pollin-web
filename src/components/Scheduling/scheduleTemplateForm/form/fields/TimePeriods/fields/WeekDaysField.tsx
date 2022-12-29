@@ -6,22 +6,21 @@ import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { weekDays } from 'helpers/constants';
 import { calculateWeekByNumber } from 'helpers/scheduling';
-import { ISingleTemplate, ITemplateGroup } from 'types/create-schedule';
+import { ITemplateGroup } from 'types/create-schedule';
 
 interface IWeekdaysFieldProps {
   index: number;
-  singleTemplate: ISingleTemplate;
 }
 
-const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
+const WeekDaysField = ({ index }: IWeekdaysFieldProps) => {
   const [t] = useTranslation();
-  const { control, formState, register, getValues } = useFormContext<ITemplateGroup>();
+  const { control, formState, getValues } = useFormContext<ITemplateGroup>();
   const {
     errors: { timePeriods }
   } = formState;
   const weekDayError = timePeriods?.[index]?.days;
   const { field } = useController({ name: `timePeriods.${index}.days`, control });
-  const { onChange } = field;
+
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_SELECT_ERROR);
   const values = getValues().timePeriods[index]?.days.map((item) => Number(item));
   const weekDayCheckboxCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS;
@@ -29,7 +28,7 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
   const onWeekDaysChange =
     (indexOfDay: number): CheckboxProps['onChange'] =>
     (e) =>
-      onChange(
+      field.onChange(
         e.target.checked
           ? [...values, indexOfDay]
           : values.map((item) => Number(item)).filter((item) => item !== indexOfDay)
@@ -43,13 +42,13 @@ const WeekDaysField = ({ index, singleTemplate }: IWeekdaysFieldProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
           {weekDays.map((day, indexOfDay) => (
             <FormControlLabel
-              key={`${day}-${singleTemplate.id}`}
+              key={day}
               label={day}
               value={calculateWeekByNumber(indexOfDay)}
               control={
                 <Checkbox
                   data-cy={`${weekDayCheckboxCyId}-${indexOfDay}`}
-                  {...register(field.name, { required: true })}
+                  value={field.value[indexOfDay]}
                   checked={isChecked(indexOfDay)}
                   onChange={onWeekDaysChange(calculateWeekByNumber(indexOfDay))}
                 />

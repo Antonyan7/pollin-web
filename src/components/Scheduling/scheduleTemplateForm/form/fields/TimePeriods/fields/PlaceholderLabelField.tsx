@@ -8,15 +8,10 @@ import { ITemplateGroup } from 'types/create-schedule';
 
 const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
   const [t] = useTranslation();
-  const { control, formState, getValues } = useFormContext<ITemplateGroup>();
-  const { field } = useController({ name: `timePeriods.${index}.placeholderName`, control });
-  const {
-    errors: { timePeriods }
-  } = formState;
-  const placeholderError = timePeriods?.[index]?.placeholderName;
-  const placeholderField = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER);
+  const { control } = useFormContext<ITemplateGroup>();
+  const { field, fieldState } = useController({ name: `timePeriods.${index}.placeholderName`, control });
+  const fieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER);
   const errorMessage = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER_ERROR);
-  const placeholderValue = getValues().timePeriods[index]?.placeholderName;
   const placeholderCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER;
 
   return (
@@ -26,11 +21,12 @@ const PlaceholderLabelField: React.FC<{ index: number }> = ({ index }) => {
       fullWidth
       color="primary"
       id="outlined-email-address"
-      helperText={placeholderError?.message && errorMessage}
-      error={Boolean(placeholderError)}
-      placeholder={placeholderField}
+      helperText={fieldState?.error && errorMessage}
+      error={Boolean(fieldState?.error)}
+      placeholder={fieldPlaceholder}
       {...field}
-      value={placeholderValue}
+      value={field.value}
+      ref={field.ref}
     />
   );
 };

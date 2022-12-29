@@ -378,7 +378,7 @@ const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDi
 };
 
 const cleanTestResultsHistory = () => async (dispatch: AppDispatch) => {
-  dispatch(setTestResultsHistory([]));
+  dispatch(setTestResultsHistory(null));
 };
 
 const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => async (dispatch: AppDispatch) => {
@@ -391,7 +391,7 @@ const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => 
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
-    dispatch(setTestResultsHistory([]));
+    dispatch(setTestResultsHistory(null));
   } finally {
     dispatch(setIsTestResultsHistoryLoading(false));
   }

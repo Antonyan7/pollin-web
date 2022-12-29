@@ -35,7 +35,7 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
   return (
     <BaseDropdownWithLoading
       data-cy={serviceTypesCyId}
-      isLoading={isServiceTypesLoading}
+      isLoading={!!isServiceTypesLoading}
       className="schedule-inputs"
       multiple
       options={serviceTypeOptions}
