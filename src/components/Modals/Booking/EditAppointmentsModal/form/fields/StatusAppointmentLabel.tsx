@@ -49,6 +49,7 @@ const StatusAppointmentLabel = () => {
                 style: { border: `${borders.solid2px}` }
               }
             }}
+            defaultValue={field.value}
             IconComponent={KeyboardArrowDownIcon}
             id="status-appointment-label"
             labelId="status-appointment-label"
@@ -56,7 +57,7 @@ const StatusAppointmentLabel = () => {
             {...fieldProps}
           >
             {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
-              <MenuItem value={statusItem.title} key={statusItem.id}>
+              <MenuItem value={statusItem.id} key={statusItem.id}>
                 {statusItem.title}
               </MenuItem>
             ))}
