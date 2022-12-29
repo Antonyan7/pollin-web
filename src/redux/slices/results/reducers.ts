@@ -6,7 +6,7 @@ import {
   IAllTestsSpecimensList,
   ILab,
   IOrderDetailsData,
-  IOrderGroup,
+  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
   IOrdersFilterItems,
@@ -216,7 +216,7 @@ const reducers = createReducer({
   setSelectedOrderType(state, action: IAction<string>) {
     state.selectedOrderType = action.payload;
   },
-  setOrderGroups(state, action: IAction<IOrderGroup[]>) {
+  setOrderGroups(state, action: IAction<IOrderGroupsCollection[]>) {
     state.orderGroups = action.payload;
   },
   setIsOrderGroupsLoading(state, action: IAction<boolean>) {

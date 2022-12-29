@@ -4,20 +4,34 @@ import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
 
 import GroupItemsWrapper from '@ui-component/orders/GroupItemsWrapper';
 
 const OrderGroups = () => {
   const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
   const isOrderGroupsLoading = useSelector(resultsSelector.isOrderGroupsLoading);
-  const orderGroups = useSelector(resultsSelector.orderGroups);
+  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
 
   useEffect(() => {
     if (selectedOrderType) {
       dispatch(resultsMiddleware.getOrderGroups(selectedOrderType));
     }
   }, [selectedOrderType]);
+
+  const renderOrderGroups = () => {
+    const activeOrderGroups = orderGroupsCollections?.find(
+      (orderGroup: IOrderGroupsCollection) => orderGroup.orderTypeId === selectedOrderType
+    );
+
+    return (
+      <div>
+        {activeOrderGroups?.groups.map((orderGroup: IOrderGroup) => (
+          <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
+        ))}
+      </div>
+    );
+  };
 
   return (
     <Box py={paddings.all24} px={paddings.all24} justifyContent="end">
@@ -27,11 +41,7 @@ const OrderGroups = () => {
           <CircularProgress />
         </Grid>
       ) : (
-        <div>
-          {orderGroups.map((orderGroup: IOrderGroup) => (
-            <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
-          ))}
-        </div>
+        renderOrderGroups()
       )}
     </Box>
   );

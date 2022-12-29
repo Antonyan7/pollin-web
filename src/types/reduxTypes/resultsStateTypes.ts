@@ -106,7 +106,7 @@ export interface IResultsProps {
   orderTypes: IOrderType[];
   isOrderTypesLoading: boolean;
   selectedOrderType: string;
-  orderGroups: IOrderGroup[];
+  orderGroups: IOrderGroupsCollection[];
   isOrderGroupsLoading: boolean;
   orderDetails: IOrderDetailsData;
   isOrderDetailsLoading: boolean;
@@ -411,6 +411,10 @@ export interface IOrderGroupItem {
   groupItems?: IOrderGroupItem[];
 }
 
+export interface IOrderGroupsCollection {
+  orderTypeId: string;
+  groups: IOrderGroup[];
+}
 export interface IOrderGroup {
   id: string;
   title: string;

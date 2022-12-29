@@ -28,6 +28,7 @@ import {
   IOrderDetailsData,
   IOrderGroup,
   IOrderGroupItem,
+  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IResultsList,
@@ -845,10 +846,23 @@ const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispa
 const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsOrderGroupsLoading(true));
 
-  try {
-    const response = await API.results.getOrderGroups(orderType);
+  const { orderGroups } = store.getState().results;
+  const currentOrderGroupByType = orderGroups.find((group: IOrderGroupsCollection) => group.orderTypeId === orderType);
 
-    dispatch(setOrderGroups(response.data.data.groups));
+  try {
+    if (!currentOrderGroupByType?.orderTypeId) {
+      const response = await API.results.getOrderGroups(orderType);
+
+      const orderGroupCollections = [
+        ...store.getState().results.orderGroups,
+        {
+          orderTypeId: orderType,
+          groups: response.data.data.groups
+        }
+      ];
+
+      dispatch(setOrderGroups(orderGroupCollections));
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -857,9 +871,26 @@ const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
   }
 };
 
-const updateOrderGroups = (orderGroups: IOrderGroup[]) => async (dispatch: AppDispatch) => {
-  dispatch(setOrderGroups(orderGroups));
-};
+const updateOrderGroups =
+  (orderTypeId: string, updatedOrderGroups: IOrderGroup[] = []) =>
+  async (dispatch: AppDispatch) => {
+    const { orderGroups } = store.getState().results;
+
+    const updatedOrderGroupsCollection: IOrderGroupsCollection[] = orderGroups.map(
+      (collection: IOrderGroupsCollection) => {
+        if (collection.orderTypeId === orderTypeId) {
+          return {
+            orderTypeId,
+            groups: updatedOrderGroups
+          };
+        }
+
+        return collection;
+      }
+    );
+
+    dispatch(setOrderGroups(updatedOrderGroupsCollection));
+  };
 
 const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   try {

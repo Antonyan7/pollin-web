@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
 
 import OrderGroupItem from '@ui-component/orders/OrderGroupItem';
 
@@ -17,7 +17,15 @@ interface GroupItemsWrapperProps {
 
 const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const theme = useTheme();
-  const orderGroups = useSelector(resultsSelector.orderGroups);
+  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
+  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+
+  const activeOrderGroups = useMemo(
+    () =>
+      orderGroupsCollections?.find((collection: IOrderGroupsCollection) => collection.orderTypeId === selectedOrderType)
+        ?.groups,
+    [orderGroupsCollections, selectedOrderType]
+  );
 
   const isEverythingSelected = useMemo(() => isAllGroupItemSelected(orderGroup.groupItems), [orderGroup.groupItems]);
 
@@ -36,7 +44,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         ...(groupItem.groupItems !== undefined ? { groupItems: updateGroupItems(groupItem.groupItems) } : {})
       }));
 
-    const updatedOrderGroups = orderGroups.map((defaultOrderGroup) =>
+    const updatedOrderGroups = activeOrderGroups?.map((defaultOrderGroup) =>
       defaultOrderGroup.id === orderGroup.id
         ? {
             ...defaultOrderGroup,
@@ -45,7 +53,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         : defaultOrderGroup
     );
 
-    dispatch(resultsMiddleware.updateOrderGroups(updatedOrderGroups));
+    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   return (

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Checkbox, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
 
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
 import TestTypeChip from '@ui-component/orders/TestTypeChip';
@@ -18,7 +18,15 @@ interface Props {
 
 const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const orderGroups = useSelector(resultsSelector.orderGroups);
+  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
+  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+
+  const activeOrderGroups = useMemo(
+    () =>
+      orderGroupsCollections?.find((collection: IOrderGroupsCollection) => collection.orderTypeId === selectedOrderType)
+        ?.groups,
+    [orderGroupsCollections, selectedOrderType]
+  );
 
   const onSelectChange: CheckboxProps['onChange'] = (event) => {
     const { checked } = event.target;
@@ -54,7 +62,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         return item;
       });
 
-    const updatedOrderGroups = orderGroups.map((orderGroup) => {
+    const updatedOrderGroups = activeOrderGroups?.map((orderGroup) => {
       if (orderGroup.id === orderGroupId) {
         return {
           ...orderGroup,
@@ -65,7 +73,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
       return orderGroup;
     });
 
-    dispatch(resultsMiddleware.updateOrderGroups(updatedOrderGroups));
+    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   const isEverythingSelected = useMemo(() => {

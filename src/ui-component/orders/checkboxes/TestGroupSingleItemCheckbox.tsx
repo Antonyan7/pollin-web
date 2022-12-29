@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
 
 const TestGroupSingleItemCheckbox = (props: {
   orderGroup: IOrderGroup;
@@ -11,7 +11,16 @@ const TestGroupSingleItemCheckbox = (props: {
   parentGroupId: string;
 }) => {
   const { orderGroup, secondaryGroupItem, parentGroupId } = props;
-  const orderGroups = useSelector(resultsSelector.orderGroups);
+  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
+
+  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+
+  const activeOrderGroups = useMemo(
+    () =>
+      orderGroupsCollections?.find((collection: IOrderGroupsCollection) => collection.orderTypeId === selectedOrderType)
+        ?.groups,
+    [orderGroupsCollections, selectedOrderType]
+  );
 
   const handleTestGroupSingleItemSelectUnselect = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -20,7 +29,7 @@ const TestGroupSingleItemCheckbox = (props: {
   ) => {
     const { checked } = event.target;
 
-    const updatedOrderGroups = orderGroups.map((defaultOrderGroup: IOrderGroup) => {
+    const updatedOrderGroups = activeOrderGroups?.map((defaultOrderGroup: IOrderGroup) => {
       const isDefaultGroupIdValid =
         defaultOrderGroup.groupItems.find((groupItem) => groupItem.id === groupItemId) &&
         defaultOrderGroup.id === orderGroup.id;
@@ -53,7 +62,7 @@ const TestGroupSingleItemCheckbox = (props: {
       return defaultOrderGroup;
     });
 
-    dispatch(resultsMiddleware.updateOrderGroups(updatedOrderGroups));
+    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   return (
