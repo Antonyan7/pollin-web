@@ -32,7 +32,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
     const updateGroupItems = (groupItems: IOrderGroupItem[]): IOrderGroupItem[] =>
       groupItems.map((groupItem) => ({
         ...groupItem,
-        selected: checked,
+        ...(groupItem.selected !== undefined ? { selected: checked } : {}),
         ...(groupItem.groupItems !== undefined ? { groupItems: updateGroupItems(groupItem.groupItems) } : {})
       }));
 

@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, CheckboxProps, Collapse, FormControlLabel, Stack, StackProps } from '@mui/material';
+import { Checkbox, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
@@ -30,28 +30,28 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         if (item.id === groupItem.id || inherited) {
           return {
             ...item,
-            selected: checked,
-            ...(item.groupItems !== undefined
+            ...(item.selected !== undefined
               ? {
-                  groupItems: updateOrderItems(item.groupItems, true)
+                  selected: checked
                 }
-              : {})
+              : {
+                  ...(item.groupItems !== undefined
+                    ? {
+                        groupItems: updateOrderItems(item.groupItems, true)
+                      }
+                    : {})
+                })
           };
         }
 
         if (item.groupItems !== undefined) {
-          const newGroupItems = updateOrderItems(item.groupItems);
-
           return {
             ...item,
-            groupItems: newGroupItems,
-            ...(newGroupItems.length > 0
-              ? { selected: newGroupItems.reduce((isSelected, { selected }) => isSelected && !!selected, true) }
-              : {})
+            groupItems: updateOrderItems(item.groupItems)
           };
         }
 
-        return { ...item };
+        return item;
       });
 
     const updatedOrderGroups = orderGroups.map((orderGroup) => {
@@ -62,22 +62,22 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         };
       }
 
-      return { ...orderGroup };
+      return orderGroup;
     });
 
     dispatch(resultsMiddleware.updateOrderGroups(updatedOrderGroups));
   };
 
   const isEverythingSelected = useMemo(() => {
-    if (groupItem.groupItems !== undefined) {
-      return groupItem.selected && isAllGroupItemSelected(groupItem.groupItems);
+    if (groupItem.selected === undefined && groupItem.groupItems !== undefined) {
+      return isAllGroupItemSelected(groupItem.groupItems);
     }
 
     return groupItem.selected ?? false;
   }, [groupItem]);
 
   const atLeastOneSelectedItemExists = useMemo(() => {
-    if (groupItem.groupItems !== undefined && groupItem.groupItems.length > 0 && !isEverythingSelected) {
+    if (groupItem.selected === undefined && groupItem.groupItems !== undefined && !isEverythingSelected) {
       return isAnyGroupItemSelected(groupItem.groupItems);
     }
 
@@ -92,26 +92,30 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
 
   return (
     <Stack pl={paddingFactor * 4}>
-      <FormControlLabel
-        label={groupItem.title}
-        control={
-          <>
-            <Checkbox
-              checked={isEverythingSelected}
-              indeterminate={atLeastOneSelectedItemExists}
-              onChange={onSelectChange}
-            />
-            {groupItem.groupItems && groupItem.groupItems.length > 0 && (
-              <>
-                <TestTypeChip type={groupItem.type} />
-                <Stack onClick={onCollapseClick} order={3}>
-                  <CollapseMenuArrowDownIcon isOpen={isOpen} />
-                </Stack>
-              </>
-            )}
-          </>
-        }
-      />
+      {groupItem.groupItems === undefined && groupItem.selected === undefined ? (
+        <ListItem sx={{ display: 'list-item', px: 1 }}>{groupItem.title}</ListItem>
+      ) : (
+        <FormControlLabel
+          label={groupItem.title}
+          control={
+            <>
+              <Checkbox
+                checked={isEverythingSelected}
+                indeterminate={atLeastOneSelectedItemExists}
+                onChange={onSelectChange}
+              />
+              {groupItem.groupItems && groupItem.groupItems.length > 0 && (
+                <>
+                  <TestTypeChip type={groupItem.type} />
+                  <Stack onClick={onCollapseClick} order={3}>
+                    <CollapseMenuArrowDownIcon isOpen={isOpen} />
+                  </Stack>
+                </>
+              )}
+            </>
+          }
+        />
+      )}
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         {groupItem.groupItems?.map((item) => (
           <OrderGroupItem groupItem={item} orderGroupId={orderGroupId} paddingFactor={1} key={item.id} />
