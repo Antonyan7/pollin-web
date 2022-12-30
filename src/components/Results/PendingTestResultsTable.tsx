@@ -10,14 +10,14 @@ import { useAppSelector } from 'redux/hooks';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 
-interface TableProps {
+export interface ExternalResultsTableProps {
   setSortField: React.Dispatch<SetStateAction<TestResultsListSortFields | null>>;
   setSortOrder: React.Dispatch<SetStateAction<SortOrder | null>>;
   sortOrder: SortOrder | null;
   sortField: TestResultsListSortFields | null;
 }
 
-const TableComponent = ({ setSortField, setSortOrder, sortOrder, sortField }: TableProps) => {
+const TableComponent = ({ setSortField, setSortOrder, sortOrder, sortField }: ExternalResultsTableProps) => {
   const [t] = useTranslation();
   const resultsList = useAppSelector(resultsSelector.resultsList);
   const isResultsLoading = useAppSelector(resultsSelector.isResultsLoading);

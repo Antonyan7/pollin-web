@@ -1,14 +1,11 @@
 import React, { useCallback } from 'react';
 import { TestResultsListSortFields } from '@axios/results/resultsManagerTypes';
+import { ExternalResultsTableProps } from '@components/Results/PendingTestResultsTable';
 import { TableCell, TableSortLabel } from '@mui/material';
 import { IHeadCell, SortOrder } from 'types/patient';
 
-interface ExternalResultsHeadCellProps {
+interface ExternalResultsHeadCellProps extends ExternalResultsTableProps {
   headCell: IHeadCell;
-  setSortField: (value: TestResultsListSortFields) => void;
-  setSortOrder: (value: SortOrder) => void;
-  sortOrder: SortOrder | null;
-  sortField: TestResultsListSortFields | null;
 }
 
 export const PendingTestResultHeadCell = ({
