@@ -28,7 +28,6 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
   const theme = useTheme();
 
   const { errors } = formState;
-  const currentFieldValue = field.value;
 
   // Choose opposite time field for current time field;
   const watchedFieldName = fieldName === 'endTime' ? 'startTime' : 'endTime';
@@ -71,8 +70,8 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
   const onTimeFieldChange = (newTime: Date | null) => {
     onChange(toLocalIsoString(newTime));
   };
-  const timeFieldValue = currentFieldValue;
-  const initialValue = convertToLocale(timeFieldValue ?? '');
+
+  const initialValue = convertToLocale(field.value ?? '');
 
   return (
     <div className="schedule-inputs">

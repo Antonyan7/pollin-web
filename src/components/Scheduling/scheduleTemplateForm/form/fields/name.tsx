@@ -13,7 +13,7 @@ const ScheduleTemplateName = () => {
   const [t] = useTranslation();
   const { register } = useFormContext();
   const { errors } = useFormState();
-  const error = useAppSelector(schedulingSelector.scheduleError)?.response?.data?.status?.message;
+  const error = useAppSelector(schedulingSelector.scheduleError)?.response?.data.status.message;
   const templateNameCyId = CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME;
   const nameFieldPlaceholder = t(Translation.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME);
   const errorMessage =

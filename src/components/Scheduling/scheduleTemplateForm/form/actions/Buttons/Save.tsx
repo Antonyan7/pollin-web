@@ -12,7 +12,7 @@ import { borderRadius, paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { calculateTimeInUTC, changeDateSameTimeString } from '@utils/dateUtils';
+import { calculateTimeInUTC, changeDateSameTimeString, convertToLocale } from '@utils/dateUtils';
 
 const SaveButton = () => {
   const [t] = useTranslation();
@@ -42,8 +42,16 @@ const SaveButton = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          reqBody.startTime = changeDateSameTimeString(calculateTimeInUTC(rest.startTime), currentDate);
-          reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(rest.endTime), currentDate);
+          if (!scheduleId) {
+            reqBody.startTime = changeDateSameTimeString(calculateTimeInUTC(rest.startTime), currentDate);
+            reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(rest.endTime), currentDate);
+          } else {
+            reqBody.startTime = changeDateSameTimeString(
+              calculateTimeInUTC(convertToLocale(rest.startTime)),
+              currentDate
+            );
+            reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(convertToLocale(rest.endTime)), currentDate);
+          }
         }
 
         return reqBody;

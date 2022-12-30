@@ -3,6 +3,7 @@ import useTimePeriodsContext from '@components/Scheduling/scheduleTemplateForm/h
 import { Grid } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { margins } from 'themes/themeConstants';
+import { v4 } from 'uuid';
 
 import { PlusIconButton } from '@ui-component/common/buttons';
 
@@ -15,7 +16,7 @@ const AddNewScheduleTemplateButton = () => {
   const { append } = useTimePeriodsContext();
 
   const onAddNewScheduleTemplateClick = () => {
-    append(getDefaultTimePeriodState());
+    append({ ...getDefaultTimePeriodState(), id: v4() });
   };
 
   const isPlusButtonDisabled = useAddNewScheduleButtonStatus();

@@ -12,7 +12,7 @@ import ContactList from '@ui-component/common/ContactList';
 const PatientHighlightsView = () => {
   const theme = useTheme();
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const patientId = useSelector(patientsSelector.currentPatientId);
   const patientProfile = useSelector(patientsSelector.patientProfile);

@@ -47,7 +47,15 @@ const ScheduleTemplateForm = () => {
 
   useEffect(() => {
     if (scheduleTemplate.timePeriods.length > 0) {
-      reset(scheduleTemplate, { keepDirtyValues: true });
+      const { name, timePeriods } = scheduleTemplate;
+
+      reset(
+        {
+          name,
+          timePeriods
+        },
+        { keepDirtyValues: true }
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scheduleTemplate]);
