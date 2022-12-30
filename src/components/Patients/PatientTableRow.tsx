@@ -5,6 +5,8 @@ import { TableCell, TableRow, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { dispatch } from 'redux/hooks';
+import { patientsMiddleware } from 'redux/slices/patients';
 import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
@@ -25,6 +27,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
 
   const onRowClick = (id: string) => {
     router.push(`/patient-emr/details/${id}/profile`);
+    dispatch(patientsMiddleware.isPatientAlertViewOpen());
   };
 
   return (
