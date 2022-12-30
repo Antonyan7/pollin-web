@@ -9,7 +9,7 @@ import { SeveritiesType } from '@components/Scheduling/types';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
-import store, { AppDispatch } from 'redux/store';
+import { AppDispatch } from 'redux/store';
 import { IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
@@ -87,10 +87,8 @@ const cleanEncountersList = () => (dispatch: AppDispatch) => {
   dispatch(setEncountersLoadingState(false));
 };
 
-const isPatientAlertViewOpen = () => async (dispatch: AppDispatch) => {
-  const alertViewState = store.getState().patients.isPatientAlertViewOpen;
-
-  dispatch(setPatientAlertViewState(!alertViewState));
+const isPatientAlertViewOpen = (alertViewState: boolean) => async (dispatch: AppDispatch) => {
+  dispatch(setPatientAlertViewState(alertViewState));
 };
 
 const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch: AppDispatch) => {

@@ -27,7 +27,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
 
   const onRowClick = (id: string) => {
     router.push(`/patient-emr/details/${id}/profile`);
-    dispatch(patientsMiddleware.isPatientAlertViewOpen());
+    dispatch(patientsMiddleware.isPatientAlertViewOpen(true));
   };
 
   return (

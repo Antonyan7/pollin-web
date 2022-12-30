@@ -42,7 +42,7 @@ const PatientAlertView = () => {
               marginBottom: margins.all24
             }}
             size="small"
-            onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen())}
+            onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen(false))}
           >
             {t(Translation.PAGE_PATIENT_ALERT_DISMISS)}
             <CloseIcon sx={{ fontSize: '12px', margin: margins.all4 }} />
