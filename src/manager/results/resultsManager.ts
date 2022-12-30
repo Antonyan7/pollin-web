@@ -308,6 +308,11 @@ const resultsManager = {
       }
     });
   },
+  downloadTestResultAttachment(attachmentId: string) {
+    return axiosInstance.get<Blob, IAxiosResponse<Blob>>(
+      `${baseURL}/v1/clinic-test-results/v1/test-result/attachment/${attachmentId}`
+    );
+  },
   getOrderDetails(orderId: string) {
     return axiosInstance
       .get<IGetOrderDetailsResponse, IAxiosResponse<IGetOrderDetailsResponse>>(`${baseURL}/v1/order/${orderId}`)

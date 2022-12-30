@@ -892,6 +892,18 @@ const updateOrderGroups =
     dispatch(setOrderGroups(updatedOrderGroupsCollection));
   };
 
+const downloadTestResultAttachment = (attachmendId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.results.downloadTestResultAttachment(attachmendId);
+
+    return response.data.data;
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error as string));
+  }
+
+  return null;
+};
 const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsOrderDetailsLoading(true));
@@ -978,7 +990,8 @@ export default {
   getOrderTypes,
   updateSelectedOrderType,
   getOrderGroups,
+  updateOrderGroups,
+  downloadTestResultAttachment,
   getOrderDetails,
-  updateOrder,
-  updateOrderGroups
+  updateOrder
 };

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Divider, Grid, styled, Typography, useTheme } from '@mui/material';
+import { Box, Button, Divider, Grid, Link, Typography, useTheme } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
@@ -13,11 +13,6 @@ import { FinalResultChipColor } from 'types/results';
 import Chip from '@ui-component/patient/Chip';
 
 import ReportSection from './ReportSection';
-
-const StyledAnchor = styled('a')({
-  textDecoration: 'none',
-  color: 'inherit'
-});
 
 const dateFormatter = (date: string) => format(new Date(date), 'MMM dd, yyyy');
 
@@ -44,7 +39,21 @@ const TestResultDetails: React.FC = () => {
   const [testResultsDetails] = useAppSelector(resultsSelector.testResultsDetails);
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
   const router = useRouter();
+  const linkRef = useRef<HTMLAnchorElement | null>(null);
   const { t } = useTranslation();
+
+  const handleAttachmentDownloadClick = async () => {
+    const blob = await dispatch(resultsMiddleware.downloadTestResultAttachment(testResultsDetails.id));
+
+    if (blob && linkRef.current) {
+      const url = window.URL.createObjectURL(blob);
+
+      linkRef.current.href = url;
+      linkRef.current.download = `${testResultsDetails.title}.pdf`;
+      linkRef.current.click();
+      window.URL.revokeObjectURL(url);
+    }
+  };
 
   const testResultId = `${router.query.testResultId}`;
 
@@ -153,17 +162,11 @@ const TestResultDetails: React.FC = () => {
         <Divider sx={{ my: margins.topBottom24 }} />
         {testResultsDetails.attachments &&
           testResultsDetails.attachments.map((attachment) => (
-            <Box display="flex" alignItems="center" key={attachment.id} mb={3}>
-              <StyledAnchor
-                href={`http://localhost:8080/clinic-test-results/v1/test-result/attachment/${attachment.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                download
-              >
-                <Button variant="contained" sx={{ marginRight: 1 }}>
-                  {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT)}
-                </Button>
-              </StyledAnchor>
+            <Box display="flex" alignItems="center" key={attachment.id} mb={margins.bottom24}>
+              <Button variant="contained" sx={{ marginRight: margins.right8 }} onClick={handleAttachmentDownloadClick}>
+                {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT)}
+              </Button>
+              <Link component="a" ref={linkRef} hidden href="#download" />
               {attachment.title}
             </Box>
           ))}
