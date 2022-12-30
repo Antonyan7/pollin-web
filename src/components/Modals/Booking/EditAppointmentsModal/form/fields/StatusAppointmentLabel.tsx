@@ -11,7 +11,7 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { ICancelStatusItem } from 'types/reduxTypes/bookingStateTypes';
+import { AppointmentStatus, ICancelStatusItem } from 'types/reduxTypes/bookingStateTypes';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 
@@ -56,6 +56,9 @@ const StatusAppointmentLabel = () => {
             label={statusAppointmentLabel}
             {...fieldProps}
           >
+            <MenuItem disabled value={AppointmentStatus.Booked}>
+              {AppointmentStatus.Booked}
+            </MenuItem>
             {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
               <MenuItem value={statusItem.id} key={statusItem.id}>
                 {statusItem.title}

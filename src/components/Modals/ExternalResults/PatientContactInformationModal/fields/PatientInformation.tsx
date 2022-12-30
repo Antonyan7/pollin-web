@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { Box, Grid, Typography } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { OHIPTestResultPossibleResponses } from 'types/results';
 
 const PatientInformation = () => {
   const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
@@ -33,8 +34,16 @@ const PatientInformation = () => {
           <Typography variant="subtitle1">{patientContactInformation.name}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.patientIdentifier}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.dateOfBirth}</Typography>
-          <Typography variant="subtitle1">{patientContactInformation.ohipNumber}</Typography>
-          <Typography variant="subtitle1">{patientContactInformation.ohipVersionCode}</Typography>
+          <Typography variant="subtitle1">
+            {patientContactInformation.ohipNumber === OHIPTestResultPossibleResponses.Unknown
+              ? 'N/A'
+              : patientContactInformation.ohipNumber}
+          </Typography>
+          <Typography variant="subtitle1">
+            {patientContactInformation.ohipVersionCode === OHIPTestResultPossibleResponses.Unknown
+              ? 'N/A'
+              : patientContactInformation.ohipVersionCode}
+          </Typography>
         </Grid>
       </Grid>
     </Box>

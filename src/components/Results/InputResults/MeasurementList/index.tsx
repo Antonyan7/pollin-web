@@ -12,7 +12,6 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
-import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { IPossibleResultOptions, ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 
@@ -33,9 +32,10 @@ const StyledTableRow = styled(TableRow)(() => ({
 export interface MeasurementListProps {
   listItems: ITestResultItem[];
   currentFormFieldName: string;
+  title: string;
 }
 
-const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName }) => {
+const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName, title }) => {
   const [t] = useTranslation();
 
   const { register, control } = useFormContext();
@@ -68,8 +68,8 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
         <TableBody>
           <StyledTableRow>
             <StyledTableCell>
-              <Typography fontWeight={600} variant="h5" component="h5">
-                {t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_TITLE)}
+              <Typography variant="h5" component="h5">
+                {t(title)}
               </Typography>
             </StyledTableCell>
           </StyledTableRow>

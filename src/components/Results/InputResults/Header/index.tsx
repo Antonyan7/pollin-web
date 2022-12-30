@@ -28,7 +28,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
   const { testResultStatusLabel, testResultStatusColor } = useTestResultStatusData(currentFormFieldName);
 
   const { customizedDate: formattedOrderedDate } = timeAdjuster(dates?.ordered ?? '');
-  const { customizedDate: formattedCollectedDate } = timeAdjuster(dates?.ordered ?? '');
+  const { customizedDate: formattedCollectedDate } = timeAdjuster(dates?.collected ?? '');
 
   return (
     <Grid container p={paddings.leftRight32} flexDirection="column">

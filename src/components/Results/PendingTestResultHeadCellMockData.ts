@@ -8,14 +8,14 @@ import { Translation } from '../../constants/translations';
 export const headCellsData = (t: TFunction) => [
   {
     id: TestResultsFilters.TestPanel,
-    label: t(Translation.PAGE_RESULTS_CELLS_TEST_PANEL),
+    label: t(Translation.PAGE_PATIENT_ORDER_RESULTS_CELLS_PANELNAME),
     align: 'left',
     paddingLeft: paddings.left0,
     isSortable: false
   },
   {
     id: TestResultsListSortFields.PATIENT_NAME,
-    label: t(Translation.PAGE_RESULTS_CELLS_PATIENT_NAME),
+    label: t(Translation.PAGE_RESULTS_CELLS_PATIENT_INFORMATION),
     align: 'left',
     paddingLeft: paddings.left0,
     isSortable: true

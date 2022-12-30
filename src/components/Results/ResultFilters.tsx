@@ -41,7 +41,7 @@ interface ResultFiltersProps {
 const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
-  const resultsFilterLabel = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
+  const resultsFilterLabel = t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS);
   const filtersList = useAppSelector(resultsSelector.resultsFiltersList);
   const isFiltersLoading = useAppSelector(resultsSelector.isResultsFiltersLoading);
   const [selectedFilters, setSelectedFilters] = useState<IResultsFilterOption[]>([]);

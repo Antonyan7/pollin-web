@@ -134,3 +134,7 @@ export enum FinalResultChipColor {
   Abnormal = 'inActive',
   Initial = 'initial'
 }
+
+export enum OHIPTestResultPossibleResponses {
+  Unknown = 'Unknown'
+}

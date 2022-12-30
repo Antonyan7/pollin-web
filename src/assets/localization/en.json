@@ -140,6 +140,7 @@
   "page.results.list.item.days": "days",
   "page.results.cells.test.panel": "Test/Panel",
   "page.results.cells.patient.name": "Patient Name",
+  "page.results.cells.patient.information": "Patient Information",
   "page.results.cells.lab": "Lab Destination",
   "page.results.cells.status": "Status",
   "page.results.cells.age": "Collection Age",

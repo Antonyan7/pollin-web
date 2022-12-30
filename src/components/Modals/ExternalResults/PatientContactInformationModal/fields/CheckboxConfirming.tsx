@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { Box, Checkbox, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientInfoContext } from 'context/PatientInformationContext';
 import { PatientInformationContextActionTypes } from 'context/types/PatientInformationContextTypes';
+import { OHIPTestResultPossibleResponses } from 'types/results';
 
 const CheckboxConfirming = () => {
   const [t] = useTranslation();
+  const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
 
   const [patientNameChecked, setPatientNameChecked] = useState<boolean>(false);
   const [patientIdChecked, setPatientIdChecked] = useState<boolean>(false);
@@ -14,13 +18,13 @@ const CheckboxConfirming = () => {
   const { setPatientInfo } = usePatientInfoContext();
 
   useEffect(() => {
-    if (patientNameChecked && patientIdChecked && OHIPInformationChecked) {
+    if (patientNameChecked && patientIdChecked) {
       setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: true });
     } else {
       setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [patientNameChecked, patientIdChecked, OHIPInformationChecked]);
+  }, [patientNameChecked, patientIdChecked]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -52,17 +56,20 @@ const CheckboxConfirming = () => {
               }
               label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_ID)}
             />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={OHIPInformationChecked}
-                  onChange={(event) => {
-                    setOfipInformationChecked(event.target.checked);
-                  }}
+            {patientContactInformation.ohipNumber !== OHIPTestResultPossibleResponses.Unknown &&
+              patientContactInformation.ohipVersionCode !== OHIPTestResultPossibleResponses.Unknown && (
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={OHIPInformationChecked}
+                      onChange={(event) => {
+                        setOfipInformationChecked(event.target.checked);
+                      }}
+                    />
+                  }
+                  label={t(Translation.MODAL_EXTERNAL_RESULTS_OHIP_INFORMATION)}
                 />
-              }
-              label={t(Translation.MODAL_EXTERNAL_RESULTS_OHIP_INFORMATION)}
-            />
+              )}
           </FormGroup>
         </Grid>
       </Grid>

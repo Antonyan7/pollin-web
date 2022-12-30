@@ -137,3 +137,7 @@ export interface ISpecimenAppointmentsState {
   selectedFilters: SpecimenCollectionFilterOption[];
   isFiltersArrayLoading: boolean;
 }
+
+export enum AppointmentStatus {
+  Booked = 'Booked'
+}
