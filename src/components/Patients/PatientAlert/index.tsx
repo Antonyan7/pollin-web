@@ -8,6 +8,7 @@ import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
+import { paddings } from 'themes/themeConstants';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 interface PatientAlertProps {
@@ -36,12 +37,19 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
       onClick={(e) => e.stopPropagation()}
       onClose={onClose}
       title={patientAlertDetails?.map((titleContent: AlertDetailsProps) => (
-        <Grid item key={titleContent.id}>
-          <Typography variant="caption" color={theme.palette.common.black}>
-            {titleContent.title}:
-          </Typography>
+        <Grid
+          item
+          key={titleContent.id}
+          sx={{
+            fontWeight: 400,
+            fontSize: theme.typography.pxToRem(12),
+            lineHeight: theme.typography.pxToRem(16.8),
+            color: theme.palette.secondary[800]
+          }}
+        >
+          <Typography color="inherit">{titleContent.title}:</Typography>
           {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-            <ListItem sx={{ paddingTop: 0, color: theme.palette.common.black }}>&#9679; {message.title}</ListItem>
+            <ListItem sx={{ pt: paddings.top4, color: 'inherit' }}>&#9679; {message.title}</ListItem>
           ))}
         </Grid>
       ))}
