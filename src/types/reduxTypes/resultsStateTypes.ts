@@ -355,6 +355,7 @@ export interface IResultListPatient {
   id: string;
   name: string;
   dateOfBirth: string;
+  identifier: string;
 }
 
 export interface IPatientContactInformationModalProps {

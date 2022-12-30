@@ -20,6 +20,7 @@ interface TableProps {
 const TableComponent = ({ setSortField, setSortOrder, sortOrder, sortField }: TableProps) => {
   const [t] = useTranslation();
   const resultsList = useAppSelector(resultsSelector.resultsList);
+  const isResultsLoading = useAppSelector(resultsSelector.isResultsLoading);
   const headCells = headCellsData(t) as IHeadCell[];
 
   return (
@@ -40,11 +41,13 @@ const TableComponent = ({ setSortField, setSortOrder, sortOrder, sortField }: Ta
       </TableHead>
 
       <TableBody>
-        {resultsList?.testResults?.map((row: IPatientContactInformationModalProps, index: number) => {
-          const labelId = `enhanced-table-checkbox-${index}`;
+        {!isResultsLoading
+          ? resultsList?.testResults?.map((row: IPatientContactInformationModalProps, index: number) => {
+              const labelId = `external-test-results-table-checkbox-${index}`;
 
-          return <PendingTestResultRow row={row} key={row.id} labelId={labelId} />;
-        })}
+              return <PendingTestResultRow row={row} key={row.id} labelId={labelId} />;
+            })
+          : null}
       </TableBody>
     </Table>
   );

@@ -23,7 +23,7 @@ const PendingTestResultList = () => {
   const resultsList = useAppSelector(resultsSelector.resultsList);
   const isResultsLoading = useAppSelector(resultsSelector.isResultsLoading);
   const pendingTestStats = useAppSelector(resultsSelector.pendingTestStats);
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+  const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
 

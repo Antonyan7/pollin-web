@@ -48,7 +48,7 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
       <TableCell>{row.title}</TableCell>
       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography variant="subtitle1">{row.patient.name}</Typography>
-        <Typography variant="subtitle2">{row.patient.id}</Typography>
+        <Typography variant="subtitle2">{row.patient.identifier}</Typography>
         <Typography variant="subtitle2">{row.patient.dateOfBirth}</Typography>
       </TableCell>
       <TableCell align="left">{row.labName}</TableCell>
