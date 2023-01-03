@@ -105,6 +105,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
       ) : (
         <FormControlLabel
           label={groupItem.title}
+          sx={{ display: 'inline-flex' }}
           control={
             <>
               <Checkbox
@@ -114,7 +115,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
               />
               {groupItem.groupItems && groupItem.groupItems.length > 0 && (
                 <>
-                  <TestTypeChip type={groupItem.type} />
+                  <TestTypeChip label={groupItem.label} type={groupItem.type} />
                   <Stack onClick={onCollapseClick} order={3}>
                     <CollapseMenuArrowDownIcon isOpen={isOpen} />
                   </Stack>

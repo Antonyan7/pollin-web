@@ -6,8 +6,12 @@ import { TestType } from 'types/reduxTypes/resultsStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
 
-const TestTypeChip = (props: { type: TestType }) => {
-  const { type } = props;
+interface Props {
+  label?: string;
+  type: TestType;
+}
+
+const TestTypeChip = ({ label, type }: Props) => {
   const theme = useTheme();
   const onClick: ChipProps['onClick'] = (e) => {
     e.preventDefault();
@@ -17,7 +21,7 @@ const TestTypeChip = (props: { type: TestType }) => {
   return (
     // TODO: hardcoded colors should be refactored once palette will be updated
     <Chip
-      label={type}
+      label={label}
       size="small"
       chipColor="notActive"
       onClick={onClick}
