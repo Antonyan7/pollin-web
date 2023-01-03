@@ -13,12 +13,12 @@ import {
   IOrdersList,
   IOrderType,
   IPendingTestStats,
-  IResultsFilterCategory,
   IResultsList,
   IResultsProps,
   ISpecimensFilterCategory,
   ISpecimensInTransportList,
   ISpecimensList,
+  ITestResultsFilters,
   ITransportList,
   LabMachine,
   SpecimenActions,
@@ -39,7 +39,7 @@ const reducers = createReducer({
   setTransportList(state, action: IAction<ITransportList>) {
     state.transportList = action.payload;
   },
-  setResultsSearchFilters(state, action: IAction<IResultsFilterCategory[]>) {
+  setResultsSearchFilters(state, action: IAction<ITestResultsFilters>) {
     state.resultFilters = action.payload;
   },
   setResultsLoadingState(state, action: IAction<boolean>) {

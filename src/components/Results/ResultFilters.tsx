@@ -49,9 +49,10 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
   const filterPlaceholder = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
 
   const adaptedGroupedOptions = () =>
-    filtersList?.flatMap((item) =>
-      item.options.map((option: IResultsFilterOption) => ({ ...option, type: option.type }))
-    );
+    (filtersList?.options.map((option: IResultsFilterOption) => ({
+      ...option,
+      type: option.type
+    })) as IResultsFilterOption[]) ?? [];
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +97,7 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
         }}
         onChange={(event, filters) => onFilterUpdate(filters)}
         getOptionDisabled={(option) => {
-          if (option && selectedFilters.length > 0) {
+          if (option && selectedFilters?.length > 0) {
             return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
           }
 

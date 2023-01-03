@@ -47,7 +47,7 @@ export interface IResultsProps {
   resultsList: IResultsList;
   transportList: ITransportList;
   isTransportFolderDownloaded: boolean;
-  resultFilters: IResultsFilterCategory[];
+  resultFilters: ITestResultsFilters | null;
   pendingTestStats: IPendingTestStats[];
   testResultsDetails: TestResultsDetails[];
   error: Error | null;
@@ -381,6 +381,8 @@ export interface IResultsFilterCategory {
   title: string;
   options: IResultsFilterOption[];
 }
+
+export interface ITestResultsFilters extends Omit<IResultsFilterCategory, 'type'> {}
 
 export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 

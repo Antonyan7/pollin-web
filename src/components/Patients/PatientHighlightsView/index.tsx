@@ -18,6 +18,8 @@ const PatientHighlightsView = () => {
   const patientProfile = useSelector(patientsSelector.patientProfile);
   const isPatientHighlightsLoading = useSelector(patientsSelector.isPatientHighlightsDetailsLoading);
   const patientHighlights = useSelector(patientsSelector.patientHighlights);
+  const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
+  const isPatientHighlightIntakeReminderActive = useSelector(patientsSelector.isPatientHighlightIntakeReminderActive);
 
   useEffect(() => {
     if (patientId && !isPatientHighlightsLoading) {
@@ -68,7 +70,10 @@ const PatientHighlightsView = () => {
           open={open}
           cycleStatus={patientProfile?.cycleStatus}
         />
-        <Collapse in={open} orientation="vertical">
+        <Collapse
+          in={(isPatientHighlightIntakeReminderActive || isPatientHighlightIntakeComplete) && open}
+          orientation="vertical"
+        >
           <Divider />
           <Grid container alignItems="flex-start" py="15px">
             {patientHighlightColumns.map((patientHighlightColumn, index) => (

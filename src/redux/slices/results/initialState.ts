@@ -13,7 +13,7 @@ export const getInitialState = (): IResultsProps => ({
     pageSize: 10,
     totalItems: 0
   },
-  resultFilters: [],
+  resultFilters: null,
   pendingTestStats: [],
   testResultsDetails: [],
   labMachines: {
