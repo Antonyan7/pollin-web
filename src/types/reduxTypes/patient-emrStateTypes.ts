@@ -38,6 +38,7 @@ export interface PatientEmrProps {
   isUpdateEncounterAddendumLoading: boolean;
   isCreateEncounterAddendumLoading: boolean;
   isPatientContactInformationLoading: boolean;
+  isPatientAlertDetailsLoading: boolean;
   isPatientAlertViewOpen: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;

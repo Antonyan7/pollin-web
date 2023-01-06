@@ -95,6 +95,9 @@ const reducers = createReducer({
   setIsPatientProfileOverviewLoading(state, action: IAction<boolean>) {
     state.profile.isOverviewLoading = action.payload;
   },
+  setPatientAlertDetailsLoading(state, action: IAction<boolean>) {
+    state.isPatientAlertDetailsLoading = action.payload;
+  },
   setTestResultsHistory(state, action: IAction<ITestResultHistory | null>) {
     state.profile.testResultsHistory = action.payload;
   },

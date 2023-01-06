@@ -88,7 +88,7 @@ const AttachFile: FC<AttachedFileProps> = ({ currentFormFieldName }) => {
         onChange={handleFileAttachment}
         inputProps={{
           multiple: true,
-          accept: '.pdf'
+          accept: '.pdf, .doc, .docx'
         }}
         inputRef={fileInputRef}
         type="file"

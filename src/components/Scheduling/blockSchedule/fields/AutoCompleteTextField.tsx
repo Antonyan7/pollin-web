@@ -46,7 +46,7 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
         error: !!error?.message,
         ...fieldProps
       }}
-      popupIcon={<KeyboardArrowDownIcon color="secondary" />}
+      popupIcon={<KeyboardArrowDownIcon color="primary" />}
     />
   );
 };

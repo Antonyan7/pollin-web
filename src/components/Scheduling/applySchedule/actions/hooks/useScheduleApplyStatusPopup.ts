@@ -9,6 +9,8 @@ import { Translation } from 'constants/translations';
 
 const useScheduleApplyStatusPopup = () => {
   const scheduleApplyStatus = useAppSelector(schedulingSelector.scheduleApplyStatus);
+  const scheduleApplyErrorMessage = useAppSelector(schedulingSelector.scheduleError)?.response?.data?.status?.message;
+
   const [t] = useTranslation();
   const { reset } = useFormContext();
 
@@ -30,7 +32,7 @@ const useScheduleApplyStatusPopup = () => {
           open: true,
           props: {
             severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
+            description: scheduleApplyErrorMessage ?? t(Translation.PAGE_SCHEDULING_APPLY_ALERT_ERROR)
           }
         })
       );

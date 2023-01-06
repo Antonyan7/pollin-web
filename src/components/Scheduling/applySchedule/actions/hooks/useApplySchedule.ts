@@ -31,7 +31,7 @@ const useHandleApplySchedule = () => {
     });
 
   const isAllowedToApplySchedule =
-    resource.id !== '' &&
+    resource !== '' &&
     scheduleTemplate.id !== '' &&
     !!repeatWeeksCount &&
     selectedWeekdaysToApply.length > 0 &&
@@ -41,7 +41,7 @@ const useHandleApplySchedule = () => {
   const handleApplySchedule = useCallback(() => {
     if (isAllowedToApplySchedule) {
       const applyScheduleTemplateData: IApplyScheduleData = {
-        resourceId: resource.id,
+        resourceId: resource,
         templateId: scheduleTemplate.id,
         // Convert to number repeatWeeksCount which comes from autocomplete as a string
         repeatWeeksCount: +repeatWeeksCount,

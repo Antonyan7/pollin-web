@@ -48,10 +48,14 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
 
   const filterPlaceholder = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
 
+  /* Filters does not work for now .
+     Tech docs were changed FE aligned with docs waiting for BE side updates !!!
+     Change adaptedGroupedOptions fn to filtersList?.options it's enough to have options
+  */
+
   const adaptedGroupedOptions = () =>
-    (filtersList?.options.map((option: IResultsFilterOption) => ({
-      ...option,
-      type: option.type
+    (filtersList?.options?.map((option: IResultsFilterOption) => ({
+      ...option
     })) as IResultsFilterOption[]) ?? [];
 
   const onSearchChange = useCallback(

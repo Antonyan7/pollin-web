@@ -2,27 +2,28 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { FormControl } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useAppSelector } from 'redux/hooks';
 import { bookingSelector } from 'redux/slices/booking';
-import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import ApplyScheduleFormRow from '../common/ApplyScheduleFormRow';
-import { defaultResource } from '../constants/defaultValues';
 import useFieldControl from '../hooks/useFieldControl';
 import { ApplyScheduleFields } from '../types';
 
 const ResourceField = () => {
-  const serviceProviders = useAppSelector(bookingSelector.serviceProvidersList);
+  const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
   const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
+  const optionsGroup = createOptionsGroup(scheduleResources.providers);
 
   const [t] = useTranslation();
-  const { field } = useFieldControl(ApplyScheduleFields.RESOURCE);
+  const { field, fieldState } = useFieldControl(ApplyScheduleFields.RESOURCE);
 
+  const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
+  const { error } = fieldState;
   const resourceLabel = t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE);
   const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
 
@@ -30,13 +31,13 @@ const ResourceField = () => {
   // const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
   // const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
   // const [resourceProviderCurrentPage, setResourceProviderCurrentPage] = useState<number>(1);
-  const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
-    if (resourceItem) {
-      field.onChange(resourceItem);
-    } else {
-      field.onChange({ ...defaultResource });
-    }
-  };
+  // const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
+  //   if (resourceItem) {
+  //     onChange(resourceItem);
+  //   } else {
+  //     onChange({ ...defaultResource });
+  //   }
+  // };
 
   // const adaptedGroupedOptions = () =>
   //   groupedResourceProviders.providers.flatMap((provider) =>
@@ -56,24 +57,31 @@ const ResourceField = () => {
 
   return (
     <ApplyScheduleFormRow title={resourceLabel}>
-      <FormControl fullWidth>
-        <BaseDropdownWithLoading
-          isLoading={isServiceProvidersLoading}
-          value={field.value}
-          popupIcon={<KeyboardArrowDownIcon color="primary" />}
-          onChange={(e, value) => {
-            if (value && typeof value !== 'string' && 'id' in value) {
-              onSelectResourceUpdate(value);
-            }
-          }}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
-          options={serviceProviders.providers}
-          getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
-          clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
-          renderInputProps={{ label: resourceLabel }}
-          data-cy={resourceCyId}
-        />
-        {/* <BaseDropdownWithLoading
+      <BaseDropdownWithLoading
+        isLoading={isServiceProvidersLoading}
+        id={ApplyScheduleFields.RESOURCE}
+        options={optionsGroup}
+        onChange={(_, value) => {
+          if (value && typeof value === 'object' && 'item' in value) {
+            onChange(value.item.id);
+          }
+        }}
+        inputValue={optionsGroup.find((item) => item.item.id === resourceId)?.item.title ?? ''}
+        isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
+        groupBy={(option) => option.firstLetter}
+        onBlur={onBlur}
+        clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
+        popupIcon={<KeyboardArrowDownIcon color="primary" />}
+        renderInputProps={{
+          label: resourceLabel,
+          helperText: error?.message ?? '',
+          error: !!error?.message,
+          ...fieldProps
+        }}
+        data-cy={resourceCyId}
+      />
+      {/* <BaseDropdownWithLoading
         isLoading={isGroupedResourceProvidersLoading}
         PopperComponent={GroupedServiceProvidersPopper}
         inputValue={resource.title}
@@ -93,7 +101,6 @@ const ResourceField = () => {
         clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
         renderInputProps={{ label }}
       /> */}
-      </FormControl>
     </ApplyScheduleFormRow>
   );
 };

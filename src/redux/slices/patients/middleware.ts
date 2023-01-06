@@ -60,7 +60,8 @@ const {
   setIsPatientHighlightIntakeComplete,
   setIsPatientHighlightIntakeReminderActive,
   setPatientAppointmentsRequestStatus,
-  setPatientAlertViewState
+  setPatientAlertViewState,
+  setPatientAlertDetailsLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -130,21 +131,20 @@ const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
 
 const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setPatientAlertDetailsLoading(true));
+
     const response = await API.patients.getPatientAlertDetails(alertId);
 
     dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  } finally {
+    dispatch(setPatientAlertDetailsLoading(false));
   }
 };
-const resetPatientAlerts = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setPatientAlertDetails([]));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
+const resetPatientAlerts = () => (dispatch: AppDispatch) => {
+  dispatch(setPatientAlertDetails([]));
 };
 
 const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) => {
