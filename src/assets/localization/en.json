@@ -256,6 +256,7 @@
   "base.dropdown.loading.more": "Loading More",
   "comments.text.field.label": "Comments",
   "page.patient.widget.data.is.not.available": "No information available.",
+  "page.patient.widget.data.no.past.appointments": "No Past Appointments.",
   "page.patient.widget.profile.partners.title": "Partners Profile",
   "page.patient.widget.test.results.title": "Test Results",
   "page.patient.widget.profile.overview.title": "Overview",

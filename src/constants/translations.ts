@@ -258,6 +258,7 @@ export enum Translation {
   BASE_DROPDOWN_LOADING_MORE = 'base.dropdown.loading.more',
   COMMENTS_TEXT_FIELD_LABEL = 'comments.text.field.label',
   PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE = 'page.patient.widget.data.is.not.available',
+  PAGE_PATIENT_WIDGET_DATA_NO_PAST_APPOINTMENTS = 'page.patient.widget.data.no.past.appointments',
   PAGE_PATIENT_WIDGET_PROFILE_PARTNERS_TITLE = 'page.patient.widget.profile.partners.title',
   PAGE_PATIENT_WIDGET_TEST_RESULTS_TITLE = 'page.patient.widget.test.results.title',
   PAGE_PATIENT_WIDGET_PROFILE_OVERVIEW_TITLE = 'page.patient.widget.profile.overview.title',

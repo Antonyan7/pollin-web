@@ -92,7 +92,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
                           {status}
                         </Typography>
                       </TableCell>
-                      <TableCell width="25%" sx={{ verticalAlign: 'middle' }}>
+                      <TableCell width="35%" sx={{ verticalAlign: 'middle' }}>
                         <Typography variant="h5">{timeAdjuster(new Date(date)).customizedDate}</Typography>
                         <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
                           {time}
@@ -123,7 +123,11 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
         </>
       ) : (
         <Typography py={paddings.topBottom24} textAlign="center">
-          {t(Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE)}
+          {t(
+            appointmentType === AppointmentType.Upcoming
+              ? Translation.PAGE_PATIENT_WIDGET_DATA_IS_NOT_AVAILABLE
+              : Translation.PAGE_PATIENT_WIDGET_DATA_NO_PAST_APPOINTMENTS
+          )}
         </Typography>
       )}
     </SubCardStyled>
