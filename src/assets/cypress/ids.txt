@@ -20,6 +20,7 @@
   modal.appointments.edit.dialog
   modal.appointments.add.dialog.form
   modal.appointments.edit.dialog.form
+  modal.order.validation.error.button.ok
   page.appointments.button.new.calendar
   page.appointments.button.new.appointment
   page.appointments.title

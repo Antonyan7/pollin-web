@@ -242,6 +242,7 @@
   "modal.confirm.order.create.cancel.title": "Are you sure you want to leave?",
   "modal.confirm.order.create.cancel.subtitle1": "Any changes made will be lost.",
   "modal.confirm.order.create.cancel.subtitle2": "Please note that this action is permanent and cannot be undone.",
+  "modal.order.validation.error.button.ok": "OK",
   "modal.test.result.review.confirmation.mark.as.reviews": "Confirm Mark as Reviews?",
   "modal.test.result.review.confirmation.message": "Are you sure you want to mark this result as reviews?",
   "modal.test.result.review.confirmation.message.undone": "Please note that this action is permanent and cannot be undone",

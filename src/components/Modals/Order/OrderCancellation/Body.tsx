@@ -20,7 +20,7 @@ const Body = ({ orderId }: BodyProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const cancellationReasons = useAppSelector(resultsSelector.cancellationReasons);
-  const isCancellOrderLoading = useAppSelector(resultsSelector.isCancellOrderLoading);
+  const isCancelOrderLoading = useAppSelector(resultsSelector.isCancellOrderLoading);
   const cancellationReasonsLoading = useAppSelector(resultsSelector.isCancellationReasonsLoading);
   const cancellationReasonsOptions = createOptionsGroup(cancellationReasons.reasons);
   const [reasonId, setReasonId] = useState('');
@@ -68,7 +68,7 @@ const Body = ({ orderId }: BodyProps) => {
         <Grid item xs={12}>
           <Stack direction="row" alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
-              isLoading={isCancellOrderLoading}
+              isLoading={isCancelOrderLoading}
               sx={{
                 borderRadius: borderRadius.radius8,
                 py: paddings.top12,

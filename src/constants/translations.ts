@@ -244,6 +244,7 @@ export enum Translation {
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_TITLE = 'modal.confirm.order.create.cancel.title',
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_SUBTITLE1 = 'modal.confirm.order.create.cancel.subtitle1',
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_SUBTITLE2 = 'modal.confirm.order.create.cancel.subtitle2',
+  MODAL_ORDER_VALIDATION_ERROR_BUTTON_OK = 'modal.order.validation.error.button.ok',
   MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MARK_AS_REVIEWS = 'modal.test.result.review.confirmation.mark.as.reviews',
   MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE = 'modal.test.result.review.confirmation.message',
   MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE_UNDONE = 'modal.test.result.review.confirmation.message.undone',

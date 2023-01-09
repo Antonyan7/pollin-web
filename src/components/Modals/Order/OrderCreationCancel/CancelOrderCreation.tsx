@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -15,7 +15,7 @@ const CancelOrderCreationModal = () => {
   const [t] = useTranslation();
   const modalTitle = t(Translation.MODAL_CONFIRM_ORDER_CREATE_CANCEL_TITLE);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal));
+  const onClose = useCallback(() => dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal)), []);
 
   return (
     <BaseModal isLoading={false} title={modalTitle} onClose={onClose}>

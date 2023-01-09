@@ -35,7 +35,8 @@ export enum ModalName {
   AddNewTransportFolderModal = 'AddNewTransportFolderModal',
   AddNewExistingTransportModal = 'AddNewExistingTransportModal',
   PatientPartnerModal = 'PatientPartnerModal',
-  CancelOrderCreationModal = 'CancelOrderCreationModal'
+  CancelOrderCreationModal = 'CancelOrderCreationModal',
+  OrderValidationErrorModal = 'OrderValidationErrorModal'
 }
 
 export enum OpenModalReason {

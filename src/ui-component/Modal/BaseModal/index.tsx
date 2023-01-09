@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useId } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import DialogContent from '@mui/material/DialogContent';
 import BaseModalTitle from 'ui-component/Modal/BaseModal/BaseModalTitle';
@@ -23,21 +23,25 @@ const BaseModal = ({
   title,
   onClose,
   dataCy
-}: BaseModalProps) => (
-  <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby="customized-dialog-title">
-    <BaseModalTitle dataCy={closeIconDataCy} id="customized-dialog-title" onClose={onClose}>
-      {title}
-    </BaseModalTitle>
-    <DialogContent dividers data-cy={dialogContentCy}>
-      {isLoading ? (
-        <Box className="Dialog-box">
-          <CircularProgress sx={{ margin: 'auto' }} />
-        </Box>
-      ) : (
-        <div>{children}</div>
-      )}
-    </DialogContent>
-  </BaseModalStyled>
-);
+}: BaseModalProps) => {
+  const id = useId();
+
+  return (
+    <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby={id}>
+      <BaseModalTitle dataCy={closeIconDataCy} id={id} onClose={onClose}>
+        {title}
+      </BaseModalTitle>
+      <DialogContent dividers data-cy={dialogContentCy}>
+        {isLoading ? (
+          <Box className="Dialog-box">
+            <CircularProgress sx={{ margin: 'auto' }} />
+          </Box>
+        ) : (
+          <div>{children}</div>
+        )}
+      </DialogContent>
+    </BaseModalStyled>
+  );
+};
 
 export default BaseModal;

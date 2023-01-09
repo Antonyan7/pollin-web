@@ -16,7 +16,7 @@ const OrderDetailsActions = () => {
   const orderDetails = useAppSelector(resultsSelector.orderDetails);
 
   const onCancelClick = () => {
-    // TODO: implement order cancelation
+    // TODO: implement order cancellation
   };
 
   const onConfirmOrderClick = () => {

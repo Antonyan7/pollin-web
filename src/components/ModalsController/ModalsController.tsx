@@ -16,6 +16,9 @@ import PatientContactInformationModal from '@components/Modals/ExternalResults/P
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
+import OrderValidationErrorModal, {
+  OrderValidationErrorModalProps
+} from '@components/Modals/Order/OrderValidationError';
 import TestResultReleaseConfirmationModal from '@components/Modals/Order/TestResultReleaseConfirmation';
 import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
 import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
@@ -101,6 +104,7 @@ const getTestResultReviewConfirmation = (modal: IOpenedModal<IMakeTestResultRevi
 const getTestResultReleaseConfirmation = (modal: IOpenedModal<IMakeTestResultReviewReq>) => (
   <TestResultReleaseConfirmationModal key={modal.name} {...modal.props} />
 );
+
 // profile highlight
 const getPatientListItemsModal = (modal: IOpenedModal<PatientLineItemsModalProps>) => (
   <PatientLineItemsModal key={modal.name} {...modal.props} />
@@ -116,9 +120,6 @@ const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
 const getHandoffConfirmationModal = (modal: IOpenedModal<HandoffConfirmationModalProps>) => (
   <HandoffConfirmation key={modal.name} {...modal.props} />
 );
-const getOrderCancellationModal = (modal: IOpenedModal<OrderCancellationProps>) => (
-  <OrderCancellation key={modal.name} {...modal.props} />
-);
 
 const getSpecimenTrackingCollectionModal = (modal: IOpenedModal<SpecimenTrackingCollectionModalProps>) => (
   <SpecimenTrackingCollectionModal key={modal.name} appointmentId={modal.props.appointmentId} />
@@ -126,6 +127,16 @@ const getSpecimenTrackingCollectionModal = (modal: IOpenedModal<SpecimenTracking
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getPatientPartnerModal = (modal: IOpenedModal<PatientPartnerModalProps>) => (
   <PatientPartnerModal key={modal.name} patientId={modal.props.patientId} />
+);
+
+// Order Creation
+
+const getOrderCancellationModal = (modal: IOpenedModal<OrderCancellationProps>) => (
+  <OrderCancellation key={modal.name} {...modal.props} />
+);
+
+const getOrderValidationErrorModal = (modal: IOpenedModal<OrderValidationErrorModalProps>) => (
+  <OrderValidationErrorModal key={modal.name} {...modal.props} />
 );
 
 // Patient Partner confirmation (Are you want to go to profile partners profile)
@@ -197,6 +208,8 @@ export const ModalsController = () => {
           // Cancel Order creation Modal
           case ModalName.CancelOrderCreationModal:
             return getOrderCreationCancelModal();
+          case ModalName.OrderValidationErrorModal:
+            return getOrderValidationErrorModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

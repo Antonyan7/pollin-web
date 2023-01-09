@@ -23,6 +23,7 @@ export enum CypressIds {
   MODAL_APPOINTMENTS_EDIT_DIALOG = 'modal.appointments.edit.dialog',
   MODAL_APPOINTMENTS_ADD_DIALOG_FORM = 'modal.appointments.add.dialog.form',
   MODAL_APPOINTMENTS_EDIT_DIALOG_FORM = 'modal.appointments.edit.dialog.form',
+  MODAL_ORDER_VALIDATION_ERROR_BUTTON_OK = 'modal.order.validation.error.button.ok',
   PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR = 'page.appointments.button.new.calendar',
   PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT = 'page.appointments.button.new.appointment',
   PAGE_APPOINTMENTS_TITLE = 'page.appointments.title',
