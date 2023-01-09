@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -38,7 +37,7 @@ const useHandleApplySchedule = () => {
     !!startScheduleDate &&
     !!endScheduleDate;
 
-  const handleApplySchedule = useCallback(() => {
+  const handleApplySchedule = () => {
     if (isAllowedToApplySchedule) {
       const applyScheduleTemplateData: IApplyScheduleData = {
         resourceId: resource,
@@ -47,8 +46,8 @@ const useHandleApplySchedule = () => {
         repeatWeeksCount: +repeatWeeksCount,
         // Transform FE applyDays data to BE acceptable fix PCP-1477!
         applyDays: selectedWeekdaysToApply.map((item: number) => calculateWeekByNumber(item)),
-        startDate: startScheduleDate ? calculateTimeInUTC(startScheduleDate) : startScheduleDate,
-        endDate: endScheduleDate ? calculateTimeInUTC(endScheduleDate) : endScheduleDate
+        startDate: calculateTimeInUTC(startScheduleDate),
+        endDate: calculateTimeInUTC(endScheduleDate)
       };
 
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
@@ -65,7 +64,7 @@ const useHandleApplySchedule = () => {
       dispatch(schedulingMiddleware.resetApplyStatusState());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAllowedToApplySchedule]);
+  };
 
   return {
     isAllowedToApplySchedule,
