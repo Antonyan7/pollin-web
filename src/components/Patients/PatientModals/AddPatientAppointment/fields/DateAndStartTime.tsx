@@ -2,15 +2,16 @@ import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
-import { Grid, TextField, TextFieldProps } from '@mui/material';
+import { Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
-import { formatDate, toRoundupTime } from 'helpers/time';
+import { UTCTimezone } from 'helpers/constants';
+import { toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import { futureDate180DaysAfter } from '@utils/dateUtils';
+import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
 
 type DateAndStartTimeType = Date | null;
 
@@ -22,6 +23,7 @@ const DateAndStartTime: React.FC = () => {
   const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
   const initialDate: DateAndStartTimeType = toRoundupTime(actualDate);
   const dateFieldName = 'date';
+  const theme = useTheme();
 
   const { field } = useController({
     name: dateFieldName,
@@ -37,6 +39,8 @@ const DateAndStartTime: React.FC = () => {
         components={{
           ActionBar: DatePickerActionBar
         }}
+        ampm={false}
+        toolbarFormat="yyyy, MMM dd"
         disablePast
         open={mobileDateTimePickerOpen}
         onOpen={() => setMobileDateTimePickerOpen(true)}
@@ -52,14 +56,20 @@ const DateAndStartTime: React.FC = () => {
           sx: {
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
+              '& .MuiClockNumber-root': {
+                color: theme.palette.primary[800]
+              },
               '& .Mui-disabled': {
-                display: 'none'
+                color: theme.palette.primary[200]
+              },
+              '& .Mui-selected': {
+                color: theme.palette.secondary.light
               }
             }
           }
         }}
         renderInput={(params: TextFieldProps) => {
-          const formattedDate = formatDate(initialDate as Date);
+          const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
 
           const formattedParams = {
             ...params,
