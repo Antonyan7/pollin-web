@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CircleIcon from '@mui/icons-material/Circle';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
@@ -6,7 +6,6 @@ import { Badge, Grid, ListItem, Typography, useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import MuiTooltip from '@mui/material/Tooltip';
 import { Translation } from 'constants/translations';
-import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { paddings } from 'themes/themeConstants';
@@ -24,18 +23,13 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
   const { t } = useTranslation();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
   const isPatientAlertDetailsLoading = useAppSelector(patientsSelector.isPatientAlertDetailsLoading);
+  const controller = new AbortController();
 
-  useEffect(() => {
-    // Clean previous patient alerts
+  const onOpen = () => dispatch(patientsMiddleware.getPatientAlertDetails(rowId, controller.signal));
+  const onClose = () => {
+    controller.abort();
     dispatch(patientsMiddleware.resetPatientAlerts());
-
-    return () => {
-      dispatch(patientsMiddleware.resetPatientAlerts());
-    };
-  }, []);
-
-  const onOpen = debounce(() => dispatch(patientsMiddleware.getPatientAlertDetails(rowId)), 500);
-  const onClose = () => dispatch(patientsMiddleware.resetPatientAlerts());
+  };
 
   const alertTextCommonStyles = {
     fontWeight: 400,
@@ -47,6 +41,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
   return alertCount ? (
     <MuiTooltip
       disableInteractive
+      enterNextDelay={250}
       componentsProps={{
         tooltip: {
           sx: {
@@ -54,6 +49,9 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
             width: '100%'
           }
         }
+      }}
+      TransitionProps={{
+        unmountOnExit: true
       }}
       onOpen={onOpen}
       onClick={(e) => e.stopPropagation()}

@@ -32,11 +32,12 @@ const axiosInstance = Axios();
 
 const patientEmrManager = {
   axiosInstance,
-  getPatientAlertDetails(patientId: string) {
+  getPatientAlertDetails(patientId: string, signal?: AbortSignal) {
     return axiosInstance.get<IAlertDetailsResponse, IAxiosResponse<IAlertDetailsResponse>>(
       `${baseURL}/v1/patients/alerts`,
       {
-        params: { patientId }
+        params: { patientId },
+        signal
       }
     );
   },

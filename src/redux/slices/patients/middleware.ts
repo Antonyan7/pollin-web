@@ -129,11 +129,11 @@ const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getPatientAlertDetails = (alertId: string) => async (dispatch: AppDispatch) => {
+const getPatientAlertDetails = (alertId: string, abortSignal?: AbortSignal) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setPatientAlertDetailsLoading(true));
 
-    const response = await API.patients.getPatientAlertDetails(alertId);
+    const response = await API.patients.getPatientAlertDetails(alertId, abortSignal);
 
     dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
   } catch (error) {
