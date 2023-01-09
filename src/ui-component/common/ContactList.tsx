@@ -9,7 +9,7 @@ import EarbudsIcon from '@mui/icons-material/Earbuds';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import { Avatar, Box, Button, ButtonProps, Grid, Tooltip, Typography } from '@mui/material';
+import { Avatar, Box, Button, ButtonProps, Grid, Stack, Tooltip, Typography } from '@mui/material';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
@@ -83,36 +83,83 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                 <Grid item xs={12}>
                   <Typography variant="caption">{date}</Typography>
                 </Grid>
-                <Grid container spacing={0} justifyContent="center" alignItems="center">
-                  <Grid item xs={4}>
+                <Stack gap={2} direction="row" justifyContent="center" alignItems="center" flexWrap="wrap">
+                  <Stack flexShrink={0}>
                     <Button
-                      startIcon={<CallOutlinedIcon />}
+                      startIcon={
+                        <CallOutlinedIcon
+                          sx={{
+                            color: patientHighlightHeader.doctor.uiid
+                              ? theme.palette.primary[800]
+                              : theme.palette.grey[500]
+                          }}
+                        />
+                      }
                       disabled={!patientHighlightHeader.contact.uiid}
                       onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
                     >
-                      <Typography variant="caption">{patientHighlightHeader.contact.title}</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight="bold"
+                        color={
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                        }
+                      >
+                        {patientHighlightHeader.contact.title}
+                      </Typography>
                     </Button>
-                  </Grid>
-                  <Grid item xs={4}>
+                  </Stack>
+                  <Stack flexShrink={0}>
                     <Button
-                      startIcon={<ContentPasteIcon />}
+                      startIcon={
+                        <ContentPasteIcon
+                          sx={{
+                            color: patientHighlightHeader.doctor.uiid
+                              ? theme.palette.primary[800]
+                              : theme.palette.grey[500]
+                          }}
+                        />
+                      }
                       disabled={!patientHighlightHeader.ohip.uiid}
                       onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
                     >
-                      <Typography variant="caption">{patientHighlightHeader.ohip.title}</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight="bold"
+                        color={
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                        }
+                      >
+                        {patientHighlightHeader.ohip.title}
+                      </Typography>
                     </Button>
-                  </Grid>
-                  <Grid item xs={4}>
+                  </Stack>
+                  <Stack flexShrink={0}>
                     <Button
-                      startIcon={<EarbudsIcon />}
+                      startIcon={
+                        <EarbudsIcon
+                          sx={{
+                            color: patientHighlightHeader.doctor.uiid
+                              ? theme.palette.primary[800]
+                              : theme.palette.grey[500]
+                          }}
+                        />
+                      } // change icon
                       disabled={!patientHighlightHeader.doctor.uiid}
                       onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
                     >
-                      {/* change icon */}
-                      <Typography variant="caption">{patientHighlightHeader.doctor.title}</Typography>
+                      <Typography
+                        variant="body2"
+                        fontWeight="bold"
+                        color={
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                        }
+                      >
+                        {patientHighlightHeader.doctor.title}
+                      </Typography>
                     </Button>
-                  </Grid>
-                </Grid>
+                  </Stack>
+                </Stack>
               </Grid>
             </Grid>
           </Grid>
@@ -165,11 +212,28 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                       onClick={() => !isPatientHighlightIntakeReminderActive && setIsSendIntakeTooltipOpen(true)}
                     >
                       <Button
-                        startIcon={<IconBell />}
+                        startIcon={
+                          <IconBell
+                            color={
+                              isPatientHighlightIntakeReminderActive
+                                ? theme.palette.primary[800]
+                                : theme.palette.grey[500]
+                            }
+                          />
+                        }
                         disabled={!isPatientHighlightIntakeReminderActive}
                         onClick={onSendIntakeButtonClick}
                       >
-                        {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
+                        <Typography
+                          variant="h5"
+                          color={
+                            isPatientHighlightIntakeReminderActive
+                              ? theme.palette.primary[800]
+                              : theme.palette.grey[500]
+                          }
+                        >
+                          {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
+                        </Typography>
                       </Button>
                     </Box>
                   </Tooltip>
