@@ -1,4 +1,4 @@
-import { IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 export const isAllGroupItemSelected = (groupItems: IOrderGroupItem[]): boolean =>
   groupItems.reduce((allSelected, groupItem) => {

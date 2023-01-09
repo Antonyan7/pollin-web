@@ -4,14 +4,14 @@ import { StyledTextareaAutosize } from '@components/Appointments/CommonMaterialC
 import { Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from '@redux/hooks';
-import { resultsSelector } from '@redux/slices/results';
+import { ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
 const OrderDetailsComments = () => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { comment } = useAppSelector(resultsSelector.orderDetails);
+  const { comment } = useAppSelector(ordersSelector.orderDetails);
 
   return (
     <Stack px={paddings.all24} py={paddings.all12} borderBottom={`1px solid ${theme.palette.primary.light}`} gap={2}>

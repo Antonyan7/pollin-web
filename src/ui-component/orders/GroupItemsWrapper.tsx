@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import OrderGroupItem from '@ui-component/orders/OrderGroupItem';
 
@@ -17,8 +17,8 @@ interface GroupItemsWrapperProps {
 
 const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const theme = useTheme();
-  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
-  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
+  const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderGroups = useMemo(
     () =>
@@ -53,7 +53,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         : defaultOrderGroup
     );
 
-    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
+    dispatch(ordersMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   return (

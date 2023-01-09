@@ -5,13 +5,10 @@ import {
   CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
-  IOrderDetailsData,
-  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
   IOrdersFilterItems,
   IOrdersList,
-  IOrderType,
   IPendingTestStats,
   IResultsList,
   IResultsProps,
@@ -206,27 +203,6 @@ const reducers = createReducer({
   },
   setIsOrdersListLoading(state, action: IAction<boolean>) {
     state.isOrdersListLoading = action.payload;
-  },
-  setOrderTypes(state, action: IAction<IOrderType[]>) {
-    state.orderTypes = action.payload;
-  },
-  setIsOrderTypesLoading(state, action: IAction<boolean>) {
-    state.isOrderTypesLoading = action.payload;
-  },
-  setSelectedOrderType(state, action: IAction<string>) {
-    state.selectedOrderType = action.payload;
-  },
-  setOrderGroups(state, action: IAction<IOrderGroupsCollection[]>) {
-    state.orderGroups = action.payload;
-  },
-  setIsOrderGroupsLoading(state, action: IAction<boolean>) {
-    state.isOrderGroupsLoading = action.payload;
-  },
-  setOrderDetails(state, action: IAction<IOrderDetailsData>) {
-    state.orderDetails = action.payload;
-  },
-  setIsOrderDetailsLoading(state, action: IAction<boolean>) {
-    state.isOrderDetailsLoading = action.payload;
   }
 });
 

@@ -103,13 +103,6 @@ export interface IResultsProps {
   orderResultsStatuses: IOrderResultsStatus[];
   ordersList: IOrdersList;
   isOrdersListLoading: boolean;
-  orderTypes: IOrderType[];
-  isOrderTypesLoading: boolean;
-  selectedOrderType: string;
-  orderGroups: IOrderGroupsCollection[];
-  isOrderGroupsLoading: boolean;
-  orderDetails: IOrderDetailsData;
-  isOrderDetailsLoading: boolean;
 }
 
 export enum ITransportFolderStatus {
@@ -390,79 +383,8 @@ export interface TestResultsDetails extends ITestResultsDetails {}
 
 export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}
 
-export interface IOrderType {
-  id: string;
-  title: string;
-}
-
-export interface IOrderTypesList {
-  orderTypes: IOrderType[];
-}
-
 export enum TestType {
   OrderGroup = 'Pollin Blood Test Group',
   TestPanel = 'Panel',
   TestType = 'TestType'
-}
-
-export interface IOrderGroupItem {
-  id: string;
-  title: string;
-  type: TestType;
-  label?: string;
-  selected?: boolean;
-  groupItems?: IOrderGroupItem[];
-}
-
-export interface IOrderGroupsCollection {
-  orderTypeId: string;
-  groups: IOrderGroup[];
-}
-export interface IOrderGroup {
-  id: string;
-  title: string;
-  groupItems: IOrderGroupItem[];
-}
-
-export interface IOrderGroupsList {
-  groups: IOrderGroup[];
-}
-
-export interface IOrderDetails {
-  id: string;
-  comment?: string;
-  isEditable: boolean;
-  hasRequisition: boolean;
-  groups: IOrderGroup[];
-}
-
-export interface IOrderDetailsData {
-  id: string;
-  comment?: string;
-  isEditable: boolean;
-  hasRequisition: boolean;
-  groups: IOrderGroup[] | null;
-}
-
-export interface IGetOrderDetailsResponse {
-  order: IOrderDetails;
-}
-
-export interface UpdateOrderGroupItem {
-  id: string;
-  groupItems?: UpdateOrderGroupItem[];
-}
-
-export interface UpdateOrderGroup {
-  id: string;
-  groupItems: UpdateOrderGroupItem[];
-}
-
-export interface UpdateOrderData {
-  comment?: string;
-  groups: UpdateOrderGroup[];
-}
-
-export interface IUpdateOrderReqBody {
-  order: UpdateOrderData;
 }

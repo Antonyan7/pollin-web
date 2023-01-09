@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, Collapse, FormControlLabel, Stack } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 import PollinBloodTestGroupCheckbox from '@ui-component/orders/checkboxes/PollinBloodTestGroupCheckbox';
 import SingleItemCheckbox from '@ui-component/orders/checkboxes/SingleItemCheckbox';

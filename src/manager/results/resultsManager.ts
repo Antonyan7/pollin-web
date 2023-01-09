@@ -22,13 +22,16 @@ import {
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
-  CancellationReasons,
-  IAllTestsSpecimensList,
   IGetOrderDetailsResponse,
   IOrderGroupsList,
+  IOrderTypesList,
+  IUpdateOrderReqBody
+} from 'types/reduxTypes/ordersStateTypes';
+import {
+  CancellationReasons,
+  IAllTestsSpecimensList,
   IOrderResultsByPatientList,
   IOrdersListResponse,
-  IOrderTypesList,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
@@ -37,7 +40,6 @@ import {
   ISpecimensList,
   ITestResultsDetails,
   ITransportListProps,
-  IUpdateOrderReqBody,
   LabMachine,
   SpecimenActionsList
 } from 'types/reduxTypes/resultsStateTypes';

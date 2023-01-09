@@ -6,18 +6,18 @@ import OrderDetailsDataActions from '@components/Orders/OrderDetails/OrderDetail
 import OrderDetailsHeader from '@components/Orders/OrderDetails/OrderDetailsHeader';
 import { Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { useRouter } from 'next/router';
 
 const OrderDetails = () => {
   const router = useRouter();
   const { orderId } = router.query;
-  const orderDetails = useAppSelector(resultsSelector.orderDetails);
-  const isOrderDetailsLoading = useAppSelector(resultsSelector.isOrderDetailsLoading);
+  const orderDetails = useAppSelector(ordersSelector.orderDetails);
+  const isOrderDetailsLoading = useAppSelector(ordersSelector.isOrderDetailsLoading);
 
   useEffect(() => {
     if (orderDetails.groups === null && !isOrderDetailsLoading && typeof orderId === 'string') {
-      dispatch(resultsMiddleware.getOrderDetails(orderId));
+      dispatch(ordersMiddleware.getOrderDetails(orderId));
     }
   }, [isOrderDetailsLoading, orderDetails.groups, orderId]);
 

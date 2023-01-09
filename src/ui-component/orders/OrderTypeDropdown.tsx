@@ -5,7 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
@@ -15,11 +15,11 @@ const OrderTypeDropdown = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const label = t(Translation.PAGE_PATIENT_PROFILE_CELLS_CREATE_ORDER_TYPE);
-  const orderTypes = useSelector(resultsSelector.orderTypes);
-  const isOrderTypesLoading = useSelector(resultsSelector.isOrderTypesLoading);
+  const orderTypes = useSelector(ordersSelector.orderTypes);
+  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypesLoading);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getOrderTypes());
+    dispatch(ordersMiddleware.getOrderTypes());
   }, []);
 
   return (
@@ -47,7 +47,7 @@ const OrderTypeDropdown = () => {
           isOptionEqualToValue={(option, value) => option.id === value.id}
           onChange={(_, value) => {
             if (value && typeof value === 'object' && 'id' in value) {
-              dispatch(resultsMiddleware.updateSelectedOrderType(value.id));
+              dispatch(ordersMiddleware.updateSelectedOrderType(value.id));
             }
           }}
           options={orderTypes}

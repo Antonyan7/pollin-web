@@ -4,14 +4,14 @@ import GroupItemsList from '@components/Orders/OrderDetails/GroupItemsList';
 import { Button, Grid, Stack, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useAppSelector } from '@redux/hooks';
-import { resultsSelector } from '@redux/slices/results';
+import { ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
 const OrderDetailsBody = () => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { groups, isEditable } = useAppSelector(resultsSelector.orderDetails);
+  const { groups, isEditable } = useAppSelector(ordersSelector.orderDetails);
 
   const onEditClick = () => {
     // TODO: Edit

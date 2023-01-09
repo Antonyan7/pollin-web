@@ -25,18 +25,13 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
-  IOrderDetailsData,
-  IOrderGroup,
-  IOrderGroupItem,
-  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IResultsList,
   IRetestRecollectData,
   ISpecimensInTransportList,
   ISpecimensList,
-  ITransportList,
-  UpdateOrderGroupItem
+  ITransportList
 } from 'types/reduxTypes/resultsStateTypes';
 import {
   ICreateTransportFolderReqBody,
@@ -103,14 +98,7 @@ const {
   setIsRequisitionDownloaded,
   setOrdersList,
   setIsOrdersListLoading,
-  setOrdersStatuses,
-  setOrderTypes,
-  setSelectedOrderType,
-  setIsOrderTypesLoading,
-  setOrderGroups,
-  setIsOrderGroupsLoading,
-  setOrderDetails,
-  setIsOrderDetailsLoading
+  setOrdersStatuses
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -824,74 +812,6 @@ const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: 
   dispatch(setIsOrdersListLoading(false));
 };
 
-const getOrderTypes = () => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrderTypesLoading(true));
-
-  try {
-    const response = await API.results.getOrderTypes();
-
-    dispatch(setOrderTypes(response.data.data.orderTypes));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsOrderTypesLoading(false));
-  }
-};
-
-const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
-  dispatch(setSelectedOrderType(orderType));
-};
-
-const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrderGroupsLoading(true));
-
-  const { orderGroups } = store.getState().results;
-  const currentOrderGroupByType = orderGroups.find((group: IOrderGroupsCollection) => group.orderTypeId === orderType);
-
-  try {
-    if (!currentOrderGroupByType?.orderTypeId) {
-      const response = await API.results.getOrderGroups(orderType);
-
-      const orderGroupCollections = [
-        ...store.getState().results.orderGroups,
-        {
-          orderTypeId: orderType,
-          groups: response.data.data.groups
-        }
-      ];
-
-      dispatch(setOrderGroups(orderGroupCollections));
-    }
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsOrderGroupsLoading(false));
-  }
-};
-
-const updateOrderGroups =
-  (orderTypeId: string, updatedOrderGroups: IOrderGroup[] = []) =>
-  async (dispatch: AppDispatch) => {
-    const { orderGroups } = store.getState().results;
-
-    const updatedOrderGroupsCollection: IOrderGroupsCollection[] = orderGroups.map(
-      (collection: IOrderGroupsCollection) => {
-        if (collection.orderTypeId === orderTypeId) {
-          return {
-            orderTypeId,
-            groups: updatedOrderGroups
-          };
-        }
-
-        return collection;
-      }
-    );
-
-    dispatch(setOrderGroups(updatedOrderGroupsCollection));
-  };
-
 const downloadTestResultAttachment = (attachmendId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.results.downloadTestResultAttachment(attachmendId);
@@ -903,44 +823,6 @@ const downloadTestResultAttachment = (attachmendId: string) => async (dispatch: 
   }
 
   return null;
-};
-const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsOrderDetailsLoading(true));
-
-    const { data } = await API.results.getOrderDetails(orderId);
-
-    dispatch(setOrderDetails(data.order));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsOrderDetailsLoading(false));
-  }
-};
-
-const updateOrder = (orderId: string, orderDetailsData: IOrderDetailsData) => async (dispatch: AppDispatch) => {
-  try {
-    const parseGroupItems = (orderGroupItems: IOrderGroupItem[]): UpdateOrderGroupItem[] =>
-      orderGroupItems.map(({ id, groupItems }) =>
-        groupItems === undefined ? { id } : { id, groupItems: parseGroupItems(groupItems) }
-      );
-
-    const body = {
-      order: {
-        ...(orderDetailsData.comment !== undefined ? { comment: orderDetailsData.comment } : {}),
-        groups: (orderDetailsData.groups ?? []).map(({ id, groupItems }) => ({
-          id,
-          groupItems: parseGroupItems(groupItems)
-        }))
-      }
-    };
-
-    await API.results.updateOrder(orderId, body);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
 };
 
 export default {
@@ -987,11 +869,5 @@ export default {
   getOrderResultsStatuses,
   setIsTestResultsSubmitWentSuccessful,
   getOrdersList,
-  getOrderTypes,
-  updateSelectedOrderType,
-  getOrderGroups,
-  updateOrderGroups,
-  downloadTestResultAttachment,
-  getOrderDetails,
-  updateOrder
+  downloadTestResultAttachment
 };

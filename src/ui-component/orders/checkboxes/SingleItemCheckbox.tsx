@@ -2,14 +2,14 @@ import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { dispatch } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
 const SingleItemCheckbox = (props: { orderGroup: IOrderGroup; defaultGroupItem: IOrderGroupItem }) => {
   const { orderGroup, defaultGroupItem } = props;
-  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
+  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
 
-  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+  const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderGroups = useMemo(
     () =>
@@ -49,7 +49,7 @@ const SingleItemCheckbox = (props: { orderGroup: IOrderGroup; defaultGroupItem: 
       return defaultOrderGroup;
     });
 
-    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
+    dispatch(ordersMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   return (

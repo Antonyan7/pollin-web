@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { Collapse, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { IOrderGroupItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 interface Props {
   groupItems?: IOrderGroupItem[];

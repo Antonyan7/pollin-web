@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -13,7 +13,7 @@ const OrderDetailsActions = () => {
   const router = useRouter();
   const { orderId } = router.query;
 
-  const orderDetails = useAppSelector(resultsSelector.orderDetails);
+  const orderDetails = useAppSelector(ordersSelector.orderDetails);
 
   const onCancelClick = () => {
     // TODO: implement order cancellation
@@ -21,7 +21,7 @@ const OrderDetailsActions = () => {
 
   const onConfirmOrderClick = () => {
     if (orderDetails.groups !== null && typeof orderId === 'string') {
-      dispatch(resultsMiddleware.updateOrder(orderId, orderDetails));
+      dispatch(ordersMiddleware.updateOrder(orderId, orderDetails));
     }
   };
 

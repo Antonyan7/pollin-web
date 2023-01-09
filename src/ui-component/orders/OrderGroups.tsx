@@ -2,20 +2,20 @@ import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderGroup, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import GroupItemsWrapper from '@ui-component/orders/GroupItemsWrapper';
 
 const OrderGroups = () => {
-  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
-  const isOrderGroupsLoading = useSelector(resultsSelector.isOrderGroupsLoading);
-  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
+  const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
+  const isOrderGroupsLoading = useSelector(ordersSelector.isOrderGroupsLoading);
+  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
 
   useEffect(() => {
     if (selectedOrderType) {
-      dispatch(resultsMiddleware.getOrderGroups(selectedOrderType));
+      dispatch(ordersMiddleware.getOrderGroups(selectedOrderType));
     }
   }, [selectedOrderType]);
 

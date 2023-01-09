@@ -2,8 +2,8 @@ import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Checkbox, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps } from '@mui/material';
 import { dispatch } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/resultsStateTypes';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
 import TestTypeChip from '@ui-component/orders/TestTypeChip';
@@ -18,8 +18,8 @@ interface Props {
 
 const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const orderGroupsCollections = useSelector(resultsSelector.orderGroups);
-  const selectedOrderType = useSelector(resultsSelector.selectedOrderType);
+  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
+  const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderGroups = useMemo(
     () =>
@@ -73,7 +73,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
       return orderGroup;
     });
 
-    dispatch(resultsMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
+    dispatch(ordersMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
   };
 
   const isEverythingSelected = useMemo(() => {
