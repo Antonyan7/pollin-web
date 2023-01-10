@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import bookingManager from '@axios/booking/bookingManager';
 import { IGetPatientAppointments } from '@axios/booking/managerBookingTypes';
 import Overview from '@components/PatientProfile/Overview';
 import PartnerProfileOverview from '@components/PatientProfile/PartnerProfileOverview';
 import TestResults from '@components/PatientProfile/TestResults';
 import { Box, Grid, Stack } from '@mui/material';
-import { patientsSelector } from '@redux/slices/patients';
+import { useAppSelector } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
+import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
 import { AppointmentType } from 'types/patientProfile';
 
@@ -16,17 +17,17 @@ import AppointmentsCard from '@ui-component/profile/AppointmentsCard';
 import LatestTestResults from '@ui-component/profile/LatestTestResult';
 
 const PatientProfile = () => {
-  const patientId = useSelector(patientsSelector.currentPatientId);
+  const router = useRouter();
+  const patientId = router.query.id as string;
   const { profilePageName, page } = usePatientProfileNavigatorContext();
   const [patientAppointments, setPatientAppointments] = useState<IGetPatientAppointments | null>(null);
+  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
 
   useEffect(() => {
-    if (patientAppointments === null && patientId) {
-      bookingManager.getPatientAppointments(patientId).then(({ data }) => {
-        setPatientAppointments(data);
-      });
-    }
-  }, [patientAppointments, patientId]);
+    bookingManager.getPatientAppointments(patientId).then(({ data }) => {
+      setPatientAppointments(data);
+    });
+  }, [appointmentStatus.create.success, patientId, patientAppointments]);
 
   useAppointmentStatusState();
 
