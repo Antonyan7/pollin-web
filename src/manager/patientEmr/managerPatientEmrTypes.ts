@@ -127,7 +127,7 @@ export interface IPatientPartnerData {
 interface IPatientHighlightDetailPartner {
   type: 'Partner';
   title: string; // title of the modal field
-  partner: IPatientPartnerData; // values of the modal field
+  partner?: IPatientPartnerData; // values of the modal field
 }
 
 export interface IPatientMedicationData {

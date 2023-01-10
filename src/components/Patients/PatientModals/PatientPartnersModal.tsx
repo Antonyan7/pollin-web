@@ -2,6 +2,7 @@ import React, { useCallback } from 'react';
 import { IPatientPartnerData } from '@axios/patientEmr/managerPatientEmrTypes';
 import LaunchIcon from '@mui/icons-material/Launch';
 import { Button, DialogProps, DialogTitle, Grid, Stack, Typography, useTheme } from '@mui/material';
+import MuiLink from '@mui/material/Link';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import Link from 'next/link';
@@ -49,27 +50,45 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
                 <Grid item xs={4} sx={{ fontWeight: 'bold', color: theme.palette.common.black }}>
                   {fieldName}:
                 </Grid>
-                <Grid item xs={8} sx={{ color: theme.palette.grey[800] }}>
+                <Grid container item xs={8} sx={{ color: theme.palette.grey[800] }}>
                   {Array.isArray(fieldValue) ? (
                     fieldValue.map((value) => (
-                      <Stack rowGap={0.25} sx={{ color: theme.palette.grey[800] }} key={`${fieldName}-${value}`}>
-                        {value}
-                      </Stack>
+                      <Grid
+                        container
+                        item
+                        xs={12}
+                        rowGap={0.25}
+                        sx={{ color: theme.palette.grey[800] }}
+                        key={`${fieldName}-${value}`}
+                      >
+                        <Grid item xs={1} />
+                        <Grid item xs={11}>
+                          {value}
+                        </Grid>
+                      </Grid>
                     ))
                   ) : (
                     <Stack rowGap={0.25} sx={{ color: theme.palette.grey[800] }}>
-                      <Grid container xs={12} alignItems="start" justifyContent="flex-end">
+                      <Grid container item xs={12} alignItems="start" justifyContent="flex-end">
                         <Grid item xs={1}>
-                          <a
-                            href={`/patient-emr/list/${fieldValue.patientId}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <LaunchIcon fontSize="small" sx={{ height: '1.125rem', cursor: 'pointer' }} />
-                          </a>
+                          {fieldValue.patientId && (
+                            <MuiLink
+                              href={`/patient-emr/details/${fieldValue.patientId}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <LaunchIcon fontSize="small" sx={{ height: '1.125rem', cursor: 'pointer' }} />
+                            </MuiLink>
+                          )}
                         </Grid>
                         <Grid item container xs={11} columnGap={0.5} alignItems="start">
-                          <Link href={`/patient-emr/list/${fieldValue.patientId}`} onClick={onClose}>
+                          {fieldValue.patientId ? (
+                            <Link href={`/patient-emr/details/${fieldValue.patientId}`} onClick={onClose}>
+                              <Typography fontWeight="bolder" align="justify" margin="unset" display="inline">
+                                <u>{fieldValue.name}</u>
+                              </Typography>
+                            </Link>
+                          ) : (
                             <Typography
                               fontWeight="bolder"
                               align="justify"
@@ -77,11 +96,12 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
                               display="inline"
                               sx={{ cursor: 'pointer' }}
                             >
-                              <u>{fieldValue.name}</u>
+                              {fieldValue.name}
                             </Typography>
-                          </Link>
+                          )}
+
                           <Typography fontWeight="normal" display="inline">
-                            ({fieldValue.pronoun})
+                            {fieldValue.pronoun && `(${fieldValue.pronoun})`}
                           </Typography>
                         </Grid>
                         <Grid item container xs={11} columnGap={0.5} alignItems="start">

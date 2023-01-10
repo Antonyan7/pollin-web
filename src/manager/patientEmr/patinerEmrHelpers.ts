@@ -23,7 +23,7 @@ const getModalParamsFromPatientHighlightDetails = (
 
               return {
                 ...modalData,
-                [fieldTitle]: partner
+                [fieldTitle]: typeof partner === 'object' ? partner : ['-']
               };
             }
 
