@@ -4,9 +4,9 @@ import { Box, Tab, Tabs, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import PatientEmrLayout from 'layout/PatientEmrLayout';
 import { useRouter } from 'next/router';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 
-const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
+const PatientOrdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   const theme = useTheme();
 
   const router = useRouter();
@@ -31,7 +31,7 @@ const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
           sx={{
             '& .MuiTabs-indicator': {
               height: 3,
-              backgroundColor: theme.palette.dark[200]
+              backgroundColor: theme.palette.primary.main
             }
           }}
         >
@@ -41,10 +41,10 @@ const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
             label={t(Translation.PAGE_PATIENT_ORDER_RESULTS_TITLE)}
           />
         </Tabs>
-        <Box mt={4}>{children}</Box>
+        <Box pt={paddings.top24}>{children}</Box>
       </Box>
     </PatientEmrLayout>
   );
 };
 
-export default PatientOdersAndResultsLayout;
+export default PatientOrdersAndResultsLayout;

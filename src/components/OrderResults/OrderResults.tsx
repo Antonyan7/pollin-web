@@ -16,7 +16,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/resultsStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
@@ -81,7 +81,11 @@ const OrderResults = () => {
         loading={isFiltersLoading}
       />
 
-      <TableContainer>
+      <TableContainer
+        sx={{
+          pt: paddings.top42
+        }}
+      >
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
             <TableRow>

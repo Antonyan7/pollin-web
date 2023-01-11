@@ -45,7 +45,8 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
         <Chip
           chipColor={FinalResultChipColor[row.finalResultType]}
           sx={{
-            height: '33px'
+            p: 0,
+            height: '28px'
           }}
           label={row.finalResultType}
         />

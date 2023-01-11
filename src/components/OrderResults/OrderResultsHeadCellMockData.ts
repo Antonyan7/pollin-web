@@ -36,14 +36,14 @@ export const headCellsData = (t: TFunction) => [
     id: OrderResultsSortFields.STATUS,
     label: t(Translation.PAGE_PATIENT_ORDER_RESULTS_CELLS_STATUS),
     align: 'left',
-    paddingLeft: paddings.left20,
+    paddingLeft: paddings.left0,
     isSortable: true
   },
   {
     id: OrderResultsSortFields.FINAL_RESULT_TYPE,
     label: t(Translation.PAGE_PATIENT_ORDER_RESULTS_CELLS_FINALRESULTTYPE),
     align: 'left',
-    paddingLeft: paddings.left20,
+    paddingLeft: paddings.left0,
     isSortable: true
   }
 ];

@@ -20,7 +20,7 @@ const allyProps = (index: number) => ({
 // Refer to this example https://mui.com/material-ui/guides/composition/#with-typescript
 const TabWithLink = (props: TabProps<typeof Link, { component: typeof Link }>) => <Tab {...props} />;
 
-const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
+const PatientOrdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const theme = useTheme();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
@@ -97,4 +97,4 @@ const PatientOdersAndResultsLayout = ({ children }: PropsWithChildren) => {
   );
 };
 
-export default PatientOdersAndResultsLayout;
+export default PatientOrdersAndResultsLayout;
