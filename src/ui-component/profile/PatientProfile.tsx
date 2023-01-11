@@ -27,7 +27,7 @@ const PatientProfile = () => {
     bookingManager.getPatientAppointments(patientId).then(({ data }) => {
       setPatientAppointments(data);
     });
-  }, [appointmentStatus.create.success, patientId]);
+  }, [appointmentStatus, patientId]);
 
   useAppointmentStatusState();
 
