@@ -18,7 +18,7 @@ export enum TestResultsListSortFields {
 }
 
 export enum TransportsSortFields {
-  STATUS = 'ReadyForTransport',
+  STATUS = 'Status',
   LAB_DESTINATION = 'LabDestination',
   DATE = 'Date'
 }
