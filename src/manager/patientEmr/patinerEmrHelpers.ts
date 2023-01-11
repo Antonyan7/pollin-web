@@ -8,14 +8,14 @@ import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 const getModalParamsFromPatientHighlightDetails = (
   patientHighlightDetails: IPatientHighlightDetailsResponse
 ): IOpenedModal<PatientPartnersModalProps | PatientMedicationsModalProps | PatientLineItemsModalProps> => {
-  const { title, highlightDetails } = patientHighlightDetails;
+  const { widgetTitle, highlightDetails } = patientHighlightDetails;
   const highlightDetailsTypes = highlightDetails.map(({ type }) => type);
 
   if (highlightDetailsTypes.includes('Partner')) {
     return {
       name: ModalName.PatientPartnersModal,
       props: {
-        title,
+        title: widgetTitle,
         data: highlightDetails.reduce<PatientPartnersModalProps['data']>((modalData, highlightDetail) => {
           switch (highlightDetail.type) {
             case 'Partner': {
@@ -48,7 +48,7 @@ const getModalParamsFromPatientHighlightDetails = (
     return {
       name: ModalName.PatientMedicationsModal,
       props: {
-        title,
+        title: widgetTitle,
         data: highlightDetails.reduce<PatientMedicationsModalProps['data']>((modalData, highlightDetail) => {
           switch (highlightDetail.type) {
             case 'Medications': {
@@ -80,7 +80,7 @@ const getModalParamsFromPatientHighlightDetails = (
   return {
     name: ModalName.PatientLineItemsModal,
     props: {
-      title,
+      title: widgetTitle,
       data: highlightDetails.reduce<PatientLineItemsModalProps['data']>((modalData, highlightDetail) => {
         switch (highlightDetail.type) {
           case 'LineItems': {

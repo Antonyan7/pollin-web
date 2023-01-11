@@ -153,7 +153,7 @@ type PatientHighlightDetail =
   | IPatientHighlightDetailLineItems;
 
 export interface IPatientHighlightDetailsResponse {
-  title: string; // Title of modal
+  widgetTitle: string; // Title of the patient highlight modal
   highlightDetails: PatientHighlightDetail[]; // modal type and entries
 }
 
