@@ -91,7 +91,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                           sx={{
                             color: patientHighlightHeader.doctor.uiid
                               ? theme.palette.primary[800]
-                              : theme.palette.grey[500]
+                              : theme.palette.primary[200]
                           }}
                         />
                       }
@@ -102,7 +102,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                         variant="body2"
                         fontWeight="bold"
                         color={
-                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }
                       >
                         {patientHighlightHeader.contact.title}
@@ -116,7 +116,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                           sx={{
                             color: patientHighlightHeader.doctor.uiid
                               ? theme.palette.primary[800]
-                              : theme.palette.grey[500]
+                              : theme.palette.primary[200]
                           }}
                         />
                       }
@@ -127,7 +127,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                         variant="body2"
                         fontWeight="bold"
                         color={
-                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }
                       >
                         {patientHighlightHeader.ohip.title}
@@ -141,7 +141,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                           sx={{
                             color: patientHighlightHeader.doctor.uiid
                               ? theme.palette.primary[800]
-                              : theme.palette.grey[500]
+                              : theme.palette.primary[200]
                           }}
                         />
                       } // change icon
@@ -152,7 +152,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                         variant="body2"
                         fontWeight="bold"
                         color={
-                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.grey[500]
+                          patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }
                       >
                         {patientHighlightHeader.doctor.title}
@@ -217,7 +217,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                             color={
                               isPatientHighlightIntakeReminderActive
                                 ? theme.palette.primary[800]
-                                : theme.palette.grey[500]
+                                : theme.palette.primary[200]
                             }
                           />
                         }
@@ -229,7 +229,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                           color={
                             isPatientHighlightIntakeReminderActive
                               ? theme.palette.primary[800]
-                              : theme.palette.grey[500]
+                              : theme.palette.primary[200]
                           }
                         >
                           {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
