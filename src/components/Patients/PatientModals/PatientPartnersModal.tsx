@@ -68,7 +68,7 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
                       </Grid>
                     ))
                   ) : (
-                    <Stack rowGap={0.25} sx={{ color: theme.palette.grey[800] }}>
+                    <Stack rowGap={0.25} sx={{ color: theme.palette.grey[800] }} flexGrow={1}>
                       <Grid container item xs={12} alignItems="start" justifyContent="flex-end">
                         <Grid item xs={1}>
                           {fieldValue.patientId && (
