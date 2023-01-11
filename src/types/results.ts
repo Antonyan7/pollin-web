@@ -30,6 +30,8 @@ export interface IOrderResultsStatus {
   status: OrderResultStatusEnum;
   title: string;
   possibleActions: OrderResultAction[];
+  textColor: string;
+  backgroundColor: string;
 }
 export interface IOrderResultsStatusesResponse {
   items: IOrderResultsStatus[];

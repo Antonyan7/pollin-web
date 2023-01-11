@@ -370,7 +370,6 @@ export interface IAddNewExistingTransportModalProps {
 }
 
 export interface IResultsFilterCategory {
-  type: string;
   title: string;
   options: IResultsFilterOption[];
 }

@@ -20,7 +20,7 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
 
   const adaptedGroupedOptions = () =>
     filtersList?.flatMap((item) =>
-      item.options.map((option: IOrderResultsFilterOptions) => ({ ...option, type: item.type }))
+      item.options.map((option: IOrderResultsFilterOptions) => ({ ...option, type: option.type }))
     );
 
   const onFilterUpdate = (filters: IOrderResultsFilterOptions[]) => {
@@ -50,6 +50,7 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
         return false;
       }}
       options={filtersList.length ? adaptedGroupedOptions() : []}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
       groupBy={(option) => option.type}
       getOptionLabel={(option) => (typeof option === 'object' ? option.title ?? '' : option)}
       renderInputProps={{ label }}
