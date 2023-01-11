@@ -1,5 +1,5 @@
-import { addMinutes, formatISO, isValid, setDate, setMonth, setYear, subDays } from 'date-fns';
-import { format } from 'date-fns-tz';
+import { addMinutes, formatISO, getHours, isValid, setDate, setMonth, setYear, subDays } from 'date-fns';
+import { format, utcToZonedTime } from 'date-fns-tz';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
@@ -164,3 +164,15 @@ export const dateInputValue = (date: string) => {
 };
 
 export const customizedTimeForWorkingHours = (time: string | Date) => format(time, 'HH:mm:ss');
+
+export const customizeDatePickerDefaultValue = (initialDate: Date | string, start: string) => {
+  const currentFormattedDate = format(new Date(initialDate), 'yyyy-MM-dd');
+  const outWorkingHours = getHours(initialDate as Date);
+  const formattedDate = format(new Date(), `${currentFormattedDate}'T'${start}${UTCTimezone}`);
+  const customizeToTimeZone = utcToZonedTime(formattedDate, 'utc');
+
+  return {
+    outWorkingHours,
+    customizeToTimeZone
+  };
+};

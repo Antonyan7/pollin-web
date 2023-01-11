@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Grid, TextField, TextFieldProps, useTheme } from '@mui/material';
+import { Grid, TextField, TextFieldProps, Theme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
+import { useAppSelector } from '@redux/hooks';
+import { coreSelector } from '@redux/slices/core';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { UTCTimezone } from 'helpers/constants';
@@ -11,7 +13,12 @@ import { toRoundupTime } from 'helpers/time';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import { changeTimezone, dateInputValue, futureDate180DaysAfter } from '@utils/dateUtils';
+import {
+  changeTimezone,
+  customizeDatePickerDefaultValue,
+  dateInputValue,
+  futureDate180DaysAfter
+} from '@utils/dateUtils';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
@@ -22,10 +29,13 @@ type DateAndStartTimeType = Date | null;
 type ErrorMessageType = string | null;
 
 const DateField = ({ fieldName }: IFieldRowProps) => {
+  const clinicConfigs = useAppSelector(coreSelector.clinicConfigs);
+  const {
+    workingHours: { start }
+  } = clinicConfigs;
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
   const [t] = useTranslation();
-  const theme = useTheme();
   const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
@@ -34,7 +44,6 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
   const { onChange, value, ...fieldProps } = field;
   const [errorMessage, setErrorMessage] = useState<ErrorMessageType>(null);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
-
   const startDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_START_DATE_ERROR);
   const endDateErrorMessage = t(Translation.PAGE_SCHEDULING_BLOCK_TEMPLATES_END_DATE_ERROR);
   const startBeforeEndMessage = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START_BEFORE_END_ERROR);
@@ -76,7 +85,6 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
         }
 
         break;
-
       default:
         break;
     }
@@ -84,15 +92,32 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
   }, [clearErrors, endTime, startTime, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
   const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
+  const initialValue: DateAndStartTimeType = toRoundupTime(value);
+  const [initialDate, setInitialDate] = useState<DateAndStartTimeType | null>(initialValue);
+  const { outWorkingHours, customizeToTimeZone } = useMemo(
+    () => customizeDatePickerDefaultValue(initialDate as Date, start),
+    [initialDate, start]
+  );
 
-  const initialDate: DateAndStartTimeType = toRoundupTime(value);
+  useEffect(
+    () => {
+      if (outWorkingHours === 0) {
+        onChange(mobileDateTimeChange(customizeToTimeZone));
+        setInitialDate(mobileDateTimeChange(customizeToTimeZone));
+      }
+
+      if (!value) {
+        setInitialDate(null);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [outWorkingHours, initialDate, customizeToTimeZone, value]
+  );
 
   return (
     <Grid item xs={12}>
       <MobileDateTimePicker
-        components={{
-          ActionBar: DatePickerActionBar
-        }}
+        components={{ ActionBar: DatePickerActionBar }}
         ampm={false}
         views={dateTimeViewOptions}
         toolbarFormat="yyyy, MMM dd"
@@ -109,27 +134,23 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
             : t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)
         }
         value={initialDate}
-        onChange={(newDate: DateAndStartTimeType) => onChange(mobileDateTimeChange(newDate))}
+        onChange={(newDate: DateAndStartTimeType) => {
+          onChange(mobileDateTimeChange(newDate));
+          setInitialDate(mobileDateTimeChange(newDate));
+        }}
         minutesStep={10}
         DialogProps={{
           sx: {
-            '& .MuiTypography-overline': {
-              textTransform: 'capitalize'
-            },
+            '& .MuiTypography-overline': { textTransform: 'capitalize' },
             '& .MuiPickersToolbar-penIconButton': { display: 'none' },
             '& .MuiClock-clock': {
-              '& .MuiClockNumber-root': {
-                color: theme.palette.common.black
-              },
-              '& .Mui-disabled': {
-                color: theme.palette.grey[500]
-              }
+              '& .MuiClockNumber-root': { color: (theme: Theme) => theme.palette.common.black },
+              '& .Mui-disabled': { color: (theme: Theme) => theme.palette.grey[500] }
             }
           }
         }}
         renderInput={(params: TextFieldProps) => {
           const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
-
           const formattedParams = {
             ...params,
             inputProps: {
@@ -143,17 +164,11 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
               {...fieldProps}
               {...formattedParams}
               fullWidth
-              sx={{
-                '& input, svg': {
-                  cursor: 'pointer'
-                }
-              }}
+              sx={{ '& input, svg': { cursor: 'pointer' } }}
               onClick={() => setMobileDateTimePickerOpen(true)}
               helperText={errors[fieldName]?.message && errorMessage}
               error={Boolean(errors[fieldName]?.message) && showErrorMessage}
-              InputProps={{
-                endAdornment: <CalendarIcon />
-              }}
+              InputProps={{ endAdornment: <CalendarIcon /> }}
             />
           );
         }}
