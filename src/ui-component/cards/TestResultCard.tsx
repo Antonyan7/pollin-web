@@ -1,6 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Card, CardContent, Grid, Typography, useTheme } from '@mui/material';
 import { borders } from 'themes/themeConstants';
 import { GenericCardProps } from 'types';
 

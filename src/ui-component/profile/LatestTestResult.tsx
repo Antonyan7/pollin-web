@@ -12,6 +12,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Theme,
   Typography
 } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -41,7 +42,7 @@ const LatestTestResults = () => {
         fontWeight: 600,
         pr: paddings.right12,
         fontSize: '14px',
-        color: (theme) => theme.palette.secondary[800]
+        color: (theme: Theme) => theme.palette.secondary[800]
       }}
       content={false}
     >

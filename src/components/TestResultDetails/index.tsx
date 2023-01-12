@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Divider, Grid, Link, Typography, useTheme } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+import { Box, Button, CircularProgress, Divider, Grid, Link, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';

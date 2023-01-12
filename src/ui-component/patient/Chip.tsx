@@ -1,6 +1,7 @@
 import React from 'react';
-import MuiChip, { ChipProps } from '@mui/material/Chip';
-import { SxProps, Theme, useTheme } from '@mui/material/styles';
+import { Chip as MuiChip, SxProps, useTheme } from '@mui/material';
+import { ChipProps } from '@mui/material/Chip';
+import { Theme } from '@mui/material/styles';
 import { CSSSelectorObjectOrCssVariables } from '@mui/system';
 import { borders, paddings } from 'themes/themeConstants';
 

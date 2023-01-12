@@ -1,6 +1,6 @@
 import React from 'react';
-import { Avatar, AvatarProps, Box } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Avatar, AvatarProps, Box, styled } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { IconBell } from '@tabler/icons';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({

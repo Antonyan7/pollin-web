@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TextField } from '@mui/material';
-import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
+import { TextField, TextFieldProps as MuiTextFieldPropsType } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';

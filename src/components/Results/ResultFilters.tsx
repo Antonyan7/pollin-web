@@ -1,8 +1,15 @@
 import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SearchIcon from '@mui/icons-material/Search';
-import { Autocomplete, InputAdornment, OutlinedInput, TextField, TextFieldProps, useTheme } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import {
+  Autocomplete,
+  InputAdornment,
+  OutlinedInput,
+  styled,
+  TextField,
+  TextFieldProps,
+  useTheme
+} from '@mui/material';
 import { Box, shouldForwardProp } from '@mui/system';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';

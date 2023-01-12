@@ -1,8 +1,7 @@
 import React, { useCallback } from 'react';
 import { IPatientPartnerData } from '@axios/patientEmr/managerPatientEmrTypes';
 import LaunchIcon from '@mui/icons-material/Launch';
-import { Button, DialogProps, DialogTitle, Grid, Stack, Typography, useTheme } from '@mui/material';
-import MuiLink from '@mui/material/Link';
+import { Button, DialogProps, DialogTitle, Grid, Link as MuiLink, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import Link from 'next/link';

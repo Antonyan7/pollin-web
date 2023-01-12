@@ -1,7 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Stack } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Button, Stack, useTheme } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';

@@ -1,6 +1,6 @@
 import React from 'react';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material';
 import { margins } from 'themes/themeConstants';
 
 const CollapseMenuArrowDownIcon = (props: { isOpen: boolean }) => {

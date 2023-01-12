@@ -1,5 +1,6 @@
 import React from 'react';
-import { SxProps, Theme } from '@mui/material/styles';
+import { SxProps } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 
 export interface DialogTitleProps {
   id: string;

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
-import { styled, SxProps } from '@mui/material/styles';
+import { Link as MuiLink, styled } from '@mui/material';
+import { LinkProps as MuiLinkProps } from '@mui/material/Link';
+import { SxProps } from '@mui/material/styles';
 import { Theme } from '@mui/system';
 import clsx from 'clsx';
 import { LinkProps as NextLinkProps } from 'next/link';

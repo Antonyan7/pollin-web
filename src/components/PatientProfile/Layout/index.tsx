@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider } from '@mui/material';
+import { Divider, Theme } from '@mui/material';
 import { Translation } from 'constants/translations';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -24,7 +24,7 @@ const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading,
       titleProps={{
         fontWeight: 600,
         fontSize: '14px',
-        color: (theme) => theme.palette.secondary[800]
+        color: (theme: Theme) => theme.palette.secondary[800]
       }}
       {...(secondary && { secondary })}
     >

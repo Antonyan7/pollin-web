@@ -1,6 +1,5 @@
 import React, { useId } from 'react';
-import { Box, CircularProgress } from '@mui/material';
-import DialogContent from '@mui/material/DialogContent';
+import { Box, CircularProgress, DialogContent } from '@mui/material';
 import BaseModalTitle from 'ui-component/Modal/BaseModal/BaseModalTitle';
 
 import { BaseModalStyled } from '@ui-component/Modal/BaseModal/BaseModalStyled';

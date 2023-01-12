@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { ExpandLess, ExpandMore } from '@mui/icons-material';
-import { Collapse, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Collapse, List, ListItem, ListItemButton, ListItemText, useTheme } from '@mui/material';
 import { IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 interface Props {

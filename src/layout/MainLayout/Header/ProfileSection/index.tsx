@@ -1,6 +1,6 @@
 import React from 'react';
-import { Avatar, AvatarProps, Chip, ChipProps } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Avatar, AvatarProps, Chip, ChipProps, styled } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
 import { margins } from 'themes/themeConstants';
 

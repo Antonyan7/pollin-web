@@ -1,7 +1,6 @@
 import React, { ReactNode, useMemo } from 'react';
 // material-ui
-import { CssBaseline } from '@mui/material';
-import { createTheme, Theme, ThemeOptions, ThemeProvider } from '@mui/material/styles';
+import { createTheme, CssBaseline, Theme, ThemeOptions, ThemeProvider } from '@mui/material';
 import { TypographyOptions } from '@mui/material/styles/createTypography';
 import defaultConfig from 'config';
 import { CustomizationProps } from 'types/config';

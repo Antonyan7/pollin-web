@@ -1,7 +1,7 @@
 import React, { memo, useMemo } from 'react';
-import { Box, Drawer, useMediaQuery } from '@mui/material';
+import { Box, Drawer, styled, useMediaQuery } from '@mui/material';
 // material-ui
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 // redux
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';

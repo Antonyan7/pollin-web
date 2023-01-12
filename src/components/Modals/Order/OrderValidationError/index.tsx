@@ -1,8 +1,7 @@
 /* eslint-disable react/no-danger */
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, DialogActions, DialogContent, Grid, Stack } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Button, DialogActions, DialogContent, Grid, Stack, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';

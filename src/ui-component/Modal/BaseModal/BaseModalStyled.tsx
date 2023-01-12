@@ -1,5 +1,4 @@
-import { Dialog } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Dialog, styled } from '@mui/material';
 
 export const BaseModalStyled = styled(Dialog)(({ theme }) => ({
   '.Dialog-box': {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Avatar, AvatarProps, Box, Card, Grid, InputAdornment, OutlinedInput, Popper } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Avatar, AvatarProps, Box, Card, Grid, InputAdornment, OutlinedInput, Popper, styled } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { shouldForwardProp } from '@mui/system';
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons';
 import Transitions from 'components/Transition/Transitions';

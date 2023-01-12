@@ -8,9 +8,9 @@ import {
   ListItemText,
   styled,
   Typography,
-  useMediaQuery
+  useMediaQuery,
+  useTheme
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import ListItemLink from 'components/Link/ListItemLink';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';

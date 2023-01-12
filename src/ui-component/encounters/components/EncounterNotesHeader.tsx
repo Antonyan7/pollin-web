@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Button, Grid, IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Button, Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { borderRadius } from 'themes/themeConstants';

@@ -1,4 +1,4 @@
-import { Palette } from '@mui/material/styles/createPalette';
+import { Palette } from '@mui/material';
 import { TestResultsStatsNumbers } from 'types/results';
 
 export const getChipColor = (age: number, palette: Palette) => {

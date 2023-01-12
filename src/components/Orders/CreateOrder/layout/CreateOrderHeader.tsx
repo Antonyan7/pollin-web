@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { Grid, IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';

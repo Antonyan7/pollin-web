@@ -1,7 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText, ListProps, Typography } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import {
+  Collapse,
+  List,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  ListProps,
+  styled,
+  Typography
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { IconChevronDown, IconChevronUp } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';

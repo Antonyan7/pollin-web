@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, useTheme } from '@mui/material';
 
 const CheckedCircleIcon = () => {
   const theme = useTheme();

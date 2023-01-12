@@ -9,9 +9,18 @@ import EarbudsIcon from '@mui/icons-material/Earbuds';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import { Avatar, Box, Button, ButtonProps, Grid, Stack, Tooltip, Typography } from '@mui/material';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import { useTheme } from '@mui/material/styles';
+import {
+  Avatar,
+  Box,
+  Button,
+  ButtonProps,
+  ClickAwayListener,
+  Grid,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';

@@ -1,8 +1,7 @@
 import React, { ReactNode, Ref } from 'react';
-import { Card, CardContent, CardHeader, Divider, Typography, TypographyTypeMap } from '@mui/material';
+import { Card, CardContent, CardHeader, Divider, Theme, Typography, TypographyTypeMap } from '@mui/material';
 import { OverrideProps } from '@mui/material/OverridableComponent';
-// material-ui
-import { Theme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { SxProps, TypographyProps } from '@mui/system';
 import { borders } from 'themes/themeConstants';
 

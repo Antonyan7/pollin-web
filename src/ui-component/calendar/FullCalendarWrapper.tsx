@@ -1,5 +1,4 @@
-// material-ui
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 
 const CalendarWrapper = styled('div')(({ theme }) => ({

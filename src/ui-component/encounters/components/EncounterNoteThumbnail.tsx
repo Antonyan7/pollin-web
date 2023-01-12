@@ -1,7 +1,6 @@
 import React from 'react';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { Box, Grid, IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { useRouter } from 'next/router';
 import { gridSpacing } from 'themes/themeConstants';

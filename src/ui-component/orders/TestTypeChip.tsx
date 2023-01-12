@@ -1,6 +1,5 @@
 import React from 'react';
-import { ChipProps } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { ChipProps, useTheme } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
 import { TestType } from 'types/reduxTypes/resultsStateTypes';
 

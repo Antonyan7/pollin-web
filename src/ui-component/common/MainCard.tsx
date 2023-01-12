@@ -7,9 +7,9 @@ import {
   CardHeaderProps,
   CardProps,
   Divider,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
 import { borders } from 'themes/themeConstants';
 
 const headerSX = {

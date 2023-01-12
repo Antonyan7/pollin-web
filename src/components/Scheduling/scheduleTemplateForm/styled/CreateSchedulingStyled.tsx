@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material';
 import { borders, margins, paddings } from 'themes/themeConstants';
 
 const CreateSchedulingTemplateStyled = styled('div')(({ theme }) => ({

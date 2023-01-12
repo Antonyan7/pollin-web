@@ -7,10 +7,9 @@ import {
   CardHeaderProps,
   CardProps,
   Divider,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
-// material-ui
-import { useTheme } from '@mui/material/styles';
 import { borders } from 'themes/themeConstants';
 // project imports
 

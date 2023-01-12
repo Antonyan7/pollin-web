@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';

@@ -2,10 +2,7 @@
 import React from 'react';
 import CheckCircleTwoToneIcon from '@mui/icons-material/CheckCircleTwoTone';
 import CloseIcon from '@mui/icons-material/Close';
-import { Typography } from '@mui/material';
-import Alert from '@mui/material/Alert';
-import IconButton from '@mui/material/IconButton';
-import Snackbar from '@mui/material/Snackbar';
+import { Alert, IconButton, Snackbar, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';

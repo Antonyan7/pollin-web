@@ -1,4 +1,4 @@
-import { SetStateAction } from 'react-transition-group/node_modules/@types/react';
+import React from 'react';
 import {
   IAllTestsSpecimensListItem,
   ISpecimensInTransportListItem,
@@ -35,8 +35,8 @@ export const onCheckboxClick = (
   id: string,
   status: string,
   selected: string[],
-  setSelected: React.Dispatch<SetStateAction<string[]>>,
-  setSelectedStatuses: React.Dispatch<SetStateAction<string[]>>
+  setSelected: React.Dispatch<React.SetStateAction<string[]>>,
+  setSelectedStatuses: React.Dispatch<React.SetStateAction<string[]>>
 ) => {
   const selectedIndex = selected.indexOf(id);
 

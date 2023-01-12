@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import { Avatar, AvatarProps, Box } from '@mui/material';
-import { styled, useTheme } from '@mui/material/styles';
+import { Avatar, AvatarProps, Box, styled } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { IconSettings } from '@tabler/icons';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';

@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, FormGroup, Stack } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { Checkbox, FormControlLabel, FormGroup, Stack, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';

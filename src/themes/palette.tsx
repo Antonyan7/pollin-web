@@ -1,6 +1,5 @@
 // material-ui
-import { PaletteMode } from '@mui/material';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, PaletteMode } from '@mui/material';
 // types
 import { ColorProps } from 'types';
 
