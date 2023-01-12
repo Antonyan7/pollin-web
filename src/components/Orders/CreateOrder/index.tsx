@@ -4,11 +4,15 @@ import CreateOrderBody from '@components/Orders/CreateOrder/layout/CreateOrderBo
 import CreateOrderHeader from '@components/Orders/CreateOrder/layout/CreateOrderHeader';
 import { Stack } from '@mui/material';
 
+import { OrderCreationContext } from '../../../context/OrderCreationContext';
+
 const CreateOrder = () => (
   <Stack>
-    <CreateOrderHeader />
-    <CreateOrderBody />
-    <CreateOrderActions />
+    <OrderCreationContext>
+      <CreateOrderHeader />
+      <CreateOrderBody />
+      <CreateOrderActions />
+    </OrderCreationContext>
   </Stack>
 );
 

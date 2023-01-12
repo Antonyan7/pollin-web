@@ -148,6 +148,7 @@
   "page.create.order.title": "Create Order",
   "page.create.order.header.text": "Back to %s",
   "page.create.order.button.create.order": "Create Order",
+  "page.create.order.button.next": "Next",
   "page.create.order.button.cancel": "Cancel",
   "page.order.details.title": "Order Details",
   "page.order.details.header.text": "Back to %s",
