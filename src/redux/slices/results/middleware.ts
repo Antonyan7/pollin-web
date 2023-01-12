@@ -270,7 +270,7 @@ const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) 
     dispatch(setError(error));
   }
 
-  dispatch(setIsTestResultReviewed(true));
+  dispatch(setIsTestResultReviewed(false));
 };
 
 const makeTestResultReleased = (testResultId: string) => async (dispatch: AppDispatch) => {

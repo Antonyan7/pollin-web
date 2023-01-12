@@ -164,7 +164,7 @@ const TestResultDetails: React.FC = () => {
           testResultsDetails.attachments.map((attachment) => (
             <Box display="flex" alignItems="center" key={attachment.id} mb={margins.bottom24}>
               <Button variant="contained" sx={{ marginRight: margins.right8 }} onClick={handleAttachmentDownloadClick}>
-                {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT)}
+                {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_DOWNLOAD_ATTACHED_FILE)}
               </Button>
               <Link component="a" ref={linkRef} hidden href="#download" />
               {attachment.title}

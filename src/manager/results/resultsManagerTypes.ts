@@ -183,6 +183,7 @@ export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
 export interface IOrdersPossibleActions {
   id: OrdersActions;
+  title: string;
 }
 
 export interface IOrdersStatusesItems {

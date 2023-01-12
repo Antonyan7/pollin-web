@@ -65,7 +65,7 @@ const PatientOrdersContextMenu = ({ actions, row }: ContextMenuProps) => {
               onMenuItemClick(actionIndex);
             }}
           >
-            {action.id}
+            {action.title}
           </MenuItem>
         ))}
       </Menu>

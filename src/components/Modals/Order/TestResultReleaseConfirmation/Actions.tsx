@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -18,6 +20,7 @@ const Actions = ({ testResultId }: ActionsProps) => {
   const isTestResultReleased = useAppSelector(resultsSelector.isTestResultReleased);
   const onClickConfirm = () => {
     dispatch(resultsMiddleware.makeTestResultReleased(testResultId));
+    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReleaseConfirmation));
   };
 
   return (

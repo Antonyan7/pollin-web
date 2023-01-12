@@ -373,6 +373,7 @@
   "page.patient.order.results.details.practitioner.comments.optional": "Practitioner Comments (optional)",
   "page.patient.order.results.details.review": "Review",
   "page.patient.order.results.details.release.to.patient": "Release to Patient",
+  "page.patient.order.results.details.download.attached.file": "Download Attached File",
   "page.patient.order.results.details.mark.as.reviewed": "Mark as Reviewed",
   "page.patient.order.results.details.not.yet.reviewed": "Not yet reviewed",
   "page.patient.order.results.details.not.yet.released": "Not yet released",

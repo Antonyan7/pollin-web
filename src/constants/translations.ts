@@ -375,6 +375,7 @@ export enum Translation {
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS_OPTIONAL = 'page.patient.order.results.details.practitioner.comments.optional',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEW = 'page.patient.order.results.details.review',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT = 'page.patient.order.results.details.release.to.patient',
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_DOWNLOAD_ATTACHED_FILE = 'page.patient.order.results.details.download.attached.file',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_MARK_AS_REVIEWED = 'page.patient.order.results.details.mark.as.reviewed',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_REVIEWED = 'page.patient.order.results.details.not.yet.reviewed',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED = 'page.patient.order.results.details.not.yet.released',
