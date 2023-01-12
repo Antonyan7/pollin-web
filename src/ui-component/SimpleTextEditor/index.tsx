@@ -10,7 +10,7 @@ import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
-import { EncoutnersFormField, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { EncountersFormField, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -103,8 +103,8 @@ const SimpleTextEditor = ({
   }, []);
 
   const isEncountersTypeSelectDisabled = mode === SimpleEditorMode.Edit_Note;
-  const encountersTypeFieldName = EncoutnersFormField.EncountersTypeField;
-  const editorFieldName = EncoutnersFormField.EditorContentField;
+  const encountersTypeFieldName = EncountersFormField.EncountersTypeField;
+  const editorFieldName = EncountersFormField.EditorContentField;
 
   const { field: typeField } = useController({ control, name: encountersTypeFieldName });
   const { field: editorField } = useController({ control, name: editorFieldName });

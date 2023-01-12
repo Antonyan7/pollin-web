@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   CircularProgress,
@@ -22,7 +23,6 @@ import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 import useTestResultPopupMessage from './hooks/useTransportsToast';
 import { headCellsData } from './headCellsData';
 import Header from './Header';
-import { TransportsHeadCell } from './TransportsHeadCell';
 import { TransportsListRow } from './TransportsListRow';
 
 const TransportsList = () => {
@@ -68,7 +68,7 @@ const TransportsList = () => {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <TransportsHeadCell
+                <HeadCell
                   headCell={headCell}
                   key={headCell.id}
                   sortOrder={sortOrder}

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IOrderResultsListReqBody, OrderResultsSortFields } from '@axios/results/resultsManagerTypes';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   CircularProgress,
@@ -22,7 +23,6 @@ import { IOrderResultsByPatientItem } from 'types/reduxTypes/resultsStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
 
 import AutocompleteWrapper from './AutocompleteWrapper';
-import { OrderResultsHeadCell } from './OrderResultsHeadCell';
 import { headCellsData } from './OrderResultsHeadCellMockData';
 import { OrderResultsRow } from './OrderResultsRow';
 
@@ -90,7 +90,7 @@ const OrderResults = () => {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <OrderResultsHeadCell
+                <HeadCell
                   headCell={headCell}
                   key={headCell.id}
                   sortOrder={sortOrder}

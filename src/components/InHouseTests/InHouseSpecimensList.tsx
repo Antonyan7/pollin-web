@@ -4,6 +4,7 @@ import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/r
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import { SeveritiesType } from '@components/Scheduling/types';
 import SearchBox from '@components/SearchBox';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   Checkbox,
@@ -33,7 +34,6 @@ import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableTool
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
 import AutocompleteWrapper from './AutocompleteWrapper';
-import { InHouseSpecimensHeadCell } from './InHouseSpecimensHeadCell';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
 
@@ -193,7 +193,7 @@ const InHouseSpecimensList = () => {
               )}
               {numSelected <= 0 &&
                 headCells.map((headCell) => (
-                  <InHouseSpecimensHeadCell
+                  <HeadCell
                     headCell={headCell}
                     key={headCell.id}
                     sortOrder={sortOrder}

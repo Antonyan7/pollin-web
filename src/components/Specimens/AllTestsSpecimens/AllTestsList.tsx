@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { IAllTestsSpecimensReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import SearchBox from '@components/SearchBox';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   Checkbox,
@@ -28,7 +29,6 @@ import { IAllTestsSpecimensListItem, ISpecimensListItemShort } from 'types/redux
 
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 
-import { AllTestsHeadCell } from './AllTestsHeadCell';
 import { headCellsData } from './AllTestsHeadCellMockData';
 import { AllTestsRow } from './AllTestsRow';
 
@@ -159,7 +159,7 @@ const AllTestsList = () => {
               ) : null}
               {numSelected <= 0 &&
                 headCells.map((headCell) => (
-                  <AllTestsHeadCell
+                  <HeadCell
                     headCell={headCell}
                     key={headCell.id}
                     sortOrder={sortOrder}

@@ -2,7 +2,7 @@ import React, { SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OrderListSortFields } from '@axios/results/resultsManagerTypes';
 import { headCellsData } from '@components/PatientOrders/PatientOrdersHeadCellMockData';
-import { PatientOrdersListHeadCell } from '@components/PatientOrders/PatientOrdersListHeadCell';
+import { HeadCell } from '@components/Table/HeadCell';
 import { Table, TableBody, TableHead, TableRow } from '@mui/material';
 import { resultsSelector } from '@redux/slices/results';
 import { useAppSelector } from 'redux/hooks';
@@ -29,7 +29,7 @@ const PatientOrdersTable = ({ setSortField, setSortOrder, sortOrder, sortField }
       <TableHead>
         <TableRow>
           {headCells.map((headCell) => (
-            <PatientOrdersListHeadCell
+            <HeadCell
               headCell={headCell}
               sortOrder={sortOrder}
               sortField={sortField}

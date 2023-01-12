@@ -93,7 +93,7 @@ export interface IEncountersFormDefaultProps {
   content: string;
 }
 
-export enum EncoutnersFormField {
+export enum EncountersFormField {
   EditorContentField = 'content',
   EncountersTypeField = 'encountersTypeId'
 }

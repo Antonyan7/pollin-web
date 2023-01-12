@@ -1,9 +1,9 @@
 import React, { SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TestResultsListSortFields } from '@axios/results/resultsManagerTypes';
-import { PendingTestResultHeadCell } from '@components/Results/PendingTestResultHeadCell';
 import { headCellsData } from '@components/Results/PendingTestResultHeadCellMockData';
 import PendingTestResultRow from '@components/Results/PendingTestResultRow';
+import { HeadCell } from '@components/Table/HeadCell';
 import { Table, TableBody, TableHead, TableRow } from '@mui/material';
 import { resultsSelector } from '@redux/slices/results';
 import { useAppSelector } from 'redux/hooks';
@@ -28,7 +28,7 @@ const TableComponent = ({ setSortField, setSortOrder, sortOrder, sortField }: Ex
       <TableHead>
         <TableRow>
           {headCells.map((headCell) => (
-            <PendingTestResultHeadCell
+            <HeadCell
               headCell={headCell}
               sortOrder={sortOrder}
               sortField={sortField}

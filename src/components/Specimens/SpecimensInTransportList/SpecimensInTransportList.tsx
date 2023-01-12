@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpecimensInTransportListSortFields } from '@axios/results/resultsManagerTypes';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   Checkbox,
@@ -27,7 +28,6 @@ import { IGetSpecimensInTransportListParams } from 'types/results';
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 
 import { headCellsData } from './headCellsData';
-import { SpecimensInTransportListHeadCell } from './SpecimensInTransportListHeadCell';
 import { SpecimensInTransportListRow } from './SpecimensInTransportListRow';
 
 const SpecimensInTransportList = () => {
@@ -100,7 +100,7 @@ const SpecimensInTransportList = () => {
               {numSelected <= 0 && (
                 <>
                   {headCells.map((headCell) => (
-                    <SpecimensInTransportListHeadCell
+                    <HeadCell
                       headCell={headCell}
                       key={headCell.id}
                       sortOrder={sortOrder}

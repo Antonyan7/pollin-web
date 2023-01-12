@@ -4,6 +4,7 @@ import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
+import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   CircularProgress,
@@ -20,8 +21,6 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
 import { IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
-
-import { PatientListHeadCell } from './PatientListHeadCell';
 
 const PatientList = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -66,7 +65,7 @@ const PatientList = () => {
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
-                <PatientListHeadCell
+                <HeadCell
                   headCell={headCell}
                   sortOrder={sortOrder}
                   setSortOrder={setSortOrder}
