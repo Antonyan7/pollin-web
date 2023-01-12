@@ -17,14 +17,22 @@ const CheckboxConfirming = () => {
   const [OHIPInformationChecked, setOfipInformationChecked] = useState<boolean>(false);
   const { setPatientInfo } = usePatientInfoContext();
 
+  const arePatientCheckboxesConfirmed = () => {
+    if (patientContactInformation.ohipNumber !== OHIPTestResultPossibleResponses.Unknown) {
+      return patientNameChecked && patientIdChecked && OHIPInformationChecked;
+    }
+
+    return patientNameChecked && patientIdChecked;
+  };
+
   useEffect(() => {
-    if (patientNameChecked && patientIdChecked) {
+    if (arePatientCheckboxesConfirmed()) {
       setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: true });
     } else {
       setPatientInfo({ type: PatientInformationContextActionTypes.UPDATE_IS_PATIENT_INFO_CONFIRMED, status: false });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [patientNameChecked, patientIdChecked]);
+  }, [patientNameChecked, patientIdChecked, OHIPInformationChecked]);
 
   return (
     <Box sx={{ flexGrow: 1 }}>
