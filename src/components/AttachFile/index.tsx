@@ -37,13 +37,16 @@ const AttachFile: FC<AttachedFileProps> = ({ currentFormFieldName }) => {
   const isFileAttachmentLimitReachedOut = attachments && attachments.length >= MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT;
 
   const handleFileAttachment = (e: ChangeEvent<HTMLInputElement>) => {
-    const newAttachedFiles = Object.values(e?.target?.files ?? []).map((item) => ({
+    const files = e?.target?.files ?? [];
+    const newAttachedFiles = Object.values(files).map((item) => ({
       file: item,
       title: item.name,
       note: ''
     }));
 
     append(newAttachedFiles);
+    // ? Clear input value after file attachment [PCP-1999].
+    e.target.value = '';
   };
 
   const handleRemoveAttachedFile = useCallback(
