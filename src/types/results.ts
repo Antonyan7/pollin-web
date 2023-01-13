@@ -4,13 +4,13 @@ import {
   ILab,
   IOrderResultsFilterCategory,
   ISpecimensFilterCategory,
-  ITestResultsFilters
+  ITestResultsFilter
 } from 'types/reduxTypes/resultsStateTypes';
 
 import { SortOrder } from './patient';
 
 export interface IResultsFiltersResponse {
-  filters: ITestResultsFilters;
+  filters: ITestResultsFilter[];
 }
 
 export interface ISpecimensFiltersResponse {
