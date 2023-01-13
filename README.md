@@ -8,8 +8,13 @@ Please use:
 
 - node `v16.18.1` (lts/gallium)
 - [yarn](https://classic.yarnpkg.com/en/docs/install)
+- YARN Should be on v2
+  ### Install Yarn v2 If you don't have
+  - Run npm install -g yarn to update the global yarn version to latest v1
+    Go into your project directory
+    Run yarn set version berry to enable v2 (cf https://yarnpkg.com/getting-started/migration for more details)
 
-## Installation:
+## Installation
 
 ```
 yarn install

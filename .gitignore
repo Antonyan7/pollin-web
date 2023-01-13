@@ -49,3 +49,6 @@ dist/
 
 #linter
 .eslintcache
+
+#yarn
+.yarn
