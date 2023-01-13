@@ -41,8 +41,8 @@ const TestResultDetails: React.FC = () => {
   const linkRef = useRef<HTMLAnchorElement | null>(null);
   const { t } = useTranslation();
 
-  const handleAttachmentDownloadClick = async () => {
-    const blob = await dispatch(resultsMiddleware.downloadTestResultAttachment(testResultsDetails.id));
+  const handleAttachmentDownloadClick = async (attachmentId: string) => {
+    const blob = await dispatch(resultsMiddleware.downloadTestResultAttachment(attachmentId));
 
     if (blob && linkRef.current) {
       const url = window.URL.createObjectURL(blob);
@@ -162,7 +162,11 @@ const TestResultDetails: React.FC = () => {
         {testResultsDetails.attachments &&
           testResultsDetails.attachments.map((attachment) => (
             <Box display="flex" alignItems="center" key={attachment.id} mb={margins.bottom24}>
-              <Button variant="contained" sx={{ marginRight: margins.right8 }} onClick={handleAttachmentDownloadClick}>
+              <Button
+                variant="contained"
+                sx={{ marginRight: margins.right8 }}
+                onClick={() => handleAttachmentDownloadClick(attachment.id)}
+              >
                 {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_DOWNLOAD_ATTACHED_FILE)}
               </Button>
               <Link component="a" ref={linkRef} hidden href="#download" />
