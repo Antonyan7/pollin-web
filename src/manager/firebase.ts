@@ -148,9 +148,9 @@ export class FirebaseManager {
     }
 
     try {
-      const tokenResult = await getIdToken(this.user);
-
-      idToken = tokenResult;
+      if (this.user) {
+        idToken = await getIdToken(this.user);
+      }
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
