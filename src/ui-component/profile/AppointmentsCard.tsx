@@ -17,12 +17,13 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import { dispatch } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -53,13 +54,24 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
     dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
   };
 
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const onRowClick = (id: string) => {
-    dispatch(
-      viewsMiddleware.openModal({
-        name: ModalName.EditAppointmentModal,
-        props: { appointmentId: id }
-      })
-    );
+    if (appointmentType === AppointmentType.Upcoming) {
+      dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.EditAppointmentModal,
+          props: { appointmentId: id }
+        })
+      );
+    } else {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.DetailsAppointmentModal,
+          props: { appointmentId: id }
+        })
+      );
+    }
   };
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
@@ -85,7 +97,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
               <TableBody>
                 {appointmentsList &&
                   appointmentsList.slice(0, 3).map(({ id, status, type, date, time }) => (
-                    <TableRow hover key={id}>
+                    <TableRow hover key={id} onClick={() => onRowClick(id)}>
                       <TableCell width="65%" sx={{ verticalAlign: 'middle' }}>
                         <Typography variant="h5">{type}</Typography>
                         <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
@@ -100,7 +112,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
                       </TableCell>
                       <TableCell width="10%">
                         <Stack>
-                          <IconButton onClick={() => onRowClick(id)}>
+                          <IconButton>
                             <ChevronRightOutlinedIcon />
                           </IconButton>
                         </Stack>

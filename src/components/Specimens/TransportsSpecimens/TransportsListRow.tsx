@@ -14,7 +14,7 @@ export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => (
   <Link href={`/clinic-test-results/specimen-tracking/transports/${row.id}`}>
     <TableRow sx={{ cursor: 'pointer' }} hover>
       <TableCell>{row.title}</TableCell>
-      <TableCell>date</TableCell>
+      <TableCell>{row.date}</TableCell>
       <TableCell>{row.labName}</TableCell>
       <TableCell>{row.driver.name}</TableCell>
       <TableCell>{row.status}</TableCell>

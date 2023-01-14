@@ -122,7 +122,7 @@ export interface IMakeTestResultReviewReq {
   reviewerComment?: string;
 }
 export interface ITransportListFolderProps {
-  date: Date | string;
+  date: string;
   id: string;
   title: string;
   labName: string;
