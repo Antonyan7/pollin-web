@@ -1,12 +1,8 @@
 import { OrderResultActionType } from '@axios/results/resultsManagerTypes';
 import { ISortOrder } from 'types/patient';
-import {
-  ILab,
-  IOrderResultsFilterCategory,
-  ISpecimensFilterCategory,
-  ITestResultsFilter
-} from 'types/reduxTypes/resultsStateTypes';
+import { ILab, ISpecimensFilterCategory, ITestResultsFilter } from 'types/reduxTypes/resultsStateTypes';
 
+import { IOrderResultsFilterCategory } from './reduxTypes/ordersStateTypes';
 import { SortOrder } from './patient';
 
 export interface IResultsFiltersResponse {

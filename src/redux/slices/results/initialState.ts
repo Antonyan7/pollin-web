@@ -1,56 +1,86 @@
-import { IResultsProps } from 'types/reduxTypes/resultsStateTypes';
+import {
+  IExternalTestResults,
+  IInHouseTestResultsProps,
+  ITestResultProps,
+  ITestResultsCollection,
+  ITestResultsCommonProps,
+  ITestResultsTracking
+} from 'types/reduxTypes/resultsStateTypes';
 
-export const getInitialState = (): IResultsProps => ({
+const getExternalResultsInitialState = (): IExternalTestResults => ({
   resultsList: {
     testResults: [],
     currentPage: 1,
     pageSize: 25,
     totalItems: 0
   },
+  resultFilters: [],
+  pendingTestStats: [],
+  isResultsListLoading: false,
+  isResultsFiltersLoading: false,
+  isPendingTestStatsLoading: false
+});
+
+const getTrackingInitialState = (): ITestResultsTracking => ({
   transportList: {
     folders: [],
     currentPage: 1,
     pageSize: 10,
     totalItems: 0
   },
-  resultFilters: null,
-  pendingTestStats: [],
-  testResultsDetails: [],
   labMachines: {
     machines: []
   },
-  error: null,
-  isResultsListLoading: false,
-  isTransportListLoading: false,
-  isResultsFiltersLoading: false,
-  isPendingTestStatsLoading: false,
-  isTestResultsDetailsLoading: false,
+  transportFolders: [],
+  isCreatingTransportFolder: false,
   isLabMachinesLoading: false,
-  isTestResultsSubmitLoading: false,
-  specimenActions: [],
-  transportActions: [],
-  cancellationReasons: {
-    reasons: []
+  isLabsLoading: false,
+  isTransportListLoading: false,
+  testResultStateStatus: {
+    success: false,
+    fail: false
   },
-  isCancellOrderLoading: false,
-  isCancellationReasonsLoading: false,
-  reviewDate: '',
-  releaseDate: '',
-  isTestResultReviewed: false,
-  isTestResultReleased: false,
-  pendingSpecimenStats: [],
+  transportActions: [],
+  labs: [],
+  isTransportFolderDownloaded: false,
+  isTransportFoldersLoading: false,
+  lastCreatedTransportFolderId: null
+});
+
+const getCollectionInitialState = (): ITestResultsCollection => ({
+  appointmentSpecimens: null,
+  isAppointmentSpecimensLoading: false,
+  isSendingSpecimenCollectionData: false,
+  isSpecimensInTransportListLoading: false,
+  isSpecimenStorageLocationsLoading: false,
+  specimenStorageLocations: [],
+  specimensInTransportList: {
+    specimens: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  }
+});
+
+const getInHouseInitialState = (): IInHouseTestResultsProps => ({
   isPendingSpecimenStatsLoading: false,
+  isSpecimensFiltersLoading: false,
+  isSpecimensConfirmationButtonClicked: false,
+  isSpecimensListLoading: false,
+  pendingSpecimenStats: [],
+  specimensFilters: [],
   specimensList: {
     specimens: [],
     currentPage: 1,
     pageSize: 10,
     totalItems: 0,
     notFound: []
-  },
-  isSpecimensConfirmationButtonClicked: false,
-  isSpecimensListLoading: false,
-  specimensFilters: [],
-  isSpecimensFiltersLoading: false,
+  }
+});
+
+const getCommonTestResultsInitialState = (): ITestResultsCommonProps => ({
+  testResultsDetails: [],
+  error: null,
   allTestsSpecimensList: {
     specimens: [],
     currentPage: 1,
@@ -58,51 +88,18 @@ export const getInitialState = (): IResultsProps => ({
     totalItems: 0,
     notFound: []
   },
-  testResultStateStatus: {
-    success: false,
-    fail: false
-  },
   isAllTestsSpecimensListLoading: false,
-  appointmentSpecimens: null,
-  isAppointmentSpecimensLoading: false,
-  specimenStorageLocations: [],
-  isSpecimenStorageLocationsLoading: false,
-  isSendingSpecimenCollectionData: false,
-  labs: [],
-  isLabsLoading: false,
-  isCreatingTransportFolder: false,
-  specimensInTransportList: {
-    specimens: [],
-    currentPage: 1,
-    pageSize: 10,
-    totalItems: 0
-  },
-  isTransportFolderDownloaded: false,
-  isSpecimensInTransportListLoading: false,
-  transportFolders: [],
-  lastCreatedTransportFolderId: null,
-  isTransportFoldersLoading: false,
-  orderStatuses: [],
-  orderResultsFilters: [],
-  isOrderResultsFiltersLoading: false,
-  orderResultsByPatientList: {
-    testResults: [],
-    currentPage: 1,
-    pageSize: 10,
-    totalItems: 0
-  },
-  isOrderResultsByPatientListLoading: false,
   // Initial state of when isTestResultsSubmitWentSuccessful test result is not submitted yet.
   isTestResultsSubmitWentSuccessful: null,
-  ordersFilters: [],
-  isRequisitionDownloaded: false,
-  isOrdersFiltersLoading: false,
-  orderResultsStatuses: [],
-  ordersList: {
-    orders: [],
-    currentPage: 1,
-    pageSize: 10,
-    totalItems: 0
-  },
-  isOrdersListLoading: false
+  specimenActions: [],
+  isTestResultsDetailsLoading: false,
+  isTestResultsSubmitLoading: false
+});
+
+export const getInitialState = (): ITestResultProps => ({
+  external: getExternalResultsInitialState(),
+  common: getCommonTestResultsInitialState(),
+  inHouse: getInHouseInitialState(),
+  tracking: getTrackingInitialState(),
+  collection: getCollectionInitialState()
 });

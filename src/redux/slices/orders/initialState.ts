@@ -13,5 +13,35 @@ export const getInitialState = (): IOrdersState => ({
     hasRequisition: false,
     groups: null
   },
-  isOrderDetailsLoading: false
+  isOrderDetailsLoading: false,
+  cancellationReasons: {
+    reasons: []
+  },
+  isCancelOrderLoading: false,
+  isCancellationReasonsLoading: false,
+  reviewDate: '',
+  releaseDate: '',
+  isTestResultReviewed: false,
+  isTestResultReleased: false,
+  orderStatuses: [],
+  orderResultsFilters: [],
+  isOrderResultsFiltersLoading: false,
+  orderResultsByPatientList: {
+    testResults: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  },
+  isOrderResultsByPatientListLoading: false,
+  ordersFilters: [],
+  isRequisitionDownloaded: false,
+  isOrdersFiltersLoading: false,
+  orderResultsStatuses: [],
+  ordersList: {
+    orders: [],
+    currentPage: 1,
+    pageSize: 10,
+    totalItems: 0
+  },
+  isOrdersListLoading: false
 });

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import { useTheme } from '@mui/material';
 import { borderRadius, borders } from 'themes/themeConstants';
-import { IOrderResultsFilterCategory } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsFilterCategory } from 'types/reduxTypes/ordersStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';

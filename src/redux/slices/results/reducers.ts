@@ -1,20 +1,15 @@
-import { IOrdersStatusesItems, ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
+import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
-  CancellationReasons,
   IAllTestsSpecimensList,
   ILab,
-  IOrderResultsByPatientList,
-  IOrderResultsFilterCategory,
-  IOrdersFilterItems,
-  IOrdersList,
   IPendingTestStats,
   IResultsList,
-  IResultsProps,
   ISpecimensFilterCategory,
   ISpecimensInTransportList,
   ISpecimensList,
+  ITestResultProps,
   ITestResultsFilter,
   ITransportList,
   LabMachine,
@@ -22,187 +17,134 @@ import {
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
 import { SchedulingStateStatusProps } from 'types/reduxTypes/schedulingStateTypes';
-import { IOrderResultsStatus, ITransportFolder } from 'types/results';
+import { ITransportFolder } from 'types/results';
 
-const createReducer = <T extends SliceCaseReducers<IResultsProps>>(reducer: T) => ({ ...reducer });
+const createReducer = <T extends SliceCaseReducers<ITestResultProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
   setError(state, action) {
-    state.error = action.payload;
+    state.common.error = action.payload;
   },
   setResultsList(state, action: IAction<IResultsList>) {
-    state.resultsList = action.payload;
+    state.external.resultsList = action.payload;
   },
   setTransportList(state, action: IAction<ITransportList>) {
-    state.transportList = action.payload;
+    state.tracking.transportList = action.payload;
   },
   setResultsSearchFilters(state, action: IAction<ITestResultsFilter[]>) {
-    state.resultFilters = action.payload;
+    state.external.resultFilters = action.payload;
   },
   setResultsLoadingState(state, action: IAction<boolean>) {
-    state.isResultsListLoading = action.payload;
+    state.external.isResultsListLoading = action.payload;
   },
   setResultsFiltersLoadingState(state, action: IAction<boolean>) {
-    state.isResultsFiltersLoading = action.payload;
+    state.external.isResultsFiltersLoading = action.payload;
   },
   setPendingTestStats(state, action: IAction<IPendingTestStats[]>) {
-    state.pendingTestStats = action.payload;
+    state.external.pendingTestStats = action.payload;
   },
   setPendingTestStatsLoadingState(state, action: IAction<boolean>) {
-    state.isPendingTestStatsLoading = action.payload;
+    state.external.isPendingTestStatsLoading = action.payload;
   },
   setTestResultsDetails(state, action: IAction<TestResultsDetails[]>) {
-    state.testResultsDetails = action.payload;
+    state.common.testResultsDetails = action.payload;
   },
   setSpecimenActions(state, action: IAction<SpecimenActions[]>) {
-    state.specimenActions = action.payload;
+    state.common.specimenActions = action.payload;
   },
   setTransportActions(state, action: IAction<SpecimenActions[]>) {
-    state.transportActions = action.payload;
+    state.tracking.transportActions = action.payload;
   },
-  setCancellationReasons(state, action: IAction<CancellationReasons>) {
-    state.cancellationReasons = action.payload;
-  },
-  setIsCancellOrderLoading(state, action: IAction<boolean>) {
-    state.isCancellOrderLoading = action.payload;
-  },
-  setIsCancellationReasonsLoading(state, action: IAction<boolean>) {
-    state.isCancellationReasonsLoading = action.payload;
-  },
-  setTestResultReviewedDate(state, action: IAction<string>) {
-    state.reviewDate = action.payload;
-  },
-  setIsTestResultReviewed(state, action: IAction<boolean>) {
-    state.isTestResultReviewed = action.payload;
-  },
-  setIsTestResultReleased(state, action: IAction<boolean>) {
-    state.isTestResultReleased = action.payload;
-  },
-  setTestResultReleasedDate(state, action: IAction<string>) {
-    state.releaseDate = action.payload;
-  },
+
   setLabMachines(state, action: IAction<LabMachine>) {
-    state.labMachines = action.payload;
+    state.tracking.labMachines = action.payload;
   },
   setIsLabMachinesLoading(state, action: IAction<boolean>) {
-    state.isLabMachinesLoading = action.payload;
+    state.tracking.isLabMachinesLoading = action.payload;
   },
   setIsTestResultsDetailsLoading(state, action: IAction<boolean>) {
-    state.isTestResultsDetailsLoading = action.payload;
+    state.common.isTestResultsDetailsLoading = action.payload;
   },
   setIsTestResultsSubmitLoading(state, action: IAction<boolean>) {
-    state.isTestResultsSubmitLoading = action.payload;
+    state.common.isTestResultsSubmitLoading = action.payload;
   },
   setPendingSpecimenStats(state, action: IAction<IPendingTestStats[]>) {
-    state.pendingSpecimenStats = action.payload;
+    state.inHouse.pendingSpecimenStats = action.payload;
   },
   setPendingSpecimenStatsLoadingState(state, action: IAction<boolean>) {
-    state.isPendingSpecimenStatsLoading = action.payload;
+    state.inHouse.isPendingSpecimenStatsLoading = action.payload;
   },
   setSpecimensList(state, action: IAction<ISpecimensList>) {
-    state.specimensList = action.payload;
+    state.inHouse.specimensList = action.payload;
   },
   setIsSpecimensListLoading(state, action: IAction<boolean>) {
-    state.isSpecimensListLoading = action.payload;
+    state.inHouse.isSpecimensListLoading = action.payload;
   },
   setSpecimensFilters(state, action: IAction<ISpecimensFilterCategory[]>) {
-    state.specimensFilters = action.payload;
+    state.inHouse.specimensFilters = action.payload;
   },
   setSpecimensFiltersLoadingState(state, action: IAction<boolean>) {
-    state.isSpecimensFiltersLoading = action.payload;
+    state.inHouse.isSpecimensFiltersLoading = action.payload;
   },
   setAllTestsSpecimensList(state, action: IAction<IAllTestsSpecimensList>) {
-    state.allTestsSpecimensList = action.payload;
+    state.common.allTestsSpecimensList = action.payload;
   },
   setIsAllTestsSpecimensListLoading(state, action: IAction<boolean>) {
-    state.isAllTestsSpecimensListLoading = action.payload;
+    state.common.isAllTestsSpecimensListLoading = action.payload;
   },
   setAppointmentSpecimens(state, action: IAction<ISpecimensForAppointment>) {
-    state.appointmentSpecimens = action.payload;
+    state.collection.appointmentSpecimens = action.payload;
   },
   setIsAppointmentSpecimensLoading(state, action: IAction<boolean>) {
-    state.isAppointmentSpecimensLoading = action.payload;
+    state.collection.isAppointmentSpecimensLoading = action.payload;
   },
   setSpecimenStorageLocations(state, action: IAction<ISpecimenLocation[]>) {
-    state.specimenStorageLocations = action.payload;
+    state.collection.specimenStorageLocations = action.payload;
   },
   setIsSpecimenStorageLocationsLoading(state, action: IAction<boolean>) {
-    state.isSpecimenStorageLocationsLoading = action.payload;
+    state.collection.isSpecimenStorageLocationsLoading = action.payload;
   },
   setIsSendingSpecimenCollectionData(state, action: IAction<boolean>) {
-    state.isSendingSpecimenCollectionData = action.payload;
+    state.collection.isSendingSpecimenCollectionData = action.payload;
   },
   setLabsLoadingState(state, action: IAction<boolean>) {
-    state.isLabsLoading = action.payload;
+    state.tracking.isLabsLoading = action.payload;
   },
   setIsTransportFolderDownloaded(state, action: IAction<boolean>) {
-    state.isTransportFolderDownloaded = action.payload;
+    state.tracking.isTransportFolderDownloaded = action.payload;
   },
   setLabs(state, action: IAction<ILab[]>) {
-    state.labs = action.payload;
+    state.tracking.labs = action.payload;
   },
   setIsCreatingTransportFolderLoading(state, action: IAction<boolean>) {
-    state.isCreatingTransportFolder = action.payload;
+    state.tracking.isCreatingTransportFolder = action.payload;
   },
   setTestResultsState(state, action: IAction<SchedulingStateStatusProps>) {
-    state.testResultStateStatus = action.payload;
+    state.tracking.testResultStateStatus = action.payload;
   },
   setIsTransportListLoading(state, action: IAction<boolean>) {
-    state.isTransportListLoading = action.payload;
+    state.tracking.isTransportListLoading = action.payload;
   },
   setSpecimensInTransportList(state, action: IAction<ISpecimensInTransportList>) {
-    state.specimensInTransportList = action.payload;
+    state.collection.specimensInTransportList = action.payload;
   },
   setIsSpecimensInTransportListLoading(state, action: IAction<boolean>) {
-    state.isSpecimensInTransportListLoading = action.payload;
+    state.collection.isSpecimensInTransportListLoading = action.payload;
   },
   setTransportFolders(state, action: IAction<ITransportFolder[]>) {
-    state.transportFolders = action.payload;
+    state.tracking.transportFolders = action.payload;
   },
   setLastCreatedTransportFolderId(state, action: IAction<string | null>) {
-    state.lastCreatedTransportFolderId = action.payload;
+    state.tracking.lastCreatedTransportFolderId = action.payload;
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
-    state.isTransportFoldersLoading = action.payload;
+    state.tracking.isTransportFoldersLoading = action.payload;
   },
-  setSpecimentConfirmButtonClicked(state, action: IAction<boolean>) {
-    state.isSpecimensConfirmationButtonClicked = action.payload;
-  },
-  setOrdersStatuses(state, action: IAction<IOrdersStatusesItems[]>) {
-    state.orderStatuses = action.payload;
-  },
-  setOrderResultsFilters(state, action: IAction<IOrderResultsFilterCategory[]>) {
-    state.orderResultsFilters = action.payload;
-  },
-  setOrderResultsFiltersLoadingState(state, action: IAction<boolean>) {
-    state.isOrderResultsFiltersLoading = action.payload;
-  },
-  setOrderResultsByPatientList(state, action: IAction<IOrderResultsByPatientList>) {
-    state.orderResultsByPatientList = action.payload;
-  },
-  setIsOrderResultsByPatientListLoading(state, action: IAction<boolean>) {
-    state.isOrderResultsByPatientListLoading = action.payload;
+  setSpecimenConfirmButtonClicked(state, action: IAction<boolean>) {
+    state.inHouse.isSpecimensConfirmationButtonClicked = action.payload;
   },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
-    state.isTestResultsSubmitWentSuccessful = action.payload;
-  },
-  setIsOrdersFiltersLoadingState(state, action: IAction<boolean>) {
-    state.isOrdersFiltersLoading = action.payload;
-  },
-  setIsRequisitionDownloaded(state, action: IAction<boolean>) {
-    state.isRequisitionDownloaded = action.payload;
-  },
-  setOrdersFilters(state, action: IAction<IOrdersFilterItems[]>) {
-    state.ordersFilters = action.payload;
-  },
-  setOrderResultsStatuses(state, action: IAction<IOrderResultsStatus[]>) {
-    state.orderResultsStatuses = action.payload;
-  },
-  setOrdersList(state, action: IAction<IOrdersList>) {
-    state.ordersList = action.payload;
-  },
-  setIsOrdersListLoading(state, action: IAction<boolean>) {
-    state.isOrdersListLoading = action.payload;
+    state.common.isTestResultsSubmitWentSuccessful = action.payload;
   }
 });
 

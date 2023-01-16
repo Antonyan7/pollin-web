@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
@@ -17,9 +17,9 @@ interface ActionsProps {
 const Actions = ({ testResultId }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.COMMON_BUTTON_CONFIRM_LABEL);
-  const isTestResultReleased = useAppSelector(resultsSelector.isTestResultReleased);
+  const isTestResultReleased = useAppSelector(ordersSelector.isTestResultReleased);
   const onClickConfirm = () => {
-    dispatch(resultsMiddleware.makeTestResultReleased(testResultId));
+    dispatch(ordersMiddleware.makeTestResultReleased(testResultId));
     dispatch(viewsMiddleware.closeModal(ModalName.TestResultReleaseConfirmation));
   };
 

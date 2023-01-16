@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { IOrdersPossibleActions } from '@axios/results/resultsManagerTypes';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
-import { resultsSelector } from '@redux/slices/results';
+import { ordersSelector } from '@redux/slices/orders';
 import { timeAdjuster } from 'helpers/timeAdjuster';
-import { IOrdersListItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrdersListItem } from 'types/reduxTypes/ordersStateTypes';
 
 import Chip from '@ui-component/patient/Chip';
 
@@ -16,7 +16,7 @@ interface PatientOrdersListRowProps {
 
 const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
   const dateCreated = timeAdjuster(row.createdAt).customizedDate;
-  const orderStatuses = useAppSelector(resultsSelector.orderStatuses);
+  const orderStatuses = useAppSelector(ordersSelector.orderStatuses);
   const currentOrderStatus = useMemo(
     () => orderStatuses.find((orderStatus) => orderStatus.status === row.status),
     [orderStatuses, row]

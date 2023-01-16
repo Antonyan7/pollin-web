@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
@@ -17,10 +17,10 @@ export interface OrderCancellationProps {
 }
 
 const OrderCancellationModal = ({ orderId }: OrderCancellationProps) => {
-  const cancellationReasonsLoading = useAppSelector(resultsSelector.isCancellationReasonsLoading);
+  const cancellationReasonsLoading = useAppSelector(ordersSelector.isCancellationReasonsLoading);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getCancellationReasons());
+    dispatch(ordersMiddleware.getCancellationReasons());
   }, []);
 
   const [t] = useTranslation();

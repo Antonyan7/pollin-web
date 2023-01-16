@@ -3,7 +3,6 @@ import {
   ActionType,
   IAllTestsSpecimensReqBody,
   IMarkInTransitActionReqBody,
-  IOrderResultsListReqBody,
   IResultsReqBody,
   IResultsReqBodyWithSortOrder,
   ISpecimenCollectionData,
@@ -11,8 +10,7 @@ import {
   ISpecimensReqBody,
   ITestResultsData,
   ITestResultsParams,
-  ITransportListReqBody,
-  OrdersListDataProps
+  ITransportListReqBody
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
@@ -22,11 +20,8 @@ import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
-import { ModalName } from 'types/modals';
 import {
   IAllTestsSpecimensList,
-  IOrderResultsByPatientList,
-  IOrdersListResponse,
   IResultsList,
   IRetestRecollectData,
   ISpecimensInTransportList,
@@ -40,65 +35,47 @@ import {
 } from 'types/results';
 
 const {
-  setResultsList,
-  setError,
-  setResultsLoadingState,
-  setResultsFiltersLoadingState,
-  setResultsSearchFilters,
-  setPendingTestStats,
-  setPendingTestStatsLoadingState,
-  setTestResultsDetails,
-  setSpecimenActions,
-  setTransportActions,
-  setTestResultReviewedDate,
-  setIsTestResultReviewed,
-  setIsTestResultReleased,
-  setTestResultReleasedDate,
-  setIsTestResultsDetailsLoading,
-  setLabMachines,
-  setIsLabMachinesLoading,
-  setCancellationReasons,
-  setIsCancellOrderLoading,
-  setIsCancellationReasonsLoading,
-  setIsTestResultsSubmitLoading,
-  setPendingSpecimenStatsLoadingState,
-  setPendingSpecimenStats,
-  setSpecimensList,
-  setIsSpecimensListLoading,
-  setSpecimensFilters,
-  setSpecimensFiltersLoadingState,
-  setIsAllTestsSpecimensListLoading,
   setAllTestsSpecimensList,
   setAppointmentSpecimens,
+  setError,
+  setIsAllTestsSpecimensListLoading,
   setIsAppointmentSpecimensLoading,
-  setSpecimenStorageLocations,
-  setIsSpecimenStorageLocationsLoading,
+  setIsCreatingTransportFolderLoading,
+  setIsLabMachinesLoading,
   setIsSendingSpecimenCollectionData,
+  setIsSpecimensInTransportListLoading,
+  setIsSpecimensListLoading,
+  setIsSpecimenStorageLocationsLoading,
+  setIsTestResultsDetailsLoading,
+  setIsTestResultsSubmitLoading,
+  setIsTestResultsSubmitWentSuccessful,
+  setIsTransportFolderDownloaded,
+  setIsTransportFoldersLoading,
+  setIsTransportListLoading,
+  setLabMachines,
   setLabs,
   setLabsLoadingState,
-  setIsTransportFolderDownloaded,
-  setIsCreatingTransportFolderLoading,
-  setTransportList,
-  setIsTransportListLoading,
-  setSpecimensInTransportList,
-  setIsSpecimensInTransportListLoading,
-  setTestResultsState,
-  setTransportFolders,
   setLastCreatedTransportFolderId,
-  setIsTransportFoldersLoading,
-  setIsOrdersFiltersLoadingState,
-  setOrdersFilters,
-  setSpecimentConfirmButtonClicked,
-  setIsTestResultsSubmitWentSuccessful,
-  setOrderResultsFilters,
-  setOrderResultsFiltersLoadingState,
-  setIsOrderResultsByPatientListLoading,
-  setOrderResultsByPatientList,
-  setOrderResultsStatuses,
-  setIsRequisitionDownloaded,
-  setOrdersList,
-  setIsOrdersListLoading,
-  setOrdersStatuses
+  setPendingSpecimenStats,
+  setPendingSpecimenStatsLoadingState,
+  setPendingTestStats,
+  setPendingTestStatsLoadingState,
+  setResultsFiltersLoadingState,
+  setResultsList,
+  setResultsLoadingState,
+  setResultsSearchFilters,
+  setSpecimenActions,
+  setSpecimenConfirmButtonClicked,
+  setSpecimensFilters,
+  setSpecimensFiltersLoadingState,
+  setSpecimensInTransportList,
+  setSpecimensList,
+  setSpecimenStorageLocations,
+  setTestResultsDetails,
+  setTestResultsState,
+  setTransportActions,
+  setTransportFolders,
+  setTransportList
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -206,39 +183,6 @@ const getTransportActions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getCancellationReasons = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsCancellationReasonsLoading(true));
-
-    const response = await API.results.getCancellationReasons();
-
-    dispatch(setCancellationReasons(response.data.data));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsCancellationReasonsLoading(false));
-  }
-};
-
-const cancellOrder =
-  (orderId: string, reasonId: string, cancellationReason?: string) => async (dispatch: AppDispatch) => {
-    dispatch(setIsCancellOrderLoading(true));
-
-    try {
-      const response = await API.results.cancellOrder(orderId, reasonId, cancellationReason);
-
-      if (response) {
-        dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
-      }
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    }
-
-    dispatch(setIsCancellOrderLoading(false));
-  };
-
 const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsLabMachinesLoading(true));
@@ -255,38 +199,6 @@ const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => 
   } finally {
     dispatch(setIsLabMachinesLoading(false));
   }
-};
-
-const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsTestResultReviewed(true));
-
-  try {
-    const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
-
-    dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
-    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-
-  dispatch(setIsTestResultReviewed(false));
-};
-
-const makeTestResultReleased = (testResultId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsTestResultReleased(true));
-
-  try {
-    const response = await API.results.makeTestResultReleased(testResultId);
-
-    dispatch(setTestResultReleasedDate(response.data.data.releaseDate));
-    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-
-  dispatch(setIsTestResultReleased(false));
 };
 
 const submitTestResults = (data: ITestResultsData[]) => async (dispatch: AppDispatch) => {
@@ -352,41 +264,10 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
   }
 };
 
-const getOrderResultsListForPatient =
-  (data: IOrderResultsListReqBody, patientId: string) => async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setIsOrderResultsByPatientListLoading(true));
+const onSpecimenConfirmButtonClicked = () => (dispatch: AppDispatch) => {
+  const specimenConfirmButtonStatus = store.getState().results.inHouse.isSpecimensConfirmationButtonClicked;
 
-      const body = (data.sortOrder !== null ? sortOrderTransformer(data) : data) as IOrderResultsListReqBody;
-
-      const response = await API.results.getOrderResultsListForPatient(body, patientId);
-      const {
-        totalItems,
-        currentPage,
-        pageSize,
-        data: { testResults }
-      } = response.data;
-
-      const results: IOrderResultsByPatientList = {
-        totalItems,
-        currentPage,
-        pageSize,
-        testResults
-      };
-
-      dispatch(setOrderResultsByPatientList(results));
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    } finally {
-      dispatch(setIsOrderResultsByPatientListLoading(false));
-    }
-  };
-
-const onSpecimentConfirmButtonClicked = () => (dispatch: AppDispatch) => {
-  const specimentConfirmButtonStatus = store.getState().results.isSpecimensConfirmationButtonClicked;
-
-  dispatch(setSpecimentConfirmButtonClicked(!specimentConfirmButtonStatus));
+  dispatch(setSpecimenConfirmButtonClicked(!specimenConfirmButtonStatus));
 };
 
 const addMachineForSpecimen = (specimens: ISpecimensReqBody[], machineId: string) => async (dispatch: AppDispatch) => {
@@ -394,7 +275,7 @@ const addMachineForSpecimen = (specimens: ISpecimensReqBody[], machineId: string
     const response = await API.results.addMachineForSpecimen(specimens, machineId);
 
     if (response) {
-      dispatch(onSpecimentConfirmButtonClicked());
+      dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
     Sentry.captureException(error);
@@ -439,7 +320,7 @@ const applyRetestAction = (specimens: string[], reasonId: string) => async (disp
     const response = await API.results.applyRetestAction(specimenData, reasonId);
 
     if (response) {
-      dispatch(onSpecimentConfirmButtonClicked());
+      dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
     Sentry.captureException(error);
@@ -453,7 +334,7 @@ const applyRecollectAction = (specimens: string[], reasonId: string) => async (d
     const response = await API.results.applyRecollectAction(specimenData, reasonId);
 
     if (response) {
-      dispatch(onSpecimentConfirmButtonClicked());
+      dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
     Sentry.captureException(error);
@@ -707,71 +588,6 @@ const addSpecimenToTransportFolder =
     }
   };
 
-const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsRequisitionDownloaded(true));
-
-  try {
-    await API.results.downloadRequisition(orderId);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-
-  dispatch(setIsRequisitionDownloaded(false));
-};
-
-const getOrdersFilters = () => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrdersFiltersLoadingState(true));
-
-  try {
-    const response = await API.results.getOrdersFilters();
-
-    dispatch(setOrdersFilters(response.data.data.filters));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-
-  dispatch(setIsOrdersFiltersLoadingState(false));
-};
-
-const getOrderStatuses = () => async (dispatch: AppDispatch) => {
-  try {
-    const response = await API.results.getOrdersStatuses();
-
-    dispatch(setOrdersStatuses(response.data.data.items));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-};
-
-const getOrderResultsFilters = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setOrderResultsFiltersLoadingState(true));
-
-    const response = await API.results.getOrderResultsFilters();
-
-    dispatch(setOrderResultsFilters(response.data.data.filters));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setOrderResultsFiltersLoadingState(false));
-  }
-};
-
-const getOrderResultsStatuses = () => async (dispatch: AppDispatch) => {
-  try {
-    const response = await API.results.getOrderResultsStatuses();
-
-    dispatch(setOrderResultsStatuses(response.data.data.items));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-};
-
 const downloadTransportFolderManifest = (transportFolderId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsTransportFolderDownloaded(true));
 
@@ -785,36 +601,9 @@ const downloadTransportFolderManifest = (transportFolderId: string) => async (di
   dispatch(setIsTransportFolderDownloaded(false));
 };
 
-const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrdersListLoading(true));
-
+const downloadTestResultAttachment = (attachmentId: string) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.results.getOrdersList(ordersListData);
-    const {
-      totalItems,
-      currentPage,
-      pageSize,
-      data: { orders }
-    } = response.data;
-    const listData: IOrdersListResponse = {
-      totalItems,
-      currentPage,
-      pageSize,
-      orders
-    };
-
-    dispatch(setOrdersList(listData));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-
-  dispatch(setIsOrdersListLoading(false));
-};
-
-const downloadTestResultAttachment = (attachmendId: string) => async (dispatch: AppDispatch) => {
-  try {
-    const response = await API.results.downloadTestResultAttachment(attachmendId);
+    const response = await API.results.downloadTestResultAttachment(attachmentId);
 
     return response.data.data;
   } catch (error) {
@@ -826,48 +615,37 @@ const downloadTestResultAttachment = (attachmendId: string) => async (dispatch: 
 };
 
 export default {
-  getResultsList,
-  resetTestResultsState,
-  getTransportList,
-  getResultsFilters,
-  getPendingTestStats,
-  removeTestResultsAttachment,
-  getTestResultsDetails,
-  getLabMachines,
-  getSpecimenActions,
   addMachineForSpecimen,
-  markInTransitAction,
-  applyRetestAction,
-  applyRecollectAction,
-  downloadTransportFolderManifest,
-  getSpecimensFilters,
-  submitTestResults,
-  getTransportActions,
-  getCancellationReasons,
-  cancellOrder,
-  makeTestResultReviewed,
-  makeTestResultReleased,
-  getPendingSpecimenStats,
-  setIsTestResultsSubmitLoading,
-  getSpecimensList,
-  getALLTestsSpecimensList,
-  getSpecimensForAppointment,
-  getSpecimenStorageLocations,
-  submitSpecimenCollections,
-  getLabs,
-  createTransportFolder,
-  getSpecimensInTransportList,
-  getTransportFolders,
   addSpecimenToTransportFolder,
+  applyRecollectAction,
+  applyRetestAction,
+  createTransportFolder,
+  downloadTestResultAttachment,
+  downloadTransportFolderManifest,
+  getALLTestsSpecimensList,
+  getLabMachines,
+  getLabs,
+  getPendingSpecimenStats,
+  getPendingTestStats,
+  getResultsFilters,
+  getResultsList,
+  getSpecimenActions,
+  getSpecimensFilters,
+  getSpecimensForAppointment,
+  getSpecimensInTransportList,
+  getSpecimensList,
+  getSpecimenStorageLocations,
+  getTestResultsDetails,
+  getTransportActions,
+  getTransportFolders,
+  getTransportList,
+  markInTransitAction,
+  onSpecimenConfirmButtonClicked,
+  removeTestResultsAttachment,
   resetLastCreatedTransportFolderId,
-  getOrdersFilters,
-  onSpecimentConfirmButtonClicked,
-  getOrderStatuses,
-  downloadRequisition,
-  getOrderResultsFilters,
-  getOrderResultsListForPatient,
-  getOrderResultsStatuses,
+  resetTestResultsState,
+  setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
-  getOrdersList,
-  downloadTestResultAttachment
+  submitSpecimenCollections,
+  submitTestResults
 };

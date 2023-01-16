@@ -1,4 +1,13 @@
-import { TestType } from 'types/reduxTypes/resultsStateTypes';
+import { IPagination } from '@axios/axiosTypes';
+import { IOrdersStatusesItems, OrdersFilterOption, OrdersFilterType } from '@axios/results/resultsManagerTypes';
+import {
+  CancellationReasons,
+  IFinalResultType,
+  IMeasurement,
+  IResultsFilterCategory,
+  TestType
+} from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsStatus, OrderResultStatusEnum } from 'types/results';
 
 export interface IOrdersState {
   error: Error | null;
@@ -9,6 +18,24 @@ export interface IOrdersState {
   isOrderGroupsLoading: boolean;
   orderDetails: IOrderDetailsData;
   isOrderDetailsLoading: boolean;
+  cancellationReasons: CancellationReasons;
+  isCancelOrderLoading: boolean;
+  isCancellationReasonsLoading: boolean;
+  ordersFilters: IOrdersFilterItems[];
+  isOrdersFiltersLoading: boolean;
+  orderStatuses: IOrdersStatusesItems[];
+  orderResultsFilters: IOrderResultsFilterCategory[];
+  isOrderResultsFiltersLoading: boolean;
+  orderResultsByPatientList: IOrderResultsByPatientList;
+  isOrderResultsByPatientListLoading: boolean;
+  orderResultsStatuses: IOrderResultsStatus[];
+  ordersList: IOrdersList;
+  isOrdersListLoading: boolean;
+  isTestResultReviewed: boolean;
+  isTestResultReleased: boolean;
+  reviewDate: string;
+  releaseDate: string;
+  isRequisitionDownloaded: boolean;
 }
 
 export interface IOrderType {
@@ -81,3 +108,52 @@ export interface UpdateOrderData {
 export interface IUpdateOrderReqBody {
   order: UpdateOrderData;
 }
+
+export enum OrdersListItemStatus {
+  NotCollected = 'NotCollected',
+  Collecting = 'Collecting',
+  AwaitingResults = 'AwaitingResults',
+  Completed = 'Completed',
+  Cancelled = 'Cancelled'
+}
+
+export enum OrdersActions {
+  ViewAndEdit = 'ViewAndEdit',
+  View = 'View',
+  Download = 'Download',
+  Cancel = 'Cancel'
+}
+export interface IOrderResultsByPatientItem {
+  id: string;
+  status: OrderResultStatusEnum;
+  panelName: string;
+  finalResultType: IFinalResultType;
+  dateReported: string;
+  measurement: IMeasurement[];
+}
+
+export interface IOrdersFilterItems {
+  title: string;
+  type: OrdersFilterType;
+  options: OrdersFilterOption[];
+}
+
+export interface IOrdersListItem {
+  id: string;
+  createdAt: Date;
+  title: string;
+  orderTypes: string;
+  status: OrdersListItemStatus;
+}
+
+export interface IOrderResultsByPatientList extends IPagination {
+  testResults: IOrderResultsByPatientItem[];
+}
+
+export interface IOrdersList extends IPagination {
+  orders: IOrdersListItem[];
+}
+
+export interface IOrdersListResponse extends IOrdersList {}
+
+export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}

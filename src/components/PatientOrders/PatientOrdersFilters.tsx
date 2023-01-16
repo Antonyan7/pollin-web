@@ -4,7 +4,7 @@ import { OrdersFilterOption } from '@axios/results/resultsManagerTypes';
 import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import { useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { borderRadius, borders } from 'themes/themeConstants';
 
@@ -21,8 +21,8 @@ interface PatientOrdersFiltersResult extends OrdersFilterOption {
 const PatientOrdersFilters = ({ setFiltersChange }: PatientOrdersResultFiltersProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
-  const ordersFilters = useAppSelector(resultsSelector.ordersFilters);
-  const isOrdersFiltersLoading = useAppSelector(resultsSelector.isOrdersFiltersLoading);
+  const ordersFilters = useAppSelector(ordersSelector.ordersFilters);
+  const isOrdersFiltersLoading = useAppSelector(ordersSelector.isOrdersFiltersLoading);
   const [selectedFilters, setSelectedFilters] = useState<PatientOrdersFiltersResult[]>([]);
 
   const adaptedGroupedOptions = (): PatientOrdersFiltersResult[] =>
@@ -36,7 +36,7 @@ const PatientOrdersFilters = ({ setFiltersChange }: PatientOrdersResultFiltersPr
   };
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getOrdersFilters());
+    dispatch(ordersMiddleware.getOrdersFilters());
   }, []);
 
   return (

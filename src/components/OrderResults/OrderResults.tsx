@@ -14,12 +14,12 @@ import {
   TableRow
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { IOrderResultsByPatientItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
 
 import AutocompleteWrapper from './AutocompleteWrapper';
@@ -31,12 +31,12 @@ const OrderResults = () => {
   const [sortField, setSortField] = useState<OrderResultsSortFields | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [selectedFilters, setSelectedFilters] = useState<IOrderResultsFilterOptions[]>([]);
-  const orderResultsByPatientList = useAppSelector(resultsSelector.orderResultsByPatientList);
-  const isOrderResultsByPatientListLoading = useAppSelector(resultsSelector.isOrderResultsByPatientListLoading);
-  const filtersList = useAppSelector(resultsSelector.orderResultsFilters);
-  const isFiltersLoading = useAppSelector(resultsSelector.isOrderResultsFiltersLoading);
+  const orderResultsByPatientList = useAppSelector(ordersSelector.orderResultsByPatientList);
+  const isOrderResultsByPatientListLoading = useAppSelector(ordersSelector.isOrderResultsByPatientListLoading);
+  const filtersList = useAppSelector(ordersSelector.orderResultsFilters);
+  const isFiltersLoading = useAppSelector(ordersSelector.isOrderResultsFiltersLoading);
 
-  const statuses = useAppSelector(resultsSelector.orderResultsStatuses);
+  const statuses = useAppSelector(ordersSelector.orderResultsStatuses);
 
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
@@ -48,8 +48,8 @@ const OrderResults = () => {
   const filterLabel = t(Translation.PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getOrderResultsFilters());
-    dispatch(resultsMiddleware.getOrderResultsStatuses());
+    dispatch(ordersMiddleware.getOrderResultsFilters());
+    dispatch(ordersMiddleware.getOrderResultsStatuses());
   }, []);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const OrderResults = () => {
       page: page + 1
     };
 
-    dispatch(resultsMiddleware.getOrderResultsListForPatient(data, patientId));
+    dispatch(ordersMiddleware.getOrderResultsListForPatient(data, patientId));
   }, [page, selectedFilters, sortField, sortOrder, patientId]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {

@@ -1,6 +1,18 @@
+import { IOrdersStatusesItems } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
-import { IOrderDetailsData, IOrderGroupsCollection, IOrdersState, IOrderType } from 'types/reduxTypes/ordersStateTypes';
+import {
+  IOrderDetailsData,
+  IOrderGroupsCollection,
+  IOrderResultsByPatientList,
+  IOrderResultsFilterCategory,
+  IOrdersFilterItems,
+  IOrdersList,
+  IOrdersState,
+  IOrderType
+} from 'types/reduxTypes/ordersStateTypes';
+import { CancellationReasons } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsStatus } from 'types/results';
 
 const createReducer = <T extends SliceCaseReducers<IOrdersState>>(reducer: T) => ({ ...reducer });
 
@@ -28,6 +40,60 @@ const reducers = createReducer({
   },
   setIsOrderDetailsLoading(state, action: IAction<boolean>) {
     state.isOrderDetailsLoading = action.payload;
+  },
+  setOrdersStatuses(state, action: IAction<IOrdersStatusesItems[]>) {
+    state.orderStatuses = action.payload;
+  },
+  setOrderResultsFilters(state, action: IAction<IOrderResultsFilterCategory[]>) {
+    state.orderResultsFilters = action.payload;
+  },
+  setOrderResultsFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isOrderResultsFiltersLoading = action.payload;
+  },
+  setOrderResultsByPatientList(state, action: IAction<IOrderResultsByPatientList>) {
+    state.orderResultsByPatientList = action.payload;
+  },
+  setIsOrderResultsByPatientListLoading(state, action: IAction<boolean>) {
+    state.isOrderResultsByPatientListLoading = action.payload;
+  },
+  setIsOrdersFiltersLoadingState(state, action: IAction<boolean>) {
+    state.isOrdersFiltersLoading = action.payload;
+  },
+  setIsRequisitionDownloaded(state, action: IAction<boolean>) {
+    state.isRequisitionDownloaded = action.payload;
+  },
+  setOrdersFilters(state, action: IAction<IOrdersFilterItems[]>) {
+    state.ordersFilters = action.payload;
+  },
+  setOrderResultsStatuses(state, action: IAction<IOrderResultsStatus[]>) {
+    state.orderResultsStatuses = action.payload;
+  },
+  setOrdersList(state, action: IAction<IOrdersList>) {
+    state.ordersList = action.payload;
+  },
+  setIsOrdersListLoading(state, action: IAction<boolean>) {
+    state.isOrdersListLoading = action.payload;
+  },
+  setCancellationReasons(state, action: IAction<CancellationReasons>) {
+    state.cancellationReasons = action.payload;
+  },
+  setIsCancelOrderLoading(state, action: IAction<boolean>) {
+    state.isCancelOrderLoading = action.payload;
+  },
+  setIsCancellationReasonsLoading(state, action: IAction<boolean>) {
+    state.isCancellationReasonsLoading = action.payload;
+  },
+  setTestResultReviewedDate(state, action: IAction<string>) {
+    state.reviewDate = action.payload;
+  },
+  setIsTestResultReviewed(state, action: IAction<boolean>) {
+    state.isTestResultReviewed = action.payload;
+  },
+  setIsTestResultReleased(state, action: IAction<boolean>) {
+    state.isTestResultReleased = action.payload;
+  },
+  setTestResultReleasedDate(state, action: IAction<string>) {
+    state.releaseDate = action.payload;
   }
 });
 

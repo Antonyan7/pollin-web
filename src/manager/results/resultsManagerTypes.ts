@@ -1,11 +1,9 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
+import { IOrdersFilterItems, OrdersActions, OrdersListItemStatus } from 'types/reduxTypes/ordersStateTypes';
 import {
-  IOrdersFilterItems,
   ISpecimensListItemShort,
   ITestResultsDetails,
-  OrdersActions,
-  OrdersListItemStatus,
   TestResultMeasurementType
 } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';

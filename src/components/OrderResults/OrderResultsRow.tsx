@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { useRouter } from 'next/router';
-import { IOrderResultsByPatientItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { FinalResultChipColor, OrderResultAction } from 'types/results';
 
 import Chip from '@ui-component/patient/Chip';

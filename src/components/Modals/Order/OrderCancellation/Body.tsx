@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
@@ -19,14 +19,14 @@ interface BodyProps {
 const Body = ({ orderId }: BodyProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const cancellationReasons = useAppSelector(resultsSelector.cancellationReasons);
-  const isCancelOrderLoading = useAppSelector(resultsSelector.isCancellOrderLoading);
-  const cancellationReasonsLoading = useAppSelector(resultsSelector.isCancellationReasonsLoading);
+  const cancellationReasons = useAppSelector(ordersSelector.cancellationReasons);
+  const isCancelOrderLoading = useAppSelector(ordersSelector.isCancelOrderLoading);
+  const cancellationReasonsLoading = useAppSelector(ordersSelector.isCancellationReasonsLoading);
   const cancellationReasonsOptions = createOptionsGroup(cancellationReasons.reasons);
   const [reasonId, setReasonId] = useState('');
 
   const onClickConfirm = () => {
-    dispatch(resultsMiddleware.cancellOrder(orderId, reasonId));
+    dispatch(ordersMiddleware.cancelOrder(orderId, reasonId));
   };
 
   return (

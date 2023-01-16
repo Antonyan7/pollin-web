@@ -1,18 +1,6 @@
 import { IPagination } from '@axios/axiosTypes';
-import {
-  IOrdersStatusesItems,
-  ISpecimenLocation,
-  ISpecimensForAppointment,
-  OrdersFilterOption,
-  OrdersFilterType
-} from '@axios/results/resultsManagerTypes';
-import {
-  IOrderResultsStatus,
-  IResultsFilterOption,
-  ITransportFolder,
-  OrderResultStatusEnum,
-  TestResultsStats
-} from 'types/results';
+import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
+import { IResultsFilterOption, ITransportFolder, TestResultsStats } from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
@@ -43,66 +31,68 @@ export enum IFinalResultType {
   Abnormal = 'Abnormal'
 }
 
-export interface IResultsProps {
-  resultsList: IResultsList;
-  transportList: ITransportList;
-  isTransportFolderDownloaded: boolean;
-  resultFilters: ITestResultsFilter[] | null;
-  pendingTestStats: IPendingTestStats[];
+export interface ITestResultsCommonProps {
   testResultsDetails: TestResultsDetails[];
-  error: Error | null;
-  labMachines: LabMachine;
-  specimenActions: SpecimenActions[];
-  transportActions: TransportActions[];
-  cancellationReasons: CancellationReasons;
-  isCancellOrderLoading: boolean;
-  isCancellationReasonsLoading: boolean;
-  isResultsListLoading: boolean;
-  isResultsFiltersLoading: boolean;
-  isPendingTestStatsLoading: boolean;
   isTestResultsDetailsLoading: boolean;
-  isLabMachinesLoading: boolean;
   isTestResultsSubmitLoading: boolean;
-  pendingSpecimenStats: IPendingTestStats[];
-  isPendingSpecimenStatsLoading: boolean;
-  specimensList: ISpecimensList;
-  isSpecimensListLoading: boolean;
-  specimensFilters: ISpecimensFilterCategory[];
-  isSpecimensFiltersLoading: boolean;
-  isTransportListLoading: boolean;
+  error: Error | null;
+  isTestResultsSubmitWentSuccessful: boolean | null;
+  specimenActions: SpecimenActions[];
   allTestsSpecimensList: IAllTestsSpecimensList;
   isAllTestsSpecimensListLoading: boolean;
-  appointmentSpecimens: ISpecimensForAppointment | null;
-  isAppointmentSpecimensLoading: boolean;
-  specimenStorageLocations: ISpecimenLocation[];
-  isSpecimenStorageLocationsLoading: boolean;
-  isSendingSpecimenCollectionData: boolean;
-  reviewDate: string;
-  releaseDate: string;
-  isTestResultReviewed: boolean;
-  isTestResultReleased: boolean;
+}
+
+export interface IInHouseTestResultsProps {
+  specimensList: ISpecimensList;
+  pendingSpecimenStats: IPendingTestStats[];
+  isPendingSpecimenStatsLoading: boolean;
+  isSpecimensListLoading: boolean;
+  isSpecimensConfirmationButtonClicked: boolean;
+  specimensFilters: ISpecimensFilterCategory[];
+  isSpecimensFiltersLoading: boolean;
+}
+
+export interface IExternalTestResults {
+  resultsList: IResultsList;
+  pendingTestStats: IPendingTestStats[];
+  isPendingTestStatsLoading: boolean;
+  resultFilters: ITestResultsFilter[];
+  isResultsListLoading: boolean;
+  isResultsFiltersLoading: boolean;
+}
+
+export interface ITestResultsTracking {
+  transportList: ITransportList;
+  isTransportFolderDownloaded: boolean;
+  transportActions: TransportActions[];
   labs: ILab[];
   isLabsLoading: boolean;
+  labMachines: LabMachine;
+  isLabMachinesLoading: boolean;
+  isTransportListLoading: boolean;
   isCreatingTransportFolder: boolean;
-  specimensInTransportList: ISpecimensInTransportList;
-  isSpecimensInTransportListLoading: boolean;
   transportFolders: ITransportFolder[];
   lastCreatedTransportFolderId: string | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
-  ordersFilters: IOrdersFilterItems[];
-  isOrdersFiltersLoading: boolean;
-  isSpecimensConfirmationButtonClicked: boolean;
-  orderStatuses: IOrdersStatusesItems[];
-  orderResultsFilters: IOrderResultsFilterCategory[];
-  isOrderResultsFiltersLoading: boolean;
-  isRequisitionDownloaded: boolean;
-  orderResultsByPatientList: IOrderResultsByPatientList;
-  isOrderResultsByPatientListLoading: boolean;
-  isTestResultsSubmitWentSuccessful: boolean | null;
-  orderResultsStatuses: IOrderResultsStatus[];
-  ordersList: IOrdersList;
-  isOrdersListLoading: boolean;
+}
+
+export interface ITestResultsCollection {
+  appointmentSpecimens: ISpecimensForAppointment | null;
+  isAppointmentSpecimensLoading: boolean;
+  isSendingSpecimenCollectionData: boolean;
+  specimenStorageLocations: ISpecimenLocation[];
+  isSpecimenStorageLocationsLoading: boolean;
+  specimensInTransportList: ISpecimensInTransportList;
+  isSpecimensInTransportListLoading: boolean;
+}
+
+export interface ITestResultProps {
+  common: ITestResultsCommonProps;
+  inHouse: IInHouseTestResultsProps;
+  external: IExternalTestResults;
+  tracking: ITestResultsTracking;
+  collection: ITestResultsCollection;
 }
 
 export enum ITransportFolderStatus {
@@ -184,15 +174,6 @@ export interface IMeasurement {
   result: string;
 }
 
-export interface IOrderResultsByPatientItem {
-  id: string;
-  status: OrderResultStatusEnum;
-  panelName: string;
-  finalResultType: IFinalResultType;
-  dateReported: string;
-  measurement: IMeasurement[];
-}
-
 export interface IAllTestsSpecimensListItem {
   id: string;
   identifier: string;
@@ -202,46 +183,9 @@ export interface IAllTestsSpecimensListItem {
   age: number;
 }
 
-export enum OrdersListItemStatus {
-  NotCollected = 'NotCollected',
-  Collecting = 'Collecting',
-  AwaitingResults = 'AwaitingResults',
-  Completed = 'Completed',
-  Cancelled = 'Cancelled'
-}
-
-export enum OrdersActions {
-  ViewAndEdit = 'ViewAndEdit',
-  View = 'View',
-  Download = 'Download',
-  Cancel = 'Cancel'
-}
-
-export interface IOrdersFilterItems {
-  title: string;
-  type: OrdersFilterType;
-  options: OrdersFilterOption[];
-}
-
-export interface IOrdersListItem {
-  id: string;
-  createdAt: Date;
-  title: string;
-  orderTypes: string;
-  status: OrdersListItemStatus;
-}
-
-export interface ISpecimensListItemShort {
-  identifier: string;
-}
-
 export interface ISpecimensList extends IPagination {
   specimens: ISpecimensListItem[];
   notFound: ISpecimensListItemShort[];
-}
-
-export interface IOrderResultsByPatientList extends IPagination {
-  testResults: IOrderResultsByPatientItem[];
 }
 
 export interface IAllTestsSpecimensList extends IPagination {
@@ -249,11 +193,9 @@ export interface IAllTestsSpecimensList extends IPagination {
   notFound: ISpecimensListItemShort[];
 }
 
-export interface IOrdersList extends IPagination {
-  orders: IOrdersListItem[];
+export interface ISpecimensListItemShort {
+  identifier: string;
 }
-
-export interface IOrdersListResponse extends IOrdersList {}
 
 export interface ISpecimensInTransportListItem {
   id: string;
@@ -320,7 +262,7 @@ export interface ITestResultAttachment {
   id: string;
   title: string;
   note?: string;
-  // Case when we have local new attached file
+  // Case when we have new attached file
   file?: File;
 }
 
@@ -379,8 +321,6 @@ export interface ITestResultsFilter extends IResultsFilterCategory {}
 export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 
 export interface TestResultsDetails extends ITestResultsDetails {}
-
-export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}
 
 export enum TestType {
   OrderGroup = 'Pollin Blood Test Group',

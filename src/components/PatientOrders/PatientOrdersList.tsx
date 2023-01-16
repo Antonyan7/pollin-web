@@ -7,7 +7,7 @@ import {
 } from '@axios/results/resultsManagerTypes';
 import { Box, CircularProgress, Grid, TableContainer, TablePagination } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { margins } from 'themes/themeConstants';
 import { ISortOrder, SortOrder } from 'types/patient';
 
@@ -18,12 +18,12 @@ import PatientOrdersFilters from './PatientOrdersFilters';
 import PatientOrdersTable from './PatientOrdersTable';
 
 const PatientOrdersList = () => {
-  const ordersList = useAppSelector(resultsSelector.ordersList);
+  const ordersList = useAppSelector(ordersSelector.ordersList);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
   const [sortField, setSortField] = useState<OrderListSortFields>(OrderListSortFields.Status);
   const [filters, setFilters] = useState<OrderListDataFilter[]>([]);
   const [page, setPage] = useState<number>(0);
-  const isOrdersListLoading = useAppSelector(resultsSelector.isOrdersListLoading);
+  const isOrdersListLoading = useAppSelector(ordersSelector.isOrdersListLoading);
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -47,11 +47,11 @@ const PatientOrdersList = () => {
       page: page + 1
     };
 
-    dispatch(resultsMiddleware.getOrdersList(data));
+    dispatch(ordersMiddleware.getOrdersList(data));
   }, [filters, page, sortField, sortOrder]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getOrderStatuses());
+    dispatch(ordersMiddleware.getOrderStatuses());
   }, []);
 
   return (

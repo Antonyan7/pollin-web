@@ -5,7 +5,7 @@ import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { viewsMiddleware } from '@redux/slices/views';
 import { dispatch } from 'redux/hooks';
 import { ModalName } from 'types/modals';
-import { IOrderResultsByPatientItem } from 'types/reduxTypes/resultsStateTypes';
+import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { OrderResultAction } from 'types/results';
 
 interface ContextMenuProps {

@@ -24,14 +24,14 @@ import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   IGetOrderDetailsResponse,
   IOrderGroupsList,
+  IOrderResultsByPatientList,
+  IOrdersListResponse,
   IOrderTypesList,
   IUpdateOrderReqBody
 } from 'types/reduxTypes/ordersStateTypes';
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
-  IOrderResultsByPatientList,
-  IOrdersListResponse,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
@@ -221,7 +221,7 @@ const resultsManager = {
       `${baseURL}/v1/order/cancellation-reason`
     );
   },
-  cancellOrder(orderId: string, reasonId: string, cancellationReason?: string) {
+  cancelOrder(orderId: string, reasonId: string, cancellationReason?: string) {
     return axiosInstance.patch<ITestResultsDetails, IAxiosResponse<CancellationReasons>>(
       `${baseURL}/v1/order/${orderId}/cancel`,
       {

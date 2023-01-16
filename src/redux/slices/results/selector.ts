@@ -3,136 +3,118 @@ import { RootState } from 'redux/store';
 
 const selector = (state: RootState) => state.results;
 
-const resultsList = createSelector([selector], (state) => state.resultsList);
-const transportList = createSelector([selector], (state) => state.transportList);
-const resultsFiltersList = createSelector([selector], (state) => state.resultFilters);
-const isResultsLoading = createSelector([selector], (state) => state.isResultsListLoading);
-const isResultsFiltersLoading = createSelector([selector], (state) => state.isResultsFiltersLoading);
-const isPendingTestStatsLoading = createSelector([selector], (state) => state.isPendingTestStatsLoading);
-const pendingTestStats = createSelector([selector], (state) => state.pendingTestStats);
-const isTestResultsDetailsLoading = createSelector([selector], (state) => state.isTestResultsDetailsLoading);
-const testResultsDetails = createSelector([selector], (state) => state.testResultsDetails);
-const labMachines = createSelector([selector], (state) => state.labMachines);
-const isLabMachinesLoading = createSelector([selector], (state) => state.isLabMachinesLoading);
-const specimenActions = createSelector([selector], (state) => state.specimenActions);
-const isPendingSpecimenStatsLoading = createSelector([selector], (state) => state.isPendingSpecimenStatsLoading);
-const pendingSpecimenStats = createSelector([selector], (state) => state.pendingSpecimenStats);
-const specimensList = createSelector([selector], (state) => state.specimensList);
-const isSpecimensListLoading = createSelector([selector], (state) => state.isSpecimensListLoading);
-const isTestResultsSubmitWentSuccessful = createSelector(
-  [selector],
-  (state) => state.isTestResultsSubmitWentSuccessful
-);
-const specimensFiltersList = createSelector([selector], (state) => state.specimensFilters);
-const isSpecimensFiltersLoading = createSelector([selector], (state) => state.isSpecimensFiltersLoading);
-const appointmentSpecimens = createSelector([selector], (state) => state.appointmentSpecimens);
-const isAppointmentSpecimensLoading = createSelector([selector], (state) => state.isAppointmentSpecimensLoading);
+// External Result
+const resultsList = createSelector([selector], (state) => state.external.resultsList);
 
-const isLabsLoading = createSelector([selector], (state) => state.isLabsLoading);
-const testResultLabs = createSelector([selector], (state) => state.labs);
-const transportActions = createSelector([selector], (state) => state.transportActions);
-const cancellationReasons = createSelector([selector], (state) => state.cancellationReasons);
-const isCancellOrderLoading = createSelector([selector], (state) => state.isCancellOrderLoading);
-const resultReviewedDate = createSelector([selector], (state) => state.reviewDate);
-const resultReleaseDate = createSelector([selector], (state) => state.releaseDate);
-const isTestResultReviewed = createSelector([selector], (state) => state.isTestResultReviewed);
-const isTestResultReleased = createSelector([selector], (state) => state.isTestResultReleased);
-const isTestResultsSubmitLoading = createSelector([selector], (state) => state.isTestResultsSubmitLoading);
-const allTestsSpecimensList = createSelector([selector], (state) => state.allTestsSpecimensList);
-const testResultStateStatus = createSelector([selector], (state) => state.testResultStateStatus);
-const isAllTestsSpecimensListLoading = createSelector([selector], (state) => state.isAllTestsSpecimensListLoading);
-const isCreatingTransportFolder = createSelector([selector], (state) => state.isCreatingTransportFolder);
-const specimensInTransportList = createSelector([selector], (state) => state.specimensInTransportList);
-const isTransportFolderDownloaded = createSelector([selector], (state) => state.isTransportFolderDownloaded);
+const resultsFiltersList = createSelector([selector], (state) => state.external.resultFilters);
+const isResultsLoading = createSelector([selector], (state) => state.external.isResultsListLoading);
+const isResultsFiltersLoading = createSelector([selector], (state) => state.external.isResultsFiltersLoading);
+const isPendingTestStatsLoading = createSelector([selector], (state) => state.external.isPendingTestStatsLoading);
+const pendingTestStats = createSelector([selector], (state) => state.external.pendingTestStats);
 
-const isSpecimensInTransportListLoading = createSelector(
+// Common
+const isTestResultsSubmitLoading = createSelector([selector], (state) => state.common.isTestResultsSubmitLoading);
+const allTestsSpecimensList = createSelector([selector], (state) => state.common.allTestsSpecimensList);
+const isTestResultsDetailsLoading = createSelector([selector], (state) => state.common.isTestResultsDetailsLoading);
+const testResultsDetails = createSelector([selector], (state) => state.common.testResultsDetails);
+const specimenActions = createSelector([selector], (state) => state.common.specimenActions);
+
+// Tracking
+const labMachines = createSelector([selector], (state) => state.tracking.labMachines);
+const isLabMachinesLoading = createSelector([selector], (state) => state.tracking.isLabMachinesLoading);
+const transportList = createSelector([selector], (state) => state.tracking.transportList);
+const isLabsLoading = createSelector([selector], (state) => state.tracking.isLabsLoading);
+const testResultLabs = createSelector([selector], (state) => state.tracking.labs);
+const transportActions = createSelector([selector], (state) => state.tracking.transportActions);
+const testResultStateStatus = createSelector([selector], (state) => state.tracking.testResultStateStatus);
+const isAllTestsSpecimensListLoading = createSelector(
   [selector],
-  (state) => state.isSpecimensInTransportListLoading
+  (state) => state.common.isAllTestsSpecimensListLoading
 );
-const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
-const transportFolders = createSelector([selector], (state) => state.transportFolders);
-const lastCreatedTransportFolderId = createSelector([selector], (state) => state.lastCreatedTransportFolderId);
-const isOrdersFiltersLoading = createSelector([selector], (state) => state.isOrdersFiltersLoading);
-const ordersFilters = createSelector([selector], (state) => state.ordersFilters);
+const isCreatingTransportFolder = createSelector([selector], (state) => state.tracking.isCreatingTransportFolder);
+
+const isTransportFolderDownloaded = createSelector([selector], (state) => state.tracking.isTransportFolderDownloaded);
+
+const transportFolders = createSelector([selector], (state) => state.tracking.transportFolders);
+const lastCreatedTransportFolderId = createSelector([selector], (state) => state.tracking.lastCreatedTransportFolderId);
+
+// InHouse
 const isSpecimensConfirmationButtonClicked = createSelector(
   [selector],
-  (state) => state.isSpecimensConfirmationButtonClicked
+  (state) => state.inHouse.isSpecimensConfirmationButtonClicked
 );
-const orderStatuses = createSelector([selector], (state) => state.orderStatuses);
-const orderResultsFilters = createSelector([selector], (state) => state.orderResultsFilters);
-const isOrderResultsFiltersLoading = createSelector([selector], (state) => state.isOrderResultsFiltersLoading);
-const orderResultsByPatientList = createSelector([selector], (state) => state.orderResultsByPatientList);
-const isOrderResultsByPatientListLoading = createSelector(
+const isPendingSpecimenStatsLoading = createSelector(
   [selector],
-  (state) => state.isOrderResultsByPatientListLoading
+  (state) => state.inHouse.isPendingSpecimenStatsLoading
 );
-const orderResultsStatuses = createSelector([selector], (state) => state.orderResultsStatuses);
-const isOrdersListLoading = createSelector([selector], (state) => state.isOrdersListLoading);
-const ordersList = createSelector([selector], (state) => state.ordersList);
-const isRequisitionDownloaded = createSelector([selector], (state) => state.isRequisitionDownloaded);
+const pendingSpecimenStats = createSelector([selector], (state) => state.inHouse.pendingSpecimenStats);
+const specimensList = createSelector([selector], (state) => state.inHouse.specimensList);
+const isSpecimensListLoading = createSelector([selector], (state) => state.inHouse.isSpecimensListLoading);
+const isTestResultsSubmitWentSuccessful = createSelector(
+  [selector],
+  (state) => state.common.isTestResultsSubmitWentSuccessful
+);
+const specimensFiltersList = createSelector([selector], (state) => state.inHouse.specimensFilters);
+const isSpecimensFiltersLoading = createSelector([selector], (state) => state.inHouse.isSpecimensFiltersLoading);
 
-const specimenStorageLocations = createSelector([selector], (state) => state.specimenStorageLocations);
+// Collection
+const appointmentSpecimens = createSelector([selector], (state) => state.collection.appointmentSpecimens);
+const isAppointmentSpecimensLoading = createSelector(
+  [selector],
+  (state) => state.collection.isAppointmentSpecimensLoading
+);
+const specimenStorageLocations = createSelector([selector], (state) => state.collection.specimenStorageLocations);
 const isSpecimenStorageLocationsLoading = createSelector(
   [selector],
-  (state) => state.isSpecimenStorageLocationsLoading
+  (state) => state.collection.isSpecimenStorageLocationsLoading
 );
-const isSendingSpecimenCollectionData = createSelector([selector], (state) => state.isSendingSpecimenCollectionData);
+const isSendingSpecimenCollectionData = createSelector(
+  [selector],
+  (state) => state.collection.isSendingSpecimenCollectionData
+);
+const specimensInTransportList = createSelector([selector], (state) => state.collection.specimensInTransportList);
+const isSpecimensInTransportListLoading = createSelector(
+  [selector],
+  (state) => state.collection.isSpecimensInTransportListLoading
+);
 
 export default {
-  testResultStateStatus,
-  resultsList,
-  transportList,
-  isResultsLoading,
-  isResultsFiltersLoading,
-  isTransportFolderDownloaded,
-  resultsFiltersList,
-  isPendingTestStatsLoading,
-  pendingTestStats,
-  isTestResultsDetailsLoading,
-  testResultsDetails,
-  labMachines,
-  isLabMachinesLoading,
-  isTestResultsSubmitLoading,
-  specimenActions,
-  transportActions,
-  cancellationReasons,
-  isCancellOrderLoading,
-  isCancellationReasonsLoading,
-  resultReviewedDate,
-  resultReleaseDate,
-  isTestResultReviewed,
-  isTestResultReleased,
-  isPendingSpecimenStatsLoading,
-  pendingSpecimenStats,
-  specimensList,
-  isSpecimensListLoading,
-  isTestResultsSubmitWentSuccessful,
-  specimensFiltersList,
-  isSpecimensFiltersLoading,
   allTestsSpecimensList,
-  isAllTestsSpecimensListLoading,
   appointmentSpecimens,
+  isAllTestsSpecimensListLoading,
   isAppointmentSpecimensLoading,
-  specimenStorageLocations,
-  isSpecimenStorageLocationsLoading,
-  isSendingSpecimenCollectionData,
-  isLabsLoading,
-  testResultLabs,
   isCreatingTransportFolder,
-  specimensInTransportList,
-  isSpecimensInTransportListLoading,
-  transportFolders,
-  lastCreatedTransportFolderId,
-  isOrdersFiltersLoading,
-  ordersFilters,
+  isLabMachinesLoading,
+  isLabsLoading,
+  isPendingSpecimenStatsLoading,
+  isPendingTestStatsLoading,
+  isResultsFiltersLoading,
+  isResultsLoading,
+  isSendingSpecimenCollectionData,
   isSpecimensConfirmationButtonClicked,
-  orderStatuses,
-  isRequisitionDownloaded,
-  orderResultsFilters,
-  isOrderResultsFiltersLoading,
-  orderResultsByPatientList,
-  isOrderResultsByPatientListLoading,
-  orderResultsStatuses,
-  isOrdersListLoading,
-  ordersList
+  isSpecimensFiltersLoading,
+  isSpecimensInTransportListLoading,
+  isSpecimensListLoading,
+  isSpecimenStorageLocationsLoading,
+  isTestResultsDetailsLoading,
+  isTestResultsSubmitLoading,
+  isTestResultsSubmitWentSuccessful,
+  isTransportFolderDownloaded,
+  labMachines,
+  lastCreatedTransportFolderId,
+  pendingSpecimenStats,
+  pendingTestStats,
+  resultsFiltersList,
+  resultsList,
+  specimenActions,
+  specimensFiltersList,
+  specimensInTransportList,
+  specimensList,
+  specimenStorageLocations,
+  testResultLabs,
+  testResultsDetails,
+  testResultStateStatus,
+  transportActions,
+  transportFolders,
+  transportList
 };
