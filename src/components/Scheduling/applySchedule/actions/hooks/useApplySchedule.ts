@@ -44,7 +44,6 @@ const useHandleApplySchedule = () => {
         templateId: scheduleTemplate.id,
         // Convert to number repeatWeeksCount which comes from autocomplete as a string
         repeatWeeksCount: +repeatWeeksCount,
-        // Transform FE applyDays data to BE acceptable fix PCP-1477!
         applyDays: selectedWeekdaysToApply.map((item: number) => calculateWeekByNumber(item)),
         startDate: calculateTimeInUTC(startScheduleDate),
         endDate: calculateTimeInUTC(endScheduleDate)

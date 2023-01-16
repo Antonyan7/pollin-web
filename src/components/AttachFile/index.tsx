@@ -45,7 +45,7 @@ const AttachFile: FC<AttachedFileProps> = ({ currentFormFieldName }) => {
     }));
 
     append(newAttachedFiles);
-    // ? Clear input value after file attachment [PCP-1999].
+    // ? Clear input value after file attachment.
     e.target.value = '';
   };
 

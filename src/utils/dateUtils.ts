@@ -22,9 +22,24 @@ export const toUTCIsoString = (value: Date) => {
   return '';
 };
 
+export const pickOnlyValidTime = (value: Date | string) => {
+  const dateTime = new Date(value);
+  const minutes = dateTime.getMinutes();
+  const hours = dateTime.getHours();
+
+  // ? When selected time is greater than maximum available time, then set maximum time value for as a rounding up time to avoid select working hours which are passed.
+  if (hours >= 18 && minutes > 0) {
+    dateTime.setMinutes(0);
+  }
+
+  return dateTime;
+};
+
 export const toLocalIsoString = (value: Date | null) => {
   if (value && isValid(value)) {
-    return formatISO(value);
+    const dateTime = pickOnlyValidTime(value);
+
+    return formatISO(dateTime);
   }
 
   return '';

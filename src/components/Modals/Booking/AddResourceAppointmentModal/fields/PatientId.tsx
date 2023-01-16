@@ -61,6 +61,9 @@ const PatientId = () => {
 
     if (newInputValue.length > 0) {
       setOpenAutocompleteList(true);
+      // ? Clean old data from redux for new value (After new search value.
+      // ? Clean up helps us to avoid duplicated data items which stuck in redux state)
+      dispatch(patientsMiddleware.cleanPatientList());
 
       const data = {
         searchString: newInputValue
@@ -68,6 +71,8 @@ const PatientId = () => {
 
       dispatch(patientsMiddleware.getPatientsList(data));
     } else {
+      // ? Clean old data from redux after closing autocomplete list
+      dispatch(patientsMiddleware.cleanPatientList());
       setOpenAutocompleteList(false);
     }
   }, []);
