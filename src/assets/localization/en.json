@@ -118,6 +118,8 @@
   "page.encounters.list.search": "Search Encounters",
   "page.encounters.list.title": "Encounters",
   "page.encounters.nothing.found": "No encounter notes have been created yet.",
+  "page.encounters.no.results.found": "No results found.",
+  "page.encounters.no.results.try.again": "Please try a different keyword.",
   "page.encounters.create.first.encounter": "Create First Encounter",
   "page.encounters.create.encounter": "Create Encounter",
   "page.encounters.encounter.type": "Encounter Type",

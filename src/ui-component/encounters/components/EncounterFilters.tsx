@@ -29,9 +29,9 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const [t] = useTranslation();
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const encounterFilters = useAppSelector(patientsSelector.encounterFilters) ?? [];
-  const [searchValue, setSearchValue] = useState<string>('');
+  const searchValue = useAppSelector(patientsSelector.encountersSearchValue);
   const [isSearchInputFocused, setSearchInputFocused] = useState(false);
-  const [filters, setFilters] = useState<IEncountersFilterOption[]>([]);
+  const selectedEncountersFilters = useAppSelector(patientsSelector.selectedEncountersFilters);
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
 
@@ -60,50 +60,45 @@ const EncounterFilters = ({ page }: { page: number }) => {
   useEffect(() => {
     const data: IEncountersReqBody = {
       patientId,
-      ...(filters.length ? { filters } : {}),
+      ...(selectedEncountersFilters.length ? { filters: selectedEncountersFilters } : {}),
       ...(searchValue.length ? { searchString: searchValue } : {}),
       ...(page ? { page } : {})
     };
 
     if (patientId) {
+      dispatch(patientsMiddleware.setEncountersLoadingState(true));
       throttleFn(data);
     }
-  }, [page, patientId, filters, searchValue, throttleFn]);
+  }, [page, patientId, selectedEncountersFilters, searchValue, throttleFn]);
 
   useEffect(() => {
     dispatch(patientsMiddleware.getEncounterFilters());
   }, []);
 
-  const handleSearchValueChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchValue(event.target.value);
-    },
-    [setSearchValue]
-  );
+  const handleSearchValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(patientsMiddleware.setEncounterSearch(event.target.value));
+  }, []);
 
-  const onAutoCompleteChange = useCallback(
-    (value: GroupedByTitlesProps[]) => {
-      const filteredResult = filterByUniqueCategory(value);
+  const onAutoCompleteChange = useCallback((value: GroupedByTitlesProps[]) => {
+    const filteredResult = filterByUniqueCategory(value);
 
-      setSelectedFilterResults(filteredResult);
+    setSelectedFilterResults(filteredResult);
 
-      const filteredResultOptions: IEncountersFilterOption[] = [];
+    const filteredResultOptions: IEncountersFilterOption[] = [];
 
-      filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
-        const filterOption = {
-          type: titleProps.options.type,
-          id: titleProps.options.id
-        };
+    filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
+      const filterOption = {
+        type: titleProps.options.type,
+        id: titleProps.options.id
+      };
 
-        filteredResultOptions.push(filterOption);
-      });
-      setFilters(filteredResultOptions);
-    },
-    [setFilters]
-  );
+      filteredResultOptions.push(filterOption);
+    });
+    dispatch(patientsMiddleware.setSelectedEncounterFilters(filteredResultOptions));
+  }, []);
 
   const clearSearchValue = useCallback(() => {
-    setSearchValue('');
+    dispatch(patientsMiddleware.setEncounterSearch(''));
   }, []);
 
   const onKeyDownEvent = (event: KeyboardEvent<HTMLElement>) => {

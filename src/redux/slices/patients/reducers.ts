@@ -6,6 +6,7 @@ import {
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
+import { IEncountersFilterOption } from 'types/patient';
 import {
   AlertDetailsProps,
   IEncounterFilterProps,
@@ -52,6 +53,12 @@ const reducers = createReducer({
   },
   setEncountersLoadingState(state, action: IAction<boolean>) {
     state.isEncountersListLoading = action.payload;
+  },
+  setEncountersSearchValue(state, action: IAction<string>) {
+    state.encountersSearchValue = action.payload;
+  },
+  setEncountersSelectedFilters(state, action: IAction<IEncountersFilterOption[]>) {
+    state.selectedEncountersFilters = action.payload;
   },
   setEncountersFiltersLoadingState(state, action: IAction<boolean>) {
     state.isEncountersFiltersLoading = action.payload;

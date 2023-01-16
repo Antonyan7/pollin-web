@@ -18,7 +18,7 @@ import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
 
 import EncounterNotesHeader from './EncounterNotesHeader';
 import EncounterNoteThumbnail from './EncounterNoteThumbnail';
-import NothingFoundEncounters from './NothingFoundEncounters';
+import EncountersEmptyState from './EncountersEmptyState';
 
 const Encounters = () => {
   const [page, setPage] = useState<number>(0);
@@ -85,9 +85,7 @@ const Encounters = () => {
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </>
-            ) : (
-              <NothingFoundEncounters />
-            )}
+            ) : null}
           </TableBody>
         </Table>
       </TableContainer>
@@ -95,7 +93,9 @@ const Encounters = () => {
         <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
           <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
-      ) : null}
+      ) : (
+        <EncountersEmptyState />
+      )}
     </>
   );
 };

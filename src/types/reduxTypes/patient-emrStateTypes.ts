@@ -12,7 +12,7 @@ import {
   IUpdateEncounterNoteRequest,
   LatestTestResultType
 } from '@axios/patientEmr/managerPatientEmrTypes';
-import { IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
+import { IEncountersFilterOption, IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
 
 interface IProfileProps {
   isOverviewLoading: boolean;
@@ -25,6 +25,8 @@ interface IProfileProps {
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
+  encountersSearchValue: string;
+  selectedEncountersFilters: IEncountersFilterOption[];
   encounters: IEncountersProps;
   isPatientProfileLoading: boolean;
   isPatientsListLoading: boolean;

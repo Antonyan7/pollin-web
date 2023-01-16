@@ -23,6 +23,8 @@ export const getInitialState = (): PatientEmrProps => ({
   isCreateEncounterAddendumLoading: false,
   isPatientContactInformationLoading: false,
   isPatientAlertViewOpen: true,
+  encountersSearchValue: '',
+  selectedEncountersFilters: [],
   encounters: {
     list: { encounters: [], pageSize: 0, currentPage: 0, totalItems: 0 },
     filters: [],

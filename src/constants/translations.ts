@@ -120,6 +120,8 @@ export enum Translation {
   PAGE_ENCOUNTERS_LIST_SEARCH = 'page.encounters.list.search',
   PAGE_ENCOUNTERS_LIST_TITLE = 'page.encounters.list.title',
   PAGE_ENCOUNTERS_NOTHING_FOUND = 'page.encounters.nothing.found',
+  PAGE_ENCOUNTERS_NO_RESULTS_FOUND = 'page.encounters.no.results.found',
+  PAGE_ENCOUNTERS_NO_RESULTS_TRY_AGAIN = 'page.encounters.no.results.try.again',
   PAGE_ENCOUNTERS_CREATE_FIRST_ENCOUNTER = 'page.encounters.create.first.encounter',
   PAGE_ENCOUNTERS_CREATE_ENCOUNTER = 'page.encounters.create.encounter',
   PAGE_ENCOUNTERS_ENCOUNTER_TYPE = 'page.encounters.encounter.type',

@@ -128,7 +128,7 @@ const SimpleTextEditor = ({
                 onChange={(event) => onChange(event.target.value)}
               >
                 {encounterTypes?.map((encounterType) => (
-                  <MenuItem value={encounterType.id} key={encounterType.toString()}>
+                  <MenuItem value={encounterType.id} key={encounterType.id}>
                     {encounterType.title}
                   </MenuItem>
                 ))}

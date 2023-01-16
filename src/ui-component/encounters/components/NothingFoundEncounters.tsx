@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -11,26 +11,23 @@ import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
 const NothingFoundEncounters = () => {
   const encountersList: IEncounterList = useAppSelector(patientsSelector.encountersList);
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
-  const isEncounterListAvailable = useMemo(
-    () => !isEncountersListLoading && !encountersList.encounters.length,
-    [encountersList.encounters.length, isEncountersListLoading]
-  );
+  const isFirstCreationAvailable = !encountersList.encounters.length && !isEncountersListLoading;
   const [t] = useTranslation();
   const theme = useTheme();
-  const router = useRouter();
+  const { query, push } = useRouter();
 
   const onCreateFirstEncounter = useCallback(() => {
-    router.push(`/patient-emr/details/${router.query.id}/add-note`);
-  }, [router]);
+    push(`/patient-emr/details/${query.id}/add-note`);
+  }, [push, query.id]);
 
-  return isEncounterListAvailable ? (
+  return isFirstCreationAvailable ? (
     <Box sx={{ textAlign: 'center', marginTop: margins.top150 }}>
       <Typography
         sx={{
           color: theme.palette.common.black,
-          marginBottom: margins.bottom20
+          marginBottom: margins.bottom20,
+          fontSize: theme.typography.pxToRem(21)
         }}
-        fontSize="21px"
         fontWeight="400"
       >
         {t(Translation.PAGE_ENCOUNTERS_NOTHING_FOUND)}
@@ -42,7 +39,7 @@ const NothingFoundEncounters = () => {
           padding: paddings.all16,
           border: `${borders.solid2px} ${theme.palette.primary.main}`,
           fontWeight: 400,
-          fontSize: '14px'
+          fontSize: theme.typography.pxToRem(14)
         }}
       >
         {t(Translation.PAGE_ENCOUNTERS_CREATE_FIRST_ENCOUNTER)}

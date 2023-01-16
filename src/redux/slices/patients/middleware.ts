@@ -10,7 +10,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch } from 'redux/store';
-import { IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
+import { IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
   ICreateEncounterNoteProps,
@@ -27,6 +27,8 @@ const {
   setPatientSearchFilters,
   setPatientAlertDetails,
   setCurrentPatientId,
+  setEncountersSearchValue,
+  setEncountersSelectedFilters,
   setPatientsLoadingState,
   setPatientsFiltersLoadingState,
   setPatientProfileOverview,
@@ -147,6 +149,14 @@ const resetPatientAlerts = () => (dispatch: AppDispatch) => {
   dispatch(setPatientAlertDetails([]));
 };
 
+const setEncounterSearch = (searchValue: string) => (dispatch: AppDispatch) => {
+  dispatch(setEncountersSearchValue(searchValue));
+};
+
+const setSelectedEncounterFilters = (selectedFilter: IEncountersFilterOption[]) => (dispatch: AppDispatch) => {
+  dispatch(setEncountersSelectedFilters(selectedFilter));
+};
+
 const setCurrentPatient = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setCurrentPatientId(patientId));
 };
@@ -200,8 +210,6 @@ export const getEncounterFilters = () => async (dispatch: AppDispatch) => {
 
 const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setEncountersLoadingState(true));
-
     const response = await API.patients.getEncounterList(encounterListData);
     const data: IEncounterList = {
       totalItems: response.data.totalItems,
@@ -474,7 +482,10 @@ export default {
   getPatientAlertDetails,
   resetPatientAlerts,
   getPatientProfileOverview,
+  setEncountersLoadingState,
   getEncounterList,
+  setEncounterSearch,
+  setSelectedEncounterFilters,
   getEncounterFilters,
   setCurrentPatient,
   cleanPatientList,
