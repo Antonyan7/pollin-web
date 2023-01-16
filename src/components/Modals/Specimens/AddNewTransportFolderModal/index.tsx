@@ -18,7 +18,8 @@ import {
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { dispatch } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { patientsSelector } from '@redux/slices/patients';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -30,6 +31,8 @@ import { ModalName } from 'types/modals';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import BaseModal from '@ui-component/Modal/BaseModal';
 
+import DatePickerWithTodayButton from '../AddNewExistingTransport/DatePickerWithTodayButton';
+
 const useStyles = makeStyles(() => ({
   menuPaper: {
     maxHeight: 200
@@ -40,6 +43,7 @@ const AddNewTransportFolderModal = () => {
   const classes = useStyles();
   const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const labList = useSelector(resultsSelector.testResultLabs);
+  const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [t] = useTranslation();
   const addNewTransportFolderModalTitleLabel = t(
     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE
@@ -61,8 +65,7 @@ const AddNewTransportFolderModal = () => {
     const body = {
       name: transportFolderName,
       labId,
-      // TODO Will pick the date from date picker from the root page after implementing that..
-      date: format(new Date(), "yyyy-MM-dd'T'HH:mm:ss+00:00")
+      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00")
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
@@ -81,6 +84,7 @@ const AddNewTransportFolderModal = () => {
             <Grid item xs={12}>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
+                  <DatePickerWithTodayButton />
                   <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs={6}>
                       <Typography variant="subtitle1" fontWeight="bold">
