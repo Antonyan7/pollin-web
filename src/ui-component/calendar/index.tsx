@@ -30,11 +30,8 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
 
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceProviders(1));
+    dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
-
-  // useEffect(() => {
-  //   dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
-  // }, []);
 
   useEffect(() => {
     if (router.isReady) {

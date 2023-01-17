@@ -18,7 +18,7 @@ const ApplyScheduleForm = () => {
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(1, true));
     dispatch(bookingMiddleware.getServiceProviders(1));
-    // dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
+    dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 
   return (
