@@ -1,4 +1,4 @@
-import { CalendarOptions } from '@fullcalendar/common';
+import { CalendarOptions } from '@fullcalendar/core';
 
 const FULL_CALENDAR_DEFAULT_PROPS: CalendarOptions = {
   rerenderDelay: 10,
@@ -7,9 +7,9 @@ const FULL_CALENDAR_DEFAULT_PROPS: CalendarOptions = {
   eventDisplay: 'block',
   height: 'auto',
   initialView: 'timeGridDay',
+  allDaySlot: false,
   slotLabelFormat: [{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }],
   eventTimeFormat: { hour: 'numeric', minute: '2-digit', hour12: false },
-  allDaySlot: false,
   slotMinTime: '07:00:00',
   slotMaxTime: '18:10:00',
   slotDuration: '00:10',

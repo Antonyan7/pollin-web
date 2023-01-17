@@ -1,12 +1,10 @@
-import '@fullcalendar/react/dist/vdom';
-
 import React from 'react';
 import { ISpecimenCollectionSlot } from '@components/SpecimenCollection/SpecimenCollectionCalendar/SpecimenCollectionCalendarTypes';
-import { CalendarOptions } from '@fullcalendar/common';
+import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
-import FullCalendar, { Ref } from '@fullcalendar/react';
+import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import { useAppSelector } from '@redux/hooks';
@@ -18,7 +16,7 @@ import useOnSpecimenCollectionEventClick from './hooks/useOnSpecimenCollectionEv
 
 interface Props {
   slots: ISpecimenCollectionSlot[];
-  calendarRef: Ref<FullCalendar>;
+  calendarRef: FullCalendar['elRef'];
   calendarDate: string;
 }
 
@@ -29,7 +27,7 @@ const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarD
     // TODO: open modal
   };
 
-  const onEventClick: CalendarOptions['eventClick'] = useOnSpecimenCollectionEventClick();
+  const onEventClick = useOnSpecimenCollectionEventClick();
 
   return (
     <FullCalendar
@@ -37,11 +35,10 @@ const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarD
       timeZone={timeZone}
       events={slots}
       ref={calendarRef}
-      select={onRangeSelect}
-      eventClick={onEventClick}
+      select={() => onRangeSelect}
+      eventClick={onEventClick as () => void}
       initialDate={calendarDate}
       plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
-      displayEventTime={false}
     />
   );
 };

@@ -1,6 +1,6 @@
 /* eslint-disable simple-import-sort/imports */
 import React from 'react';
-import FullCalendar, { Ref } from '@fullcalendar/react';
+import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
@@ -17,7 +17,7 @@ import FULL_CALENDAR_DEFAULT_PROPS from './constants/fullCalendarDefaultProps';
 interface FullCalendarContainerProps {
   slots: ICalendarSlot[];
   calendarDate: string;
-  calendarRef: Ref<FullCalendar>;
+  calendarRef: FullCalendar['elRef'];
 }
 
 const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({ slots, calendarDate, calendarRef }) => {
@@ -31,8 +31,8 @@ const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({ slots, ca
       timeZone={timeZone}
       events={slots}
       ref={calendarRef}
-      select={onRangeSelect}
-      eventClick={onEventClick}
+      select={onRangeSelect as () => void}
+      eventClick={onEventClick as () => void}
       initialDate={calendarDate}
       plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}
     />

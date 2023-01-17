@@ -11,7 +11,7 @@ import timelinePlugin from '@fullcalendar/timeline';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
 import { CreateSlot } from '@ui-component/calendar/Slot';
-import { changeDateSameTime, excludeDates, getWeekDay } from '@utils/dateUtils';
+import { changeDateSameTime, excludeDates, getDateInUtc, getWeekDay } from '@utils/dateUtils';
 import { SlotTypes } from 'types/calendar';
 import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
@@ -27,7 +27,6 @@ const Calendar = () => {
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
   const { timeZone } = useAppSelector(coreSelector.clinicConfigs);
-
   const initialDate: Date = useMemo(() => {
     const todaysDay = getWeekDay(new Date());
     let selectedWeekDays: number[] = [];
@@ -72,7 +71,7 @@ const Calendar = () => {
 
       calendarApi.prev();
 
-      const viewTitle = calendarApi.currentDataManager?.getCurrentData().viewTitle as string;
+      const viewTitle = getDateInUtc(new Date(calendarApi.getDate()));
 
       const getCurrentDate = new Date(viewTitle);
 
@@ -88,7 +87,7 @@ const Calendar = () => {
 
       calendarApi.next();
 
-      const viewTitle = calendarApi.currentDataManager?.getCurrentData().viewTitle as string;
+      const viewTitle = getDateInUtc(new Date(calendarApi.getDate()));
 
       const getCurrentDate = new Date(viewTitle);
 

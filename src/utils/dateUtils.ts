@@ -126,6 +126,20 @@ export const changeDateSameTimeString = (oldDate: string, newDate: string) => {
   return `${year}-${month}-${day}${oldDate.slice(10)}`;
 };
 
+export const changeToNeutralTime = (value: string) => {
+  const date = value.slice(0, 10);
+
+  return `${date}${neutralDateTime}`;
+};
+
+export const getDateInUtc = (date: Date) => {
+  if (date) {
+    return changeToNeutralTime(calculateTimeInUTC(date));
+  }
+
+  return '';
+};
+
 export const linkDateAndTime = (date: Date | null, time: Date | null) => {
   let result = '';
 

@@ -49,3 +49,7 @@ dist/
 
 #linter
 .eslintcache
+
+#yarn
+.yarn/cache
+.yarn/install-state.gz
