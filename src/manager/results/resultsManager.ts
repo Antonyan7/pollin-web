@@ -169,7 +169,7 @@ const resultsManager = {
   },
   downloadTransportFolderManifest(transportFolderId: string) {
     return axiosInstance.get<void, IAxiosResponse<void>>(
-      `${baseURL}/v1/transport/${transportFolderId}/download-manifest`
+      `/clinic-downloads/v1/transport/${transportFolderId}/download-manifest`
     );
   },
   applyRetestAction(specimenData: IRetestRecollectData[], reasonId: string) {

@@ -592,13 +592,17 @@ const downloadTransportFolderManifest = (transportFolderId: string) => async (di
   dispatch(setIsTransportFolderDownloaded(true));
 
   try {
-    await API.results.downloadTransportFolderManifest(transportFolderId);
+    const response = await API.results.downloadTransportFolderManifest(transportFolderId);
+
+    return response.data.data;
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
 
   dispatch(setIsTransportFolderDownloaded(false));
+
+  return null;
 };
 
 const downloadTestResultAttachment = (attachmentId: string) => async (dispatch: AppDispatch) => {
