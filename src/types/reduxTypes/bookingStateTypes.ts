@@ -81,8 +81,10 @@ export interface IServiceProvider extends IUniqueItem {}
 
 export interface IGroupedServiceProviders extends IPagination {
   providers: IGroupedServiceProvider[];
+  searchString?: string;
 }
 export interface IGroupedServiceProvider {
+  groupId: string;
   groupTitle: string;
   items: IUniqueItem[];
 }

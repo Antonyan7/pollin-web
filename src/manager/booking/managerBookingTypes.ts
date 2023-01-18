@@ -22,6 +22,7 @@ export interface IServiceProvidersReqParams {
 
 export interface IGroupedServiceProvidersParams {
   page: number;
+  searchString?: string;
   specimenCollection?: boolean;
 }
 

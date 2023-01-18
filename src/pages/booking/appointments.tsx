@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import { GroupedServiceProvidersPopper, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AddIcon from '@mui/icons-material/Add';
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Divider, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -19,13 +16,13 @@ import dynamic from 'next/dynamic';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { borderRadius, borders, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
-import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
 import { futureDate180DaysAfter, getCurrentDate, getDate, neutralDateTime } from '@utils/dateUtils';
 
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
@@ -46,23 +43,13 @@ const dateFormControlStyle = {
   marginRight: margins.right12
 };
 
-// eslint-disable-next-line max-lines-per-function
 const Appointments = () => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
-  const groupedServiceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
-  const [isSearchInputFocused, setSearchInputFocused] = useState<boolean>(false);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
-  const isGroupedServiceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
   const theme = useTheme();
   const [t] = useTranslation();
-  const [groupedServiceProvidersOptions, setGroupedServiceProvidersOptions] = useState<GroupedServiceProvidersOption>({
-    id: '',
-    type: '',
-    title: ''
-  });
-  const serviceProviderSelectRef = useRef(null);
-  const [serviceProviderCurrentPage, setServiceProviderCurrentPage] = useState<number>(2);
+
   const currentDay = getCurrentDate();
   const isToday = getDate(calendarDate) === getDate(currentDay);
   const onOpenAppointmentsModalAdd = useCallback(() => {
@@ -79,48 +66,11 @@ const Appointments = () => {
       dispatch(bookingMiddleware.setDateValue(format(date, 'yyyy-MM-dd')));
     }
   }, []);
-  const onServiceProviderChange = useCallback((providerOption?: GroupedServiceProvidersOption) => {
-    dispatch(bookingMiddleware.applyResource(providerOption?.id ?? ''));
-  }, []);
   const onTodayClick = useCallback(() => {
     dispatch(bookingMiddleware.setDateValue(getDate(getCurrentDate())));
   }, []);
-  const onClearIconClick = useCallback(() => {
-    onServiceProviderChange();
-    setGroupedServiceProvidersOptions({ title: '', id: '', type: '' });
-  }, [onServiceProviderChange]);
-  const onServiceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
-    const eventTarget = event.target as HTMLDivElement;
-
-    if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
-      if (groupedServiceProviders.pageSize * serviceProviderCurrentPage <= groupedServiceProviders.totalItems) {
-        setServiceProviderCurrentPage(serviceProviderCurrentPage + 1);
-        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: serviceProviderCurrentPage }));
-      }
-    }
-  };
 
   useAppointmentStatusState();
-
-  const showClearIcon = isSearchInputFocused && groupedServiceProvidersOptions.id;
-  const adaptedGroupedOptions = () =>
-    groupedServiceProviders.providers.flatMap((provider) =>
-      provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
-    );
-
-  useEffect(
-    () => {
-      if (serviceProviderId && groupedServiceProviders.providers.length) {
-        const defaultServiceProvider = groupedServiceProviders.providers
-          .flatMap((provider) => provider.items)
-          .find((providerItem) => providerItem.id === serviceProviderId);
-
-        setGroupedServiceProvidersOptions({ ...groupedServiceProvidersOptions, ...defaultServiceProvider });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [serviceProviderId, groupedServiceProvidersOptions.id, groupedServiceProviders]
-  );
 
   return (
     <Box>
@@ -140,39 +90,9 @@ const Appointments = () => {
         />
         <MainHeader>
           <Box sx={formControlStyle}>
-            <BaseDropdownWithLoading
-              isLoading={isGroupedServiceProvidersLoading}
-              data-cy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
-              PopperComponent={GroupedServiceProvidersPopper}
-              popupIcon={<KeyboardArrowDownIcon color="primary" />}
-              ref={serviceProviderSelectRef}
-              ListboxProps={{
-                style: {
-                  border: `${borders.solid2px} ${theme.palette.primary.main}`,
-                  borderRadius: borderRadius.radius12
-                },
-                onScroll: (event) => onServiceProviderScroll(event)
-              }}
-              id="grouped-service-provider-dropdown"
-              options={adaptedGroupedOptions()}
-              groupBy={(providerOption) => providerOption.type}
-              getOptionLabel={(providerOption) =>
-                typeof providerOption === 'object' ? providerOption.title : providerOption
-              }
-              isOptionEqualToValue={(providerOption, providerValue) => providerOption.id === providerValue.id}
-              onChange={(_event, providerOption) => {
-                if (providerOption) {
-                  onServiceProviderChange(providerOption as GroupedServiceProvidersOption);
-                }
-              }}
-              value={groupedServiceProvidersOptions}
-              onBlur={() => setSearchInputFocused(false)}
-              onFocus={() => setSearchInputFocused(true)}
-              clearIcon={showClearIcon ? <CloseIcon onClick={onClearIconClick} fontSize="small" /> : null}
-              renderInputProps={{
-                label: t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE),
-                value: serviceProviderId
-              }}
+            <ResourceDropdown
+              dataCy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
+              label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
             />
           </Box>
           <Box sx={dateFormControlStyle}>

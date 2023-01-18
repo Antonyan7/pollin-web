@@ -1,14 +1,13 @@
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
 export const usePaginatedAutoCompleteScroll = (
   initialPage: number,
   isLoading: boolean,
   pageSize: number,
   totalItems: number,
-  onBottomReach: (currentPage: number) => void
+  onBottomReach: (currentPage: number) => void // make sure this function will be memoized with useCallback
 ) => {
   const initialPageValue = useRef(initialPage);
-  const callback = useRef(onBottomReach);
   const page = useRef(initialPage);
   const ref = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef(0);
@@ -19,7 +18,7 @@ export const usePaginatedAutoCompleteScroll = (
     }
   }, [isLoading]);
 
-  return useCallback(
+  const onScroll = useCallback(
     (event: React.UIEvent) => {
       const eventTarget = event.target as HTMLDivElement;
 
@@ -30,11 +29,22 @@ export const usePaginatedAutoCompleteScroll = (
         scrollPosition.current = eventTarget.scrollTop;
         page.current = 1 + page.current;
 
-        callback.current(page.current);
+        onBottomReach(page.current);
 
         ref.current = eventTarget;
       }
     },
-    [isLoading, pageSize, totalItems]
+    [isLoading, onBottomReach, pageSize, totalItems]
   );
+
+  const resetScroll = useCallback(() => {
+    page.current = initialPageValue.current;
+    scrollPosition.current = 0;
+
+    if (ref.current) {
+      ref.current.scrollTop = 0;
+    }
+  }, []);
+
+  return useMemo(() => ({ onScroll, resetScroll }), [onScroll, resetScroll]);
 };

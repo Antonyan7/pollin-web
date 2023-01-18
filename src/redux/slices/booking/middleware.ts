@@ -90,11 +90,13 @@ const getGroupedServiceProviders =
       dispatch(setIsGroupedServiceProvidersLoading(true));
 
       const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
+
       const data: IGroupedServiceProviders = {
         totalItems: response.data.totalItems,
         currentPage: response.data.currentPage,
         pageSize: response.data.pageSize,
-        providers: response.data.data.providers
+        providers: response.data.data.providers,
+        ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
       };
 
       dispatch(setGroupedServiceProviders(data));
@@ -132,12 +134,13 @@ const getNewGroupedServiceProviders =
     try {
       dispatch(setIsGroupedServiceProvidersLoading(true));
 
-      const response = await API.booking.getGroupedServiceProviders({ page: serviceProvidersData.page });
+      const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
       const data: IGroupedServiceProviders = {
         totalItems: response.data.totalItems,
         currentPage: response.data.currentPage,
         pageSize: response.data.pageSize,
-        providers: response.data.data.providers
+        providers: response.data.data.providers,
+        ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
       };
 
       dispatch(updateGroupedServiceProviders(data));

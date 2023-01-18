@@ -29,14 +29,9 @@ interface BaseDropdownWithLoadingProps<
 }
 
 const EndAdornmentLoading = () => (
-  <CircularProgress
-    color="primary"
-    size={16}
-    sx={{
-      position: 'relative',
-      left: '20px'
-    }}
-  />
+  <InputAdornment position="end" sx={{ right: '12px', pointerEvents: 'none', position: 'absolute' }}>
+    <CircularProgress color="primary" size={20} />
+  </InputAdornment>
 );
 
 const BaseDropdownWithLoading = <
