@@ -3,7 +3,6 @@ import { Link as MuiLink, styled } from '@mui/material';
 import { LinkProps as MuiLinkProps } from '@mui/material/Link';
 import { SxProps } from '@mui/material/styles';
 import { Theme } from '@mui/system';
-import clsx from 'clsx';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -36,15 +35,16 @@ const Link = React.forwardRef(
   ) => {
     const router = useRouter();
     const pathname = typeof href === 'string' ? href : href.pathname;
-    const className = clsx(classNameProps, {
-      [activeClassName]: router.pathname === pathname && activeClassName
-    });
+    const linkClasses = classNameProps;
+    const isActiveLink = router.pathname === pathname && activeClassName && router.pathname !== '/';
+    const additionalClasses = isActiveLink ? activeClassName : '';
+    const allActualClasses = linkClasses.concat(additionalClasses);
 
     const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
 
     if (isExternal) {
       if (noLinkStyle) {
-        return <Anchor className={className} href={href} ref={ref} {...other} />;
+        return <Anchor className={allActualClasses} href={href} ref={ref} {...other} />;
       }
     }
 
@@ -52,7 +52,7 @@ const Link = React.forwardRef(
       <ComposedMuiLink
         component={NextLinkComposed}
         linkAs={linkAs}
-        className={className}
+        className={allActualClasses}
         ref={ref}
         to={href as string}
         {...other}
