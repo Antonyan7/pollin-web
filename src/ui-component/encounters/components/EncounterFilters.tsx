@@ -5,7 +5,7 @@ import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import { BoxProps, InputAdornment, useTheme } from '@mui/material';
+import { BoxProps, InputAdornment, Typography, useTheme } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
@@ -34,6 +34,8 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const selectedEncountersFilters = useAppSelector(patientsSelector.selectedEncountersFilters);
   const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
   const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
+  const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
+  const encountersList = useAppSelector(patientsSelector.encountersList);
 
   const searchFieldPlaceholder = t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH);
 
@@ -106,33 +108,45 @@ const EncounterFilters = ({ page }: { page: number }) => {
       (event.target as HTMLElement).blur();
     }
   };
+  const showSearchValueResult = !isEncountersListLoading && (searchValue.length || selectedEncountersFilters.length);
 
   return (
     <MainHeader>
-      <StyledOutlinedInput
-        onBlur={() => setSearchInputFocused(false)}
-        onFocus={() => setSearchInputFocused(true)}
-        onKeyDown={onKeyDownEvent}
-        onChange={handleSearchValueChange}
-        id="input-search-encounters"
-        value={searchValue}
-        placeholder={searchFieldPlaceholder}
-        startAdornment={
-          <InputAdornment position="start">
-            <SearchIcon sx={{ color: theme.palette.primary.main }} />
-          </InputAdornment>
-        }
-        endAdornment={
-          searchValue.length && !isSearchInputFocused ? (
-            <InputAdornment position="end">
-              <CloseIcon
-                sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
-                onClick={clearSearchValue}
-              />
+      <Box>
+        <StyledOutlinedInput
+          onBlur={() => setSearchInputFocused(false)}
+          onFocus={() => setSearchInputFocused(true)}
+          onKeyDown={onKeyDownEvent}
+          onChange={handleSearchValueChange}
+          id="input-search-encounters"
+          value={searchValue}
+          placeholder={searchFieldPlaceholder}
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon sx={{ color: theme.palette.primary.main }} />
             </InputAdornment>
-          ) : null
-        }
-      />
+          }
+          endAdornment={
+            searchValue.length && !isSearchInputFocused ? (
+              <InputAdornment position="end">
+                <CloseIcon
+                  sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
+                  onClick={clearSearchValue}
+                />
+              </InputAdornment>
+            ) : null
+          }
+        />
+        {showSearchValueResult ? (
+          <Typography
+            sx={{
+              marginLeft: margins.left16
+            }}
+          >
+            {encountersList.encounters.length} {t(Translation.PAGE_PATIENT_ENCOUNTERS_LIST_RESULTS)}
+          </Typography>
+        ) : null}
+      </Box>
       <BaseDropdownWithLoading
         id="encounterFilterId"
         fullWidth

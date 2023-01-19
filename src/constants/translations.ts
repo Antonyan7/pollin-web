@@ -8,6 +8,7 @@ export enum Translation {
   PAGE_PATIENT_LIST_ALERT_COUNT = 'page.patient.list.alert.count',
   PAGE_PATIENT_ENCOUNTERS_MODAL_TITLE = 'page.patient.encounters.modal.title',
   PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE = 'page.patient.encounters.modal.subtitle',
+  PAGE_PATIENT_ENCOUNTERS_LIST_RESULTS = 'page.patient.encounters.list.results',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TITLE = 'page.patient.profile.appointments.list.title',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_APPOINTMENT = 'page.patient.profile.appointments.list.table.header.appointment',
   PAGE_PATIENT_LATEST_TEST_RESULT_TITLE = 'page.patient.latest.test.result.title',
