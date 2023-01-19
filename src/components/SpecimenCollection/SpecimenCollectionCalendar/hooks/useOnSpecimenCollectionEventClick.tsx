@@ -13,7 +13,7 @@ const useOnSpecimenCollectionEventClick = () => {
   const appointmentDetails = useAppSelector(bookingSelector.appointmentDetails);
 
   useEffect(() => {
-    if (appointmentDetails?.patient.id) {
+    if (appointmentDetails?.patient.id && targetAppointment?.isEditable) {
       dispatch(patientsMiddleware.getPatientContactInformation(appointmentDetails?.patient.id));
       dispatch(
         viewsMiddleware.openModal({
