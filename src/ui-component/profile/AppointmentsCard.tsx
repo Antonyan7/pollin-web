@@ -122,7 +122,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
               </TableBody>
             </Table>
           </TableContainer>
-          {appointmentsList && appointmentsList.length > 0 && (
+          {appointmentsList && appointmentsList.length > 3 && (
             <CardActions>
               <Grid container justifyContent="right">
                 <Button variant="text" onClick={onViewAllClick}>
