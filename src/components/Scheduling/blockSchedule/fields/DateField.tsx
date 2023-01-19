@@ -1,42 +1,22 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Grid, TextField, TextFieldProps, Theme } from '@mui/material';
-import { MobileDateTimePicker } from '@mui/x-date-pickers';
-import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
-import { useAppSelector } from '@redux/hooks';
-import { coreSelector } from '@redux/slices/core';
-import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
+import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { UTCTimezone } from 'helpers/constants';
 import { toRoundupTime } from 'helpers/time';
 
-import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
-import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import {
-  changeTimezone,
-  customizeDatePickerDefaultValue,
-  dateInputValue,
-  futureDate180DaysAfter
-} from '@utils/dateUtils';
+import DefaultMobileDateTimePicker from '@ui-component/common/DefaultMobileDateTimePicker';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
-
-const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
 type DateAndStartTimeType = Date | null;
 type ErrorMessageType = string | null;
 
 const DateField = ({ fieldName }: IFieldRowProps) => {
-  const clinicConfigs = useAppSelector(coreSelector.clinicConfigs);
-  const {
-    workingHours: { start }
-  } = clinicConfigs;
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
   const [t] = useTranslation();
-  const [mobileDateTimePickerOpen, setMobileDateTimePickerOpen] = useState<boolean>(false);
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
     control
@@ -91,86 +71,23 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearErrors, endTime, startTime, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
-  const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
   const initialValue: DateAndStartTimeType = toRoundupTime(value);
-  const [initialDate, setInitialDate] = useState<DateAndStartTimeType | null>(initialValue);
-  const { outWorkingHours, customizeToTimeZone } = useMemo(
-    () => customizeDatePickerDefaultValue(initialDate as Date, start),
-    [initialDate, start]
-  );
-
-  useEffect(
-    () => {
-      if (outWorkingHours === 0) {
-        onChange(mobileDateTimeChange(customizeToTimeZone));
-        setInitialDate(mobileDateTimeChange(customizeToTimeZone));
-      }
-
-      if (!value) {
-        setInitialDate(null);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [outWorkingHours, initialDate, customizeToTimeZone, value]
-  );
 
   return (
     <Grid item xs={12}>
-      <MobileDateTimePicker
-        components={{ ActionBar: DatePickerActionBar }}
-        ampm={false}
-        views={dateTimeViewOptions}
+      <DefaultMobileDateTimePicker
         toolbarFormat="yyyy, MMM dd"
-        disablePast
-        open={mobileDateTimePickerOpen}
-        onOpen={() => setMobileDateTimePickerOpen(true)}
-        onClose={() => setMobileDateTimePickerOpen(false)}
-        minTime={MIN_SELECTABLE_DATE_TIME}
-        maxTime={MAX_SELECTABLE_DATE_TIME}
-        maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
         label={
           fieldName === 'startDate'
             ? t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)
             : t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)
         }
-        value={initialDate}
-        onChange={(newDate: DateAndStartTimeType) => {
-          onChange(mobileDateTimeChange(newDate));
-          setInitialDate(mobileDateTimeChange(newDate));
-        }}
-        minutesStep={10}
-        DialogProps={{
-          sx: {
-            '& .MuiTypography-overline': { textTransform: 'capitalize' },
-            '& .MuiPickersToolbar-penIconButton': { display: 'none' },
-            '& .MuiClock-clock': {
-              '& .MuiClockNumber-root': { color: (theme: Theme) => theme.palette.common.black },
-              '& .Mui-disabled': { color: (theme: Theme) => theme.palette.grey[500] }
-            }
-          }
-        }}
-        renderInput={(params: TextFieldProps) => {
-          const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
-          const formattedParams = {
-            ...params,
-            inputProps: {
-              ...params.inputProps,
-              value: formattedDate
-            }
-          };
-
-          return (
-            <TextField
-              {...fieldProps}
-              {...formattedParams}
-              fullWidth
-              sx={{ '& input, svg': { cursor: 'pointer' } }}
-              onClick={() => setMobileDateTimePickerOpen(true)}
-              helperText={errors[fieldName]?.message && errorMessage}
-              error={Boolean(errors[fieldName]?.message) && showErrorMessage}
-              InputProps={{ endAdornment: <CalendarIcon /> }}
-            />
-          );
+        value={initialValue}
+        onChange={onChange}
+        renderInputProps={{
+          ...fieldProps,
+          helperText: errors[fieldName]?.message && errorMessage,
+          error: Boolean(errors[fieldName]?.message) && showErrorMessage
         }}
       />
     </Grid>
