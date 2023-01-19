@@ -153,6 +153,7 @@ export const paddings = {
 export const borderRadius = {
   radius0: 0,
   radius4: '4px',
+  radius7: '7px',
   radius8: '8px',
   radius12: '12px'
 };

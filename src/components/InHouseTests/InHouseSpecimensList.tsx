@@ -150,16 +150,22 @@ const InHouseSpecimensList = () => {
   const numSelected = selected.length;
   const rowCount = specimensList?.specimens.length;
 
+  const invalidSearchedItems = specimensList.notFound.map((invalidItem) => invalidItem.identifier);
+
   return (
     <PatientListStyled>
       <Box sx={{ marginBottom: margins.bottom32 }}>
         <SpecimensStatsView stats={pendingSpecimenStats} />
       </Box>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
-          <SearchBox onSearch={searchByIdsHandler} placeholder={searchLabel} />
+      <Grid container spacing={3}>
+        <Grid item xs={12} md={6} lg={6}>
+          <SearchBox
+            onSearch={searchByIdsHandler}
+            placeholder={searchLabel}
+            invalidSearchedItems={invalidSearchedItems}
+          />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={6} lg={6}>
           <AutocompleteWrapper
             onChange={filterChangeHandler}
             label={filterLabel}

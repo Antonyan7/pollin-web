@@ -88,11 +88,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ testType = '' }) =>
                   {...(shouldShowSpecimenId && { currentTestResultPageId })}
                 />
                 {testResultDetails.items.length > 0 && (
-                  <MeasurementList
-                    listItems={testResultDetails.items}
-                    currentFormFieldName={currentFormFieldName}
-                    title={testResultDetails.title}
-                  />
+                  <MeasurementList listItems={testResultDetails.items} currentFormFieldName={currentFormFieldName} />
                 )}
                 <Grid px={paddings.leftRight24}>
                   <Divider sx={{ my: margins.topBottom8 }} />

@@ -277,7 +277,6 @@ export enum Translation {
   PAGE_INPUT_RESULTS_TEST_DATES_TITLE = 'page.input.results.test.dates.title',
   PAGE_INPUT_RESULTS_TEST_DATES_DATE_COLLECTED = 'page.input.results.test.dates.date.collected',
   PAGE_INPUT_RESULTS_TEST_DATES_DATE_ORDERED = 'page.input.results.test.dates.date.ordered',
-  PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_TITLE = 'page.input.results.test.measurement.list.title',
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_TYPE = 'page.input.results.test.measurement.list.field.name.type',
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_UNIT = 'page.input.results.test.measurement.list.field.name.unit',
   PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT = 'page.input.results.test.measurement.list.field.name.result',

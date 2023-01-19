@@ -25,17 +25,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   border: 'none'
 }));
 
-const StyledTableRow = styled(TableRow)(() => ({
-  border: 'none'
-}));
-
 export interface MeasurementListProps {
   listItems: ITestResultItem[];
   currentFormFieldName: string;
-  title: string;
 }
 
-const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName, title }) => {
+const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName }) => {
   const [t] = useTranslation();
 
   const { register, control } = useFormContext();
@@ -66,13 +61,6 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
           </TableRow>
         </TableHead>
         <TableBody>
-          <StyledTableRow>
-            <StyledTableCell>
-              <Typography variant="h5" component="h5">
-                {t(title)}
-              </Typography>
-            </StyledTableCell>
-          </StyledTableRow>
           {fields?.map((field, fieldIndex) => {
             const showResultOptionsDropdown = !!(
               listItems[fieldIndex].possibleResultOptions && listItems[fieldIndex].possibleResultOptions?.length
@@ -80,7 +68,18 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
 
             return (
               <TableRow key={field.id}>
-                <StyledTableCell>{listItems[fieldIndex].type}</StyledTableCell>
+                <StyledTableCell>
+                  <Typography
+                    variant="h5"
+                    component="h5"
+                    fontWeight={600}
+                    sx={{
+                      color: (theme) => theme.palette.secondary[800]
+                    }}
+                  >
+                    {listItems[fieldIndex].type}
+                  </Typography>
+                </StyledTableCell>
                 <StyledTableCell>{listItems[fieldIndex].unit}</StyledTableCell>
                 <StyledTableCell>
                   <PossibleResultOptionsField
