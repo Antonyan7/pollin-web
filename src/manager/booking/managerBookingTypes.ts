@@ -106,9 +106,15 @@ export interface IGetPatientAppointmentsListReqBody {
 export interface IPatientAppointment {
   id: string;
   type: string;
-  status: 'Booked' | 'Cancelled' | 'Fulfilled';
+  status: PatientAppointmentStatuses;
   date: string;
   time: string;
+}
+
+export enum PatientAppointmentStatuses {
+  Booked = 'Booked',
+  Cancelled = 'Cancelled',
+  Fulfilled = 'Fulfilled'
 }
 
 export interface IGetPatientAppointmentsListResponse {

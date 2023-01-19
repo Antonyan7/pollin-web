@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
 import AddIcon from '@mui/icons-material/Add';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
@@ -55,19 +55,26 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
   };
 
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
-  const onRowClick = (id: string) => {
+  const onRowClick = (id: string, status: PatientAppointmentStatuses) => {
+    const shouldOpenDetailsModal =
+      status === PatientAppointmentStatuses.Cancelled || appointmentType === AppointmentType.Past;
+
+    if (shouldOpenDetailsModal) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.DetailsAppointmentModal,
+          props: { appointmentId: id }
+        })
+      );
+
+      return;
+    }
+
     if (appointmentType === AppointmentType.Upcoming) {
       dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.EditAppointmentModal,
-          props: { appointmentId: id }
-        })
-      );
-    } else {
-      dispatch(
-        viewsMiddleware.openModal({
-          name: ModalName.DetailsAppointmentModal,
           props: { appointmentId: id }
         })
       );
@@ -97,7 +104,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
               <TableBody>
                 {appointmentsList &&
                   appointmentsList.slice(0, 3).map(({ id, status, type, date, time }) => (
-                    <TableRow hover key={id} onClick={() => onRowClick(id)}>
+                    <TableRow hover key={id} onClick={() => onRowClick(id, status)}>
                       <TableCell width="65%" sx={{ verticalAlign: 'middle' }}>
                         <Typography variant="h5">{type}</Typography>
                         <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
