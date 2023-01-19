@@ -43,9 +43,10 @@ const StyledOutlinedInputResultsFilter = styled(OutlinedInput, { shouldForwardPr
 interface ResultFiltersProps {
   setSearchValue: React.Dispatch<SetStateAction<string>>;
   setFiltersChange: (args: IResultsFilterOption[]) => void;
+  setPage: (page: number) => void;
 }
 
-const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps) => {
+const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFiltersProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const resultsFilterLabel = t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS);
@@ -62,12 +63,16 @@ const ResultFilters = ({ setSearchValue, setFiltersChange }: ResultFiltersProps)
       const debouncedCallback = debounce(() => setSearchValue(event.target.value), 1000);
 
       debouncedCallback();
+      setPage(0);
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setSearchValue]
   );
 
   const onFilterUpdate = (filters: IResultsFilterOption[]) => {
     setSelectedFilters(filters);
+    setPage(0);
     setFiltersChange(filters);
   };
 

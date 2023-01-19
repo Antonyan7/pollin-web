@@ -41,10 +41,6 @@ const PendingTestResultList = () => {
   }, []);
 
   useEffect(() => {
-    setPage(0);
-  }, [filters, searchValue]);
-
-  useEffect(() => {
     const data: IResultsReqBody = {
       ...(searchValue ? { searchString: searchValue } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
@@ -61,7 +57,7 @@ const PendingTestResultList = () => {
       <Box sx={{ marginBottom: margins.bottom32 }}>
         <SpecimensStatsView stats={pendingTestStats} />
       </Box>
-      <ResultFilters setSearchValue={setSearchValue} setFiltersChange={handleFiltersUpdate} />
+      <ResultFilters setPage={setPage} setSearchValue={setSearchValue} setFiltersChange={handleFiltersUpdate} />
       <TableContainer>
         <Table setSortField={setSortField} setSortOrder={setSortOrder} sortField={sortField} sortOrder={sortOrder} />
       </TableContainer>
