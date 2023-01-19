@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker, MobileDateTimePickerProps } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
 import { useAppSelector } from '@redux/hooks';
 import { coreSelector } from '@redux/slices/core';
 import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
+import { Translation } from 'constants/translations';
 import { UTCTimezone } from 'helpers/constants';
 import { toRoundupTime } from 'helpers/time';
 
@@ -21,7 +23,7 @@ interface DefaultMobileDateTimePickerProps<TInputDate, TDate>
   extends Omit<MobileDateTimePickerProps<TInputDate, TDate>, 'renderInput'> {
   renderInputProps?: TextFieldProps;
 }
-type DateAndStartTimeType = Date | null;
+export type DateAndStartTimeType = Date | null;
 
 const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
@@ -29,21 +31,26 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
   renderInputProps,
   value,
   onChange,
+  label,
   ...otherProps
 }: DefaultMobileDateTimePickerProps<TInputDate, TDate>) => {
+  const [t] = useTranslation();
   const clinicConfigs = useAppSelector(coreSelector.clinicConfigs);
+  const editModalLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_TIME_PICKER);
   const {
     workingHours: { start }
   } = clinicConfigs;
   const theme = useTheme();
   const mobileDateTimeChange = (date: DateAndStartTimeType) => toRoundupTime(date);
-  const initialValue: DateAndStartTimeType = toRoundupTime(value as string);
-  const [initialDate, setInitialDate] = useState<DateAndStartTimeType | null>(initialValue);
+  const initialValue: DateAndStartTimeType | TInputDate =
+    label === editModalLabel ? value : toRoundupTime(value as string);
+  const [initialDate, setInitialDate] = useState<DateAndStartTimeType | TInputDate | null>(initialValue);
   const { outWorkingHours, customizeToTimeZone } = useMemo(
     () => customizeDatePickerDefaultValue(initialDate as Date, start),
     [initialDate, start]
   );
   const formattedDate = dateInputValue(changeTimezone(initialDate as string | Date, UTCTimezone));
+
   const formattedParams = {
     inputProps: {
       value: formattedDate
@@ -83,6 +90,7 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
       onChange={onChange}
       components={{ ActionBar: DatePickerActionBar }}
       ampm={false}
+      label={label}
       disablePast
       minTime={MIN_SELECTABLE_DATE_TIME as TDate}
       maxTime={MAX_SELECTABLE_DATE_TIME as TDate}

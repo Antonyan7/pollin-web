@@ -6,9 +6,10 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { toRoundupTime } from 'helpers/time';
 
-import DefaultMobileDateTimePicker from '@ui-component/common/DefaultMobileDateTimePicker';
-import { changeTimezone, getTimezoneOffset } from '@utils/dateUtils';
+import DefaultMobileDateTimePicker, { DateAndStartTimeType } from '@ui-component/common/DefaultMobileDateTimePicker';
+import { changeTimezone, convertToLocale, getTimezoneOffset, toLocalIsoString } from '@utils/dateUtils';
 
 import { IFormValues } from '../types';
 
@@ -37,13 +38,15 @@ const DateAndStartTime: React.FC = () => {
     }
   }, [details?.appointment?.date, field.value]);
 
+  const getMobileDateTime = (date: DateAndStartTimeType) => toLocalIsoString(toRoundupTime(date));
+
   return (
     <Grid item xs={12}>
       <DefaultMobileDateTimePicker
         label={dateAndStartTimeLabel}
         data-cy={dateAndStartTimeLabelCyId}
-        value={field.value as string}
-        onChange={onChange}
+        value={convertToLocale(field.value as string)}
+        onChange={(date: DateAndStartTimeType) => onChange(getMobileDateTime(date))}
         renderInputProps={{
           ...fieldProps
         }}
