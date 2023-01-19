@@ -26,7 +26,7 @@ const OrderDetails = () => {
       <OrderDetailsHeader />
       <OrderDetailsBody />
       <OrderDetailsComments />
-      <OrderDetailsDataActions />
+      <OrderDetailsDataActions orderId={orderId as string} />
       {orderDetails.isEditable && <OrderDetailsActions />}
     </Stack>
   );

@@ -253,13 +253,17 @@ const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) =
   dispatch(setIsRequisitionDownloaded(true));
 
   try {
-    await API.results.downloadRequisition(orderId);
+    const response = await API.results.downloadRequisition(orderId);
+
+    return response.data.data;
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
 
   dispatch(setIsRequisitionDownloaded(false));
+
+  return null;
 };
 
 const getOrdersFilters = () => async (dispatch: AppDispatch) => {
