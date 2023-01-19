@@ -3,7 +3,7 @@ inputs:
   node_version:
     description: 'Node version'
     required: false
-    default: v16.13.0
+    default: v16.17.0
   pat_to_read_package:
     description: 'Pat to read Packages'
     required: true
@@ -22,7 +22,9 @@ runs:
         echo "::endgroup::"
 
         echo "::group::Install yarn modules"
-        yarn install --ignore-scripts
+        yarn set version berry
+        rm -rf node_modules
+        yarn install --no-immutable
         yarn add cypress
         echo "::endgroup::"
       shell: bash

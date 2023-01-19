@@ -51,5 +51,10 @@ dist/
 .eslintcache
 
 #yarn
+.yarn/*
 .yarn/cache
-.yarn/install-state.gz
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions

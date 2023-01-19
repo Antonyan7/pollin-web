@@ -3,7 +3,7 @@ inputs:
   node_version:
     description: 'Node version'
     required: false
-    default: v16.13.0
+    default: v16.17.0
 
 description:
 runs:
@@ -12,7 +12,9 @@ runs:
     - name: Install Modules
       run: |
         echo "::group::Install npm modules"
-        yarn install --ignore-scripts
+        yarn set version berry
+        rm -rf node_modules
+        yarn install --no-immutable
         echo "::endgroup::"
 
       shell: bash
