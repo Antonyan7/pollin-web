@@ -45,7 +45,7 @@ class RequestManager {
       const captchaToken = await FirebaseManager?.getToken();
       const idToken = await FirebaseManager?.getIdToken();
 
-      requestConfig.headers.set({
+      requestConfig.headers = {
         'x-pollin-device-id': getOrGenerateDeviceId(),
         'x-pollin-request-id': generateRequestId(),
         'x-pollin-lang': 'en',
@@ -53,7 +53,7 @@ class RequestManager {
         'x-pollin-firebase-app-check': captchaToken,
         'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
         'x-pollin-id-token': idToken
-      });
+      };
 
       return requestConfig;
     });

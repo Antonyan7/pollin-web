@@ -28,9 +28,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 export interface MeasurementListProps {
   listItems: ITestResultItem[];
   currentFormFieldName: string;
+  title: string;
 }
 
-const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName }) => {
+const StyledTableRow = styled(TableRow)(() => ({
+  border: 'none'
+}));
+
+const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFormFieldName, title }) => {
   const [t] = useTranslation();
 
   const { register, control } = useFormContext();
@@ -61,6 +66,15 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
           </TableRow>
         </TableHead>
         <TableBody>
+          {fields?.length > 1 ? (
+            <StyledTableRow>
+              <StyledTableCell>
+                <Typography variant="h5" component="h5" fontWeight={600}>
+                  {t(title)}
+                </Typography>
+              </StyledTableCell>
+            </StyledTableRow>
+          ) : null}
           {fields?.map((field, fieldIndex) => {
             const showResultOptionsDropdown = !!(
               listItems[fieldIndex].possibleResultOptions && listItems[fieldIndex].possibleResultOptions?.length
