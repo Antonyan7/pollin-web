@@ -323,7 +323,7 @@ export interface ISpecimensFilterCategory extends IResultsFilterCategory {}
 export interface TestResultsDetails extends ITestResultsDetails {}
 
 export enum TestType {
-  OrderGroup = 'Pollin Blood Test Group',
+  OrderGroup = 'OrderGroup',
   TestPanel = 'Panel',
   TestType = 'TestType'
 }
