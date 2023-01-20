@@ -7,9 +7,9 @@ import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
-import throttle from 'lodash.throttle';
 import { borderRadius, borders } from 'themes/themeConstants';
 
+import { useLodashThrottle } from '@hooks/useLodashThrottle';
 import { usePaginatedAutoCompleteScroll } from '@hooks/usePaginatedAutoCompleteScroll';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -100,21 +100,7 @@ const ResourceDropdown = ({ specimenCollection = false, dataCy, label }: Resourc
     [specimenCollection]
   );
 
-  const throttleFn = useMemo(
-    () =>
-      throttle(handleThrottleSearch, 1000, {
-        leading: false,
-        trailing: true
-      }),
-    [handleThrottleSearch]
-  );
-
-  useEffect(
-    () => () => {
-      throttleFn.cancel();
-    },
-    [throttleFn]
-  );
+  const throttleFn = useLodashThrottle(handleThrottleSearch);
 
   useEffect(() => {
     resetScroll();

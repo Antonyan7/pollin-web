@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { KeyboardEvent, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
@@ -9,12 +9,12 @@ import { BoxProps, InputAdornment, Typography, useTheme } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
-import throttle from 'lodash.throttle';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
 import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
 
+import { useLodashThrottle } from '@hooks/useLodashThrottle';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
@@ -43,21 +43,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
     dispatch(patientsMiddleware.getEncounterList(data));
   }, []);
 
-  const throttleFn = useMemo(
-    () =>
-      throttle(handleThrottleSearch, 1000, {
-        leading: false,
-        trailing: true
-      }),
-    [handleThrottleSearch]
-  );
-
-  useEffect(
-    () => () => {
-      throttleFn.cancel();
-    },
-    [throttleFn]
-  );
+  const throttleFn = useLodashThrottle(handleThrottleSearch);
 
   useEffect(() => {
     const data: IEncountersReqBody = {
