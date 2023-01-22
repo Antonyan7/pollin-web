@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
+import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins, paddings } from 'themes/themeConstants';
@@ -27,6 +28,7 @@ import Chip from '@ui-component/patient/Chip';
 const LatestTestResults = () => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const [t] = useTranslation();
+  const router = useRouter();
   const latestTestResults = useAppSelector(patientsSelector.latestTestResults);
 
   useEffect(() => {
@@ -98,7 +100,7 @@ const LatestTestResults = () => {
           </TableContainer>
           <CardActions>
             <Grid container justifyContent="right">
-              <Button variant="text">
+              <Button variant="text" onClick={() => router.push(`/patient-emr/details/${patientId}/orders`)}>
                 {t(Translation.COMMON_BUTTON_VIEW_ALL)}
                 <ChevronRightOutlinedIcon />
               </Button>
