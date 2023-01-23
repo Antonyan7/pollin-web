@@ -44,6 +44,7 @@ export const margins = {
   top2: '2px',
   top4: '4px',
   top8: '8px',
+  top10: '10px',
   top12: '12px',
   top16: '16px',
   top20: '20px',
