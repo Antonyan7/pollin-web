@@ -4,7 +4,7 @@ import { ConfigProps } from 'types/config';
 export const DASHBOARD_PATH = '/';
 
 const config: ConfigProps = {
-  fontFamily: `'Roboto', sans-serif`,
+  fontFamily: `'Geomanist', 'Lora', 'Roboto', sans-serif`,
   borderRadius: 8,
   outlinedFilled: true,
   navType: 'light', // light, dark

@@ -8,7 +8,9 @@ class CustomDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <style>@import url(`https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap`);</style>
+        </Head>
         <body>
           <Main />
           <NextScript />

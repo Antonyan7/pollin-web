@@ -3,8 +3,10 @@ import { useTranslation } from 'react-i18next';
 import AppointmentsContent from '@components/Appointments/AppointmentsContent';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import getDesktopDatePickerDefaultProps from '@components/DefaultDesktopDatePicker/defaultProps';
+import { CalendarTodayTwoTone } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Divider, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Divider, outlinedInputClasses, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
 import { BoxProps } from '@mui/system';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -19,7 +21,6 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
@@ -32,6 +33,10 @@ export const MainHeader = styled(Box)<BoxProps>(() => ({
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'space-between'
+}));
+
+const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
+  color: theme.palette.primary.main
 }));
 
 const formControlStyle = { minWidth: '210px', marginTop: margins.top32, marginRight: margins.right12 };
@@ -120,13 +125,22 @@ const Appointments = () => {
                   value={new Date(`${calendarDate}${neutralDateTime}`)}
                   onChange={(date: Date | null) => onDateChange(date)}
                   components={{
-                    OpenPickerIcon: CalendarIcon
+                    OpenPickerIcon: CalendarPopupIcon
                   }}
+                  // TODO: Make DesktopDatePicker one component with all updated styles.
+                  {...getDesktopDatePickerDefaultProps(theme)}
+                  showToolbar={false}
                   renderInput={(params) => (
                     <TextField
                       disabled
-                      sx={{ width: '320px' }}
+                      sx={{
+                        width: 300,
+                        [`.${outlinedInputClasses.notchedOutline}`]: {
+                          borderWidth: `1px !important`
+                        }
+                      }}
                       {...params}
+                      focused={datePickerOpen}
                       onClick={() => setDatePickerOpen(true)}
                       onKeyDown={(event) => {
                         event.preventDefault();
