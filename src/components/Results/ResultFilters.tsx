@@ -71,8 +71,8 @@ const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFilt
   );
 
   const onFilterUpdate = (filters: IResultsFilterOption[]) => {
-    setSelectedFilters(filters);
     setPage(0);
+    setSelectedFilters(filters);
     setFiltersChange(filters);
   };
 

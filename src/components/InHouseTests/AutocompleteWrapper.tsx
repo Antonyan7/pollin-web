@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material';
+import { useRouter } from 'next/router';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { IResultsFilterCategory } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+
+import { findFilterById } from '../../helpers/inHouse';
 
 interface AutocompleteWrapperProps {
   onChange: (args: IResultsFilterOption[]) => void;
@@ -15,6 +18,7 @@ interface AutocompleteWrapperProps {
 
 const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: AutocompleteWrapperProps) => {
   const theme = useTheme();
+  const router = useRouter();
   const [selectedFilters, setSelectedFilters] = useState<IResultsFilterOption[]>([]);
 
   const adaptedGroupedOptions = () =>
@@ -27,11 +31,21 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
     onChange(filters);
   };
 
+  useEffect(() => {
+    const { selectedFilter } = router.query;
+    const previousFilters = findFilterById(filtersList, selectedFilter);
+
+    setSelectedFilters(previousFilters);
+    onChange(previousFilters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtersList]);
+
   return (
     <BaseDropdownWithLoading
       fullWidth
       multiple
       isLoading={loading}
+      value={selectedFilters}
       ListboxProps={{
         style: {
           maxHeight: 260,

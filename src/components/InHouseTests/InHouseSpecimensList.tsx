@@ -25,6 +25,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
+import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
@@ -32,6 +33,8 @@ import { ISpecimensFilterOptions } from 'types/results';
 
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
+
+import { findFilterById } from '../../helpers/inHouse';
 
 import AutocompleteWrapper from './AutocompleteWrapper';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
@@ -52,6 +55,7 @@ const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensLi
 
 // eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
+  const router = useRouter();
   const [page, setPage] = useState<number>(0);
   const [identifiers, setIdentifiers] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
@@ -88,6 +92,41 @@ const InHouseSpecimensList = () => {
 
     dispatch(resultsMiddleware.getSpecimensList(data));
   }, [page, identifiers, selectedFilters, sortField, sortOrder, isSpecimensConfirmationButtonClicked]);
+
+  useEffect(() => {
+    const filters = selectedFilters?.map(({ id }) => id);
+
+    router.replace(
+      {
+        query: {
+          ...router.query,
+          selectedPage: page + 1,
+          ...(identifiers.length > 0 ? { selectedSpecimens: identifiers.map((identifier) => identifier) } : {}),
+          ...(selectedFilters.length > 0 ? { selectedFilter: filters } : {}),
+          ...(sortField ? { selectedSortField: sortField } : {}),
+          ...(sortOrder ? { selectedSortOrder: sortOrder } : {})
+        }
+      },
+      undefined,
+      { scroll: false }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, selectedFilters, sortField, sortOrder, identifiers]);
+
+  useEffect(() => {
+    const { selectedFilter, selectedPage, selectedSortField, selectedSortOrder, selectedSpecimens } = router.query;
+
+    if (filtersList.length) {
+      setPage(selectedPage ? Number(selectedPage) - 1 : 0);
+      setSortField(
+        selectedSortField ? (selectedSortField as SpecimensListSortFields) : SpecimensListSortFields.COLLECTION_AGE
+      );
+      setSortOrder(selectedSortOrder ? (selectedSortOrder as SortOrder) : SortOrder.Desc);
+      setIdentifiers(selectedSpecimens?.length ? (selectedSpecimens as string[]).map((specimen) => specimen) : []);
+      setSelectedFilters(findFilterById(filtersList, selectedFilter));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filtersList]);
 
   useEffect(() => {
     setToastHasBeenShown(false);
