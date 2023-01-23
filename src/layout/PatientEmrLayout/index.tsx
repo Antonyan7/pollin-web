@@ -45,20 +45,25 @@ const PatientOrdersAndResultsLayout = ({ children }: PropsWithChildren) => {
     }
   }, [currentPatientId, router.query.id]);
 
+  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
+
   return (
     <>
-      <PatientAlertView />
       <MainBreadcrumb
-        currentPage={patientProfile?.title as string}
+        currentPage={patientFullName}
         navigation={{
           basePath: '/',
           items: [
-            { name: 'Patient List/EMR', path: '/patient-emr/list' },
-            { name: patientProfile?.title, path: `/patient-emr/list/${currentPatientId}` }
+            { name: 'Patient List', path: '/patient-emr/list' },
+            {
+              name: patientFullName,
+              path: `/patient-emr/list/${currentPatientId}`
+            }
           ]
         }}
       />
       <br />
+      <PatientAlertView />
       <PatientHighlightsView />
       <br />
       <Tabs

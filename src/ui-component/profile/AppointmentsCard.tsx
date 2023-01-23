@@ -90,8 +90,8 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
       title={currentAppointmentType}
       secondary={
         appointmentType === AppointmentType.Upcoming && (
-          <IconButton>
-            <AddIcon onClick={onOpenAppointmentsModalAdd} />
+          <IconButton onClick={onOpenAppointmentsModalAdd}>
+            <AddIcon />
           </IconButton>
         )
       }

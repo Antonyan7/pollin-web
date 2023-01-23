@@ -5,7 +5,6 @@ import API from '@axios/API';
 import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
-import EarbudsIcon from '@mui/icons-material/Earbuds';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
@@ -26,6 +25,8 @@ import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
+
+import DoctorIcon from '@assets/icons/DoctorIcon';
 
 const avatarImage = '/assets/images/users';
 
@@ -146,7 +147,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Stack flexShrink={0}>
                     <Button
                       startIcon={
-                        <EarbudsIcon
+                        <DoctorIcon
                           sx={{
                             color: patientHighlightHeader.doctor.uiid
                               ? theme.palette.primary[800]
