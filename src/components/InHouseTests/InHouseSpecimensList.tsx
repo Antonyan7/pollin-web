@@ -188,8 +188,9 @@ const InHouseSpecimensList = () => {
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
   const numSelected = selected.length;
   const rowCount = specimensList?.specimens.length;
-
+  const isAllSelected = rowCount > rowsPerPage ? rowsPerPage : rowCount;
   const invalidSearchedItems = specimensList.notFound.map((invalidItem) => invalidItem.identifier);
+  const isAllSpecimensSelected = rowCount > 0 && !!numSelected && !!isAllSelected;
 
   return (
     <PatientListStyled>
@@ -222,7 +223,7 @@ const InHouseSpecimensList = () => {
                 <Checkbox
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
-                  checked={rowCount > 0 && numSelected === rowsPerPage}
+                  checked={isAllSpecimensSelected}
                   onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelected, setSelectedStatuses)}
                 />
               </TableCell>
