@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   ConsultationDivider,
-  ConsultationFormRadioGroup,
   ConsultationFormSubTitle,
+  ConsultationFormTitle,
   ConsultationTitleWithIcon
 } from '@components/Plans/components/common';
+import ConsultationFormRadio from '@components/Plans/components/ConslutationFormRadio/ConsultationFormRadio';
 import PartnerContent from '@components/Plans/components/PatientDetails/PartnerContent';
 import PartnerFormHeader from '@components/Plans/components/PatientDetails/PartnerHeader';
 import { getPatientDetailsValues, maximumAmoutOfPartners } from '@components/Plans/helpers';
 import { InitialConsultationFormRadioValues } from '@components/Plans/types';
 import AddIcon from '@mui/icons-material/Add';
-import { Button, FormControl, FormControlLabel, Grid, Radio, useTheme } from '@mui/material';
+import { Button, Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
@@ -39,7 +40,12 @@ const PatientDetails = () => {
   };
 
   return (
-    <>
+    <Grid item container xs={12} direction="column" gap={4}>
+      <Grid item container px={paddings.leftRight32}>
+        <ConsultationFormTitle>
+          {t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_PARTNER_DETAILS)}
+        </ConsultationFormTitle>
+      </Grid>
       <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
         <Grid
           item
@@ -59,25 +65,7 @@ const PatientDetails = () => {
         </Grid>
         <Grid item container direction="column" xs={8} gap={2}>
           <Grid>
-            <FormControl>
-              <ConsultationFormRadioGroup
-                onChange={onRadioFieldChange}
-                name="PartnerDetails"
-                aria-labelledby="partner-details"
-                value={radioContolValue}
-              >
-                <FormControlLabel
-                  value={InitialConsultationFormRadioValues.Yes}
-                  control={<Radio />}
-                  label={t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES)}
-                />
-                <FormControlLabel
-                  value={InitialConsultationFormRadioValues.No}
-                  control={<Radio />}
-                  label={t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO)}
-                />
-              </ConsultationFormRadioGroup>
-            </FormControl>
+            <ConsultationFormRadio value={radioContolValue} onChange={onRadioFieldChange} fieldName="JourneyInvolved" />
           </Grid>
           <Grid>
             <ConsultationFormSubTitle>
@@ -116,7 +104,7 @@ const PatientDetails = () => {
         </Grid>
       </Grid>
       <ConsultationDivider />
-    </>
+    </Grid>
   );
 };
 

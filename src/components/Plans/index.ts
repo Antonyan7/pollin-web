@@ -1,4 +1,5 @@
-import PatientContribution from './components/PatientContribution/PatientContribution';
-import PatientDetails from './components/PatientDetails/PatientDetails';
+import GenitourinaryHistory from '@components/Plans/components/GenitourinaryHistory/GenitourinaryHistory';
+import PatientContribution from '@components/Plans/components/PatientContribution/PatientContribution';
+import PatientDetails from '@components/Plans/components/PatientDetails/PatientDetails';
 
-export { PatientContribution, PatientDetails };
+export { GenitourinaryHistory, PatientContribution, PatientDetails };
