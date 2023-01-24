@@ -1,6 +1,8 @@
 import { ICreateEncounterAddendumRequest, ICreateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IEncountersFormDefaultProps } from 'types/patient';
 
+export const maxEncountersSearchLength = 100;
+
 export const getEditEncounterInitialValues = (
   initialValues?: IEncountersFormDefaultProps
 ): IEncountersFormDefaultProps => ({

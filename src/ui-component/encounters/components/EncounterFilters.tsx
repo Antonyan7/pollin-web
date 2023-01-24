@@ -16,6 +16,7 @@ import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
 
 import { useLodashThrottle } from '@hooks/useLodashThrottle';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+import { maxEncountersSearchLength } from '@ui-component/encounters/helpers/initialValues';
 
 const MainHeader = styled(Box)<BoxProps>(() => ({
   marginTop: margins.top16,
@@ -28,7 +29,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const theme = useTheme();
   const [t] = useTranslation();
   const patientId = useAppSelector(patientsSelector.currentPatientId);
-  const encounterFilters = useAppSelector(patientsSelector.encounterFilters) ?? [];
+  const encounterFilters = useAppSelector(patientsSelector.encounterFilters);
   const searchValue = useAppSelector(patientsSelector.encountersSearchValue);
   const [isSearchInputFocused, setSearchInputFocused] = useState(false);
   const selectedEncountersFilters = useAppSelector(patientsSelector.selectedEncountersFilters);
@@ -64,7 +65,13 @@ const EncounterFilters = ({ page }: { page: number }) => {
   }, []);
 
   const handleSearchValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(patientsMiddleware.setEncounterSearch(event.target.value));
+    const encounterSearchValue = event.target.value;
+
+    if (encounterSearchValue.length >= maxEncountersSearchLength) {
+      return;
+    }
+
+    dispatch(patientsMiddleware.setEncounterSearch(encounterSearchValue));
   }, []);
 
   const onAutoCompleteChange = useCallback((value: GroupedByTitlesProps[]) => {
@@ -95,6 +102,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
     }
   };
   const showSearchValueResult = !isEncountersListLoading && (searchValue.length || selectedEncountersFilters.length);
+  const showClearIcon = searchValue.length && !isSearchInputFocused;
 
   return (
     <MainHeader>
@@ -113,7 +121,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
             </InputAdornment>
           }
           endAdornment={
-            searchValue.length && !isSearchInputFocused ? (
+            showClearIcon ? (
               <InputAdornment position="end">
                 <CloseIcon
                   sx={{ color: theme.palette.primary.main, '&:hover': { cursor: 'pointer' } }}
