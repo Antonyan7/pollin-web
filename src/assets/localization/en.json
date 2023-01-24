@@ -155,6 +155,7 @@
   "page.results.title": "External Results",
   "page.results.list.field.search": "Patient Name/ID Search",
   "page.results.list.item.days": "days",
+  "page.results.list.item.day": "day",
   "page.results.cells.test.panel": "Test/Panel",
   "page.results.cells.patient.name": "Patient Name",
   "page.results.cells.patient.information": "Patient Information",

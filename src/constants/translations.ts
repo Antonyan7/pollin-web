@@ -157,6 +157,7 @@ export enum Translation {
   PAGE_RESULTS_TITLE = 'page.results.title',
   PAGE_RESULTS_LIST_FIELD_SEARCH = 'page.results.list.field.search',
   PAGE_RESULTS_LIST_ITEM_DAYS = 'page.results.list.item.days',
+  PAGE_RESULTS_LIST_ITEM_DAY = 'page.results.list.item.day',
   PAGE_RESULTS_CELLS_TEST_PANEL = 'page.results.cells.test.panel',
   PAGE_RESULTS_CELLS_PATIENT_NAME = 'page.results.cells.patient.name',
   PAGE_RESULTS_CELLS_PATIENT_INFORMATION = 'page.results.cells.patient.information',

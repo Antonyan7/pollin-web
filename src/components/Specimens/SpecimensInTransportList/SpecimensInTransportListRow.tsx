@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
-import { Translation } from 'constants/translations';
+import { getRowLabel } from 'helpers/getPatientRowLabel';
 import { ISpecimensInTransportListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
 import ContextMenu from '@ui-component/contextMenu';
@@ -44,7 +44,7 @@ export const SpecimensInTransportListRow = ({
       <TableCell>{row.identifier}</TableCell>
       <TableCell>{row.patientName}</TableCell>
       <TableCell>
-        <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
+        <Chip label={`${row.age} ${getRowLabel(row.age, t)}`} size="small" chipColor="notActive" />
       </TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>

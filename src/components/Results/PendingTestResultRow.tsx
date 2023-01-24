@@ -4,7 +4,7 @@ import { TableCell, TableRow, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
-import { Translation } from 'constants/translations';
+import { getRowLabel } from 'helpers/getPatientRowLabel';
 import { getChipColor } from 'helpers/resultsChipColor';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
@@ -56,7 +56,7 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
       <TableCell align="center">
         <Chip
           sx={{ background: chipColor.light, color: chipColor.dark }}
-          label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`}
+          label={`${row.age} ${getRowLabel(row.age, t)}`}
           size="small"
           chipColor="notActive"
         />

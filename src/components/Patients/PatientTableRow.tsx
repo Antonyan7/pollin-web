@@ -36,6 +36,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
       tabIndex={-1}
       key={row.id}
     >
+      <TableCell component="th" id={labelId} scope="row" />
       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography variant="subtitle1" sx={{ color: 'grey.900' }}>
           {row.name}

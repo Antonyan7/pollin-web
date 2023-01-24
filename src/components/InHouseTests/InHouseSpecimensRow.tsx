@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, useTheme } from '@mui/material';
-import { Translation } from 'constants/translations';
+import { getRowLabel } from 'helpers/getPatientRowLabel';
 import { useRouter } from 'next/router';
 import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
@@ -56,7 +56,7 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: I
       <TableCell>{row.machine}</TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="center">
-        <Chip label={`${row.age} ${t(Translation.PAGE_RESULTS_LIST_ITEM_DAYS)}`} size="small" chipColor="notActive" />
+        <Chip label={`${row.age}  ${getRowLabel(row.age, t)} `} size="small" chipColor="notActive" />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
         <ContextMenu actions={actions} row={row} />
