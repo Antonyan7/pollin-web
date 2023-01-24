@@ -11,14 +11,10 @@ import {
   useTheme
 } from '@mui/material';
 import { borders } from 'themes/themeConstants';
-// project imports
 
-// constant
 const headerSX = {
   '& .MuiCardHeader-action': { mr: 0 }
 };
-
-// ==============================|| CUSTOM MAIN CARD ||============================== //
 
 export interface MainCardProps {
   border?: boolean;
@@ -70,16 +66,13 @@ const MainCard = React.forwardRef(
           ...sx
         }}
       >
-        {/* card header and action */}
         {!darkTitle && title && <CardHeader sx={headerSX} title={title} action={secondary} />}
         {darkTitle && title && (
           <CardHeader sx={headerSX} title={<Typography variant="h3">{title}</Typography>} action={secondary} />
         )}
 
-        {/* content & header divider */}
         {title && <Divider />}
 
-        {/* card content */}
         {content && (
           <CardContent sx={contentSX} className={contentClass}>
             {children}

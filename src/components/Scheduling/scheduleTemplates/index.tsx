@@ -16,7 +16,6 @@ import { margins } from 'themes/themeConstants';
 import { ITableRow } from './ScheduleTemplatesTable/Table';
 import ScheduleTemplatesTable from './ScheduleTemplatesTable';
 
-// ==============================|| CUSTOMER LIST ||============================== //
 const ScheduleTemplates = () => {
   const [page, setPage] = React.useState<number>(0);
   const [rows, setRows] = React.useState<ITableRow[]>([]);
@@ -66,7 +65,6 @@ const ScheduleTemplates = () => {
         <ScheduleTemplatesContext>
           <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
         </ScheduleTemplatesContext>
-        {/* table pagination */}
         <TablePagination
           rowsPerPageOptions={[rowsPerPage]}
           component="div"
