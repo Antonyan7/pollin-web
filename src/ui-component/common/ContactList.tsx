@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import API from '@axios/API';
 import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
-import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
@@ -26,6 +25,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
 
+import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
 
 const avatarImage = '/assets/images/users';
@@ -122,7 +122,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                   <Stack flexShrink={0}>
                     <Button
                       startIcon={
-                        <ContentPasteIcon
+                        <AssignmentIcon
                           sx={{
                             color: patientHighlightHeader.doctor.uiid
                               ? theme.palette.primary[800]
@@ -154,7 +154,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                               : theme.palette.primary[200]
                           }}
                         />
-                      } // change icon
+                      }
                       disabled={!patientHighlightHeader.doctor.uiid}
                       onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
                     >

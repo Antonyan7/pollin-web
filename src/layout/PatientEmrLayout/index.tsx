@@ -57,7 +57,7 @@ const PatientOrdersAndResultsLayout = ({ children }: PropsWithChildren) => {
             { name: 'Patient List', path: '/patient-emr/list' },
             {
               name: patientFullName,
-              path: `/patient-emr/list/${currentPatientId}`
+              path: `/patient-emr/details/${currentPatientId}`
             }
           ]
         }}
