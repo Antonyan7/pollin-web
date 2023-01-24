@@ -1,14 +1,16 @@
 import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, FormControlLabel, FormGroup, Stack, useTheme } from '@mui/material';
+import { Box, FormControlLabel, FormGroup, Stack, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
 import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
+import { WhiteCheckedIcon } from '@assets/icons/WhiteCheckedIcon';
 import OrderGroupItem from '@ui-component/orders/OrderGroupItem';
 
 import { isAllGroupItemSelected, isAnyGroupItemSelected } from './helpers';
+import OrderGroupCheckbox from './OrderGroupCheckbox';
 
 interface GroupItemsWrapperProps {
   orderGroup: IOrderGroup;
@@ -67,13 +69,15 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         <FormGroup>
           <FormControlLabel
             control={
-              <Checkbox
+              <OrderGroupCheckbox
+                checkedColor={theme.palette.primary.main}
+                checkedIcon={<WhiteCheckedIcon />}
+                onChange={handleAllSelection}
                 checked={!!orderGroup?.id && isEverythingSelected}
                 indeterminate={!(!!orderGroup?.id && isEverythingSelected) ? atLeastOneSelectedItemExists : undefined}
-                onChange={handleAllSelection}
               />
             }
-            label={orderGroup.title}
+            label={<Box sx={{ color: theme.palette.secondary['800'] }}>{orderGroup.title}</Box>}
           />
         </FormGroup>
       </Stack>

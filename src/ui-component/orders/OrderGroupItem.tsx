@@ -1,14 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Checkbox, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps } from '@mui/material';
+import { Box, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
 
+import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
 import TestTypeChip from '@ui-component/orders/TestTypeChip';
 
 import { isAllGroupItemSelected, isAnyGroupItemSelected } from './helpers';
+import OrderGroupCheckbox from './OrderGroupCheckbox';
 
 interface Props {
   groupItem: IOrderGroupItem;
@@ -17,6 +19,8 @@ interface Props {
 }
 
 const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) => {
+  const theme = useTheme();
+
   const [isOpen, setIsOpen] = useState(false);
   const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
@@ -104,14 +108,16 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         <ListItem sx={{ display: 'list-item', px: 1 }}>{groupItem.title}</ListItem>
       ) : (
         <FormControlLabel
-          label={groupItem.title}
+          label={<Box sx={{ color: theme.palette.secondary['800'] }}>{groupItem.title}</Box>}
           sx={{ display: 'inline-flex' }}
           control={
             <>
-              <Checkbox
+              <OrderGroupCheckbox
+                checkedIcon={<CheckedIcon />}
+                checkedColor={theme.palette.primary.light}
+                onChange={onSelectChange}
                 checked={isEverythingSelected}
                 indeterminate={atLeastOneSelectedItemExists}
-                onChange={onSelectChange}
               />
               {groupItem.groupItems && groupItem.groupItems.length > 0 && (
                 <>
