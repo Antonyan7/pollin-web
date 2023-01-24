@@ -1,59 +1,17 @@
-import React, { KeyboardEvent, useCallback, useState } from 'react';
-import { Close, HighlightOffOutlined } from '@mui/icons-material';
+import React, { KeyboardEvent, useCallback, useRef, useState } from 'react';
+import { Close } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  Box,
-  Chip,
-  chipClasses,
-  IconButton,
-  InputAdornment,
-  OutlinedInput,
-  OutlinedInputProps,
-  styled,
-  useTheme
-} from '@mui/material';
-import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { IconButton, InputAdornment, OutlinedInput, outlinedInputClasses, Portal, useTheme } from '@mui/material';
 
-const StyledOutlinedInput = styled(OutlinedInput)<OutlinedInputProps>(({ theme }) => ({
-  '.MuiInputAdornment-root': {
-    height: '100%',
-    maxHeight: '100%',
-    display: 'grid',
-    gridTemplateColumns: 'repeat(3, max-content)'
-  },
-  width: '100%',
-  '.chips-container': {
-    height: '100%',
-    maxWidth: 500,
-    overflowX: 'overlay',
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'default',
-    '::-webkit-scrollbar': {
-      height: 5
-    },
-    '::-webkit-scrollbar-thumb': {
-      background: theme.palette.grey[500]
-    },
-
-    '::-webkit-scrollbar-thumb:hover': {
-      background: theme.palette.grey[700]
-    }
-  }
-}));
-
-interface SearchBoxProps {
-  onSearch: (values: string[]) => void;
-  placeholder: string;
-  invalidSearchedItems?: string[];
-}
+import { SearchBoxItems } from './SearchBoxItems';
+import { SearchBoxProps } from './types';
 
 const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSearchedItems }) => {
   const theme = useTheme();
   const [currentSearchboxValues, setCurrentSearchboxValues] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
-
-  const pushValue = (value: string) => {
+  const container = useRef();
+  const addSearchedValue = (value: string) => {
     if (currentSearchboxValues.indexOf(value) === -1 && !!value) {
       setCurrentSearchboxValues([...currentSearchboxValues, value]);
       setSearchValue('');
@@ -69,7 +27,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
     if (lastCharacter === ',' || lastCharacter === ' ') {
       const newValue = value.slice(0, -1).trim();
 
-      pushValue(newValue);
+      addSearchedValue(newValue);
     } else {
       setSearchValue(value);
     }
@@ -84,7 +42,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
       onSearch(currentSearchboxValues);
     }
 
-    pushValue(searchValue);
+    addSearchedValue(searchValue);
   };
 
   const clearClickHandler = useCallback(() => {
@@ -110,16 +68,33 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
 
   return (
     <form onSubmit={submitHandler}>
-      <StyledOutlinedInput
-        id="input-search-patients"
+      <OutlinedInput
         value={searchValue}
         placeholder={currentSearchboxValues.length === 0 ? placeholder : ''}
         onChange={changeHandler}
         onKeyDown={keyDownHandler}
         autoComplete="off"
         fullWidth
+        ref={container}
+        sx={{
+          display: 'flex',
+          [`.${outlinedInputClasses.input}`]: {
+            order: 3,
+            width: 'auto',
+            minWidth: '20%'
+          },
+          button: {
+            ml: 'auto',
+            order: 4
+          }
+        }}
         startAdornment={
-          <InputAdornment position="start">
+          <InputAdornment
+            position="start"
+            sx={{
+              order: 1
+            }}
+          >
             <IconButton type="submit">
               <SearchIcon
                 sx={{
@@ -128,53 +103,28 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
                 }}
               />
             </IconButton>
-            <Box className="chips-container">
-              {currentSearchboxValues.map((value) => {
-                const isSearchedItemInvalid = invalidSearchedItems?.includes(value);
-
-                return (
-                  <Chip
-                    color="primary"
-                    variant="outlined"
-                    sx={{
-                      ml: margins.left8,
-                      background: theme.palette.primary[100],
-                      borderRadius: borderRadius.radius7,
-                      border: isSearchedItemInvalid ? `1px solid ${theme.palette.error.main}` : 'none',
-                      color: theme.palette.primary.dark,
-                      fontWeight: 600,
-                      py: paddings.topBottom2,
-                      fontSize: theme.typography.pxToRem(14),
-                      lineHeight: '140%',
-                      maxHeight: theme.typography.pxToRem(24),
-                      [`.${chipClasses.label}`]: {
-                        pl: paddings.left8,
-                        pr: 0
-                      },
-                      [`.${chipClasses.deleteIcon}`]: {
-                        ml: theme.typography.pxToRem(9.33),
-                        fontSize: theme.typography.pxToRem(16),
-                        fill: theme.palette.primary.main
-                      }
-                    }}
-                    deleteIcon={<HighlightOffOutlined />}
-                    key={value}
-                    label={value}
-                    onDelete={() => searchboxValueDeleteHandler(value)}
-                  />
-                );
-              })}
-            </Box>
           </InputAdornment>
         }
         endAdornment={
           (currentSearchboxValues?.length > 0 || !!searchValue) && (
-            <IconButton onClick={clearClickHandler}>
+            <IconButton
+              onClick={clearClickHandler}
+              sx={{
+                order: 4
+              }}
+            >
               <Close color="primary" />
             </IconButton>
           )
         }
       />
+      <Portal container={container.current}>
+        <SearchBoxItems
+          searchboxValueDeleteHandler={searchboxValueDeleteHandler}
+          currentSearchboxValues={currentSearchboxValues}
+          invalidSearchedItems={invalidSearchedItems}
+        />
+      </Portal>
     </form>
   );
 };
