@@ -1,22 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
+import { TableCell, TableRow, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
+import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import ContextMenu from '@ui-component/contextMenu';
+import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
 
 interface InHouseSpecimensRowProps {
   row: ISpecimensListItem;
   actions: SpecimenActionsValues[];
   isItemSelected: boolean;
-  onClick: (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => void;
-  labelId: string;
+  onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 }
 
-export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected, labelId }: InHouseSpecimensRowProps) => {
+export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: InHouseSpecimensRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const router = useRouter();
@@ -30,21 +31,24 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected, lab
   };
 
   return (
-    <TableRow role="checkbox" hover key={row.id} onClick={navigateToTestResultsPage}>
-      <TableCell
-        padding="checkbox"
-        onClick={(event) => {
-          event.stopPropagation();
-          onClick(event, row.id);
-        }}
-      >
-        <Checkbox
-          sx={{ color: theme.palette.primary.main }}
-          checked={isItemSelected}
-          inputProps={{
-            'aria-labelledby': labelId
-          }}
+    <TableRow
+      role="checkbox"
+      hover
+      key={row.id}
+      onClick={navigateToTestResultsPage}
+      {...(isItemSelected && {
+        sx: {
+          background: theme.palette.secondary[200]
+        }
+      })}
+    >
+      <TableCell padding="checkbox">
+        <CustomCheckbox
+          checkedIcon={<CheckedIcon />}
+          checkedColor={theme.palette.primary.light}
           key={row.id}
+          checked={isItemSelected}
+          onChange={(event) => onClick(event, row.id)}
         />
       </TableCell>
       <TableCell>{row.titles?.join(', ')}</TableCell>

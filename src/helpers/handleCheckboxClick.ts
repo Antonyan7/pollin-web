@@ -31,7 +31,7 @@ export const handleSelectAllClick = (
 };
 
 export const onCheckboxClick = (
-  event: React.MouseEvent,
+  event: React.ChangeEvent<HTMLInputElement>,
   id: string,
   status: string,
   selected: string[],

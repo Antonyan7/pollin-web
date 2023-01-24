@@ -7,7 +7,6 @@ import SearchBox from '@components/SearchBox';
 import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
-  Checkbox,
   CircularProgress,
   Grid,
   Table,
@@ -31,7 +30,9 @@ import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
+import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
+import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
 import { findFilterById } from '../../helpers/inHouse';
@@ -220,8 +221,9 @@ const InHouseSpecimensList = () => {
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
-                <Checkbox
-                  sx={{ color: theme.palette.primary.main }}
+                <CustomCheckbox
+                  checkedIcon={<CheckedIcon />}
+                  checkedColor={theme.palette.primary.light}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={isAllSpecimensSelected}
                   onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelected, setSelectedStatuses)}
@@ -252,10 +254,9 @@ const InHouseSpecimensList = () => {
           </TableHead>
           {!isSpecimensListLoading ? (
             <TableBody>
-              {specimensList?.specimens?.map((row: ISpecimensListItem, index: number) => {
+              {specimensList?.specimens?.map((row: ISpecimensListItem) => {
                 const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
                 const isItemSelected = isSelected(row.id);
-                const labelId = `enhanced-table-checkbox-${index}`;
 
                 return (
                   <InHouseSpecimensRow
@@ -264,7 +265,6 @@ const InHouseSpecimensList = () => {
                     actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
                     isItemSelected={isItemSelected}
                     onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
-                    labelId={labelId}
                   />
                 );
               })}

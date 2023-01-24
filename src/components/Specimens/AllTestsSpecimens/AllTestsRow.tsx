@@ -11,7 +11,7 @@ interface AllTestsRowProps {
   row: IAllTestsSpecimensListItem;
   actions: SpecimenActionsValues[];
   isItemSelected: boolean;
-  onClick: (event: React.MouseEvent<HTMLTableHeaderCellElement, MouseEvent>, name: string) => void;
+  onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
   labelId: string;
 }
 
@@ -21,18 +21,16 @@ export const AllTestsRow = ({ row, actions, isItemSelected, onClick, labelId }: 
 
   return (
     <TableRow role="checkbox" hover key={row.id}>
-      <TableCell
-        padding="checkbox"
-        onClick={(event) => {
-          event.stopPropagation();
-          onClick(event, row.id);
-        }}
-      >
+      <TableCell padding="checkbox">
         <Checkbox
           sx={{ color: theme.palette.primary.main }}
           checked={isItemSelected}
           inputProps={{
             'aria-labelledby': labelId
+          }}
+          onChange={(event) => {
+            event.stopPropagation();
+            onClick(event, row.id);
           }}
           key={row.id}
         />

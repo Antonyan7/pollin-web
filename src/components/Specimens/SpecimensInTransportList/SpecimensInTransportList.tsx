@@ -127,7 +127,9 @@ const SpecimensInTransportList = () => {
                   key={row.id}
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
                   isItemSelected={isItemSelected}
-                  onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
+                  onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)
+                  }
                   labelId={labelId}
                 />
               );
