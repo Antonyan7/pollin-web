@@ -28,5 +28,6 @@ export const getInitialState = (): SchedulingProps => ({
     success: false,
     fail: false
   },
-  scheduleLoading: false
+  scheduleLoading: false,
+  isApplyingSchedule: false
 });

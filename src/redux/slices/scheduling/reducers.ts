@@ -59,6 +59,9 @@ const reducers = createReducer({
   },
   setIsServiceTypesLoading(state, action: IAction<boolean>) {
     state.isServiceTypesLoading = action.payload;
+  },
+  setIsApplyingSchedule(state, action: IAction<boolean>) {
+    state.isApplyingSchedule = action.payload;
   }
 });
 

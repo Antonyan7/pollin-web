@@ -35,7 +35,8 @@ const {
   setCalendarLoadingState,
   setScheduleLoading,
   setIsServiceTypesLoading,
-  updateScheduleTemplates
+  updateScheduleTemplates,
+  setIsApplyingSchedule
 } = slice.actions;
 
 const getServiceTypes = () => async (dispatch: AppDispatch) => {
@@ -101,6 +102,8 @@ const getNewSchedulingTemplates = (pageSize: number) => async (dispatch: AppDisp
 
 export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsApplyingSchedule(true));
+
     await API.scheduling.applyScheduleTemplate(data);
     dispatch(
       setApplyScheduleState({
@@ -117,6 +120,8 @@ export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispat
         fail: true
       })
     );
+  } finally {
+    dispatch(setIsApplyingSchedule(false));
   }
 };
 

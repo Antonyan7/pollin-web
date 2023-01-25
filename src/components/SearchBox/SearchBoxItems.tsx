@@ -16,6 +16,7 @@ export const SearchBoxItems: React.FC<SearchBoxItemsProps> = ({
         height: '100%',
         overflowX: 'overlay',
         display: 'flex',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         order: 2,
         cursor: 'default',

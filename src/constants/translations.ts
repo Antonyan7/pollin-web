@@ -320,6 +320,7 @@ export enum Translation {
   NAVIGATION_TAB_ITEM_RESULTS = 'navigation.tab.item.results',
   COMMON_BUTTON_CONFIRM_LABEL = 'common.button.confirm.label',
   COMMON_MODAL_HEADER_CANCEL_CONFIRMATION = 'common.modal.header.cancel.confirmation',
+  COMMON_TABLE_NO_RESULTS_FOUND = 'common.table.no.results.found',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY1 = 'page.in.house.results.test.cancel.modal.body1',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY2 = 'page.in.house.results.test.cancel.modal.body2',
   FILE_ATTACHMENT_MAXIMUM_LIMIT_REACHED_OUT = 'file.attachment.maximum.limit.reached.out',

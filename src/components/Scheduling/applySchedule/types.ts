@@ -21,7 +21,6 @@ export interface ApplyScheduleFormRowProps {
 }
 
 export interface ApplyScheduleButtonProps {
-  isScheduleLoading: boolean;
   isAllowedToApplySchedule: boolean;
   handleApplySchedule: () => void;
 }

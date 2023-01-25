@@ -318,6 +318,7 @@
   "navigation.tab.item.results": "Results",
   "common.button.confirm.label": "Confirm",
   "common.modal.header.cancel.confirmation": "Cancel Confirmation",
+  "common.table.no.results.found": "No results found",
   "page.in.house.results.test.cancel.modal.body1": "Are you sure you want to cancel?",
   "page.in.house.results.test.cancel.modal.body2": "Please note that your changes will not be saved.",
   "file.attachment.maximum.limit.reached.out": "You have reached maximum number of attachments",

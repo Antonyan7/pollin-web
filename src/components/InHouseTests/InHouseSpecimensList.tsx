@@ -5,6 +5,7 @@ import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import { SeveritiesType } from '@components/Scheduling/types';
 import SearchBox from '@components/SearchBox';
 import { HeadCell } from '@components/Table/HeadCell';
+import NoResultsFound from '@components/Table/NoResultsFound';
 import {
   Box,
   CircularProgress,
@@ -53,7 +54,7 @@ const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensLi
     </div>
   `;
 };
-
+// TODO: Refactor this file after demo reduce complexity + follow 150 lines rule!
 // eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
   const router = useRouter();
@@ -188,10 +189,12 @@ const InHouseSpecimensList = () => {
 
   const isSelected = (id: string) => selected.indexOf(id) !== -1;
   const numSelected = selected.length;
-  const rowCount = specimensList?.specimens.length;
-  const isAllSelected = rowCount > rowsPerPage ? rowsPerPage : rowCount;
+  const rowsCount = specimensList?.specimens.length;
+  const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
   const invalidSearchedItems = specimensList.notFound.map((invalidItem) => invalidItem.identifier);
-  const isAllSpecimensSelected = rowCount > 0 && !!numSelected && !!isAllSelected;
+  const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
+  const areAvailableSpecimens = rowsCount > 0;
+  const isResultsNotFound = !areAvailableSpecimens && !isSpecimensListLoading;
 
   return (
     <PatientListStyled>
@@ -224,7 +227,7 @@ const InHouseSpecimensList = () => {
                 <CustomCheckbox
                   checkedIcon={<CheckedIcon />}
                   checkedColor={theme.palette.primary.light}
-                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  indeterminate={numSelected > 0 && numSelected < rowsCount}
                   checked={isAllSpecimensSelected}
                   onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelected, setSelectedStatuses)}
                 />
@@ -269,14 +272,14 @@ const InHouseSpecimensList = () => {
                 );
               })}
             </TableBody>
-          ) : null}
+          ) : (
+            <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+              <CircularProgress sx={{ margin: margins.auto }} />
+            </Box>
+          )}
         </Table>
       </TableContainer>
-      {isSpecimensListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : null}
+      {isResultsNotFound && <NoResultsFound />}
       <TablePagination
         component="div"
         count={specimensList.totalItems}

@@ -56,6 +56,7 @@ export interface SchedulingProps {
   scheduleSingleTemplate: SingleSchedulingProps;
   schedulingListLoadingStatus: boolean;
   scheduleTemplates: IScheduleTemplatesList;
+  isApplyingSchedule: boolean;
   error: AxiosError<{ status: ISchedulingErrorResponseStatus }> | null;
   overrides: number[];
   scheduleBlock: BlockSchedulingProps;
