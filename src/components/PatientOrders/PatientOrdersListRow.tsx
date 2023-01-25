@@ -44,7 +44,7 @@ const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
               backgroundColor: chipBackgroundColor
             }
           }}
-          label={row.status}
+          label={currentOrderStatus?.title}
           chipColor="active"
         />
       </TableCell>

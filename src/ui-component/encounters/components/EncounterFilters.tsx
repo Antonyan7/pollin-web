@@ -67,7 +67,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const handleSearchValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const encounterSearchValue = event.target.value;
 
-    if (encounterSearchValue.length >= maxEncountersSearchLength) {
+    if (encounterSearchValue.length === maxEncountersSearchLength) {
       return;
     }
 
