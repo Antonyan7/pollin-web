@@ -10,6 +10,7 @@ import { ISortOrder, SortOrder } from 'types/patient';
 import { capitalizeFirst } from '@utils/stringUtils';
 
 interface AppointmentsListParams {
+  patientId: string;
   page: number;
   order: SortOrder | null;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
@@ -17,6 +18,7 @@ interface AppointmentsListParams {
 }
 
 interface AppointmentsListRequestBody {
+  patientId: string;
   page: number;
   sortOrder: ISortOrder;
   sortByField: PatientAppointmentsFields;
@@ -28,6 +30,7 @@ const getAppointmentsListFromParams = async (params: AppointmentsListParams) => 
   const sortByField = capitalizeFirst<PatientAppointmentsFields>(params.orderBy ?? PatientAppointmentsSortField.Date);
 
   const requestBody: AppointmentsListRequestBody = {
+    patientId: params.patientId,
     page: params.page,
     sortOrder,
     sortByField,

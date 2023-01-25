@@ -13,6 +13,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 const AppointmentListFilter = () => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const isAppointmentFiltersLoading = useAppSelector(patientsSelector.isPatientAppointmentFiltersLoading);
   const { list, orderBy, order, filters, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
   const { currentPage } = list;
@@ -24,7 +25,9 @@ const AppointmentListFilter = () => {
       : [];
 
   const onAppointmentRecencyChange = async (appointmentFilters: PatientAppointmentsFilterOption[]) => {
-    dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, appointmentFilters));
+    dispatch(
+      patientsMiddleware.getPatientAppointments(currentPatientId, currentPage, order, orderBy, appointmentFilters)
+    );
   };
 
   return (

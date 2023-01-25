@@ -45,24 +45,29 @@ const headCells: HeadCell[] = [
 
 const AppointmentsListTable = () => {
   const [t] = useTranslation();
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const { list, orderBy, order, selectedFilters, filters } = useAppSelector(patientsSelector.patientAppointments);
   const { appointments: tableData, totalItems, pageSize, currentPage } = list;
 
   useEffect(() => {
     if (tableData === null && filters !== null && currentPage) {
-      dispatch(patientsMiddleware.getPatientAppointments(currentPage, order, orderBy, selectedFilters));
+      dispatch(
+        patientsMiddleware.getPatientAppointments(currentPatientId, currentPage, order, orderBy, selectedFilters)
+      );
     }
-  }, [currentPage, selectedFilters, order, orderBy, tableData, filters]);
+  }, [currentPage, selectedFilters, order, orderBy, tableData, filters, currentPatientId]);
 
   const onTableHeadCellClick = async (newOrderBy: Exclude<HeadCell['id'], 'time'>) => {
     const switchOrder = order === SortOrder.Asc ? SortOrder.Desc : SortOrder.Asc;
     const newOrder = orderBy === newOrderBy ? switchOrder : SortOrder.Asc;
 
-    dispatch(patientsMiddleware.getPatientAppointments(currentPage, newOrder, newOrderBy, selectedFilters));
+    dispatch(
+      patientsMiddleware.getPatientAppointments(currentPatientId, currentPage, newOrder, newOrderBy, selectedFilters)
+    );
   };
 
   const onTablePageChange: TablePaginationProps['onPageChange'] = async (_e, newPage) => {
-    dispatch(patientsMiddleware.getPatientAppointments(newPage + 1, order, orderBy, selectedFilters));
+    dispatch(patientsMiddleware.getPatientAppointments(currentPatientId, newPage + 1, order, orderBy, selectedFilters));
   };
 
   return (

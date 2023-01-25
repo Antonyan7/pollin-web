@@ -435,6 +435,7 @@ const getPatientContactInformation = (patientId: string) => async (dispatch: App
 
 const getPatientAppointments =
   (
+    patientId: string,
     page: number,
     order: SortOrder | null,
     orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
@@ -445,6 +446,7 @@ const getPatientAppointments =
       const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
 
       const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
+        patientId,
         page,
         order,
         orderBy,
