@@ -5,41 +5,65 @@ import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { dispatch } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
+import { useRouter } from 'next/router';
 import { borderRadius, borders } from 'themes/themeConstants';
+import { IGroupedServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
 import { useLodashThrottle } from '@hooks/useLodashThrottle';
 import { usePaginatedAutoCompleteScroll } from '@hooks/usePaginatedAutoCompleteScroll';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 interface ResourceDropdownProps {
+  groupedServiceProvidersList: IGroupedServiceProviders;
+  serviceProviderId: string;
+  isGroupedServiceProvidersLoading: boolean;
   specimenCollection?: boolean;
   dataCy: string;
   label: string;
 }
 
-const ResourceDropdown = ({ specimenCollection = false, dataCy, label }: ResourceDropdownProps) => {
+const ResourceDropdown = ({
+  groupedServiceProvidersList,
+  serviceProviderId,
+  isGroupedServiceProvidersLoading,
+  specimenCollection = false,
+  dataCy,
+  label
+}: ResourceDropdownProps) => {
   const theme = useTheme();
+  const router = useRouter();
+  const { resource } = router.query;
 
-  const groupedServiceProvidersList = useAppSelector(bookingSelector.groupedServiceProvidersList);
-  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
-  const isGroupedServiceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
+  const [groupedServiceProvidersSelectedOption, setGroupedServiceProvidersSelectedOption] =
+    useState<GroupedServiceProvidersOption | null>(null);
 
-  const [groupedServiceProvidersOptions, setGroupedServiceProvidersOptions] = useState<GroupedServiceProvidersOption>({
-    id: '',
-    type: '',
-    title: ''
-  });
+  const adaptedGroupedOptions = useMemo(
+    () =>
+      groupedServiceProvidersList.providers.flatMap((provider) =>
+        provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
+      ),
+    [groupedServiceProvidersList.providers]
+  );
+
+  const onServiceProviderChange = useCallback(
+    (providerOption?: GroupedServiceProvidersOption) => {
+      dispatch(bookingMiddleware.applyResource(providerOption?.id ?? '', specimenCollection));
+    },
+    [specimenCollection]
+  );
 
   useEffect(() => {
-    if (serviceProviderId) {
-      setGroupedServiceProvidersOptions((prevGroupedServiceProvidersOptions) => ({
-        ...prevGroupedServiceProvidersOptions,
-        id: serviceProviderId
-      }));
+    if (typeof resource === 'string') {
+      const option = adaptedGroupedOptions.find(({ id }) => id === resource);
+
+      if (option) {
+        setGroupedServiceProvidersSelectedOption(option);
+        onServiceProviderChange(option);
+      }
     }
-  }, [serviceProviderId]);
+  }, [adaptedGroupedOptions, onServiceProviderChange, resource]);
 
   useEffect(() => {
     if (groupedServiceProvidersList.providers.length === 0 && groupedServiceProvidersList.currentPage === 0) {
@@ -51,18 +75,6 @@ const ResourceDropdown = ({ specimenCollection = false, dataCy, label }: Resourc
       );
     }
   }, [specimenCollection, groupedServiceProvidersList]);
-
-  const adaptedGroupedOptions = useMemo(
-    () =>
-      groupedServiceProvidersList.providers.flatMap((provider) =>
-        provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
-      ),
-    [groupedServiceProvidersList.providers]
-  );
-
-  const onServiceProviderChange = (providerOption?: GroupedServiceProvidersOption) => {
-    dispatch(bookingMiddleware.applyResource(providerOption?.id ?? ''));
-  };
 
   const onBottomReach = useCallback(
     (currentPage: number) => {
@@ -122,6 +134,7 @@ const ResourceDropdown = ({ specimenCollection = false, dataCy, label }: Resourc
           },
           onScroll: (event) => onServiceProviderScroll(event)
         }}
+        value={groupedServiceProvidersSelectedOption}
         options={adaptedGroupedOptions}
         filterOptions={(options) => options} // disable mui filtering the BE will give us filtered data
         groupBy={(option) => option.type}
@@ -130,8 +143,9 @@ const ResourceDropdown = ({ specimenCollection = false, dataCy, label }: Resourc
         onChange={(_event, option, reason) => {
           if (reason === 'clear') {
             onServiceProviderChange();
-            setGroupedServiceProvidersOptions({ ...groupedServiceProvidersOptions, id: '' });
+            setGroupedServiceProvidersSelectedOption(null);
           } else if (option) {
+            setGroupedServiceProvidersSelectedOption(option as GroupedServiceProvidersOption);
             onServiceProviderChange(option as GroupedServiceProvidersOption);
           }
         }}

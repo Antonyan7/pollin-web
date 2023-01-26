@@ -24,14 +24,17 @@ import slice from './slice';
 const {
   updateServiceProviders,
   updateGroupedServiceProviders,
+  updateSpecimenGroupedServiceProviders,
   setIsServiceProvidersLoading,
   setIsGroupedServiceProvidersLoading,
   setServiceProviders,
   setGroupedServiceProviders,
+  setSpecimenGroupedServiceProviders,
   setError,
   setDate,
   setAppointments,
   setCurrentServiceProviderId,
+  setCurrentSpecimenServiceProviderId,
   setCalendarLoadingState,
   setPatientsList,
   setPatientListLoading,
@@ -48,7 +51,8 @@ const {
   setCancelAppointmentErrorState,
   setSpecimenAppointmentsFilters,
   setSpecimenAppointmentsFiltersArrayLoading,
-  setSpecimenAppointments
+  setSpecimenAppointments,
+  setIsSpecimenGroupedServiceProvidersLoading
 } = slice.actions;
 
 const resetPatientData = (dispatch: AppDispatch) => {
@@ -87,7 +91,13 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
 const getGroupedServiceProviders =
   (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
     try {
-      dispatch(setIsGroupedServiceProvidersLoading(true));
+      const isSpecimenCollection = serviceProvidersData.specimenCollection;
+
+      dispatch(
+        isSpecimenCollection
+          ? setIsSpecimenGroupedServiceProvidersLoading(true)
+          : setIsGroupedServiceProvidersLoading(true)
+      );
 
       const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
 
@@ -99,12 +109,13 @@ const getGroupedServiceProviders =
         ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
       };
 
-      dispatch(setGroupedServiceProviders(data));
+      dispatch(isSpecimenCollection ? setSpecimenGroupedServiceProviders(data) : setGroupedServiceProviders(data));
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
     } finally {
       dispatch(setIsGroupedServiceProvidersLoading(false));
+      dispatch(setIsSpecimenGroupedServiceProvidersLoading(false));
     }
   };
 
@@ -132,7 +143,13 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
 const getNewGroupedServiceProviders =
   (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
     try {
-      dispatch(setIsGroupedServiceProvidersLoading(true));
+      const isSpecimenCollection = serviceProvidersData.specimenCollection;
+
+      dispatch(
+        isSpecimenCollection
+          ? setIsSpecimenGroupedServiceProvidersLoading(true)
+          : setIsGroupedServiceProvidersLoading(true)
+      );
 
       const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
       const data: IGroupedServiceProviders = {
@@ -143,12 +160,15 @@ const getNewGroupedServiceProviders =
         ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
       };
 
-      dispatch(updateGroupedServiceProviders(data));
+      dispatch(
+        isSpecimenCollection ? updateSpecimenGroupedServiceProviders(data) : updateGroupedServiceProviders(data)
+      );
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
     } finally {
       dispatch(setIsGroupedServiceProvidersLoading(false));
+      dispatch(setIsSpecimenGroupedServiceProvidersLoading(false));
     }
   };
 
@@ -176,8 +196,8 @@ const setEditSaveButtonDisabled = (value: boolean) => (dispatch: AppDispatch) =>
   dispatch(setSaveButtonDisabled(value));
 };
 
-const applyResource = (value: string) => (dispatch: AppDispatch) => {
-  dispatch(setCurrentServiceProviderId(value));
+const applyResource = (value: string, isSpecimenCollection?: boolean) => (dispatch: AppDispatch) => {
+  dispatch(isSpecimenCollection ? setCurrentSpecimenServiceProviderId(value) : setCurrentServiceProviderId(value));
 };
 
 const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async (dispatch: AppDispatch) => {

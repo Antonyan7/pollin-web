@@ -51,7 +51,9 @@ const dateFormControlStyle = {
 const Appointments = () => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const groupedServiceProvidersList = useAppSelector(bookingSelector.groupedServiceProvidersList);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  const isGroupedServiceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
   const theme = useTheme();
   const [t] = useTranslation();
 
@@ -96,6 +98,9 @@ const Appointments = () => {
         <MainHeader>
           <Box sx={formControlStyle}>
             <ResourceDropdown
+              groupedServiceProvidersList={groupedServiceProvidersList}
+              serviceProviderId={serviceProviderId}
+              isGroupedServiceProvidersLoading={isGroupedServiceProvidersLoading}
               dataCy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
               label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
             />

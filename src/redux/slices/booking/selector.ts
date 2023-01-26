@@ -6,9 +6,14 @@ const selector = (state: RootState) => state.booking;
 export const appointmentsList = createSelector([selector], (state) => state.appointments);
 export const serviceProvidersList = createSelector([selector], (state) => state.serviceProviders);
 export const groupedServiceProvidersList = createSelector([selector], (state) => state.groupedServiceProviders);
+export const specimenGroupedServiceProvidersList = createSelector(
+  [selector],
+  (state) => state.specimenGroupedServiceProviders
+);
 export const calendarDate = createSelector([selector], (state) => state.date);
 export const isCalendarLoading = createSelector([selector], (state) => state.isCalendarLoading);
 export const serviceProviderId = createSelector([selector], (state) => state.currentServiceProviderId);
+export const specimenServiceProviderId = createSelector([selector], (state) => state.currentSpecimenServiceProviderId);
 export const patientList = createSelector([selector], (state) => state.patientList);
 export const serviceTypes = createSelector([selector], (state) => state.serviceTypes);
 export const appointmentDetails = createSelector([selector], (state) => state.appointmentDetails);
@@ -17,6 +22,10 @@ export const isServiceProvidersLoading = createSelector([selector], (state) => s
 export const isGroupedServiceProvidersLoading = createSelector(
   [selector],
   (state) => state.isGroupedServiceProvidersLoading
+);
+export const isSpecimenGroupedServiceProvidersLoading = createSelector(
+  [selector],
+  (state) => state.isSpecimenGroupedServiceProvidersLoading
 );
 export const isAppointmentLoading = createSelector([selector], (state) => state.isAppointmentLoading);
 export const isSaveButtonDisabled = createSelector([selector], (state) => state.isSaveButtonDisabled);
@@ -42,11 +51,14 @@ export default {
   isServiceTypesLoading,
   isServiceProvidersLoading,
   isGroupedServiceProvidersLoading,
+  isSpecimenGroupedServiceProvidersLoading,
   appointmentsList,
   serviceProvidersList,
   groupedServiceProvidersList,
+  specimenGroupedServiceProvidersList,
   calendarDate,
   serviceProviderId,
+  specimenServiceProviderId,
   isCalendarLoading,
   patientList,
   serviceTypes,

@@ -63,15 +63,16 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
       }
     }
 
-    if (calendarDate && serviceProviderId) {
-      const updateQueryParams = () => {
-        router.push({
-          query: { resource: serviceProviderId, date: calendarDate }
-        });
-      };
-
-      updateQueryParams();
-    }
+    router.push({
+      query: {
+        ...(serviceProviderId
+          ? {
+              resource: serviceProviderId
+            }
+          : {}),
+        ...(calendarDate ? { date: calendarDate } : {})
+      }
+    });
 
     // We are disabling this since linter is asking for router include in deps, but it shouldn't
     // eslint-disable-next-line react-hooks/exhaustive-deps

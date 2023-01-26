@@ -42,10 +42,13 @@ export interface BookingProps {
   date: string;
   serviceProviders: IServiceProviders;
   groupedServiceProviders: IGroupedServiceProviders;
+  specimenGroupedServiceProviders: IGroupedServiceProviders;
   isServiceProvidersLoading: boolean;
   isGroupedServiceProvidersLoading: boolean;
+  isSpecimenGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
   currentServiceProviderId: string;
+  currentSpecimenServiceProviderId: string;
   isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;

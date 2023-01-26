@@ -33,11 +33,20 @@ const reducers = createReducer({
   updateGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders.providers = [...state.groupedServiceProviders.providers, ...action.payload.providers];
   },
+  updateSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.specimenGroupedServiceProviders.providers = [
+      ...state.specimenGroupedServiceProviders.providers,
+      ...action.payload.providers
+    ];
+  },
   setIsServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isServiceProvidersLoading = action.payload;
   },
   setIsGroupedServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isGroupedServiceProvidersLoading = action.payload;
+  },
+  setIsSpecimenGroupedServiceProvidersLoading(state, action: IAction<boolean>) {
+    state.isSpecimenGroupedServiceProvidersLoading = action.payload;
   },
   setIsServiceTypesLoading(state, action: IAction<boolean>) {
     state.isServiceTypesLoading = action.payload;
@@ -48,8 +57,14 @@ const reducers = createReducer({
   setGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders = action.payload;
   },
+  setSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.specimenGroupedServiceProviders = action.payload;
+  },
   setCurrentServiceProviderId(state, action: IAction<string>) {
     state.currentServiceProviderId = action.payload;
+  },
+  setCurrentSpecimenServiceProviderId(state, action: IAction<string>) {
+    state.currentSpecimenServiceProviderId = action.payload;
   },
   setCurrentAppointmentId(state, action: IAction<string>) {
     state.currentAppointmentId = action.payload;

@@ -5,6 +5,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
 import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
 
 import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
 import FullCalendarWrapper from '@ui-component/calendar/FullCalendarWrapper';
@@ -15,17 +16,58 @@ import SpecimenCollectionFullCalendarContainer from './SpecimenCollectionFullCal
 
 const SpecimenCollectionCalendar = () => {
   const [t] = useTranslation();
+  const router = useRouter();
   const calendarRef = useRef<FullCalendar>(null);
   const [slots, setSlots] = useState<ISpecimenCollectionSlot[]>([]);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
-  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  const serviceProviderId = useAppSelector(bookingSelector.specimenServiceProviderId);
   const specimenAppointments = useAppSelector(bookingSelector.specimenAppointmentsList);
   const selectedSpecimenAppointmentsFilters = useAppSelector(bookingSelector.selectedSpecimenAppointmentsFilters);
   const isCalendarLoading = useAppSelector(bookingSelector.isCalendarLoading);
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceProviders(1));
-  }, []);
+    if (router.isReady) {
+      if (router.query.date) {
+        dispatch(bookingMiddleware.setDateValue(router.query?.date as string));
+      }
+
+      if (router.query.resource) {
+        dispatch(bookingMiddleware.applyResource(router.query?.resource as string, true));
+      }
+    }
+    // We are disabling this since linter is asking for router props date and resource include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  useEffect(() => {
+    if (serviceProviderId) {
+      dispatch(bookingMiddleware.getAppointments(serviceProviderId, calendarDate));
+    }
+
+    if (calendarDate) {
+      const calendarEl = calendarRef.current;
+
+      if (calendarEl) {
+        const calendarApi = calendarEl.getApi();
+
+        calendarApi.gotoDate(calendarDate);
+      }
+    }
+
+    router.push({
+      query: {
+        ...(serviceProviderId
+          ? {
+              resource: serviceProviderId
+            }
+          : {}),
+        ...(calendarDate ? { date: calendarDate } : {})
+      }
+    });
+
+    // We are disabling this since linter is asking for router include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarDate, serviceProviderId]);
 
   useEffect(() => {
     if (serviceProviderId) {
