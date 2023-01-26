@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 import { Box, Grid, Typography } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { OHIPTestResultPossibleResponses } from 'types/results';
+import { format } from 'date-fns';
+import { ContactInformationResultsPossibleResponses } from 'types/results';
 
 const PatientInformation = () => {
   const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
@@ -33,14 +34,18 @@ const PatientInformation = () => {
         <Grid item xs={6}>
           <Typography variant="subtitle1">{patientContactInformation.name}</Typography>
           <Typography variant="subtitle1">{patientContactInformation.patientIdentifier}</Typography>
-          <Typography variant="subtitle1">{patientContactInformation.dateOfBirth}</Typography>
           <Typography variant="subtitle1">
-            {patientContactInformation.ohipNumber === OHIPTestResultPossibleResponses.Unknown
+            {patientContactInformation.dateOfBirth === ContactInformationResultsPossibleResponses.Unknown
+              ? 'N/A'
+              : format(new Date(patientContactInformation.dateOfBirth), `MMM dd, yyy`)}
+          </Typography>
+          <Typography variant="subtitle1">
+            {patientContactInformation.ohipNumber === ContactInformationResultsPossibleResponses.Unknown
               ? 'N/A'
               : patientContactInformation.ohipNumber}
           </Typography>
           <Typography variant="subtitle1">
-            {patientContactInformation.ohipVersionCode === OHIPTestResultPossibleResponses.Unknown
+            {patientContactInformation.ohipVersionCode === ContactInformationResultsPossibleResponses.Unknown
               ? 'N/A'
               : patientContactInformation.ohipVersionCode}
           </Typography>

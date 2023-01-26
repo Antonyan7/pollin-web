@@ -133,6 +133,6 @@ export enum FinalResultChipColor {
   Initial = 'initial'
 }
 
-export enum OHIPTestResultPossibleResponses {
+export enum ContactInformationResultsPossibleResponses {
   Unknown = 'Unknown'
 }

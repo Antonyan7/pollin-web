@@ -6,7 +6,7 @@ import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { usePatientInfoContext } from 'context/PatientInformationContext';
 import { PatientInformationContextActionTypes } from 'context/types/PatientInformationContextTypes';
-import { OHIPTestResultPossibleResponses } from 'types/results';
+import { ContactInformationResultsPossibleResponses } from 'types/results';
 
 const CheckboxConfirming = () => {
   const [t] = useTranslation();
@@ -18,7 +18,7 @@ const CheckboxConfirming = () => {
   const { setPatientInfo } = usePatientInfoContext();
 
   const arePatientCheckboxesConfirmed = () => {
-    if (patientContactInformation.ohipNumber !== OHIPTestResultPossibleResponses.Unknown) {
+    if (patientContactInformation.ohipNumber !== ContactInformationResultsPossibleResponses.Unknown) {
       return patientNameChecked && patientIdChecked && OHIPInformationChecked;
     }
 
@@ -62,10 +62,10 @@ const CheckboxConfirming = () => {
                   }}
                 />
               }
-              label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_ID)}
+              label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_DATE_OF_BIRTH)}
             />
-            {patientContactInformation.ohipNumber !== OHIPTestResultPossibleResponses.Unknown &&
-              patientContactInformation.ohipVersionCode !== OHIPTestResultPossibleResponses.Unknown && (
+            {patientContactInformation.ohipNumber !== ContactInformationResultsPossibleResponses.Unknown &&
+              patientContactInformation.ohipVersionCode !== ContactInformationResultsPossibleResponses.Unknown && (
                 <FormControlLabel
                   control={
                     <Checkbox
