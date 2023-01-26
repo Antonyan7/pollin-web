@@ -128,6 +128,7 @@ export interface IPatientAppointmentsListFilterOptions {
 
 export interface IPatientAppointmentsListFilter {
   title: string;
+  type: string;
   options: IPatientAppointmentsListFilterOptions[];
 }
 

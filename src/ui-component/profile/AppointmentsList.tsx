@@ -61,8 +61,8 @@ const AppointmentsList = () => {
           const queryFilterIds =
             typeof router.query.filterIds === 'string' ? [router.query.filterIds] : router.query.filterIds ?? [];
 
-          const querySelectedFilters = data.filters.flatMap(({ options, title }) =>
-            options.filter(({ id }) => queryFilterIds.includes(id)).map((option) => ({ ...option, type: title }))
+          const querySelectedFilters = data.filters.flatMap(({ options, type }) =>
+            options.filter(({ id }) => queryFilterIds.includes(id)).map((option) => ({ ...option, type }))
           );
 
           dispatch(setPatientAppointmentsSelectedFilters(querySelectedFilters));

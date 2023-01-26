@@ -21,7 +21,7 @@ const AppointmentListFilter = () => {
 
   const adaptedGroupedOptions = () =>
     filters && filters.length > 0
-      ? filters?.flatMap((item) => item?.options.map((option) => ({ ...option, type: item.title })))
+      ? filters?.flatMap((item) => item?.options.map((option) => ({ ...option, type: item.type })))
       : [];
 
   const onAppointmentRecencyChange = async (appointmentFilters: PatientAppointmentsFilterOption[]) => {
