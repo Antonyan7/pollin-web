@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import API from '@axios/API';
@@ -7,18 +7,7 @@ import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import {
-  Avatar,
-  Box,
-  Button,
-  ButtonProps,
-  ClickAwayListener,
-  Grid,
-  Stack,
-  Tooltip,
-  Typography,
-  useTheme
-} from '@mui/material';
+import { Avatar, Box, Button, ButtonProps, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -48,7 +37,6 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
   const isPatientHighlightIntakeReminderActive = useSelector(patientsSelector.isPatientHighlightIntakeReminderActive);
-  const [isSendIntakeTooltipOpen, setIsSendIntakeTooltipOpen] = useState(false);
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
     async () => {
@@ -198,56 +186,50 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
               </Grid>
             ) : (
               <Grid item>
-                <ClickAwayListener onClickAway={() => setIsSendIntakeTooltipOpen(false)}>
-                  <Tooltip
-                    placement="bottom-start"
-                    componentsProps={{
-                      tooltip: {
-                        sx: {
-                          background: theme.palette.primary.main,
-                          color: theme.palette.common.white,
-                          padding: theme.spacing(1)
-                        }
+                <Tooltip
+                  placement="bottom-start"
+                  componentsProps={{
+                    tooltip: {
+                      sx: {
+                        background: theme.palette.primary.main,
+                        color: theme.palette.common.white,
+                        padding: theme.spacing(1)
                       }
-                    }}
-                    title={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE)}
-                    onClose={() => setIsSendIntakeTooltipOpen(false)}
-                    open={!isPatientHighlightIntakeReminderActive && isSendIntakeTooltipOpen}
-                    disableFocusListener
-                    disableHoverListener
-                    disableTouchListener
-                  >
-                    <Box
-                      sx={{ display: 'inline' }}
-                      onClick={() => !isPatientHighlightIntakeReminderActive && setIsSendIntakeTooltipOpen(true)}
-                    >
-                      <Button
-                        startIcon={
-                          <IconBell
-                            color={
-                              isPatientHighlightIntakeReminderActive
-                                ? theme.palette.primary[800]
-                                : theme.palette.primary[200]
-                            }
-                          />
-                        }
-                        disabled={!isPatientHighlightIntakeReminderActive}
-                        onClick={onSendIntakeButtonClick}
-                      >
-                        <Typography
-                          variant="h5"
+                    }
+                  }}
+                  title={
+                    !isPatientHighlightIntakeReminderActive
+                      ? t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE)
+                      : ''
+                  }
+                >
+                  <Box component="span">
+                    <Button
+                      startIcon={
+                        <IconBell
                           color={
                             isPatientHighlightIntakeReminderActive
                               ? theme.palette.primary[800]
                               : theme.palette.primary[200]
                           }
-                        >
-                          {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
-                        </Typography>
-                      </Button>
-                    </Box>
-                  </Tooltip>
-                </ClickAwayListener>
+                        />
+                      }
+                      disabled={!isPatientHighlightIntakeReminderActive}
+                      onClick={onSendIntakeButtonClick}
+                    >
+                      <Typography
+                        variant="h5"
+                        color={
+                          isPatientHighlightIntakeReminderActive
+                            ? theme.palette.primary[800]
+                            : theme.palette.primary[200]
+                        }
+                      >
+                        {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SEND_INTAKE)}
+                      </Typography>
+                    </Button>
+                  </Box>
+                </Tooltip>
               </Grid>
             )}
           </Grid>
