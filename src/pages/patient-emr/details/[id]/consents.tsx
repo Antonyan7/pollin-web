@@ -1,5 +1,6 @@
 import React from 'react';
-import PatientEmrLayout from 'layout/PatientEmrLayout';
+
+import PatientEmrLayout from './index';
 
 const Consents = () => <div>Consents</div>;
 

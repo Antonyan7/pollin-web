@@ -2,8 +2,8 @@ import React, { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Tab, Tabs, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
-import PatientEmrLayout from 'layout/PatientEmrLayout';
 import { useRouter } from 'next/router';
+import PatientEmrLayout from 'pages/patient-emr/details/[id]/index';
 import { margins, paddings } from 'themes/themeConstants';
 
 const PatientOrdersAndResultsLayout = ({ children }: PropsWithChildren) => {

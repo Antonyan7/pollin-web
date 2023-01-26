@@ -4,11 +4,11 @@ import { AddendumsProps, IEncounterDetailsProps } from '@axios/patientEmr/manage
 import { ArrowBackIos, EditOutlined, PrintOutlined, ShareOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Theme, useTheme } from '@mui/system';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
 import { useRouter } from 'next/router';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 import { ButtonWithIcon } from '@ui-component/common/buttons';
@@ -55,7 +55,7 @@ const FooterEncounter = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const goToAddAddendumPage = () => router.push(`/patient-emr/encounter/${router.query.id}/add-addendum`);
+  const goToAddAddendumPage = () => router.push(`/patient-emr/encounter/${router.query.encounterId}/add-addendum`);
 
   return (
     <Grid item sx={{ mt: margins.top64, mb: margins.bottom48, display: 'flex', justifyContent: 'space-between' }}>
@@ -105,7 +105,7 @@ const EncounterDetailsPage = () => {
   const router = useRouter();
   const encounterNoteCreatedTime = encountersCustomizedDateWithoutTime(new Date(encounterData?.createdOn as Date));
   const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
-  const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.id}/edit-note`);
+  const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.encounterId}/edit-note`);
   const goToEditAddendumPage = (addendumId: string) =>
     router.push(`/patient-emr/encounter/${addendumId}/edit-addendum`);
   const handleBack = useCallback(() => {
@@ -114,11 +114,11 @@ const EncounterDetailsPage = () => {
   }, [currentPatientId, router]);
 
   useEffect(() => {
-    if (router.query.id) {
-      dispatch(patientsMiddleware.getEncounterDetailsInformation(router.query.id as string));
-      dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
+    if (typeof router.query.encounterId === 'string') {
+      dispatch(patientsMiddleware.getEncounterDetailsInformation(router.query.encounterId));
+      dispatch(patientsMiddleware.setCurrentEncounterId(router.query.encounterId));
     }
-  }, [router.query.id]);
+  }, [router.query.encounterId]);
 
   const isEncounterNoteUpdated =
     new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();

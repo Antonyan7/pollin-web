@@ -1,8 +1,10 @@
 import React from 'react';
-import PatientEmrLayout from 'layout/PatientEmrLayout';
+
+import Consents from './consents';
+import PatientEmrLayout from './index';
 
 const Medications = () => <div>Medications</div>;
 
-Medications.PageLayout = PatientEmrLayout;
+Consents.PageLayout = PatientEmrLayout;
 
 export default Medications;

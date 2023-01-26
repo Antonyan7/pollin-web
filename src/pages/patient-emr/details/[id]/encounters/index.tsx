@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import PatientEmrLayout from 'layout/PatientEmrLayout';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 
 import Encounters from '@ui-component/encounters/components/Encounters';
+
+import PatientEmrLayout from '../index';
 
 const EncountersTab = () => {
   const router = useRouter();
