@@ -24,6 +24,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
+import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
@@ -258,14 +259,14 @@ const InHouseSpecimensList = () => {
           {!isSpecimensListLoading ? (
             <TableBody>
               {specimensList?.specimens?.map((row: ISpecimensListItem) => {
-                const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
+                const filteredSpecimenAction = findCurrentAction(specimenActions, row);
                 const isItemSelected = isSelected(row.id);
 
                 return (
                   <InHouseSpecimensRow
                     row={row}
                     key={row.id}
-                    actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
+                    actions={filteredSpecimenAction ? filteredSpecimenAction.actions : []}
                     isItemSelected={isItemSelected}
                     onClick={(e) => onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)}
                   />

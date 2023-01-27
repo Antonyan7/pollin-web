@@ -127,9 +127,7 @@ const resultsManager = {
     });
   },
   getSpecimenActions() {
-    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(
-      `${baseURL}/v1/specimen/actions`
-    );
+    return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(`${baseURL}/v1/specimen/status`);
   },
   getPendingSpecimenStats() {
     return axiosInstance.get<IPendingSpecimensStats, IAxiosResponse<IPendingSpecimensStats>>(
@@ -213,7 +211,7 @@ const resultsManager = {
   },
   getTransportActions() {
     return axiosInstance.get<ITestResultsDetails, IAxiosResponse<SpecimenActionsList>>(
-      `${baseURL}/v1/transport/actions`
+      `${baseURL}/v1/transport/status`
     );
   },
   getCancellationReasons() {

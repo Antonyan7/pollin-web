@@ -10,13 +10,6 @@ export interface ISpecimenProps {
   error: Error | null;
 }
 
-export enum IStatus {
-  Pending = 'Pending',
-  NotReceived = 'NotReceived',
-  Completed = 'Completed',
-  Reported = 'Reported'
-}
-
 export enum ITestResultStatus {
   Pending = 'Pending',
   NotReceived = 'NotReceived',
@@ -141,16 +134,30 @@ export interface SpecimenActionsList {
 
 export interface SpecimenActions {
   actions: SpecimenActionsValues[];
-  status: string;
+  title: string;
+  status: SpecimenActionsType;
 }
 export interface TransportActions {
   actions: SpecimenActionsValues[];
+  title: string;
   status: string;
 }
 
 export interface SpecimenActionsValues {
   id: string;
   title: string;
+}
+
+export enum SpecimenActionsType {
+  NotCollected = 'Not Collected',
+  Collected = 'Collected',
+  ReceivedInLab = 'Received In Lab',
+  InProgress = 'In-Progress',
+  Completed = 'Completed',
+  ReadyForTransport = 'Ready For Transport',
+  InTransit = 'In Transit',
+  RetestRequired = 'Retest Required',
+  RecollectRequired = 'Recollect Required'
 }
 
 export interface IResultsList extends IPagination {
@@ -164,7 +171,7 @@ export interface ISpecimensListItem {
   identifier: string;
   titles: string[];
   machine: string;
-  status: IStatus;
+  status: SpecimenActionsType;
   age: number;
 }
 
@@ -179,7 +186,7 @@ export interface IAllTestsSpecimensListItem {
   identifier: string;
   titles: string[];
   labName: string;
-  status: IStatus;
+  status: SpecimenActionsType;
   age: number;
 }
 
@@ -201,7 +208,7 @@ export interface ISpecimensInTransportListItem {
   id: string;
   identifier: string;
   patientName: string;
-  status: IStatus;
+  status: SpecimenActionsType;
   age: number;
 }
 
@@ -297,7 +304,7 @@ export interface IPatientContactInformationModalProps {
   id: string;
   age: number;
   labName: string;
-  status: IStatus;
+  status: SpecimenActionsType;
   title: string;
   patient: IResultListPatient;
   shouldBeRedirected?: boolean;

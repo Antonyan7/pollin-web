@@ -16,6 +16,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { format } from 'date-fns';
+import findCurrentAction from 'helpers/findCurrentAction';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
@@ -82,13 +83,13 @@ const TransportsList = () => {
           <TableBody>
             <TableBody />
             {transportList?.folders?.map((row: ITransportListFolderProps) => {
-              const filteredSpecimenActions = transportActions.find((item) => item.status === row.status);
+              const filteredSpecimenAction = findCurrentAction(transportActions, row);
 
               return (
                 <TransportsListRow
                   row={row}
                   key={row.id}
-                  actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
+                  actions={filteredSpecimenAction ? filteredSpecimenAction.actions : []}
                 />
               );
             })}
