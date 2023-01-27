@@ -10,16 +10,19 @@ import {
   ISpecimensReqBody,
   ITestResultsData,
   ITestResultsParams,
-  ITransportListReqBody
+  ITransportListReqBody,
+  TransportsSortFields
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
+import { resultsMiddleware } from '@redux/slices/results/index';
 import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
 import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
+import { SortOrder } from 'types/patient';
 import {
   IAllTestsSpecimensList,
   IResultsList,
@@ -493,6 +496,15 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
     const response = await API.results.createTransportFolder(data);
 
     dispatch(setLastCreatedTransportFolderId(response.data.data.uuid));
+
+    const transportListRequestBody = {
+      date: data.date,
+      page: 0,
+      sortByField: TransportsSortFields.STATUS,
+      sortOrder: SortOrder.Desc
+    };
+
+    dispatch(resultsMiddleware.getTransportList(transportListRequestBody));
 
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
