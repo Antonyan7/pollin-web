@@ -188,6 +188,10 @@ const getAppointments = (resourceId: string, date: string) => async (dispatch: A
   }
 };
 
+const clearAppointments = () => (dispatch: AppDispatch) => {
+  dispatch(setAppointments([]));
+};
+
 const setDateValue = (value: string) => (dispatch: AppDispatch) => {
   dispatch(setDate(value));
 };
@@ -483,14 +487,18 @@ const getSpecimenAppointments =
       const response = await API.booking.getProvidersCollectionCalendarAppointments({ resourceId, date, filters });
 
       dispatch(setSpecimenAppointments(response.data.appointments));
-      dispatch(setCalendarLoadingState(false));
     } catch (error) {
-      dispatch(setAppointments([]));
-      dispatch(setCalendarLoadingState(false));
       Sentry.captureException(error);
+      dispatch(setSpecimenAppointments([]));
       dispatch(setError(error as string));
+    } finally {
+      dispatch(setCalendarLoadingState(false));
     }
   };
+
+const clearSpecimenAppointments = () => (dispatch: AppDispatch) => {
+  dispatch(setSpecimenAppointments([]));
+};
 
 export default {
   getNewServiceProviders,
@@ -499,6 +507,7 @@ export default {
   getGroupedServiceProviders,
   setDateValue,
   getAppointments,
+  clearAppointments,
   cancelAppointment,
   applyResource,
   getPatients,
@@ -513,5 +522,6 @@ export default {
   resetAppointmentStatus,
   clearCreateAppointmentErrorState,
   getSpecimenAppointmentsFilters,
-  getSpecimenAppointments
+  getSpecimenAppointments,
+  clearSpecimenAppointments
 };

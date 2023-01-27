@@ -79,7 +79,7 @@ const SpecimenCollectionCalendar = () => {
         )
       );
     } else {
-      setSlots([]);
+      dispatch(bookingMiddleware.clearSpecimenAppointments());
     }
 
     if (calendarDate) {

@@ -51,6 +51,8 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
   useEffect(() => {
     if (serviceProviderId) {
       dispatch(bookingMiddleware.getAppointments(serviceProviderId, calendarDate));
+    } else {
+      dispatch(bookingMiddleware.clearAppointments());
     }
 
     if (calendarDate) {
