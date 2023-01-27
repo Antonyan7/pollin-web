@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Stack, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { ordersMiddleware } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -15,6 +16,7 @@ const Body = () => {
   const router = useRouter();
   const { id: currentPatientId } = router.query;
   const onClickConfirm = () => {
+    dispatch(ordersMiddleware.resetOrderGroupsSelection());
     dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal));
     router.push(`/patient-emr/details/${currentPatientId}/orders`);
   };

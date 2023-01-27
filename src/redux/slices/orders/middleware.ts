@@ -114,6 +114,11 @@ const updateOrderGroups =
     dispatch(setOrderGroups(updatedOrderGroupsCollection));
   };
 
+const resetOrderGroupsSelection = () => async (dispatch: AppDispatch) => {
+  dispatch(setSelectedOrderType(''));
+  dispatch(setOrderGroups([]));
+};
+
 const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsOrderDetailsLoading(true));
@@ -349,6 +354,7 @@ export default {
   updateSelectedOrderType,
   getOrderGroups,
   updateOrderGroups,
+  resetOrderGroupsSelection,
   getOrderDetails,
   updateOrder,
   getOrderResultsFilters,

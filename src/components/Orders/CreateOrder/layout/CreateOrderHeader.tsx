@@ -1,23 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography, useTheme } from '@mui/material';
-import { useAppSelector } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { format } from 'util';
 
 const CreateOrderHeader = () => {
   const [t] = useTranslation();
-  const router = useRouter();
   const theme = useTheme();
-  const { id: currentPatientId } = router.query;
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const onBackClick = () => {
-    router.push(`/patient-emr/details/${currentPatientId}`);
+    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
+
+  useEffect(() => {
+    window.onpopstate = () => {
+      window.history.forward();
+      onBackClick();
+    };
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   return (
     <Grid
