@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import EventIcon from '@mui/icons-material/Event';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker, MobileDateTimePickerProps } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
@@ -10,7 +11,6 @@ import { Translation } from 'constants/translations';
 import { UTCTimezone } from 'helpers/constants';
 import { toRoundupTime } from 'helpers/time';
 
-import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
 import {
   changeTimezone,
@@ -119,10 +119,12 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
           {...params}
           {...renderInputProps}
           {...formattedParams}
-          sx={{ '& input, svg': { cursor: 'pointer' } }}
+          sx={{
+            svg: { color: theme.palette.primary.main }
+          }}
           InputProps={{
             ...params.InputProps,
-            endAdornment: <CalendarIcon />
+            endAdornment: <EventIcon />
           }}
           fullWidth
         />
