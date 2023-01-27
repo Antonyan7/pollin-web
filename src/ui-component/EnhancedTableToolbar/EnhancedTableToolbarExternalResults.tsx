@@ -29,7 +29,7 @@ const EnhancedTableToolbarExternalResults = ({
   const checkSameStatues = useMemo(() => Array.from(new Set(selectedStatuses)), [selectedStatuses]);
   const hasSameStatues = useMemo(() => checkSameStatues.length > 1, [checkSameStatues]);
   const options = useMemo(
-    () => specimenActions.find((item: SpecimenActions) => item.status === checkSameStatues[0]),
+    () => specimenActions.find((item: SpecimenActions) => item.title === checkSameStatues[0]),
     [specimenActions, checkSameStatues]
   );
   const showOptions = options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit);
