@@ -328,7 +328,7 @@
   "page.in.house.specimens.search.placeholder": "Scan Barcode",
   "page.in.house.specimens.filter.label": "Filter Specimens",
   "page.in.house.specimens.search.success": "Successfully Filtered",
-  "page.in.house.specimens.search.fail": "The following Specimen ID(s) were not found. Please try again",
+  "page.in.house.specimens.search.fail": "The following Specimen ID(s) were not found. Please try again.",
   "page.specimens.title": "Specimens",
   "page.specimens.tracking.title": "Specimen Tracking",
   "page.specimens.tracking.all.tests.title": "All Tests",

@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { TableCell, TableRow, Typography, useTheme } from '@mui/material';
+import { TableCell, TableRow, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
-import { getChipColor } from 'helpers/resultsChipColor';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 
+import useChipColor from '@hooks/useChipColor';
 import Chip from '@ui-component/patient/Chip';
 
 interface IExternalResultsTableRow {
@@ -18,13 +18,8 @@ interface IExternalResultsTableRow {
 
 const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
   const [t] = useTranslation();
-  const theme = useTheme();
 
-  const chipColor = useMemo(
-    () => getChipColor(row.age, theme.palette),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [row.age]
-  );
+  const chipColor = useChipColor(row.age);
 
   const onContactInformationModalOpen = () => {
     dispatch(

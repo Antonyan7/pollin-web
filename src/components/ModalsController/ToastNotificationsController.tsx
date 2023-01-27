@@ -1,5 +1,5 @@
 import React from 'react';
-import { ToastNotification } from '@components/ToastNotification/ToastNotification';
+import { ToastNotification } from '@components/ToastNotification';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 

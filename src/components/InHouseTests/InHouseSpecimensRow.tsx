@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
+import useChipColor from '@hooks/useChipColor';
 import ContextMenu from '@ui-component/contextMenu';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
@@ -29,6 +30,8 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: I
 
     router.push(inHouseTestResultsPagePath);
   };
+
+  const chipColor = useChipColor(row.age);
 
   return (
     <TableRow
@@ -56,7 +59,12 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: I
       <TableCell>{row.machine}</TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="center">
-        <Chip label={`${row.age}  ${getRowLabel(row.age, t)} `} size="small" chipColor="notActive" />
+        <Chip
+          sx={{ background: chipColor.light, color: chipColor.dark }}
+          label={`${row.age}  ${getRowLabel(row.age, t)} `}
+          size="small"
+          chipColor="notActive"
+        />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
         <ContextMenu actions={actions} row={row} />

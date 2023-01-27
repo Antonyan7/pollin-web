@@ -25,25 +25,12 @@ import { rowsPerPage } from 'helpers/constants';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { IAllTestsSpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
+import { IAllTestsSpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 
 import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
 
 import { headCellsData } from './AllTestsHeadCellMockData';
 import { AllTestsRow } from './AllTestsRow';
-
-const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensListItemShort[] = []) => {
-  const listElements = notFoundSpecimens.map((specimen) => `<li>${specimen.identifier}</li>`).join('');
-
-  return `
-    <div>
-      <p>${headerText}</p>
-      <ul>
-        ${listElements}
-      </ul>
-    </div>
-  `;
-};
 
 // eslint-disable-next-line max-lines-per-function
 const AllTestsList = () => {
@@ -85,10 +72,10 @@ const AllTestsList = () => {
             open: true,
             props: {
               severityType: SeveritiesType.error,
-              description: generateDescription(
-                t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
-                allTestsSpecimensList.notFound
-              )
+              renderList: {
+                header: t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
+                items: allTestsSpecimensList.notFound.map((specimen) => specimen.identifier)
+              }
             }
           })
         );

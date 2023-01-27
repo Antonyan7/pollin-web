@@ -29,7 +29,7 @@ import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxCli
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { ISpecimensListItem, ISpecimensListItemShort } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
@@ -42,20 +42,8 @@ import { findFilterById } from '../../helpers/inHouse';
 import AutocompleteWrapper from './AutocompleteWrapper';
 import { headCellsData } from './InHouseSpecimensHeadCellMockData';
 import { InHouseSpecimensRow } from './InHouseSpecimensRow';
+// TODO: Refactor this file after demo reduce complexity + follow 150 lines rule - fhhealth.atlassian.net/browse/PCP-2227
 
-const generateDescription = (headerText: string, notFoundSpecimens: ISpecimensListItemShort[] = []) => {
-  const listElements = notFoundSpecimens.map((specimen) => `<li>${specimen.identifier}</li>`).join('');
-
-  return `
-    <div>
-      <p>${headerText}</p>
-      <ul>
-        ${listElements}
-      </ul>
-    </div>
-  `;
-};
-// TODO: Refactor this file after demo reduce complexity + follow 150 lines rule!
 // eslint-disable-next-line max-lines-per-function
 const InHouseSpecimensList = () => {
   const router = useRouter();
@@ -77,6 +65,7 @@ const InHouseSpecimensList = () => {
 
   const searchLabel = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
   const filterLabel = t(Translation.PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL);
+  const invalidSearchedItems = specimensList.notFound.map((notFoundItem) => notFoundItem.identifier);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getPendingSpecimenStats());
@@ -147,10 +136,10 @@ const InHouseSpecimensList = () => {
             open: true,
             props: {
               severityType: SeveritiesType.error,
-              description: generateDescription(
-                t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
-                specimensList.notFound
-              )
+              renderList: {
+                header: t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
+                items: invalidSearchedItems
+              }
             }
           })
         );
@@ -192,7 +181,6 @@ const InHouseSpecimensList = () => {
   const numSelected = selected.length;
   const rowsCount = specimensList?.specimens.length;
   const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
-  const invalidSearchedItems = specimensList.notFound.map((invalidItem) => invalidItem.identifier);
   const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
   const areAvailableSpecimens = rowsCount > 0;
   const isResultsNotFound = !areAvailableSpecimens && !isSpecimensListLoading;
@@ -254,9 +242,10 @@ const InHouseSpecimensList = () => {
                     setSortField={setSortField}
                   />
                 ))}
+              <TableCell />
             </TableRow>
           </TableHead>
-          {!isSpecimensListLoading ? (
+          {!isSpecimensListLoading && (
             <TableBody>
               {specimensList?.specimens?.map((row: ISpecimensListItem) => {
                 const filteredSpecimenAction = findCurrentAction(specimenActions, row);
@@ -273,12 +262,13 @@ const InHouseSpecimensList = () => {
                 );
               })}
             </TableBody>
-          ) : (
-            <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-              <CircularProgress sx={{ margin: margins.auto }} />
-            </Box>
           )}
         </Table>
+        {isSpecimensListLoading && (
+          <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+            <CircularProgress sx={{ margin: margins.auto }} />
+          </Box>
+        )}
       </TableContainer>
       {isResultsNotFound && <NoResultsFound />}
       <TablePagination
