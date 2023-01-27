@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -23,9 +24,9 @@ import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import { borderRadius, margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { ISortOrder } from 'types/patient';
+import { SortOrder } from 'types/patient';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
-import { ITransportFolder, TransportStatus } from 'types/results';
+import { ITransportFolder } from 'types/results';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -68,11 +69,11 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
     const body = {
       date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
       page: 1,
-      sortByField: TransportStatus.ReadyForTransport,
-      sortOrder: ISortOrder.Asc
+      sortByField: TransportsSortFields.STATUS,
+      sortOrder: SortOrder.Asc
     };
 
-    dispatch(resultsMiddleware.getTransportFolders(body));
+    dispatch(resultsMiddleware.getTransportList(body));
   }, [calendarDate]);
 
   return (
