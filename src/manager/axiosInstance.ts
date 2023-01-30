@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { CookieKey } from 'constants/cookieKey';
 import { devToolsDefaultConfig } from 'constants/defaultConfigs';
 import { guid } from 'helpers/guid';
@@ -39,13 +39,13 @@ class RequestManager {
     const serverUrl = getServerUrl();
     const axiosInstance = axios.create({ baseURL: `${serverUrl}` });
 
-    axiosInstance.interceptors.request.use(async (config: AxiosRequestConfig) => {
+    axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
       const requestConfig = config;
 
       const captchaToken = await FirebaseManager?.getToken();
       const idToken = await FirebaseManager?.getIdToken();
 
-      requestConfig.headers = {
+      requestConfig.headers.set({
         'x-pollin-device-id': getOrGenerateDeviceId(),
         'x-pollin-request-id': generateRequestId(),
         'x-pollin-lang': 'en',
@@ -53,7 +53,7 @@ class RequestManager {
         'x-pollin-firebase-app-check': captchaToken,
         'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
         'x-pollin-id-token': idToken
-      };
+      });
 
       return requestConfig;
     });

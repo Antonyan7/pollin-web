@@ -192,8 +192,6 @@ export const dateInputValue = (date: string) => {
   return dayjs(initialDate).format(`MMM DD, YYYY HH:mm [${TIME_CONFIG || ''}]`);
 };
 
-export const customizedTimeForWorkingHours = (time: string | Date) => format(time, 'HH:mm:ss');
-
 export const customizeDatePickerDefaultValue = (initialDate: Date | string, start: string) => {
   const currentFormattedDate = format(new Date(initialDate), 'yyyy-MM-dd');
   const outWorkingHours = getHours(initialDate as Date);
