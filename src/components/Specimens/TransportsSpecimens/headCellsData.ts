@@ -29,7 +29,7 @@ export const headCellsData = (t: TFunction) => [
     id: 'driverName',
     label: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME),
     align: 'left',
-    paddingLeft: paddings.left20,
+    paddingLeft: paddings.left0,
     isSortable: false
   },
   {

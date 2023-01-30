@@ -72,6 +72,7 @@ const isSendingSpecimenCollectionData = createSelector(
   [selector],
   (state) => state.collection.isSendingSpecimenCollectionData
 );
+const isTransportListLoading = createSelector([selector], (state) => state.tracking.isTransportListLoading);
 const specimensInTransportList = createSelector([selector], (state) => state.collection.specimensInTransportList);
 const isSpecimensInTransportListLoading = createSelector(
   [selector],
@@ -101,6 +102,7 @@ export default {
   isTestResultsSubmitWentSuccessful,
   isTransportFolderDownloaded,
   labMachines,
+  isTransportListLoading,
   lastCreatedTransportFolderId,
   pendingSpecimenStats,
   pendingTestStats,

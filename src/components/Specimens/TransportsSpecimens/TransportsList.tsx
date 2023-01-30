@@ -5,16 +5,20 @@ import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   CircularProgress,
+  Divider,
+  Grid,
   Table,
   TableBody,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
-} from '@mui/material';
+  TableRow,
+  Typography,
+  useTheme} from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { margins } from 'themes/themeConstants';
@@ -32,9 +36,10 @@ const TransportsList = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const transportList = useAppSelector(resultsSelector.transportList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
-  const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
+  const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
+  const theme = useTheme();
 
   useTestResultPopupMessage();
 
@@ -82,6 +87,11 @@ const TransportsList = () => {
           </TableHead>
           <TableBody>
             <TableBody />
+            {isTransportListLoading ? (
+              <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+                <CircularProgress sx={{ margin: margins.auto }} />
+              </Box>
+            ) : null}
             {transportList?.folders?.map((row: ITransportListFolderProps) => {
               const filteredSpecimenAction = findCurrentAction(transportActions, row);
 
@@ -96,10 +106,17 @@ const TransportsList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {allTestsSpecimensListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
+      {!transportList?.folders.length && !isTransportListLoading ? (
+        <>
+          <Grid container justifyContent="center" padding="20px">
+            <Grid item>
+              <Typography color={theme.palette.primary.main} variant="h4">
+                {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE)}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider />
+        </>
       ) : null}
       <TablePagination
         component="div"
