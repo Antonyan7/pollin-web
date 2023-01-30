@@ -205,3 +205,11 @@ export const customizeDatePickerDefaultValue = (initialDate: Date | string, star
     customizeToTimeZone
   };
 };
+
+export const formatDate = (initialDate: string, formatValue: string) => {
+  const dateInUTC = getDateInUtc(new Date(initialDate));
+  const dateWithNeutralHour = changeToNeutralTime(dateInUTC);
+  const date = new Date(dateWithNeutralHour);
+
+  return format(date, formatValue);
+};

@@ -10,6 +10,7 @@ import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsSt
 
 import useChipColor from '@hooks/useChipColor';
 import Chip from '@ui-component/patient/Chip';
+import { formatDate } from '@utils/dateUtils';
 
 interface IExternalResultsTableRow {
   row: IPatientContactInformationModalProps;
@@ -44,7 +45,7 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
       <TableCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography variant="subtitle1">{row.patient.name}</Typography>
         <Typography variant="subtitle2">{row.patient.identifier}</Typography>
-        <Typography variant="subtitle2">{row.patient.dateOfBirth}</Typography>
+        <Typography variant="subtitle2">{formatDate(row.patient.dateOfBirth, 'MMM dd, yyyy')}</Typography>
       </TableCell>
       <TableCell align="left">{row.labName}</TableCell>
       <TableCell align="left">{row.status}</TableCell>
