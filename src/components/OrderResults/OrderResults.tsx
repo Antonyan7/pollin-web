@@ -22,6 +22,8 @@ import { IHeadCell, SortOrder } from 'types/patient';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
 
+import EmrOrdersAndResultsTabs from '../../layout/PatientOrdersAndResultsLayout';
+
 import AutocompleteWrapper from './AutocompleteWrapper';
 import { headCellsData } from './OrderResultsHeadCellMockData';
 import { OrderResultsRow } from './OrderResultsRow';
@@ -74,6 +76,7 @@ const OrderResults = () => {
 
   return (
     <>
+      <EmrOrdersAndResultsTabs />
       <AutocompleteWrapper
         onChange={filterChangeHandler}
         label={filterLabel}

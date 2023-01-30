@@ -13,6 +13,8 @@ import { ISortOrder, SortOrder } from 'types/patient';
 
 import { capitalizeFirst } from '@utils/stringUtils';
 
+import EmrOrdersAndResultsTabs from '../../layout/PatientOrdersAndResultsLayout';
+
 import CreateNewOrderButton from './PatientCreateNewOrderButton';
 import PatientOrdersFilters from './PatientOrdersFilters';
 import PatientOrdersTable from './PatientOrdersTable';
@@ -56,6 +58,7 @@ const PatientOrdersList = () => {
 
   return (
     <Box>
+      <EmrOrdersAndResultsTabs />
       <Grid container xs={12}>
         <Grid item xs={10} pr={3}>
           <PatientOrdersFilters setFiltersChange={handleFiltersUpdate} />
