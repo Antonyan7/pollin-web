@@ -106,7 +106,14 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
                   appointmentsList.slice(0, 3).map(({ id, status, type, date, time }) => (
                     <TableRow hover key={id} onClick={() => onRowClick(id, status)}>
                       <TableCell width="65%" sx={{ verticalAlign: 'middle' }}>
-                        <Typography variant="h5">{type}</Typography>
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            textDecoration: status === PatientAppointmentStatuses.Cancelled ? 'line-through' : 'auto'
+                          }}
+                        >
+                          {type}
+                        </Typography>
                         <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
                           {status}
                         </Typography>
