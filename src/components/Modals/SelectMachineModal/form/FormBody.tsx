@@ -8,7 +8,6 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { createOptionsGroup } from 'helpers/berryFunctions';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { LabMachineProps } from 'types/reduxTypes/resultsStateTypes';
@@ -61,8 +60,7 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
 
   const labMachines = useAppSelector(resultsSelector.labMachines);
   const isLabMachinesLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
-  const options = labMachines.machines ? labMachines.machines : labMachines;
-  const labMachinesOptions = createOptionsGroup(options as LabMachineProps[]);
+  const options = labMachines.machines ? labMachines.machines : (labMachines.reasons as LabMachineProps[]);
 
   const isConfirmationLoading = useAppSelector(resultsSelector.isLabMachinesLoading);
 
@@ -115,15 +113,14 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
                 border: `${borders.solid2px} ${theme.palette.primary.main}`
               }
             }}
-            isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
             onChange={(_, value) => {
-              if (value && typeof value === 'object' && 'item' in value) {
-                setMachineVal(value.item.id);
+              if (value && typeof value === 'object' && 'id' in value) {
+                setMachineVal(value.id);
               }
             }}
-            options={labMachinesOptions}
-            groupBy={(option) => option.firstLetter}
-            getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
+            options={options}
+            getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
             clearIcon={<CloseIcon onClick={() => setMachineVal('')} fontSize="small" />}
             popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
             renderInputProps={{

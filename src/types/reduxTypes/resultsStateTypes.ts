@@ -122,6 +122,7 @@ export interface LabMachineProps {
 }
 export interface LabMachine {
   machines: LabMachineProps[];
+  reasons?: CancellationReasonsProps[];
 }
 export interface ILab {
   id: string;
