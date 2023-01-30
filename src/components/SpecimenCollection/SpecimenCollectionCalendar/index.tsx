@@ -96,12 +96,11 @@ const SpecimenCollectionCalendar = () => {
   useEffect(() => {
     const calendarEvents: ISpecimenCollectionSlot[] = specimenAppointments.map((item) => ({
       allDay: false,
-      classNames: ['open-slot'],
+      classNames: ['specimen-slot'],
       start: item.startTime,
       end: dayjs(item.startTime)
         .add(item.timeUnits * 10, 'minutes')
         .format(),
-      startStr: '',
       title: item.title,
       id: item.id,
       color: item.color ?? 'transparent',
