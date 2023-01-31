@@ -86,14 +86,14 @@ export interface ISpecimensListReqBody {
   page: number;
   specimens?: ISpecimensListItemShort[];
   sortOrder?: SortOrder;
-  filters?: Omit<IResultsFilterOption, 'title'>[];
+  filters?: Omit<IResultsFilterOption, 'group' | 'title'>[];
   sortByField?: SpecimensListSortFields;
 }
 
 export interface IOrderResultsListReqBody {
   page: number;
   sortOrder?: SortOrder;
-  filters?: Omit<IResultsFilterOption, 'title'>[];
+  filters?: Omit<IResultsFilterOption, 'group' | 'title'>[];
   sortByField?: OrderResultsSortFields;
 }
 

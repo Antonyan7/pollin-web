@@ -83,6 +83,7 @@ export interface IGetTransportFoldersResponse {
 export interface IResultsFilterOption {
   type: string;
   id: string;
+  group: string;
   title: string;
 }
 

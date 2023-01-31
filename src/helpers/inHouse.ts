@@ -16,3 +16,17 @@ export const findFilterById = (filtersList: ISpecimensFilterCategory[], selected
 
   return preSelectedFilters?.length ? preSelectedFilters.map((filter) => filter) : [];
 };
+
+export const findFilterOptionById = (filtersList: IResultsFilterOption[], selectedFilter?: string | string[]) => {
+  const preSelectedFilters: IResultsFilterOption[] = [];
+
+  const filterOptions = filtersList.find((option) =>
+    typeof selectedFilter === 'string' ? option.id === selectedFilter : selectedFilter?.includes(option.id)
+  );
+
+  if (filterOptions) {
+    preSelectedFilters.push(filterOptions);
+  }
+
+  return preSelectedFilters?.length ? preSelectedFilters : [];
+};

@@ -1,5 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Autocomplete,
@@ -56,7 +57,13 @@ const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFilt
 
   const filterPlaceholder = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
 
-  const adaptedGroupedOptions = useMemo(() => (filtersList ?? []).flatMap(({ options }) => options), [filtersList]);
+  const adaptedGroupedOptions = useMemo(
+    () =>
+      (filtersList ?? []).flatMap((item) =>
+        item.options.map((option: IResultsFilterOption) => ({ ...option, group: item.title, type: option.type }))
+      ),
+    [filtersList]
+  );
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,14 +113,15 @@ const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFilt
         onChange={(event, filters) => onFilterUpdate(filters)}
         getOptionDisabled={(option) => {
           if (option && selectedFilters?.length > 0) {
-            return !!selectedFilters?.find((item: { type: string }) => item.type === option.type);
+            return !!selectedFilters?.find((item) => item.group === option.group);
           }
 
           return false;
         }}
         options={adaptedGroupedOptions}
-        groupBy={(option) => option.type}
+        groupBy={(option) => option.group}
         getOptionLabel={(option) => option.title}
+        PopperComponent={GroupedServiceProvidersPopper}
         renderInput={(params: TextFieldProps) => (
           <TextField {...params} label={resultsFilterLabel} name="resultsFilter" />
         )}
