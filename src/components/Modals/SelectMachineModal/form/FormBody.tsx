@@ -32,20 +32,20 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
     switch (actionType) {
       case ActionType.InProgress:
         setModalTexts({
-          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE),
-          selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_LOCATED_IN)
+          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_LOCATED_IN),
+          selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE)
         });
         break;
       case ActionType.Retest:
         setModalTexts({
-          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RETEST),
-          selectLabel: t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST_REQUIRED)
+          selectReasonText: t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST_REQUIRED),
+          selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RETEST)
         });
         break;
       case ActionType.Recollect:
         setModalTexts({
-          selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RECOLLECT),
-          selectLabel: t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT_REQUIRED)
+          selectReasonText: t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT_REQUIRED),
+          selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RECOLLECT)
         });
         break;
       default:
@@ -94,14 +94,14 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
           {specimenIds?.map((id) => (
             <Typography variant="h4">
               {t(Translation.MODAL_CONFIRM_MACHINE_SPECIMEN_ID)}:
-              <Typography variant="caption" fontWeight="bold" marginLeft={margins.left4}>
+              <Typography variant="h6" display="inline" marginLeft={margins.left4}>
                 {id}
               </Typography>
             </Typography>
           ))}
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="caption">{modalTexts.selectReasonText}</Typography>
+          <Typography variant="h5">{modalTexts.selectReasonText}</Typography>
         </Grid>
         <Grid item xs={12}>
           <BaseDropdownWithLoading
