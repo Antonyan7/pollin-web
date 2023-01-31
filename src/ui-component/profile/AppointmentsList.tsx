@@ -6,7 +6,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector, patientsSlice } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 import { SortOrder } from 'types/patient';
-import { AppointmentResponseStatus } from 'types/reduxTypes/patient-emrStateTypes';
+import { AppointmentResponseStatus, GroupedFiltersOption } from 'types/reduxTypes/patient-emrStateTypes';
 
 import AppointmentsListHeader from '@ui-component/profile/AppointmentListHeader';
 import AppointmentsListFilter from '@ui-component/profile/AppointmentsListFilter';
@@ -61,8 +61,10 @@ const AppointmentsList = () => {
           const queryFilterIds =
             typeof router.query.filterIds === 'string' ? [router.query.filterIds] : router.query.filterIds ?? [];
 
-          const querySelectedFilters = data.filters.flatMap(({ options, type }) =>
-            options.filter(({ id }) => queryFilterIds.includes(id)).map((option) => ({ ...option, type }))
+          const querySelectedFilters: GroupedFiltersOption[] = data.filters.flatMap(({ options, type, title }) =>
+            options
+              .filter(({ id }) => queryFilterIds.includes(id))
+              .map((option) => ({ ...option, type, groupTitle: title }))
           );
 
           dispatch(setPatientAppointmentsSelectedFilters(querySelectedFilters));

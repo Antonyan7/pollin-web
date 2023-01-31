@@ -210,13 +210,15 @@ export enum AppointmentResponseStatus {
   SUCCESS = 'success',
   FAIL = 'fail'
 }
-
+export interface GroupedFiltersOption extends PatientAppointmentsFilterOption {
+  groupTitle: string;
+}
 export interface IPatientAppointmentsProps {
   list: IPatientAppointmentsList;
   orderBy: Exclude<keyof IPatientAppointment, 'time'> | null;
   order: SortOrder | null;
   filters: IPatientAppointmentsListFilter[] | null;
-  selectedFilters: PatientAppointmentsFilterOption[];
+  selectedFilters: GroupedFiltersOption[];
   status: AppointmentResponseStatus;
 }
 

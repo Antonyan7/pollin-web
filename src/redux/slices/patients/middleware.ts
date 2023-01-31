@@ -1,6 +1,6 @@
 import API from '@axios/API';
 import bookingHelpers from '@axios/booking/bookingHelpers';
-import { IPatientAppointment, PatientAppointmentsFilterOption } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
@@ -13,6 +13,7 @@ import { AppDispatch } from 'redux/store';
 import { IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
+  GroupedFiltersOption,
   ICreateEncounterNoteProps,
   IEncounterList,
   IPatientList,
@@ -439,7 +440,7 @@ const getPatientAppointments =
     page: number,
     order: SortOrder | null,
     orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
-    selectedFilters?: PatientAppointmentsFilterOption[]
+    selectedFilters?: GroupedFiltersOption[]
   ) =>
   async (dispatch: AppDispatch) => {
     try {

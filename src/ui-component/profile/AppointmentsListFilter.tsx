@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { PatientAppointmentsFilterOption } from '@axios/booking/managerBookingTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { borderRadius, borders } from 'themes/themeConstants';
+import { GroupedFiltersOption } from 'types/reduxTypes/patient-emrStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -19,12 +19,17 @@ const AppointmentListFilter = () => {
   const { currentPage } = list;
   const currentPatientAppointmentFilterField = useAppSelector(patientsSelector.currentPatientAppointmentFilterField);
 
-  const adaptedGroupedOptions = () =>
-    filters && filters.length > 0
-      ? filters?.flatMap((item) => item?.options.map((option) => ({ ...option, type: item.type })))
-      : [];
+  const adaptedGroupedOptions = useMemo(
+    () =>
+      filters && filters.length > 0
+        ? filters?.flatMap((item) =>
+            item?.options.map((option) => ({ ...option, type: item.type, groupTitle: item.title }))
+          )
+        : [],
+    [filters]
+  );
 
-  const onAppointmentRecencyChange = async (appointmentFilters: PatientAppointmentsFilterOption[]) => {
+  const onAppointmentRecencyChange = async (appointmentFilters: GroupedFiltersOption[]) => {
     dispatch(
       patientsMiddleware.getPatientAppointments(currentPatientId, currentPage, order, orderBy, appointmentFilters)
     );
@@ -47,8 +52,7 @@ const AppointmentListFilter = () => {
         onChange={(_event, appointmentFilters) =>
           onAppointmentRecencyChange(
             appointmentFilters.filter(
-              (appointmentFilter): appointmentFilter is PatientAppointmentsFilterOption =>
-                typeof appointmentFilter === 'object'
+              (appointmentFilter): appointmentFilter is GroupedFiltersOption => typeof appointmentFilter === 'object'
             )
           )
         }
@@ -60,8 +64,8 @@ const AppointmentListFilter = () => {
           return false;
         }}
         value={[...selectedFilters]}
-        options={adaptedGroupedOptions()}
-        groupBy={(option) => option.type}
+        options={adaptedGroupedOptions}
+        groupBy={(option) => option.groupTitle}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         clearIcon={<CloseIcon onClick={() => onAppointmentRecencyChange([])} fontSize="small" />}
