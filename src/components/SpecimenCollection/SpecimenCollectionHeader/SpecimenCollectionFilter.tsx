@@ -32,7 +32,7 @@ const SpecimenCollectionFilter = () => {
   };
 
   return (
-    <Box sx={{ width: '450px' }}>
+    <Box>
       <BaseDropdownWithLoading
         data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS}
         multiple

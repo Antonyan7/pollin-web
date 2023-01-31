@@ -119,7 +119,7 @@ const ResourceDropdown = ({
   }, [groupedServiceProvidersList.searchString, resetScroll]);
 
   return (
-    <Box sx={{ minWidth: '225px' }}>
+    <Box sx={{ maxWidth: '240px' }}>
       <BaseDropdownWithLoading
         freeSolo
         isLoading={isGroupedServiceProvidersLoading}
