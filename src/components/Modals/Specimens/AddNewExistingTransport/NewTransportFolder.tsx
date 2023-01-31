@@ -24,7 +24,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
-import { borderRadius, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
@@ -163,7 +163,6 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                 <ButtonWithLoading
                   disabled={!(labId && transportFolderName && calendarDate)}
                   sx={{
-                    borderRadius: borderRadius.radius8,
                     '&.MuiButton-root.MuiLoadingButton-root': {
                       backgroundColor: (theme) => theme.palette.primary.main
                     },

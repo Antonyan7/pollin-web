@@ -8,7 +8,7 @@ import { coreSelector } from '@redux/slices/core';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { borderRadius, paddings } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -76,7 +76,6 @@ const SaveButton = () => {
       type="submit"
       sx={{
         px: paddings.leftRight4,
-        borderRadius: borderRadius.radius8,
         height: 45
       }}
     >

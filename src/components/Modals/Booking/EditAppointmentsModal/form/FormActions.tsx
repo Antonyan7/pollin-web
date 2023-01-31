@@ -7,7 +7,7 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
-import { borderRadius, paddings } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -47,7 +47,7 @@ const FormActions = () => {
             data-cy={saveButtonLabelCyId}
             disabled={isSaveButtonDisabled}
             isLoading={isConfirmationLoading}
-            sx={{ width: '60px', borderRadius: borderRadius.radius8 }}
+            sx={{ width: '60px' }}
             type="submit"
             variant="contained"
           >

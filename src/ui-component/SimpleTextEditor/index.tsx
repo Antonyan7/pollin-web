@@ -147,12 +147,7 @@ const SimpleTextEditor = ({
             <StyledButton type="button" variant="outlined" onClick={handleCancel}>
               {t(Translation.PAGE_ENCOUNTERS_CANCEL_LABEL)}
             </StyledButton>
-            <ButtonWithLoading
-              sx={{ borderRadius: borderRadius.radius8 }}
-              isLoading={buttonWithLoadingState}
-              type="submit"
-              variant="contained"
-            >
+            <ButtonWithLoading isLoading={buttonWithLoadingState} type="submit" variant="contained">
               <Typography mr={buttonWithLoadingState ? margins.right8 : margins.all0}>
                 {!buttonWithLoadingState
                   ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)

@@ -6,7 +6,7 @@ import { ordersMiddleware } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -36,7 +36,6 @@ const Body = () => {
             <ButtonWithLoading
               isLoading={false}
               sx={{
-                borderRadius: borderRadius.radius8,
                 py: paddings.top12,
                 px: paddings.leftRight24
               }}

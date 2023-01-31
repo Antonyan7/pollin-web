@@ -7,7 +7,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { usePatientInfoContext } from 'context/PatientInformationContext';
 import { useRouter } from 'next/router';
-import { borderRadius, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { IPatientContactInformationModalProps } from 'types/reduxTypes/resultsStateTypes';
 
@@ -56,7 +56,6 @@ const Actions = ({ row }: IPatientInfoProps) => {
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
               sx={{
-                borderRadius: borderRadius.radius8,
                 '&.MuiButton-root.MuiLoadingButton-root': {
                   backgroundColor: (theme) => theme.palette.primary.main
                 },

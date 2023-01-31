@@ -5,7 +5,7 @@ import { useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { borderRadius, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -27,7 +27,6 @@ const FormActions = ({ isActionButtonDisabled }: FormActionsProps) => {
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
               sx={{
-                borderRadius: borderRadius.radius8,
                 '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
                   backgroundColor: (theme) => theme.palette.grey[200]
                 }

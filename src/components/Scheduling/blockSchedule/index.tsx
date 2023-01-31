@@ -12,7 +12,7 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import { viewsMiddleware } from 'redux/slices/views';
-import { borderRadius, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
@@ -134,7 +134,8 @@ const BlockTemplates = () => {
                   variant="contained"
                   sx={{
                     marginLeft: margins.auto,
-                    borderRadius: borderRadius.radius8
+                    minWidth: '70px',
+                    minHeight: '50px'
                   }}
                 >
                   <Typography sx={{ mr: isScheduleLoading ? 2 : 0 }}>

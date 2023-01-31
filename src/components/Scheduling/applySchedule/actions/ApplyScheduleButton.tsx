@@ -5,7 +5,7 @@ import { useAppSelector } from '@redux/hooks';
 import { schedulingSelector } from '@redux/slices/scheduling';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { borderRadius, paddings } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -29,7 +29,6 @@ const ApplyScheduleButton = ({ isAllowedToApplySchedule, handleApplySchedule }: 
         color="primary"
         variant="contained"
         style={{
-          borderRadius: borderRadius.radius8,
           lineHeight: 1.5
         }}
         onClick={handleApplySchedule}

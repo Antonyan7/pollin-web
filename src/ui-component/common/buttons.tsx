@@ -3,7 +3,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, ButtonProps, CircularProgress, Fab, Grid, SxProps, Typography } from '@mui/material';
-import { paddings } from 'themes/themeConstants';
+import { borderRadius, paddings } from 'themes/themeConstants';
 
 export const PlusIconButton = (props: { isPlusButtonDisabled?: boolean; onClick: () => void; dataCy?: string }) => {
   const { onClick, isPlusButtonDisabled, dataCy } = props;
@@ -102,6 +102,7 @@ export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWi
       minWidth: '100px',
       px: 2,
       textAlign: 'left',
+      borderRadius: borderRadius.radius8,
       '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
         color: (theme) => theme.palette.common.white,
         background: (theme) => theme.palette.grey[300]

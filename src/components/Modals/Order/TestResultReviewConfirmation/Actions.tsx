@@ -4,7 +4,7 @@ import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
-import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -29,7 +29,6 @@ const Actions = ({ testResultId, reviewerComment }: ActionsProps) => {
             <ButtonWithLoading
               isLoading={isTestResultReviewed}
               sx={{
-                borderRadius: borderRadius.radius8,
                 py: paddings.top12,
                 px: paddings.leftRight24
               }}

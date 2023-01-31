@@ -1,17 +1,9 @@
 import React from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { styled, Typography, TypographyProps, useTheme } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import Link from 'next/link';
 
 import { IBreadcrumbNavItemProp } from './Breadcrumb';
-
-const StyledBreadcrumbParagraph = styled(Typography)<TypographyProps>(() => ({
-  fontSize: '16px',
-  lineHeight: '20px',
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center'
-}));
 
 const BreadcrumbNavItem = ({ page, index }: IBreadcrumbNavItemProp) => {
   const theme = useTheme();
@@ -27,14 +19,16 @@ const BreadcrumbNavItem = ({ page, index }: IBreadcrumbNavItemProp) => {
         />
       ) : null}
       <Link href={page.path}>
-        <StyledBreadcrumbParagraph
+        <Typography
           sx={{
-            color: index ? theme.palette.secondary.main : theme.palette.grey[400]
+            color: index ? theme.palette.secondary.main : theme.palette.common.black,
+            fontSize: theme.typography.pxToRem(16),
+            cursor: 'pointer'
           }}
           variant="h3"
         >
           {page.name}
-        </StyledBreadcrumbParagraph>
+        </Typography>
       </Link>
     </>
   );

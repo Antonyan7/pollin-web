@@ -25,7 +25,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
-import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -144,7 +144,6 @@ const AddNewTransportFolderModal = () => {
                       <ButtonWithLoading
                         disabled={!(labId && transportFolderName)}
                         sx={{
-                          borderRadius: borderRadius.radius8,
                           '&.MuiButton-root.MuiLoadingButton-root': {
                             backgroundColor: (theme) => theme.palette.primary.main
                           },

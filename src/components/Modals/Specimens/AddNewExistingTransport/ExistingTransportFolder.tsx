@@ -22,7 +22,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
-import { borderRadius, margins } from 'themes/themeConstants';
+import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
@@ -118,7 +118,6 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                 <ButtonWithLoading
                   disabled={!(calendarDate && transportFolder)}
                   sx={{
-                    borderRadius: borderRadius.radius8,
                     '&.MuiButton-root.MuiLoadingButton-root': {
                       backgroundColor: (theme) => theme.palette.primary.main
                     },

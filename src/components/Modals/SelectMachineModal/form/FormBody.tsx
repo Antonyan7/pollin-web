@@ -135,7 +135,6 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
             <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
               <ButtonWithLoading
                 sx={{
-                  borderRadius: borderRadius.radius8,
                   '&.MuiButton-root.MuiLoadingButton-root.Mui-disabled': {
                     backgroundColor: theme.palette.grey[200]
                   }

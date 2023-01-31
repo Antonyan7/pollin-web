@@ -70,7 +70,6 @@ const Body = ({ orderId }: BodyProps) => {
             <ButtonWithLoading
               isLoading={isCancelOrderLoading}
               sx={{
-                borderRadius: borderRadius.radius8,
                 py: paddings.top12,
                 px: paddings.leftRight24
               }}
