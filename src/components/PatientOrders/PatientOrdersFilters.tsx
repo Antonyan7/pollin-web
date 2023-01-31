@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OrdersFilterOption } from '@axios/results/resultsManagerTypes';
 import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
@@ -66,6 +67,7 @@ const PatientOrdersFilters = ({ setFiltersChange }: PatientOrdersResultFiltersPr
       renderInputProps={{
         label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
       }}
+      popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
     />
   );
 };

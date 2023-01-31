@@ -27,6 +27,7 @@ export const patientListTabLinks = [
   { linkName: 'Medications', href: 'medications' },
   { linkName: 'Orders & Results', href: 'orders' },
   { linkName: 'Consents', href: 'consents' },
+  { linkName: 'Medical Background', href: 'medicalbackground' },
   { linkName: 'Referrals', href: 'referrals' }
 ];
 export const rowsPerPage = 10;

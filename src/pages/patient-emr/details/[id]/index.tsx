@@ -66,38 +66,40 @@ export default ({ children }: PropsWithChildren) => {
       <PatientAlertView />
       <PatientHighlightsView />
       <br />
-      <Tabs
-        value={currentTabIndex}
-        indicatorColor="primary"
-        textColor="primary"
-        onChange={handleChange}
-        aria-label="simple tabs example"
-        variant="fullWidth"
-        sx={{
-          '& .MuiTabs-indicator': {
-            height: 3,
-            backgroundColor: theme.palette.dark[200]
-          }
-        }}
-      >
-        {patientListTabLinks.map((link, linkIndex) => {
-          const isLinkAvailable = Object.values(AvailablePages).includes(link.linkName as AvailablePages);
+      <Main sx={{ marginTop: margins.top0 }}>
+        <Tabs
+          value={currentTabIndex}
+          indicatorColor="primary"
+          textColor="primary"
+          onChange={handleChange}
+          aria-label="simple tabs example"
+          variant="fullWidth"
+          sx={{
+            '& .MuiTabs-indicator': {
+              height: 3,
+              backgroundColor: theme.palette.dark[200]
+            }
+          }}
+        >
+          {patientListTabLinks.map((link, linkIndex) => {
+            const isLinkAvailable = Object.values(AvailablePages).includes(link.linkName as AvailablePages);
 
-          return (
-            currentPatientId && (
-              <TabWithLink
-                disabled={!isLinkAvailable}
-                key={link.linkName}
-                component={Link}
-                href={`/patient-emr/details/${currentPatientId}/${link.href}`}
-                label={link.linkName}
-                {...allyProps(linkIndex)}
-              />
-            )
-          );
-        })}
-      </Tabs>
-      <Main sx={{ marginTop: margins.top0 }}>{children}</Main>
+            return (
+              currentPatientId && (
+                <TabWithLink
+                  disabled={!isLinkAvailable}
+                  key={link.linkName}
+                  component={Link}
+                  href={`/patient-emr/details/${currentPatientId}/${link.href}`}
+                  label={link.linkName}
+                  {...allyProps(linkIndex)}
+                />
+              )
+            );
+          })}
+        </Tabs>
+        {children}
+      </Main>
     </>
   );
 };

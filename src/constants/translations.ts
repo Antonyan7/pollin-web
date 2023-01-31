@@ -191,6 +191,7 @@ export enum Translation {
   PAGE_ORDER_DETAILS_BUTTON_DOWNLOAD_REQUISITIONS = 'page.order.details.button.download.requisitions',
   PAGE_ORDER_DETAILS_BUTTON_CONFIRM = 'page.order.details.button.confirm',
   PAGE_ORDER_DETAILS_BUTTON_CANCEL = 'page.order.details.button.cancel',
+  PAGE_ORDER_DETAILS_THERE_ARE_NO_AVAILABLE_ORDERS = 'page.order.details.there.are.no.available.orders',
   MODAL_CANCEL = 'modal.cancel',
   MODAL_OK = 'modal.ok',
   MODAL_MARK_AS_IN_PROGRESS_CONFIRM_MACHINE = 'modal.mark.as.in_progress.confirm.machine',

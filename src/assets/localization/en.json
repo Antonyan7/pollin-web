@@ -189,6 +189,7 @@
   "page.order.details.button.download.requisitions": "Download Requisition(s)",
   "page.order.details.button.confirm": "Confirm",
   "page.order.details.button.cancel": "Cancel",
+  "page.order.details.there.are.no.available.orders": "There are no available orders to view list",
   "modal.cancel": "Cancel",
   "modal.ok": "OK",
   "modal.mark.as.in_progress.confirm.machine": "Mark as In-Progress: Confirm Machine",
