@@ -20,8 +20,10 @@ import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
 import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
+import axios from 'axios';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
+import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
 import {
   IAllTestsSpecimensList,
@@ -34,7 +36,8 @@ import {
 import {
   ICreateTransportFolderReqBody,
   IGetSpecimensInTransportListParams,
-  IGetTransportFoldersReqBody
+  IGetTransportFoldersReqBody,
+  ResultsErrorMessages
 } from 'types/results';
 
 const {
@@ -49,6 +52,7 @@ const {
   setIsSpecimensInTransportListLoading,
   setIsSpecimensListLoading,
   setIsSpecimenStorageLocationsLoading,
+  setIsSpecimentAddedToFolder,
   setIsTestResultsDetailsLoading,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
@@ -580,12 +584,11 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
 
 const addSpecimenToTransportFolder =
   (specimens: IRetestRecollectData[], transportFolderId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setIsSpecimentAddedToFolder(true));
+
     try {
       await API.results.addSpecimenToTransportFolder(specimens, transportFolderId);
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    } finally {
+      dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,
@@ -597,7 +600,27 @@ const addSpecimenToTransportFolder =
           }
         })
       );
+    } catch (error) {
+      Sentry.captureException(error);
+
+      if (axios.isAxiosError(error)) {
+        if (error?.response?.data.status.message === ResultsErrorMessages.Specimen_not_found) {
+          dispatch(
+            viewsMiddleware.setToastNotificationPopUpState({
+              open: true,
+              props: {
+                severityType: SeveritiesType.error,
+                description: t(
+                  Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_ERROR_MESSAGE
+                )
+              }
+            })
+          );
+        }
+      }
     }
+
+    dispatch(setIsSpecimentAddedToFolder(false));
   };
 
 const downloadTransportFolderManifest = (transportFolderId: string) => async (dispatch: AppDispatch) => {

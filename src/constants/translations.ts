@@ -371,6 +371,7 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.folder',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_DATE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.date',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.success.message',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_ERROR_MESSAGE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.error.message',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_FOLDER_CREATE_SUCCESS_MESSAGE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.folder.create.success.message',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_NAME = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID = 'page.specimens.tracking.transports.add.new.transport.folder.modal.transport.folder.id',

@@ -3,31 +3,19 @@ import { useTranslation } from 'react-i18next';
 import { TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import {
-  Box,
-  DialogActions,
-  Divider,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack
-} from '@mui/material';
+import { Box, DialogActions, Divider, FormControl, Grid, MenuItem, SelectChangeEvent, Stack } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
+import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
-import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
-import { ITransportFolder } from 'types/results';
+import { IAddNewExistingTransportModalProps, ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 const useStyles = makeStyles(() => ({
@@ -39,30 +27,29 @@ const useStyles = makeStyles(() => ({
 const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const { specimenIds } = props;
   const classes = useStyles();
-  const transportFolders = useAppSelector(resultsSelector.transportFolders);
+  const transportList = useAppSelector(resultsSelector.transportList);
+  const { folders: transportFolders } = transportList;
+  const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
+  const isSpecimentAddedToFolder = useAppSelector(resultsSelector.isSpecimentAddedToFolder);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [t] = useTranslation();
   const [transportFolder, setTransportFolder] = useState<string>('');
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
-  const [specimenIdArray, setSpecimenIdArray] = useState<string[]>([]);
+  const selectDropdownLabel = t(
+    Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER
+  );
 
   const handleTransportFolderChange = (event: SelectChangeEvent) => {
     setTransportFolder(event.target.value as string);
   };
 
   const onConfirmAddToNewExistingTransport = () => {
-    if (!Array.isArray(specimenIds)) {
-      setSpecimenIdArray([specimenIds]);
-    } else {
-      setSpecimenIdArray(specimenIds);
-    }
-
+    const specimenIdArray = defineSpecimenId(specimenIds);
     const specimens = specimenIdArray.map((specimenId: string) => ({
       id: specimenId
     }));
 
     dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder));
-    dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
   };
 
   useEffect(() => {
@@ -84,26 +71,22 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
             <DatePickerWithTodayButton />
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="add-transport-folder-label">
-                  {t(
-                    Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER
-                  )}
-                </InputLabel>
-                <Select
+                <BaseSelectWithLoading
+                  isLoading={isTransportListLoading}
                   IconComponent={KeyboardArrowDownIcon}
                   labelId="add-transport-folder-label"
                   id="add-transport-folder"
                   value={transportFolder}
-                  label="Transport Folder"
+                  label={selectDropdownLabel}
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleTransportFolderChange}
                 >
-                  {transportFolders.map((transport: ITransportFolder) => (
+                  {transportFolders.map((transport: ITransportListFolderProps) => (
                     <MenuItem value={transport.id} key={transport.id}>
                       {transport.title}
                     </MenuItem>
                   ))}
-                </Select>
+                </BaseSelectWithLoading>
               </FormControl>
             </Grid>
           </Grid>
@@ -125,7 +108,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                       backgroundColor: (theme) => theme.palette.primary.light
                     }
                   }}
-                  isLoading={false}
+                  isLoading={isSpecimentAddedToFolder}
                   variant="contained"
                   onClick={onConfirmAddToNewExistingTransport}
                 >

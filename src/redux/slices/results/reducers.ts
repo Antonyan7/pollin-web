@@ -128,6 +128,9 @@ const reducers = createReducer({
   setSpecimensInTransportList(state, action: IAction<ISpecimensInTransportList>) {
     state.collection.specimensInTransportList = action.payload;
   },
+  setIsSpecimentAddedToFolder(state, action: IAction<boolean>) {
+    state.tracking.isSpecimentAddedToFolder = action.payload;
+  },
   setIsSpecimensInTransportListLoading(state, action: IAction<boolean>) {
     state.collection.isSpecimensInTransportListLoading = action.payload;
   },

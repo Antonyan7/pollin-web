@@ -33,6 +33,7 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
   },
   transportFolders: [],
   isCreatingTransportFolder: false,
+  isSpecimentAddedToFolder: false,
   isLabMachinesLoading: false,
   isLabsLoading: false,
   isTransportListLoading: false,

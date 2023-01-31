@@ -21,11 +21,10 @@ import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
+import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -50,7 +49,6 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const [labId, setLabId] = useState<string>('');
   const [transportFolderName, setTransportFolderName] = useState<string>('');
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
-  const [specimenIdArray, setSpecimenIdArray] = useState<string[]>([]);
 
   const handleDestinationLabChange = (event: SelectChangeEvent) => {
     setLabId(event.target.value as string);
@@ -70,21 +68,15 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   }, [calendarDate, labId, transportFolderName]);
 
   const addSpecimenToAlreadyCreatedTransportFolder = useCallback(() => {
-    if (!Array.isArray(specimenIds)) {
-      setSpecimenIdArray([specimenIds]);
-    } else {
-      setSpecimenIdArray(specimenIds);
-    }
-
+    const specimenIdArray = defineSpecimenId(specimenIds);
     const specimens = specimenIdArray.map((specimenId: string) => ({
       id: specimenId
     }));
 
     if (lastCreatedTransportFolderId) {
       dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolderId));
-      dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
     }
-  }, [lastCreatedTransportFolderId, specimenIds, specimenIdArray]);
+  }, [lastCreatedTransportFolderId, specimenIds]);
 
   const onConfirmCreateNewTransportFolder = useCallback(() => {
     createNewTransportFolder();

@@ -23,6 +23,8 @@ const specimenActions = createSelector([selector], (state) => state.common.speci
 const labMachines = createSelector([selector], (state) => state.tracking.labMachines);
 const isLabMachinesLoading = createSelector([selector], (state) => state.tracking.isLabMachinesLoading);
 const transportList = createSelector([selector], (state) => state.tracking.transportList);
+const isTransportListLoading = createSelector([selector], (state) => state.tracking.isTransportListLoading);
+const isSpecimentAddedToFolder = createSelector([selector], (state) => state.tracking.isSpecimentAddedToFolder);
 const isLabsLoading = createSelector([selector], (state) => state.tracking.isLabsLoading);
 const testResultLabs = createSelector([selector], (state) => state.tracking.labs);
 const transportActions = createSelector([selector], (state) => state.tracking.transportActions);
@@ -72,7 +74,6 @@ const isSendingSpecimenCollectionData = createSelector(
   [selector],
   (state) => state.collection.isSendingSpecimenCollectionData
 );
-const isTransportListLoading = createSelector([selector], (state) => state.tracking.isTransportListLoading);
 const specimensInTransportList = createSelector([selector], (state) => state.collection.specimensInTransportList);
 const isSpecimensInTransportListLoading = createSelector(
   [selector],
@@ -100,9 +101,10 @@ export default {
   isTestResultsDetailsLoading,
   isTestResultsSubmitLoading,
   isTestResultsSubmitWentSuccessful,
+  isTransportListLoading,
+  isSpecimentAddedToFolder,
   isTransportFolderDownloaded,
   labMachines,
-  isTransportListLoading,
   lastCreatedTransportFolderId,
   pendingSpecimenStats,
   pendingTestStats,

@@ -1,6 +1,6 @@
 import { IPagination } from '@axios/axiosTypes';
 import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
-import { IResultsFilterOption, ITransportFolder, TestResultsStats } from 'types/results';
+import { IResultsFilterOption, ITransportFolder, ITransportFolderDriver, TestResultsStats } from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
@@ -62,6 +62,7 @@ export interface ITestResultsTracking {
   isLabsLoading: boolean;
   labMachines: LabMachine;
   isLabMachinesLoading: boolean;
+  isSpecimentAddedToFolder: boolean;
   isTransportListLoading: boolean;
   isCreatingTransportFolder: boolean;
   transportFolders: ITransportFolder[];
@@ -109,7 +110,7 @@ export interface ITransportListFolderProps {
   id: string;
   title: string;
   labName: string;
-  driver: { name: string };
+  driver: ITransportFolderDriver;
   status: ITransportFolderStatus;
 }
 export interface ITransportListProps {

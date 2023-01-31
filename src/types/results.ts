@@ -115,6 +115,10 @@ export enum TransportFolderStatus {
   InTransit = 'In transit'
 }
 
+export enum ResultsErrorMessages {
+  Specimen_not_found = 'SPECIMEN_NOT_FOUND'
+}
+
 export enum TestResultsStatsNumbers {
   Days30 = 30,
   Days15 = 15
