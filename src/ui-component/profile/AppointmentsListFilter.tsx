@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -38,6 +39,7 @@ const AppointmentListFilter = () => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
+        PopperComponent={GroupedServiceProvidersPopper}
         id="appointmentFilterId"
         fullWidth
         multiple
