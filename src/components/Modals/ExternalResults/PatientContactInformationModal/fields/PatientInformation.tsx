@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import { Box, Grid, Typography } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { ContactInformationResultsPossibleResponses } from 'types/results';
+import { formatDate } from 'utils/dateUtils';
 
 const PatientInformation = () => {
   const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
@@ -37,7 +37,7 @@ const PatientInformation = () => {
           <Typography variant="subtitle1">
             {patientContactInformation.dateOfBirth === ContactInformationResultsPossibleResponses.Unknown
               ? 'N/A'
-              : format(new Date(patientContactInformation.dateOfBirth), `MMM dd, yyy`)}
+              : formatDate(patientContactInformation.dateOfBirth, 'MMM dd, yyy')}
           </Typography>
           <Typography variant="subtitle1">
             {patientContactInformation.ohipNumber === ContactInformationResultsPossibleResponses.Unknown
