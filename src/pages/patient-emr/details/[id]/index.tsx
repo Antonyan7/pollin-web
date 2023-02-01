@@ -77,7 +77,7 @@ export default ({ children }: PropsWithChildren) => {
           sx={{
             '& .MuiTabs-indicator': {
               height: 3,
-              backgroundColor: theme.palette.dark[200]
+              backgroundColor: theme.palette.primary.main
             }
           }}
         >
