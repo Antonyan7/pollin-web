@@ -27,7 +27,9 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id }
   const router = useRouter();
 
   const onEncounterClick = () => {
-    router.push(`/patient-emr/encounter/${id}`);
+    const { id: currentPatientId } = router.query;
+
+    router.push(`/patient-emr/details/${currentPatientId}/encounters/encounter/${id}`);
   };
 
   return (
