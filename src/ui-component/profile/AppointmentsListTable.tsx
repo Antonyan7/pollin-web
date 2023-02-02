@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
 import {
   Table,
   TableBody,
@@ -96,14 +96,18 @@ const AppointmentsListTable = () => {
           </TableHead>
           <TableBody>
             {tableData &&
-              tableData.map(({ id, type, date, time, status }) => (
-                <TableRow key={id}>
-                  <TableCell>{type}</TableCell>
-                  <TableCell>{format(new Date(date), 'MMM dd, yyyy')}</TableCell>
-                  <TableCell>{time}</TableCell>
-                  <TableCell>{status}</TableCell>
-                </TableRow>
-              ))}
+              tableData.map(({ id, type, date, time, status }) => {
+                const appointmentTypeStyle = status === PatientAppointmentStatuses.Cancelled ? 'line-through' : 'auto';
+
+                return (
+                  <TableRow key={id}>
+                    <TableCell sx={{ textDecoration: appointmentTypeStyle }}>{type}</TableCell>
+                    <TableCell>{format(new Date(date), 'MMM dd, yyyy')}</TableCell>
+                    <TableCell>{time}</TableCell>
+                    <TableCell>{status}</TableCell>
+                  </TableRow>
+                );
+              })}
             {Array.from({ length: pageSize - (tableData?.length ?? 0) }, (_, i) => (
               <TableRow key={`placeholder-${i}`}>
                 <TableCell sx={{ borderColor: 'transparent', userSelect: 'none' }}>&nbsp;</TableCell>
