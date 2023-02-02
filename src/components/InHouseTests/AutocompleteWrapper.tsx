@@ -42,7 +42,7 @@ const AutocompleteWrapper = ({ onChange, label, filtersList, loading }: Autocomp
     setSelectedFilters(previousFilters);
     onChange(previousFilters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [adaptedGroupedOptions]);
+  }, [filtersList]);
 
   return (
     <BaseDropdownWithLoading

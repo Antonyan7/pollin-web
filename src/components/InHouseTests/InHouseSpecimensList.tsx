@@ -76,7 +76,7 @@ const InHouseSpecimensList = () => {
   useEffect(() => {
     const data: ISpecimensListReqBody = {
       ...(identifiers.length > 0 ? { specimens: identifiers.map((identifier) => ({ identifier })) } : {}),
-      ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
+      ...(selectedFilters.length ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {}),
       page: page + 1
@@ -86,27 +86,11 @@ const InHouseSpecimensList = () => {
   }, [page, identifiers, selectedFilters, sortField, sortOrder, isSpecimensConfirmationButtonClicked]);
 
   useEffect(() => {
-    const filters = selectedFilters?.map(({ id }) => id);
-
-    router.replace(
-      {
-        query: {
-          ...router.query,
-          selectedPage: page + 1,
-          ...(identifiers.length > 0 ? { selectedSpecimens: identifiers.map((identifier) => identifier) } : {}),
-          ...(selectedFilters.length > 0 ? { selectedFilter: filters } : {}),
-          ...(sortField ? { selectedSortField: sortField } : {}),
-          ...(sortOrder ? { selectedSortOrder: sortOrder } : {})
-        }
-      },
-      undefined,
-      { scroll: false }
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, selectedFilters, sortField, sortOrder, identifiers]);
-
-  useEffect(() => {
     const { selectedFilter, selectedPage, selectedSortField, selectedSortOrder, selectedSpecimens } = router.query;
+
+    let specimens = selectedSpecimens && selectedSpecimens.length ? selectedSpecimens : ([] as string | string[]);
+
+    specimens = !Array.isArray(specimens) ? [specimens] : (specimens as string[]);
 
     if (filtersList.length) {
       setPage(selectedPage ? Number(selectedPage) - 1 : 0);
@@ -114,7 +98,7 @@ const InHouseSpecimensList = () => {
         selectedSortField ? (selectedSortField as SpecimensListSortFields) : SpecimensListSortFields.COLLECTION_AGE
       );
       setSortOrder(selectedSortOrder ? (selectedSortOrder as SortOrder) : SortOrder.Desc);
-      setIdentifiers(selectedSpecimens?.length ? (selectedSpecimens as string[]).map((specimen) => specimen) : []);
+      setIdentifiers(specimens?.length ? (specimens as string[]).map((specimen) => specimen) : []);
       setSelectedFilters(findFilterById(filtersList, selectedFilter));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -159,17 +143,43 @@ const InHouseSpecimensList = () => {
   }, [specimensList.notFound, isSpecimensListLoading, toastHasBeenShown]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+    const url = {
+      pathname: router.pathname,
+      query: { ...router.query, selectedPage: newPage + 1 }
+    };
+
+    router.push(url, undefined, { shallow: true });
     setPage(newPage);
   };
 
   const searchByIdsHandler = useCallback((idArr: string[]) => {
     setPage(0);
     setIdentifiers(idArr);
+
+    const url = {
+      pathname: router.pathname,
+      query: { ...router.query, selectedSpecimens: idArr, selectedPage: 1 }
+    };
+
+    router.push(url, undefined, { shallow: true });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const filterChangeHandler = useCallback((curFilters: ISpecimensFilterOptions[]) => {
+    const filters = curFilters?.map(({ id }) => id);
+
     setPage(0);
     setSelectedFilters(curFilters);
+
+    const url = {
+      pathname: router.pathname,
+      query: { ...router.query, selectedFilter: filters, selectedPage: 1 }
+    };
+
+    router.push(url, undefined, { shallow: true });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const specimenActions = useAppSelector(resultsSelector.specimenActions);

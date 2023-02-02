@@ -1,5 +1,6 @@
 import React from 'react';
 import { TableCell, TableSortLabel, tableSortLabelClasses, useTheme } from '@mui/material';
+import { useRouter } from 'next/router';
 import { SortOrder } from 'types/patient';
 
 import { HeadCellProps } from './types';
@@ -12,7 +13,7 @@ export const HeadCell = <SortFieldType,>({
   sortField
 }: HeadCellProps<SortFieldType>) => {
   const theme = useTheme();
-
+  const router = useRouter();
   const onSort = (field: SortFieldType) => {
     setSortField(field);
 
@@ -21,6 +22,13 @@ export const HeadCell = <SortFieldType,>({
 
     const isTheSameField = sortOrder === SortOrder.Asc && field === sortField;
     const sortDirection = isTheSameField ? SortOrder.Desc : SortOrder.Asc;
+
+    const url = {
+      pathname: router.pathname,
+      query: { ...router.query, selectedSortField: field as string, selectedOrder: sortDirection }
+    };
+
+    router.push(url, undefined, { shallow: true });
 
     setSortOrder(sortDirection);
   };

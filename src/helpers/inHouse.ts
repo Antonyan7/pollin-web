@@ -14,19 +14,22 @@ export const findFilterById = (filtersList: ISpecimensFilterCategory[], selected
     }
   });
 
-  return preSelectedFilters?.length ? preSelectedFilters.map((filter) => filter) : [];
+  return preSelectedFilters?.length ? preSelectedFilters : [];
 };
 
-export const findFilterOptionById = (filtersList: IResultsFilterOption[], selectedFilter?: string | string[]) => {
-  const preSelectedFilters: IResultsFilterOption[] = [];
+export const findFilterOptionById = (
+  filtersList: IResultsFilterOption[],
+  selectedFilter?: string | string[]
+): IResultsFilterOption[] => {
+  if (selectedFilter && filtersList.length) {
+    const selectedFilters = !Array.isArray(selectedFilter) ? [selectedFilter] : selectedFilter;
 
-  const filterOptions = filtersList.find((option) =>
-    typeof selectedFilter === 'string' ? option.id === selectedFilter : selectedFilter?.includes(option.id)
-  );
+    const preSelectedFilters = selectedFilters?.map(
+      (item) => filtersList.find((option) => option.id === item) as IResultsFilterOption
+    );
 
-  if (filterOptions) {
-    preSelectedFilters.push(filterOptions);
+    return preSelectedFilters ?? [];
   }
 
-  return preSelectedFilters?.length ? preSelectedFilters : [];
+  return [];
 };

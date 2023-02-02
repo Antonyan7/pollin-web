@@ -1,13 +1,15 @@
-import React, { KeyboardEvent, useCallback, useRef, useState } from 'react';
+import React, { KeyboardEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Close } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, OutlinedInput, outlinedInputClasses, Portal, useTheme } from '@mui/material';
+import { useRouter } from 'next/router';
 
 import { SearchBoxItems } from './SearchBoxItems';
 import { SearchBoxProps } from './types';
 
 const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSearchedItems }) => {
   const theme = useTheme();
+  const router = useRouter();
   const [currentSearchboxValues, setCurrentSearchboxValues] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const container = useRef();
@@ -65,6 +67,17 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
     setCurrentSearchboxValues(newSearchBoxValues);
     onSearch(newSearchBoxValues);
   };
+
+  useEffect(() => {
+    let { selectedSpecimens } = router.query;
+
+    if (selectedSpecimens?.length) {
+      selectedSpecimens = !Array.isArray(selectedSpecimens) ? [selectedSpecimens] : selectedSpecimens;
+      setCurrentSearchboxValues(selectedSpecimens as string[]);
+    }
+
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <form onSubmit={submitHandler}>

@@ -24,7 +24,7 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: I
   const router = useRouter();
 
   const navigateToTestResultsPage = () => {
-    const currentPath = router.asPath;
+    const currentPath = router.pathname;
     const specimenId = row.id;
     const inHouseTestResultsPagePath = `${currentPath}/input-results/${specimenId}`;
 
