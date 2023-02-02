@@ -4,12 +4,12 @@ import FullCalendar from '@fullcalendar/react';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
-import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
 
 import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
 import FullCalendarWrapper from '@ui-component/calendar/FullCalendarWrapper';
 import { StyledDisabledLayer } from '@ui-component/calendar/StyledDisabledLayer';
+import { calculateEndTime } from '@utils/dateUtils';
 
 import { ISpecimenCollectionSlot } from './SpecimenCollectionCalendarTypes';
 import SpecimenCollectionFullCalendarContainer from './SpecimenCollectionFullCalendarContainer';
@@ -94,19 +94,19 @@ const SpecimenCollectionCalendar = () => {
   }, [calendarDate, selectedSpecimenAppointmentsFilters, serviceProviderId]);
 
   useEffect(() => {
-    const calendarEvents: ISpecimenCollectionSlot[] = specimenAppointments.map((item) => ({
-      allDay: false,
-      classNames: ['specimen-slot'],
-      start: item.startTime,
-      end: dayjs(item.startTime)
-        .add(item.timeUnits * 10, 'minutes')
-        .format(),
-      title: item.title,
-      id: item.id,
-      color: item.color ?? 'transparent',
-      textColor: 'black',
-      ...(!item.color ? { borderColor: 'black' } : {})
-    }));
+    const calendarEvents: ISpecimenCollectionSlot[] = specimenAppointments.map(
+      ({ startTime, timeUnits, id, color, title }) => ({
+        allDay: false,
+        classNames: ['specimen-slot'],
+        start: startTime,
+        end: calculateEndTime(startTime, timeUnits),
+        title,
+        id,
+        color: color ?? 'transparent',
+        textColor: 'black',
+        ...(!color ? { borderColor: 'black' } : {})
+      })
+    );
 
     setSlots(calendarEvents);
   }, [specimenAppointments]);
