@@ -70,7 +70,7 @@ export const getInitialState = (): PatientEmrProps => ({
     },
     filters: null,
     selectedFilters: [],
-    order: SortOrder.Desc,
+    order: SortOrder.Asc,
     orderBy: PatientAppointmentsSortField.Date,
     status: AppointmentResponseStatus.IDLE
   },
