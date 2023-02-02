@@ -29,11 +29,6 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
   const [t] = useTranslation();
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceProviders(1));
-    dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
-  }, []);
-
-  useEffect(() => {
     if (router.isReady) {
       if (router.query.date) {
         dispatch(bookingMiddleware.setDateValue(router.query?.date as string));

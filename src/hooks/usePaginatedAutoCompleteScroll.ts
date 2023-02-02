@@ -2,13 +2,14 @@ import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
 export const usePaginatedAutoCompleteScroll = (
   initialPage: number,
+  currentPage: number,
   isLoading: boolean,
   pageSize: number,
   totalItems: number,
   onBottomReach: (currentPage: number) => void // make sure this function will be memoized with useCallback
 ) => {
   const initialPageValue = useRef(initialPage);
-  const page = useRef(initialPage);
+  const page = useRef(currentPage);
   const ref = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef(0);
 
@@ -28,7 +29,6 @@ export const usePaginatedAutoCompleteScroll = (
       if (isScrollBottom && !isLastPage && !isLoading) {
         scrollPosition.current = eventTarget.scrollTop;
         page.current = 1 + page.current;
-
         onBottomReach(page.current);
 
         ref.current = eventTarget;

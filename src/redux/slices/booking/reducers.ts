@@ -32,12 +32,20 @@ const reducers = createReducer({
   },
   updateGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders.providers = [...state.groupedServiceProviders.providers, ...action.payload.providers];
+    state.groupedServiceProviders.currentPage = action.payload.currentPage;
+    state.groupedServiceProviders.totalItems = action.payload.totalItems;
+    state.groupedServiceProviders.pageSize = action.payload.pageSize;
+    state.groupedServiceProviders.searchString = action.payload.searchString;
   },
   updateSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.specimenGroupedServiceProviders.providers = [
       ...state.specimenGroupedServiceProviders.providers,
       ...action.payload.providers
     ];
+    state.specimenGroupedServiceProviders.currentPage = action.payload.currentPage;
+    state.specimenGroupedServiceProviders.totalItems = action.payload.totalItems;
+    state.specimenGroupedServiceProviders.pageSize = action.payload.pageSize;
+    state.specimenGroupedServiceProviders.searchString = action.payload.searchString;
   },
   setIsServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isServiceProvidersLoading = action.payload;

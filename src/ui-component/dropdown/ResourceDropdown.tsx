@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
 import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
@@ -38,6 +38,9 @@ const ResourceDropdown = ({
 
   const [groupedServiceProvidersSelectedOption, setGroupedServiceProvidersSelectedOption] =
     useState<GroupedServiceProvidersOption | null>(null);
+
+  const [searchInput, setSearchInput] = useState(groupedServiceProvidersList.searchString ?? '');
+  const searchChanged = useRef(false);
 
   const adaptedGroupedOptions = useMemo(
     () =>
@@ -93,6 +96,7 @@ const ResourceDropdown = ({
 
   const { onScroll: onServiceProviderScroll, resetScroll } = usePaginatedAutoCompleteScroll(
     1,
+    Math.max(groupedServiceProvidersList.currentPage, 1),
     isGroupedServiceProvidersLoading,
     groupedServiceProvidersList.pageSize,
     groupedServiceProvidersList.totalItems,
@@ -115,8 +119,11 @@ const ResourceDropdown = ({
   const throttleFn = useLodashThrottle(handleThrottleSearch);
 
   useEffect(() => {
-    resetScroll();
-  }, [groupedServiceProvidersList.searchString, resetScroll]);
+    if (searchChanged.current) {
+      resetScroll();
+      searchChanged.current = false;
+    }
+  }, [groupedServiceProvidersList.searchString, resetScroll, searchChanged]);
 
   return (
     <Box sx={{ maxWidth: '240px' }}>
@@ -127,6 +134,7 @@ const ResourceDropdown = ({
         PopperComponent={GroupedServiceProvidersPopper}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         forcePopupIcon
+        inputValue={searchInput}
         ListboxProps={{
           style: {
             border: `${borders.solid2px} ${theme.palette.primary.main}`,
@@ -152,6 +160,8 @@ const ResourceDropdown = ({
         onInputChange={(_event, searchString, reason) => {
           if (reason === 'input' || reason === 'clear') {
             throttleFn(searchString);
+            searchChanged.current = true;
+            setSearchInput(searchString);
           }
         }}
         clearIcon={<CloseIcon fontSize="small" />}
