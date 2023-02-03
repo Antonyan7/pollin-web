@@ -1,5 +1,6 @@
 import React from 'react';
 import { TableCell, TableRow } from '@mui/material';
+import { timeAdjuster } from 'helpers/timeAdjuster';
 import Link from 'next/link';
 import { ITransportListFolderProps, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
@@ -14,7 +15,7 @@ export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => (
   <Link href={`/clinic-test-results/specimen-tracking/transports/${row.id}`}>
     <TableRow sx={{ cursor: 'pointer' }} hover>
       <TableCell>{row.title}</TableCell>
-      <TableCell>{row.date}</TableCell>
+      <TableCell>{timeAdjuster(row.date).customizedDate}</TableCell>
       <TableCell>{row.labName}</TableCell>
       <TableCell>{row.driver.name}</TableCell>
       <TableCell>{row.status}</TableCell>
