@@ -2,16 +2,19 @@ import React from 'react';
 import { Avatar, AvatarProps, Box, styled } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { IconBell } from '@tabler/icons';
+import { borders } from 'themes/themeConstants';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
   ...theme.typography.mediumAvatar,
+  border: `${borders.solid1px}`,
+  borderColor: theme.palette.primary.light,
+  background: theme.palette.primary.light,
+  color: theme.palette.primary.dark,
   transition: 'all .2s ease-in-out',
-  background: theme.palette.secondary.light,
-  color: theme.palette.secondary.dark,
-  '&[aria-controls="menu-list-grow"],&:hover': {
-    background: theme.palette.secondary.dark,
-    color: theme.palette.secondary.light
+  '&:hover': {
+    background: theme.palette.primary.dark,
+    color: theme.palette.primary.light
   }
 }));
 

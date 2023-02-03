@@ -124,6 +124,7 @@
   "page.scheduling.block.date.start.after.end.error": "End Date & Time must occur after start date",
   "page.scheduling.block.time.start.after.end.error": "Start time must occur before end time",
   "page.scheduling.block.time.end.after.end.error": "End Time must occur after start time",
+  "page.task.dashboard.title": "Task Dashboard",
   "page.scheduling.apply.title": "Apply Schedule",
   "page.scheduling.apply.resource": "Resource",
   "page.scheduling.apply.every": "Every",

@@ -12,6 +12,7 @@ import DevSection from './DevSection';
 import NotificationSection from './NotificationSection';
 import ProfileSection from './ProfileSection';
 import SearchSection from './SearchSection';
+import TaskDashboard from './TaskDashboard';
 
 const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   ...theme.typography.commonAvatar,
@@ -62,6 +63,9 @@ const Header = () => {
       </Box>
       <Box sx={{ display: { sm: 'block' } }}>
         <NotificationSection />
+      </Box>
+      <Box sx={{ display: { sm: 'block' } }}>
+        <TaskDashboard />
       </Box>
       <Box sx={{ display: { sm: 'block' } }}>
         <ProfileSection />
