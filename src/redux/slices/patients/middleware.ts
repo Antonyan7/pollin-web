@@ -9,7 +9,7 @@ import { SeveritiesType } from '@components/Scheduling/types';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
-import { AppDispatch } from 'redux/store';
+import { AppDispatch, RootState } from 'redux/store';
 import { IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
@@ -479,6 +479,25 @@ const setCurrentAppointmentType = (appointmentType: string) => async (dispatch: 
   dispatch(setCurrentAppointmentFilterType(appointmentType));
 };
 
+const resetAppointmentsList = () => async (dispatch: AppDispatch, getState: () => RootState) => {
+  try {
+    const currentValues = getState().patients.patientAppointments;
+
+    dispatch(
+      setPatientAppointments({
+        ...currentValues,
+        list: {
+          ...currentValues.list,
+          appointments: null
+        }
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -486,6 +505,7 @@ export default {
   resetPatientAlerts,
   getPatientProfileOverview,
   setEncountersLoadingState,
+  resetAppointmentsList,
   getEncounterList,
   setEncounterSearch,
   setSelectedEncounterFilters,

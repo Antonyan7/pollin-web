@@ -51,6 +51,7 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
     navigateTo(PatientProfilePageName.AppointmentsList, {
       filterIds: filterId
     });
+    dispatch(patientsMiddleware.resetAppointmentsList());
     dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
   };
 
