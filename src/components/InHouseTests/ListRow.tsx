@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, useTheme } from '@mui/material';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
 import { useRouter } from 'next/router';
-import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import useChipColor from '@hooks/useChipColor';
@@ -11,14 +10,9 @@ import ContextMenu from '@ui-component/contextMenu';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
 
-interface InHouseSpecimensRowProps {
-  row: ISpecimensListItem;
-  actions: SpecimenActionsValues[];
-  isItemSelected: boolean;
-  onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
-}
+import { SpecimensListRowProps } from './types';
 
-export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: InHouseSpecimensRowProps) => {
+const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const router = useRouter();
@@ -72,3 +66,5 @@ export const InHouseSpecimensRow = ({ row, actions, onClick, isItemSelected }: I
     </TableRow>
   );
 };
+
+export default SpecimensListRow;

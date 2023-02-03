@@ -30,6 +30,7 @@ export const handleSelectAllClick = (
   setSelectedStatuses([]);
 };
 
+// TODO: remove this callback which used react local state in outside https://fhhealth.atlassian.net/browse/PCP-2409
 export const onCheckboxClick = (
   event: React.ChangeEvent<HTMLInputElement>,
   id: string,
