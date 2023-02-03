@@ -7,6 +7,8 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import { IOrdersListItem, OrdersActions } from 'types/reduxTypes/ordersStateTypes';
 
+import { useToolbarAction } from '@hooks/useToolbarAction';
+
 interface ContextMenuProps {
   actions: IOrdersPossibleActions[];
   row: IOrdersListItem;
@@ -20,22 +22,25 @@ const PatientOrdersContextMenu = ({ actions, row }: ContextMenuProps) => {
   const handleClose = () => {
     setAnchorElement(null);
   };
+  const handleOrderCancellationPopupAction = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.OrderCancellation,
+        props: { orderId: row.id }
+      })
+    );
+  }, [row.id]);
 
-  const onMenuItemClick = useCallback(
-    (actionIndex: number) => {
-      const element = actions.find((_, index) => index === actionIndex);
-
-      if (element && element.id === OrdersActions.Cancel) {
-        dispatch(
-          viewsMiddleware.openModal({
-            name: ModalName.OrderCancellation,
-            props: { orderId: row.id }
-          })
-        );
+  const actionBindings = [
+    {
+      actionId: OrdersActions.Cancel,
+      actionCallback: () => {
+        handleOrderCancellationPopupAction();
       }
-    },
-    [actions, row]
-  );
+    }
+  ];
+
+  const toolbarAction = useToolbarAction(actionBindings);
 
   return (
     <Grid item>
@@ -58,11 +63,11 @@ const PatientOrdersContextMenu = ({ actions, row }: ContextMenuProps) => {
           horizontal: 'right'
         }}
       >
-        {actions?.map((action, actionIndex) => (
+        {actions?.map((action) => (
           <MenuItem
             onClick={() => {
               handleClose();
-              onMenuItemClick(actionIndex);
+              toolbarAction(action.id);
             }}
           >
             {action.title}

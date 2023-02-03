@@ -33,7 +33,7 @@ import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
-import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
+import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import SpecimensStatsView from '@ui-component/profile/SpecimensStatsView';
 
@@ -233,7 +233,7 @@ const InHouseSpecimensList = () => {
               </TableCell>
               {numSelected > 0 && (
                 <TableCell padding="none" colSpan={6}>
-                  <EnhancedTableToolbarExternalResults
+                  <ResultsTableRowToolbar
                     numSelected={numSelected}
                     specimenActions={specimenActions}
                     selectedStatuses={selectedStatuses}

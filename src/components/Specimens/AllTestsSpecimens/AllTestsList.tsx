@@ -27,7 +27,7 @@ import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { IAllTestsSpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 
-import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
+import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
 import { headCellsData } from './AllTestsHeadCellMockData';
 import { AllTestsRow } from './AllTestsRow';
@@ -136,7 +136,7 @@ const AllTestsList = () => {
 
               {numSelected > 0 ? (
                 <TableCell padding="none" colSpan={6}>
-                  <EnhancedTableToolbarExternalResults
+                  <ResultsTableRowToolbar
                     numSelected={numSelected}
                     specimenActions={specimenActions}
                     selectedStatuses={selectedStatuses}

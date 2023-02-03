@@ -25,7 +25,7 @@ import { IHeadCell, SortOrder } from 'types/patient';
 import { ISpecimensInTransportListItem } from 'types/reduxTypes/resultsStateTypes';
 import { IGetSpecimensInTransportListParams } from 'types/results';
 
-import EnhancedTableToolbarExternalResults from '@ui-component/EnhancedTableToolbar/EnhancedTableToolbarExternalResults';
+import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
 import { headCellsData } from './headCellsData';
 import { SpecimensInTransportListRow } from './SpecimensInTransportListRow';
@@ -88,7 +88,7 @@ const SpecimensInTransportList = () => {
 
               {numSelected > 0 ? (
                 <TableCell padding="none" colSpan={6}>
-                  <EnhancedTableToolbarExternalResults
+                  <ResultsTableRowToolbar
                     numSelected={numSelected}
                     specimenActions={specimenActions}
                     selectedStatuses={selectedStatuses}

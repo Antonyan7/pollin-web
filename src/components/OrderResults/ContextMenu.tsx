@@ -8,6 +8,8 @@ import { ModalName } from 'types/modals';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { OrderResultAction } from 'types/results';
 
+import { useToolbarAction } from '@hooks/useToolbarAction';
+
 interface ContextMenuProps {
   actions: OrderResultAction[];
   row: IOrderResultsByPatientItem;
@@ -22,30 +24,40 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     setAnchorElement(null);
   };
 
-  const onMenuItemClick = useCallback(
-    (actionIndex: number) => {
-      const element = actions.find((_, index) => index === actionIndex);
+  const handleTestResultReleaseConfirmationAction = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.TestResultReleaseConfirmation,
+        props: { testResultId: row.id }
+      })
+    );
+  }, [row.id]);
 
-      if (element?.id === OrderResultActionType.Release) {
-        dispatch(
-          viewsMiddleware.openModal({
-            name: ModalName.TestResultReleaseConfirmation,
-            props: { testResultId: row.id }
-          })
-        );
-      }
+  const handleTestResultReviewConfirmationAction = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.TestResultReviewConfirmation,
+        props: { testResultId: row.id }
+      })
+    );
+  }, [row.id]);
 
-      if (element?.id === OrderResultActionType.Review) {
-        dispatch(
-          viewsMiddleware.openModal({
-            name: ModalName.TestResultReviewConfirmation,
-            props: { testResultId: row.id }
-          })
-        );
+  const actionBindings = [
+    {
+      actionId: OrderResultActionType.Release,
+      actionCallback: () => {
+        handleTestResultReleaseConfirmationAction();
       }
     },
-    [actions, row]
-  );
+    {
+      actionId: OrderResultActionType.Review,
+      actionCallback: () => {
+        handleTestResultReviewConfirmationAction();
+      }
+    }
+  ];
+
+  const toolbarAction = useToolbarAction(actionBindings);
 
   return (
     <Grid item>
@@ -68,11 +80,12 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
           horizontal: 'right'
         }}
       >
-        {actions?.map((el, index) => (
+        {actions?.map((el) => (
           <MenuItem
+            key={el.id}
             onClick={() => {
               handleClose();
-              onMenuItemClick(index);
+              toolbarAction(el.id);
             }}
           >
             {el.title}

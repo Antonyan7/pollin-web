@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { TransportActionType } from '@axios/results/resultsManagerTypes';
+import { ActionType, TransportActionType } from '@axios/results/resultsManagerTypes';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid, MenuItem, Typography } from '@mui/material';
 import { resultsMiddleware } from '@redux/slices/results';
@@ -10,6 +10,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import { SpecimenActions, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
 
+import { useToolbarAction } from '@hooks/useToolbarAction';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 
 interface EnhancedTableToolbarExternalResultsProps {
@@ -19,7 +20,7 @@ interface EnhancedTableToolbarExternalResultsProps {
   selected: string[];
 }
 
-const EnhancedTableToolbarExternalResults = ({
+const ResultsTableRowToolbar = ({
   numSelected,
   specimenActions,
   selectedStatuses,
@@ -34,37 +35,59 @@ const EnhancedTableToolbarExternalResults = ({
   );
   const showOptions = options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit);
 
-  const handleMoveToTransportAction = () => {
+  const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     dispatch(
       viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: selected } })
     );
-  };
+  }, [selected]);
 
-  const onMenuItemClick = useCallback(
-    (optionType: TransportActionType, actionIndex: number) => {
-      if (
-        optionType === TransportActionType.MoveToAnotherTransport ||
-        optionType === TransportActionType.MoveToTransport
-      ) {
+  const handleMarkAsAction = useCallback(
+    (actionType: string) => {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.SelectMachineModal,
+          props: { specimenIds: selected, actionType }
+        })
+      );
+    },
+    [selected]
+  );
+
+  const actionBindings = [
+    {
+      actionId: TransportActionType.MoveToTransport,
+      actionCallback: () => {
         handleMoveToTransportAction();
       }
-      // TODO @Sirusho: Please take a look on this case and make sure that everything should be like this
-      else {
-        const element = options?.actions.find((_, index) => index === actionIndex);
-
-        dispatch(
-          viewsMiddleware.openModal({
-            name: ModalName.SelectMachineModal,
-            props: { specimenIds: selected, actionType: element?.id }
-          })
-        );
+    },
+    {
+      actionId: TransportActionType.MoveToAnotherTransport,
+      actionCallback: () => {
+        handleMoveToTransportAction();
       }
     },
+    {
+      actionId: ActionType.InProgress,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.InProgress);
+      }
+    },
+    {
+      actionId: ActionType.Recollect,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.Recollect);
+      }
+    },
+    {
+      actionId: ActionType.Retest,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.Retest);
+      }
+    }
+  ];
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [options?.actions, selected]
-  );
+  const toolbarAction = useToolbarAction(actionBindings);
 
   return (
     <Grid container xs={12} sx={{ mt: '7px', mb: '7px' }}>
@@ -89,12 +112,12 @@ const EnhancedTableToolbarExternalResults = ({
             labelId="action-label"
             label={t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_ACTION)}
           >
-            {options?.actions.map((item: SpecimenActionsValues, index: number) => (
+            {options?.actions.map((item: SpecimenActionsValues) => (
               <MenuItem
                 key={item.title}
                 value={item.title}
                 onClick={() => {
-                  onMenuItemClick(item.id as TransportActionType, index);
+                  toolbarAction(item.id);
                 }}
               >
                 {item.title}
@@ -107,4 +130,4 @@ const EnhancedTableToolbarExternalResults = ({
   );
 };
 
-export default EnhancedTableToolbarExternalResults;
+export default ResultsTableRowToolbar;

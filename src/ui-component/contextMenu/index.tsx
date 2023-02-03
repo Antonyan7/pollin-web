@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { TransportActionType } from '@axios/results/resultsManagerTypes';
+import { ActionType, TransportActionType } from '@axios/results/resultsManagerTypes';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { resultsMiddleware } from '@redux/slices/results';
@@ -13,6 +13,8 @@ import {
   ITransportListFolderProps,
   SpecimenActionsValues
 } from 'types/reduxTypes/resultsStateTypes';
+
+import { useToolbarAction } from '@hooks/useToolbarAction';
 
 interface ContextMenuProps {
   actions: SpecimenActionsValues[];
@@ -35,39 +37,61 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     );
   }, [row.id]);
 
-  const onMenuItemClick = useCallback(
-    (actionIndex: number) => {
-      const element = actions.find((_, index) => index === actionIndex);
+  const handleHandoffConfirmationAction = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.HandoffConfirmation,
+        props: { row }
+      })
+    );
+  }, [row]);
 
-      if (
-        element?.id === TransportActionType.MoveToAnotherTransport ||
-        element?.id === TransportActionType.MoveToTransport
-      ) {
-        handleMoveToTransportAction();
-
-        return;
-      }
-
-      if (element?.id === TransportActionType.MarkInTransit) {
-        dispatch(
-          viewsMiddleware.openModal({
-            name: ModalName.HandoffConfirmation,
-            props: { row }
-          })
-        );
-
-        return;
-      }
-
+  const handleMarkAsAction = useCallback(
+    (actionType: string) => {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.SelectMachineModal,
-          props: { specimenIds: [row.id], actionType: element?.id }
+          props: { specimenIds: [row.id], actionType }
         })
       );
     },
-    [actions, row, handleMoveToTransportAction]
+    [row.id]
   );
+
+  const actionBindings = [
+    {
+      actionId: TransportActionType.MoveToTransport,
+      actionCallback: () => {
+        handleMoveToTransportAction();
+      }
+    },
+    {
+      actionId: TransportActionType.MarkInTransit,
+      actionCallback: () => {
+        handleHandoffConfirmationAction();
+      }
+    },
+    {
+      actionId: ActionType.InProgress,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.InProgress);
+      }
+    },
+    {
+      actionId: ActionType.Recollect,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.Recollect);
+      }
+    },
+    {
+      actionId: ActionType.Retest,
+      actionCallback: () => {
+        handleMarkAsAction(ActionType.Retest);
+      }
+    }
+  ];
+
+  const toolbarAction = useToolbarAction(actionBindings);
 
   return (
     <Grid item>
@@ -90,11 +114,11 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
           horizontal: 'right'
         }}
       >
-        {actions?.map((el, index) => (
+        {actions?.map((el) => (
           <MenuItem
             onClick={() => {
               handleClose();
-              onMenuItemClick(index);
+              toolbarAction(el.id);
             }}
           >
             {el.title}
