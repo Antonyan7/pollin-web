@@ -1,6 +1,6 @@
 import API from '@axios/API';
 import bookingHelpers from '@axios/booking/bookingHelpers';
-import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
@@ -486,6 +486,11 @@ const resetAppointmentsList = () => async (dispatch: AppDispatch, getState: () =
     dispatch(
       setPatientAppointments({
         ...currentValues,
+        filters: null,
+        selectedFilters: [],
+        order: SortOrder.Asc,
+        orderBy: PatientAppointmentsSortField.Date,
+        status: AppointmentResponseStatus.IDLE,
         list: {
           ...currentValues.list,
           appointments: null
