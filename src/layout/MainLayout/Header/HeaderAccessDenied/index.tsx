@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import LogoSection from '../../LogoSection';
 import ProfileSection from '../ProfileSection';
 
-const HeaderPermision = () => (
+const HeaderPermission = () => (
   <>
     <Box
       sx={(theme) => ({
@@ -25,4 +25,4 @@ const HeaderPermision = () => (
   </>
 );
 
-export default HeaderPermision;
+export default HeaderPermission;

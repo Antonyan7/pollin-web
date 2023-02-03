@@ -67,6 +67,17 @@ const PortalHeader = () => (
   </Toolbar>
 );
 
+const PortalDefaultContent = ({ children }: PropsWithChildren) => {
+  const { drawerOpen } = useAppSelector(viewsSelector.menu);
+  const theme = useTheme();
+
+  return (
+    <Main theme={theme} open={drawerOpen}>
+      {children}
+    </Main>
+  );
+};
+
 const PortalContent = ({ children }: PropsWithChildren) => {
   const { drawerOpen } = useAppSelector(viewsSelector.menu);
   const theme = useTheme();
@@ -93,10 +104,21 @@ const PortalContent = ({ children }: PropsWithChildren) => {
 };
 
 const LayoutContent = ({ children }: PropsWithChildren) => {
+  const router = useRouter();
   const user = useAppSelector(userSelector.user);
   const isSignedIn = useMemo(() => !!user, [user]);
 
-  return isSignedIn ? <PortalContent>{children}</PortalContent> : <Login />;
+  const isAccessDenied = router.pathname === '/access-denied';
+
+  if (!isSignedIn) {
+    return <Login />;
+  }
+
+  if (isAccessDenied) {
+    return <PortalDefaultContent>{children}</PortalDefaultContent>;
+  }
+
+  return <PortalContent>{children}</PortalContent>;
 };
 
 const MainLayout = ({ children }: PropsWithChildren) => {

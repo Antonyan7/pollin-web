@@ -1,3 +1,5 @@
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { CookieKey } from 'constants/cookieKey';
 import { devToolsDefaultConfig } from 'constants/defaultConfigs';
@@ -57,6 +59,23 @@ class RequestManager {
 
       return requestConfig;
     });
+
+    axiosInstance.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        if (error.response.status === 403) {
+          dispatch(
+            viewsMiddleware.setRedirectionState({
+              path: '/access-denied',
+              params: '',
+              apply: true
+            })
+          );
+        }
+
+        return Promise.reject(error);
+      }
+    );
 
     RequestManager.instance = axiosInstance;
 

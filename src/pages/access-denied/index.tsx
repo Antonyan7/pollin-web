@@ -7,7 +7,7 @@ import { borderRadius, margins } from 'themes/themeConstants';
 
 import AccessDenied from '@assets/icons/AccessDenied/accessDenied.png';
 
-import HeaderAccessDenied from '../Header/HeaderAccessDenied';
+import HeaderAccessDenied from '../../layout/MainLayout/Header/HeaderAccessDenied';
 
 const Main = styled('main')(({ theme }) => ({
   borderBottomLeftRadius: 0,
