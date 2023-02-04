@@ -331,6 +331,7 @@
   "page.in.house.specimens.filter.label": "Filter Specimens",
   "page.in.house.specimens.search.success": "Successfully Filtered",
   "page.in.house.specimens.search.fail": "The following Specimen ID(s) were not found. Please try again.",
+  "page.in.house.actions.input.test.results": "Input test Results",
   "page.permision.access": "You don't have access permissions",
   "page.permision.access.contact.your.administrator": "Contact your administrator to get access",
   "page.specimens.title": "Specimens",

@@ -1,8 +1,11 @@
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ActionType, TransportActionType } from '@axios/results/resultsManagerTypes';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
 import { resultsMiddleware } from '@redux/slices/results';
+import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
@@ -22,12 +25,22 @@ interface ContextMenuProps {
 }
 
 const ContextMenu = ({ actions, row }: ContextMenuProps) => {
+  const [t] = useTranslation();
+  const router = useRouter();
   const [anchorElement, setAnchorElement] = useState<Element | ((element: Element) => Element) | null>(null);
   const handleClick = (event: React.MouseEvent) => {
     setAnchorElement(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorElement(null);
+  };
+
+  const navigateToTestResultsPage = () => {
+    const currentPath = router.pathname;
+    const specimenId = row.id;
+    const inHouseTestResultsPagePath = `${currentPath}/input-results/${specimenId}`;
+
+    router.push(inHouseTestResultsPagePath);
   };
 
   const handleMoveToTransportAction = useCallback(() => {
@@ -124,6 +137,9 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
             {el.title}
           </MenuItem>
         ))}
+        <MenuItem onClick={navigateToTestResultsPage}>
+          {t(Translation.PAGE_IN_HOUSE_ACTIONS_INPUT_TEST_RESULTS)}
+        </MenuItem>
       </Menu>
     </Grid>
   );

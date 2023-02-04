@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, useTheme } from '@mui/material';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
-import { useRouter } from 'next/router';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import useChipColor from '@hooks/useChipColor';
@@ -15,15 +14,6 @@ import { SpecimensListRowProps } from './types';
 const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const router = useRouter();
-
-  const navigateToTestResultsPage = () => {
-    const currentPath = router.pathname;
-    const specimenId = row.id;
-    const inHouseTestResultsPagePath = `${currentPath}/input-results/${specimenId}`;
-
-    router.push(inHouseTestResultsPagePath);
-  };
 
   const chipColor = useChipColor(row.age);
 
@@ -32,7 +22,6 @@ const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensLi
       role="checkbox"
       hover
       key={row.id}
-      onClick={navigateToTestResultsPage}
       {...(isItemSelected && {
         sx: {
           background: theme.palette.secondary[200]

@@ -333,6 +333,7 @@ export enum Translation {
   PAGE_IN_HOUSE_SPECIMENS_FILTER_LABEL = 'page.in.house.specimens.filter.label',
   PAGE_IN_HOUSE_SPECIMENS_SEARCH_SUCCESS = 'page.in.house.specimens.search.success',
   PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL = 'page.in.house.specimens.search.fail',
+  PAGE_IN_HOUSE_ACTIONS_INPUT_TEST_RESULTS = 'page.in.house.actions.input.test.results',
   PAGE_PERMISION_ACCESS = 'page.permision.access',
   PAGE_PERMISION_ACCESS_CONTACT_YOUR_ADMINISTRATOR = 'page.permision.access.contact.your.administrator',
   PAGE_SPECIMENS_TITLE = 'page.specimens.title',
