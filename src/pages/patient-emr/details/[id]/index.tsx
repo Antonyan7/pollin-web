@@ -6,6 +6,7 @@ import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
 import { Tab, TabProps, Tabs, useTheme } from '@mui/material';
 import { patientListTabLinks } from 'helpers/constants';
+import getPatientName from 'helpers/getPatientName';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -45,7 +46,7 @@ export default ({ children }: PropsWithChildren) => {
     }
   }, [currentPatientId, router.query.id]);
 
-  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
+  const patientFullName = getPatientName(patientProfile?.title as string);
 
   return (
     <>
