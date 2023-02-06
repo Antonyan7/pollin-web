@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,23 +10,26 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { LabMachineProps } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensListItem, LabMachineProps } from 'types/reduxTypes/resultsStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface FormBodyProps {
-  specimenIds: string[];
+  specimens: ISpecimensListItem[];
   actionType: string;
 }
 
-const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
+const FormBody = ({ specimens, actionType }: FormBodyProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const [modalTexts, setModalTexts] = useState({
     selectReasonText: '',
     selectLabel: ''
   });
+
+  const specimenIds = specimens.map((specimen) => specimen.id);
+  const specimenIdentifier = specimens.map((specimen) => specimen.identifier);
 
   const setModalNames = useCallback(() => {
     switch (actionType) {
@@ -67,8 +70,6 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
   const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
   const [machineVal, setMachineVal] = useState('');
 
-  const specimens = useMemo(() => specimenIds.map((id) => ({ id })), [specimenIds]);
-
   const onConfirmClick = useCallback(() => {
     switch (actionType) {
       case ActionType.InProgress:
@@ -91,11 +92,11 @@ const FormBody = ({ specimenIds, actionType }: FormBodyProps) => {
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {specimenIds?.map((id) => (
+          {specimenIdentifier?.map((identifier) => (
             <Typography variant="h4">
               {t(Translation.MODAL_CONFIRM_MACHINE_SPECIMEN_ID)}:
-              <Typography variant="h6" display="inline" marginLeft={margins.left4}>
-                {id}
+              <Typography variant="h5" display="inline" marginLeft={margins.left8}>
+                {identifier}
               </Typography>
             </Typography>
           ))}

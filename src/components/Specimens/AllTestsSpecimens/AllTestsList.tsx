@@ -25,7 +25,7 @@ import { rowsPerPage } from 'helpers/constants';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { IAllTestsSpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
+import { IAllTestsSpecimensListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
@@ -103,11 +103,12 @@ const AllTestsList = () => {
   };
 
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const numSelected = selected.length;
+  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
+  const selectedIds = selectedRows.map((row) => row.id);
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+  const numSelected = selectedIds.length;
+
   const rowCount = allTestsSpecimensList?.specimens.length;
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
 
   const searchByIdsHandler = useCallback((idArr: string[]) => {
     setPage(0);
@@ -128,9 +129,7 @@ const AllTestsList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) =>
-                    handleSelectAllClick(e, allTestsSpecimensList.specimens, setSelected, setSelectedStatuses)
-                  }
+                  onChange={(e) => handleSelectAllClick(e, allTestsSpecimensList.specimens, setSelectedRows)}
                 />
               </TableCell>
 
@@ -139,8 +138,7 @@ const AllTestsList = () => {
                   <ResultsTableRowToolbar
                     numSelected={numSelected}
                     specimenActions={specimenActions}
-                    selectedStatuses={selectedStatuses}
-                    selected={selected}
+                    selectedRows={selectedRows}
                   />
                 </TableCell>
               ) : null}
@@ -172,7 +170,7 @@ const AllTestsList = () => {
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
                   isItemSelected={isItemSelected}
                   onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)
+                    onCheckboxClick(e, row, selectedRows, setSelectedRows)
                   }
                   labelId={labelId}
                 />

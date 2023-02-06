@@ -22,7 +22,7 @@ import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxCli
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { ISpecimensInTransportListItem } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensInTransportListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 import { IGetSpecimensInTransportListParams } from 'types/results';
 
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
@@ -62,11 +62,12 @@ const SpecimensInTransportList = () => {
     setPage(newPage);
   };
 
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
-  const numSelected = selected.length;
+  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
+  const selectedIds = selectedRows.map((row) => row.id);
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+  const numSelected = selectedIds.length;
+
   const rowCount = specimensInTransportList.pageSize;
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
   const theme = useTheme();
 
   return (
@@ -80,9 +81,7 @@ const SpecimensInTransportList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
                   checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) =>
-                    handleSelectAllClick(e, specimensInTransportList.specimens, setSelected, setSelectedStatuses)
-                  }
+                  onChange={(e) => handleSelectAllClick(e, specimensInTransportList.specimens, setSelectedRows)}
                 />
               </TableCell>
 
@@ -91,8 +90,7 @@ const SpecimensInTransportList = () => {
                   <ResultsTableRowToolbar
                     numSelected={numSelected}
                     specimenActions={specimenActions}
-                    selectedStatuses={selectedStatuses}
-                    selected={selected}
+                    selectedRows={selectedRows}
                   />
                 </TableCell>
               ) : null}
@@ -128,7 +126,7 @@ const SpecimensInTransportList = () => {
                   actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
                   isItemSelected={isItemSelected}
                   onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)
+                    onCheckboxClick(e, row, selectedRows, setSelectedRows)
                   }
                   labelId={labelId}
                 />

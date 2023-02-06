@@ -242,6 +242,12 @@ export enum TestResultMeasurementType {
   Retest = 'Retest'
 }
 
+export type TableRowCheckboxProps =
+  | IAllTestsSpecimensListItem
+  | ISpecimensListItem
+  | ITransportListFolderProps
+  | ISpecimensInTransportListItem;
+
 interface ITestResultDates {
   collected: string;
   ordered: string;

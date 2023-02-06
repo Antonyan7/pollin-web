@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
-import { SpecimenActions, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
+import { SpecimenActions, SpecimenActionsValues, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { useToolbarAction } from '@hooks/useToolbarAction';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
@@ -16,19 +16,20 @@ import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 interface EnhancedTableToolbarExternalResultsProps {
   numSelected: number;
   specimenActions: SpecimenActions[];
-  selectedStatuses: string[];
-  selected: string[];
+  selectedRows: TableRowCheckboxProps[];
 }
 
 const ResultsTableRowToolbar = ({
   numSelected,
   specimenActions,
-  selectedStatuses,
-  selected
+  selectedRows
 }: EnhancedTableToolbarExternalResultsProps) => {
   const [t] = useTranslation();
-  const checkSameStatues = useMemo(() => Array.from(new Set(selectedStatuses)), [selectedStatuses]);
-  const hasSameStatues = useMemo(() => checkSameStatues.length > 1, [checkSameStatues]);
+  const selectedStatuses = selectedRows.map((row) => row.status);
+  const selectedId = selectedRows.map((row) => row.id);
+
+  const checkSameStatues = Array.from(new Set(selectedStatuses));
+  const hasSameStatues = checkSameStatues.length > 1;
   const options = useMemo(
     () => specimenActions.find((item: SpecimenActions) => item.title === checkSameStatues[0]),
     [specimenActions, checkSameStatues]
@@ -38,20 +39,20 @@ const ResultsTableRowToolbar = ({
   const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     dispatch(
-      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: selected } })
+      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: selectedId } })
     );
-  }, [selected]);
+  }, [selectedId]);
 
   const handleMarkAsAction = useCallback(
     (actionType: string) => {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.SelectMachineModal,
-          props: { specimenIds: selected, actionType }
+          props: { specimens: selectedRows, actionType }
         })
       );
     },
-    [selected]
+    [selectedRows]
   );
 
   const actionBindings = [

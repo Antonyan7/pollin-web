@@ -19,7 +19,7 @@ import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins, paddings } from 'themes/themeConstants';
 import { SortOrder } from 'types/patient';
-import { ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
+import { ISpecimensListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CircularLoading from '@ui-component/circular-loading';
@@ -73,11 +73,11 @@ const InHouseSpecimensList = () => {
 
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
 
-  const [selected, setSelected] = useState<string[]>([]);
-  const [selectedStatuses, setSelectedStatuses] = useState<string[]>([]);
+  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
+  const selectedIds = selectedRows.map((row) => row.id);
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+  const numSelected = selectedIds.length;
 
-  const isSelected = (id: string) => selected.indexOf(id) !== -1;
-  const numSelected = selected.length;
   const rowsCount = specimensList?.specimens.length;
   const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
   const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
@@ -107,7 +107,7 @@ const InHouseSpecimensList = () => {
                     checkedColor={theme.palette.primary.light}
                     indeterminate={numSelected > 0 && numSelected < rowsCount}
                     checked={isAllSpecimensSelected}
-                    onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelected, setSelectedStatuses)}
+                    onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelectedRows)}
                   />
                 </TableCell>
                 {numSelected > 0 && (
@@ -115,8 +115,7 @@ const InHouseSpecimensList = () => {
                     <ResultsTableRowToolbar
                       numSelected={numSelected}
                       specimenActions={specimenActions}
-                      selectedStatuses={selectedStatuses}
-                      selected={selected}
+                      selectedRows={selectedRows}
                     />
                   </TableCell>
                 )}
@@ -138,7 +137,7 @@ const InHouseSpecimensList = () => {
                       isItemSelected={isItemSelected}
                       onClick={(e) =>
                         // TODO: https://fhhealth.atlassian.net/browse/PCP-2409 The same logic used in a few create common solution for this.
-                        onCheckboxClick(e, row.id, row.status, selected, setSelected, setSelectedStatuses)
+                        onCheckboxClick(e, row, selectedRows, setSelectedRows)
                       }
                     />
                   );

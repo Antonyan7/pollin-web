@@ -64,11 +64,11 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.SelectMachineModal,
-          props: { specimenIds: [row.id], actionType }
+          props: { specimens: [row], actionType }
         })
       );
     },
-    [row.id]
+    [row]
   );
 
   const actionBindings = [

@@ -1,60 +1,38 @@
 import React from 'react';
-import {
-  IAllTestsSpecimensListItem,
-  ISpecimensInTransportListItem,
-  ISpecimensListItem,
-  ITransportListFolderProps
-} from 'types/reduxTypes/resultsStateTypes';
+import { TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 
 export const handleSelectAllClick = (
   event: React.ChangeEvent<HTMLInputElement>,
-  specimensList:
-    | IAllTestsSpecimensListItem[]
-    | ISpecimensListItem[]
-    | ITransportListFolderProps[]
-    | ISpecimensInTransportListItem[],
-  setSelected: (item: string[]) => void,
-  setSelectedStatuses: (item: string[]) => void
+  specimensList: TableRowCheckboxProps[],
+  setSelectedRows: React.Dispatch<React.SetStateAction<TableRowCheckboxProps[]>>
 ) => {
   if (event.target.checked) {
-    const newSelectedId = specimensList?.map((specimen) => specimen.id);
-    const newSelectedStatus = specimensList?.map((specimen) => specimen.status);
-
-    setSelected(newSelectedId);
-    setSelectedStatuses(newSelectedStatus);
-
-    return;
+    setSelectedRows(specimensList);
+  } else {
+    setSelectedRows([]);
   }
-
-  setSelected([]);
-  setSelectedStatuses([]);
 };
 
 // TODO: remove this callback which used react local state in outside https://fhhealth.atlassian.net/browse/PCP-2409
 export const onCheckboxClick = (
-  event: React.ChangeEvent<HTMLInputElement>,
-  id: string,
-  status: string,
-  selected: string[],
-  setSelected: React.Dispatch<React.SetStateAction<string[]>>,
-  setSelectedStatuses: React.Dispatch<React.SetStateAction<string[]>>
+  _event: React.ChangeEvent<HTMLInputElement>,
+  row: TableRowCheckboxProps,
+  selectedRow: TableRowCheckboxProps[],
+  setSelectedRows: React.Dispatch<React.SetStateAction<TableRowCheckboxProps[]>>
 ) => {
-  const selectedIndex = selected.indexOf(id);
+  const selectedIds = selectedRow.map((specimen) => specimen.id);
+  const selectedIndex = selectedIds.indexOf(row.id);
 
   if (selectedIndex === -1) {
-    setSelected((selectedItems) => [...selectedItems, id]);
-    setSelectedStatuses((statuses) => [...statuses, status]);
+    setSelectedRows((selectedItems) => [...selectedItems, row]);
   } else if (selectedIndex === 0) {
-    setSelected((selectedItems) => selectedItems.slice(1));
-    setSelectedStatuses((statuses) => statuses.slice(1));
-  } else if (selectedIndex === selected.length - 1) {
-    setSelected((selectedItems) => selectedItems.slice(0, -1));
-    setSelectedStatuses((statuses) => statuses.slice(0, -1));
+    setSelectedRows((selectedItems) => selectedItems.slice(1));
+  } else if (selectedIndex === selectedRow.length - 1) {
+    setSelectedRows((selectedItems) => selectedItems.slice(0, -1));
   } else if (selectedIndex > 0) {
-    setSelected((selectedItems) => [
+    setSelectedRows((selectedItems) => [
       ...selectedItems.slice(0, selectedIndex),
       ...selectedItems.slice(selectedIndex + 1)
     ]);
-    setSelectedStatuses((statuses) => [...statuses.slice(0, selectedIndex), ...statuses.slice(selectedIndex + 1)]);
   }
 };
