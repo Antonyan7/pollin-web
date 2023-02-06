@@ -24,5 +24,5 @@ const createCustomShadow = (theme: Theme, color: string) => {
 export default function customShadows(navType: string, theme: Theme) {
   return navType === 'dark'
     ? createCustomShadow(theme, theme.palette.dark.main)
-    : createCustomShadow(theme, theme.palette.grey[600]);
+    : createCustomShadow(theme, theme.palette.grey[900]);
 }

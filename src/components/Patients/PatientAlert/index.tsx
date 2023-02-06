@@ -1,14 +1,23 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import CircleIcon from '@mui/icons-material/Circle';
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import { Badge, Button, Grid, ListItem, Tooltip as MuiTooltip, Typography, useTheme } from '@mui/material';
+import {
+  Badge,
+  badgeClasses,
+  Button,
+  Grid,
+  ListItem,
+  Tooltip as MuiTooltip,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
+import AlertIcon from '@assets/icons/AlertIcon';
 import CircularLoading from '@ui-component/circular-loading';
 
 interface PatientAlertProps {
@@ -109,14 +118,30 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
         )
       }
     >
-      <Button sx={{ m: 1 }}>
-        <Badge badgeContent={alertCount} color="error">
-          <ReportGmailerrorredIcon fontSize="large" sx={{ color: theme.palette.primary.main }} />
+      <Button sx={{ m: margins.all8 }}>
+        <Badge
+          badgeContent={alertCount}
+          color="error"
+          sx={{
+            [`.${badgeClasses.badge}`]: {
+              mr: margins.right6,
+              mt: margins.top4
+            }
+          }}
+        >
+          <AlertIcon fontSize="large" color="primary" />
         </Badge>
       </Button>
     </MuiTooltip>
   ) : (
-    <Typography>{t(Translation.PAGE_PATIENT_LIST_ALERT_COUNT)}</Typography>
+    <Typography
+      sx={{
+        color: theme.palette.grey[400],
+        fontSize: theme.typography.pxToRem(16)
+      }}
+    >
+      {t(Translation.PAGE_PATIENT_LIST_ALERT_COUNT)}
+    </Typography>
   );
 };
 

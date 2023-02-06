@@ -39,12 +39,12 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
     e.preventDefault();
 
     if (searchValue) {
-      onSearch([...currentSearchboxValues, searchValue]);
+      onSearch([...currentSearchboxValues, searchValue.trim()]);
     } else {
       onSearch(currentSearchboxValues);
     }
 
-    addSearchedValue(searchValue);
+    addSearchedValue(searchValue.trim());
   };
 
   const clearClickHandler = useCallback(() => {

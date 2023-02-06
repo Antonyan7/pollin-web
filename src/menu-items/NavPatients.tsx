@@ -1,6 +1,10 @@
 import React from 'react';
 import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import { OverrideIcon } from 'types';
+
+import NavbarTitle from './NavbarTitle';
 
 interface PatientsProps {
   id: string;
@@ -18,7 +22,7 @@ interface PatientsProps {
 
 const NavPatients: PatientsProps = {
   id: 'Patients',
-  title: <h3>Patient EMR</h3>,
+  title: <NavbarTitle>{t(Translation.NAVIGATION_TAB_ITEM_PATIENT_EMR)}</NavbarTitle>,
   type: 'group',
   children: [
     {

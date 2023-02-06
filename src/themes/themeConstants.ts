@@ -23,6 +23,7 @@ export const margins = {
   right0: 0,
   right2: '2px',
   right4: '4px',
+  right6: '6px',
   right8: '8px',
   right12: '12px',
   right16: '16px',

@@ -3,7 +3,11 @@ import React from 'react';
 import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import ViewDayIcon from '@mui/icons-material/ViewDay';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import { OverrideIcon } from 'types';
+
+import NavbarTitle from './NavbarTitle';
 
 interface NavSchedulingProps {
   id: string;
@@ -21,7 +25,7 @@ interface NavSchedulingProps {
 
 const NavScheduling: NavSchedulingProps = {
   id: 'Scheduling',
-  title: <h3>Scheduling</h3>,
+  title: <NavbarTitle>{t(Translation.NAVIGATION_TAB_ITEM_SCHEDULING)}</NavbarTitle>,
   type: 'group',
   children: [
     {

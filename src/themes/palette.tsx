@@ -73,7 +73,7 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
         300: colors.grey300,
         400: colors.grey400,
         500: colors.grey500,
-        600: colors.grey900,
+        600: colors.grey600,
         700: colors.grey700,
         800: colors.grey800,
         900: colors.grey900

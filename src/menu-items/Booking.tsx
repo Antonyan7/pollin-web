@@ -1,6 +1,10 @@
 import React from 'react';
 import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import { OverrideIcon } from 'types';
+
+import NavbarTitle from './NavbarTitle';
 
 interface BookingProps {
   id: string;
@@ -18,7 +22,7 @@ interface BookingProps {
 
 const Booking: BookingProps = {
   id: 'Booking',
-  title: <h3>Booking</h3>,
+  title: <NavbarTitle>{t(Translation.NAVIGATION_TAB_ITEM_BOOKING)}</NavbarTitle>,
   type: 'group',
   children: [
     {

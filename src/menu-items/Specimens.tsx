@@ -4,6 +4,8 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
 
+import NavbarTitle from './NavbarTitle';
+
 interface SpecimensProps {
   id: string;
   title: React.ReactNode | string;
@@ -20,7 +22,7 @@ interface SpecimensProps {
 
 const Specimens: SpecimensProps = {
   id: 'Specimens',
-  title: <h3>{t(Translation.PAGE_SPECIMENS_TITLE)}</h3>,
+  title: <NavbarTitle>{t(Translation.NAVIGATION_TAB_ITEM_SPECIMENS)}</NavbarTitle>,
   type: 'group',
   children: [
     {

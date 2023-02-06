@@ -7,32 +7,32 @@ const Typography = (theme: Theme, borderRadius: number, fontFamily: string): Typ
   fontFamily,
   h6: {
     fontWeight: 500,
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontSize: '0.75rem'
   },
   h5: {
     fontSize: '0.875rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontWeight: 500
   },
   h4: {
     fontSize: '1rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontWeight: 600
   },
   h3: {
     fontSize: '1.25rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontWeight: 600
   },
   h2: {
     fontSize: '1.5rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontWeight: 700
   },
   h1: {
     fontSize: '2.125rem',
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     fontWeight: 700
   },
   subtitle1: {
@@ -98,7 +98,7 @@ const Typography = (theme: Theme, borderRadius: number, fontFamily: string): Typ
   menuCaption: {
     fontSize: '0.875rem',
     fontWeight: 500,
-    color: theme.palette.grey[600],
+    color: theme.palette.grey[900],
     padding: paddings.all8,
     textTransform: 'capitalize',
     marginTop: margins.top12

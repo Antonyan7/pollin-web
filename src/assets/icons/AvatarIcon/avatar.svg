@@ -1,0 +1,21 @@
+<svg width="32" height="33" viewBox="0 0 32 33" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Avatar">
+<g id="UI">
+<circle id="Ellipse 9" cx="16" cy="16.5" r="16" fill="#F9F8F6"/>
+<mask id="mask0_1839_1311" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="32" height="33">
+<circle id="Ellipse 10" cx="16" cy="16.5" r="16" fill="#C4C4C4"/>
+</mask>
+<g mask="url(#mask0_1839_1311)">
+</g>
+<g id="Frame" clip-path="url(#clip0_1839_1311)">
+<path id="Vector" d="M15.9998 15.6619C17.8513 15.6619 19.3522 14.161 19.3522 12.3095C19.3522 10.4581 17.8513 8.95714 15.9998 8.95714C14.1484 8.95714 12.6475 10.4581 12.6475 12.3095C12.6475 14.161 14.1484 15.6619 15.9998 15.6619Z" stroke="#A5BBB1" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M10.9717 24.0429V22.3667C10.9717 21.4776 11.3249 20.6249 11.9536 19.9962C12.5823 19.3675 13.435 19.0143 14.3241 19.0143H17.6764C18.5655 19.0143 19.4182 19.3675 20.0469 19.9962C20.6756 20.6249 21.0288 21.4776 21.0288 22.3667V24.0429" stroke="#A5BBB1" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_1839_1311">
+<rect width="20.1143" height="20.1143" fill="white" transform="translate(5.94287 6.44286)"/>
+</clipPath>
+</defs>
+</svg>
