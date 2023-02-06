@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { IResultsReqBody, TestResultsListSortFields } from '@axios/results/resultsManagerTypes';
+import NoResultsFound from '@components/NoResultsFound';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import ResultFilters from '@components/Results/ResultFilters';
-import NoResultsFound from '@components/Table/NoResultsFound';
 import { Box, CircularProgress, TableContainer, TablePagination } from '@mui/material';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { dispatch, useAppSelector } from 'redux/hooks';

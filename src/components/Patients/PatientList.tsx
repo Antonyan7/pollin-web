@@ -1,26 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import NoResultsFound from '@components/NoResultsFound';
 import PatientFilters from '@components/Patients/PatientFilters';
 import { headCellsListMockData } from '@components/Patients/PatientHeadCellMockData';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
 import { HeadCell } from '@components/Table/HeadCell';
-import {
-  Box,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow
-} from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { margins } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { IPatientsFilterOption, IPatientsReqBody, PatientListField, SortOrder } from 'types/patient';
 import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
+
+import CircularLoading from '@ui-component/circular-loading';
 
 const PatientList = () => {
   const [searchValue, setSearchValue] = useState('');
@@ -57,6 +51,11 @@ const PatientList = () => {
     setPage(0);
   }, [filters, searchValue]);
 
+  const areNotAnyAvailableResults = patientsList.totalItems === 0;
+  const notAvailableResultsLabel = t(Translation.PAGE_PATIENT_LIST_NOT_AVAILABLE);
+  const notFoundAnyResultsLabel = t(Translation.PAGE_PATIENT_LIST_NOT_FOUND);
+  const areNotFoundAnyResults = (searchValue || filters.length) && areNotAnyAvailableResults;
+
   return (
     <PatientListStyled>
       <PatientFilters setSearchValue={setSearchValue} setFiltersChange={setFilters} />
@@ -84,12 +83,17 @@ const PatientList = () => {
             </TableBody>
           )}
         </Table>
+        {isPatientListLoading ? (
+          <CircularLoading sx={{ py: paddings.topBottom32 }} />
+        ) : (
+          areNotAnyAvailableResults && (
+            <NoResultsFound
+              label={areNotFoundAnyResults ? notFoundAnyResultsLabel : notAvailableResultsLabel}
+              pt={paddings.top24}
+            />
+          )
+        )}
       </TableContainer>
-      {isPatientListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : null}
       <TablePagination
         labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
         component="div"

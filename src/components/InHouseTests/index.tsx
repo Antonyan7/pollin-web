@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
+import NoResultsFound from '@components/NoResultsFound';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
-import NoResultsFound from '@components/Table/NoResultsFound';
 import {
   Table,
   TableBody,

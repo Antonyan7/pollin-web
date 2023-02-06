@@ -8,7 +8,7 @@ interface CircularLoadingProps {
 
 const CircularLoading: React.FC<CircularLoadingProps> = ({ loadingProps, sx }) => (
   <Grid display="flex" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%', ...sx }}>
-    <CircularProgress size={24} {...loadingProps} />
+    <CircularProgress size={40} {...loadingProps} />
   </Grid>
 );
 

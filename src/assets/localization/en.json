@@ -4,6 +4,8 @@
   "page.patient.list.field.search": "Search Patients",
   "page.patient.list.field.filters": "Filter Results",
   "page.patient.list.alert.count": "None",
+  "page.patient.list.not.available": "There are no patients available to view.",
+  "page.patient.list.not.found": "There are no patients found.",
   "page.patient.encounters.modal.title": "Cancel Encounter Creation",
   "page.patient.encounters.modal.subtitle": "Are you sure you want to cancel? Any changes made will be lost.",
   "page.patient.encounters.list.results": "Results",

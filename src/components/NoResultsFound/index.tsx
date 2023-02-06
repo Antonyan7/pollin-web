@@ -1,12 +1,14 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, GridProps, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
-const NoResultsFound: React.FC<GridProps> = ({ ...props }) => {
+import { NoResultsFoundProps } from './types';
+
+const NoResultsFound: React.FC<NoResultsFoundProps> = ({ label = '', ...props }) => {
   const [t] = useTranslation();
-  const notFoundLabel = t(Translation.COMMON_TABLE_NO_RESULTS_FOUND);
+  const notFoundLabel = label ?? t(Translation.COMMON_TABLE_NO_RESULTS_FOUND);
 
   return (
     <Grid
