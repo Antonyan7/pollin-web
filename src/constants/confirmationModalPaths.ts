@@ -4,3 +4,8 @@ export enum ConfirmationPaths {
   Edit_Addendum = '/edit-addendum',
   Add_Addendum = '/add-addendum'
 }
+
+export enum EncounterPaths {
+  patientBase = '/patient-emr/details',
+  encounterBase = '/encounters/encounter'
+}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -15,6 +15,7 @@ import { IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 
+import encountersRedirect, { EncountersPageTypes } from '../helpers/encountersRedirect';
 import { getAddEncounterInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
@@ -56,7 +57,6 @@ const AddEncounterNote = () => {
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const router = useRouter();
-
   const methods = useForm<IEncountersFormBody>({
     defaultValues: getAddEncounterInitialValues()
   });
@@ -66,9 +66,7 @@ const AddEncounterNote = () => {
 
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
-  const closeImmediately = (): void => {
-    router.push(`/patient-emr/details/${patientId}/encounters`);
-  };
+  const closeImmediately = (): void => encountersRedirect(router, EncountersPageTypes.BACK);
 
   const handleClose = (): void => {
     const shouldClosePage = sanitizedValue === previousEditorValue;
@@ -93,6 +91,12 @@ const AddEncounterNote = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [patientId]
   );
+
+  useEffect(() => {
+    if (typeof router.query.id === 'string') {
+      dispatch(patientsMiddleware.setCurrentPatient(router.query.id));
+    }
+  }, [router.query.id]);
 
   return (
     <FormProvider {...methods}>

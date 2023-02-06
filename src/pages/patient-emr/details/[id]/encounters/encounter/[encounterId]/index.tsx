@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { Fragment, useCallback, useEffect } from 'react';
 import { AddendumsProps, IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ArrowBackIos, EditOutlined, PrintOutlined, ShareOutlined } from '@mui/icons-material';
 import { Box, CircularProgress, Divider, Grid, IconButton, Typography } from '@mui/material';
-import { Theme, useTheme } from '@mui/system';
+import { useTheme } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
-import { useRouter } from 'next/router';
+import { t } from 'i18next';
+import EncountersLayout from 'layout/EncountersLayout';
+import { useRouter, withRouter } from 'next/router';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 import { ButtonWithIcon } from '@ui-component/common/buttons';
@@ -18,29 +19,35 @@ import {
   encountersCustomizedDate,
   encountersCustomizedDateWithoutTime
 } from '@ui-component/encounters/helpers/encountersDate';
+import encountersRedirect, { EncountersPageTypes } from '@ui-component/encounters/helpers/encountersRedirect';
 
 interface EncounterDetailsPageTitleProps {
-  theme: Theme;
   encounterData: IEncounterDetailsProps;
   handleBack: () => void;
   encounterNoteCreatedTime: string;
 }
 
 const EncounterDetailsPageTitle = ({
-  theme,
   encounterData,
   handleBack,
   encounterNoteCreatedTime
 }: EncounterDetailsPageTitleProps) => (
-  <Grid container alignItems="center" justifyContent="space-between" xs={12}>
+  <Grid container item alignItems="center" justifyContent="space-between" xs={12}>
     <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
       <Grid item>
         <IconButton onClick={handleBack}>
-          <ArrowBackIos sx={{ color: theme.palette.primary.main }} />
+          <ArrowBackIos sx={{ color: (theme) => theme.palette.primary.main }} />
         </IconButton>
       </Grid>
       <Grid item xs={7}>
-        <Typography variant="h3" sx={{ color: theme.palette.common.black }} fontSize="21px" fontWeight="500">
+        <Typography
+          variant="h3"
+          sx={{
+            color: (theme) => theme.palette.common.black,
+            fontSize: (theme) => theme.typography.pxToRem(21),
+            fontWeight: 500
+          }}
+        >
           {encounterData.title}
         </Typography>
       </Grid>
@@ -53,9 +60,8 @@ const EncounterDetailsPageTitle = ({
 
 const FooterEncounter = () => {
   const theme = useTheme();
-  const [t] = useTranslation();
   const router = useRouter();
-  const goToAddAddendumPage = () => router.push(`/patient-emr/encounter/${router.query.encounterId}/add-addendum`);
+  const goToAddAddendumPage = () => encountersRedirect(router, EncountersPageTypes.ADD_ADDENDUM);
 
   return (
     <Grid item sx={{ mt: margins.top64, mb: margins.bottom48, display: 'flex', justifyContent: 'space-between' }}>
@@ -97,21 +103,20 @@ const FooterEncounter = () => {
 
 const EncounterDetailsPage = () => {
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
-  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const isEncountersDetailsLoading = useAppSelector(patientsSelector.isEncountersDetailsLoading);
   const theme = useTheme();
-  const [t] = useTranslation();
   const router = useRouter();
   const encounterNoteCreatedTime = encountersCustomizedDateWithoutTime(new Date(encounterData?.createdOn as Date));
   const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
-  const goToEditEncounterPage = () => router.push(`/patient-emr/encounter/${router.query.encounterId}/edit-note`);
+  const goToEditEncounterPage = () => encountersRedirect(router, EncountersPageTypes.EDIT_ENCOUNTER);
   const goToEditAddendumPage = (addendumId: string) =>
-    router.push(`/patient-emr/encounter/${addendumId}/edit-addendum`);
+    encountersRedirect(router, EncountersPageTypes.EDIT_ADDENDUM, addendumId);
+
   const handleBack = useCallback(() => {
-    router.push(`/patient-emr/details/${currentPatientId}/encounters`);
+    encountersRedirect(router, EncountersPageTypes.BACK);
     dispatch(patientsMiddleware.getEncounterDetailsInformation());
-  }, [currentPatientId, router]);
+  }, [router]);
 
   useEffect(() => {
     if (typeof router.query.encounterId === 'string') {
@@ -129,13 +134,18 @@ const EncounterDetailsPage = () => {
     }
   }, [currentEncounterId]);
 
+  useEffect(() => {
+    if (typeof router.query.id === 'string') {
+      dispatch(patientsMiddleware.setCurrentPatient(router.query.id));
+    }
+  }, [router.query.id]);
+
   return (
-    <>
+    <EncountersLayout>
       {encounterData && !isEncountersDetailsLoading ? (
         <EncountersWrapper
           title={
             <EncounterDetailsPageTitle
-              theme={theme}
               encounterData={encounterData}
               handleBack={handleBack}
               encounterNoteCreatedTime={encounterNoteCreatedTime}
@@ -176,7 +186,7 @@ const EncounterDetailsPage = () => {
                   : t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON);
 
                 return (
-                  <>
+                  <Fragment key={addendum.id}>
                     <Divider />
                     <Grid item container direction="row" alignItems="center" gap={3}>
                       <Typography variant="h4" sx={{ width: '130px' }}>
@@ -202,7 +212,7 @@ const EncounterDetailsPage = () => {
                         {`${isEditedTitle} ${encountersCustomizedDate(addendum.date as Date)}`}
                       </Typography>
                     </Grid>
-                  </>
+                  </Fragment>
                 );
               })}
             </Grid>
@@ -215,8 +225,8 @@ const EncounterDetailsPage = () => {
           <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
       ) : null}
-    </>
+    </EncountersLayout>
   );
 };
 
-export default EncounterDetailsPage;
+export default withRouter(EncounterDetailsPage);

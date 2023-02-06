@@ -7,7 +7,7 @@ import { ModalName } from 'types/modals';
 
 const useShouldOpenCancelChangesConfirmationModal = (textFieldValue: string, previousTextFieldValue: string) => {
   const router = useRouter();
-  const pathName = router.asPath.split('/')[4];
+  const pathName = router.asPath.split('/')[7] ?? router.asPath.split('/')[4];
   const openCancelChangesConfirmationModal = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.EncountersCancelChangesModal, props: null }));
   };

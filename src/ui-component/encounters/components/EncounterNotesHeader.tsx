@@ -4,7 +4,9 @@ import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { borderRadius } from 'themes/themeConstants';
+import { borderRadius, margins } from 'themes/themeConstants';
+
+import encountersRedirect, { EncountersPageTypes } from '../helpers/encountersRedirect';
 
 import EncounterFilters from './EncounterFilters';
 
@@ -13,10 +15,10 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
   const [t] = useTranslation();
   const router = useRouter();
 
-  const handleCreateEncounterNoteClick = () => router.push(`/patient-emr/details/${router.query.id}/add-note`);
+  const handleCreateEncounterNoteClick = () => encountersRedirect(router, EncountersPageTypes.ADD_ENCOUNTER);
 
   return (
-    <Box>
+    <Box mt={margins.top16}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Typography
           sx={{

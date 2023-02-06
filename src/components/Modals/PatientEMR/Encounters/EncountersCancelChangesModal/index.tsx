@@ -40,10 +40,12 @@ const EncountersCancelChangesModal = () => {
   const onConfirm = () => {
     onClose();
 
-    let backTo = router.asPath.split('/').slice(0, 4).join('/');
+    let backTo = router.asPath.split('/').slice(0, 7).join('/');
 
     if (router.asPath.includes(ConfirmationPaths.Add_Note)) {
-      backTo = `${backTo}/encounters`;
+      const toEncountersList = router.asPath.split('/').slice(0, 4).join('/');
+
+      backTo = `${toEncountersList}/encounters`;
     }
 
     router.push(backTo);

@@ -77,8 +77,9 @@ const EditAddednumHeaderTitle = () => {
 
 const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   const router = useRouter();
-  const currentAddendumId = router.query.id as string;
+  const currentAddendumId = router.query.addendumId as string;
   const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const isUpdateEncounterNoteLoading = useAppSelector(patientsSelector.isUpdateEncounterNoteLoading);
   const isUpdateEncounterAddendumLoading = useAppSelector(patientsSelector.isUpdateEncounterAddendumLoading);
   const isEncountersDetailsLoading = useAppSelector(patientsSelector.isEncountersDetailsLoading);
@@ -105,9 +106,9 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
 
   useEffect(() => {
     if (!currentEncounterId && mode === SimpleEditorMode.Edit_Note) {
-      dispatch(patientsMiddleware.setCurrentEncounterId(router.query.id as string));
+      dispatch(patientsMiddleware.setCurrentEncounterId(router.query.encounterId as string));
     }
-  }, [currentEncounterId, mode, router.query.id]);
+  }, [currentEncounterId, mode, router.query.encounterId]);
 
   useEffect(() => {
     if (mode === SimpleEditorMode.Edit_Addendum && currentAddendum) {
@@ -143,7 +144,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   }, [currentAddendumId, encounterData?.addendums]);
 
   const closeImmediately = (): void => {
-    router.push(`/patient-emr/encounter/${currentEncounterId}`);
+    router.push(`/patient-emr/details/${currentPatientId}/encounters/encounter/${currentEncounterId}`);
   };
 
   const handleClose = (): void => {
@@ -194,7 +195,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
             <EditAddednumHeaderTitle />
             <EditAddendumHeader mode={mode} encounterData={encounterData} />
             {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
-              ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} />)
+              ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} key={addendum.id} />)
               : null}
           </Grid>
           <NoteEditor

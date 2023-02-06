@@ -1,12 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import parse from 'html-react-parser';
+import { t } from 'i18next';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -30,43 +30,40 @@ interface AddAddendumTitleProps {
 
 const NoteEditor = dynamic<SimpleEditorProps>(() => import('@ui-component/SimpleTextEditor'), { ssr: false });
 
-const AddAddendumTitle = ({ handleClose, encounterNoteEditedTime }: AddAddendumTitleProps) => {
-  const [t] = useTranslation();
-
-  return (
-    <Grid container alignItems="center" justifyContent="space-between">
-      <Grid container item xs={6} sx={{ p: 2 }} alignItems="center">
-        <Grid item xs={1}>
-          <IconButton onClick={handleClose}>
-            <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
-          </IconButton>
-        </Grid>
-        <Grid item xs={5}>
-          <Typography
-            sx={{ color: (theme) => theme.palette.common.black, marginRight: margins.right20 }}
-            fontSize="21px"
-            fontWeight="400"
-          >
-            {t(Translation.PAGE_ENCOUNTERS_ADD_ADDENDUM)}
-          </Typography>
-        </Grid>
+const AddAddendumTitle = ({ handleClose, encounterNoteEditedTime }: AddAddendumTitleProps) => (
+  <Grid container alignItems="center" justifyContent="space-between">
+    <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
+      <Grid item xs={1}>
+        <IconButton onClick={handleClose}>
+          <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
+        </IconButton>
       </Grid>
-      <Grid container item xs={2} justifyContent="flex-end" pr={4}>
-        <Typography variant="h4">{encounterNoteEditedTime}</Typography>
+      <Grid item xs={5}>
+        <Typography
+          sx={{
+            color: (theme) => theme.palette.common.black,
+            marginRight: margins.right20,
+            fontSize: (theme) => theme.typography.pxToRem(21),
+            fontWeight: 400
+          }}
+        >
+          {t(Translation.PAGE_ENCOUNTERS_ADD_ADDENDUM)}
+        </Typography>
       </Grid>
     </Grid>
-  );
-};
+    <Grid container item xs={2} justifyContent="flex-end" pr={paddings.right32}>
+      <Typography variant="h4">{encounterNoteEditedTime}</Typography>
+    </Grid>
+  </Grid>
+);
 
 const AddAddendum = () => {
   const router = useRouter();
-  const currentEncounterId = useAppSelector(patientsSelector.currentEncounterId);
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
   const isCreateEncounterAddendumLoading = useAppSelector(patientsSelector.isCreateEncounterAddendumLoading);
   const [editorValue, setEditorValue] = useState<string>('');
   const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
-  const encounterId = router.query.id as string;
-  const [t] = useTranslation();
+  const encounterId = router.query.encounterId as string;
   const isEncounterNoteUpdated =
     new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
   const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
@@ -82,7 +79,7 @@ const AddAddendum = () => {
   });
 
   const closeImmediately = (): void => {
-    router.push(`/patient-emr/encounter/${currentEncounterId}`);
+    router.push(`/patient-emr/details/${router.query.id}/encounters/encounter/${encounterId}`);
   };
 
   const handleClose = (): void => {
