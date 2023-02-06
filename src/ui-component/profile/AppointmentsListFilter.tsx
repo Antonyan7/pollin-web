@@ -16,8 +16,7 @@ const AppointmentListFilter = () => {
   const [t] = useTranslation();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
   const isAppointmentFiltersLoading = useAppSelector(patientsSelector.isPatientAppointmentFiltersLoading);
-  const { list, orderBy, order, filters, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
-  const { currentPage } = list;
+  const { orderBy, order, filters, selectedFilters } = useAppSelector(patientsSelector.patientAppointments);
   const currentPatientAppointmentFilterField = useAppSelector(patientsSelector.currentPatientAppointmentFilterField);
 
   const adaptedGroupedOptions = useMemo(
@@ -31,9 +30,7 @@ const AppointmentListFilter = () => {
   );
 
   const onAppointmentRecencyChange = async (appointmentFilters: GroupedFiltersOption[]) => {
-    dispatch(
-      patientsMiddleware.getPatientAppointments(currentPatientId, currentPage, order, orderBy, appointmentFilters)
-    );
+    dispatch(patientsMiddleware.getPatientAppointments(currentPatientId, 1, order, orderBy, appointmentFilters));
   };
 
   return (
