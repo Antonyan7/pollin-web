@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
 import AddIcon from '@mui/icons-material/Add';
@@ -41,6 +41,8 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
   const [t] = useTranslation();
   const theme = useTheme();
   const { navigateTo } = usePatientProfileNavigatorContext();
+  const appointmentDetails = useAppSelector(bookingSelector.appointmentDetails);
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
 
   const currentAppointmentType =
     appointmentType === AppointmentType.Upcoming
@@ -55,8 +57,15 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
     dispatch(patientsMiddleware.setCurrentAppointmentType(currentAppointmentType));
   };
 
-  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  useEffect(() => {
+    if (serviceProviderId) {
+      dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
+    }
+  }, [serviceProviderId]);
+
   const onRowClick = (id: string, status: PatientAppointmentStatuses) => {
+    dispatch(bookingMiddleware.getAppointmentDetails(id));
+
     const shouldOpenDetailsModal =
       status === PatientAppointmentStatuses.Cancelled || appointmentType === AppointmentType.Past;
 
@@ -72,7 +81,6 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
     }
 
     if (appointmentType === AppointmentType.Upcoming) {
-      dispatch(bookingMiddleware.getServiceTypes({ resourceId: serviceProviderId }));
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.EditAppointmentModal,
@@ -81,6 +89,12 @@ const AppointmentsCard = ({ appointmentType, appointmentsList, filterId }: Props
       );
     }
   };
+
+  useEffect(() => {
+    if (appointmentDetails?.provider) {
+      dispatch(bookingMiddleware.applyResource(appointmentDetails.provider.id));
+    }
+  }, [appointmentDetails?.provider]);
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddPatientAppointmentsModal, props: {} }));

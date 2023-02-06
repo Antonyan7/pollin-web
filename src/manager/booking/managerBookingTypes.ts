@@ -6,7 +6,8 @@ import {
   IGroupedServiceProvider,
   IPatientInfo,
   IServiceProvider,
-  IServiceType
+  IServiceType,
+  IUniqueItem
 } from 'types/reduxTypes/bookingStateTypes';
 
 export interface IAppointmentListReqParams {
@@ -80,6 +81,7 @@ export interface IAppointmentDetailsResponse {
   patient: IPatientInfo;
   serviceType?: IServiceType;
   statusVariations: ICancelStatusItem[];
+  provider: IUniqueItem;
 }
 
 export interface ICancelAppointmentReqBody {
