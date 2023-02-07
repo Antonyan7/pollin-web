@@ -59,6 +59,7 @@ export enum EncounterFilterTypes {
 export interface IPatientsFilterOption {
   type: PatientListFilterType | string;
   id: string;
+  title: string;
 }
 export interface IEncountersFilterOption {
   type: EncounterFilterTypes | string;
@@ -69,7 +70,7 @@ export interface IPatientsReqBody {
   searchString: string;
   sortByField?: PatientListField;
   sortOrder?: SortOrder;
-  filters?: IPatientsFilterOption[];
+  filters?: Omit<IPatientsFilterOption, 'title'>[];
   page?: number;
 }
 

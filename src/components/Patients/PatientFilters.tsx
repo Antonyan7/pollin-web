@@ -1,18 +1,16 @@
-import React, { SetStateAction, useCallback, useEffect, useState } from 'react';
+import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import CloseIcon from '@mui/icons-material/Close';
+import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, OutlinedInput, styled, useTheme } from '@mui/material';
 import { Box, shouldForwardProp } from '@mui/system';
 import { Translation } from 'constants/translations';
-import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import slice from 'redux/slices/patients/slice';
-import { margins, paddings } from 'themes/themeConstants';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { IPatientsFilterOption } from 'types/patient';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
@@ -41,22 +39,39 @@ export const StyledOutlinedInput = styled(OutlinedInput, { shouldForwardProp })(
 
 interface PatientFiltersProps {
   setSearchValue: React.Dispatch<SetStateAction<string>>;
-  setFiltersChange: React.Dispatch<SetStateAction<IPatientsFilterOption[]>>;
+  setFiltersChange: React.Dispatch<SetStateAction<Omit<IPatientsFilterOption, 'title'>[]>>;
 }
 
 const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProps) => {
   const theme = useTheme();
-  const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
+  const [t] = useTranslation();
+  const [selectedFilterResults, setSelectedFilterResults] = useState<IPatientsFilterOption[]>([]);
   const { setPatientsLoadingState } = slice.actions;
-  const filtersList = useAppSelector(patientsSelector.filtersList);
+  const patientFilters = useAppSelector(patientsSelector.filtersList);
   const isFiltersLoading = useAppSelector(patientsSelector.isPatientsFiltersLoading);
+  const searchPlaceholder = t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH);
 
   useEffect(() => {
     dispatch(patientsMiddleware.getPatientSearchFilters());
   }, []);
 
-  const [t] = useTranslation();
-  const searchPlaceholder = t(Translation.PAGE_PATIENT_LIST_FIELD_SEARCH);
+  const adaptedPatientFilterOptions: IPatientsFilterOption[] = useMemo(
+    () =>
+      patientFilters.flatMap((patientFilter) =>
+        patientFilter.options.map((option) => ({ ...option, type: patientFilter.type }))
+      ),
+    [patientFilters]
+  );
+
+  const onFilterUpdate = (filters: IPatientsFilterOption[]) => {
+    const filtersWithoutTitle = filters.map((filter: Partial<IPatientsFilterOption>) => ({
+      id: filter.id,
+      type: filter.type
+    }));
+
+    setSelectedFilterResults(filters);
+    setFiltersChange(filtersWithoutTitle as Omit<IPatientsFilterOption, 'title'>[]);
+  };
 
   const onSearchChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,27 +82,6 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
       debouncedCallback();
     },
     [setSearchValue, setPatientsLoadingState]
-  );
-
-  const onAutoCompleteChange = useCallback(
-    (value: GroupedByTitlesProps[]) => {
-      const filteredResult = filterByUniqueCategory(value);
-
-      setSelectedFilterResults(filteredResult);
-
-      const filteredResultOptions: IPatientsFilterOption[] = [];
-
-      filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
-        const filterOption = {
-          type: titleProps.options.type,
-          id: titleProps.options.id
-        };
-
-        filteredResultOptions.push(filterOption);
-      });
-      setFiltersChange(filteredResultOptions);
-    },
-    [setFiltersChange]
   );
 
   return (
@@ -107,18 +101,27 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
         fullWidth
         multiple
         isLoading={isFiltersLoading}
-        options={reformattedFilterResults(filtersList)}
-        groupBy={(option) => option.options.type}
-        getOptionLabel={(option) => (typeof option === 'object' ? option.options.title ?? '' : option)}
-        isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
-        value={[...selectedFilterResults]}
-        onChange={(_, selectedOption) => {
-          onAutoCompleteChange(
-            selectedOption.filter((option): option is GroupedByTitlesProps => typeof option === 'object')
-          );
+        options={adaptedPatientFilterOptions}
+        PopperComponent={GroupedServiceProvidersPopper}
+        groupBy={(option) => option.type}
+        ListboxProps={{
+          style: {
+            maxHeight: 260,
+            borderRadius: `${borderRadius.radius8}`,
+            border: `${borders.solid2px} ${theme.palette.primary.main}`
+          }
         }}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        onChange={(_event, filters) => onFilterUpdate(filters as IPatientsFilterOption[])}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
-        clearIcon={<CloseIcon onClick={() => onAutoCompleteChange([])} fontSize="small" />}
+        getOptionDisabled={(option) => {
+          if (option && selectedFilterResults.length > 0) {
+            return !!selectedFilterResults?.find((selectedFilterResult) => selectedFilterResult.type === option.type);
+          }
+
+          return false;
+        }}
         renderInputProps={{
           label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
         }}

@@ -20,7 +20,7 @@ const PatientList = () => {
   const [searchValue, setSearchValue] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
   const [sortField, setSortField] = useState<PatientListField>(PatientListField.CYCLE_STATUS);
-  const [filters, setFilters] = useState<IPatientsFilterOption[]>([]);
+  const [filters, setFilters] = useState<Omit<IPatientsFilterOption, 'title'>[]>([]);
   const [page, setPage] = React.useState(0);
   const [t] = useTranslation();
 
@@ -28,7 +28,7 @@ const PatientList = () => {
   const patientsList = useAppSelector(patientsSelector.patientsList);
   const isPatientListLoading = useAppSelector(patientsSelector.isPatientsListLoading);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+  const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
 
@@ -37,12 +37,9 @@ const PatientList = () => {
       searchString: searchValue,
       sortByField: sortField,
       sortOrder,
-      page: page + 1
+      page: page + 1,
+      ...(filters.length > 0 ? { filters } : {})
     };
-
-    if (filters.length) {
-      data.filters = filters;
-    }
 
     dispatch(patientsMiddleware.getPatientsList(data));
   }, [filters, page, searchValue, sortField, sortOrder]);

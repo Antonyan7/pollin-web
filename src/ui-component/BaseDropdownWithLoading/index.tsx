@@ -11,8 +11,10 @@ import {
   Select,
   SelectProps,
   TextField,
-  TextFieldProps
+  TextFieldProps,
+  useTheme
 } from '@mui/material';
+import { borderRadius } from 'themes/themeConstants';
 
 import BottomBarLoading from './BottomBarLoading';
 import Listbox, { BaseDropdownWithLoadingContext } from './Listbox';
@@ -46,6 +48,7 @@ const BaseDropdownWithLoading = <
   ...otherProps
 }: BaseDropdownWithLoadingProps<T, Multiple, DisableClearable, FreeSolo>) => {
   const isFirstLoading = useRef<boolean | null>(null);
+  const theme = useTheme();
 
   useEffect(() => {
     if (isFirstLoading.current === null && isLoading) {
@@ -74,6 +77,15 @@ const BaseDropdownWithLoading = <
             data-cy={dataCy ?? ''}
             {...params}
             {...renderInputProps}
+            sx={{
+              ...renderInputProps?.sx,
+              '& .MuiChip-filled': {
+                background: theme.palette.primary[100],
+                borderRadius: borderRadius.radius7,
+                border: `none`,
+                color: theme.palette.primary.dark
+              }
+            }}
             InputProps={{
               ...params.InputProps,
               endAdornment:
