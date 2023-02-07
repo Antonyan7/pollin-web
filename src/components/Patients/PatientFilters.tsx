@@ -100,6 +100,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
         id="patientFilterId"
         fullWidth
         multiple
+        disableClearable
         isLoading={isFiltersLoading}
         options={adaptedPatientFilterOptions}
         PopperComponent={GroupedServiceProvidersPopper}
