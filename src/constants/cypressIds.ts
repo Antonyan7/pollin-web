@@ -87,6 +87,7 @@ export enum CypressIds {
   PAGE_CREATE_ORDER_TITLE = 'page.create.order.title',
   PAGE_CREATE_ORDER_HEADER_TEXT = 'page.create.order.header.text',
   PAGE_CREATE_ORDER_BUTTON_CREATE_ORDER = 'page.create.order.button.create.order',
+  PAGE_CREATE_ORDER_BUTTON_EDIT = 'page.create.order.button.edit',
   PAGE_CREATE_ORDER_BUTTON_NEXT = 'page.create.order.button.next',
   PAGE_CREATE_ORDER_BUTTON_CANCEL = 'page.create.order.button.cancel',
   PAGE_ORDER_DETAILS_TITLE = 'page.order.details.title',

@@ -2,11 +2,11 @@ import { IOrdersState } from 'types/reduxTypes/ordersStateTypes';
 
 export const getInitialState = (): IOrdersState => ({
   error: null,
+  orderTypeOptions: [],
+  isOrderTypeOptionsLoading: false,
+  selectedOrderType: '',
   orderTypes: [],
   isOrderTypesLoading: false,
-  selectedOrderType: '',
-  orderGroups: [],
-  isOrderGroupsLoading: false,
   orderDetails: {
     id: '',
     isEditable: false,

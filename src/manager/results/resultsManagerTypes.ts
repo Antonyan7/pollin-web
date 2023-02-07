@@ -1,6 +1,11 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
-import { IOrdersFilterItems, OrdersActions, OrdersListItemStatus } from 'types/reduxTypes/ordersStateTypes';
+import {
+  IOrderGroup,
+  IOrdersFilterItems,
+  OrdersActions,
+  OrdersListItemStatus
+} from 'types/reduxTypes/ordersStateTypes';
 import {
   ISpecimensListItemShort,
   ITestResultsDetails,
@@ -221,4 +226,31 @@ export interface OrdersListDataProps {
   filters?: OrderListDataFilter[];
   sortOrder: ISortOrder;
   sortByField: OrderListSortFields;
+}
+
+export interface IValidateOrderTypeGroupItem {
+  id: string;
+  groupItems?: IValidateOrderTypeGroupItem[];
+}
+
+export interface IValidateOrderType {
+  id: string;
+  groups: IValidateOrderTypeGroupItem[];
+}
+
+export interface IValidateOrderCreationReqBody {
+  orderTypes: IValidateOrderType[];
+}
+
+export interface IValidatedOrderType {
+  id: string;
+  groups: IOrderGroup[];
+}
+
+export interface IValidateOrderCreationResponse {
+  orderTypes: IValidatedOrderType[];
+  message?: {
+    title: string;
+    html: string;
+  };
 }

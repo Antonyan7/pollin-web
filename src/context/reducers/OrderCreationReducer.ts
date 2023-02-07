@@ -11,6 +11,11 @@ export const orderCreationReducer = (
         ...state,
         step: action.step
       };
+    case OrderCreationContextActionTypes.UPDATE_VALIDATED_ORDER_GROUPS:
+      return {
+        ...state,
+        validatedOrderTypes: action.validatedOrderTypes
+      };
     default:
       return state;
   }

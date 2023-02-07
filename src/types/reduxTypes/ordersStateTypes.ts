@@ -11,11 +11,11 @@ import { IOrderResultsStatus, OrderResultStatusEnum } from 'types/results';
 
 export interface IOrdersState {
   error: Error | null;
-  orderTypes: IOrderType[];
-  isOrderTypesLoading: boolean;
+  orderTypeOptions: IOrderTypeOption[];
+  isOrderTypeOptionsLoading: boolean;
   selectedOrderType: string;
-  orderGroups: IOrderGroupsCollection[];
-  isOrderGroupsLoading: boolean;
+  orderTypes: IOrderTypesCollection[];
+  isOrderTypesLoading: boolean;
   orderDetails: IOrderDetailsData;
   isOrderDetailsLoading: boolean;
   cancellationReasons: CancellationReasons;
@@ -38,13 +38,13 @@ export interface IOrdersState {
   isRequisitionDownloaded: boolean;
 }
 
-export interface IOrderType {
+export interface IOrderTypeOption {
   id: string;
   title: string;
 }
 
 export interface IOrderTypesList {
-  orderTypes: IOrderType[];
+  orderTypes: IOrderTypeOption[];
 }
 
 export interface IOrderGroup {
@@ -62,7 +62,7 @@ export interface IOrderGroupItem {
   groupItems?: IOrderGroupItem[];
 }
 
-export interface IOrderGroupsCollection {
+export interface IOrderTypesCollection {
   orderTypeId: string;
   groups: IOrderGroup[];
 }

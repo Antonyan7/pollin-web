@@ -14,6 +14,7 @@ const CreateOrderHeader = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
+  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
   const onBackClick = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
@@ -45,7 +46,7 @@ const CreateOrderHeader = () => {
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">
-        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.title}`)}
+        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientFullName)}
       </Typography>
     </Grid>
   );

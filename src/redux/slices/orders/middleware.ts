@@ -1,5 +1,9 @@
 import API from '@axios/API';
-import { IOrderResultsListReqBody, OrdersListDataProps } from '@axios/results/resultsManagerTypes';
+import {
+  IOrderResultsListReqBody,
+  IValidateOrderCreationReqBody,
+  OrdersListDataProps
+} from '@axios/results/resultsManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/orders/slice';
 import store, { AppDispatch } from '@redux/store';
@@ -9,9 +13,9 @@ import {
   IOrderDetailsData,
   IOrderGroup,
   IOrderGroupItem,
-  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrdersListResponse,
+  IOrderTypesCollection,
   UpdateOrderGroupItem
 } from 'types/reduxTypes/ordersStateTypes';
 
@@ -19,11 +23,11 @@ import { viewsMiddleware } from '../views';
 
 const {
   setError,
-  setOrderTypes,
+  setOrderTypeOptions,
   setSelectedOrderType,
+  setIsOrderTypeOptionsLoading,
+  setOrderTypes,
   setIsOrderTypesLoading,
-  setOrderGroups,
-  setIsOrderGroupsLoading,
   setOrderDetails,
   setIsOrderDetailsLoading,
   setIsCancellationReasonsLoading,
@@ -46,13 +50,45 @@ const {
   setTestResultReviewedDate
 } = slice.actions;
 
-const getOrderTypes = () => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrderTypesLoading(true));
+const getOrderTypeOptions = () => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrderTypeOptionsLoading(true));
 
   try {
-    const response = await API.results.getOrderTypes();
+    const response = await API.results.getOrderTypeOptions();
 
-    dispatch(setOrderTypes(response.data.data.orderTypes));
+    dispatch(setOrderTypeOptions(response.data.data.orderTypes));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrderTypeOptionsLoading(false));
+  }
+};
+
+const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
+  dispatch(setSelectedOrderType(orderType));
+};
+
+const getOrderTypes = (orderType: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrderTypesLoading(true));
+
+  const { orderTypes } = store.getState().orders;
+  const currentOrderGroupByType = orderTypes.find((group: IOrderTypesCollection) => group.orderTypeId === orderType);
+
+  try {
+    if (!currentOrderGroupByType?.orderTypeId) {
+      const response = await API.results.getOrderTypes(orderType);
+
+      const orderGroupCollections = [
+        ...store.getState().orders.orderTypes,
+        {
+          orderTypeId: orderType,
+          groups: response.data.data.groups
+        }
+      ];
+
+      dispatch(setOrderTypes(orderGroupCollections));
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -61,62 +97,28 @@ const getOrderTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
-  dispatch(setSelectedOrderType(orderType));
-};
-
-const getOrderGroups = (orderType: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrderGroupsLoading(true));
-
-  const { orderGroups } = store.getState().orders;
-  const currentOrderGroupByType = orderGroups.find((group: IOrderGroupsCollection) => group.orderTypeId === orderType);
-
-  try {
-    if (!currentOrderGroupByType?.orderTypeId) {
-      const response = await API.results.getOrderGroups(orderType);
-
-      const orderGroupCollections = [
-        ...store.getState().orders.orderGroups,
-        {
-          orderTypeId: orderType,
-          groups: response.data.data.groups
-        }
-      ];
-
-      dispatch(setOrderGroups(orderGroupCollections));
-    }
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsOrderGroupsLoading(false));
-  }
-};
-
-const updateOrderGroups =
+const updateOrderTypes =
   (orderTypeId: string, updatedOrderGroups: IOrderGroup[] = []) =>
   async (dispatch: AppDispatch) => {
-    const { orderGroups } = store.getState().orders;
+    const { orderTypes } = store.getState().orders;
 
-    const updatedOrderGroupsCollection: IOrderGroupsCollection[] = orderGroups.map(
-      (collection: IOrderGroupsCollection) => {
-        if (collection.orderTypeId === orderTypeId) {
-          return {
-            orderTypeId,
-            groups: updatedOrderGroups
-          };
-        }
-
-        return collection;
+    const updatedOrderTypes: IOrderTypesCollection[] = orderTypes.map((collection: IOrderTypesCollection) => {
+      if (collection.orderTypeId === orderTypeId) {
+        return {
+          orderTypeId,
+          groups: updatedOrderGroups
+        };
       }
-    );
 
-    dispatch(setOrderGroups(updatedOrderGroupsCollection));
+      return collection;
+    });
+
+    dispatch(setOrderTypes(updatedOrderTypes));
   };
 
-const resetOrderGroupsSelection = () => async (dispatch: AppDispatch) => {
+const resetOrderTypesSelection = () => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(''));
-  dispatch(setOrderGroups([]));
+  dispatch(setOrderTypes([]));
 };
 
 const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
@@ -349,12 +351,25 @@ const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: 
   dispatch(setIsOrdersListLoading(false));
 };
 
+const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => async (dispatch: AppDispatch) => {
+  dispatch(setIsOrdersListLoading(true));
+
+  try {
+    await API.results.validateOrderCreation(orderTypes);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsOrdersListLoading(false));
+};
+
 export default {
-  getOrderTypes,
+  getOrderTypeOptions,
   updateSelectedOrderType,
-  getOrderGroups,
-  updateOrderGroups,
-  resetOrderGroupsSelection,
+  getOrderTypes,
+  updateOrderTypes,
+  resetOrderTypesSelection,
   getOrderDetails,
   updateOrder,
   getOrderResultsFilters,
@@ -367,5 +382,6 @@ export default {
   downloadRequisition,
   cancelOrder,
   makeTestResultReleased,
-  makeTestResultReviewed
+  makeTestResultReviewed,
+  validateOrderCreation
 };

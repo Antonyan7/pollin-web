@@ -16,7 +16,7 @@ const Body = () => {
   const router = useRouter();
   const { id: currentPatientId } = router.query;
   const onClickConfirm = () => {
-    dispatch(ordersMiddleware.resetOrderGroupsSelection());
+    dispatch(ordersMiddleware.resetOrderTypesSelection());
     dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal));
     router.push(`/patient-emr/details/${currentPatientId}/orders`);
   };

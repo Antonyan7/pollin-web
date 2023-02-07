@@ -3,11 +3,11 @@ import { RootState } from 'redux/store';
 
 const selector = (state: RootState) => state.orders;
 
+const orderTypeOptions = createSelector([selector], (state) => state.orderTypeOptions);
+const isOrderTypeOptionsLoading = createSelector([selector], (state) => state.isOrderTypeOptionsLoading);
+const selectedOrderType = createSelector([selector], (state) => state.selectedOrderType);
 const orderTypes = createSelector([selector], (state) => state.orderTypes);
 const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
-const selectedOrderType = createSelector([selector], (state) => state.selectedOrderType);
-const orderGroups = createSelector([selector], (state) => state.orderGroups);
-const isOrderGroupsLoading = createSelector([selector], (state) => state.isOrderGroupsLoading);
 const orderDetails = createSelector([selector], (state) => state.orderDetails);
 const isOrderDetailsLoading = createSelector([selector], (state) => state.isOrderDetailsLoading);
 const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
@@ -33,11 +33,11 @@ const isTestResultReviewed = createSelector([selector], (state) => state.isTestR
 const isTestResultReleased = createSelector([selector], (state) => state.isTestResultReleased);
 
 export default {
+  orderTypeOptions,
+  isOrderTypeOptionsLoading,
+  selectedOrderType,
   orderTypes,
   isOrderTypesLoading,
-  selectedOrderType,
-  orderGroups,
-  isOrderGroupsLoading,
   orderDetails,
   isOrderDetailsLoading,
   orderResultsByPatientList,

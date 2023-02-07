@@ -17,6 +17,8 @@ import {
   ITestResultsData,
   ITestResultsDetailsBody,
   ITransportListReqBody,
+  IValidateOrderCreationReqBody,
+  IValidateOrderCreationResponse,
   OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
 import { Axios } from 'manager/axiosInstance';
@@ -298,10 +300,10 @@ const resultsManager = {
       ordersListData
     );
   },
-  getOrderTypes() {
+  getOrderTypeOptions() {
     return axiosInstance.get<IOrderTypesList, IAxiosResponse<IOrderTypesList>>(`${baseURL}/v1/order/type`);
   },
-  getOrderGroups(orderType: string) {
+  getOrderTypes(orderType: string) {
     return axiosInstance.get<IOrderGroupsList, IAxiosResponse<IOrderGroupsList>>(`${baseURL}/v1/order/group`, {
       params: {
         orderType
@@ -317,7 +319,15 @@ const resultsManager = {
       .then(({ data }) => data);
   },
   updateOrder(orderId: string, body: IUpdateOrderReqBody) {
-    return axiosInstance.put<IUpdateOrderReqBody, IAxiosResponse<null>>(`${baseURL}/v1/order/${orderId}`, body);
+    return axiosInstance.put<null, IAxiosResponse<null>>(`${baseURL}/v1/order/${orderId}`, body);
+  },
+  validateOrderCreation(body: IValidateOrderCreationReqBody) {
+    return axiosInstance
+      .post<IValidateOrderCreationResponse, IAxiosResponse<IValidateOrderCreationResponse>>(
+        `${baseURL}/v1/order/validate`,
+        body
+      )
+      .then(({ data }) => data);
   }
 };
 

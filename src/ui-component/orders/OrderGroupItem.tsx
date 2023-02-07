@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Box, CheckboxProps, Collapse, FormControlLabel, ListItem, Stack, StackProps, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
-import { IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
+import { IOrderGroupItem, IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CollapseMenuArrowDownIcon from '@ui-component/orders/CollapseMenuArrowDownIcon';
@@ -22,14 +22,12 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
   const theme = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
-  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
+  const orderTypes = useSelector(ordersSelector.orderTypes);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
-  const activeOrderGroups = useMemo(
-    () =>
-      orderGroupsCollections?.find((collection: IOrderGroupsCollection) => collection.orderTypeId === selectedOrderType)
-        ?.groups,
-    [orderGroupsCollections, selectedOrderType]
+  const activeOrderTypes = useMemo(
+    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.orderTypeId === selectedOrderType)?.groups,
+    [orderTypes, selectedOrderType]
   );
 
   const onSelectChange: CheckboxProps['onChange'] = (event) => {
@@ -66,7 +64,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         return item;
       });
 
-    const updatedOrderGroups = activeOrderGroups?.map((orderGroup) => {
+    const updatedOrderTypes = activeOrderTypes?.map((orderGroup) => {
       if (orderGroup.id === orderGroupId) {
         return {
           ...orderGroup,
@@ -77,7 +75,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
       return orderGroup;
     });
 
-    dispatch(ordersMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
+    dispatch(ordersMiddleware.updateOrderTypes(selectedOrderType, updatedOrderTypes));
   };
 
   const isEverythingSelected = useMemo(() => {

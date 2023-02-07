@@ -3,13 +3,13 @@ import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
   IOrderDetailsData,
-  IOrderGroupsCollection,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
   IOrdersFilterItems,
   IOrdersList,
   IOrdersState,
-  IOrderType
+  IOrderTypeOption,
+  IOrderTypesCollection
 } from 'types/reduxTypes/ordersStateTypes';
 import { CancellationReasons } from 'types/reduxTypes/resultsStateTypes';
 import { IOrderResultsStatus } from 'types/results';
@@ -20,20 +20,20 @@ const reducers = createReducer({
   setError(state, action) {
     state.error = action.payload;
   },
-  setOrderTypes(state, action: IAction<IOrderType[]>) {
-    state.orderTypes = action.payload;
+  setOrderTypeOptions(state, action: IAction<IOrderTypeOption[]>) {
+    state.orderTypeOptions = action.payload;
   },
-  setIsOrderTypesLoading(state, action: IAction<boolean>) {
+  setIsOrderTypeOptionsLoading(state, action: IAction<boolean>) {
     state.isOrderTypesLoading = action.payload;
   },
   setSelectedOrderType(state, action: IAction<string>) {
     state.selectedOrderType = action.payload;
   },
-  setOrderGroups(state, action: IAction<IOrderGroupsCollection[]>) {
-    state.orderGroups = action.payload;
+  setOrderTypes(state, action: IAction<IOrderTypesCollection[]>) {
+    state.orderTypes = action.payload;
   },
-  setIsOrderGroupsLoading(state, action: IAction<boolean>) {
-    state.isOrderGroupsLoading = action.payload;
+  setIsOrderTypesLoading(state, action: IAction<boolean>) {
+    state.isOrderTypesLoading = action.payload;
   },
   setOrderDetails(state, action: IAction<IOrderDetailsData>) {
     state.orderDetails = action.payload;

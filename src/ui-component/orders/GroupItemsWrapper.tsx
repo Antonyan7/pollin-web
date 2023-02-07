@@ -4,7 +4,7 @@ import { Box, FormControlLabel, FormGroup, Stack, useTheme } from '@mui/material
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupItem, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
+import { IOrderGroup, IOrderGroupItem, IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import { WhiteCheckedIcon } from '@assets/icons/WhiteCheckedIcon';
 import OrderGroupItem from '@ui-component/orders/OrderGroupItem';
@@ -18,14 +18,12 @@ interface GroupItemsWrapperProps {
 
 const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const theme = useTheme();
-  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
+  const orderTypes = useSelector(ordersSelector.orderTypes);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
-  const activeOrderGroups = useMemo(
-    () =>
-      orderGroupsCollections?.find((collection: IOrderGroupsCollection) => collection.orderTypeId === selectedOrderType)
-        ?.groups,
-    [orderGroupsCollections, selectedOrderType]
+  const activeOrderTypes = useMemo(
+    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.orderTypeId === selectedOrderType)?.groups,
+    [orderTypes, selectedOrderType]
   );
 
   const isEverythingSelected = useMemo(() => isAllGroupItemSelected(orderGroup.groupItems), [orderGroup.groupItems]);
@@ -45,7 +43,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         ...(groupItem.groupItems !== undefined ? { groupItems: updateGroupItems(groupItem.groupItems) } : {})
       }));
 
-    const updatedOrderGroups = activeOrderGroups?.map((defaultOrderGroup) =>
+    const updatedOrderTypes = activeOrderTypes?.map((defaultOrderGroup) =>
       defaultOrderGroup.id === orderGroup.id
         ? {
             ...defaultOrderGroup,
@@ -54,7 +52,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         : defaultOrderGroup
     );
 
-    dispatch(ordersMiddleware.updateOrderGroups(selectedOrderType, updatedOrderGroups));
+    dispatch(ordersMiddleware.updateOrderTypes(selectedOrderType, updatedOrderTypes));
   };
 
   return (

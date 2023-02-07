@@ -1,31 +1,60 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import resultsManager from '@axios/results/resultsManager';
+import { IValidateOrderTypeGroupItem } from '@axios/results/resultsManagerTypes';
 import { Button, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { updateOrderCreationStep, updateValidatedOrderTypes } from 'context/actions/OrderCreationContextActions';
+import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
 
-import { useOrderCreationContext } from '../../../../context/OrderCreationContext';
-import { OrderCreationContextActionTypes } from '../../../../context/types/OrderCreationContextTypes';
+const transformGroups = (groups: (IOrderGroup | IOrderGroupItem)[]): IValidateOrderTypeGroupItem[] =>
+  groups.map(({ id, groupItems }) => ({
+    id,
+    ...(groupItems !== undefined ? { groupItems: transformGroups(groupItems) } : {})
+  }));
 
 const CreateOrderActions = () => {
   const [t] = useTranslation();
-  const { orderCreationInfo, setOrderCreationInfo } = useOrderCreationContext();
-  const orderGroups = useSelector(ordersSelector.orderGroups);
+  const { orderCreationState, dispatchOrderCreationState } = useOrderCreationContext();
+  const orderTypes = useSelector(ordersSelector.orderTypes);
 
   const onCancelClick = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
   const onNextButtonClick = () => {
-    setOrderCreationInfo({ type: OrderCreationContextActionTypes.UPDATE_ORDER_CREATION_STEP, step: 1 });
+    resultsManager
+      .validateOrderCreation({
+        orderTypes: orderTypes.map(({ orderTypeId: id, groups }) => ({ id, groups: transformGroups(groups) }))
+      })
+      .then(({ data }) => {
+        if (data.message) {
+          const { title, html } = data.message;
+
+          dispatch(
+            viewsMiddleware.openModal({
+              name: ModalName.OrderValidationErrorModal,
+              props: {
+                title,
+                html
+              }
+            })
+          );
+        } else {
+          dispatchOrderCreationState(updateValidatedOrderTypes(data.orderTypes));
+          dispatchOrderCreationState(updateOrderCreationStep(1));
+        }
+      });
   };
 
   const onCreateOrderClick = () => {
@@ -33,8 +62,8 @@ const CreateOrderActions = () => {
   };
 
   const atLeastOneSelectedItemExists = useMemo(
-    () => orderGroups.some((orderGroup) => orderGroup.groups.some((group) => isAnyGroupItemSelected(group.groupItems))),
-    [orderGroups]
+    () => orderTypes.some((orderGroup) => orderGroup.groups.some((group) => isAnyGroupItemSelected(group.groupItems))),
+    [orderTypes]
   );
 
   return (
@@ -48,7 +77,7 @@ const CreateOrderActions = () => {
       >
         {t(Translation.PAGE_CREATE_ORDER_BUTTON_CANCEL)}
       </Button>
-      {orderCreationInfo.step === 0 ? (
+      {orderCreationState.step === 0 ? (
         <Button
           data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_NEXT}
           color="primary"

@@ -1,34 +1,37 @@
 import React, { createContext, useContext, useReducer } from 'react';
 
+import { emptyFunction } from '@utils/contextUtils';
+
 import { OrderCreationContextActions } from './actions/OrderCreationContextActions';
 import { orderCreationReducer } from './reducers/OrderCreationReducer';
 import { IOrderCreationState } from './types/OrderCreationContextTypes';
 
 const initialState: IOrderCreationState = {
-  step: 0
+  step: 0,
+  validatedOrderTypes: []
 };
 
 export interface IOrderCreationContext {
-  orderCreationInfo: IOrderCreationState;
-  setOrderCreationInfo: React.Dispatch<OrderCreationContextActions>;
+  orderCreationState: IOrderCreationState;
+  dispatchOrderCreationState: React.Dispatch<OrderCreationContextActions>;
 }
 
 const initialOrderCreationContext: IOrderCreationContext = {
-  orderCreationInfo: initialState,
-  setOrderCreationInfo: () => {}
+  orderCreationState: initialState,
+  dispatchOrderCreationState: emptyFunction
 };
 
 const Context = createContext<IOrderCreationContext>(initialOrderCreationContext);
 
 export const OrderCreationContext: React.FC<React.PropsWithChildren> = ({ children }) => {
-  const [orderCreationInfo, setOrderCreationInfo] = useReducer(orderCreationReducer, initialState);
+  const [orderCreationState, dispatchOrderCreationState] = useReducer(orderCreationReducer, initialState);
 
   const value: IOrderCreationContext = React.useMemo(
     () => ({
-      orderCreationInfo,
-      setOrderCreationInfo
+      orderCreationState,
+      dispatchOrderCreationState
     }),
-    [orderCreationInfo]
+    [orderCreationState]
   );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

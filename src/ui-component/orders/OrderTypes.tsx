@@ -4,29 +4,29 @@ import { Box, CircularProgress, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
-import { IOrderGroup, IOrderGroupsCollection } from 'types/reduxTypes/ordersStateTypes';
+import { IOrderGroup, IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
 
 import GroupItemsWrapper from '@ui-component/orders/GroupItemsWrapper';
 
-const OrderGroups = () => {
+const OrderTypes = () => {
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
-  const isOrderGroupsLoading = useSelector(ordersSelector.isOrderGroupsLoading);
-  const orderGroupsCollections = useSelector(ordersSelector.orderGroups);
+  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypesLoading);
+  const orderTypes = useSelector(ordersSelector.orderTypes);
 
   useEffect(() => {
     if (selectedOrderType) {
-      dispatch(ordersMiddleware.getOrderGroups(selectedOrderType));
+      dispatch(ordersMiddleware.getOrderTypes(selectedOrderType));
     }
   }, [selectedOrderType]);
 
-  const renderOrderGroups = () => {
-    const activeOrderGroups = orderGroupsCollections?.find(
-      (orderGroup: IOrderGroupsCollection) => orderGroup.orderTypeId === selectedOrderType
+  const renderOrderTypes = () => {
+    const activeOrderTypes = orderTypes?.find(
+      (orderGroup: IOrderTypesCollection) => orderGroup.orderTypeId === selectedOrderType
     );
 
     return (
       <div>
-        {activeOrderGroups?.groups.map((orderGroup: IOrderGroup) => (
+        {activeOrderTypes?.groups.map((orderGroup: IOrderGroup) => (
           <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
         ))}
       </div>
@@ -36,15 +36,15 @@ const OrderGroups = () => {
   return (
     <Box py={paddings.all24} px={paddings.all24} justifyContent="end">
       <Stack direction="row" alignItems="center" justifyContent="flex-start" px={paddings.all12} />
-      {isOrderGroupsLoading ? (
+      {isOrderTypesLoading ? (
         <Grid item display="flex" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%' }}>
           <CircularProgress />
         </Grid>
       ) : (
-        renderOrderGroups()
+        renderOrderTypes()
       )}
     </Box>
   );
 };
 
-export default OrderGroups;
+export default OrderTypes;

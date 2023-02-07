@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -14,11 +14,16 @@ const OrderTypeDropdown = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const label = t(Translation.PAGE_PATIENT_PROFILE_CELLS_CREATE_ORDER_TYPE);
-  const orderTypes = useSelector(ordersSelector.orderTypes);
-  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypesLoading);
+  const orderTypeOptions = useSelector(ordersSelector.orderTypeOptions);
+  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypeOptionsLoading);
+  const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
+  const selectedValue = useMemo(
+    () => orderTypeOptions.find(({ id }) => id === selectedOrderType) ?? null,
+    [orderTypeOptions, selectedOrderType]
+  );
 
   useEffect(() => {
-    dispatch(ordersMiddleware.getOrderTypes());
+    dispatch(ordersMiddleware.getOrderTypeOptions());
   }, []);
 
   return (
@@ -43,13 +48,14 @@ const OrderTypeDropdown = () => {
         <BaseDropdownWithLoading
           fullWidth
           popupIcon={<KeyboardArrowDownIcon color="primary" />}
-          isOptionEqualToValue={(option, value) => option.id === value.id}
+          value={selectedValue}
           onChange={(_, value) => {
             if (value && typeof value === 'object' && 'id' in value) {
               dispatch(ordersMiddleware.updateSelectedOrderType(value.id));
             }
           }}
-          options={orderTypes}
+          options={[...orderTypeOptions]}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
           renderInputProps={{ label }}
           isLoading={isOrderTypesLoading}
