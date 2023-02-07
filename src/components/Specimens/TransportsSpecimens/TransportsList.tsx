@@ -14,7 +14,8 @@ import {
   TablePagination,
   TableRow,
   Typography,
-  useTheme} from '@mui/material';
+  useTheme
+} from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
@@ -34,6 +35,7 @@ const TransportsList = () => {
   const [page, setPage] = useState<number>(0);
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
+  const [searchedItems, setSearchedItems] = useState<string[]>([]);
   const transportList = useAppSelector(resultsSelector.transportList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
@@ -47,12 +49,13 @@ const TransportsList = () => {
     const data: ITransportListReqBody = {
       date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
       page: page + 1,
+      ...(searchedItems.length > 0 ? { specimens: searchedItems.map((identifier) => ({ identifier })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {})
     };
 
     dispatch(resultsMiddleware.getTransportList(data));
-  }, [calendarDate, page, sortField, sortOrder]);
+  }, [calendarDate, page, searchedItems, sortField, sortOrder]);
 
   useEffect(() => {
     dispatch(resultsMiddleware.getTransportActions());
@@ -62,13 +65,14 @@ const TransportsList = () => {
     setPage(newPage);
   };
   const transportActions = useAppSelector(resultsSelector.transportActions);
-  const handlePageChange = () => {
-    setPage(page);
+  const searchByIdsHandler = (newSearchedItems: string[]) => {
+    setSearchedItems(newSearchedItems);
+    setPage(0);
   };
 
   return (
     <>
-      <Header handlePageChange={handlePageChange} />
+      <Header searchedItems={searchedItems} searchByIdsHandler={searchByIdsHandler} />
       <TableContainer>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>

@@ -11,6 +11,6 @@ const findCurrentAction = <
 >(
   actions: ActionsTypeProps[],
   target: TargetType
-) => actions.find((item) => item.title === target.status);
+) => actions.find((item) => item.status === target.status);
 
 export default findCurrentAction;

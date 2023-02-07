@@ -1,3 +1,4 @@
 export interface HeaderProps {
-  handlePageChange: (value: number) => void;
+  searchByIdsHandler: (value: string[]) => void;
+  searchedItems: string[];
 }

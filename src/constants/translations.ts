@@ -396,6 +396,8 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK = 'page.specimens.tracking.transports.go.back',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_BUTTON_LABEL = 'page.specimens.tracking.transports.add.new.transport.folder.button.label',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_SEARCH_FAIL = 'page.specimens.tracking.transports.search.fail',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_SEARCH_SUCCESS = 'page.specimens.tracking.transports.search.success',
   COMMON_WEEK_LABEL_SINGLE = 'common.week.label.single',
   COMMON_WEEK_LABEL_MULTIPLE = 'common.week.label.multiple',
   PAGE_PATIENT_ORDER_RESULTS_CELLS_DATE = 'page.patient.order.results.cells.date',

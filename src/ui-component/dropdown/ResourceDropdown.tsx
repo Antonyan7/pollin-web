@@ -158,10 +158,11 @@ const ResourceDropdown = ({
           }
         }}
         onInputChange={(_event, searchString, reason) => {
+          setSearchInput(searchString);
+
           if (reason === 'input' || reason === 'clear') {
             throttleFn(searchString);
             searchChanged.current = true;
-            setSearchInput(searchString);
           }
         }}
         clearIcon={<CloseIcon fontSize="small" />}
