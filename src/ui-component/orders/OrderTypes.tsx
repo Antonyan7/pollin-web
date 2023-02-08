@@ -14,19 +14,17 @@ const OrderTypes = () => {
   const orderTypes = useSelector(ordersSelector.orderTypes);
 
   useEffect(() => {
-    if (selectedOrderType) {
-      dispatch(ordersMiddleware.getOrderTypes(selectedOrderType));
-    }
-  }, [selectedOrderType]);
+    dispatch(ordersMiddleware.getOrderTypes());
+  }, []);
 
   const renderOrderTypes = () => {
     const activeOrderTypes = orderTypes?.find(
-      (orderGroup: IOrderTypesCollection) => orderGroup.orderTypeId === selectedOrderType
+      (orderGroup: IOrderTypesCollection) => orderGroup.id === selectedOrderType
     );
 
     return (
       <div>
-        {activeOrderTypes?.groups.map((orderGroup: IOrderGroup) => (
+        {activeOrderTypes?.groups?.map((orderGroup: IOrderGroup) => (
           <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
         ))}
       </div>

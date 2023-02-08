@@ -3,7 +3,6 @@ import { IOrdersState } from 'types/reduxTypes/ordersStateTypes';
 export const getInitialState = (): IOrdersState => ({
   error: null,
   orderTypeOptions: [],
-  isOrderTypeOptionsLoading: false,
   selectedOrderType: '',
   orderTypes: [],
   isOrderTypesLoading: false,

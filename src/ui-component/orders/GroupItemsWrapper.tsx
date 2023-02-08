@@ -22,7 +22,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderTypes = useMemo(
-    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.orderTypeId === selectedOrderType)?.groups,
+    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.id === selectedOrderType)?.groups,
     [orderTypes, selectedOrderType]
   );
 

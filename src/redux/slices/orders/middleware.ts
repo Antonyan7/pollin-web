@@ -23,9 +23,7 @@ import { viewsMiddleware } from '../views';
 
 const {
   setError,
-  setOrderTypeOptions,
   setSelectedOrderType,
-  setIsOrderTypeOptionsLoading,
   setOrderTypes,
   setIsOrderTypesLoading,
   setOrderDetails,
@@ -46,49 +44,27 @@ const {
   setOrdersFilters,
   setOrdersList,
   setOrdersStatuses,
+  setOrderTypeOptions,
   setTestResultReleasedDate,
   setTestResultReviewedDate
 } = slice.actions;
-
-const getOrderTypeOptions = () => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrderTypeOptionsLoading(true));
-
-  try {
-    const response = await API.results.getOrderTypeOptions();
-
-    dispatch(setOrderTypeOptions(response.data.data.orderTypes));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsOrderTypeOptionsLoading(false));
-  }
-};
 
 const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(orderType));
 };
 
-const getOrderTypes = (orderType: string) => async (dispatch: AppDispatch) => {
+const getOrderTypes = () => async (dispatch: AppDispatch) => {
   dispatch(setIsOrderTypesLoading(true));
 
-  const { orderTypes } = store.getState().orders;
-  const currentOrderGroupByType = orderTypes.find((group: IOrderTypesCollection) => group.orderTypeId === orderType);
-
   try {
-    if (!currentOrderGroupByType?.orderTypeId) {
-      const response = await API.results.getOrderTypes(orderType);
+    const response = await API.results.getOrderTypes();
+    const orderTypeOptions = response.data.data.orderTypes.map((orderType: IOrderTypesCollection) => ({
+      id: orderType.id,
+      title: orderType.title
+    }));
 
-      const orderGroupCollections = [
-        ...store.getState().orders.orderTypes,
-        {
-          orderTypeId: orderType,
-          groups: response.data.data.groups
-        }
-      ];
-
-      dispatch(setOrderTypes(orderGroupCollections));
-    }
+    dispatch(setOrderTypes(response.data.data.orderTypes));
+    dispatch(setOrderTypeOptions(orderTypeOptions));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -98,14 +74,15 @@ const getOrderTypes = (orderType: string) => async (dispatch: AppDispatch) => {
 };
 
 const updateOrderTypes =
-  (orderTypeId: string, updatedOrderGroups: IOrderGroup[] = []) =>
+  (id: string, updatedOrderGroups: IOrderGroup[] = []) =>
   async (dispatch: AppDispatch) => {
     const { orderTypes } = store.getState().orders;
 
     const updatedOrderTypes: IOrderTypesCollection[] = orderTypes.map((collection: IOrderTypesCollection) => {
-      if (collection.orderTypeId === orderTypeId) {
+      if (collection.id === id) {
         return {
-          orderTypeId,
+          id: collection.id,
+          title: collection.title,
           groups: updatedOrderGroups
         };
       }
@@ -365,7 +342,6 @@ const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => asy
 };
 
 export default {
-  getOrderTypeOptions,
   updateSelectedOrderType,
   getOrderTypes,
   updateOrderTypes,

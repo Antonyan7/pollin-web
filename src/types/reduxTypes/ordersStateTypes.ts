@@ -12,7 +12,6 @@ import { IOrderResultsStatus, OrderResultStatusEnum } from 'types/results';
 export interface IOrdersState {
   error: Error | null;
   orderTypeOptions: IOrderTypeOption[];
-  isOrderTypeOptionsLoading: boolean;
   selectedOrderType: string;
   orderTypes: IOrderTypesCollection[];
   isOrderTypesLoading: boolean;
@@ -43,10 +42,6 @@ export interface IOrderTypeOption {
   title: string;
 }
 
-export interface IOrderTypesList {
-  orderTypes: IOrderTypeOption[];
-}
-
 export interface IOrderGroup {
   id: string;
   title: string;
@@ -63,12 +58,13 @@ export interface IOrderGroupItem {
 }
 
 export interface IOrderTypesCollection {
-  orderTypeId: string;
+  id: string;
+  title: string;
   groups: IOrderGroup[];
 }
 
-export interface IOrderGroupsList {
-  groups: IOrderGroup[];
+export interface IOrderTypesGroups {
+  orderTypes: IOrderTypesCollection[];
 }
 
 export interface IOrderDetails {

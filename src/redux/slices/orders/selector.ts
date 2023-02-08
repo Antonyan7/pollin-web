@@ -4,7 +4,6 @@ import { RootState } from 'redux/store';
 const selector = (state: RootState) => state.orders;
 
 const orderTypeOptions = createSelector([selector], (state) => state.orderTypeOptions);
-const isOrderTypeOptionsLoading = createSelector([selector], (state) => state.isOrderTypeOptionsLoading);
 const selectedOrderType = createSelector([selector], (state) => state.selectedOrderType);
 const orderTypes = createSelector([selector], (state) => state.orderTypes);
 const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
@@ -34,7 +33,6 @@ const isTestResultReleased = createSelector([selector], (state) => state.isTestR
 
 export default {
   orderTypeOptions,
-  isOrderTypeOptionsLoading,
   selectedOrderType,
   orderTypes,
   isOrderTypesLoading,

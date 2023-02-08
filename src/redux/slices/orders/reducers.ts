@@ -23,9 +23,6 @@ const reducers = createReducer({
   setOrderTypeOptions(state, action: IAction<IOrderTypeOption[]>) {
     state.orderTypeOptions = action.payload;
   },
-  setIsOrderTypeOptionsLoading(state, action: IAction<boolean>) {
-    state.isOrderTypesLoading = action.payload;
-  },
   setSelectedOrderType(state, action: IAction<string>) {
     state.selectedOrderType = action.payload;
   },

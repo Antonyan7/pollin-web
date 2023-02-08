@@ -25,10 +25,9 @@ import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
   IGetOrderDetailsResponse,
-  IOrderGroupsList,
   IOrderResultsByPatientList,
   IOrdersListResponse,
-  IOrderTypesList,
+  IOrderTypesGroups,
   IUpdateOrderReqBody
 } from 'types/reduxTypes/ordersStateTypes';
 import {
@@ -300,15 +299,8 @@ const resultsManager = {
       ordersListData
     );
   },
-  getOrderTypeOptions() {
-    return axiosInstance.get<IOrderTypesList, IAxiosResponse<IOrderTypesList>>(`${baseURL}/v1/order/type`);
-  },
-  getOrderTypes(orderType: string) {
-    return axiosInstance.get<IOrderGroupsList, IAxiosResponse<IOrderGroupsList>>(`${baseURL}/v1/order/group`, {
-      params: {
-        orderType
-      }
-    });
+  getOrderTypes() {
+    return axiosInstance.get<IOrderTypesGroups, IAxiosResponse<IOrderTypesGroups>>(`${baseURL}/v1/order/group`);
   },
   downloadTestResultAttachment(attachmentId: string) {
     return axiosInstance.get<Blob, IAxiosResponse<Blob>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);

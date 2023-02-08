@@ -35,7 +35,7 @@ const CreateOrderActions = () => {
   const onNextButtonClick = () => {
     resultsManager
       .validateOrderCreation({
-        orderTypes: orderTypes.map(({ orderTypeId: id, groups }) => ({ id, groups: transformGroups(groups) }))
+        orderTypes: orderTypes.map(({ id, groups }) => ({ id, groups: transformGroups(groups) }))
       })
       .then(({ data }) => {
         if (data.message) {
@@ -62,7 +62,8 @@ const CreateOrderActions = () => {
   };
 
   const atLeastOneSelectedItemExists = useMemo(
-    () => orderTypes.some((orderGroup) => orderGroup.groups.some((group) => isAnyGroupItemSelected(group.groupItems))),
+    () =>
+      orderTypes.some((orderGroup) => orderGroup?.groups?.some((group) => isAnyGroupItemSelected(group.groupItems))),
     [orderTypes]
   );
 

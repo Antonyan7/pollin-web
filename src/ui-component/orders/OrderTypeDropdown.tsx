@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -15,16 +15,13 @@ const OrderTypeDropdown = () => {
   const theme = useTheme();
   const label = t(Translation.PAGE_PATIENT_PROFILE_CELLS_CREATE_ORDER_TYPE);
   const orderTypeOptions = useSelector(ordersSelector.orderTypeOptions);
-  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypeOptionsLoading);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
+  const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypesLoading);
+
   const selectedValue = useMemo(
     () => orderTypeOptions.find(({ id }) => id === selectedOrderType) ?? null,
     [orderTypeOptions, selectedOrderType]
   );
-
-  useEffect(() => {
-    dispatch(ordersMiddleware.getOrderTypeOptions());
-  }, []);
 
   return (
     <Box
