@@ -379,7 +379,7 @@
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.existing.transport.folder.label": "Existing Transport Folder(s)",
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.folder": "Transport Folder",
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.date": "Transport Date",
-  "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.success.message": "Specimens are added to new/existing transport folder successfully",
+  "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.success.message": "The following Specimen ID(s) have been moved to",
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.existing.transport.error.message": "Specimen not found",
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.folder.create.success.message": "Transport folder created successfully",
   "page.specimens.tracking.transports.add.new.existing.transport.folder.modal.transport.name": "Transport Name",

@@ -60,6 +60,7 @@ export interface IGetTransportFoldersReqBody {
 }
 
 export interface ICreateTransportFolderResponse {
+  title: string;
   uuid: string;
 }
 

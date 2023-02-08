@@ -46,9 +46,12 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
   const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     dispatch(
-      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: row.id } })
+      viewsMiddleware.openModal({
+        name: ModalName.AddNewExistingTransportModal,
+        props: { specimenIds: row.id, selectedIdentifiers: [row.identifier] }
+      })
     );
-  }, [row.id]);
+  }, [row.id, row.identifier]);
 
   const handleHandoffConfirmationAction = useCallback(() => {
     dispatch(

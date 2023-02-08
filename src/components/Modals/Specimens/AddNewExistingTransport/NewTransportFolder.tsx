@@ -39,11 +39,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
-  const { specimenIds } = props;
+  const { specimenIds, selectedIdentifiers } = props;
 
   const classes = useStyles();
   const labList = useSelector(resultsSelector.testResultLabs);
-  const lastCreatedTransportFolderId = useAppSelector(resultsSelector.lastCreatedTransportFolderId);
+  const lastCreatedTransportFolder = useAppSelector(resultsSelector.lastCreatedTransportFolder);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [t] = useTranslation();
   const [labId, setLabId] = useState<string>('');
@@ -73,10 +73,12 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       id: specimenId
     }));
 
-    if (lastCreatedTransportFolderId) {
-      dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolderId));
+    if (lastCreatedTransportFolder?.id) {
+      dispatch(
+        resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolder.id, selectedIdentifiers)
+      );
     }
-  }, [lastCreatedTransportFolderId, specimenIds]);
+  }, [lastCreatedTransportFolder?.id, specimenIds, selectedIdentifiers]);
 
   const onConfirmCreateNewTransportFolder = useCallback(() => {
     createNewTransportFolder();
@@ -87,12 +89,12 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   }, []);
 
   useEffect(() => {
-    if (lastCreatedTransportFolderId) {
+    if (lastCreatedTransportFolder?.id) {
       addSpecimenToAlreadyCreatedTransportFolder();
       dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lastCreatedTransportFolderId]);
+  }, [lastCreatedTransportFolder?.id]);
 
   return (
     <Grid container spacing={3}>

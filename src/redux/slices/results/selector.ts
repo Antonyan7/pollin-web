@@ -38,7 +38,7 @@ const isCreatingTransportFolder = createSelector([selector], (state) => state.tr
 const isTransportFolderDownloaded = createSelector([selector], (state) => state.tracking.isTransportFolderDownloaded);
 
 const transportFolders = createSelector([selector], (state) => state.tracking.transportFolders);
-const lastCreatedTransportFolderId = createSelector([selector], (state) => state.tracking.lastCreatedTransportFolderId);
+const lastCreatedTransportFolder = createSelector([selector], (state) => state.tracking.lastCreatedTransportFolder);
 
 // InHouse
 const isSpecimensConfirmationButtonClicked = createSelector(
@@ -105,7 +105,7 @@ export default {
   isSpecimentAddedToFolder,
   isTransportFolderDownloaded,
   labMachines,
-  lastCreatedTransportFolderId,
+  lastCreatedTransportFolder,
   pendingSpecimenStats,
   pendingTestStats,
   resultsFiltersList,

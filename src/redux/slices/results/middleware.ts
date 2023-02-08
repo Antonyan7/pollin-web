@@ -18,7 +18,7 @@ import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransfor
 import { resultsMiddleware } from '@redux/slices/results/index';
 import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
-import store, { AppDispatch } from '@redux/store';
+import store, { AppDispatch, RootState } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import axios from 'axios';
 import { Translation } from 'constants/translations';
@@ -31,7 +31,8 @@ import {
   IRetestRecollectData,
   ISpecimensInTransportList,
   ISpecimensList,
-  ITransportList
+  ITransportList,
+  LastCreatedTransportFolder
 } from 'types/reduxTypes/resultsStateTypes';
 import {
   ICreateTransportFolderReqBody,
@@ -62,7 +63,7 @@ const {
   setLabMachines,
   setLabs,
   setLabsLoadingState,
-  setLastCreatedTransportFolderId,
+  setLastCreatedTransportFolder,
   setPendingSpecimenStats,
   setPendingSpecimenStatsLoadingState,
   setPendingTestStats,
@@ -498,8 +499,13 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
     dispatch(setIsCreatingTransportFolderLoading(true));
 
     const response = await API.results.createTransportFolder(data);
+    const { uuid, title } = response.data.data;
+    const transportFolderData: LastCreatedTransportFolder = {
+      id: uuid,
+      title
+    };
 
-    dispatch(setLastCreatedTransportFolderId(response.data.data.uuid));
+    dispatch(setLastCreatedTransportFolder(transportFolderData));
 
     const transportListRequestBody = {
       date: data.date,
@@ -509,18 +515,6 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
     };
 
     dispatch(resultsMiddleware.getTransportList(transportListRequestBody));
-
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(
-            Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_FOLDER_CREATE_SUCCESS_MESSAGE
-          )
-        }
-      })
-    );
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -530,7 +524,7 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
 };
 
 const resetLastCreatedTransportFolderId = () => async (dispatch: AppDispatch) => {
-  dispatch(setLastCreatedTransportFolderId(null));
+  dispatch(setLastCreatedTransportFolder(null));
 };
 
 const getSpecimensInTransportList =
@@ -583,7 +577,10 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
 };
 
 const addSpecimenToTransportFolder =
-  (specimens: IRetestRecollectData[], transportFolderId: string) => async (dispatch: AppDispatch) => {
+  (specimens: IRetestRecollectData[], transportFolderId: string, selectedIdentifiers?: string[]) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
+    const currentTransportFolder = getState().results.tracking.lastCreatedTransportFolder;
+
     dispatch(setIsSpecimentAddedToFolder(true));
 
     try {
@@ -594,9 +591,12 @@ const addSpecimenToTransportFolder =
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(
-              Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE
-            )
+            renderList: {
+              header: `${t(
+                Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE
+              )} ${currentTransportFolder?.title}`,
+              items: selectedIdentifiers
+            }
           }
         })
       );

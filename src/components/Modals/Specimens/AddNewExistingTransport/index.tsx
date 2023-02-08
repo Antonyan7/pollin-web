@@ -15,7 +15,7 @@ import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStat
 import BaseModal from '@ui-component/Modal/BaseModal';
 
 const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps) => {
-  const { specimenIds } = props;
+  const { specimenIds, selectedIdentifiers } = props;
   const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const [t] = useTranslation();
   const addNewTransportFolderModalTitleLabel = t(
@@ -64,10 +64,10 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
               </Tabs>
             </Box>
             <TabPanel value={activePageValue} index={0}>
-              <NewTransportFolder specimenIds={specimenIds} />
+              <NewTransportFolder specimenIds={specimenIds} selectedIdentifiers={selectedIdentifiers} />
             </TabPanel>
             <TabPanel value={activePageValue} index={1}>
-              <ExistingTransportFolder specimenIds={specimenIds} />
+              <ExistingTransportFolder specimenIds={specimenIds} selectedIdentifiers={selectedIdentifiers} />
             </TabPanel>
           </Box>
         </DialogContent>

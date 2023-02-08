@@ -13,6 +13,7 @@ import {
   ITestResultsFilter,
   ITransportList,
   LabMachine,
+  LastCreatedTransportFolder,
   SpecimenActions,
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
@@ -137,8 +138,8 @@ const reducers = createReducer({
   setTransportFolders(state, action: IAction<ITransportFolder[]>) {
     state.tracking.transportFolders = action.payload;
   },
-  setLastCreatedTransportFolderId(state, action: IAction<string | null>) {
-    state.tracking.lastCreatedTransportFolderId = action.payload;
+  setLastCreatedTransportFolder(state, action: IAction<LastCreatedTransportFolder | null>) {
+    state.tracking.lastCreatedTransportFolder = action.payload;
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.tracking.isTransportFoldersLoading = action.payload;

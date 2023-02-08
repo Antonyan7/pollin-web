@@ -27,7 +27,7 @@ const ResultsTableRowToolbar = ({
   const [t] = useTranslation();
   const selectedStatuses = selectedRows.map((row) => row.status);
   const selectedId = selectedRows.map((row) => row.id);
-
+  const selectedIdentifiers = selectedRows.map((row) => row.identifier);
   const checkSameStatues = Array.from(new Set(selectedStatuses));
   const hasSameStatues = checkSameStatues.length > 1;
   const options = useMemo(
@@ -39,9 +39,12 @@ const ResultsTableRowToolbar = ({
   const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
     dispatch(
-      viewsMiddleware.openModal({ name: ModalName.AddNewExistingTransportModal, props: { specimenIds: selectedId } })
+      viewsMiddleware.openModal({
+        name: ModalName.AddNewExistingTransportModal,
+        props: { specimenIds: selectedId, selectedIdentifiers }
+      })
     );
-  }, [selectedId]);
+  }, [selectedId, selectedIdentifiers]);
 
   const handleMarkAsAction = useCallback(
     (actionType: string) => {

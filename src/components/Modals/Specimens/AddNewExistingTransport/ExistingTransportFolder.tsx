@@ -25,7 +25,7 @@ const useStyles = makeStyles(() => ({
 }));
 
 const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
-  const { specimenIds } = props;
+  const { specimenIds, selectedIdentifiers } = props;
   const classes = useStyles();
   const transportList = useAppSelector(resultsSelector.transportList);
   const { folders: transportFolders } = transportList;
@@ -49,7 +49,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       id: specimenId
     }));
 
-    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder));
+    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder, selectedIdentifiers));
   };
 
   useEffect(() => {

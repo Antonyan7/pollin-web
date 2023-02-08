@@ -45,7 +45,7 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
   labs: [],
   isTransportFolderDownloaded: false,
   isTransportFoldersLoading: false,
-  lastCreatedTransportFolderId: null
+  lastCreatedTransportFolder: null
 });
 
 const getCollectionInitialState = (): ITestResultsCollection => ({

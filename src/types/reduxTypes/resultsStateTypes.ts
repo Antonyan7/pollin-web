@@ -66,7 +66,7 @@ export interface ITestResultsTracking {
   isTransportListLoading: boolean;
   isCreatingTransportFolder: boolean;
   transportFolders: ITransportFolder[];
-  lastCreatedTransportFolderId: string | null;
+  lastCreatedTransportFolder: LastCreatedTransportFolder | null;
   isTransportFoldersLoading: boolean;
   testResultStateStatus: SchedulingStateStatusProps;
 }
@@ -108,6 +108,7 @@ export interface IMakeTestResultReviewReq {
 export interface ITransportListFolderProps {
   date: string;
   id: string;
+  identifier?: string;
   title: string;
   labName: string;
   driver: ITransportFolderDriver;
@@ -129,6 +130,8 @@ export interface ILab {
   id: string;
   title: string;
 }
+
+export interface LastCreatedTransportFolder extends LabMachineProps {}
 
 export interface SpecimenActionsList {
   variations: SpecimenActions[];
@@ -324,6 +327,7 @@ export interface IAddNewContactModalProps {
 
 export interface IAddNewExistingTransportModalProps {
   specimenIds: string[];
+  selectedIdentifiers: string[];
 }
 
 export interface IResultsFilterCategory {
