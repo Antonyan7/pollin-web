@@ -194,7 +194,7 @@
   "page.order.details.button.confirm": "Confirm",
   "page.order.details.button.cancel": "Cancel",
   "page.order.details.there.are.no.available.orders": "There are no available orders to view list",
-  "navigation.tab.item.results": "Results",
+  "navigation.tab.item.tests.and.results": "Tests & Results",
   "navigation.tab.item.patient.emr": "Patient EMR",
   "navigation.tab.item.scheduling": "Scheduling",
   "navigation.tab.item.specimens": "Specimens",

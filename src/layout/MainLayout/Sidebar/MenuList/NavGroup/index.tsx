@@ -1,11 +1,12 @@
 import React from 'react';
 import { Divider, List, Typography, useTheme } from '@mui/material';
+import { margins, paddings } from 'themes/themeConstants';
 import { NavGroupProps } from 'types';
 
 import NavCollapse from '../NavCollapse';
 import NavItem from '../NavItem';
 
-const NavGroup = ({ item }: NavGroupProps) => {
+const NavGroup = ({ item, isLastItem }: NavGroupProps) => {
   const theme = useTheme();
 
   const items = item.children?.map((menu) => {
@@ -41,7 +42,19 @@ const NavGroup = ({ item }: NavGroupProps) => {
       >
         {items}
       </List>
-      <Divider sx={{ mt: 0.25, mb: 1.25 }} />
+      {!isLastItem ? (
+        <Divider sx={{ mt: margins.top8, mb: margins.bottom12 }} />
+      ) : (
+        <Typography
+          sx={{
+            textAlign: 'center',
+            color: theme.palette.primary.light,
+            pt: paddings.top8
+          }}
+        >
+          v1.0.0
+        </Typography>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React from 'react';
-import GroupsTwoToneIcon from '@mui/icons-material/GroupsTwoTone';
+import { PeopleAltOutlined } from '@mui/icons-material';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
@@ -30,7 +30,7 @@ const NavPatients: PatientsProps = {
       title: 'Patient List',
       type: 'item',
       url: '/patient-emr/list',
-      icon: GroupsTwoToneIcon,
+      icon: PeopleAltOutlined,
       breadcrumbs: false
     }
   ]

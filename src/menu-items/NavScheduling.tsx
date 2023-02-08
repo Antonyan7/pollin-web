@@ -1,8 +1,7 @@
-// assets
 import React from 'react';
-import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import ReorderIcon from '@mui/icons-material/Reorder';
 import ViewDayIcon from '@mui/icons-material/ViewDay';
+import { IconTable } from '@tabler/icons';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
@@ -41,7 +40,7 @@ const NavScheduling: NavSchedulingProps = {
       title: 'Apply Schedule',
       type: 'item',
       url: '/scheduling/apply-schedule',
-      icon: CalendarViewMonthIcon,
+      icon: IconTable,
       breadcrumbs: false
     },
     {

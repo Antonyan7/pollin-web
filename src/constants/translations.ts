@@ -196,7 +196,7 @@ export enum Translation {
   PAGE_ORDER_DETAILS_BUTTON_CONFIRM = 'page.order.details.button.confirm',
   PAGE_ORDER_DETAILS_BUTTON_CANCEL = 'page.order.details.button.cancel',
   PAGE_ORDER_DETAILS_THERE_ARE_NO_AVAILABLE_ORDERS = 'page.order.details.there.are.no.available.orders',
-  NAVIGATION_TAB_ITEM_RESULTS = 'navigation.tab.item.results',
+  NAVIGATION_TAB_ITEM_TESTS_AND_RESULTS = 'navigation.tab.item.tests.and.results',
   NAVIGATION_TAB_ITEM_PATIENT_EMR = 'navigation.tab.item.patient.emr',
   NAVIGATION_TAB_ITEM_SCHEDULING = 'navigation.tab.item.scheduling',
   NAVIGATION_TAB_ITEM_SPECIMENS = 'navigation.tab.item.specimens',

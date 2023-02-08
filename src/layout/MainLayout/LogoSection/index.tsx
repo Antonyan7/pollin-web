@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link as MuiLink, Typography, useTheme } from '@mui/material';
 import { DASHBOARD_PATH } from 'config';
+import { margins } from 'themes/themeConstants';
 
 import { Link } from '../../../components';
 
@@ -10,8 +11,17 @@ const LogoSection = () => {
   return (
     <MuiLink underline="none" component={Link} href={DASHBOARD_PATH}>
       <div style={{ display: 'flex' }}>
-        <Typography variant="h2" color={theme.palette.common.black} margin="5px 5px 5px 0px">
-          DANDELION
+        <Typography
+          variant="h2"
+          sx={{
+            fontFamily: 'Lora'
+          }}
+          color={theme.palette.primary[800]}
+          my={margins.topBottom4}
+          ml={margins.left0}
+          mr={margins.right4}
+        >
+          Pollin Portal
         </Typography>
       </div>
     </MuiLink>

@@ -128,12 +128,13 @@ const InHouseSpecimensList = () => {
                 {specimensList?.specimens?.map((row: ISpecimensListItem) => {
                   const filteredSpecimenAction = findCurrentAction(specimenActions, row);
                   const isItemSelected = isSelected(row.id);
+                  const isActionsAvailable = filteredSpecimenAction && numSelected === 0;
 
                   return (
                     <SpecimenListRow
                       row={row}
                       key={row.id}
-                      actions={filteredSpecimenAction ? filteredSpecimenAction.actions : []}
+                      actions={isActionsAvailable ? filteredSpecimenAction.actions : []}
                       isItemSelected={isItemSelected}
                       onClick={(e) =>
                         // TODO: https://fhhealth.atlassian.net/browse/PCP-2409 The same logic used in a few create common solution for this.

@@ -13,6 +13,7 @@ import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
+import { margins, paddings } from 'themes/themeConstants';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
@@ -59,12 +60,12 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   };
 
   return (
-    <Box py="15px" borderBottom={`1px solid ${theme.palette.grey[100]}!important`}>
+    <Box py={paddings.topBottom16} borderBottom={`1px solid ${theme.palette.grey[100]}!important`}>
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} style={{ cursor: 'pointer' }}>
           <Grid container alignItems="center" sx={{ flexWrap: 'nowrap' }}>
             <Grid item>
-              <Avatar alt={name} src={avatarProfile} sx={{ width: 60, height: 60, m: 3 }} />
+              <Avatar alt={name} src={avatarProfile} sx={{ width: 60, height: 60, m: margins.all24 }} />
             </Grid>
             <Grid item sm zeroMinWidth>
               <Grid container spacing={0}>
@@ -172,7 +173,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
               <Grid item>
                 <Tooltip placement="top" title="Message">
                   <Button
-                    sx={{ minWidth: 32, height: 32, margin: '10px 10px' }}
+                    sx={{ minWidth: 32, height: 32, margin: margins.all8 }}
                     startIcon={<ModeEditOutlinedIcon fontSize="small" />}
                   >
                     {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE)}
@@ -193,7 +194,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                       sx: {
                         background: theme.palette.primary.main,
                         color: theme.palette.common.white,
-                        padding: theme.spacing(1)
+                        padding: paddings.all8
                       }
                     }
                   }}

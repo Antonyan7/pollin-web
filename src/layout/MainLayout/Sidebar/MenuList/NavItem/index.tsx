@@ -14,6 +14,7 @@ import {
 import ListItemLink from 'components/Link/ListItemLink';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
+import { margins } from 'themes/themeConstants';
 import { LinkTarget, NavItemType } from 'types';
 
 interface NavItemProps {
@@ -76,23 +77,41 @@ const NavItem = ({ item, level }: NavItemProps) => {
     }
   }, [item.id]);
 
+  const isActive = openItem?.findIndex((id: string) => id === item.id) > -1;
+
   return (
     <ListItemLink data-cy={listItemCyId} item={item} itemTarget={itemTarget}>
       <StyledListItemButton
         theme={theme}
         level={level}
         disabled={item.disabled}
-        selected={openItem?.findIndex((id: string) => id === item.id) > -1}
+        selected={isActive}
         onClick={() => itemHandler(item.id)}
+        sx={{
+          '&:hover': {
+            background: `${theme.palette.secondary[200]}`
+          },
+          background: isActive ? `${theme.palette.secondary[200]}` : 'transparent',
+          mt: margins.top8
+        }}
       >
-        <ListItemIcon sx={{ my: 'auto', minWidth: !item?.icon ? 18 : 36, color: theme.palette.primary.main }}>
+        <ListItemIcon
+          sx={{
+            my: 'auto',
+            minWidth: !item?.icon ? 18 : 36,
+            color: `${isActive ? theme.palette.primary.main : theme.palette.secondary.dark} !important`
+          }}
+        >
           {itemIcon}
         </ListItemIcon>
         <ListItemText
           primary={
             <Typography
-              variant={openItem?.findIndex((id: string) => id === item.id) > -1 ? 'h5' : 'body1'}
-              color="primary"
+              color={isActive ? 'primary.main' : 'secondary.dark'}
+              sx={{
+                lineHeight: theme.typography.pxToRem(19.6),
+                fontWeight: 400
+              }}
             >
               {item.title}
             </Typography>

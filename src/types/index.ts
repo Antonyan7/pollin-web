@@ -81,6 +81,7 @@ export interface NavGroupProps {
     color?: 'primary' | 'secondary' | 'default';
     url?: string;
   };
+  isLastItem?: boolean;
 }
 export interface MainStyleProps {
   theme: Theme;

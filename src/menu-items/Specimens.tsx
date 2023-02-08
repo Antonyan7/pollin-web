@@ -1,5 +1,6 @@
 import React from 'react';
-import { LocalShippingTwoTone, ScienceOutlined } from '@mui/icons-material';
+import { LocalShippingTwoTone } from '@mui/icons-material';
+import { IconFlask } from '@tabler/icons';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
@@ -30,7 +31,7 @@ const Specimens: SpecimensProps = {
       title: t(Translation.PAGE_SPECIMEN_COLLECTION_TITLE),
       type: 'item',
       url: '/clinic-test-results/specimen-collection',
-      icon: ScienceOutlined,
+      icon: IconFlask,
       breadcrumbs: false
     },
     {
