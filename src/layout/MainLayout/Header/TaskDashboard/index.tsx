@@ -24,7 +24,7 @@ const TaskDashboard = () => {
   const theme = useTheme();
   const router = useRouter();
   const onClick = useCallback(() => {
-    router.push('/task-manager');
+    router.push('/task-dashboard');
   }, [router]);
 
   return (

@@ -129,6 +129,7 @@ export enum Translation {
   PAGE_SCHEDULING_BLOCK_TIME_START_AFTER_END_ERROR = 'page.scheduling.block.time.start.after.end.error',
   PAGE_SCHEDULING_BLOCK_TIME_END_AFTER_END_ERROR = 'page.scheduling.block.time.end.after.end.error',
   PAGE_TASK_DASHBOARD_TITLE = 'page.task.dashboard.title',
+  PAGE_TASK_DASHBOARD_CREATE_TASK = 'page.task.dashboard.create.task',
   PAGE_SCHEDULING_APPLY_TITLE = 'page.scheduling.apply.title',
   PAGE_SCHEDULING_APPLY_RESOURCE = 'page.scheduling.apply.resource',
   PAGE_SCHEDULING_APPLY_EVERY = 'page.scheduling.apply.every',
