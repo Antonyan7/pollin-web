@@ -31,10 +31,12 @@ const ResultsTableRowToolbar = ({
   const checkSameStatues = Array.from(new Set(selectedStatuses));
   const hasSameStatues = checkSameStatues.length > 1;
   const options = useMemo(
-    () => specimenActions.find((item: SpecimenActions) => item.title === checkSameStatues[0]),
+    () => specimenActions.find((item: SpecimenActions) => item.status === checkSameStatues[0]),
     [specimenActions, checkSameStatues]
   );
-  const showOptions = options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit);
+  const filteredOptions = options?.actions.filter((action) => action.id !== 'InputTestResults');
+  const showOptions =
+    options?.actions.find((item) => item.id !== TransportActionType.MarkInTransit) && selectedRows.length > 1;
 
   const handleMoveToTransportAction = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
@@ -116,7 +118,7 @@ const ResultsTableRowToolbar = ({
             labelId="action-label"
             label={t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_HEADER_ACTION)}
           >
-            {options?.actions.map((item: SpecimenActionsValues) => (
+            {filteredOptions?.map((item: SpecimenActionsValues) => (
               <MenuItem
                 key={item.title}
                 value={item.title}

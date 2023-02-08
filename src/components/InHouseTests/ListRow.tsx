@@ -1,6 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TableCell, TableRow, useTheme } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { resultsSelector } from '@redux/slices/results';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
@@ -14,6 +16,8 @@ import { SpecimensListRowProps } from './types';
 const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
+  const specimenActions = useAppSelector(resultsSelector.specimenActions);
+  const statusVariation = specimenActions.find((action) => action.status === row.status);
 
   const chipColor = useChipColor(row.age);
 
@@ -40,7 +44,7 @@ const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensLi
       <TableCell>{row.titles?.join(', ')}</TableCell>
       <TableCell>{row.identifier}</TableCell>
       <TableCell>{row.machine}</TableCell>
-      <TableCell>{row.status}</TableCell>
+      <TableCell>{statusVariation?.title}</TableCell>
       <TableCell align="center">
         <Chip
           sx={{ background: chipColor.light, color: chipColor.dark }}
