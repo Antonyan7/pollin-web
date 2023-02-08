@@ -76,22 +76,26 @@ const AppointmentsListTable = () => {
         <Table>
           <TableHead>
             <TableRow>
-              {headCells.map((headCell) => (
-                <TableCell key={headCell.id}>
-                  {headCell.id !== 'time' ? (
-                    <TableSortLabel
-                      direction={headCell.id === orderBy && order ? order : undefined}
-                      onClick={() => onTableHeadCellClick(headCell.id as Exclude<HeadCell['id'], 'time'>)}
-                    >
-                      <Typography fontWeight="bold">{t(headCell.label)}</Typography>
-                    </TableSortLabel>
-                  ) : (
-                    <Typography fontWeight="bold" sx={{ userSelect: 'none' }}>
-                      {t(headCell.label)}
-                    </Typography>
-                  )}
-                </TableCell>
-              ))}
+              {headCells.map((headCell) => {
+                const isDirectionMatch = headCell.id === orderBy?.toLowerCase() && order;
+
+                return (
+                  <TableCell key={headCell.id}>
+                    {headCell.id !== 'time' ? (
+                      <TableSortLabel
+                        direction={isDirectionMatch ? order : undefined}
+                        onClick={() => onTableHeadCellClick(headCell.id as Exclude<HeadCell['id'], 'time'>)}
+                      >
+                        <Typography fontWeight="bold">{t(headCell.label)}</Typography>
+                      </TableSortLabel>
+                    ) : (
+                      <Typography fontWeight="bold" sx={{ userSelect: 'none' }}>
+                        {t(headCell.label)}
+                      </Typography>
+                    )}
+                  </TableCell>
+                );
+              })}
             </TableRow>
           </TableHead>
           <TableBody>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import bookingManager from '@axios/booking/bookingManager';
-import { IGetPatientAppointments } from '@axios/booking/managerBookingTypes';
+import { IGetPatientAppointments, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import Overview from '@components/PatientProfile/Overview';
 import PartnerProfileOverview from '@components/PatientProfile/PartnerProfileOverview';
 import TestResults from '@components/PatientProfile/TestResults';
@@ -10,6 +10,7 @@ import { bookingSelector } from '@redux/slices/booking';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { SortOrder } from 'types/patient';
 import { AppointmentType } from 'types/patientProfile';
 
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
@@ -69,11 +70,15 @@ const PatientProfile = () => {
                 appointmentType={AppointmentType.Upcoming}
                 appointmentsList={patientAppointments?.upcoming.appointments ?? null}
                 filterId={patientAppointments?.upcoming.filter ?? ''}
+                sortByField={patientAppointments?.upcoming.sortByField ?? PatientAppointmentsSortField.Date}
+                sortOrder={patientAppointments?.upcoming.sortOrder ?? SortOrder.Asc}
               />
               <AppointmentsCard
                 appointmentType={AppointmentType.Past}
                 appointmentsList={patientAppointments?.past.appointments ?? null}
                 filterId={patientAppointments?.past.filter ?? ''}
+                sortByField={patientAppointments?.past.sortByField ?? PatientAppointmentsSortField.Date}
+                sortOrder={patientAppointments?.past.sortOrder ?? SortOrder.Desc}
               />
             </Stack>
           </Grid>

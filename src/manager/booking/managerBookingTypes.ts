@@ -1,5 +1,5 @@
 import { IEmptyResponse } from 'manager/common';
-import { ISortOrder } from 'types/patient';
+import { ISortOrder, SortOrder } from 'types/patient';
 import {
   IAppointment,
   ICancelStatusItem,
@@ -155,10 +155,14 @@ export enum PatientAppointmentsFields {
 export interface IGetPatientAppointments {
   upcoming: {
     filter: string;
+    sortOrder: SortOrder;
+    sortByField: PatientAppointmentsSortField;
     appointments: IPatientAppointment[];
   };
   past: {
     filter: string;
+    sortOrder: SortOrder;
+    sortByField: PatientAppointmentsSortField;
     appointments: IPatientAppointment[];
   };
 }
