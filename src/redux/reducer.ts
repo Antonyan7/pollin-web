@@ -1,4 +1,5 @@
 import { resultsSlice } from '@redux/slices/results';
+import { tasksSlice } from '@redux/slices/tasks';
 import { combineReducers } from 'redux';
 
 import { bookingSlice } from './slices/booking';
@@ -17,7 +18,8 @@ const reducer = combineReducers({
   booking: bookingSlice.reducer,
   user: userSlice.reducer,
   results: resultsSlice.reducer,
-  orders: ordersSlice.reducer
+  orders: ordersSlice.reducer,
+  tasks: tasksSlice.reducer
 });
 
 export default reducer;

@@ -103,19 +103,27 @@ export const getTimezoneOffset = () => getCurrentDate().slice(-6);
 export const calculateTimeInUTC = (date: string | Date | null) => {
   const timezoneOffset = getTimezoneOffset();
 
-  if (timezoneOffset[0] === '-') {
-    const utcDate = dayjs(date)
-      .add(Number(timezoneOffset.slice(1, 3)) * 60 + Number(timezoneOffset.slice(4, 6)), 'minutes')
-      .format();
+  if (date) {
+    if (timezoneOffset[0] === '-') {
+      const utcDate = dayjs(date)
+        .add(Number(timezoneOffset.slice(1, 3)) * 60 + Number(timezoneOffset.slice(4, 6)), 'minutes')
+        .format();
 
-    return changeTimezone(utcDate, UTCTimezone);
+      return changeTimezone(utcDate, UTCTimezone);
+    }
+
+    if (timezoneOffset[0] === '+') {
+      const utcDate = dayjs(date)
+        .subtract(Number(timezoneOffset.slice(1, 3)) * 60 + Number(timezoneOffset.slice(4, 6)), 'minutes')
+        .format();
+
+      return changeTimezone(utcDate, UTCTimezone);
+    }
+
+    return changeTimezone(date, UTCTimezone);
   }
 
-  const utcDate = dayjs(date)
-    .subtract(Number(timezoneOffset.slice(1, 3)) * 60 + Number(timezoneOffset.slice(4, 6)), 'minutes')
-    .format();
-
-  return changeTimezone(utcDate, UTCTimezone);
+  return '';
 };
 
 export const changeDateSameTimeString = (oldDate: string, newDate: string) => {

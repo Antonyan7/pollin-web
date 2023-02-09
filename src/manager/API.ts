@@ -1,6 +1,7 @@
 import bookingManager from '@axios/booking/bookingManager';
 import patientEmrManager from '@axios/patientEmr/patientEmrManager';
 import resultsManager from '@axios/results/resultsManager';
+import tasksManager from '@axios/tasks/tasksManager';
 import { AxiosInstance } from 'axios';
 import schedulingManager from 'manager/scheduling/schedulingManager';
 
@@ -11,7 +12,8 @@ const API = {
   scheduling: schedulingManager,
   booking: bookingManager,
   patients: patientEmrManager,
-  results: resultsManager
+  results: resultsManager,
+  tasks: tasksManager
 };
 
 export default API;

@@ -427,5 +427,11 @@
   "page.patient.order.results.details.not.yet.released": "Not yet released",
   "page.patient.order.results.details.reviewed.on": "Reviewed on",
   "page.patient.order.results.details.released.on": "Released on",
-  "page.patient.order.results.details.test.name": "Test Name"
+  "page.patient.order.results.details.test.name": "Test Name",
+  "page.tasks.manager.cells.task": "Task",
+  "page.tasks.manager.cells.patient": "Patient",
+  "page.tasks.manager.cells.due": "Due",
+  "page.tasks.manager.cells.priority": "Priority",
+  "page.tasks.manager.cells.assignee": "Assignee",
+  "page.tasks.manager.cells.status": "Status"
 }

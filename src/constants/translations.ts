@@ -430,7 +430,13 @@ export enum Translation {
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED = 'page.patient.order.results.details.not.yet.released',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON = 'page.patient.order.results.details.reviewed.on',
   PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON = 'page.patient.order.results.details.released.on',
-  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TEST_NAME = 'page.patient.order.results.details.test.name'
+  PAGE_PATIENT_ORDER_RESULTS_DETAILS_TEST_NAME = 'page.patient.order.results.details.test.name',
+  PAGE_TASKS_MANAGER_CELLS_TASK = 'page.tasks.manager.cells.task',
+  PAGE_TASKS_MANAGER_CELLS_PATIENT = 'page.tasks.manager.cells.patient',
+  PAGE_TASKS_MANAGER_CELLS_DUE = 'page.tasks.manager.cells.due',
+  PAGE_TASKS_MANAGER_CELLS_PRIORITY = 'page.tasks.manager.cells.priority',
+  PAGE_TASKS_MANAGER_CELLS_ASSIGNEE = 'page.tasks.manager.cells.assignee',
+  PAGE_TASKS_MANAGER_CELLS_STATUS = 'page.tasks.manager.cells.status'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
