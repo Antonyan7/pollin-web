@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { FirebaseManager } from '@axios/firebase';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import FlagsProvider from 'HOCs/FlagProvider/FlagsProvider';
 import type { AppProps } from 'next/app';
 import Main from 'pages';
 import ThemeCustomization from 'themes';
@@ -32,19 +33,21 @@ const Pollin = ({ Component, pageProps, emotionCache = clientSideEmotionCache }:
   return (
     <CacheProvider value={emotionCache}>
       <ThemeCustomization>
-        <Provider store={store}>
-          <NavigationScroll>
-            <Main>
-              {Component.PageLayout ? (
-                <Component.PageLayout>
+        <FlagsProvider>
+          <Provider store={store}>
+            <NavigationScroll>
+              <Main>
+                {Component.PageLayout ? (
+                  <Component.PageLayout>
+                    <Component {...pageProps} />
+                  </Component.PageLayout>
+                ) : (
                   <Component {...pageProps} />
-                </Component.PageLayout>
-              ) : (
-                <Component {...pageProps} />
-              )}
-            </Main>
-          </NavigationScroll>
-        </Provider>
+                )}
+              </Main>
+            </NavigationScroll>
+          </Provider>
+        </FlagsProvider>
       </ThemeCustomization>
     </CacheProvider>
   );

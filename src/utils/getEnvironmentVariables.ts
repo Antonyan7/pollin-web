@@ -1,0 +1,15 @@
+/* eslint no-process-env: 0 */
+export const getEnvironmentVariables = (): Record<string, string> => ({
+  NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL as string,
+
+  NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT as string,
+  NEXT_PUBLIC_APP_VERSION: process.env.NEXT_PUBLIC_APP_VERSION as string,
+
+  NEXT_PUBLIC_SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN as string,
+  NEXT_PUBLIC_SENTRY_ENVIRONMENT: process.env.NEXT_PUBLIC_SENTRY_ENVIRONMENT as string,
+
+  NEXT_PUBLIC_FIREBASE_CONFIG: process.env.NEXT_PUBLIC_FIREBASE_CONFIG as string,
+  NEXT_PUBLIC_IDENTITY_PROVIDER_ID: process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_ID as string,
+  NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID: process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID as string,
+  NEXT_PUBLIC_RECAPTURE_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTURE_SITE_KEY as string
+});

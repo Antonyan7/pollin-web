@@ -104,6 +104,7 @@ module.exports = {
         unnamedComponents: 'arrow-function'
       }
     ],
+    'no-process-env': 2,
     'no-param-reassign': 0,
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',

@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from '@sentry/nextjs';
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { AppCheck, getToken, initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
 import { Auth, getAuth, getIdToken, onAuthStateChanged, SAMLAuthProvider, signInWithPopup, User } from 'firebase/auth';
@@ -6,6 +7,7 @@ import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadB
 import { dispatchAuthError, dispatchIsAuthChecked, dispatchLoginUser } from 'layout/MainLayout/Login/loginHelpers';
 import { v4 } from 'uuid';
 
+import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 import { getFileExtension } from '@utils/stringUtils';
 
 export class FirebaseManager {
@@ -21,7 +23,10 @@ export class FirebaseManager {
 
   private static initializeAuth() {
     this.auth = getAuth(this.app);
-    this.auth.tenantId = process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID ?? '';
+
+    const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID } = getEnvironmentVariables();
+
+    this.auth.tenantId = NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID;
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.user = user;
@@ -37,7 +42,8 @@ export class FirebaseManager {
   }
 
   public static async login() {
-    const samlProvider = new SAMLAuthProvider(process.env.NEXT_PUBLIC_IDENTITY_PROVIDER_ID ?? '');
+    const { NEXT_PUBLIC_IDENTITY_PROVIDER_ID } = getEnvironmentVariables();
+    const samlProvider = new SAMLAuthProvider(NEXT_PUBLIC_IDENTITY_PROVIDER_ID);
 
     signInWithPopup(this.auth, samlProvider)
       .then((credential) => {
@@ -63,16 +69,20 @@ export class FirebaseManager {
     try {
       const apps = getApps();
 
-      if (!apps.length) {
-        this.app = initializeApp(JSON.parse(String(process.env.NEXT_PUBLIC_FIREBASE_CONFIG)), 'staff');
+      [this.app] = apps;
 
-        FirebaseManager.appCheck = initializeAppCheck(this.app, {
-          provider: new ReCaptchaEnterpriseProvider(String(process.env.NEXT_PUBLIC_RECAPTURE_SITE_KEY)),
-          isTokenAutoRefreshEnabled: true
-        });
+      const { NEXT_PUBLIC_FIREBASE_CONFIG, NEXT_PUBLIC_RECAPTURE_SITE_KEY } = getEnvironmentVariables();
+
+      if (!apps.length) {
+        this.app = initializeApp(JSON.parse(NEXT_PUBLIC_FIREBASE_CONFIG));
       } else {
         [this.app] = apps;
       }
+
+      FirebaseManager.appCheck = initializeAppCheck(this.app, {
+        provider: new ReCaptchaEnterpriseProvider(NEXT_PUBLIC_RECAPTURE_SITE_KEY),
+        isTokenAutoRefreshEnabled: true
+      });
 
       if (!this.auth) {
         this.initializeAuth();
@@ -81,11 +91,8 @@ export class FirebaseManager {
       if (!this.storage) {
         this.initiateStorage();
       }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('initializeApp error');
-      // eslint-disable-next-line no-console
-      console.error(e);
+    } catch (error) {
+      Sentry.captureException(error);
     }
   }
 
@@ -119,8 +126,7 @@ export class FirebaseManager {
     let token = ' ';
 
     if (!FirebaseManager.appCheck) {
-      // eslint-disable-next-line no-console
-      console.error('App check not initiated');
+      Sentry.captureException('App check not initiated');
 
       return '';
     }
@@ -129,9 +135,8 @@ export class FirebaseManager {
       const tokenResult = await getToken(FirebaseManager.appCheck);
 
       token = tokenResult.token;
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
+    } catch (error) {
+      Sentry.captureException(error);
     }
 
     return token;
@@ -141,8 +146,7 @@ export class FirebaseManager {
     let idToken = '';
 
     if (!FirebaseManager.appCheck) {
-      // eslint-disable-next-line no-console
-      console.error('App check not initiated');
+      Sentry.captureException('App check not initiated');
 
       return '';
     }
@@ -151,9 +155,8 @@ export class FirebaseManager {
       if (this.user) {
         idToken = await getIdToken(this.user);
       }
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error(e);
+    } catch (error) {
+      Sentry.captureException(error);
     }
 
     return idToken;

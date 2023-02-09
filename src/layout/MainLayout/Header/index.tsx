@@ -5,6 +5,9 @@ import { IconMenu2 } from '@tabler/icons';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 
+import { useFlags } from '@hooks/useFlagsHook';
+import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
+
 import LogoSection from '../LogoSection';
 
 import CheckSection from './CheckSection';
@@ -27,9 +30,11 @@ const StyledAvatar = styled(Avatar)<AvatarProps>(({ theme }) => ({
   }
 }));
 
+const { NEXT_PUBLIC_ENVIRONMENT } = getEnvironmentVariables();
 const Header = () => {
   const theme = useTheme();
   const { drawerOpen } = useAppSelector(viewsSelector.menu);
+  const { DOMAIN_TASK_MANAGEMENT } = useFlags();
 
   return (
     <>
@@ -57,16 +62,14 @@ const Header = () => {
       <SearchSection />
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ flexGrow: 1 }} />
-      {process.env.NEXT_PUBLIC_ENVIRONMENT === 'dev' ? <DevSection /> : null}
+      {NEXT_PUBLIC_ENVIRONMENT === 'dev' ? <DevSection /> : null}
       <Box sx={{ display: { sm: 'block' } }}>
         <CheckSection />
       </Box>
       <Box sx={{ display: { sm: 'block' } }}>
         <NotificationSection />
       </Box>
-      <Box sx={{ display: { sm: 'block' } }}>
-        <TaskDashboard />
-      </Box>
+      <Box sx={{ display: { sm: 'block' } }}>{DOMAIN_TASK_MANAGEMENT ? <TaskDashboard /> : null}</Box>
       <Box sx={{ display: { sm: 'block' } }}>
         <ProfileSection />
       </Box>

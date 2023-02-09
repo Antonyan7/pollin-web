@@ -6,6 +6,7 @@ import { devToolsDefaultConfig } from 'constants/defaultConfigs';
 import { guid } from 'helpers/guid';
 
 import { getFromCookie } from '@utils/cookies';
+import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 
 import { FirebaseManager } from './firebase';
 
@@ -46,6 +47,7 @@ class RequestManager {
 
       const captchaToken = await FirebaseManager?.getToken();
       const idToken = await FirebaseManager?.getIdToken();
+      const { NEXT_PUBLIC_APP_VERSION } = getEnvironmentVariables();
 
       requestConfig.headers.set({
         'x-pollin-device-id': getOrGenerateDeviceId(),
@@ -53,7 +55,7 @@ class RequestManager {
         'x-pollin-lang': 'en',
         'x-pollin-source': 'web',
         'x-pollin-firebase-app-check': captchaToken,
-        'x-pollin-app-version': `${process.env.NEXT_PUBLIC_APP_VERSION}`,
+        'x-pollin-app-version': `${NEXT_PUBLIC_APP_VERSION}`,
         'x-pollin-id-token': idToken
       });
 

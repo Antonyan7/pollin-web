@@ -1,3 +1,7 @@
+import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
+
+const { NEXT_PUBLIC_BASE_URL } = getEnvironmentVariables();
+
 export const devToolsDefaultConfig = {
-  server: process.env.NEXT_PUBLIC_BASE_URL
+  server: NEXT_PUBLIC_BASE_URL
 };
