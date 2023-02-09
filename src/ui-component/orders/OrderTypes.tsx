@@ -32,8 +32,8 @@ const OrderTypes = () => {
   };
 
   return (
-    <Box py={paddings.all24} px={paddings.all24} justifyContent="end">
-      <Stack direction="row" alignItems="center" justifyContent="flex-start" px={paddings.all12} />
+    <Box p={paddings.all24} justifyContent="end">
+      <Stack direction="row" alignItems="center" justifyContent="flex-start" px={paddings.leftRight12} />
       {isOrderTypesLoading ? (
         <Grid item display="flex" alignItems="center" justifyContent="center" sx={{ width: '100%', height: '100%' }}>
           <CircularProgress />

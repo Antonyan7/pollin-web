@@ -1,6 +1,7 @@
 import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, OutlinedInput, styled, useTheme } from '@mui/material';
@@ -109,7 +110,17 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
           style: {
             maxHeight: 260,
             borderRadius: `${borderRadius.radius8}`,
-            border: `${borders.solid2px} ${theme.palette.primary.main}`
+            border: `${borders.solid2px} ${theme.palette.primary.main}`,
+            position: 'absolute',
+            top: '10px',
+            width: '100%',
+            backgroundColor: theme.palette.common.white
+          }
+        }}
+        ChipProps={{
+          deleteIcon: <HighlightOffTwoToneIcon />,
+          style: {
+            fontWeight: 600
           }
         }}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}

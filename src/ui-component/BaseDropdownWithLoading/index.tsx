@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useEffect, useRef } from 'react';
-import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import {
   Autocomplete,
   AutocompleteProps,
@@ -67,22 +66,12 @@ const BaseDropdownWithLoading = <
         ListboxProps={{
           ...otherProps.ListboxProps,
           style: {
-            ...otherProps?.ListboxProps?.style,
-            position: 'absolute',
-            top: '10px',
-            width: '100%',
-            backgroundColor: theme.palette.common.white
+            position: 'relative',
+            ...otherProps?.ListboxProps?.style
           },
           id: 'listBox'
         }}
         ListboxComponent={Listbox}
-        ChipProps={{
-          deleteIcon: <HighlightOffTwoToneIcon />,
-          style: {
-            ...otherProps.ChipProps?.style,
-            fontWeight: 600
-          }
-        }}
         renderInput={(params: AutocompleteRenderInputParams) => (
           <TextField
             data-cy={dataCy ?? ''}

@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import resultsManager from '@axios/results/resultsManager';
-import { IValidateOrderTypeGroupItem } from '@axios/results/resultsManagerTypes';
+import resultsHelpers from '@axios/results/resultsHelpers';
 import { Button, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersSelector } from '@redux/slices/orders';
@@ -13,15 +12,8 @@ import { updateOrderCreationStep, updateValidatedOrderTypes } from 'context/acti
 import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { IOrderGroup, IOrderGroupItem } from 'types/reduxTypes/ordersStateTypes';
 
 import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
-
-const transformGroups = (groups: (IOrderGroup | IOrderGroupItem)[]): IValidateOrderTypeGroupItem[] =>
-  groups.map(({ id, groupItems }) => ({
-    id,
-    ...(groupItems !== undefined ? { groupItems: transformGroups(groupItems) } : {})
-  }));
 
 const CreateOrderActions = () => {
   const [t] = useTranslation();
@@ -32,29 +24,25 @@ const CreateOrderActions = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
-  const onNextButtonClick = () => {
-    resultsManager
-      .validateOrderCreation({
-        orderTypes: orderTypes.map(({ id, groups }) => ({ id, groups: transformGroups(groups) }))
-      })
-      .then(({ data }) => {
-        if (data.message) {
-          const { title, html } = data.message;
+  const onNextButtonClick = async () => {
+    const data = await resultsHelpers.getValidatedOrderCreationData(orderTypes);
 
-          dispatch(
-            viewsMiddleware.openModal({
-              name: ModalName.OrderValidationErrorModal,
-              props: {
-                title,
-                html
-              }
-            })
-          );
-        } else {
-          dispatchOrderCreationState(updateValidatedOrderTypes(data.orderTypes));
-          dispatchOrderCreationState(updateOrderCreationStep(1));
-        }
-      });
+    if (!data.message) {
+      dispatchOrderCreationState(updateValidatedOrderTypes(data.orderTypes));
+      dispatchOrderCreationState(updateOrderCreationStep(1));
+    } else {
+      const { title, html } = data.message;
+
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.OrderValidationErrorModal,
+          props: {
+            title,
+            html
+          }
+        })
+      );
+    }
   };
 
   const onCreateOrderClick = () => {
@@ -68,7 +56,7 @@ const CreateOrderActions = () => {
   );
 
   return (
-    <Stack direction="row" gap={2} py={paddings.all12} px={paddings.all24} justifyContent="end">
+    <Stack direction="row" gap={2} py={paddings.topBottom12} px={paddings.leftRight24} justifyContent="end">
       <Button
         data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_CANCEL}
         color="primary"

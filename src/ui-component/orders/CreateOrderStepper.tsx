@@ -12,8 +12,8 @@ const CreateOrderStepper = () => {
   const { orderCreationState } = useOrderCreationContext();
 
   return (
-    <Box py={paddings.all24} px={paddings.all24} justifyContent="end">
-      <Stepper activeStep={orderCreationState.step} sx={{ pt: 4, pb: 4 }}>
+    <Box p={paddings.all24} justifyContent="end">
+      <Stepper activeStep={orderCreationState.step} sx={{ py: paddings.topBottom4 }}>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

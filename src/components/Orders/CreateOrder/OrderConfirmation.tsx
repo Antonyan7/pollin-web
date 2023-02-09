@@ -23,7 +23,7 @@ const OrderConfirmation = () => {
   };
 
   return (
-    <Stack px={paddings.all24} py={paddings.all24} borderBottom={`1px solid ${theme.palette.primary.light}`} gap={2}>
+    <Stack p={paddings.all24} borderBottom={`1px solid ${theme.palette.primary.light}`} gap={2}>
       {validatedOrderTypes.map(({ id: orderTypeId, groups }) => (
         <React.Fragment key={orderTypeId}>
           <Stack direction="row" justifyContent="space-between">

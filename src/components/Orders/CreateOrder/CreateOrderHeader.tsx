@@ -38,8 +38,8 @@ const CreateOrderHeader = () => {
       columnGap={1}
       direction="row"
       justifyItems="center"
-      px={paddings.all24}
-      py={paddings.all12}
+      px={paddings.leftRight24}
+      py={paddings.topBottom12}
       borderBottom={`1px solid ${theme.palette.primary.light}`}
     >
       <IconButton onClick={onBackClick}>
