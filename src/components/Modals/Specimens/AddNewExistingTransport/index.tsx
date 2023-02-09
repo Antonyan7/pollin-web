@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import ExistingTransportFolder from '@components/Modals/Specimens/AddNewExistingTransport/ExistingTransportFolder';
 import NewTransportFolder from '@components/Modals/Specimens/AddNewExistingTransport/NewTransportFolder';
 import TabPanel from '@components/Specimens/TabPanel';
-import { Box, DialogContent, Grid, Tab, Tabs } from '@mui/material';
+import { Box, DialogContent, Grid, styled, Tab, Tabs } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -13,6 +13,10 @@ import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import BaseModal from '@ui-component/Modal/BaseModal';
+
+const TransportModalTab = styled(Tab)(() => ({
+  textTransform: 'none'
+}));
 
 const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps) => {
   const { specimenIds, selectedIdentifiers } = props;
@@ -49,13 +53,13 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
                 aria-label="basic tabs example"
                 variant="fullWidth"
               >
-                <Tab
+                <TransportModalTab
                   label={t(
                     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_TRANSPORT_FOLDER_LABEL
                   )}
                   {...showActivePage(0)}
                 />
-                <Tab
+                <TransportModalTab
                   label={t(
                     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_EXISTING_TRANSPORT_FOLDER_LABEL
                   )}

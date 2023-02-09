@@ -1,7 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
-import { Grid, Stack, TextField, Typography, useTheme } from '@mui/material';
+import { CalendarTodayTwoTone } from '@mui/icons-material';
+import { Grid, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -10,8 +11,11 @@ import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 
-import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { futureDate180DaysAfter, getCurrentDate, getDate, neutralDateTime } from '@utils/dateUtils';
+
+const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
+  color: theme.palette.primary.main
+}));
 
 const DatePickerWithTodayButton = () => {
   const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
@@ -61,7 +65,7 @@ const DatePickerWithTodayButton = () => {
               value={new Date(`${calendarDate}${neutralDateTime}`)}
               onChange={(date: Date | null) => onDateChange(date)}
               components={{
-                OpenPickerIcon: CalendarIcon
+                OpenPickerIcon: CalendarPopupIcon
               }}
               renderInput={(params) => (
                 <TextField

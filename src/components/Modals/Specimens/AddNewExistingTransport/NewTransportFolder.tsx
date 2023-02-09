@@ -133,7 +133,6 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   labelId="add-transport-folder-label"
                   id="add-transport-folder"
                   value={labId}
-                  label="Destination Lab"
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleDestinationLabChange}
                 >
