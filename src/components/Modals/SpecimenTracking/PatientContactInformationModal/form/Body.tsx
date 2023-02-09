@@ -33,12 +33,16 @@ const Body = ({ row }: BodyProps) => {
   const onActionClick = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.HandoffConfirmation));
     dispatch(
-      resultsMiddleware.markInTransitAction({
-        transportFolderId: row.id,
-        driverName,
-        comment
-      })
+      resultsMiddleware.markInTransitAction(
+        {
+          transportFolderId: row.id,
+          driverName,
+          comment
+        },
+        row.title
+      )
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [comment, driverName, row.id]);
 
   return (

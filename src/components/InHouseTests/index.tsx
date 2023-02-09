@@ -128,7 +128,7 @@ const InHouseSpecimensList = () => {
                 {specimensList?.specimens?.map((row: ISpecimensListItem) => {
                   const filteredSpecimenAction = findCurrentAction(specimenActions, row);
                   const isItemSelected = isSelected(row.id);
-                  const isActionsAvailable = filteredSpecimenAction && numSelected === 0;
+                  const isActionsAvailable = filteredSpecimenAction && numSelected < 2;
 
                   return (
                     <SpecimenListRow

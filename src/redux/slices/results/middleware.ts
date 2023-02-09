@@ -300,26 +300,33 @@ export const resetTestResultsState = () => async (dispatch: AppDispatch) => {
   );
 };
 
-const markInTransitAction = (reqBody: IMarkInTransitActionReqBody) => async (dispatch: AppDispatch) => {
-  try {
-    await API.results.markInTransitAction(reqBody);
-    dispatch(
-      setTestResultsState({
-        success: true,
-        fail: false
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-    dispatch(
-      setTestResultsState({
-        success: false,
-        fail: true
-      })
-    );
-  }
-};
+const markInTransitAction =
+  (reqBody: IMarkInTransitActionReqBody, rowTitle: string) => async (dispatch: AppDispatch) => {
+    try {
+      await API.results.markInTransitAction(reqBody);
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            renderList: {
+              header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_TRANSIT_SUCCESS),
+              items: [rowTitle]
+            }
+          }
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+      dispatch(
+        setTestResultsState({
+          success: false,
+          fail: true
+        })
+      );
+    }
+  };
 
 const applyRetestAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
   try {
