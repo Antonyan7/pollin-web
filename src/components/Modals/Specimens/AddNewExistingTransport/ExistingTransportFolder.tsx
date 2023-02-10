@@ -99,7 +99,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                 >
                   {transportFolders.map((transport: ITransportListFolderProps) => (
                     <MenuItem value={transport.id} key={transport.id}>
-                      {transport.title}
+                      {transport.fullTitle}
                     </MenuItem>
                   ))}
                 </BaseSelectWithLoading>

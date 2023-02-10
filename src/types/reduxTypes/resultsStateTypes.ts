@@ -111,6 +111,7 @@ export interface ITransportListFolderProps {
   identifier?: string;
   title: string;
   labName: string;
+  fullTitle: string;
   driver: ITransportFolderDriver;
   status: ITransportFolderStatus;
 }
