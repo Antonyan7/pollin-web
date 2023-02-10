@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import EmptyScheduleState from '@components/Scheduling/EmptyStateSchedule';
 import { Box, CircularProgress, Table, TableBody, TableContainer } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
@@ -102,11 +103,13 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
           </TableBody>
         )}
       </Table>
-      {isScheduleTemplatesLoading && (
+      {isScheduleTemplatesLoading ? (
         <Box sx={{ textAlign: 'center', marginTop: margins.top24 }}>
           <CircularProgress data-cy={loadingIndicatorCyId} sx={{ margin: margins.auto }} />
           <p>{t(Translation.PAGE_SCHEDULING_TEMPLATES_TABLE_LOADING)}</p>
         </Box>
+      ) : (
+        <EmptyScheduleState />
       )}
     </TableContainer>
   );
