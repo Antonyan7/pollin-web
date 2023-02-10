@@ -1,4 +1,4 @@
-import { ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
+import { ITaskPriorityOption, ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import { ITasksManager, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
@@ -14,6 +14,9 @@ const reducers = createReducer({
   },
   setTasksLoadingState(state, action: IAction<boolean>) {
     state.isTasksListLoading = action.payload;
+  },
+  setTaskPriorities(state, action: IAction<ITaskPriorityOption[]>) {
+    state.priorities = action.payload;
   },
   setTaskStatuses(state, action: IAction<ITaskStatusOption[]>) {
     state.statuses = action.payload;

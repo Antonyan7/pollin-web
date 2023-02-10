@@ -24,6 +24,7 @@ const TasksList = () => {
 
   useEffect(() => {
     dispatch(tasksMiddleware.getTasksStatuses());
+    dispatch(tasksMiddleware.getTaskPriorities());
   }, []);
 
   useEffect(() => {

@@ -14,8 +14,17 @@ export enum TasksListSortFields {
   PATIENT_NAME = 'PatientName'
 }
 
+export interface ITasksPrioritiesResponse {
+  priorities: ITaskPriorityOption[];
+}
+
 export interface ITasksStatusesResponse {
   options: ITaskStatusOption[];
+}
+
+export interface ITaskPriorityOption {
+  id: string;
+  title: string;
 }
 
 export interface ITaskStatusOption {

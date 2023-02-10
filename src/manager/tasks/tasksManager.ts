@@ -1,4 +1,4 @@
-import { ITasksListReqBody, ITasksStatusesResponse } from '@axios/tasks/tasksManagerTypes';
+import { ITasksListReqBody, ITasksPrioritiesResponse, ITasksStatusesResponse } from '@axios/tasks/tasksManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
@@ -15,6 +15,11 @@ const resultsManager = {
   getTaskStatuses() {
     return axiosInstance.get<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(
       `${baseURL}/v1/tasks/statuses`
+    );
+  },
+  getTaskPriorities() {
+    return axiosInstance.get<ITasksPrioritiesResponse, IAxiosResponse<ITasksPrioritiesResponse>>(
+      `${baseURL}/v1/tasks/priorities`
     );
   }
 };

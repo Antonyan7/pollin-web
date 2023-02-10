@@ -1,11 +1,12 @@
 import { IPagination } from '@axios/axiosTypes';
-import { ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
+import { ITaskPriorityOption, ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
 
 export interface ITasksManager {
   tasks: ITasksProps;
   isTasksListLoading: boolean;
   error: Error | null;
   statuses: ITaskStatusOption[];
+  priorities: ITaskPriorityOption[];
 }
 
 export interface ITasksProps extends IPagination {
