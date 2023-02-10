@@ -30,7 +30,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const transportList = useAppSelector(resultsSelector.transportList);
   const { folders: transportFolders } = transportList;
   const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
-  const isSpecimentAddedToFolder = useAppSelector(resultsSelector.isSpecimentAddedToFolder);
+  const isSpecimenAddedToFolder = useAppSelector(resultsSelector.isSpecimenAddedToFolder);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const [t] = useTranslation();
   const [transportFolder, setTransportFolder] = useState<string>('');
@@ -108,7 +108,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                       backgroundColor: (theme) => theme.palette.primary.light
                     }
                   }}
-                  isLoading={isSpecimentAddedToFolder}
+                  isLoading={isSpecimenAddedToFolder}
                   variant="contained"
                   onClick={onConfirmAddToNewExistingTransport}
                 >

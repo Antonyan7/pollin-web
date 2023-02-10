@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionType } from '@axios/results/resultsManagerTypes';
+import { SpecimenActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -18,11 +18,11 @@ const FormHeader = ({ actionType }: FormHeaderProps) => {
 
   const modalName = useMemo(() => {
     switch (actionType) {
-      case ActionType.InProgress:
+      case SpecimenActionType.InProgress:
         return t(Translation.MODAL_MARK_AS_IN_PROGRESS_CONFIRM_MACHINE);
-      case ActionType.Retest:
+      case SpecimenActionType.Retest:
         return t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST);
-      case ActionType.Recollect:
+      case SpecimenActionType.Recollect:
         return t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT);
       default:
         return '';

@@ -2,14 +2,15 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
-import { IAllTestsSpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
+import { ContextMenuAction, IAllTestsSpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 
-import ContextMenu from '@ui-component/contextMenu';
+import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 
 interface AllTestsRowProps {
   row: IAllTestsSpecimensListItem;
-  actions: SpecimenActionsValues[];
+  actions: ContextMenuAction[];
   isItemSelected: boolean;
   onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
   labelId: string;
@@ -18,6 +19,8 @@ interface AllTestsRowProps {
 export const AllTestsRow = ({ row, actions, isItemSelected, onClick, labelId }: AllTestsRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
+
+  const actionBindings = useSpecimenActions([row], actions);
 
   return (
     <TableRow role="checkbox" hover key={row.id}>
@@ -43,7 +46,7 @@ export const AllTestsRow = ({ row, actions, isItemSelected, onClick, labelId }: 
       </TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actions={actions} row={row} />
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );

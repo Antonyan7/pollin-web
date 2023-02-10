@@ -5,9 +5,11 @@ import {
   TransportActions
 } from 'types/reduxTypes/resultsStateTypes';
 
+import { ISpecimenRowProps } from '@hooks/contextMenu/types';
+
 const findCurrentAction = <
   ActionsTypeProps extends SpecimenActions | TransportActions,
-  TargetType extends ISpecimensListItem | ITransportListFolderProps
+  TargetType extends ISpecimensListItem | ITransportListFolderProps | ISpecimenRowProps
 >(
   actions: ActionsTypeProps[],
   target: TargetType

@@ -19,9 +19,11 @@ import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins, paddings } from 'themes/themeConstants';
 import { SortOrder } from 'types/patient';
-import { ISpecimensListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
+import { ContextMenuAction, ISpecimensListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
+import { ISpecimenRowProps } from '@hooks/contextMenu/types';
+import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
 import CircularLoading from '@ui-component/circular-loading';
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
@@ -35,6 +37,7 @@ import SpecimenStatistics from './Statistics';
 import { InHouseSpecimensListCallbacks, InHouseSpecimensListState } from './types';
 
 const InHouseSpecimensList = () => {
+  const theme = useTheme();
   const [inHouseSpecimensList, setInHouseSpecimensList] = useState<InHouseSpecimensListState>({
     page: 0,
     searchedItems: [],
@@ -42,20 +45,32 @@ const InHouseSpecimensList = () => {
     sortOrder: SortOrder.Desc,
     selectedFilters: []
   });
-
   const specimensList = useAppSelector(resultsSelector.specimensList);
-  const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
-
+  const isLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
+  const actionVariations = useAppSelector(resultsSelector.specimenActions);
   const isSpecimensConfirmationButtonClicked = useAppSelector(resultsSelector.isSpecimensConfirmationButtonClicked);
-  const theme = useTheme();
+  const inHouseSpecimensListCallbacks = useInHouseSpecimensListCallbacks(setInHouseSpecimensList);
+  const { handlePageChange } = inHouseSpecimensListCallbacks;
+  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
+
+  const selectedIds = selectedRows.map((row) => row.id);
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+  const numSelected = selectedIds.length;
+  const rowsCount = specimensList?.specimens.length;
+  const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
+  const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
+  const areAvailableSpecimens = rowsCount > 0;
+  const isResultsNotFound = !areAvailableSpecimens && !isLoading;
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getSpecimenActions());
-  }, []);
+    if (!actionVariations.length) {
+      dispatch(resultsMiddleware.getSpecimenActions());
+    }
+  }, [actionVariations]);
 
-  const inHouseSpecimensListCallbacks = useInHouseSpecimensListCallbacks(setInHouseSpecimensList);
-
-  const { handlePageChange } = inHouseSpecimensListCallbacks;
+  useEffect(() => {
+    setSelectedRows([]);
+  }, [specimensList]);
 
   useEffect(() => {
     const { page, searchedItems, sortField, sortOrder, selectedFilters } = inHouseSpecimensList;
@@ -71,19 +86,6 @@ const InHouseSpecimensList = () => {
     dispatch(resultsMiddleware.getSpecimensList(data));
   }, [inHouseSpecimensList, isSpecimensConfirmationButtonClicked]);
 
-  const specimenActions = useAppSelector(resultsSelector.specimenActions);
-
-  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
-  const selectedIds = selectedRows.map((row) => row.id);
-  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
-  const numSelected = selectedIds.length;
-
-  const rowsCount = specimensList?.specimens.length;
-  const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
-  const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
-  const areAvailableSpecimens = rowsCount > 0;
-  const isResultsNotFound = !areAvailableSpecimens && !isSpecimensListLoading;
-
   const listContextValues = useMemo(
     () => ({
       callbacks: inHouseSpecimensListCallbacks as InHouseSpecimensListCallbacks,
@@ -91,6 +93,23 @@ const InHouseSpecimensList = () => {
     }),
     [inHouseSpecimensList, inHouseSpecimensListCallbacks]
   );
+
+  const actions = useMemo(() => {
+    const statuses = selectedRows.map((row) => row.status);
+    const uniqueStatuses = Array.from(new Set(statuses));
+
+    if (uniqueStatuses.length === 1) {
+      const onlyStatus = uniqueStatuses[0];
+      const currentStatusActions: ContextMenuAction[] =
+        actionVariations.find((variation) => variation.status === onlyStatus)?.actions ?? [];
+
+      return currentStatusActions;
+    }
+
+    return [];
+  }, [selectedRows, actionVariations]);
+
+  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
 
   return (
     <SpecimensListContext.Provider value={listContextValues}>
@@ -112,29 +131,25 @@ const InHouseSpecimensList = () => {
                 </TableCell>
                 {numSelected > 0 && (
                   <TableCell padding="none" colSpan={6}>
-                    <ResultsTableRowToolbar
-                      numSelected={numSelected}
-                      specimenActions={specimenActions}
-                      selectedRows={selectedRows}
-                    />
+                    <ResultsTableRowToolbar actionBindings={actionBindings} selectionCount={numSelected} />
                   </TableCell>
                 )}
                 {numSelected <= 0 && <HeaderCells />}
                 <TableCell />
               </TableRow>
             </TableHead>
-            {!isSpecimensListLoading && (
+            {!isLoading && (
               <TableBody>
                 {specimensList?.specimens?.map((row: ISpecimensListItem) => {
-                  const filteredSpecimenAction = findCurrentAction(specimenActions, row);
+                  const filteredSpecimenAction = findCurrentAction(actionVariations, row);
                   const isItemSelected = isSelected(row.id);
-                  const isActionsAvailable = filteredSpecimenAction && numSelected < 2;
+                  const isContextMenuAvailable = filteredSpecimenAction && numSelected < 2;
 
                   return (
                     <SpecimenListRow
                       row={row}
                       key={row.id}
-                      actions={isActionsAvailable ? filteredSpecimenAction.actions : []}
+                      actions={isContextMenuAvailable ? filteredSpecimenAction.actions : []}
                       isItemSelected={isItemSelected}
                       onClick={(e) =>
                         // TODO: https://fhhealth.atlassian.net/browse/PCP-2409 The same logic used in a few create common solution for this.
@@ -146,7 +161,7 @@ const InHouseSpecimensList = () => {
               </TableBody>
             )}
           </Table>
-          {isSpecimensListLoading && (
+          {isLoading && (
             <CircularLoading sx={{ margin: margins.auto, marginTop: margins.top16, py: paddings.topBottom16 }} />
           )}
         </TableContainer>

@@ -33,10 +33,10 @@ import {
 import {
   CancellationReasons,
   IAllTestsSpecimensList,
+  IObjectWithId,
   IPendingSpecimensStats,
   IPendingTestResultStats,
   IResultsList,
-  IRetestRecollectData,
   ISpecimensInTransportList,
   ISpecimensList,
   ITestResultsDetails,
@@ -171,7 +171,7 @@ const resultsManager = {
       `/clinic-downloads/v1/transport/${transportFolderId}/download-manifest`
     );
   },
-  applyRetestAction(specimenData: IRetestRecollectData[], reasonId: string) {
+  applyRetestAction(specimenData: IObjectWithId[], reasonId: string) {
     return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/retest`,
       {
@@ -180,13 +180,25 @@ const resultsManager = {
       }
     );
   },
-  applyRecollectAction(specimenData: IRetestRecollectData[], reasonId: string) {
+  applyRecollectAction(specimenData: IObjectWithId[], reasonId: string) {
     return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
       `${baseURL}/v1/specimen/recollect`,
       {
         specimens: specimenData,
         reasonId
       }
+    );
+  },
+  applyMoveToInHouse(specimens: IObjectWithId[]) {
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
+      `${baseURL}/v1/specimen/move-in-house`,
+      { specimens }
+    );
+  },
+  applyMoveToAllTests(specimens: IObjectWithId[]) {
+    return axiosInstance.patch<IAddMachineForSpecimen, IAxiosResponse<IAddMachineForSpecimen>>(
+      `${baseURL}/v1/specimen/mark-as-collected`,
+      { specimens }
     );
   },
   getSpecimensFilters() {
@@ -275,7 +287,7 @@ const resultsManager = {
       data
     );
   },
-  addSpecimenToTransportFolder(specimens: IRetestRecollectData[], transportFolderId: string) {
+  addSpecimenToTransportFolder(specimens: IObjectWithId[], transportFolderId: string) {
     return axiosInstance.patch<IAddSpecimenToTransportFolder, IAxiosResponse<IAddSpecimenToTransportFolder>>(
       `${baseURL}/v1/specimen/add-to-transport`,
       {

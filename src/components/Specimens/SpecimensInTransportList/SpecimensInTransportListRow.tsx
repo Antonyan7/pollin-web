@@ -2,31 +2,34 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
-import { ISpecimensInTransportListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
+import { ContextMenuAction, ISpecimensInTransportListItem } from 'types/reduxTypes/resultsStateTypes';
 
-import ContextMenu from '@ui-component/contextMenu';
+import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 
 interface SpecimensInTransportListRowProps {
   row: ISpecimensInTransportListItem;
-  actions: SpecimenActionsValues[];
+  actions: ContextMenuAction[];
   isItemSelected: boolean;
-  onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
   labelId: string;
+  onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 }
 
 export const SpecimensInTransportListRow = ({
   row,
   actions,
   isItemSelected,
-  onClick,
-  labelId
+  labelId,
+  onClick
 }: SpecimensInTransportListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
 
+  const actionBindings = useSpecimenActions([row], actions);
+
   return (
-    <TableRow role="checkbox" hover key={row.id}>
+    <TableRow role="checkbox" hover>
       <TableCell padding="checkbox">
         <Checkbox
           sx={{ color: theme.palette.primary.main }}
@@ -48,7 +51,7 @@ export const SpecimensInTransportListRow = ({
       </TableCell>
       <TableCell>{row.status}</TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actions={actions} row={row} />
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );

@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
-import { IOrdersPossibleActions } from '@axios/results/resultsManagerTypes';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { ordersSelector } from '@redux/slices/orders';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { IOrdersListItem } from 'types/reduxTypes/ordersStateTypes';
+import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
+import useOrderActions from '@hooks/contextMenu/useOrderActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
-
-import PatientOrdersContextMenu from './PatientOrdersContextMenu';
 
 interface PatientOrdersListRowProps {
   row: IOrdersListItem;
@@ -23,7 +23,9 @@ const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
   );
   const chipBackgroundColor = currentOrderStatus?.backgroundColor as string;
   const chipTextColor = currentOrderStatus?.textColor as string;
-  const contextMenuOptions = currentOrderStatus?.possibleActions as IOrdersPossibleActions[];
+  const contextMenuOptions = currentOrderStatus?.possibleActions as ContextMenuAction[];
+
+  const actionBindings = useOrderActions(row, contextMenuOptions);
 
   return (
     <TableRow sx={{ cursor: 'pointer' }} hover tabIndex={-1} key={row.id}>
@@ -49,7 +51,7 @@ const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
         />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <PatientOrdersContextMenu actions={contextMenuOptions} row={row} />
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );

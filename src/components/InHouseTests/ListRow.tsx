@@ -6,20 +6,23 @@ import { resultsSelector } from '@redux/slices/results';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
+import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
 import useChipColor from '@hooks/useChipColor';
-import ContextMenu from '@ui-component/contextMenu';
+import { ContextMenu } from '@ui-component/contextMenu';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
 
-import { SpecimensListRowProps } from './types';
+import { SpecimenListRowProps } from './types';
 
-const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensListRowProps) => {
+const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
   const statusVariation = specimenActions.find((action) => action.status === row.status);
 
   const chipColor = useChipColor(row.age);
+
+  const actionBindings = useSpecimenActions([row], actions);
 
   return (
     <TableRow
@@ -54,10 +57,10 @@ const SpecimensListRow = ({ row, actions, onClick, isItemSelected }: SpecimensLi
         />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actions={actions} row={row} />
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );
 };
 
-export default SpecimensListRow;
+export default SpecimenListRow;

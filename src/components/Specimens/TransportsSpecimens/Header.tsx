@@ -23,6 +23,7 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_BUTTON_LABEL
   );
 
+  const labList = useAppSelector(resultsSelector.testResultLabs);
   const specimensList = useAppSelector(resultsSelector.specimensList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
   const invalidSearchedItems = specimensList.notFound.map((notFoundItem) => notFoundItem.identifier);
@@ -63,8 +64,10 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
   }, [specimensList.notFound, isSpecimensListLoading]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getLabs());
-  }, []);
+    if (!labList.length) {
+      dispatch(resultsMiddleware.getLabs());
+    }
+  }, [labList]);
 
   const onAddTransportNewFolderClick = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());

@@ -62,7 +62,7 @@ export interface ITestResultsTracking {
   isLabsLoading: boolean;
   labMachines: LabMachine;
   isLabMachinesLoading: boolean;
-  isSpecimentAddedToFolder: boolean;
+  isSpecimenAddedToFolder: boolean;
   isTransportListLoading: boolean;
   isCreatingTransportFolder: boolean;
   transportFolders: ITransportFolder[];
@@ -138,17 +138,17 @@ export interface SpecimenActionsList {
 }
 
 export interface SpecimenActions {
-  actions: SpecimenActionsValues[];
+  actions: ContextMenuAction[];
   title: string;
   status: SpecimenActionsType;
 }
 export interface TransportActions {
-  actions: SpecimenActionsValues[];
+  actions: ContextMenuAction[];
   title: string;
   status: string;
 }
 
-export interface SpecimenActionsValues {
+export interface ContextMenuAction {
   id: string;
   title: string;
 }
@@ -234,7 +234,7 @@ export interface IPendingTestResultStats {
 export interface IPendingSpecimensStats {
   stats: IPendingTestStats[];
 }
-export interface IRetestRecollectData {
+export interface IObjectWithId {
   id: string;
 }
 
@@ -245,6 +245,7 @@ export enum TestResultMeasurementType {
   Retest = 'Retest'
 }
 
+// TODO: refactor this
 export type TableRowCheckboxProps =
   | IAllTestsSpecimensListItem
   | ISpecimensListItem

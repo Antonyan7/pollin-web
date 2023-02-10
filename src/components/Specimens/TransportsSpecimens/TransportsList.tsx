@@ -32,16 +32,18 @@ import Header from './Header';
 import { TransportsListRow } from './TransportsListRow';
 
 const TransportsList = () => {
+  const [t] = useTranslation();
+  const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [searchedItems, setSearchedItems] = useState<string[]>([]);
-  const transportList = useAppSelector(resultsSelector.transportList);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
-  const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
-  const [t] = useTranslation();
+  const transportList = useAppSelector(resultsSelector.transportList);
+  const isLoading = useAppSelector(resultsSelector.isTransportListLoading);
+  const actionVariations = useAppSelector(resultsSelector.transportActions);
+
   const headCells = headCellsData(t) as IHeadCell[];
-  const theme = useTheme();
 
   useTestResultPopupMessage();
 
@@ -58,13 +60,14 @@ const TransportsList = () => {
   }, [calendarDate, page, searchedItems, sortField, sortOrder]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getTransportActions());
-  }, []);
+    if (!actionVariations.length) {
+      dispatch(resultsMiddleware.getTransportActions());
+    }
+  }, [actionVariations]);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
-  const transportActions = useAppSelector(resultsSelector.transportActions);
   const searchByIdsHandler = (newSearchedItems: string[]) => {
     setSearchedItems(newSearchedItems);
     setPage(0);
@@ -91,26 +94,22 @@ const TransportsList = () => {
           </TableHead>
           <TableBody>
             <TableBody />
-            {isTransportListLoading ? (
+            {isLoading ? (
               <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
                 <CircularProgress sx={{ margin: margins.auto }} />
               </Box>
             ) : null}
             {transportList?.folders?.map((row: ITransportListFolderProps) => {
-              const filteredSpecimenAction = findCurrentAction(transportActions, row);
+              const filteredActions = findCurrentAction(actionVariations, row);
 
               return (
-                <TransportsListRow
-                  row={row}
-                  key={row.id}
-                  actions={filteredSpecimenAction ? filteredSpecimenAction.actions : []}
-                />
+                <TransportsListRow row={row} key={row.id} actions={filteredActions ? filteredActions.actions : []} />
               );
             })}
           </TableBody>
         </Table>
       </TableContainer>
-      {!transportList?.folders.length && !isTransportListLoading ? (
+      {!transportList?.folders.length && !isLoading ? (
         <>
           <Grid container justifyContent="center" padding="20px">
             <Grid item>

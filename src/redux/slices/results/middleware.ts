@@ -1,6 +1,5 @@
 import API from '@axios/API';
 import {
-  ActionType,
   IAllTestsSpecimensReqBody,
   IMarkInTransitActionReqBody,
   IResultsReqBody,
@@ -11,6 +10,8 @@ import {
   ITestResultsData,
   ITestResultsParams,
   ITransportListReqBody,
+  SpecimenActionType,
+  SpecimensListSortFields,
   TransportsSortFields
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -27,8 +28,8 @@ import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
 import {
   IAllTestsSpecimensList,
+  IObjectWithId,
   IResultsList,
-  IRetestRecollectData,
   ISpecimensInTransportList,
   ISpecimensList,
   ITransportList,
@@ -53,7 +54,7 @@ const {
   setIsSpecimensInTransportListLoading,
   setIsSpecimensListLoading,
   setIsSpecimenStorageLocationsLoading,
-  setIsSpecimentAddedToFolder,
+  setIsSpecimenAddedToFolder,
   setIsTestResultsDetailsLoading,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
@@ -196,7 +197,7 @@ const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => 
     dispatch(setIsLabMachinesLoading(true));
 
     const response =
-      actionType === ActionType.InProgress
+      actionType === SpecimenActionType.InProgress
         ? await API.results.getLabMachines()
         : await API.results.getRetestRecollect(actionType);
 
@@ -356,6 +357,75 @@ const applyRecollectAction = (specimens: string[], reasonId: string) => async (d
     dispatch(setError(error));
   }
 };
+const applyMoveToAllTests = (specimens: string[]) => async (dispatch: AppDispatch) => {
+  try {
+    const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
+
+    const response = await API.results.applyMoveToAllTests(specimenData);
+
+    if (response) {
+      dispatch(onSpecimenConfirmButtonClicked());
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
+const getAllTestsSpecimensList =
+  (
+    payload: IAllTestsSpecimensReqBody = {
+      page: 0,
+      sortByField: SpecimensListSortFields.COLLECTION_AGE,
+      sortOrder: SortOrder.Desc
+    }
+  ) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsAllTestsSpecimensListLoading(true));
+
+      const body = (payload.sortOrder !== null ? sortOrderTransformer(payload) : payload) as IAllTestsSpecimensReqBody;
+
+      const response = await API.results.getAllTestsSpecimensList(body);
+      const {
+        totalItems,
+        currentPage,
+        pageSize,
+        data: { specimens, notFound }
+      } = response.data;
+
+      const results: IAllTestsSpecimensList = {
+        totalItems,
+        currentPage,
+        pageSize,
+        specimens,
+        notFound
+      };
+
+      dispatch(setAllTestsSpecimensList(results));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsAllTestsSpecimensListLoading(false));
+    }
+  };
+
+const applyMoveToInHouse = (specimens: string[]) => async (dispatch: AppDispatch) => {
+  try {
+    const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
+
+    const response = await API.results.applyMoveToInHouse(specimenData);
+
+    if (response) {
+      dispatch(getAllTestsSpecimensList());
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
   try {
     dispatch(setSpecimensFiltersLoadingState(true));
@@ -399,37 +469,6 @@ const getTransportList = (resultsListData: ITransportListReqBody) => async (disp
     dispatch(setError(error));
   } finally {
     dispatch(setIsTransportListLoading(false));
-  }
-};
-
-const getALLTestsSpecimensList = (payload: IAllTestsSpecimensReqBody) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsAllTestsSpecimensListLoading(true));
-
-    const body = (payload.sortOrder !== null ? sortOrderTransformer(payload) : payload) as IAllTestsSpecimensReqBody;
-
-    const response = await API.results.getAllTestsSpecimensList(body);
-    const {
-      totalItems,
-      currentPage,
-      pageSize,
-      data: { specimens, notFound }
-    } = response.data;
-
-    const results: IAllTestsSpecimensList = {
-      totalItems,
-      currentPage,
-      pageSize,
-      specimens,
-      notFound
-    };
-
-    dispatch(setAllTestsSpecimensList(results));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsAllTestsSpecimensListLoading(false));
   }
 };
 
@@ -584,11 +623,11 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
 };
 
 const addSpecimenToTransportFolder =
-  (specimens: IRetestRecollectData[], transportFolderId: string, selectedIdentifiers?: string[]) =>
+  (specimens: IObjectWithId[], transportFolderId: string, selectedIdentifiers?: string[]) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     const currentTransportFolder = getState().results.tracking.lastCreatedTransportFolder;
 
-    dispatch(setIsSpecimentAddedToFolder(true));
+    dispatch(setIsSpecimenAddedToFolder(true));
 
     try {
       await API.results.addSpecimenToTransportFolder(specimens, transportFolderId);
@@ -627,7 +666,8 @@ const addSpecimenToTransportFolder =
       }
     }
 
-    dispatch(setIsSpecimentAddedToFolder(false));
+    dispatch(setIsSpecimenAddedToFolder(false));
+    dispatch(getAllTestsSpecimensList());
   };
 
 const downloadTransportFolderManifest = (transportFolderId: string) => async (dispatch: AppDispatch) => {
@@ -665,10 +705,11 @@ export default {
   addSpecimenToTransportFolder,
   applyRecollectAction,
   applyRetestAction,
+  applyMoveToInHouse,
   createTransportFolder,
   downloadTestResultAttachment,
   downloadTransportFolderManifest,
-  getALLTestsSpecimensList,
+  getAllTestsSpecimensList,
   getLabMachines,
   getLabs,
   getPendingSpecimenStats,
@@ -686,6 +727,7 @@ export default {
   getTransportFolders,
   getTransportList,
   markInTransitAction,
+  applyMoveToAllTests,
   onSpecimenConfirmButtonClicked,
   removeTestResultsAttachment,
   resetLastCreatedTransportFolderId,

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ActionType } from '@axios/results/resultsManagerTypes';
+import { SpecimenActionType } from '@axios/results/resultsManagerTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { DialogActions, DialogContent, Grid, Stack, Typography, useTheme } from '@mui/material';
@@ -33,19 +33,19 @@ const FormBody = ({ specimens, actionType }: FormBodyProps) => {
 
   const setModalNames = useCallback(() => {
     switch (actionType) {
-      case ActionType.InProgress:
+      case SpecimenActionType.InProgress:
         setModalTexts({
           selectReasonText: t(Translation.MODAL_CONFIRM_MACHINE_LOCATED_IN),
           selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE)
         });
         break;
-      case ActionType.Retest:
+      case SpecimenActionType.Retest:
         setModalTexts({
           selectReasonText: t(Translation.MODAL_CONFIRM_REASON_FOR_RETEST_REQUIRED),
           selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RETEST)
         });
         break;
-      case ActionType.Recollect:
+      case SpecimenActionType.Recollect:
         setModalTexts({
           selectReasonText: t(Translation.MODAL_CONFIRM_REASON_FOR_RECOLLECT_REQUIRED),
           selectLabel: t(Translation.MODAL_CONFIRM_MACHINE_VALUE_RECOLLECT)
@@ -72,13 +72,13 @@ const FormBody = ({ specimens, actionType }: FormBodyProps) => {
 
   const onConfirmClick = useCallback(() => {
     switch (actionType) {
-      case ActionType.InProgress:
+      case SpecimenActionType.InProgress:
         dispatch(resultsMiddleware.addMachineForSpecimen(specimens, machineVal));
         break;
-      case ActionType.Retest:
+      case SpecimenActionType.Retest:
         dispatch(resultsMiddleware.applyRetestAction(specimenIds, machineVal));
         break;
-      case ActionType.Recollect:
+      case SpecimenActionType.Recollect:
         dispatch(resultsMiddleware.applyRecollectAction(specimenIds, machineVal));
         break;
       default:

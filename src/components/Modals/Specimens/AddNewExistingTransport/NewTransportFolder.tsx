@@ -85,8 +85,10 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   }, [createNewTransportFolder]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getLabs());
-  }, []);
+    if (!labList.length) {
+      dispatch(resultsMiddleware.getLabs());
+    }
+  }, [labList]);
 
   useEffect(() => {
     if (lastCreatedTransportFolder?.id) {

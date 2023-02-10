@@ -1,6 +1,6 @@
 import { SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { SortOrder } from 'types/patient';
-import { ISpecimensListItem, SpecimenActionsValues } from 'types/reduxTypes/resultsStateTypes';
+import { ContextMenuAction, ISpecimensListItem } from 'types/reduxTypes/resultsStateTypes';
 import { ISpecimensFilterOptions } from 'types/results';
 
 export interface InHouseSpecimensListState {
@@ -25,9 +25,9 @@ export interface SpecimensListContextValues {
   inHouseSpecimensList: InHouseSpecimensListState;
 }
 
-export interface SpecimensListRowProps {
+export interface SpecimenListRowProps {
   row: ISpecimensListItem;
-  actions: SpecimenActionsValues[];
+  actions: ContextMenuAction[];
   isItemSelected: boolean;
   onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
 }

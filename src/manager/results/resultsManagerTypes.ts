@@ -50,10 +50,15 @@ export enum SpecimensInTransportListSortFields {
   PATIENT_NAME = 'PatientName'
 }
 
-export enum ActionType {
+export enum SpecimenActionType {
   Retest = 'Retest',
   Recollect = 'Recollect',
-  InProgress = 'InProgress'
+  InProgress = 'InProgress',
+  MoveToAnotherTransport = 'MoveToAnotherTransport',
+  MoveToTransport = 'MoveToTransport',
+  InputTestResults = 'InputTestResults',
+  MoveToAllTests = 'Back',
+  MoveInHouse = 'MoveInHouse'
 }
 
 export enum OrderResultActionType {
@@ -62,9 +67,7 @@ export enum OrderResultActionType {
 }
 
 export enum TransportActionType {
-  MarkInTransit = 'MarkInTransit',
-  MoveToAnotherTransport = 'MoveToAnotherTransport',
-  MoveToTransport = 'MoveToTransport'
+  MarkInTransit = 'MarkInTransit'
 }
 
 export interface IResultsReqBody {

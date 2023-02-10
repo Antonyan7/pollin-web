@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IAllTestsSpecimensReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -22,11 +22,18 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
+import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
-import { IAllTestsSpecimensListItem, TableRowCheckboxProps } from 'types/reduxTypes/resultsStateTypes';
+import {
+  ContextMenuAction,
+  IAllTestsSpecimensListItem,
+  TableRowCheckboxProps
+} from 'types/reduxTypes/resultsStateTypes';
 
+import { ISpecimenRowProps } from '@hooks/contextMenu/types';
+import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
 import { headCellsData } from './AllTestsHeadCellMockData';
@@ -34,16 +41,39 @@ import { AllTestsRow } from './AllTestsRow';
 
 // eslint-disable-next-line max-lines-per-function
 const AllTestsList = () => {
+  const [t] = useTranslation();
+  const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [identifiers, setIdentifiers] = useState<string[]>([]);
   const [sortField, setSortField] = useState<SpecimensListSortFields | null>(SpecimensListSortFields.COLLECTION_AGE);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [toastHasBeenShown, setToastHasBeenShown] = useState(false);
-  const allTestsSpecimensList = useAppSelector(resultsSelector.allTestsSpecimensList);
-  const allTestsSpecimensListLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
-  const theme = useTheme();
-  const [t] = useTranslation();
+  const specimensList = useAppSelector(resultsSelector.allTestsSpecimensList);
+  const isLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
+  const actionVariations = useAppSelector(resultsSelector.specimenActions);
+
   const headCells = headCellsData(t) as IHeadCell[];
+
+  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
+  const selectedIds = selectedRows.map((row) => row.id);
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+  const numSelected = selectedIds.length;
+  const rowsCount = specimensList?.specimens.length;
+  const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
+  const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
+
+  const rowCount = specimensList?.specimens.length;
+
+  const searchByIdsHandler = useCallback((idArr: string[]) => {
+    setPage(0);
+    setIdentifiers(idArr);
+  }, []);
+
+  const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
+
+  useEffect(() => {
+    setSelectedRows([]);
+  }, [specimensList]);
 
   useEffect(() => {
     const data: IAllTestsSpecimensReqBody = {
@@ -53,7 +83,7 @@ const AllTestsList = () => {
       page: page + 1
     };
 
-    dispatch(resultsMiddleware.getALLTestsSpecimensList(data));
+    dispatch(resultsMiddleware.getAllTestsSpecimensList(data));
   }, [page, identifiers, sortField, sortOrder]);
 
   useEffect(() => {
@@ -61,12 +91,12 @@ const AllTestsList = () => {
   }, [identifiers]);
 
   useEffect(() => {
-    const shouldShowToast = identifiers.length > 0 && !allTestsSpecimensListLoading && !toastHasBeenShown;
+    const shouldShowToast = identifiers.length > 0 && !isLoading && !toastHasBeenShown;
 
     if (shouldShowToast) {
       setToastHasBeenShown(true);
 
-      if (allTestsSpecimensList.notFound?.length > 0) {
+      if (specimensList.notFound?.length > 0) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
@@ -74,7 +104,7 @@ const AllTestsList = () => {
               severityType: SeveritiesType.error,
               renderList: {
                 header: t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_FAIL),
-                items: allTestsSpecimensList.notFound.map((specimen) => specimen.identifier)
+                items: specimensList.notFound.map((specimen) => specimen.identifier)
               }
             }
           })
@@ -92,30 +122,34 @@ const AllTestsList = () => {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [allTestsSpecimensList.notFound, allTestsSpecimensListLoading, toastHasBeenShown]);
+  }, [specimensList.notFound, isLoading, toastHasBeenShown]);
 
   useEffect(() => {
-    dispatch(resultsMiddleware.getSpecimenActions());
-  }, []);
+    if (!actionVariations.length) {
+      dispatch(resultsMiddleware.getSpecimenActions());
+    }
+  }, [actionVariations]);
 
-  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
 
-  const specimenActions = useAppSelector(resultsSelector.specimenActions);
-  const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
-  const selectedIds = selectedRows.map((row) => row.id);
-  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
-  const numSelected = selectedIds.length;
+  const actions = useMemo(() => {
+    const statuses = selectedRows.map((row) => row.status);
+    const uniqueStatuses = Array.from(new Set(statuses));
 
-  const rowCount = allTestsSpecimensList?.specimens.length;
+    if (uniqueStatuses.length === 1) {
+      const onlyStatus = uniqueStatuses[0];
+      const currentStatusActions: ContextMenuAction[] =
+        actionVariations.find((variation) => variation.status === onlyStatus)?.actions ?? [];
 
-  const searchByIdsHandler = useCallback((idArr: string[]) => {
-    setPage(0);
-    setIdentifiers(idArr);
-  }, []);
+      return currentStatusActions;
+    }
 
-  const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
+    return [];
+  }, [selectedRows, actionVariations]);
+
+  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
 
   return (
     <>
@@ -128,18 +162,14 @@ const AllTestsList = () => {
                 <Checkbox
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowCount}
-                  checked={rowCount > 0 && numSelected === rowsPerPage}
-                  onChange={(e) => handleSelectAllClick(e, allTestsSpecimensList.specimens, setSelectedRows)}
+                  checked={isAllSpecimensSelected}
+                  onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelectedRows)}
                 />
               </TableCell>
 
               {numSelected > 0 ? (
                 <TableCell padding="none" colSpan={6}>
-                  <ResultsTableRowToolbar
-                    numSelected={numSelected}
-                    specimenActions={specimenActions}
-                    selectedRows={selectedRows}
-                  />
+                  <ResultsTableRowToolbar actionBindings={actionBindings} selectionCount={numSelected} />
                 </TableCell>
               ) : null}
               {numSelected <= 0 &&
@@ -158,16 +188,17 @@ const AllTestsList = () => {
 
           <TableBody>
             <TableBody />
-            {allTestsSpecimensList?.specimens?.map((row: IAllTestsSpecimensListItem, index: number) => {
-              const filteredSpecimenActions = specimenActions.find((item) => item.status === row.status);
+            {specimensList?.specimens?.map((row: IAllTestsSpecimensListItem, index: number) => {
+              const filteredSpecimenActions = findCurrentAction(actionVariations, row);
               const isItemSelected = isSelected(row.id);
+              const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
               const labelId = `enhanced-table-checkbox-${index}`;
 
               return (
                 <AllTestsRow
                   row={row}
                   key={row.id}
-                  actions={filteredSpecimenActions ? filteredSpecimenActions.actions : []}
+                  actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
                   isItemSelected={isItemSelected}
                   onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
                     onCheckboxClick(e, row, selectedRows, setSelectedRows)
@@ -179,16 +210,16 @@ const AllTestsList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {allTestsSpecimensListLoading ? (
+      {isLoading ? (
         <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
           <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
       ) : null}
       <TablePagination
         component="div"
-        count={allTestsSpecimensList.totalItems}
-        rowsPerPage={allTestsSpecimensList.pageSize}
-        page={allTestsSpecimensList.currentPage - 1}
+        count={specimensList.totalItems}
+        rowsPerPage={specimensList.pageSize}
+        page={specimensList.currentPage - 1}
         onPageChange={handleChangePage}
       />
     </>

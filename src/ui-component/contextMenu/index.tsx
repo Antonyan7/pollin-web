@@ -1,33 +1,16 @@
-import React, { useCallback, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ActionType, TransportActionType } from '@axios/results/resultsManagerTypes';
+import React, { useState } from 'react';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
-import { resultsMiddleware } from '@redux/slices/results';
-import { Translation } from 'constants/translations';
-import { useRouter } from 'next/router';
-import { dispatch } from 'redux/hooks';
-import { viewsMiddleware } from 'redux/slices/views';
-import { ModalName } from 'types/modals';
-import {
-  IAllTestsSpecimensListItem,
-  ISpecimensInTransportListItem,
-  ISpecimensListItem,
-  ITransportListFolderProps,
-  SpecimenActionsValues
-} from 'types/reduxTypes/resultsStateTypes';
 
-import { useToolbarAction } from '@hooks/useToolbarAction';
+import { IContextActionBinding, useContextMenuAction } from '@hooks/useContextMenuAction';
 
 interface ContextMenuProps {
-  actions: SpecimenActionsValues[];
-  row: ISpecimensListItem | IAllTestsSpecimensListItem | ITransportListFolderProps | ISpecimensInTransportListItem;
+  actionBindings: IContextActionBinding[];
 }
 
-const ContextMenu = ({ actions, row }: ContextMenuProps) => {
-  const [t] = useTranslation();
-  const router = useRouter();
+export const ContextMenu = ({ actionBindings }: ContextMenuProps) => {
   const [anchorElement, setAnchorElement] = useState<Element | ((element: Element) => Element) | null>(null);
+
   const handleClick = (event: React.MouseEvent) => {
     setAnchorElement(event.currentTarget);
   };
@@ -35,83 +18,11 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
     setAnchorElement(null);
   };
 
-  const navigateToTestResultsPage = () => {
-    const currentPath = router.pathname;
-    const specimenId = row.id;
-    const inHouseTestResultsPagePath = `${currentPath}/input-results/${specimenId}`;
-
-    router.push(inHouseTestResultsPagePath);
-  };
-
-  const handleMoveToTransportAction = useCallback(() => {
-    dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
-    dispatch(
-      viewsMiddleware.openModal({
-        name: ModalName.AddNewExistingTransportModal,
-        props: { specimenIds: row.id, selectedIdentifiers: [row.identifier] }
-      })
-    );
-  }, [row.id, row.identifier]);
-
-  const handleHandoffConfirmationAction = useCallback(() => {
-    dispatch(
-      viewsMiddleware.openModal({
-        name: ModalName.HandoffConfirmation,
-        props: { row }
-      })
-    );
-  }, [row]);
-
-  const handleMarkAsAction = useCallback(
-    (actionType: string) => {
-      dispatch(
-        viewsMiddleware.openModal({
-          name: ModalName.SelectMachineModal,
-          props: { specimens: [row], actionType }
-        })
-      );
-    },
-    [row]
-  );
-
-  const actionBindings = [
-    {
-      actionId: TransportActionType.MoveToTransport,
-      actionCallback: () => {
-        handleMoveToTransportAction();
-      }
-    },
-    {
-      actionId: TransportActionType.MarkInTransit,
-      actionCallback: () => {
-        handleHandoffConfirmationAction();
-      }
-    },
-    {
-      actionId: ActionType.InProgress,
-      actionCallback: () => {
-        handleMarkAsAction(ActionType.InProgress);
-      }
-    },
-    {
-      actionId: ActionType.Recollect,
-      actionCallback: () => {
-        handleMarkAsAction(ActionType.Recollect);
-      }
-    },
-    {
-      actionId: ActionType.Retest,
-      actionCallback: () => {
-        handleMarkAsAction(ActionType.Retest);
-      }
-    }
-  ];
-
-  const toolbarAction = useToolbarAction(actionBindings);
+  const actionCallback = useContextMenuAction(actionBindings);
 
   return (
     <Grid item>
-      <IconButton size="small" onClick={handleClick} disabled={!actions.length}>
+      <IconButton size="small" onClick={handleClick} disabled={!actionBindings.length}>
         <MoreVertOutlinedIcon aria-controls="menu-friend-card" aria-haspopup="true" />
       </IconButton>
       <Menu
@@ -130,22 +41,17 @@ const ContextMenu = ({ actions, row }: ContextMenuProps) => {
           horizontal: 'right'
         }}
       >
-        {actions?.map((el) => (
+        {actionBindings?.map((actionItem) => (
           <MenuItem
             onClick={() => {
               handleClose();
-              toolbarAction(el.id);
+              actionCallback(actionItem.id);
             }}
           >
-            {el.title}
+            {actionItem.title}
           </MenuItem>
         ))}
-        <MenuItem onClick={navigateToTestResultsPage}>
-          {t(Translation.PAGE_IN_HOUSE_ACTIONS_INPUT_TEST_RESULTS)}
-        </MenuItem>
       </Menu>
     </Grid>
   );
 };
-
-export default ContextMenu;

@@ -4,9 +4,9 @@ import { useRouter } from 'next/router';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { FinalResultChipColor, OrderResultAction } from 'types/results';
 
+import useOrderResultsActions from '@hooks/contextMenu/useOrderResultsActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
-
-import ContextMenu from './ContextMenu';
 
 interface OrderResultsRowProps {
   row: IOrderResultsByPatientItem;
@@ -19,6 +19,8 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
   const handleOrderResultRowClick = () => {
     router.push(`/patient-emr/details/${patientId}/orders/results/${row.id}`);
   };
+
+  const actionBindings = useOrderResultsActions(row, actions);
 
   return (
     <TableRow role="checkbox" hover key={row.id} onClick={handleOrderResultRowClick} sx={{ cursor: 'pointer' }}>
@@ -52,7 +54,7 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
         />
       </TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actions={actions} row={row} />
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );

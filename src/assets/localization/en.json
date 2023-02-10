@@ -64,6 +64,7 @@
   "page.patient.plans.patient.details.genitourinary.history": "Genitourinary History",
   "common.button.view.all": "View All",
   "common.pagination.rows.count": "Rows per page",
+  "common.bulk.selected": "{{count}} Selected",
   "cycle.status.not.active": "Not active",
   "page.appointments.title": "Appointments",
   "page.appointments.loading": "Loading Calendar",
