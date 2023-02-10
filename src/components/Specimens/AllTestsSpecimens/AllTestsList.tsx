@@ -1,8 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IAllTestsSpecimensReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
+import NoResultsFound from '@components/NoResultsFound';
 import { SeveritiesType } from '@components/Scheduling/types';
 import SearchBox from '@components/SearchBox';
+import { headCellsData } from '@components/Specimens/AllTestsSpecimens/AllTestsHeadCellMockData';
+import { AllTestsRow } from '@components/Specimens/AllTestsSpecimens/AllTestsRow';
 import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
@@ -36,9 +39,6 @@ import { ISpecimenRowProps } from '@hooks/contextMenu/types';
 import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
-import { headCellsData } from './AllTestsHeadCellMockData';
-import { AllTestsRow } from './AllTestsRow';
-
 // eslint-disable-next-line max-lines-per-function
 const AllTestsList = () => {
   const [t] = useTranslation();
@@ -68,8 +68,6 @@ const AllTestsList = () => {
     setPage(0);
     setIdentifiers(idArr);
   }, []);
-
-  const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
 
   useEffect(() => {
     setSelectedRows([]);
@@ -150,6 +148,10 @@ const AllTestsList = () => {
   }, [selectedRows, actionVariations]);
 
   const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
+  const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
+  const inHouseSpecimensListEmptyMessage = t(Translation.PAGE_IN_HOUSE_SPECIMENS_LIST_EMPTY_STATE_MESSAGE);
+  const showEmptyState = !isLoading && !rowsCount;
+  const showSpecimensList = rowsCount && !isLoading;
 
   return (
     <>
@@ -188,33 +190,43 @@ const AllTestsList = () => {
 
           <TableBody>
             <TableBody />
-            {specimensList?.specimens?.map((row: IAllTestsSpecimensListItem, index: number) => {
-              const filteredSpecimenActions = findCurrentAction(actionVariations, row);
-              const isItemSelected = isSelected(row.id);
-              const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
-              const labelId = `enhanced-table-checkbox-${index}`;
+            {showSpecimensList
+              ? specimensList?.specimens?.map((row: IAllTestsSpecimensListItem, index: number) => {
+                  const filteredSpecimenActions = findCurrentAction(actionVariations, row);
+                  const isItemSelected = isSelected(row.id);
+                  const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
+                  const labelId = `enhanced-table-checkbox-${index}`;
 
-              return (
-                <AllTestsRow
-                  row={row}
-                  key={row.id}
-                  actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
-                  isItemSelected={isItemSelected}
-                  onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onCheckboxClick(e, row, selectedRows, setSelectedRows)
-                  }
-                  labelId={labelId}
-                />
-              );
-            })}
+                  return (
+                    <AllTestsRow
+                      row={row}
+                      key={row.id}
+                      actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
+                      isItemSelected={isItemSelected}
+                      onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        onCheckboxClick(e, row, selectedRows, setSelectedRows)
+                      }
+                      labelId={labelId}
+                    />
+                  );
+                })
+              : null}
           </TableBody>
         </Table>
       </TableContainer>
       {isLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
+        <Box
+          sx={{
+            display: 'grid',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: margins.top16
+          }}
+        >
           <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
       ) : null}
+      {showEmptyState ? <NoResultsFound label={inHouseSpecimensListEmptyMessage} /> : null}
       <TablePagination
         component="div"
         count={specimensList.totalItems}
