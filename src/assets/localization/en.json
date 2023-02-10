@@ -334,7 +334,7 @@
   "page.in.house.results.test.cancel.modal.body1": "Are you sure you want to cancel?",
   "page.in.house.results.test.cancel.modal.body2": "Please note that your changes will not be saved.",
   "file.attachment.maximum.limit.reached.out": "You have reached maximum number of attachments",
-  "page.in.house.specimens.cells.title": "Test Name",
+  "page.in.house.specimens.cells.title": "Test/Panel Name",
   "page.in.house.specimens.cells.id": "Specimen ID",
   "page.in.house.specimens.cells.machine": "Machine",
   "page.in.house.specimens.search.placeholder": "Scan Barcode",
