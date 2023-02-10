@@ -626,7 +626,11 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
 const addSpecimenToTransportFolder =
   (specimens: IObjectWithId[], transportFolderId: string, selectedIdentifiers?: string[]) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
-    const currentTransportFolder = getState().results.tracking.lastCreatedTransportFolder;
+    const newTransportFolder = getState().results.tracking.lastCreatedTransportFolder;
+    const existingTransportFolder = getState().results.tracking.transportList.folders.find(
+      (folder) => folder.id === transportFolderId
+    );
+    const transportFolderTitle = existingTransportFolder?.title ?? newTransportFolder?.title;
 
     dispatch(setIsSpecimenAddedToFolder(true));
 
@@ -641,7 +645,7 @@ const addSpecimenToTransportFolder =
             renderList: {
               header: `${t(
                 Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_SUCCESS_MESSAGE
-              )} ${currentTransportFolder?.title}`,
+              )} ${transportFolderTitle}`,
               items: selectedIdentifiers
             }
           }

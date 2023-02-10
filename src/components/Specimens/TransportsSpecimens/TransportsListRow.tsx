@@ -6,6 +6,7 @@ import { ContextMenuAction, ITransportListFolderProps } from 'types/reduxTypes/r
 
 import useTransportActions from '@hooks/contextMenu/useTransportActions';
 import { ContextMenu } from '@ui-component/contextMenu';
+import { getCurrentDate, getDate } from '@utils/dateUtils';
 
 interface AllTestsRowProps {
   row: ITransportListFolderProps;
@@ -14,12 +15,16 @@ interface AllTestsRowProps {
 
 export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
   const actionBindings = useTransportActions(row, actions);
+  const currentDay = getCurrentDate();
+  const isToday = getDate(currentDay) === getDate(row.date);
+  const { customizedDate, customizedTransportCreationDate } = timeAdjuster(row.date);
+  const folderCreateDate = isToday ? customizedTransportCreationDate : customizedDate;
 
   return (
     <Link href={`/clinic-test-results/specimen-tracking/transports/${row.id}`}>
       <TableRow sx={{ cursor: 'pointer' }} hover>
         <TableCell>{row.title}</TableCell>
-        <TableCell>{timeAdjuster(row.date).customizedDate}</TableCell>
+        <TableCell>{folderCreateDate}</TableCell>
         <TableCell>{row.labName}</TableCell>
         <TableCell>{row.driver.name}</TableCell>
         <TableCell>{row.status}</TableCell>

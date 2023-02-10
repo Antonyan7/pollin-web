@@ -15,6 +15,7 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
+  Theme,
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
@@ -29,18 +30,22 @@ import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStat
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   menuPaper: {
     maxHeight: 200
   },
   root: {
     padding: 0
+  },
+  select: {
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.primary.main
+    }
   }
 }));
 
 const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const { specimenIds, selectedIdentifiers } = props;
-
   const classes = useStyles();
   const labList = useSelector(resultsSelector.testResultLabs);
   const lastCreatedTransportFolder = useAppSelector(resultsSelector.lastCreatedTransportFolder);
@@ -49,7 +54,9 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const [labId, setLabId] = useState<string>('');
   const [transportFolderName, setTransportFolderName] = useState<string>('');
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
-
+  const transportFolderLabel = t(
+    Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB
+  );
   const handleDestinationLabChange = (event: SelectChangeEvent) => {
     setLabId(event.target.value as string);
   };
@@ -61,7 +68,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
     const body = {
       name: transportFolderName,
       labId,
-      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00")
+      date: format(new Date(calendarDate), 'yyyy-MM-dd')
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
@@ -127,13 +134,13 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
             </Grid>
             <Grid item xs={12}>
               <FormControl fullWidth>
-                <InputLabel id="add-transport-folder-label">
-                  {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_DESTINATION_LAB)}
-                </InputLabel>
+                <InputLabel id="add-transport-folder-label">{transportFolderLabel}</InputLabel>
                 <Select
                   IconComponent={KeyboardArrowDownIcon}
+                  className={classes.select}
                   labelId="add-transport-folder-label"
                   id="add-transport-folder"
+                  label={transportFolderLabel}
                   value={labId}
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleDestinationLabChange}

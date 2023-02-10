@@ -65,7 +65,7 @@ const AddNewTransportFolderModal = () => {
     const body = {
       name: transportFolderName,
       labId,
-      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00")
+      date: format(new Date(calendarDate), 'yyyy-MM-dd')
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));

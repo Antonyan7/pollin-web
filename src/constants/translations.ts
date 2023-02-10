@@ -379,6 +379,7 @@ export enum Translation {
   PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS = 'page.specimen.collection.select.filters',
   PAGE_SPECIMEN_COLLECTION_CALENDAR_TITLE_DISABLED = 'page.specimen.collection.calendar.title.disabled',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.transport.folder.modal.title',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_CREATION_DAY = 'page.specimens.tracking.transports.add.new.transport.folder.creation.day',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_TITLE = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.title',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_TRANSPORT_FOLDER_LABEL = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.new.transport.folder.label',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_EXISTING_TRANSPORT_FOLDER_LABEL = 'page.specimens.tracking.transports.add.new.existing.transport.folder.modal.existing.transport.folder.label',

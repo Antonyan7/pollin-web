@@ -3,7 +3,17 @@ import { useTranslation } from 'react-i18next';
 import { TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Box, DialogActions, Divider, FormControl, Grid, MenuItem, SelectChangeEvent, Stack } from '@mui/material';
+import {
+  Box,
+  DialogActions,
+  Divider,
+  FormControl,
+  Grid,
+  MenuItem,
+  SelectChangeEvent,
+  Stack,
+  Theme
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
@@ -18,9 +28,14 @@ import { IAddNewExistingTransportModalProps, ITransportListFolderProps } from 't
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   menuPaper: {
     maxHeight: 200
+  },
+  select: {
+    '& .MuiSvgIcon-root': {
+      color: theme.palette.primary.main
+    }
   }
 }));
 
@@ -74,6 +89,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                 <BaseSelectWithLoading
                   isLoading={isTransportListLoading}
                   IconComponent={KeyboardArrowDownIcon}
+                  className={classes.select}
                   labelId="add-transport-folder-label"
                   id="add-transport-folder"
                   value={transportFolder}
