@@ -219,6 +219,9 @@ export interface ISpecimensInTransportListItem {
 
 export interface ISpecimensInTransportList extends IPagination {
   specimens: ISpecimensInTransportListItem[];
+  transportFolder: {
+    title: string;
+  };
 }
 
 export interface IPendingTestStats {

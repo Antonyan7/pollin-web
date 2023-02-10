@@ -588,14 +588,15 @@ const getSpecimensInTransportList =
         totalItems,
         currentPage,
         pageSize,
-        data: { specimens }
+        data: { specimens, transportFolder }
       } = response.data;
 
       const results: ISpecimensInTransportList = {
         totalItems,
         currentPage,
         pageSize,
-        specimens
+        specimens,
+        transportFolder
       };
 
       dispatch(setSpecimensInTransportList(results));

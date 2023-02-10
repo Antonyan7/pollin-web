@@ -24,6 +24,8 @@ const SpecimensInTransport = () => {
     () => transportList.folders.find((folder) => folder.id === transportId)?.title,
     [transportId, transportList.folders]
   );
+  const specimensInTransportList = useAppSelector(resultsSelector.specimensInTransportList);
+  const transportFolderTitle = specimensInTransportList.transportFolder.title;
 
   const handleDownloadClick = useCallback(
     async (transportFolderId: string) => {
@@ -45,7 +47,7 @@ const SpecimensInTransport = () => {
   return (
     <>
       <MainBreadcrumb
-        currentPage={transportId}
+        currentPage={transportFolderTitle}
         navigation={{
           basePath: '/',
           items: [
@@ -53,7 +55,7 @@ const SpecimensInTransport = () => {
               name: t(Translation.PAGE_SPECIMENS_TRACKING_TITLE),
               path: '/clinic-test-results/specimen-tracking/transports'
             },
-            { name: transportId, path: `/clinic-test-results/specimen-tracking/transports/${transportId}` }
+            { name: transportFolderTitle, path: `/clinic-test-results/specimen-tracking/transports/${transportId}` }
           ]
         }}
       />
@@ -76,7 +78,7 @@ const SpecimensInTransport = () => {
           sx={{ marginTop: 2, marginBottom: 4 }}
         >
           <Typography variant="h4" fontWeight={600} color="primary">
-            {transportId}
+            {transportFolderTitle}
           </Typography>
           <ButtonWithLoading
             isLoading={isTransportFolderDownloaded}

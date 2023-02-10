@@ -56,6 +56,9 @@ const getCollectionInitialState = (): ITestResultsCollection => ({
   isSpecimenStorageLocationsLoading: false,
   specimenStorageLocations: [],
   specimensInTransportList: {
+    transportFolder: {
+      title: ''
+    },
     specimens: [],
     currentPage: 1,
     pageSize: 10,
