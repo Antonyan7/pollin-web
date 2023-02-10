@@ -31,8 +31,9 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
 
   const navigateToTestResultsPage = () => {
     // it's not bulk action, so we'll have only one item in it
-    const specimenId = ids[0];
-    const inHouseTestResultsPagePath = `/clinic-test-results/in-house-tests/input-results/${specimenId}`;
+    const { id: specimenId, identifier: specimenIdentifier } = rows[0];
+
+    const inHouseTestResultsPagePath = `/clinic-test-results/in-house-tests/input-results/${specimenId}?specimenId=${specimenIdentifier}`;
 
     router.push(inHouseTestResultsPagePath);
   };

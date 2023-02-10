@@ -57,7 +57,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
                 },
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_LAB_PHONE_NUMBER),
-                  value: lab?.phone ?? ''
+                  value: !specimenId ? lab?.phone ?? '' : ''
                 },
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_LAB_ORDERING_MRP),

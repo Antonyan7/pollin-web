@@ -10,14 +10,17 @@ const InputResultsHeaderSection: React.FC<InputResultsHeaderSectionProps> = ({ t
       <Typography variant="h5" component="h5" fontWeight={600}>
         {title}
       </Typography>
-      {rows.map((row) => (
-        <Grid key={row.label} display="flex" justifyContent="space-between">
-          <Typography variant="h5" component="h5" fontWeight={500}>
-            {row.label}:
-          </Typography>
-          <Typography color="grey.500">{row.value}</Typography>
-        </Grid>
-      ))}
+      {rows.map(
+        (row) =>
+          row?.value && (
+            <Grid key={row.label} display="flex" justifyContent="space-between">
+              <Typography variant="h5" component="h5" fontWeight={500}>
+                {row.label}:
+              </Typography>
+              <Typography color="grey.500">{row.value}</Typography>
+            </Grid>
+          )
+      )}
     </Grid>
   </Grid>
 );
