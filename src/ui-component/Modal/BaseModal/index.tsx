@@ -27,7 +27,7 @@ const BaseModal = ({
 
   return (
     <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby={id}>
-      <BaseModalTitle dataCy={closeIconDataCy} id={id} onClose={onClose}>
+      <BaseModalTitle data-cy={closeIconDataCy} id={id} onClose={onClose}>
         {title}
       </BaseModalTitle>
       <DialogContent dividers data-cy={dialogContentCy}>

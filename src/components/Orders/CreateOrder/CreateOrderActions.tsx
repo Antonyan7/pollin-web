@@ -42,6 +42,9 @@ const CreateOrderActions = () => {
           }
         })
       );
+
+      dispatchOrderCreationState(updateValidatedOrderTypes(data.orderTypes));
+      dispatchOrderCreationState(updateOrderCreationStep(1));
     }
   };
 
