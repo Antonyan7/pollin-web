@@ -1,22 +1,46 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
+import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box } from '@mui/material';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
+import { Box, Chip, useTheme } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector, bookingSlice } from '@redux/slices/booking';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { borderRadius, borders, gridSpacing, margins, positionSpaces } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const { setSelectedSpecimenAppointmentsFilters } = bookingSlice.actions;
 
+const useStyles = makeStyles({
+  selectedValues: {
+    display: 'flex',
+    alignItems: 'center',
+    overflowX: 'scroll',
+    width: '100%',
+    overflowY: 'auto',
+    gap: gridSpacing
+  },
+  selectedValue: {
+    margin: `${margins.topBottom2} ${margins.leftRight0}`,
+    fontWeight: 600
+  }
+});
+
 const SpecimenCollectionFilter = () => {
   const [t] = useTranslation();
+  const classes = useStyles();
+  const theme = useTheme();
+  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const specimenAppointmentsFilters = useAppSelector(bookingSelector.specimenAppointmentsFilters);
   const isFiltersArrayLoading = useAppSelector(bookingSelector.isSpecimenAppointmentsFiltersArrayLoading);
   const selectedSpecimenAppointmentsFilters = useAppSelector(bookingSelector.selectedSpecimenAppointmentsFilters);
+
+  const onDropdownOpenClose = () => setDropdownOpen(!dropdownOpen);
 
   useEffect(() => {
     if (specimenAppointmentsFilters === null) {
@@ -37,18 +61,44 @@ const SpecimenCollectionFilter = () => {
         data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_SELECT_FILTERS}
         multiple
         fullWidth
-        limitTags={3}
+        disableClearable
         isLoading={isFiltersArrayLoading}
+        open={dropdownOpen}
+        onOpen={onDropdownOpenClose}
+        onClose={onDropdownOpenClose}
         options={adaptedGroupedOptions()}
         groupBy={(option) => option.type}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
-        getOptionDisabled={(option) => {
-          if (option && selectedSpecimenAppointmentsFilters.length > 0) {
-            return !!selectedSpecimenAppointmentsFilters.find((item) => item.type === option.type);
+        ListboxProps={{
+          style: {
+            maxHeight: 260,
+            borderRadius: `${borderRadius.radius8}`,
+            border: `${borders.solid2px} ${theme.palette.primary.main}`,
+            position: 'absolute',
+            top: positionSpaces.top12,
+            width: '100%',
+            backgroundColor: theme.palette.common.white
           }
-
-          return false;
         }}
+        sx={{
+          '& .MuiAutocomplete-input': {
+            display: selectedSpecimenAppointmentsFilters.length ? 'none' : 'flex'
+          }
+        }}
+        renderTags={(specimenOptions, getSpecimenTagProps) => (
+          <Box className={classes.selectedValues} onClick={onDropdownOpenClose}>
+            {specimenOptions.map((specimentOption, optionIndex) => (
+              <Chip
+                deleteIcon={<HighlightOffTwoToneIcon />}
+                label={specimentOption.title}
+                {...getSpecimenTagProps({ index: optionIndex })}
+                key={specimentOption.id}
+                className={classes.selectedValue}
+              />
+            ))}
+          </Box>
+        )}
+        PopperComponent={GroupedServiceProvidersPopper}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         value={[...selectedSpecimenAppointmentsFilters]}
         onChange={(_event, newSpecimenAppointmentsFilters, reason) => {
