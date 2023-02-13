@@ -22,7 +22,10 @@ const Actions: React.FC<SpecimenTrackingCollectionModalActionsProps> = ({
 }) => {
   const specimensForAppointment = useSelector(resultsSelector.appointmentSpecimens);
   const isSpecimensForAppointmentLoading = useSelector(resultsSelector.isAppointmentSpecimensLoading);
-  const areThereAnyOrders = specimensForAppointment && !isSpecimensForAppointmentLoading;
+  const areThereAnyOrders =
+    specimensForAppointment?.specimens &&
+    specimensForAppointment?.specimens?.length > 0 &&
+    !isSpecimensForAppointmentLoading;
 
   const { handleSubmit } = useFormContext<ISpecimenCollectionLocationsField>();
   const { locations = [] } = useWatch();
