@@ -20,7 +20,9 @@ const Body: React.FC<SpecimenTrackingCollectionModalSteps> = ({ collectionModalC
   const specimensForAppointment = useAppSelector(resultsSelector.appointmentSpecimens);
   const isSpecimensForAppointmentLoading = useAppSelector(resultsSelector.isAppointmentSpecimensLoading);
   const patientContactInformation = useAppSelector(patientsSelector.patientContactInformation);
-  const areThereAnyOrders = specimensForAppointment && !isSpecimensForAppointmentLoading;
+
+  const areThereAnyOrders =
+    specimensForAppointment && specimensForAppointment.specimens.length > 0 && !isSpecimensForAppointmentLoading;
 
   return (
     <Grid item xs={12}>
@@ -50,8 +52,9 @@ const Body: React.FC<SpecimenTrackingCollectionModalSteps> = ({ collectionModalC
             <SpecimenDataItem
               label={t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TOTAL_VIALS_LABEL)}
               value={`${
-                specimensForAppointment?.totalVialsCount ??
-                t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TOTAL_ZERO_VIALS_LABEL)
+                specimensForAppointment?.totalVialsCount
+                  ? specimensForAppointment?.totalVialsCount
+                  : t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TOTAL_ZERO_VIALS_LABEL)
               }`}
             />
           </Grid>

@@ -23,6 +23,7 @@ import store, { AppDispatch, RootState } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import axios from 'axios';
 import { Translation } from 'constants/translations';
+import { format } from 'date-fns';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
@@ -301,34 +302,6 @@ export const resetTestResultsState = () => async (dispatch: AppDispatch) => {
   );
 };
 
-const markInTransitAction =
-  (reqBody: IMarkInTransitActionReqBody, rowTitle: string) => async (dispatch: AppDispatch) => {
-    try {
-      await API.results.markInTransitAction(reqBody);
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            renderList: {
-              header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_TRANSIT_SUCCESS),
-              items: [rowTitle]
-            }
-          }
-        })
-      );
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-      dispatch(
-        setTestResultsState({
-          success: false,
-          fail: true
-        })
-      );
-    }
-  };
-
 const applyRetestAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
   try {
     const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
@@ -441,36 +414,45 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getTransportList = (resultsListData: ITransportListReqBody) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsTransportListLoading(true));
-
-    let testResultsReqBody = resultsListData;
-
-    if (resultsListData.sortOrder !== null) {
-      testResultsReqBody = sortOrderTransformer(
-        resultsListData as IResultsReqBodyWithSortOrder
-      ) as ITransportListReqBody;
+const getTransportList =
+  (
+    resultsListData: ITransportListReqBody = {
+      date: format(new Date(store.getState().booking.date), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
+      page: 0,
+      sortByField: TransportsSortFields.STATUS,
+      sortOrder: SortOrder.Desc
     }
+  ) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsTransportListLoading(true));
 
-    const response = await API.results.getTransportList(testResultsReqBody);
-    const { totalItems, currentPage, pageSize } = response.data;
+      let testResultsReqBody = resultsListData;
 
-    const results: ITransportList = {
-      totalItems,
-      currentPage,
-      pageSize,
-      folders: response.data.data.folders
-    };
+      if (resultsListData.sortOrder !== null) {
+        testResultsReqBody = sortOrderTransformer(
+          resultsListData as IResultsReqBodyWithSortOrder
+        ) as ITransportListReqBody;
+      }
 
-    dispatch(setTransportList(results));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsTransportListLoading(false));
-  }
-};
+      const response = await API.results.getTransportList(testResultsReqBody);
+      const { totalItems, currentPage, pageSize } = response.data;
+
+      const results: ITransportList = {
+        totalItems,
+        currentPage,
+        pageSize,
+        folders: response.data.data.folders
+      };
+
+      dispatch(setTransportList(results));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsTransportListLoading(false));
+    }
+  };
 
 const getSpecimensForAppointment = (appointmentId: string) => async (dispatch: AppDispatch) => {
   try {
@@ -572,6 +554,36 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
 const resetLastCreatedTransportFolderId = () => async (dispatch: AppDispatch) => {
   dispatch(setLastCreatedTransportFolder(null));
 };
+
+const markInTransitAction =
+  (reqBody: IMarkInTransitActionReqBody, rowTitle: string) => async (dispatch: AppDispatch) => {
+    try {
+      await API.results.markInTransitAction(reqBody);
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            renderList: {
+              header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_TRANSIT_SUCCESS),
+              items: [rowTitle]
+            }
+          }
+        })
+      );
+
+      dispatch(resultsMiddleware.getTransportList());
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+      dispatch(
+        setTestResultsState({
+          success: false,
+          fail: true
+        })
+      );
+    }
+  };
 
 const getSpecimensInTransportList =
   (options: IGetSpecimensInTransportListParams, transportId: string) => async (dispatch: AppDispatch) => {
