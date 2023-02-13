@@ -12,6 +12,14 @@ const resultsManager = {
   getTasksList(data: ITasksListReqBody) {
     return axiosInstance.post<ITasksProps, IAxiosResponsePaginated<ITasksProps>>(`${baseURL}/v1/tasks`, data);
   },
+  updateTaskStatus(rowId: string, statusId: string) {
+    return axiosInstance.patch<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(
+      `${baseURL}/v1/tasks/${rowId}/update-status`,
+      {
+        statusId
+      }
+    );
+  },
   getTaskStatuses() {
     return axiosInstance.get<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(
       `${baseURL}/v1/tasks/statuses`

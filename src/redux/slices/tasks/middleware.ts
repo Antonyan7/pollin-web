@@ -1,12 +1,13 @@
 import API from '@axios/API';
-import { ITasksListReqBody } from '@axios/tasks/tasksManagerTypes';
+import { ContextMenuAction, ITasksListReqBody } from '@axios/tasks/tasksManagerTypes';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/tasks/slice';
 import { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
-const { setError, setTaskPriorities, setTasksList, setTasksLoadingState, setTaskStatuses } = slice.actions;
+const { setError, setTaskPriorities, setTasksList, setTasksLoadingState, setTaskStatuses, setIsTaskUpdated } =
+  slice.actions;
 
 const getTasksStatuses = () => async (dispatch: AppDispatch) => {
   try {
@@ -14,12 +15,29 @@ const getTasksStatuses = () => async (dispatch: AppDispatch) => {
 
     const response = await API.tasks.getTaskStatuses();
 
-    dispatch(setTaskStatuses(response.data.data.options));
+    const dataWithReassignOption = response.data.data.options.map(({ actions, ...otherOptions }) => ({
+      ...otherOptions,
+      actions: [...actions, { id: ContextMenuAction.Reassign, title: ContextMenuAction.Reassign }]
+    }));
+
+    dispatch(setTaskStatuses(dataWithReassignOption));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
     dispatch(setTasksLoadingState(false));
+  }
+};
+
+const updateTaskStatus = (rowId: string, statusId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTaskUpdated(true));
+    await API.tasks.updateTaskStatus(rowId, statusId);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTaskUpdated(false));
   }
 };
 
@@ -70,5 +88,6 @@ const getTasksList = (tasksListData: ITasksListReqBody) => async (dispatch: AppD
 export default {
   getTasksList,
   getTasksStatuses,
+  updateTaskStatus,
   getTaskPriorities
 };

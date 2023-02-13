@@ -41,3 +41,12 @@ export interface IStatusOptionAction {
   id: string;
   title: string;
 }
+
+export enum ContextMenuAction {
+  Pending = 'Pending',
+  InProgress = 'InProgress',
+  OnHold = 'OnHold',
+  Completed = 'Completed',
+  Cancelled = 'Cancelled',
+  Reassign = 'Reassign'
+}

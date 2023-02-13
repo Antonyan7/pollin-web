@@ -34,6 +34,9 @@ import { SpecimenTrackingCollectionModalProps } from '@components/Modals/Specime
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
 } from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
+import TaskStatusUpdateModal, {
+  TestResultReviewConfirmationProps
+} from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -142,6 +145,11 @@ const getOrderValidationErrorModal = (modal: IOpenedModal<OrderValidationErrorMo
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
 
+// Task Management
+const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmationProps>) => (
+  <TaskStatusUpdateModal key={modal.name} {...modal.props} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
 
@@ -210,6 +218,9 @@ export const ModalsController = () => {
             return getOrderCreationCancelModal();
           case ModalName.OrderValidationErrorModal:
             return getOrderValidationErrorModal(modal);
+          // Task Managment
+          case ModalName.TaskStatusUpdateModal:
+            return getTaskStatusUpdateModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

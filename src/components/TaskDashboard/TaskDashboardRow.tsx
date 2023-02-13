@@ -4,6 +4,8 @@ import { useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
+import useTaskDashboardActions from '@hooks/contextMenu/useTaskDashboardActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 import { formatDate } from '@utils/dateUtils';
 
@@ -14,6 +16,7 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
   const taskPriorities = useAppSelector(tasksSelector.tasksPrioritiesList);
   const status = findStatusByID(row.statusId, taskStatuses);
   const priority = findPriorityById(row.priorityId, taskPriorities);
+  const actionBindings = useTaskDashboardActions(row, status.actions);
 
   return (
     <TableRow tabIndex={-1} key={row.uuid}>
@@ -29,6 +32,9 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
           size="small"
           chipColor="notActive"
         />
+      </TableCell>
+      <TableCell align="left" onClick={(e) => e.stopPropagation()}>
+        <ContextMenu actionBindings={actionBindings} />
       </TableCell>
     </TableRow>
   );

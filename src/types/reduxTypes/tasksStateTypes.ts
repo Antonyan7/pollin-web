@@ -6,6 +6,7 @@ export interface ITasksManager {
   isTasksListLoading: boolean;
   error: Error | null;
   statuses: ITaskStatusOption[];
+  isTaskUpdated: boolean;
   priorities: ITaskPriorityOption[];
 }
 
