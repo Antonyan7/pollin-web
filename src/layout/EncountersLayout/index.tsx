@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import { Main } from '@components/common/AppointmentsContent';
 import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
 import { Translation } from 'constants/translations';

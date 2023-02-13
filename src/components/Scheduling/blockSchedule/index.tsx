@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper } from '@components/common/MaterialComponents';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, Typography } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -82,7 +82,7 @@ const BlockTemplates = () => {
   };
 
   useEffect(() => {
-    dispatch(bookingMiddleware.getServiceProviders(1));
+    dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box } from '@mui/material';

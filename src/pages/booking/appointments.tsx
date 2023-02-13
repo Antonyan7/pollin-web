@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import AppointmentsContent from '@components/Appointments/AppointmentsContent';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import AppointmentsContent from '@components/common/AppointmentsContent';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import getDesktopDatePickerDefaultProps from '@components/DefaultDesktopDatePicker/defaultProps';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';

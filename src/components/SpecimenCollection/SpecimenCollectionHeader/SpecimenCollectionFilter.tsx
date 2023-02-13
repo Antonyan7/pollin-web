@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpecimenCollectionFilterOption } from '@axios/booking/managerBookingTypes';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { Box, Chip, useTheme } from '@mui/material';

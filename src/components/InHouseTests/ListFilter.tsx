@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import { useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';

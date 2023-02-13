@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import { Main } from '@components/common/AppointmentsContent';
 import SpecimensInTransportList from '@components/Specimens/SpecimensInTransportList/SpecimensInTransportList';
 import { ArrowBackIos } from '@mui/icons-material';
 import DownloadIcon from '@mui/icons-material/Download';

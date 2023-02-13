@@ -1,6 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
-import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import { Main } from '@components/common/AppointmentsContent';
 import { Link } from '@components/index';
 import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';

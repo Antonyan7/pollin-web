@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
+import { defaultResource } from '@components/Scheduling/applySchedule/constants/defaultValues';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { createOptionsGroup } from 'helpers/berryFunctions';
-import { useAppSelector } from 'redux/hooks';
-import { bookingSelector } from 'redux/slices/booking';
+import { useTheme } from '@mui/system';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { borderRadius, borders } from 'themes/themeConstants';
+import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
@@ -12,41 +16,83 @@ import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
 
 const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
-  const scheduleResources = useAppSelector(bookingSelector.serviceProvidersList);
-  const isServiceProvidersLoading = useAppSelector(bookingSelector.isServiceProvidersLoading);
-  const optionsGroup = createOptionsGroup(scheduleResources.providers);
   const { control } = useFormContext<IBlockScheduleForm>();
 
   const { field, fieldState } = useController<IBlockScheduleForm>({
     name: fieldName,
     control
   });
+  const theme = useTheme();
   const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
   const { error } = fieldState;
 
+  const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
+  const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
+  const [resourceProviderCurrentPage, setResourceProviderCurrentPage] = useState<number>(1);
+  const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
+    if (resourceItem) {
+      onChange(resourceItem.id);
+    } else {
+      onChange({ ...defaultResource });
+    }
+  };
+
+  const adaptedGroupedOptions = useMemo(
+    () =>
+      groupedResourceProviders.providers.flatMap((provider) =>
+        (provider?.items ?? []).map((option) => ({ ...option, type: provider.groupTitle }))
+      ),
+    [groupedResourceProviders.providers]
+  );
+  const resourceFieldOptions = adaptedGroupedOptions;
+  const resourceFieldInputValue = useMemo(
+    () => resourceFieldOptions.find((fieldOption) => fieldOption.id === resourceId)?.title ?? '',
+    [resourceId, resourceFieldOptions]
+  );
+
+  const onResourceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
+    const eventTarget = event.target as HTMLDivElement;
+
+    if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
+      if (groupedResourceProviders.pageSize * resourceProviderCurrentPage <= groupedResourceProviders.totalItems) {
+        setResourceProviderCurrentPage(resourceProviderCurrentPage + 1);
+        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: resourceProviderCurrentPage }));
+      }
+    }
+  };
+
   return (
     <BaseDropdownWithLoading
-      isLoading={isServiceProvidersLoading}
-      id={fieldName}
-      options={optionsGroup}
-      onChange={(_, value) => {
-        if (value && typeof value === 'object' && 'item' in value) {
-          onChange(value.item.id);
+      isLoading={isGroupedResourceProvidersLoading}
+      PopperComponent={GroupedServiceProvidersPopper}
+      inputValue={resourceFieldInputValue}
+      popupIcon={<KeyboardArrowDownIcon color="primary" />}
+      onChange={(_event, resourceProvider) => {
+        if (resourceProvider) {
+          onSelectResourceUpdate(resourceProvider as IServiceProvider);
         }
       }}
-      inputValue={optionsGroup.find((item) => item.item.id === resourceId)?.item.title ?? ''}
-      isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-      getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
-      groupBy={(option) => option.firstLetter}
+      ListboxProps={{
+        onScroll: (event) => onResourceProviderScroll(event),
+        style: {
+          borderRadius: `${borderRadius.radius8}`,
+          border: `${borders.solid2px} ${theme.palette.primary.main}`
+        }
+      }}
+      id="scheduling-grouped-service-provider-dropdown"
       onBlur={onBlur}
-      clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
+      isOptionEqualToValue={(option, value) => option.id === value.id}
+      options={resourceFieldOptions}
+      getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
+      groupBy={(resourceOption) => resourceOption.type}
+      clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
       renderInputProps={{
         label: fieldLabel,
         helperText: error?.message ?? '',
         error: !!error?.message,
+        value: resourceId ?? '',
         ...fieldProps
       }}
-      popupIcon={<KeyboardArrowDownIcon color="primary" />}
     />
   );
 };

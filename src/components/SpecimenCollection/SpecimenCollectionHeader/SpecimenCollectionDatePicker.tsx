@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import { Stack, TextField, Typography, useTheme } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';

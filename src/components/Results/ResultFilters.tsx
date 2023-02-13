@@ -1,6 +1,6 @@
 import React, { SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import SearchIcon from '@mui/icons-material/Search';
 import {
   Autocomplete,

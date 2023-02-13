@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useTheme } from '@mui/system';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { borderRadius, borders } from 'themes/themeConstants';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
@@ -19,7 +21,7 @@ import { ApplyScheduleFields } from '../types';
 const ResourceField = () => {
   const [t] = useTranslation();
   const { field, fieldState } = useFieldControl(ApplyScheduleFields.RESOURCE);
-
+  const theme = useTheme();
   const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
   const { error } = fieldState;
   const resourceLabel = t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE);
@@ -70,7 +72,11 @@ const ResourceField = () => {
           }
         }}
         ListboxProps={{
-          onScroll: (event) => onResourceProviderScroll(event)
+          onScroll: (event) => onResourceProviderScroll(event),
+          style: {
+            borderRadius: `${borderRadius.radius8}`,
+            border: `${borders.solid2px} ${theme.palette.primary.main}`
+          }
         }}
         id="scheduling-grouped-service-provider-dropdown"
         onBlur={onBlur}

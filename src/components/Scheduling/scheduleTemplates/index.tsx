@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ScheduleBoxWrapper, StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper, StyledButtonNew } from '@components/common/MaterialComponents';
 import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 import { TablePagination, Typography, useTheme } from '@mui/material';

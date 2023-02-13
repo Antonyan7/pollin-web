@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/common/MaterialComponents';
 import useScheduleFormContext from '@components/Scheduling/scheduleTemplateForm/hooks/useScheduleFormContext';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';

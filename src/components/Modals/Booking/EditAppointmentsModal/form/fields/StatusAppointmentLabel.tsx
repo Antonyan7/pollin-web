@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/common/MaterialComponents';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, Grid, MenuItem } from '@mui/material';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';

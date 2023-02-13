@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/common/MaterialComponents';
 import { CloseOutlined } from '@mui/icons-material';
 import {
   Dialog,

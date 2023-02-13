@@ -1,7 +1,7 @@
 import React, { PropsWithChildren } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Main } from '@components/Appointments/AppointmentsContent';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import { Main } from '@components/common/AppointmentsContent';
 import { Box, Tab, Tabs, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';

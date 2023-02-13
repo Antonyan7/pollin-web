@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import AddIcon from '@mui/icons-material/Add';
 import { Typography, useTheme } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';

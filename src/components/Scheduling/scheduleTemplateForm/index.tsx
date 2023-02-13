@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper } from '@components/common/MaterialComponents';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { useRouter } from 'next/router';

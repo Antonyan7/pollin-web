@@ -3,7 +3,7 @@ import { FieldValues, SubmitHandler, useController, useFormContext } from 'react
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/common/MaterialComponents';
 import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';

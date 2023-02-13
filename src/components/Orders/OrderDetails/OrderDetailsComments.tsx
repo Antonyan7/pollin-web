@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledTextareaAutosize } from '@components/Appointments/CommonMaterialComponents';
+import { StyledTextareaAutosize } from '@components/common/MaterialComponents';
 import { Stack, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { ordersSelector } from '@redux/slices/orders';

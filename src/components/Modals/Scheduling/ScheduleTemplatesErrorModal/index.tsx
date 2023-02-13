@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { StyledButton } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButton } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
 import { CardActions, CardContent, Divider, Grid, IconButton, Modal, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';

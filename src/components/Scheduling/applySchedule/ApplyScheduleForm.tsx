@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { ScheduleBoxWrapper } from '@components/Appointments/CommonMaterialComponents';
+import { ScheduleBoxWrapper } from '@components/common/MaterialComponents';
 import { Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
@@ -17,7 +17,6 @@ const ApplyScheduleForm = () => {
 
   useEffect(() => {
     dispatch(schedulingMiddleware.getSchedulingTemplates(1, true));
-    dispatch(bookingMiddleware.getServiceProviders(1));
     dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
 

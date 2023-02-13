@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GroupedServiceProvidersPopper } from '@components/Appointments/CommonMaterialComponents';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import { useTheme } from '@mui/material';
 import { borderRadius, borders } from 'themes/themeConstants';
 import { IOrderResultsFilterCategory } from 'types/reduxTypes/ordersStateTypes';

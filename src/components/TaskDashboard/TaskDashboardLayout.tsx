@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import AddIcon from '@mui/icons-material/Add';
 import { Grid, Typography, useTheme } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';

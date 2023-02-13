@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { StyledButtonNew } from '@components/Appointments/CommonMaterialComponents';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
 import { Grid, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
