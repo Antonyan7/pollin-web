@@ -16,6 +16,11 @@ export const orderCreationReducer = (
         ...state,
         validatedOrderTypes: action.validatedOrderTypes
       };
+    case OrderCreationContextActionTypes.UPDATE_IS_VALIDATION_LOADING:
+      return {
+        ...state,
+        isValidationLoading: action.isValidationLoading
+      };
     default:
       return state;
   }

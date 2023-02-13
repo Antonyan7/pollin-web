@@ -24,4 +24,17 @@ export const updateValidatedOrderTypes = (
   validatedOrderTypes
 });
 
-export type OrderCreationContextActions = IUpdateOrderCreationStepAction | IUpdateValidatedTypeGroupsAction;
+export interface IUpdateIsValidationLoadingAction {
+  type: typeof OrderCreationContextActionTypes.UPDATE_IS_VALIDATION_LOADING;
+  isValidationLoading: boolean;
+}
+
+export const updateIsValidationLoading = (isValidationLoading: boolean): IUpdateIsValidationLoadingAction => ({
+  type: OrderCreationContextActionTypes.UPDATE_IS_VALIDATION_LOADING,
+  isValidationLoading
+});
+
+export type OrderCreationContextActions =
+  | IUpdateOrderCreationStepAction
+  | IUpdateValidatedTypeGroupsAction
+  | IUpdateIsValidationLoadingAction;

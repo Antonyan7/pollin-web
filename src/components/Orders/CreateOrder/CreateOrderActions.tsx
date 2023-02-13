@@ -8,7 +8,11 @@ import { ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { updateOrderCreationStep, updateValidatedOrderTypes } from 'context/actions/OrderCreationContextActions';
+import {
+  updateIsValidationLoading,
+  updateOrderCreationStep,
+  updateValidatedOrderTypes
+} from 'context/actions/OrderCreationContextActions';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -25,7 +29,11 @@ const CreateOrderActions = () => {
   };
 
   const onNextButtonClick = async () => {
+    dispatchOrderCreationState(updateIsValidationLoading(true));
+
     const data = await resultsHelpers.getValidatedOrderCreationData(orderTypes);
+
+    dispatchOrderCreationState(updateIsValidationLoading(false));
 
     if (!data.message) {
       dispatchOrderCreationState(updateValidatedOrderTypes(data.orderTypes));
