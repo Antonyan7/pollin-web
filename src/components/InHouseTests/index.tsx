@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ISpecimensListReqBody, SpecimensListSortFields } from '@axios/results/resultsManagerTypes';
 import NoResultsFound from '@components/NoResultsFound';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
@@ -14,6 +15,7 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
@@ -38,6 +40,7 @@ import { InHouseSpecimensListCallbacks, InHouseSpecimensListState } from './type
 
 const InHouseSpecimensList = () => {
   const theme = useTheme();
+  const [t] = useTranslation();
   const [inHouseSpecimensList, setInHouseSpecimensList] = useState<InHouseSpecimensListState>({
     page: 0,
     searchedItems: [],
@@ -110,6 +113,7 @@ const InHouseSpecimensList = () => {
   }, [selectedRows, actionVariations]);
 
   const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
+  const inHouseEmptyStateLabel = t(Translation.PAGE_IN_HOUSE_EMPTY_RESULTS_LABEL);
 
   return (
     <SpecimensListContext.Provider value={listContextValues}>
@@ -165,7 +169,7 @@ const InHouseSpecimensList = () => {
             <CircularLoading sx={{ margin: margins.auto, marginTop: margins.top16, py: paddings.topBottom16 }} />
           )}
         </TableContainer>
-        {isResultsNotFound && <NoResultsFound />}
+        {isResultsNotFound && <NoResultsFound label={inHouseEmptyStateLabel} />}
         <TablePagination
           component="div"
           count={specimensList.totalItems}

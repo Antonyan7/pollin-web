@@ -8,7 +8,7 @@ import { NoResultsFoundProps } from './types';
 
 const NoResultsFound: React.FC<NoResultsFoundProps> = ({ label = '', ...props }) => {
   const [t] = useTranslation();
-  const notFoundLabel = label.length && label.length ? label : t(Translation.COMMON_TABLE_NO_RESULTS_FOUND);
+  const notFoundLabel = label || t(Translation.COMMON_TABLE_NO_RESULTS_FOUND);
 
   return (
     <Grid
