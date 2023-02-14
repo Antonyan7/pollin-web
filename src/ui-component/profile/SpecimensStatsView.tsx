@@ -33,7 +33,7 @@ const SpecimensStatsView: React.FC<SpecimensStatsViewProps> = ({ stats }) => {
         <TestResultCard
           primary={statsGreaterThan15}
           secondary={stats.find((stat) => stat.type === TestResultsStats.GreaterThan15Days)?.count}
-          color={theme.palette.warning.dark}
+          color={theme.palette.warning[500]}
           backgroundColor={theme.palette.warning.light}
         />
       </Grid>
@@ -41,7 +41,7 @@ const SpecimensStatsView: React.FC<SpecimensStatsViewProps> = ({ stats }) => {
         <TestResultCard
           primary={statsLessThan15}
           secondary={stats.find((stat) => stat.type === TestResultsStats.LessThanOrEqual15Days)?.count}
-          color={theme.palette.success.dark}
+          color={theme.palette.success[600]}
           backgroundColor={theme.palette.success.light}
         />
       </Grid>

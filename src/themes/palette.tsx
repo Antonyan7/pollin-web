@@ -47,7 +47,8 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
         light: colors.errorLight,
         main: colors.errorMain,
         dark: colors.errorDark,
-        800: colors.error800
+        800: colors.error800,
+        200: colors.error200
       },
       orange: {
         light: colors.orangeLight,
@@ -57,14 +58,17 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
       warning: {
         light: colors.warningLight,
         main: colors.warningMain,
-        dark: colors.warningDark
+        dark: colors.warningDark,
+        800: colors.warning800,
+        500: colors.warning500
       },
       success: {
         light: colors.successLight,
         200: colors.success200,
         main: colors.successMain,
         dark: colors.successDark,
-        800: colors.success800
+        800: colors.success800,
+        600: colors.success600
       },
       grey: {
         50: colors.grey50,

@@ -20,7 +20,7 @@ interface IExternalResultsTableRow {
 const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
   const [t] = useTranslation();
 
-  const chipColor = useChipColor(row.age);
+  const chipColors = useChipColor(row.age);
 
   const onContactInformationModalOpen = () => {
     dispatch(
@@ -51,7 +51,7 @@ const PendingTestResultRow = ({ row, labelId }: IExternalResultsTableRow) => {
       <TableCell align="left">{row.status}</TableCell>
       <TableCell align="center">
         <Chip
-          sx={{ background: chipColor.light, color: chipColor.dark }}
+          sx={{ ...chipColors }}
           label={`${row.age} ${getRowLabel(row.age, t)}`}
           size="small"
           chipColor="notActive"

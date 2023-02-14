@@ -20,7 +20,7 @@ const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenList
   const specimenActions = useAppSelector(resultsSelector.specimenActions);
   const statusVariation = specimenActions.find((action) => action.status === row.status);
 
-  const chipColor = useChipColor(row.age);
+  const chipColors = useChipColor(row.age);
 
   const actionBindings = useSpecimenActions([row], actions);
 
@@ -50,7 +50,7 @@ const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenList
       <TableCell>{statusVariation?.title}</TableCell>
       <TableCell align="center">
         <Chip
-          sx={{ background: chipColor.light, color: chipColor.dark }}
+          sx={{ ...chipColors }}
           label={`${row.age}  ${getRowLabel(row.age, t)} `}
           size="small"
           chipColor="notActive"

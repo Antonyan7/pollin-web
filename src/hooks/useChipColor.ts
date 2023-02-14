@@ -11,14 +11,23 @@ const useChipColor = (value: number) => {
     const { success, warning, error } = palette;
 
     if (isStatusSuccess) {
-      return success;
+      return {
+        background: success.light,
+        color: success[800]
+      };
     }
 
     if (isStatusWarning) {
-      return warning;
+      return {
+        background: warning.light,
+        color: warning[800]
+      };
     }
 
-    return error;
+    return {
+      background: error[200],
+      color: error[800]
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
 

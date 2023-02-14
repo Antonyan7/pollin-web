@@ -22,12 +22,14 @@ $successLight: #e2f3e4;
 $success200: #48b767;
 $successMain: #48b767;
 $successDark: #48b767;
+$success600: #00c853;
 $success800: #02922a;
 
 // error
 $errorLight: #f6eae6;
 $errorMain: #d7442f;
 $errorDark: #d7442f;
+$error200: #f7eae6;
 $error800: #a81804;
 
 // orange
@@ -39,6 +41,8 @@ $orangeDark: #d84315;
 $warningLight: #faf3e2;
 $warningMain: #f3c67e;
 $warningDark: #ea8f00;
+$warning500: #ffc107;
+$warning800: #d68300;
 
 // grey
 $grey50: #fafafa;
@@ -115,23 +119,24 @@ $commonButtonBackgroundColor: #fafafa;
   successMain: $successMain;
   successDark: $successDark;
   success800: $success800;
-
+  success600: $success600;
   // error
   errorLight: $errorLight;
   errorMain: $errorMain;
   errorDark: $errorDark;
+  error200: $error200;
   error800: $error800;
 
   // orange
   orangeLight: $orangeLight;
   orangeMain: $orangeMain;
   orangeDark: $orangeDark;
-
   // warning
   warningLight: $warningLight;
   warningMain: $warningMain;
   warningDark: $warningDark;
-
+  warning800: $warning800;
+  warning500: $warning500;
   // grey
   grey50: $grey50;
   grey100: $grey100;
