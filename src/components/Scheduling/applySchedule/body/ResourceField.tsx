@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
@@ -22,14 +22,14 @@ const ResourceField = () => {
   const [t] = useTranslation();
   const { field, fieldState } = useFieldControl(ApplyScheduleFields.RESOURCE);
   const theme = useTheme();
-  const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
-  const { error } = fieldState;
   const resourceLabel = t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE);
   const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
 
+  const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
+  const { error } = fieldState;
   const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
   const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
-  const [resourceProviderCurrentPage, setResourceProviderCurrentPage] = useState<number>(1);
+  const resourceProviderCurrentPage = groupedResourceProviders.currentPage;
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
     if (resourceItem) {
       onChange(resourceItem.id);
@@ -53,8 +53,9 @@ const ResourceField = () => {
 
     if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
       if (groupedResourceProviders.pageSize * resourceProviderCurrentPage <= groupedResourceProviders.totalItems) {
-        setResourceProviderCurrentPage(resourceProviderCurrentPage + 1);
-        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: resourceProviderCurrentPage }));
+        const newPage = resourceProviderCurrentPage + 1;
+
+        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: newPage }));
       }
     }
   };

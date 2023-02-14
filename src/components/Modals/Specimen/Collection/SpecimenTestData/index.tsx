@@ -4,7 +4,7 @@ import { Chip, Divider, Grid, Stack, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 
-import { SpecimenTestDataProps } from '../../types';
+import { SpecimenTestDataProps } from '../types';
 
 import SpecimenDataItem from './SpecimenDataItem';
 

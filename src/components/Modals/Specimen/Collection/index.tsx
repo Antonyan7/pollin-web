@@ -14,9 +14,9 @@ import BaseModal from '@ui-component/Modal/BaseModal';
 import Actions from './Actions';
 import Body from './Body';
 import extractDefaultFormFieldsFromSpecimens from './helpers';
-import { SpecimenTrackingCollectionModalProps } from './types';
+import { SpecimenCollectionModalProps } from './types';
 
-const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalProps> = ({ appointmentId }) => {
+const SpecimenCollectionModal: React.FC<SpecimenCollectionModalProps> = ({ appointmentId }) => {
   const [collectionModalCurrentStep, setCollectionModalCurrentStep] = useState<number>(1);
 
   const isSpecimensForAppointmentLoading = useAppSelector(resultsSelector.isAppointmentSpecimensLoading);
@@ -40,12 +40,12 @@ const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalP
   }, [reset, specimensForAppointment, isSpecimensForAppointmentLoading]);
 
   const [t] = useTranslation();
-  const specimenTrackingCollectionTitle = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TITLE);
+  const specimenCollectionTitle = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TITLE);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.SpecimenTrackingCollection));
+  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.SpecimenCollection));
 
   return (
-    <BaseModal isLoading={isSpecimensForAppointmentLoading} title={specimenTrackingCollectionTitle} onClose={onClose}>
+    <BaseModal isLoading={isSpecimensForAppointmentLoading} title={specimenCollectionTitle} onClose={onClose}>
       <FormProvider {...methods}>
         <Grid>
           <DialogContent sx={{ p: paddings.all8, minWidth: 500 }}>
@@ -69,4 +69,4 @@ const SpecimenTrackingCollectionModal: React.FC<SpecimenTrackingCollectionModalP
   );
 };
 
-export default SpecimenTrackingCollectionModal;
+export default SpecimenCollectionModal;

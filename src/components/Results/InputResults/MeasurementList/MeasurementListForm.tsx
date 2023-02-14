@@ -85,6 +85,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ testType = '' }) =>
                   dates={testResultDetails.dates}
                   lab={testResultDetails.lab}
                   currentFormFieldName={currentFormFieldName}
+                  isInHouseTest={isInHouseTest}
                   {...(shouldShowSpecimenId && { specimenId: `${router.query?.specimenId}` })}
                 />
                 {testResultDetails.items.length > 0 && (

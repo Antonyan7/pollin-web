@@ -4,7 +4,7 @@ import { Check } from '@mui/icons-material';
 import { Divider, Grid, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-import { SpecimenDataCollectionProgressBarProps } from '../../types';
+import { SpecimenDataCollectionProgressBarProps } from '../types';
 
 import ProgressBarIndicator from './ProgressBarIndicator';
 

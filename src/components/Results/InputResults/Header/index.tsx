@@ -20,11 +20,11 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
   lab,
   dates,
   specimenId,
-  currentFormFieldName
+  currentFormFieldName,
+  isInHouseTest
 }) => {
   const [t] = useTranslation();
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
-
   const { testResultStatusLabel, testResultStatusColor } = useTestResultStatusData(currentFormFieldName);
 
   const { customizedDate: formattedOrderedDate } = timeAdjuster(dates?.ordered ?? '');
@@ -57,7 +57,7 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
                 },
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_LAB_PHONE_NUMBER),
-                  value: !specimenId ? lab?.phone ?? '' : ''
+                  value: !isInHouseTest ? lab?.phone ?? '' : ''
                 },
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_LAB_ORDERING_MRP),

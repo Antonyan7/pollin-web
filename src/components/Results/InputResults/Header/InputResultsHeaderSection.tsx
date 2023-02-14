@@ -12,7 +12,7 @@ const InputResultsHeaderSection: React.FC<InputResultsHeaderSectionProps> = ({ t
       </Typography>
       {rows.map(
         (row) =>
-          row?.value && (
+          row?.value !== '' && (
             <Grid key={row.label} display="flex" justifyContent="space-between">
               <Typography variant="h5" component="h5" fontWeight={500}>
                 {row.label}:

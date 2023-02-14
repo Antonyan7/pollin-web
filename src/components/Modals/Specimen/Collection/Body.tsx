@@ -8,14 +8,13 @@ import { resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
-import { SpecimenTrackingCollectionModalSteps } from '../types';
-
 import SpecimenDataItem from './SpecimenTestData/SpecimenDataItem';
 import FirstStepContent from './FirstStepContent';
 import SpecimenDataCollectionProgressBar from './ProgressBar';
 import SecondStepContent from './SecondStepContent';
+import { SpecimenCollectionModalSteps } from './types';
 
-const Body: React.FC<SpecimenTrackingCollectionModalSteps> = ({ collectionModalCurrentStep }) => {
+const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentStep }) => {
   const [t] = useTranslation();
   const specimensForAppointment = useAppSelector(resultsSelector.appointmentSpecimens);
   const isSpecimensForAppointmentLoading = useAppSelector(resultsSelector.isAppointmentSpecimensLoading);

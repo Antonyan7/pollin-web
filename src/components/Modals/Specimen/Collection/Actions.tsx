@@ -11,10 +11,10 @@ import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import {
   ISpecimenCollectionFormLocationData,
   ISpecimenCollectionLocationsField,
-  SpecimenTrackingCollectionModalActionsProps
-} from '../types';
+  SpecimenCollectionModalActionsProps
+} from './types';
 
-const Actions: React.FC<SpecimenTrackingCollectionModalActionsProps> = ({
+const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
   collectionModalCurrentStep,
   setCollectionModalCurrentStep,
   appointmentId,
@@ -65,7 +65,7 @@ const Actions: React.FC<SpecimenTrackingCollectionModalActionsProps> = ({
     }
   };
 
-  const handleSpecimenTrackingConfirmation = () => {
+  const handleSpecimenCollectionConfirmation = () => {
     if (isFirstStep) {
       setCollectionModalCurrentStep?.(2);
     } else {
@@ -107,7 +107,7 @@ const Actions: React.FC<SpecimenTrackingCollectionModalActionsProps> = ({
               }}
               color="primary"
               variant="contained"
-              onClick={handleSpecimenTrackingConfirmation}
+              onClick={handleSpecimenCollectionConfirmation}
             >
               {confirmButtonLabel}
             </Button>

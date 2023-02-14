@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import { defaultResource } from '@components/Scheduling/applySchedule/constants/defaultValues';
@@ -28,7 +28,9 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
 
   const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
   const isGroupedResourceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
-  const [resourceProviderCurrentPage, setResourceProviderCurrentPage] = useState<number>(1);
+
+  const resourceProviderCurrentPage = groupedResourceProviders.currentPage;
+
   const onSelectResourceUpdate = (resourceItem: IServiceProvider | null) => {
     if (resourceItem) {
       onChange(resourceItem.id);
@@ -37,26 +39,25 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
     }
   };
 
-  const adaptedGroupedOptions = useMemo(
-    () =>
-      groupedResourceProviders.providers.flatMap((provider) =>
-        (provider?.items ?? []).map((option) => ({ ...option, type: provider.groupTitle }))
-      ),
-    [groupedResourceProviders.providers]
-  );
-  const resourceFieldOptions = adaptedGroupedOptions;
-  const resourceFieldInputValue = useMemo(
-    () => resourceFieldOptions.find((fieldOption) => fieldOption.id === resourceId)?.title ?? '',
-    [resourceId, resourceFieldOptions]
-  );
+  const { resourceFieldInputValue, resourceFieldOptions } = useMemo(() => {
+    const adaptedGroupedOptions = groupedResourceProviders.providers.flatMap((provider) =>
+      (provider?.items ?? []).map((option) => ({ ...option, type: provider.groupTitle }))
+    );
+
+    return {
+      resourceFieldInputValue: adaptedGroupedOptions.find((fieldOption) => fieldOption.id === resourceId)?.title ?? '',
+      resourceFieldOptions: adaptedGroupedOptions
+    };
+  }, [resourceId, groupedResourceProviders.providers]);
 
   const onResourceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
     const eventTarget = event.target as HTMLDivElement;
 
     if (eventTarget.scrollHeight - Math.round(eventTarget.scrollTop) === eventTarget.clientHeight) {
       if (groupedResourceProviders.pageSize * resourceProviderCurrentPage <= groupedResourceProviders.totalItems) {
-        setResourceProviderCurrentPage(resourceProviderCurrentPage + 1);
-        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: resourceProviderCurrentPage }));
+        const newPage = resourceProviderCurrentPage + 1;
+
+        dispatch(bookingMiddleware.getNewGroupedServiceProviders({ page: newPage }));
       }
     }
   };

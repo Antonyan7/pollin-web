@@ -14,7 +14,7 @@ const extractFormDataFromTestResultsDetails = (testResultsDetails: TestResultsDe
         items: currentTestDetails.items?.map((item: ITestResultItem) => ({
           id: item.id,
           resultType: item.resultType,
-          dateReceived: item.dateReceived,
+          dateReceived: item?.dateReceived ? item?.dateReceived : null,
           result: item?.result ?? ''
         })),
         comment: currentTestDetails.comment ?? '',

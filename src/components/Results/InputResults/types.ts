@@ -23,6 +23,7 @@ export interface InputResultsHeaderSectionProps {
 export interface InputTestResultsHeaderProps extends Partial<ITestResultsDetails> {
   specimenId?: string;
   currentFormFieldName: string;
+  isInHouseTest: boolean;
 }
 
 export interface IMeasurementsFieldValues {

@@ -1,17 +1,21 @@
 import { Dispatch, SetStateAction } from 'react';
 import { ISpecimenForAppointment } from '@axios/results/resultsManagerTypes';
 
-export interface SpecimenTrackingCollectionModalSteps {
+export interface SpecimenCollectionModalProps {
+  appointmentId: string;
+}
+
+export interface SpecimenCollectionModalSteps {
   collectionModalCurrentStep: number;
   setCollectionModalCurrentStep?: Dispatch<SetStateAction<number>>;
 }
 
-export interface SpecimenTrackingCollectionModalActionsProps extends SpecimenTrackingCollectionModalSteps {
+export interface SpecimenCollectionModalActionsProps extends SpecimenCollectionModalSteps {
   appointmentId: string;
   onClose: () => void;
 }
 
-export interface SpecimenDataCollectionProgressBarProps extends SpecimenTrackingCollectionModalSteps {
+export interface SpecimenDataCollectionProgressBarProps extends SpecimenCollectionModalSteps {
   isProgressFreezed: boolean;
 }
 

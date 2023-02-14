@@ -34,11 +34,11 @@ const Actions = ({ row }: IPatientInfoProps) => {
 
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
 
-    // Check is specimenTrackings patientResults Modal
+    // Check is specimenCollection patientResults Modal
     if ('isEditable' in row) {
       dispatch(
         viewsMiddleware.openModal({
-          name: ModalName.SpecimenTrackingCollection,
+          name: ModalName.SpecimenCollection,
           props: {
             appointmentId: row.id
           }

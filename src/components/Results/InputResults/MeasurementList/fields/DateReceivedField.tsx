@@ -46,7 +46,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
           onClose={onDatePickerClose}
           label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED)}
           inputFormat="MMM dd, yyyy"
-          value={new Date(`${value}`)}
+          value={value ? new Date(`${value}`) : null}
           onChange={(date: Date | null) => onDateChange(date)}
           components={{
             OpenPickerIcon: CalendarIcon

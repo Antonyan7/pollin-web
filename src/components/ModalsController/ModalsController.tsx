@@ -27,10 +27,10 @@ import ScheduleTemplatesErrorModal, {
   ScheduleTemplatesErrorModalProps
 } from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
+import SpecimenCollectionModal from '@components/Modals/Specimen/Collection';
+import { SpecimenCollectionModalProps } from '@components/Modals/Specimen/Collection/types';
 import AddNewExistingTransportModal from '@components/Modals/Specimens/AddNewExistingTransport';
 import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
-import SpecimenTrackingCollectionModal from '@components/Modals/SpecimenTracking/Collection';
-import { SpecimenTrackingCollectionModalProps } from '@components/Modals/SpecimenTracking/Collection/types';
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
 } from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
@@ -124,8 +124,8 @@ const getHandoffConfirmationModal = (modal: IOpenedModal<HandoffConfirmationModa
   <HandoffConfirmation key={modal.name} {...modal.props} />
 );
 
-const getSpecimenTrackingCollectionModal = (modal: IOpenedModal<SpecimenTrackingCollectionModalProps>) => (
-  <SpecimenTrackingCollectionModal key={modal.name} appointmentId={modal.props.appointmentId} />
+const getSpecimenCollectionModal = (modal: IOpenedModal<SpecimenCollectionModalProps>) => (
+  <SpecimenCollectionModal key={modal.name} appointmentId={modal.props.appointmentId} />
 );
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getPatientPartnerModal = (modal: IOpenedModal<PatientPartnerModalProps>) => (
@@ -200,8 +200,8 @@ export const ModalsController = () => {
             return getPatientPartnersModal(modal);
           case ModalName.InHouseTestResults:
             return getInHouseTestResultsModal();
-          case ModalName.SpecimenTrackingCollection:
-            return getSpecimenTrackingCollectionModal(modal);
+          case ModalName.SpecimenCollection:
+            return getSpecimenCollectionModal(modal);
           case ModalName.TestResultReviewConfirmation:
             return getTestResultReviewConfirmation(modal);
           case ModalName.TestResultReleaseConfirmation:
