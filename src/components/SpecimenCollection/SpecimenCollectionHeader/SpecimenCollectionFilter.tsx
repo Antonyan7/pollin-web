@@ -23,7 +23,12 @@ const useStyles = makeStyles({
     overflowX: 'scroll',
     width: '100%',
     overflowY: 'auto',
-    gap: gridSpacing
+    gap: gridSpacing,
+    '-ms-overflow-style': 'none',
+    'scrollbar-width': 'none',
+    '&::-webkit-scrollbar': {
+      display: 'none'
+    }
   },
   selectedValue: {
     margin: `${margins.topBottom2} ${margins.leftRight0}`,
