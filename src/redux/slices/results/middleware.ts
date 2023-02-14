@@ -384,13 +384,25 @@ const getAllTestsSpecimensList =
     }
   };
 
-const applyMoveToInHouse = (specimens: string[]) => async (dispatch: AppDispatch) => {
+const applyMoveToInHouse = (specimens: string[], identifiers: string[]) => async (dispatch: AppDispatch) => {
   try {
     const specimenData = specimens.map((specimenId) => ({ id: specimenId }));
 
     const response = await API.results.applyMoveToInHouse(specimenData);
 
     if (response) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            renderList: {
+              header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_HOUSE_SUCCESS),
+              items: identifiers
+            }
+          }
+        })
+      );
       dispatch(getAllTestsSpecimensList());
     }
   } catch (error) {

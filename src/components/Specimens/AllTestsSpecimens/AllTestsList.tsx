@@ -149,7 +149,7 @@ const AllTestsList = () => {
 
   const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
   const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
-  const inHouseSpecimensListEmptyMessage = t(Translation.PAGE_IN_HOUSE_SPECIMENS_LIST_EMPTY_STATE_MESSAGE);
+  const inHouseSpecimensListEmptyMessage = t(Translation.PAGE_IN_HOUSE_SPECIMENS_LIST_EMPTY_MESSAGE);
   const showEmptyState = !isLoading && !rowsCount;
   const showSpecimensList = rowsCount && !isLoading;
 

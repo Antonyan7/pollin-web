@@ -26,8 +26,8 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
   }, [ids, identifiers]);
 
   const handleMoveToInHouse = useCallback(() => {
-    dispatch(resultsMiddleware.applyMoveToInHouse(ids));
-  }, [ids]);
+    dispatch(resultsMiddleware.applyMoveToInHouse(ids, identifiers));
+  }, [ids, identifiers]);
 
   const navigateToTestResultsPage = () => {
     // it's not bulk action, so we'll have only one item in it
