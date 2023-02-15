@@ -22,6 +22,7 @@ import {
 interface DefaultMobileDateTimePickerProps<TInputDate, TDate>
   extends Omit<MobileDateTimePickerProps<TInputDate, TDate>, 'renderInput'> {
   renderInputProps?: TextFieldProps;
+  isLimited?: boolean;
 }
 export type DateAndStartTimeType = Date | null;
 
@@ -32,6 +33,7 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
   value,
   onChange,
   label,
+  isLimited = true,
   ...otherProps
 }: DefaultMobileDateTimePickerProps<TInputDate, TDate>) => {
   const [t] = useTranslation();
@@ -55,6 +57,16 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
     inputProps: {
       value: formattedDate
     }
+  };
+
+  const limitParams = {
+    ...(isLimited
+      ? {
+          minTime: MIN_SELECTABLE_DATE_TIME as TDate,
+          maxTime: MAX_SELECTABLE_DATE_TIME as TDate,
+          maxDate: futureDate180DaysAfter as TDate
+        }
+      : {})
   };
 
   useEffect(
@@ -92,9 +104,7 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
       ampm={false}
       label={label}
       disablePast
-      minTime={MIN_SELECTABLE_DATE_TIME as TDate}
-      maxTime={MAX_SELECTABLE_DATE_TIME as TDate}
-      maxDate={futureDate180DaysAfter as TDate} // Don't allow to select days for future more than 180 days
+      {...limitParams} // Don't allow to select days for future more than 180 days
       minutesStep={10}
       DialogProps={{
         ...otherProps.DialogProps,

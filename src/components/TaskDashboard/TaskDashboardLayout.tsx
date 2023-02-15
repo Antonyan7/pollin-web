@@ -5,7 +5,10 @@ import AddIcon from '@mui/icons-material/Add';
 import { Grid, Typography, useTheme } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { dispatch } from '@redux/hooks';
 import { Translation } from 'constants/translations';
+import { viewsMiddleware } from 'redux/slices/views';
+import { ModalName } from 'types/modals';
 
 export const TaskDashboardLayout = ({
   toggle,
@@ -19,6 +22,15 @@ export const TaskDashboardLayout = ({
 
   const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     setToggle(event.target.checked);
+  };
+
+  const onCreateTask = () => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.CreateTaskModal,
+        props: {}
+      })
+    );
   };
 
   return (
@@ -40,7 +52,7 @@ export const TaskDashboardLayout = ({
         />
       </Grid>
       <Grid item>
-        <StyledButtonNew fullWidth theme={theme} variant="contained" endIcon={<AddIcon />}>
+        <StyledButtonNew onClick={onCreateTask} fullWidth theme={theme} variant="contained" endIcon={<AddIcon />}>
           <Typography color={theme.palette.common.white}>{t(Translation.PAGE_TASK_DASHBOARD_CREATE_TASK)}</Typography>
         </StyledButtonNew>
       </Grid>

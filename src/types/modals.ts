@@ -38,7 +38,8 @@ export enum ModalName {
   PatientPartnerModal = 'PatientPartnerModal',
   CancelOrderCreationModal = 'CancelOrderCreationModal',
   OrderValidationErrorModal = 'OrderValidationErrorModal',
-  TaskStatusUpdateModal = 'TaskStatusUpdateModal'
+  TaskStatusUpdateModal = 'TaskStatusUpdateModal',
+  CreateTaskModal = 'CreateTaskModal'
 }
 
 export enum OpenModalReason {

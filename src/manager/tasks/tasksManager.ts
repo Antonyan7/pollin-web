@@ -1,7 +1,12 @@
-import { ITasksListReqBody, ITasksPrioritiesResponse, ITasksStatusesResponse } from '@axios/tasks/tasksManagerTypes';
+import {
+  ITaskCreateReqBody,
+  ITasksListReqBody,
+  ITasksPrioritiesResponse,
+  ITasksStatusesResponse
+} from '@axios/tasks/tasksManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
+import { ITaskCreateProps, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const baseURL = '/clinic-tasks';
 
@@ -10,7 +15,10 @@ const axiosInstance = Axios();
 const resultsManager = {
   axiosInstance,
   getTasksList(data: ITasksListReqBody) {
-    return axiosInstance.post<ITasksProps, IAxiosResponsePaginated<ITasksProps>>(`${baseURL}/v1/tasks`, data);
+    return axiosInstance.post<ITasksProps, IAxiosResponsePaginated<ITasksProps>>(`${baseURL}/v1/tasks/list`, data);
+  },
+  createTask(data: ITaskCreateReqBody) {
+    return axiosInstance.post<ITaskCreateProps, IAxiosResponse<ITaskCreateProps>>(`${baseURL}/v1/tasks`, data);
   },
   updateTaskStatus(rowId: string, statusId: string) {
     return axiosInstance.patch<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(

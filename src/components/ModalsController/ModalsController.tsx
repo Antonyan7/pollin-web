@@ -37,6 +37,7 @@ import HandoffConfirmation, {
 import TaskStatusUpdateModal, {
   TestResultReviewConfirmationProps
 } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
+import CreateTaskModal from '@components/Modals/Tasks';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -142,6 +143,8 @@ const getOrderValidationErrorModal = (modal: IOpenedModal<OrderValidationErrorMo
   <OrderValidationErrorModal key={modal.name} {...modal.props} />
 );
 
+const getTaskCreateModal = () => <CreateTaskModal />;
+
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
 
@@ -218,9 +221,12 @@ export const ModalsController = () => {
             return getOrderCreationCancelModal();
           case ModalName.OrderValidationErrorModal:
             return getOrderValidationErrorModal(modal);
-          // Task Managment
+          //  Task Dashboard
+          case ModalName.CreateTaskModal:
+            return getTaskCreateModal();
           case ModalName.TaskStatusUpdateModal:
             return getTaskStatusUpdateModal(modal);
+
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

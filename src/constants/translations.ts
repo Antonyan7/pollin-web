@@ -449,7 +449,15 @@ export enum Translation {
   PAGE_TASKS_MANAGER_CELLS_DUE = 'page.tasks.manager.cells.due',
   PAGE_TASKS_MANAGER_CELLS_PRIORITY = 'page.tasks.manager.cells.priority',
   PAGE_TASKS_MANAGER_CELLS_ASSIGNEE = 'page.tasks.manager.cells.assignee',
-  PAGE_TASKS_MANAGER_CELLS_STATUS = 'page.tasks.manager.cells.status'
+  PAGE_TASKS_MANAGER_CELLS_STATUS = 'page.tasks.manager.cells.status',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_TITLE = 'page.tasks.manager.modal.create.title',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_TASK_NAME_PLACEHOLDER = 'page.tasks.manager.modal.create.task.name.placeholder',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_PLACEHOLDER = 'page.tasks.manager.modal.create.patient.placeholder',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DUE_DATE_PLACEHOLDER = 'page.tasks.manager.modal.create.patient.due.date.placeholder',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DESCRIPTION_PLACEHOLDER = 'page.tasks.manager.modal.create.patient.description.placeholder',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_PRIORITY_PLACEHOLDER = 'page.tasks.manager.modal.create.patient.priority.placeholder',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_ASSIGN_PLACEHOLDER = 'page.tasks.manager.modal.create.patient.assign.placeholder',
+  PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_CREATE = 'page.tasks.manager.toast.successful.create'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

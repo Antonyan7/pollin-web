@@ -7,6 +7,8 @@ export const getInitialState = (): ITasksManager => ({
     pageSize: 25,
     totalItems: 0
   },
+  isTaskCreateLoading: false,
+  createdTaskId: '',
   priorities: [],
   isTasksListLoading: false,
   statuses: [],

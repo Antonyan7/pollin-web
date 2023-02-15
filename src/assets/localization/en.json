@@ -447,5 +447,13 @@
   "page.tasks.manager.cells.due": "Due",
   "page.tasks.manager.cells.priority": "Priority",
   "page.tasks.manager.cells.assignee": "Assignee",
-  "page.tasks.manager.cells.status": "Status"
+  "page.tasks.manager.cells.status": "Status",
+  "page.tasks.manager.modal.create.title": "Create Task",
+  "page.tasks.manager.modal.create.task.name.placeholder": "Task Name",
+  "page.tasks.manager.modal.create.patient.placeholder": "Patient (optional)",
+  "page.tasks.manager.modal.create.patient.due.date.placeholder": "Due Date & Time",
+  "page.tasks.manager.modal.create.patient.description.placeholder": "Description/Notes (optional)",
+  "page.tasks.manager.modal.create.patient.priority.placeholder": "Priority",
+  "page.tasks.manager.modal.create.patient.assign.placeholder": "Assign to",
+  "page.tasks.manager.toast.successful.create": "Task created and sent to"
 }

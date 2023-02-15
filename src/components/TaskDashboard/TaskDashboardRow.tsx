@@ -16,15 +16,15 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
   const taskPriorities = useAppSelector(tasksSelector.tasksPrioritiesList);
   const status = findStatusByID(row.statusId, taskStatuses);
   const priority = findPriorityById(row.priorityId, taskPriorities);
-  const actionBindings = useTaskDashboardActions(row, status.actions);
+  const actionBindings = useTaskDashboardActions(row, status?.actions);
 
   return (
     <TableRow tabIndex={-1} key={row.uuid}>
       <TableCell sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{row.name}</TableCell>
       <TableCell>{row.patient.name}</TableCell>
       <TableCell align="left">{formatDate(row.dueDate, 'MMM dd, yyyy HH:mm')}</TableCell>
-      <TableCell align="left">{priority.title}</TableCell>
-      <TableCell align="center">????</TableCell>
+      <TableCell align="left">{priority?.title}</TableCell>
+      <TableCell align="center">{row.assignee.name}</TableCell>
       <TableCell align="center">
         <Chip
           sx={{ background: status?.label?.background, color: status?.label?.text }}

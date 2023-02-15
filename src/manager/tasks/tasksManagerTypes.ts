@@ -41,6 +41,19 @@ export interface IStatusOptionAction {
   id: string;
   title: string;
 }
+export interface ITaskCreateReqBody {
+  task: ITaskCreate;
+}
+
+export interface ITaskCreate {
+  name: string;
+  assigneeId: string;
+  patientId?: string;
+  dueDate: string;
+  priorityId: string;
+  staffUserId: string;
+  description?: string;
+}
 
 export enum ContextMenuAction {
   Pending = 'Pending',

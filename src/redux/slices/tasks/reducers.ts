@@ -15,6 +15,12 @@ const reducers = createReducer({
   setTasksLoadingState(state, action: IAction<boolean>) {
     state.isTasksListLoading = action.payload;
   },
+  setTaskCreateLoadingState(state, action: IAction<boolean>) {
+    state.isTaskCreateLoading = action.payload;
+  },
+  setCreatedTaskId(state, action: IAction<string>) {
+    state.createdTaskId = action.payload;
+  },
   setTaskPriorities(state, action: IAction<ITaskPriorityOption[]>) {
     state.priorities = action.payload;
   },

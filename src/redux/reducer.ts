@@ -7,6 +7,7 @@ import { coreSlice } from './slices/core';
 import { ordersSlice } from './slices/orders';
 import { patientsSlice } from './slices/patients';
 import { schedulingSlice } from './slices/scheduling';
+import { staffSlice } from './slices/staff';
 import { userSlice } from './slices/user';
 import { viewsSlice } from './slices/views';
 
@@ -19,7 +20,8 @@ const reducer = combineReducers({
   user: userSlice.reducer,
   results: resultsSlice.reducer,
   orders: ordersSlice.reducer,
-  tasks: tasksSlice.reducer
+  tasks: tasksSlice.reducer,
+  staff: staffSlice.reducer
 });
 
 export default reducer;
