@@ -21,7 +21,7 @@ import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encou
 
 import 'react-quill/dist/quill.snow.css';
 
-const StyledGrid = styled(Grid)<GridProps>(({ theme }) => ({
+const EditorWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   width: '100%',
   marginTop: margins.top24,
   '& .quill': {
@@ -102,7 +102,6 @@ const SimpleTextEditor = ({
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
 
-  const isEncountersTypeSelectDisabled = mode === SimpleEditorMode.Edit_Note;
   const encountersTypeFieldName = EncountersFormField.EncountersTypeField;
   const editorFieldName = EncountersFormField.EditorContentField;
 
@@ -113,14 +112,13 @@ const SimpleTextEditor = ({
 
   return (
     <>
-      <StyledGrid item xs={12} theme={theme} as="form" onSubmit={handleSubmit(onSubmit)}>
+      <EditorWrapper item xs={12} theme={theme} as="form" onSubmit={handleSubmit(onSubmit)}>
         <SubCardStyled
           sx={{ backgroundColor: theme.palette.secondary[200], border: `${borders.solid1px} inherit`, p: 2 }}
         >
-          {mode === SimpleEditorMode.Add_Note || mode === SimpleEditorMode.Edit_Note ? (
+          {mode === SimpleEditorMode.Add_Note ? (
             <Grid item xs={6} mb={2}>
               <BaseSelectWithLoading
-                disabled={isEncountersTypeSelectDisabled}
                 labelId="encounter-label"
                 id="encounter-type"
                 label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
@@ -156,7 +154,7 @@ const SimpleTextEditor = ({
             </ButtonWithLoading>
           </Grid>
         </SubCardStyled>
-      </StyledGrid>
+      </EditorWrapper>
       {mode === SimpleEditorMode.Edit_Note ? <EditEncounterNoteAddendums /> : null}
       {mode === SimpleEditorMode.Edit_Addendum && secondPartAddendums?.length
         ? secondPartAddendums.map((addendum: AddendumsProps) => <CurrentAddendum currentAddendum={addendum} />)
