@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
 import { TestResultReviewConfirmationProps } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal/index';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -16,8 +17,11 @@ const Actions = ({ row, actionType }: TestResultReviewConfirmationProps) => {
   const confirmButtonLabel = t(Translation.COMMON_BUTTON_CONFIRM_LABEL);
   const isTaskUpdated = useAppSelector(tasksSelector.isTaskUpdated);
 
+  const taskStatuses: ITaskStatusOption[] = useAppSelector(tasksSelector.tasksStatusList);
+  const updatedStatus = taskStatuses.find((status) => status.statusId === actionType);
+  const message = `${t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_NOTIFICATION)} ${updatedStatus?.title}`;
   const onClickConfirm = () => {
-    dispatch(tasksMiddleware.updateTaskStatus(row.uuid, actionType));
+    dispatch(tasksMiddleware.updateTaskStatus(row.uuid, actionType, message));
     dispatch(viewsMiddleware.closeModal(ModalName.TaskStatusUpdateModal));
   };
 

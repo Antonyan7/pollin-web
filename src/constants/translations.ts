@@ -298,6 +298,7 @@ export enum Translation {
   MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_PATIENT = 'modal.task.management.task.status.update.patient',
   MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_PREVIOUS_STATUS = 'modal.task.management.task.status.update.previous.status',
   MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_UPDATED_STATUS = 'modal.task.management.task.status.update.updated.status',
+  MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_NOTIFICATION = 'modal.task.management.task.status.update.notification',
   PAGE_TASKS_MANAGER_OVERFLOW_REASSIGN = 'page.tasks.manager.overflow.reassign',
   MODAL_TEST_RESULT_HISTORY_NO_TRENDS = 'modal.test.result.history.no.trends',
   MODAL_TEST_RESULT_CONFIRM_RELEASE_TO_PATIENT = 'modal.test.result.confirm.release.to.patient',

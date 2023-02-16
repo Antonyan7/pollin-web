@@ -41,10 +41,19 @@ const getTasksStatuses = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const updateTaskStatus = (rowId: string, statusId: string) => async (dispatch: AppDispatch) => {
+const updateTaskStatus = (rowId: string, statusId: string, message: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsTaskUpdated(true));
     await API.tasks.updateTaskStatus(rowId, statusId);
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: message
+        }
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

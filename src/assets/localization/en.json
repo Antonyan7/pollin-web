@@ -296,6 +296,7 @@
   "modal.task.management.task.status.update.patient": "Patient:",
   "modal.task.management.task.status.update.previous.status": "Previous Status:",
   "modal.task.management.task.status.update.updated.status": "Updated Status:",
+  "modal.task.management.task.status.update.notification": "Review Result task updated to",
   "page.tasks.manager.overflow.reassign": "Reassign",
   "modal.test.result.history.no.trends": "No trends",
   "modal.test.result.confirm.release.to.patient": "Confirm Release to Patient?",
