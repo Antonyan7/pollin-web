@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FieldValues, SubmitHandler, useController, useFormContext } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -10,7 +10,7 @@ import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
-import { EncountersFormField, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { EncountersFormField, IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -92,11 +92,21 @@ const SimpleTextEditor = ({
 }: SimpleEditorProps) => {
   const encounterTypes = useAppSelector(patientsSelector.encountersTypes);
   const isEncounterLoading = useAppSelector(patientsSelector.isEncountersListLoading);
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
+  const recentAppointments = useAppSelector(patientsSelector.recentAppointments);
+  const isRecentAppointmentsLoading = useAppSelector(patientsSelector.isRecentAppointmentsLoading);
   const buttonWithLoadingState = loadingButtonState ?? isEncounterLoading;
-  const onSubmit = handleSave as SubmitHandler<FieldValues>;
+
   const theme = useTheme();
   const [t] = useTranslation();
-  const { handleSubmit, control } = useFormContext();
+  const { handleSubmit, control } = useFormContext<IEncountersFormBody>();
+  const onSubmit = handleSubmit((values) => handleSave?.(values));
+
+  useEffect(() => {
+    if (recentAppointments === null && !isRecentAppointmentsLoading && currentPatientId) {
+      dispatch(patientsMiddleware.getPatientRecentAppointments(currentPatientId));
+    }
+  }, [currentPatientId, isRecentAppointmentsLoading, recentAppointments]);
 
   useEffect(() => {
     dispatch(patientsMiddleware.getEncountersTypes());
@@ -104,35 +114,54 @@ const SimpleTextEditor = ({
 
   const encountersTypeFieldName = EncountersFormField.EncountersTypeField;
   const editorFieldName = EncountersFormField.EditorContentField;
+  const recentAppointmentsFieldName = EncountersFormField.RecentAppointmentsField;
 
   const { field: typeField } = useController({ control, name: encountersTypeFieldName });
+  const { field: recentAppointmentsField } = useController({ control, name: recentAppointmentsFieldName });
   const { field: editorField } = useController({ control, name: editorFieldName });
-  const { value, onChange } = typeField;
   const { onChange: onEditorFieldChange, ...fieldProps } = editorField;
 
   return (
     <>
-      <EditorWrapper item xs={12} theme={theme} as="form" onSubmit={handleSubmit(onSubmit)}>
+      <EditorWrapper item xs={12} theme={theme} as="form" onSubmit={onSubmit}>
         <SubCardStyled
           sx={{ backgroundColor: theme.palette.secondary[200], border: `${borders.solid1px} inherit`, p: 2 }}
         >
-          {mode === SimpleEditorMode.Add_Note ? (
-            <Grid item xs={6} mb={2}>
-              <BaseSelectWithLoading
-                labelId="encounter-label"
-                id="encounter-type"
-                label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-                value={value}
-                onChange={(event) => onChange(event.target.value)}
-              >
-                {encounterTypes?.map((encounterType) => (
-                  <MenuItem value={encounterType.id} key={encounterType.id}>
-                    {encounterType.title}
-                  </MenuItem>
-                ))}
-              </BaseSelectWithLoading>
+          {mode === SimpleEditorMode.Add_Note && (
+            <Grid item xs={12} container columnGap={margins.all24}>
+              <Grid item xs={4} mb={2}>
+                <BaseSelectWithLoading
+                  labelId="encounter-label"
+                  id="encounter-type"
+                  label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+                  value={typeField.value}
+                  onChange={(event) => typeField.onChange(event.target.value)}
+                >
+                  {encounterTypes?.map((encounterType) => (
+                    <MenuItem value={encounterType.id} key={encounterType.id}>
+                      {encounterType.title}
+                    </MenuItem>
+                  ))}
+                </BaseSelectWithLoading>
+              </Grid>
+              <Grid item xs={4.5} mb={2}>
+                <BaseSelectWithLoading
+                  isLoading={isRecentAppointmentsLoading}
+                  labelId="recent-appointments-label"
+                  id="recent-appointments"
+                  label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_PAST_APPOINTMENT)}
+                  value={recentAppointmentsField.value}
+                  onChange={(event) => recentAppointmentsField.onChange(event.target.value)}
+                >
+                  {recentAppointments?.map(({ id, type, date }) => (
+                    <MenuItem value={id} key={id}>
+                      {type} | {date}
+                    </MenuItem>
+                  ))}
+                </BaseSelectWithLoading>
+              </Grid>
             </Grid>
-          ) : null}
+          )}
           <ReactQuill
             style={{ backgroundColor: theme.palette.common.white }}
             onChange={(event) => {
@@ -155,10 +184,9 @@ const SimpleTextEditor = ({
           </Grid>
         </SubCardStyled>
       </EditorWrapper>
-      {mode === SimpleEditorMode.Edit_Note ? <EditEncounterNoteAddendums /> : null}
-      {mode === SimpleEditorMode.Edit_Addendum && secondPartAddendums?.length
-        ? secondPartAddendums.map((addendum: AddendumsProps) => <CurrentAddendum currentAddendum={addendum} />)
-        : null}
+      {mode === SimpleEditorMode.Edit_Note && <EditEncounterNoteAddendums />}
+      {!!(mode === SimpleEditorMode.Edit_Addendum && secondPartAddendums?.length) &&
+        secondPartAddendums.map((addendum: AddendumsProps) => <CurrentAddendum currentAddendum={addendum} />)}
     </>
   );
 };

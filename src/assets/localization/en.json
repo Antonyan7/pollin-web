@@ -155,6 +155,7 @@
   "page.encounters.create.first.encounter": "Create First Encounter",
   "page.encounters.create.encounter": "Create Encounter",
   "page.encounters.encounter.type": "Encounter Type",
+  "page.encounters.encounter.past.appointment": "Past Appointment (Optional)",
   "page.encounters.edit.encounter.note": "Edit Encounter",
   "page.encounters.add.addendum": "Add Addendum",
   "page.encounters.edit.addendum": "Edit Addendum",

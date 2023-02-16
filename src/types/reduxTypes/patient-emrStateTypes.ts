@@ -2,6 +2,7 @@ import { IPagination } from '@axios/axiosTypes';
 import {
   IPatientAppointment,
   IPatientAppointmentsListFilter,
+  IPatientRecentAppointment,
   PatientAppointmentsFilterOption
 } from '@axios/booking/managerBookingTypes';
 import {
@@ -28,6 +29,8 @@ export interface PatientEmrProps {
   encountersSearchValue: string;
   selectedEncountersFilters: IEncountersFilterOption[];
   encounters: IEncountersProps;
+  recentAppointments: IPatientRecentAppointment[] | null;
+  isRecentAppointmentsLoading: boolean;
   isPatientProfileLoading: boolean;
   isPatientsListLoading: boolean;
   isEncountersListLoading: boolean;

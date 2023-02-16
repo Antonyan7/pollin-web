@@ -87,6 +87,7 @@ export interface IEncountersFormBody {
   patientId?: string;
   id?: string;
   encounterId?: string;
+  recentAppointmentId?: string;
 }
 
 export interface IEncountersFormDefaultProps {
@@ -96,7 +97,8 @@ export interface IEncountersFormDefaultProps {
 
 export enum EncountersFormField {
   EditorContentField = 'content',
-  EncountersTypeField = 'encountersTypeId'
+  EncountersTypeField = 'encountersTypeId',
+  RecentAppointmentsField = 'recentAppointmentId'
 }
 
 export interface IHeadCell {

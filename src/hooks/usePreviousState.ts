@@ -5,9 +5,9 @@ const usePreviousState = (nextValue: string, stale?: boolean) => {
 
   useEffect(() => {
     if (stale) {
-      const isInitalized = previousState.current === '';
+      const isInitialized = previousState.current === '';
 
-      if (isInitalized) {
+      if (isInitialized) {
         previousState.current = nextValue;
       }
     } else {

@@ -210,3 +210,13 @@ export interface IGetProvidersCollectionCalendarAppointmentsReqBody {
   date: string;
   filters: ProvidersCollectionCalendarAppointmentsReqBodyFilter[];
 }
+
+export interface IPatientRecentAppointment {
+  id: string;
+  type: string;
+  date: string;
+}
+
+export interface IGetPatientRecentAppointments {
+  appointments: IPatientRecentAppointment[];
+}

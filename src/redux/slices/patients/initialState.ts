@@ -31,6 +31,8 @@ export const getInitialState = (): PatientEmrProps => ({
     types: [{ id: '', title: '' }],
     encounterDetails: null
   },
+  recentAppointments: null,
+  isRecentAppointmentsLoading: false,
   error: null,
   patientProfile: null,
   isPatientHighlightsLoading: false,

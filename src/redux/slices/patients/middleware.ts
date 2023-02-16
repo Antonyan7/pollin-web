@@ -39,6 +39,8 @@ const {
   setEncounterFilters,
   setEncountersType,
   setEncounterDetailsInfo,
+  setRecentAppointments,
+  setIsRecentAppointmentsLoading,
   setPatientProfile,
   setIsPatientProfileLoading,
   setPatientHighlightsLoadingState,
@@ -236,6 +238,21 @@ const getEncountersTypes = () => async (dispatch: AppDispatch) => {
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
+  }
+};
+
+const getPatientRecentAppointments = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsRecentAppointmentsLoading(true));
+
+    const response = await API.booking.getPatientRecentAppointments(patientId);
+
+    dispatch(setRecentAppointments(response.data.appointments));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsRecentAppointmentsLoading(false));
   }
 };
 
@@ -512,6 +529,7 @@ export default {
   setEncountersLoadingState,
   resetAppointmentsList,
   getEncounterList,
+  getPatientRecentAppointments,
   setEncounterSearch,
   setSelectedEncounterFilters,
   getEncounterFilters,

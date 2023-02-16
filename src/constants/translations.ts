@@ -157,6 +157,7 @@ export enum Translation {
   PAGE_ENCOUNTERS_CREATE_FIRST_ENCOUNTER = 'page.encounters.create.first.encounter',
   PAGE_ENCOUNTERS_CREATE_ENCOUNTER = 'page.encounters.create.encounter',
   PAGE_ENCOUNTERS_ENCOUNTER_TYPE = 'page.encounters.encounter.type',
+  PAGE_ENCOUNTERS_ENCOUNTER_PAST_APPOINTMENT = 'page.encounters.encounter.past.appointment',
   PAGE_ENCOUNTERS_EDIT_ENCOUNTER_NOTE = 'page.encounters.edit.encounter.note',
   PAGE_ENCOUNTERS_ADD_ADDENDUM = 'page.encounters.add.addendum',
   PAGE_ENCOUNTERS_EDIT_ADDENDUM = 'page.encounters.edit.addendum',

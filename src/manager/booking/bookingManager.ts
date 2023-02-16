@@ -13,6 +13,7 @@ import {
   IGetPatientAppointmentsListFiltersResponse,
   IGetPatientAppointmentsListReqBody,
   IGetPatientAppointmentsListResponse,
+  IGetPatientRecentAppointments,
   IGetProvidersCollectionCalendarAppointments,
   IGetProvidersCollectionCalendarAppointmentsReqBody,
   IGroupedServiceProvidersListResponse,
@@ -115,6 +116,13 @@ const bookingManager = {
       .post<IGetProvidersCollectionCalendarAppointments, IAxiosResponse<IGetProvidersCollectionCalendarAppointments>>(
         `${baseURL}/v1/calendar/specimen-appointments`,
         body
+      )
+      .then(({ data }) => data);
+  },
+  getPatientRecentAppointments(patientId: string) {
+    return axiosInstance
+      .get<IGetPatientRecentAppointments, IAxiosResponse<IGetPatientRecentAppointments>>(
+        `${baseURL}/v1/profile-appointment/${patientId}/recent`
       )
       .then(({ data }) => data);
   }

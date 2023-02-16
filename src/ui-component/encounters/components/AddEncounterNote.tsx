@@ -61,7 +61,7 @@ const AddEncounterNote = () => {
     defaultValues: getAddEncounterInitialValues()
   });
 
-  const sanitizedValue: string = sanitize(editorValue);
+  const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
 
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);

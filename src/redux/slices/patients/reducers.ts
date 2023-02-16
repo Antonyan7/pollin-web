@@ -1,3 +1,4 @@
+import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
   IPatientContactInformation,
@@ -80,6 +81,12 @@ const reducers = createReducer({
   },
   setEncounterDetailsInfo(state, action: IAction<IEncounterDetailsProps | null>) {
     state.encounters.encounterDetails = action.payload;
+  },
+  setRecentAppointments(state, action: IAction<IPatientRecentAppointment[]>) {
+    state.recentAppointments = action.payload;
+  },
+  setIsRecentAppointmentsLoading(state, action: IAction<boolean>) {
+    state.isRecentAppointmentsLoading = action.payload;
   },
   setPatientProfile(state, action: IAction<PatientProfile | null>) {
     state.patientProfile = action.payload;
