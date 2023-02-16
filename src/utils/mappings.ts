@@ -3,4 +3,5 @@ interface IStatusMapping {
   status: string;
 }
 
-export const getStatusTitle = (variations: IStatusMapping[], statusId: string): string => variations.find((variation) => variation.status === statusId)?.title ?? statusId;
+export const getStatusTitle = (variations: IStatusMapping[], statusId: string): string =>
+  variations.find((variation) => variation.status === statusId)?.title ?? statusId;

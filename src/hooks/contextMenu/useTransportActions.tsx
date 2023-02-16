@@ -8,7 +8,7 @@ import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 import { ITransportRowProps } from './types';
 
-const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction[] = []) => {
+const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction[] = [], isCurrentDay?: boolean) => {
   const handleHandoffConfirmationAction = useCallback(() => {
     dispatch(
       viewsMiddleware.openModal({
@@ -18,15 +18,17 @@ const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction
     );
   }, [row]);
 
-  const actionBindings = [
-    {
+  const actionBindings = [];
+
+  if (!isCurrentDay) {
+    actionBindings.push({
       id: TransportActionType.MarkInTransit,
       title: actions.find((action) => action.id === TransportActionType.MarkInTransit)?.title ?? 'Could not find',
       actionCallback: () => {
         handleHandoffConfirmationAction();
       }
-    }
-  ];
+    });
+  }
 
   return filterActionBindings(actions, actionBindings);
 };

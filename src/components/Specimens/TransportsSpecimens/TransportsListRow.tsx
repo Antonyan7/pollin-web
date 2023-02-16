@@ -17,12 +17,12 @@ interface AllTestsRowProps {
 }
 
 export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
-  const actionBindings = useTransportActions(row, actions);
   const currentDay = getCurrentDate();
-  const actionVariations = useAppSelector(resultsSelector.transportActions);
-  const isToday = getDate(currentDay) === getDate(row.date);
+  const isCurrentDay = getDate(currentDay) === getDate(row.date);
   const { customizedDate, customizedTransportCreationDate } = timeAdjuster(row.date);
-  const folderCreateDate = isToday ? customizedTransportCreationDate : customizedDate;
+  const folderCreateDate = isCurrentDay ? customizedTransportCreationDate : customizedDate;
+  const actionBindings = useTransportActions(row, actions, !isCurrentDay);
+  const actionVariations = useAppSelector(resultsSelector.transportActions);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
   return (
