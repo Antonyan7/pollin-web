@@ -34,7 +34,8 @@ export interface ITransportListReqBody {
 }
 
 export enum SpecimensListSortFields {
-  COLLECTION_AGE = 'CollectionAge'
+  COLLECTION_AGE = 'CollectionAge',
+  LAB_NAME = 'LabName'
 }
 
 export enum OrderResultsSortFields {

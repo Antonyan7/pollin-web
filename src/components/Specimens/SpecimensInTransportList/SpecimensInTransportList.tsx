@@ -43,7 +43,7 @@ const SpecimensInTransportList = () => {
   const [sortField, setSortField] = useState<SpecimensInTransportListSortFields>(
     SpecimensInTransportListSortFields.PATIENT_NAME
   );
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
   const specimensList = useAppSelector(resultsSelector.specimensInTransportList);
   const isLoading = useAppSelector(resultsSelector.isSpecimensInTransportListLoading);
   const actionVariations = useAppSelector(resultsSelector.specimenActions);

@@ -36,7 +36,7 @@ const TransportsList = () => {
   const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
-  const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
+  const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Asc);
   const [searchedItems, setSearchedItems] = useState<string[]>([]);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const transportList = useAppSelector(resultsSelector.transportList);

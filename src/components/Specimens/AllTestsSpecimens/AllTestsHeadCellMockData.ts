@@ -19,11 +19,11 @@ export const headCellsData = (t: TFunction) => [
     isSortable: false
   },
   {
-    id: 'labName',
+    id: SpecimensListSortFields.LAB_NAME,
     label: t(Translation.PAGE_SPECIMENS_LAB_NAME),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
     id: SpecimensListSortFields.COLLECTION_AGE,
