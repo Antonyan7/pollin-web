@@ -1,13 +1,19 @@
 import { ITaskPriorityOption, ITaskStatusOption } from '@axios/tasks/tasksManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
-import { ITasksManager, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
+import { ITaskDetails, ITasksManager, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const createReducer = <T extends SliceCaseReducers<ITasksManager>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
   setError(state, action) {
     state.error = action.payload;
+  },
+  setTaskDetails(state, action: IAction<ITaskDetails>) {
+    state.taskDetails = action.payload;
+  },
+  setIsTaskDetailsLoading(state, action: IAction<boolean>) {
+    state.isTaskDetailsLoading = action.payload;
   },
   setTasksList(state, action: IAction<ITasksProps>) {
     state.tasks = action.payload;

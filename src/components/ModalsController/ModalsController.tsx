@@ -34,6 +34,7 @@ import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTrans
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
 } from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
+import TaskDetailsModal, { TaskDetailsModalProps } from '@components/Modals/TaskDashboard/TaskDetailsModal';
 import TaskStatusUpdateModal, {
   TestResultReviewConfirmationProps
 } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
@@ -149,6 +150,10 @@ const getTaskCreateModal = () => <CreateTaskModal />;
 const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
 
 // Task Management
+const getTaskDetailsModal = (modal: IOpenedModal<TaskDetailsModalProps>) => (
+  <TaskDetailsModal key={modal.name} {...modal.props} />
+);
+
 const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmationProps>) => (
   <TaskStatusUpdateModal key={modal.name} {...modal.props} />
 );
@@ -224,6 +229,8 @@ export const ModalsController = () => {
           //  Task Dashboard
           case ModalName.CreateTaskModal:
             return getTaskCreateModal();
+          case ModalName.TaskDetailsModal:
+            return getTaskDetailsModal(modal);
           case ModalName.TaskStatusUpdateModal:
             return getTaskStatusUpdateModal(modal);
 

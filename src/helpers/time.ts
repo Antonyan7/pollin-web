@@ -18,4 +18,4 @@ export const toRoundupTime = (selectedTime: Date | string | null) => {
 };
 
 export const formatDate = (date: Date | null) =>
-  date ? format(new Date(date), `MMM dd, yyy hh:mm a '[${TIME_CONFIG || ''}]'`) : '';
+  date ? format(new Date(date), `MMM dd, yyy hh:mm a '${TIME_CONFIG || ''}'`) : '';

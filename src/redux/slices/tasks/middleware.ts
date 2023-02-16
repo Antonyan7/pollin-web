@@ -12,6 +12,8 @@ import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const {
   setError,
+  setTaskDetails,
+  setIsTaskDetailsLoading,
   setCreatedTaskId,
   setTaskCreateLoadingState,
   setTaskPriorities,
@@ -114,6 +116,21 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
   }
 };
 
+const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTaskDetailsLoading(true));
+
+    const response = await API.tasks.getTaskDetails(taskId);
+
+    dispatch(setTaskDetails(response.data.data.task));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTaskDetailsLoading(false));
+  }
+};
+
 const getTasksList = (tasksListData: ITasksListReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoadingState(true));
@@ -144,6 +161,7 @@ const getTasksList = (tasksListData: ITasksListReqBody) => async (dispatch: AppD
 };
 
 export default {
+  getTasksDetails,
   getTasksList,
   getTasksStatuses,
   updateTaskStatus,

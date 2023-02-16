@@ -6,7 +6,7 @@ import {
 } from '@axios/tasks/tasksManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { ITaskCreateProps, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
+import { ITaskCreateProps,ITasksDetailsProps, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const baseURL = '/clinic-tasks';
 
@@ -14,6 +14,11 @@ const axiosInstance = Axios();
 
 const resultsManager = {
   axiosInstance,
+  getTaskDetails(taskId: string) {
+    return axiosInstance.get<ITasksDetailsProps, IAxiosResponsePaginated<ITasksDetailsProps>>(
+      `${baseURL}/v1/tasks/${taskId}`
+    );
+  },
   getTasksList(data: ITasksListReqBody) {
     return axiosInstance.post<ITasksProps, IAxiosResponsePaginated<ITasksProps>>(`${baseURL}/v1/tasks/list`, data);
   },

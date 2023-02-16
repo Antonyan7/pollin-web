@@ -13,5 +13,23 @@ export const getInitialState = (): ITasksManager => ({
   isTasksListLoading: false,
   statuses: [],
   error: null,
-  isTaskUpdated: false
+  isTaskUpdated: false,
+  taskDetails: {
+    name: '',
+    patient: { name: '' },
+    dueDate: '',
+    description: '',
+    priorityId: '',
+    assignee: {
+      name: '',
+      date: ''
+    },
+    createdBy: {
+      name: '',
+      date: ''
+    },
+    statusId: '',
+    reassigningHistory: []
+  },
+  isTaskDetailsLoading: false
 });
