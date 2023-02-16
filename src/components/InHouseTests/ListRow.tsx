@@ -11,16 +11,17 @@ import useChipColor from '@hooks/useChipColor';
 import { ContextMenu } from '@ui-component/contextMenu';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
+import { getStatusTitle } from '@utils/mappings';
 
 import { SpecimenListRowProps } from './types';
 
 const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const specimenActions = useAppSelector(resultsSelector.specimenActions);
-  const statusVariation = specimenActions.find((action) => action.status === row.status);
+  const actionVariations = useAppSelector(resultsSelector.specimenActions);
 
   const chipColors = useChipColor(row.age);
+  const statusTitle = getStatusTitle(actionVariations, row.status);
 
   const actionBindings = useSpecimenActions([row], actions);
 
@@ -47,7 +48,7 @@ const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenList
       <TableCell>{row.titles?.join(', ')}</TableCell>
       <TableCell>{row.identifier}</TableCell>
       <TableCell>{row.machine}</TableCell>
-      <TableCell>{statusVariation?.title}</TableCell>
+      <TableCell>{statusTitle}</TableCell>
       <TableCell align="center">
         <Chip
           sx={{ ...chipColors }}
