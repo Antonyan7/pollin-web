@@ -17,6 +17,7 @@ import { margins, paddings } from 'themes/themeConstants';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
+import { useFlags } from '@hooks/useFlagsHook';
 
 const avatarImage = '/assets/images/users';
 
@@ -33,6 +34,7 @@ interface ContactListProps {
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const { DOMAIN_MEDICAL_BACKGROUND } = useFlags();
   const avatarProfile = avatar && `${avatarImage}/${avatar}`;
   const patientId = useSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
@@ -49,6 +51,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
         dispatch(viewsMiddleware.openModal(modalParams));
       }
     };
+
   const onSendIntakeButtonClick = () => {
     dispatch(
       patientsMiddleware.sendPatientIntakeReminder(
@@ -171,14 +174,16 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
           >
             {isPatientHighlightIntakeComplete ? (
               <Grid item>
-                <Tooltip placement="top" title="Message">
-                  <Button
-                    sx={{ minWidth: 32, height: 32, margin: margins.all8 }}
-                    startIcon={<ModeEditOutlinedIcon fontSize="small" />}
-                  >
-                    {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE)}
-                  </Button>
-                </Tooltip>
+                {DOMAIN_MEDICAL_BACKGROUND ? (
+                  <Tooltip placement="top" title="Message">
+                    <Button
+                      sx={{ minWidth: 32, height: 32, margin: margins.all8 }}
+                      startIcon={<ModeEditOutlinedIcon fontSize="small" />}
+                    >
+                      {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE)}
+                    </Button>
+                  </Tooltip>
+                ) : null}
                 <Tooltip placement="top" title="Message">
                   <Button sx={{ minWidth: 32, height: 32 }} onClick={() => setOpen(!open)}>
                     {open ? <KeyboardArrowUpIcon fontSize="small" /> : <KeyboardArrowDownIcon fontSize="small" />}
