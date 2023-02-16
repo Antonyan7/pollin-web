@@ -12,6 +12,7 @@ import DetailsAppointmentModal, {
 } from '@components/Modals/Booking/DetailsAppointmentModal';
 import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Modals/Booking/EditAppointmentsModal';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
+import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
@@ -149,6 +150,9 @@ const getTaskCreateModal = () => <CreateTaskModal />;
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
 
+// Error modal
+const getErrorModal = () => <ErrorModal />;
+
 // Task Management
 const getTaskDetailsModal = (modal: IOpenedModal<TaskDetailsModalProps>) => (
   <TaskDetailsModal key={modal.name} {...modal.props} />
@@ -226,6 +230,9 @@ export const ModalsController = () => {
             return getOrderCreationCancelModal();
           case ModalName.OrderValidationErrorModal:
             return getOrderValidationErrorModal(modal);
+          // Error Modal
+          case ModalName.ErrorModal:
+            return getErrorModal();
           //  Task Dashboard
           case ModalName.CreateTaskModal:
             return getTaskCreateModal();
