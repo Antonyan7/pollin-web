@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButtonNew } from '@components/common/MaterialComponents';
+import EventIcon from '@mui/icons-material/Event';
 import { Stack, TextField, Typography, useTheme } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -74,11 +75,15 @@ const DefaultDatePicker = () => {
           renderInput={(params) => (
             <TextField
               disabled
-              sx={{ width: '320px' }}
+              sx={{ width: '320px', svg: { color: theme.palette.primary.main } }}
               {...params}
               onClick={() => setDatePickerOpen(true)}
               onKeyDown={(event) => {
                 event.preventDefault();
+              }}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: <EventIcon />
               }}
             />
           )}

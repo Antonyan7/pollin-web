@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useController } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import EventIcon from '@mui/icons-material/Event';
 import { Stack, TextField, TextFieldProps } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -54,12 +55,16 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
           renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => (
             <TextField
               disabled
-              sx={{ width: '320px' }}
+              sx={{ width: '320px', svg: { color: (theme) => theme.palette.primary.main } }}
               {...params}
               {...otherFieldProps}
               onClick={() => setOpenDatePicker(true)}
               onKeyDown={(event) => {
                 event.preventDefault();
+              }}
+              InputProps={{
+                ...params.InputProps,
+                endAdornment: <EventIcon />
               }}
             />
           )}
