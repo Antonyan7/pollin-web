@@ -26,6 +26,7 @@ import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -82,7 +83,12 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
 
     if (lastCreatedTransportFolder?.id) {
       dispatch(
-        resultsMiddleware.addSpecimenToTransportFolder(specimens, lastCreatedTransportFolder.id, selectedIdentifiers)
+        resultsMiddleware.addSpecimenToTransportFolder(
+          specimens,
+          lastCreatedTransportFolder.id,
+          ModalName.AddNewExistingTransportModal,
+          selectedIdentifiers
+        )
       );
     }
   }, [lastCreatedTransportFolder?.id, specimenIds, selectedIdentifiers]);

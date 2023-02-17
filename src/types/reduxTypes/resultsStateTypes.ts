@@ -1,5 +1,6 @@
 import { IPagination } from '@axios/axiosTypes';
 import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
+import { ModalName } from 'types/modals';
 import {
   IResultsFilterOption,
   ITransportFolder,
@@ -337,6 +338,7 @@ export interface IAddNewContactModalProps {
 export interface IAddNewExistingTransportModalProps {
   specimenIds: string[];
   selectedIdentifiers: string[];
+  modalName: ModalName;
 }
 
 export interface IResultsFilterCategory {

@@ -25,6 +25,15 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
     );
   }, [ids, identifiers]);
 
+  const handleMoveToAnotherTransport = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.MoveToAnotherTransport,
+        props: { specimenIds: ids, selectedIdentifiers: identifiers }
+      })
+    );
+  }, [ids, identifiers]);
+
   const handleMoveToInHouse = useCallback(() => {
     dispatch(resultsMiddleware.applyMoveToInHouse(ids, identifiers));
   }, [ids, identifiers]);
@@ -60,6 +69,13 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
       title: getActionTitleById(SpecimenActionType.MoveToTransport, actions),
       actionCallback: () => {
         handleMoveToTransport();
+      }
+    },
+    {
+      id: SpecimenActionType.MoveToAnotherTransport,
+      title: getActionTitleById(SpecimenActionType.MoveToAnotherTransport, actions),
+      actionCallback: () => {
+        handleMoveToAnotherTransport();
       }
     },
     {

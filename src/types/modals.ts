@@ -36,6 +36,7 @@ export enum ModalName {
   AddNewTransportFolderModal = 'AddNewTransportFolderModal',
   AddNewExistingTransportModal = 'AddNewExistingTransportModal',
   PatientPartnerModal = 'PatientPartnerModal',
+  MoveToAnotherTransport = 'MoveToAnotherTransport',
   ErrorModal = 'ErrorModal',
   CancelOrderCreationModal = 'CancelOrderCreationModal',
   TaskDetailsModal = 'TaskDetailsModal',

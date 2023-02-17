@@ -32,6 +32,9 @@ import SpecimenCollectionModal from '@components/Modals/Specimen/Collection';
 import { SpecimenCollectionModalProps } from '@components/Modals/Specimen/Collection/types';
 import AddNewExistingTransportModal from '@components/Modals/Specimens/AddNewExistingTransport';
 import AddNewTransportFolderModal from '@components/Modals/Specimens/AddNewTransportFolderModal';
+import MoveToAnotherTransport, {
+  MoveToAnotherTransportProps
+} from '@components/Modals/Specimens/MoveToAnotherTransport';
 import HandoffConfirmation, {
   HandoffConfirmationModalProps
 } from '@components/Modals/SpecimenTracking/PatientContactInformationModal';
@@ -145,6 +148,10 @@ const getOrderValidationErrorModal = (modal: IOpenedModal<OrderValidationErrorMo
   <OrderValidationErrorModal key={modal.name} {...modal.props} />
 );
 
+const getMoveToAnotherTransport = (modal: IOpenedModal<MoveToAnotherTransportProps>) => (
+  <MoveToAnotherTransport key={modal.name} {...modal.props} />
+);
+
 const getTaskCreateModal = () => <CreateTaskModal />;
 
 // Patient Partner confirmation (Are you want to go to profile partners profile)
@@ -203,6 +210,8 @@ export const ModalsController = () => {
             return getAddNewTransportFolderModal(modal);
           case ModalName.AddNewExistingTransportModal:
             return getAddNewExistingTransportModal(modal);
+          case ModalName.MoveToAnotherTransport:
+            return getMoveToAnotherTransport(modal);
           // profile highlight
           case ModalName.PatientLineItemsModal:
             return getPatientListItemsModal(modal);

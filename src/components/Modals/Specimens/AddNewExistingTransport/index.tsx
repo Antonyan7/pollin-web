@@ -68,10 +68,18 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
               </Tabs>
             </Box>
             <TabPanel value={activePageValue} index={0}>
-              <NewTransportFolder specimenIds={specimenIds} selectedIdentifiers={selectedIdentifiers} />
+              <NewTransportFolder
+                specimenIds={specimenIds}
+                selectedIdentifiers={selectedIdentifiers}
+                modalName={ModalName.AddNewExistingTransportModal}
+              />
             </TabPanel>
             <TabPanel value={activePageValue} index={1}>
-              <ExistingTransportFolder specimenIds={specimenIds} selectedIdentifiers={selectedIdentifiers} />
+              <ExistingTransportFolder
+                specimenIds={specimenIds}
+                selectedIdentifiers={selectedIdentifiers}
+                modalName={ModalName.AddNewExistingTransportModal}
+              />
             </TabPanel>
           </Box>
         </DialogContent>

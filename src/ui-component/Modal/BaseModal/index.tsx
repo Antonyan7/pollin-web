@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import { Box, CircularProgress, DialogContent } from '@mui/material';
+import { Box, CircularProgress, DialogContent, SxProps } from '@mui/material';
 import BaseModalTitle from 'ui-component/Modal/BaseModal/BaseModalTitle';
 
 import { BaseModalStyled } from '@ui-component/Modal/BaseModal/BaseModalStyled';
@@ -12,6 +12,8 @@ export interface BaseModalProps {
   children?: JSX.Element;
   onClose: () => void;
   dataCy?: string;
+  disableDivider?: boolean;
+  titleSx?: SxProps;
 }
 
 const BaseModal = ({
@@ -21,16 +23,25 @@ const BaseModal = ({
   dialogContentCy,
   title,
   onClose,
-  dataCy
+  dataCy,
+  disableDivider,
+  titleSx
 }: BaseModalProps) => {
   const id = useId();
 
   return (
     <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby={id}>
-      <BaseModalTitle data-cy={closeIconDataCy} id={id} onClose={onClose}>
+      <BaseModalTitle
+        data-cy={closeIconDataCy}
+        id={id}
+        onClose={onClose}
+        {...(titleSx && {
+          sx: titleSx
+        })}
+      >
         {title}
       </BaseModalTitle>
-      <DialogContent dividers data-cy={dialogContentCy}>
+      <DialogContent dividers={!disableDivider} data-cy={dialogContentCy}>
         {isLoading ? (
           <Box className="Dialog-box">
             <CircularProgress sx={{ margin: 'auto' }} />

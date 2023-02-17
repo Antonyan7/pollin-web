@@ -689,7 +689,7 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
 };
 
 const addSpecimenToTransportFolder =
-  (specimens: IObjectWithId[], transportFolderId: string, selectedIdentifiers?: string[]) =>
+  (specimens: IObjectWithId[], transportFolderId: string, modalToClose: ModalName, selectedIdentifiers?: string[]) =>
   async (dispatch: AppDispatch, getState: () => RootState) => {
     const newTransportFolder = getState().results.tracking.lastCreatedTransportFolder;
     const existingTransportFolder = getState().results.tracking.transportList.folders.find(
@@ -701,7 +701,7 @@ const addSpecimenToTransportFolder =
 
     try {
       await API.results.addSpecimenToTransportFolder(specimens, transportFolderId);
-      dispatch(viewsMiddleware.closeModal(ModalName.AddNewExistingTransportModal));
+      dispatch(viewsMiddleware.closeModal(modalToClose));
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,

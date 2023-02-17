@@ -22,6 +22,7 @@ import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
 import { IAddNewExistingTransportModalProps, ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 import { TransportFolderStatus } from 'types/results';
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
-  const { specimenIds, selectedIdentifiers } = props;
+  const { specimenIds, selectedIdentifiers, modalName } = props;
   const classes = useStyles();
   const transportList = useAppSelector(resultsSelector.transportList);
   const { folders: transportFolders } = transportList;
@@ -68,7 +69,9 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       id: specimenId
     }));
 
-    dispatch(resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder, selectedIdentifiers));
+    dispatch(
+      resultsMiddleware.addSpecimenToTransportFolder(specimens, transportFolder, modalName, selectedIdentifiers)
+    );
   };
 
   useEffect(() => {
@@ -82,12 +85,14 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
     dispatch(resultsMiddleware.getTransportList(body));
   }, [calendarDate]);
 
+  const isMoveToAnother = modalName === ModalName.MoveToAnotherTransport;
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
-            <DatePickerWithTodayButton />
+            {!isMoveToAnother && <DatePickerWithTodayButton />}
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <BaseSelectWithLoading
@@ -113,7 +118,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
         </Box>
       </Grid>
       <Grid item xs={12}>
-        <Divider sx={{ marginBottom: margins.bottom16 }} />
+        {!isMoveToAnother && <Divider sx={{ marginBottom: margins.bottom16 }} />}
         <DialogActions sx={{ marginTop: margins.top4 }}>
           <Grid container justifyContent="flex-end" alignItems="center">
             <Grid item xs={12}>
