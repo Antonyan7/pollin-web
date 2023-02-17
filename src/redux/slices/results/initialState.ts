@@ -24,6 +24,7 @@ const getExternalResultsInitialState = (): IExternalTestResults => ({
 const getTrackingInitialState = (): ITestResultsTracking => ({
   transportList: {
     folders: [],
+    notFound: [],
     currentPage: 1,
     pageSize: 10,
     totalItems: 0

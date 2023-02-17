@@ -458,7 +458,8 @@ const getTransportList =
         totalItems,
         currentPage,
         pageSize,
-        folders: response.data.data.folders
+        folders: response.data.data.folders,
+        notFound: response.data.data.notFound
       };
 
       dispatch(setTransportList(results));

@@ -119,6 +119,7 @@ export interface ITransportListFolderProps {
 }
 export interface ITransportListProps {
   folders: ITransportListFolderProps[];
+  notFound: ISpecimensListItemShort[];
 }
 
 export interface LabMachineProps {
@@ -173,6 +174,7 @@ export interface IResultsList extends IPagination {
 }
 export interface ITransportList extends IPagination {
   folders: ITransportListFolderProps[];
+  notFound: ISpecimensListItemShort[];
 }
 export interface ISpecimensListItem {
   id: string;

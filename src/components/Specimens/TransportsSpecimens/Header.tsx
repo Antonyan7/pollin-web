@@ -24,15 +24,15 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
   );
 
   const labList = useAppSelector(resultsSelector.testResultLabs);
-  const specimensList = useAppSelector(resultsSelector.specimensList);
+  const transportList = useAppSelector(resultsSelector.transportList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
-  const invalidSearchedItems = specimensList.notFound.map((notFoundItem) => notFoundItem.identifier);
+  const invalidSearchedItems = transportList?.notFound?.map((notFoundItem) => notFoundItem.identifier);
 
   useEffect(() => {
     const shouldShowToast = searchedItems.length > 0 && !isSpecimensListLoading;
 
     if (shouldShowToast) {
-      if (specimensList.notFound?.length > 0) {
+      if (transportList?.notFound?.length > 0) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [specimensList.notFound, isSpecimensListLoading]);
+  }, [transportList.notFound, isSpecimensListLoading]);
 
   useEffect(() => {
     if (!labList.length) {
@@ -82,7 +82,11 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
 
   return (
     <>
-      <SearchBox onSearch={searchByIdsHandler} placeholder={scanBarcodeLabel} />
+      <SearchBox
+        onSearch={searchByIdsHandler}
+        placeholder={scanBarcodeLabel}
+        invalidSearchedItems={invalidSearchedItems}
+      />
       <Grid display="flex" justifyContent="space-between" my={margins.topBottom20}>
         <Grid item xs={3}>
           <DefaultDatePicker />
