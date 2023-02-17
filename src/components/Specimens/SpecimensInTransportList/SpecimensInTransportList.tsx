@@ -60,8 +60,6 @@ const SpecimensInTransportList = () => {
   const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
   const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
 
-  const rowCount = specimensList?.specimens.length;
-
   useEffect(() => {
     const params: IGetSpecimensInTransportListParams = {
       page: page + 1,
@@ -108,7 +106,7 @@ const SpecimensInTransportList = () => {
               <TableCell padding="checkbox">
                 <Checkbox
                   sx={{ color: theme.palette.primary.main }}
-                  indeterminate={numSelected > 0 && numSelected < rowCount}
+                  indeterminate={numSelected > 0 && numSelected < rowsCount}
                   checked={isAllSpecimensSelected}
                   onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelectedRows)}
                 />

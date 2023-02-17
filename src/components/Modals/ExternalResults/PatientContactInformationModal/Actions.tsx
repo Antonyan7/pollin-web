@@ -15,9 +15,10 @@ import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface IPatientInfoProps {
   row: IPatientContactInformationModalProps;
+  shouldOpenSpecimenCollection: boolean;
 }
 
-const Actions = ({ row }: IPatientInfoProps) => {
+const Actions = ({ row, shouldOpenSpecimenCollection }: IPatientInfoProps) => {
   const [t] = useTranslation();
   const router = useRouter();
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
@@ -34,8 +35,7 @@ const Actions = ({ row }: IPatientInfoProps) => {
 
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
 
-    // Check is specimenCollection patientResults Modal
-    if ('isEditable' in row) {
+    if (shouldOpenSpecimenCollection) {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.SpecimenCollection,
@@ -44,9 +44,9 @@ const Actions = ({ row }: IPatientInfoProps) => {
           }
         })
       );
+    } else {
+      dispatch(bookingMiddleware.getAppointmentDetails());
     }
-
-    dispatch(bookingMiddleware.getAppointmentDetails());
   };
 
   return (

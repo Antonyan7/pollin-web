@@ -118,6 +118,11 @@ export interface IAppointment {
   color: string;
 }
 
+export interface ISpecimenCollectionAppointment {
+  id: string;
+  status: AppointmentStatus.InProgress;
+}
+
 export interface ICalendarSlot {
   id?: string;
   title: string;
@@ -145,5 +150,6 @@ export interface ISpecimenAppointmentsState {
 }
 
 export enum AppointmentStatus {
-  Booked = 'Booked'
+  Booked = 'Booked',
+  InProgress = 'InProgress'
 }

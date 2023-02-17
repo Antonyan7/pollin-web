@@ -24,6 +24,7 @@ import {
   IUpdatedAppointmentResponse
 } from '@axios/booking/managerBookingTypes';
 import { Axios } from 'manager/axiosInstance';
+import { ISpecimenCollectionAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 const baseURL = '/clinic-booking';
 
@@ -75,6 +76,12 @@ const bookingManager = {
     return axiosInstance.put<IUpdatedAppointmentResponse, IAxiosResponse<IUpdatedAppointmentResponse>>(
       `${baseURL}/v1/appointment/${appointmentId}`,
       appointmentValues
+    );
+  },
+  updateSpecimenCollectionAppointmentStatus(appointment: ISpecimenCollectionAppointment) {
+    return axiosInstance.patch<ISpecimenCollectionAppointment, IAxiosResponse<ISpecimenCollectionAppointment>>(
+      `${baseURL}/v1/calendar/specimen-appointments`,
+      appointment
     );
   },
 

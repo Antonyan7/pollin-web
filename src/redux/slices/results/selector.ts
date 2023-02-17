@@ -79,6 +79,10 @@ const isSpecimensInTransportListLoading = createSelector(
   [selector],
   (state) => state.collection.isSpecimensInTransportListLoading
 );
+const isUpdatingSpecimenCollectionAppointmentStatus = createSelector(
+  [selector],
+  (state) => state.collection.isUpdatingSpecimenCollectionAppointmentStatus
+);
 
 export default {
   allTestsSpecimensList,
@@ -104,6 +108,7 @@ export default {
   isTransportListLoading,
   isSpecimenAddedToFolder,
   isTransportFolderDownloaded,
+  isUpdatingSpecimenCollectionAppointmentStatus,
   labMachines,
   lastCreatedTransportFolder,
   pendingSpecimenStats,

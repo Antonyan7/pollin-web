@@ -27,6 +27,7 @@ import { format } from 'date-fns';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
+import { ISpecimenCollectionAppointment } from 'types/reduxTypes/bookingStateTypes';
 import {
   IAllTestsSpecimensList,
   IObjectWithId,
@@ -42,6 +43,8 @@ import {
   IGetTransportFoldersReqBody,
   ResultsErrorMessages
 } from 'types/results';
+
+import { bookingMiddleware } from '../booking';
 
 const {
   setAllTestsSpecimensList,
@@ -62,6 +65,7 @@ const {
   setIsTransportFolderDownloaded,
   setIsTransportFoldersLoading,
   setIsTransportListLoading,
+  setIsUpdatingSpecimenCollectionAppointmentStatus,
   setLabMachines,
   setLabs,
   setLabsLoadingState,
@@ -511,28 +515,56 @@ const getSpecimenStorageLocations = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const submitSpecimenCollections = (data: ISpecimenCollectionData) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsSendingSpecimenCollectionData(true));
-    await API.results.submitSpecimenCollections(data);
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECT_SUCCESS_MESSAGE, {
-            appointmentId: data.appointmentId
-          })
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsSendingSpecimenCollectionData(false));
-  }
-};
+const updateSpecimenCollectionAppointmentStatus =
+  (data: ISpecimenCollectionAppointment) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsUpdatingSpecimenCollectionAppointmentStatus(true));
+
+      await API.booking.updateSpecimenCollectionAppointmentStatus(data);
+      dispatch(getSpecimensForAppointment(data.id));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsUpdatingSpecimenCollectionAppointmentStatus(false));
+    }
+  };
+
+const submitSpecimenCollections =
+  (data: ISpecimenCollectionData, patientName: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsSendingSpecimenCollectionData(true));
+      await API.results.submitSpecimenCollections(data);
+
+      const { currentSpecimenServiceProviderId, specimenAppointments, date } = store.getState().booking;
+
+      dispatch(
+        bookingMiddleware.getSpecimenAppointments(
+          currentSpecimenServiceProviderId,
+          date,
+          specimenAppointments.selectedFilters.map(({ id }) => ({ id }))
+        )
+      );
+      // Reset current appointment details
+      dispatch(bookingMiddleware.getAppointmentDetails());
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECT_SUCCESS_MESSAGE, {
+              title: patientName
+            })
+          }
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsSendingSpecimenCollectionData(false));
+    }
+  };
 
 const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (dispatch: AppDispatch) => {
   try {
@@ -761,6 +793,7 @@ export default {
   removeTestResultsAttachment,
   resetLastCreatedTransportFolderId,
   resetTestResultsState,
+  updateSpecimenCollectionAppointmentStatus,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
   submitSpecimenCollections,

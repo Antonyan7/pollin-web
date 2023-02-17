@@ -20,10 +20,13 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
   const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const [t] = useTranslation();
   const patientContactInformationTitleLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_TITLE);
-
+  const shouldOpenSpecimenCollection = 'isEditable' in row;
   const onClose = () => {
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));
-    dispatch(bookingMiddleware.getAppointmentDetails());
+
+    if (!shouldOpenSpecimenCollection) {
+      dispatch(bookingMiddleware.getAppointmentDetails());
+    }
   };
 
   return (
@@ -41,7 +44,7 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
               </Grid>
               <Grid item xs={12}>
                 <Divider sx={{ marginBottom: margins.bottom16 }} />
-                <Actions row={row} />
+                <Actions row={row} shouldOpenSpecimenCollection={shouldOpenSpecimenCollection} />
               </Grid>
             </Grid>
           </PatientInformationContext>

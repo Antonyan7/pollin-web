@@ -377,7 +377,7 @@
   "page.specimen.tracking.modal.collection.button.collection.completed.label": "Collection Completed",
   "page.specimen.tracking.modal.collection.button.collection.done.label": "Collection Done",
   "page.specimen.tracking.modal.collection.select.store.label": "Store",
-  "page.specimen.tracking.modal.collection.collect.success.message": "Collection for {{appointmentId}} Completed",
+  "page.specimen.tracking.modal.collection.collect.success.message": "Collection for {{title}} Completed",
   "page.specimen.tracking.modal.collection.button.back.label": "Back",
   "page.specimen.tracking.modal.collection.specimen.location.store.placeholder": "Store",
   "page.specimen.tracking.modal.collection.collected.on.title": "Collected On",

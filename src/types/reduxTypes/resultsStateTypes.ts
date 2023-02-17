@@ -79,6 +79,7 @@ export interface ITestResultsCollection {
   isSpecimenStorageLocationsLoading: boolean;
   specimensInTransportList: ISpecimensInTransportList;
   isSpecimensInTransportListLoading: boolean;
+  isUpdatingSpecimenCollectionAppointmentStatus: boolean;
 }
 
 export interface ITestResultProps {

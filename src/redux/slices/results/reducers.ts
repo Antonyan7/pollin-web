@@ -149,6 +149,9 @@ const reducers = createReducer({
   },
   setIsTestResultsSubmitWentSuccessful(state, action: IAction<boolean | null>) {
     state.common.isTestResultsSubmitWentSuccessful = action.payload;
+  },
+  setIsUpdatingSpecimenCollectionAppointmentStatus(state, action: IAction<boolean>) {
+    state.collection.isUpdatingSpecimenCollectionAppointmentStatus = action.payload;
   }
 });
 

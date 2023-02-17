@@ -25,8 +25,10 @@ export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
   const actionVariations = useAppSelector(resultsSelector.transportActions);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
+  const linkToInsideTransportFolder = `/clinic-test-results/specimen-tracking/transports/${row.id}`;
+
   return (
-    <Link href={`/clinic-test-results/specimen-tracking/transports/${row.id}`}>
+    <Link href={linkToInsideTransportFolder}>
       <TableRow sx={{ cursor: 'pointer' }} hover>
         <TableCell>{row.title}</TableCell>
         <TableCell>{folderCreateDate}</TableCell>

@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
@@ -42,7 +43,10 @@ const SpecimenCollectionModal: React.FC<SpecimenCollectionModalProps> = ({ appoi
   const [t] = useTranslation();
   const specimenCollectionTitle = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_TITLE);
 
-  const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.SpecimenCollection));
+  const onClose = () => {
+    dispatch(viewsMiddleware.closeModal(ModalName.SpecimenCollection));
+    dispatch(bookingMiddleware.getAppointmentDetails());
+  };
 
   return (
     <BaseModal isLoading={isSpecimensForAppointmentLoading} title={specimenCollectionTitle} onClose={onClose}>

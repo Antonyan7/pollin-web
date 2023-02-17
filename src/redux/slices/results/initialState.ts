@@ -63,7 +63,8 @@ const getCollectionInitialState = (): ITestResultsCollection => ({
     currentPage: 1,
     pageSize: 10,
     totalItems: 0
-  }
+  },
+  isUpdatingSpecimenCollectionAppointmentStatus: false
 });
 
 const getInHouseInitialState = (): IInHouseTestResultsProps => ({

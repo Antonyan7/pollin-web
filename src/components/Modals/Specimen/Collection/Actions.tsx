@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Button, DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import {
   ISpecimenCollectionFormLocationData,
@@ -22,6 +24,11 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
 }) => {
   const specimensForAppointment = useSelector(resultsSelector.appointmentSpecimens);
   const isSpecimensForAppointmentLoading = useSelector(resultsSelector.isAppointmentSpecimensLoading);
+
+  const appointmentDetails = useSelector(bookingSelector.appointmentDetails);
+  const appointmentStatus = appointmentDetails?.appointment.status;
+  const patientName = appointmentDetails?.patient.name ?? '';
+
   const areThereAnyOrders =
     specimensForAppointment?.specimens &&
     specimensForAppointment?.specimens?.length > 0 &&
@@ -35,7 +42,6 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
 
   const [t] = useTranslation();
   const isFirstStep = collectionModalCurrentStep === 1;
-
   const confirmButtonLabel = (() => {
     const doneButtonLabel = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_BUTTON_COLLECTION_DONE_LABEL);
 
@@ -53,13 +59,16 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
   const onSubmit = (data: ISpecimenCollectionLocationsField) => {
     if (data) {
       dispatch(
-        resultsMiddleware.submitSpecimenCollections({
-          appointmentId,
-          collections: locations.map(({ specimenId, storageLocationId }: ISpecimenCollectionFormLocationData) => ({
-            specimenId,
-            storageLocationId
-          }))
-        })
+        resultsMiddleware.submitSpecimenCollections(
+          {
+            appointmentId,
+            collections: locations.map(({ specimenId, storageLocationId }: ISpecimenCollectionFormLocationData) => ({
+              specimenId,
+              storageLocationId
+            }))
+          },
+          patientName
+        )
       );
       onClose();
     }
@@ -78,6 +87,17 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
   };
 
   const isSubmitButtonDisabled = isFirstStep ? !areThereAnyOrders : !areAllLocationsFilled;
+
+  useEffect(() => {
+    if (appointmentStatus !== AppointmentStatus.InProgress && areThereAnyOrders) {
+      dispatch(
+        resultsMiddleware.updateSpecimenCollectionAppointmentStatus({
+          id: appointmentId,
+          status: AppointmentStatus.InProgress
+        })
+      );
+    }
+  }, [appointmentId, appointmentStatus, areThereAnyOrders]);
 
   return (
     <DialogActions sx={{ marginTop: margins.top8, p: 0 }}>
