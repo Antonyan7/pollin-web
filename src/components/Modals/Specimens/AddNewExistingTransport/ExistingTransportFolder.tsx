@@ -24,6 +24,7 @@ import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
 import { SortOrder } from 'types/patient';
 import { IAddNewExistingTransportModalProps, ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
+import { TransportFolderStatus } from 'types/results';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -44,6 +45,9 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const classes = useStyles();
   const transportList = useAppSelector(resultsSelector.transportList);
   const { folders: transportFolders } = transportList;
+  const onlyReadyForTransitFolders = transportFolders.filter(
+    (transportFolder) => transportFolder.status === TransportFolderStatus.ReadyForTransport
+  );
   const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const isSpecimenAddedToFolder = useAppSelector(resultsSelector.isSpecimenAddedToFolder);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
@@ -97,7 +101,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleTransportFolderChange}
                 >
-                  {transportFolders.map((transport: ITransportListFolderProps) => (
+                  {onlyReadyForTransitFolders.map((transport: ITransportListFolderProps) => (
                     <MenuItem value={transport.id} key={transport.id}>
                       {transport.fullTitle}
                     </MenuItem>

@@ -55,7 +55,7 @@ export interface IGetTransportFoldersReqBody {
   date: string;
   specimens?: IIdentifier[];
   page: number;
-  sortByField: TransportStatus;
+  sortByField: TransportFolderStatus;
   sortOrder: ISortOrder;
 }
 
@@ -106,14 +106,9 @@ export enum TestResultsStats {
   LessThanOrEqual15Days = 'LessThanOrEqual15Days'
 }
 
-export enum TransportStatus {
+export enum TransportFolderStatus {
   ReadyForTransport = 'ReadyForTransport',
   InTransit = 'InTransit'
-}
-
-export enum TransportFolderStatus {
-  ReadyForTransport = 'Ready for transport',
-  InTransit = 'In transit'
 }
 
 export enum ResultsErrorMessages {

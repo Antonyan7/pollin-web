@@ -1,6 +1,12 @@
 import { IPagination } from '@axios/axiosTypes';
 import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
-import { IResultsFilterOption, ITransportFolder, ITransportFolderDriver, TestResultsStats } from 'types/results';
+import {
+  IResultsFilterOption,
+  ITransportFolder,
+  ITransportFolderDriver,
+  TestResultsStats,
+  TransportFolderStatus
+} from 'types/results';
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
@@ -90,11 +96,6 @@ export interface ITestResultProps {
   collection: ITestResultsCollection;
 }
 
-export enum ITransportFolderStatus {
-  ReadyForTransport = 'ReadyForTransport',
-  InTransit = 'InTransit'
-}
-
 export interface CancellationReasonsProps {
   id: string;
   title: string;
@@ -114,7 +115,7 @@ export interface ITransportListFolderProps {
   labName: string;
   fullTitle: string;
   driver: ITransportFolderDriver;
-  status: ITransportFolderStatus;
+  status: TransportFolderStatus;
 }
 export interface ITransportListProps {
   folders: ITransportListFolderProps[];
