@@ -520,8 +520,16 @@ const updateSpecimenCollectionAppointmentStatus =
     try {
       dispatch(setIsUpdatingSpecimenCollectionAppointmentStatus(true));
 
+      const { currentSpecimenServiceProviderId, specimenAppointments, date } = store.getState().booking;
+
       await API.booking.updateSpecimenCollectionAppointmentStatus(data);
-      dispatch(getSpecimensForAppointment(data.id));
+      dispatch(
+        bookingMiddleware.getSpecimenAppointments(
+          currentSpecimenServiceProviderId,
+          date,
+          specimenAppointments.selectedFilters.map(({ id }) => ({ id }))
+        )
+      );
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error));

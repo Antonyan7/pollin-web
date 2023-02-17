@@ -81,7 +81,7 @@ const bookingManager = {
   updateSpecimenCollectionAppointmentStatus(appointment: ISpecimenCollectionAppointment) {
     return axiosInstance.patch<ISpecimenCollectionAppointment, IAxiosResponse<ISpecimenCollectionAppointment>>(
       `${baseURL}/v1/calendar/specimen-appointments`,
-      appointment
+      { appointment }
     );
   },
 
