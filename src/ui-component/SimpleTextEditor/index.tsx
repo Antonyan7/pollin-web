@@ -114,7 +114,7 @@ const SimpleTextEditor = ({
 
   const encountersTypeFieldName = EncountersFormField.EncountersTypeField;
   const editorFieldName = EncountersFormField.EditorContentField;
-  const recentAppointmentsFieldName = EncountersFormField.RecentAppointmentsField;
+  const recentAppointmentsFieldName = EncountersFormField.AppointmentsField;
 
   const { field: typeField } = useController({ control, name: encountersTypeFieldName });
   const { field: recentAppointmentsField } = useController({ control, name: recentAppointmentsFieldName });

@@ -178,7 +178,9 @@ export interface IPatientContactInformationResponse {
   information: IPatientContactInformation;
 }
 
-export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {}
+export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {
+  appointmentId?: string;
+}
 export interface IUpdateEncounterNoteRequest {
   id: string;
   content: string;
