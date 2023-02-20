@@ -32,7 +32,7 @@ const SpecimensInTransport = () => {
       const blob = await dispatch(resultsMiddleware.downloadTransportFolderManifest(transportFolderId));
 
       if (blob && downloadManifestRef.current) {
-        const url = window.URL.createObjectURL(blob);
+        const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
 
         downloadManifestRef.current.href = url;
         downloadManifestRef.current.download = `${downloadedTransportTitle}.pdf`;

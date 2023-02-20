@@ -21,6 +21,7 @@ import {
   IValidateOrderCreationResponse,
   OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
+import { AxiosResponse } from 'axios';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
@@ -167,8 +168,11 @@ const resultsManager = {
     );
   },
   downloadTransportFolderManifest(transportFolderId: string) {
-    return axiosInstance.get<void, IAxiosResponse<void>>(
-      `/clinic-downloads/v1/transport/${transportFolderId}/download-manifest`
+    return axiosInstance.get<void, AxiosResponse<BlobPart>>(
+      `/clinic-downloads/v1/transport/${transportFolderId}/download-manifest`,
+      {
+        responseType: 'blob'
+      }
     );
   },
   applyRetestAction(specimenData: IObjectWithId[], reasonId: string) {

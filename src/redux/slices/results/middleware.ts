@@ -751,7 +751,11 @@ const downloadTransportFolderManifest = (transportFolderId: string) => async (di
   try {
     const response = await API.results.downloadTransportFolderManifest(transportFolderId);
 
-    return response.data.data;
+    if (response) {
+      dispatch(setIsTransportFolderDownloaded(false));
+
+      return response.data;
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
