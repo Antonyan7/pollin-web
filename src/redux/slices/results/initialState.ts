@@ -46,16 +46,7 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
   labs: [],
   isTransportFolderDownloaded: false,
   isTransportFoldersLoading: false,
-  lastCreatedTransportFolder: null
-});
-
-const getCollectionInitialState = (): ITestResultsCollection => ({
-  appointmentSpecimens: null,
-  isAppointmentSpecimensLoading: false,
-  isSendingSpecimenCollectionData: false,
-  isSpecimensInTransportListLoading: false,
-  isSpecimenStorageLocationsLoading: false,
-  specimenStorageLocations: [],
+  lastCreatedTransportFolder: null,
   specimensInTransportList: {
     transportFolder: {
       title: ''
@@ -65,6 +56,16 @@ const getCollectionInitialState = (): ITestResultsCollection => ({
     pageSize: 10,
     totalItems: 0
   },
+  shouldRefetchInTransportList: false
+});
+
+const getCollectionInitialState = (): ITestResultsCollection => ({
+  appointmentSpecimens: null,
+  isAppointmentSpecimensLoading: false,
+  isSendingSpecimenCollectionData: false,
+  isSpecimensInTransportListLoading: false,
+  isSpecimenStorageLocationsLoading: false,
+  specimenStorageLocations: [],
   isUpdatingSpecimenCollectionAppointmentStatus: false
 });
 

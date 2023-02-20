@@ -47,7 +47,7 @@ const SpecimensInTransportList = () => {
   const specimensList = useAppSelector(resultsSelector.specimensInTransportList);
   const isLoading = useAppSelector(resultsSelector.isSpecimensInTransportListLoading);
   const actionVariations = useAppSelector(resultsSelector.specimenActions);
-
+  const shouldRefetchInTransportList = useAppSelector(resultsSelector.shouldRefetchInTransportList);
   const transportId = router.query.id as string;
 
   const headCells = headCellsData(t) as IHeadCell[];
@@ -68,7 +68,8 @@ const SpecimensInTransportList = () => {
     };
 
     dispatch(resultsMiddleware.getSpecimensInTransportList(params, transportId));
-  }, [transportId, page, sortField, sortOrder]);
+    dispatch(resultsMiddleware.setShouldRefetchInTransportList(false));
+  }, [transportId, page, sortField, sortOrder, shouldRefetchInTransportList]);
 
   useEffect(() => {
     if (!actionVariations.length) {

@@ -63,6 +63,8 @@ export interface IExternalTestResults {
 
 export interface ITestResultsTracking {
   transportList: ITransportList;
+  specimensInTransportList: ISpecimensInTransportList;
+  shouldRefetchInTransportList: boolean;
   isTransportFolderDownloaded: boolean;
   transportActions: TransportActions[];
   labs: ILab[];
@@ -84,7 +86,6 @@ export interface ITestResultsCollection {
   isSendingSpecimenCollectionData: boolean;
   specimenStorageLocations: ISpecimenLocation[];
   isSpecimenStorageLocationsLoading: boolean;
-  specimensInTransportList: ISpecimensInTransportList;
   isSpecimensInTransportListLoading: boolean;
   isUpdatingSpecimenCollectionAppointmentStatus: boolean;
 }

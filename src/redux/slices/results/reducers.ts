@@ -127,7 +127,7 @@ const reducers = createReducer({
     state.tracking.isTransportListLoading = action.payload;
   },
   setSpecimensInTransportList(state, action: IAction<ISpecimensInTransportList>) {
-    state.collection.specimensInTransportList = action.payload;
+    state.tracking.specimensInTransportList = action.payload;
   },
   setIsSpecimenAddedToFolder(state, action: IAction<boolean>) {
     state.tracking.isSpecimenAddedToFolder = action.payload;
@@ -143,6 +143,9 @@ const reducers = createReducer({
   },
   setIsTransportFoldersLoading(state, action: IAction<boolean>) {
     state.tracking.isTransportFoldersLoading = action.payload;
+  },
+  setShouldRefetchInTransportList(state, action: IAction<boolean>) {
+    state.tracking.shouldRefetchInTransportList = action.payload;
   },
   setSpecimenConfirmButtonClicked(state, action: IAction<boolean>) {
     state.inHouse.isSpecimensConfirmationButtonClicked = action.payload;

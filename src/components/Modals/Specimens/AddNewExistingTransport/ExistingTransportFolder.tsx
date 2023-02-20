@@ -21,6 +21,7 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import defineSpecimenId from 'helpers/defineSpecimenId';
+import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
@@ -46,8 +47,12 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const classes = useStyles();
   const transportList = useAppSelector(resultsSelector.transportList);
   const { folders: transportFolders } = transportList;
+  const { query } = useRouter();
+  const currentTransportFolderId = query?.id ?? '';
   const onlyReadyForTransitFolders = transportFolders.filter(
-    (transportFolder) => transportFolder.status === TransportFolderStatus.ReadyForTransport
+    (transportFolder) =>
+      transportFolder.status === TransportFolderStatus.ReadyForTransport &&
+      currentTransportFolderId !== transportFolder.id
   );
   const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const isSpecimenAddedToFolder = useAppSelector(resultsSelector.isSpecimenAddedToFolder);

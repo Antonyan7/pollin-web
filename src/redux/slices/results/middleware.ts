@@ -89,7 +89,8 @@ const {
   setTestResultsState,
   setTransportActions,
   setTransportFolders,
-  setTransportList
+  setTransportList,
+  setShouldRefetchInTransportList
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -313,6 +314,7 @@ const applyRetestAction = (specimens: string[], reasonId: string) => async (disp
     const response = await API.results.applyRetestAction(specimenData, reasonId);
 
     if (response) {
+      dispatch(setShouldRefetchInTransportList(true));
       dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
@@ -327,6 +329,7 @@ const applyRecollectAction = (specimens: string[], reasonId: string) => async (d
     const response = await API.results.applyRecollectAction(specimenData, reasonId);
 
     if (response) {
+      dispatch(setShouldRefetchInTransportList(true));
       dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
@@ -341,6 +344,7 @@ const applyMoveToAllTests = (specimens: string[]) => async (dispatch: AppDispatc
     const response = await API.results.applyMoveToAllTests(specimenData);
 
     if (response) {
+      dispatch(setShouldRefetchInTransportList(true));
       dispatch(onSpecimenConfirmButtonClicked());
     }
   } catch (error) {
@@ -407,6 +411,7 @@ const applyMoveToInHouse = (specimens: string[], identifiers: string[]) => async
           }
         })
       );
+      dispatch(setShouldRefetchInTransportList(true));
       dispatch(getAllTestsSpecimensList());
     }
   } catch (error) {
@@ -624,7 +629,6 @@ const markInTransitAction =
           }
         })
       );
-
       dispatch(resultsMiddleware.getTransportList());
     } catch (error) {
       Sentry.captureException(error);
@@ -716,6 +720,7 @@ const addSpecimenToTransportFolder =
           }
         })
       );
+      dispatch(setShouldRefetchInTransportList(true));
     } catch (error) {
       Sentry.captureException(error);
 
@@ -805,6 +810,7 @@ export default {
   updateSpecimenCollectionAppointmentStatus,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
+  setShouldRefetchInTransportList,
   submitSpecimenCollections,
   submitTestResults
 };

@@ -74,7 +74,8 @@ const isSendingSpecimenCollectionData = createSelector(
   [selector],
   (state) => state.collection.isSendingSpecimenCollectionData
 );
-const specimensInTransportList = createSelector([selector], (state) => state.collection.specimensInTransportList);
+const specimensInTransportList = createSelector([selector], (state) => state.tracking.specimensInTransportList);
+const shouldRefetchInTransportList = createSelector([selector], (state) => state.tracking.shouldRefetchInTransportList);
 const isSpecimensInTransportListLoading = createSelector(
   [selector],
   (state) => state.collection.isSpecimensInTransportListLoading
@@ -125,5 +126,6 @@ export default {
   testResultStateStatus,
   transportActions,
   transportFolders,
-  transportList
+  transportList,
+  shouldRefetchInTransportList
 };
