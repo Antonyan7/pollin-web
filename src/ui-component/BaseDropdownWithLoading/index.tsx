@@ -16,8 +16,9 @@ import {
 } from '@mui/material';
 import { borderRadius } from 'themes/themeConstants';
 
+import { BaseDropdownWithLoadingContext } from './context/BaseDropdownWithLoadingContext';
 import BottomBarLoading from './BottomBarLoading';
-import Listbox, { BaseDropdownWithLoadingContext } from './Listbox';
+import Listbox from './Listbox';
 
 interface BaseDropdownWithLoadingProps<
   T,
@@ -48,6 +49,8 @@ const BaseDropdownWithLoading = <
   ...otherProps
 }: BaseDropdownWithLoadingProps<T, Multiple, DisableClearable, FreeSolo>) => {
   const isFirstLoading = useRef<boolean | null>(null);
+  const innerRef = useRef<HTMLDivElement | null>(null);
+  const scrollPosition = useRef<number>(0);
   const theme = useTheme();
 
   useEffect(() => {
@@ -58,16 +61,31 @@ const BaseDropdownWithLoading = <
     }
   }, [isLoading]);
 
+  useEffect(() => {
+    if (!isLoading && innerRef.current) {
+      innerRef.current.scrollTop = scrollPosition.current;
+    }
+  });
+
+  const { ListboxProps, ...otherAutocompleteProps } = otherProps;
+
   return (
     <BaseDropdownWithLoadingContext.Provider value={isLoading}>
       <Autocomplete
-        {...otherProps}
+        {...otherAutocompleteProps}
         loading={isLoading}
         ListboxProps={{
-          ...otherProps.ListboxProps,
+          ...ListboxProps,
           style: {
             position: 'relative',
-            ...otherProps?.ListboxProps?.style
+            ...ListboxProps?.style
+          },
+          onScroll: (e) => {
+            const eventTarget = e.target as HTMLDivElement;
+
+            innerRef.current = eventTarget;
+            ListboxProps?.onScroll?.(e);
+            scrollPosition.current = eventTarget.scrollTop;
           },
           id: 'listBox'
         }}
