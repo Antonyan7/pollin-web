@@ -19,6 +19,7 @@ import { rowsPerPage } from 'helpers/constants';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
 import { useRouter } from 'next/router';
+import { paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import {
   ContextMenuAction,
@@ -137,30 +138,36 @@ const SpecimensInTransportList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            <TableBody />
-            {specimensList?.specimens?.map((row: ISpecimensInTransportListItem, index: number) => {
-              const filteredSpecimenActions = findCurrentAction(actionVariations, row);
-              const isItemSelected = isSelected(row.id);
-              const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
-              const labelId = `enhanced-table-checkbox-${index}`;
+            {!isLoading &&
+              specimensList?.specimens?.map((row: ISpecimensInTransportListItem, index: number) => {
+                const filteredSpecimenActions = findCurrentAction(actionVariations, row);
+                const isItemSelected = isSelected(row.id);
+                const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
+                const labelId = `enhanced-table-checkbox-${index}`;
 
-              return (
-                <SpecimensInTransportListRow
-                  row={row}
-                  key={row.id}
-                  actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
-                  isItemSelected={isItemSelected}
-                  onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    onCheckboxClick(e, row, selectedRows, setSelectedRows)
-                  }
-                  labelId={labelId}
-                />
-              );
-            })}
+                return (
+                  <SpecimensInTransportListRow
+                    row={row}
+                    key={row.id}
+                    actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
+                    isItemSelected={isItemSelected}
+                    onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      onCheckboxClick(e, row, selectedRows, setSelectedRows)
+                    }
+                    labelId={labelId}
+                  />
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
-      {isLoading ? <CircularLoading /> : null}
+      {isLoading && (
+        <CircularLoading
+          sx={{
+            py: paddings.topBottom16
+          }}
+        />
+      )}
       <TablePagination
         component="div"
         count={specimensList.totalItems}

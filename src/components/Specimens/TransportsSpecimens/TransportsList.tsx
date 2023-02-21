@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import { HeadCell } from '@components/Table/HeadCell';
 import {
-  Box,
-  CircularProgress,
   Divider,
   Grid,
   Table,
@@ -22,9 +20,11 @@ import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { format } from 'date-fns';
 import findCurrentAction from 'helpers/findCurrentAction';
-import { margins } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
+
+import CircularLoading from '@ui-component/circular-loading';
 
 import useTestResultPopupMessage from './hooks/useTransportsToast';
 import { headCellsData } from './headCellsData';
@@ -92,23 +92,27 @@ const TransportsList = () => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            <TableBody />
-            {isLoading ? (
-              <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-                <CircularProgress sx={{ margin: margins.auto }} />
-              </Box>
-            ) : null}
-            {transportList?.folders?.map((row: ITransportListFolderProps) => {
-              const filteredActions = findCurrentAction(actionVariations, row);
 
-              return (
-                <TransportsListRow row={row} key={row.id} actions={filteredActions ? filteredActions.actions : []} />
-              );
-            })}
-          </TableBody>
+          {!isLoading && (
+            <TableBody>
+              {transportList?.folders?.map((row: ITransportListFolderProps) => {
+                const filteredActions = findCurrentAction(actionVariations, row);
+
+                return (
+                  <TransportsListRow row={row} key={row.id} actions={filteredActions ? filteredActions.actions : []} />
+                );
+              })}
+            </TableBody>
+          )}
         </Table>
       </TableContainer>
+      {isLoading && (
+        <CircularLoading
+          sx={{
+            py: paddings.topBottom16
+          }}
+        />
+      )}
       {!transportList?.folders.length && !isLoading ? (
         <>
           <Grid container justifyContent="center" padding="20px">

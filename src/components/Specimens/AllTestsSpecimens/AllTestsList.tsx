@@ -189,7 +189,6 @@ const AllTestsList = () => {
           </TableHead>
 
           <TableBody>
-            <TableBody />
             {showSpecimensList
               ? specimensList?.specimens?.map((row: IAllTestsSpecimensListItem, index: number) => {
                   const filteredSpecimenActions = findCurrentAction(actionVariations, row);
