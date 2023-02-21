@@ -36,7 +36,7 @@ const getTasksStatuses = () => async (dispatch: AppDispatch) => {
 
     const response = await API.tasks.getTaskStatuses();
 
-    const dataWithReassignOption = response.data.data.options.map(({ actions, ...otherOptions }) => ({
+    const dataWithReassignOption = response.data.data.variations.map(({ actions, ...otherOptions }) => ({
       ...otherOptions,
       actions: [...actions, { id: ContextMenuAction.Reassign, title: ContextMenuAction.Reassign }]
     }));

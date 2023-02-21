@@ -69,7 +69,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={6}>
         <Chip
-          sx={{ background: status?.label?.background, color: status?.label?.text, padding: paddings.all8 }}
+          sx={{ background: status?.label?.backgroundColor, color: status?.label?.textColor, padding: paddings.all8 }}
           label={status?.title}
           size="small"
         />

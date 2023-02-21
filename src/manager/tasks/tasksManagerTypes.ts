@@ -25,7 +25,7 @@ export interface ITasksPrioritiesResponse {
 }
 
 export interface ITasksStatusesResponse {
-  options: ITaskStatusOption[];
+  variations: ITaskStatusOption[];
 }
 
 export interface ITaskPriorityOption {
@@ -40,8 +40,8 @@ export interface ITaskStatusOption {
   actions: IStatusOptionAction[];
 }
 export interface IStatusOptionLabel {
-  text: string;
-  background: string;
+  textColor: string;
+  backgroundColor: string;
 }
 export interface IStatusOptionAction {
   id: string;

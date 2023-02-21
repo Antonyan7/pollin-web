@@ -32,13 +32,13 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
   return (
     <TableRow tabIndex={-1} key={row.uuid} onClick={handleRowClick}>
       <TableCell sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{row.name}</TableCell>
-      <TableCell>{row.patient.name}</TableCell>
+      <TableCell>{row.patient?.name}</TableCell>
       <TableCell align="left">{formatDate(row.dueDate, 'MMM dd, yyyy HH:mm')}</TableCell>
       <TableCell align="left">{priority?.title}</TableCell>
-      <TableCell align="center">{row.assignee.name}</TableCell>
+      <TableCell align="center">{row.assignee?.name}</TableCell>
       <TableCell align="center">
         <Chip
-          sx={{ background: status?.label?.background, color: status?.label?.text }}
+          sx={{ background: status?.label?.backgroundColor, color: status?.label?.textColor }}
           label={status?.title}
           size="small"
           chipColor="notActive"
