@@ -19,7 +19,7 @@ export const headCellsData = (t: TFunction) => [
     isSortable: false
   },
   {
-    id: SpecimensListSortFields.LAB_NAME,
+    id: SpecimensListSortFields.LAB_DESTINATION,
     label: t(Translation.PAGE_SPECIMENS_LAB_NAME),
     align: 'left',
     paddingLeft: paddings.left0,
