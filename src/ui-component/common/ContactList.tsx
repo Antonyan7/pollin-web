@@ -6,14 +6,14 @@ import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { Avatar, Box, Button, ButtonProps, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
-import { margins, paddings } from 'themes/themeConstants';
+import { useRouter } from 'next/router';
+import { borders, margins, paddings } from 'themes/themeConstants';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
@@ -33,6 +33,7 @@ interface ContactListProps {
 // eslint-disable-next-line max-lines-per-function
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
+  const router = useRouter();
   const [t] = useTranslation();
   const { DOMAIN_MEDICAL_BACKGROUND } = useFlags();
   const avatarProfile = avatar && `${avatarImage}/${avatar}`;
@@ -60,6 +61,10 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
         t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_FAIL)
       )
     );
+  };
+
+  const navigateToMedicalBackground = () => {
+    router.push(`/patient-emr/details/${router.query.id}/medical-background`);
   };
 
   return (
@@ -175,14 +180,18 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
             {isPatientHighlightIntakeComplete ? (
               <Grid item>
                 {DOMAIN_MEDICAL_BACKGROUND ? (
-                  <Tooltip placement="top" title="Message">
-                    <Button
-                      sx={{ minWidth: 32, height: 32, margin: margins.all8 }}
-                      startIcon={<ModeEditOutlinedIcon fontSize="small" />}
-                    >
-                      {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_EDIT_PROFILE)}
-                    </Button>
-                  </Tooltip>
+                  <Button
+                    onClick={navigateToMedicalBackground}
+                    variant="outlined"
+                    sx={{
+                      minWidth: 32,
+                      height: 32,
+                      margin: margins.all8,
+                      borderRadius: `${borders.solid2px} ${theme.palette.primary.main}`
+                    }}
+                  >
+                    {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_TITLE)}
+                  </Button>
                 ) : null}
                 <Tooltip placement="top" title="Message">
                   <Button sx={{ minWidth: 32, height: 32 }} onClick={() => setOpen(!open)}>
