@@ -9,7 +9,7 @@ import DefaultMobileDateTimePicker from '@ui-component/common/DefaultMobileDateT
 
 type DateAndStartTimeType = Date | null;
 
-const DueDateField = () => {
+const DueDateField = ({ disabled }: { disabled?: boolean }) => {
   const fieldName = 'dueDate';
   const { control, register } = useFormContext();
   const [t] = useTranslation();
@@ -26,6 +26,7 @@ const DueDateField = () => {
         {...register('dueDate')}
         label={t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DUE_DATE_PLACEHOLDER)}
         value={initialValue}
+        disabled={disabled}
         isLimited={false}
         onChange={onChange}
         renderInputProps={{

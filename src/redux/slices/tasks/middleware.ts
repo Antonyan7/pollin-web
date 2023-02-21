@@ -1,5 +1,10 @@
 import API from '@axios/API';
-import { ContextMenuAction, ITaskCreateReqBody, ITasksListReqBody } from '@axios/tasks/tasksManagerTypes';
+import {
+  ContextMenuAction,
+  ITaskCreateReqBody,
+  ITaskReassignReqBody,
+  ITasksListReqBody
+} from '@axios/tasks/tasksManagerTypes';
 import { ICreateTaskForm } from '@components/Modals/Tasks/form/initialValues';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
@@ -18,6 +23,8 @@ const {
   setTaskCreateLoadingState,
   setTaskPriorities,
   setTasksList,
+  setIsTaskStatusUpdated,
+  setIsTaskReassignLoading,
   setTasksLoadingState,
   setTaskStatuses,
   setIsTaskUpdated
@@ -56,11 +63,21 @@ const updateTaskStatus = (rowId: string, statusId: string, message: string) => a
         }
       })
     );
+    dispatch(setIsTaskStatusUpdated(true));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   } finally {
     dispatch(setIsTaskUpdated(false));
+  }
+};
+
+const setTaskStatusUpdate = (value: boolean) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTaskStatusUpdated(value));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
   }
 };
 
@@ -76,6 +93,15 @@ const getTaskPriorities = () => async (dispatch: AppDispatch) => {
     dispatch(setError(error));
   } finally {
     dispatch(setTasksLoadingState(false));
+  }
+};
+
+const clearCreatedTaskState = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setCreatedTaskId(''));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
   }
 };
 
@@ -131,6 +157,29 @@ const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
   }
 };
 
+const reassignTask = (reassignData: ITaskReassignReqBody, message: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTaskReassignLoading(true));
+
+    await API.tasks.reassignTask(reassignData);
+
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: message
+        }
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTaskReassignLoading(false));
+  }
+};
+
 const getTasksList = (tasksListData: ITasksListReqBody) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTasksLoadingState(true));
@@ -164,7 +213,10 @@ export default {
   getTasksDetails,
   getTasksList,
   getTasksStatuses,
+  setTaskStatusUpdate,
   updateTaskStatus,
+  reassignTask,
+  clearCreatedTaskState,
   createTask,
   getTaskPriorities
 };

@@ -6,7 +6,7 @@ import { useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { Translation } from 'constants/translations';
 
-const PriorityField = () => {
+const PriorityField = ({ disabled }: { disabled?: boolean }) => {
   const [t] = useTranslation();
   const { control, register } = useFormContext();
   const taskPriorities = useAppSelector(tasksSelector.tasksPrioritiesList);
@@ -17,7 +17,7 @@ const PriorityField = () => {
 
   return (
     <Grid item xs={12}>
-      <TextField {...field} fullWidth select label={priorityLabel} {...register(priorityFieldName)}>
+      <TextField {...field} fullWidth select label={priorityLabel} {...register(priorityFieldName)} disabled={disabled}>
         {taskPriorities.map((priority) => (
           <MenuItem value={priority.id} key={priority.id}>
             {priority.title}

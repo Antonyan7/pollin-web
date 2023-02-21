@@ -42,6 +42,7 @@ import TaskDetailsModal, { TaskDetailsModalProps } from '@components/Modals/Task
 import TaskStatusUpdateModal, {
   TestResultReviewConfirmationProps
 } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
+import ReassignTaskModal from '@components/Modals/TaskReassign';
 import CreateTaskModal from '@components/Modals/Tasks';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
@@ -165,6 +166,10 @@ const getTaskDetailsModal = (modal: IOpenedModal<TaskDetailsModalProps>) => (
   <TaskDetailsModal key={modal.name} {...modal.props} />
 );
 
+const getReassignTaskModal = (modal: IOpenedModal<TestResultReviewConfirmationProps>) => (
+  <ReassignTaskModal key={modal.name} {...modal.props} />
+);
+
 const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmationProps>) => (
   <TaskStatusUpdateModal key={modal.name} {...modal.props} />
 );
@@ -249,6 +254,8 @@ export const ModalsController = () => {
             return getTaskDetailsModal(modal);
           case ModalName.TaskStatusUpdateModal:
             return getTaskStatusUpdateModal(modal);
+          case ModalName.ReassignTaskModal:
+            return getReassignTaskModal(modal);
 
           // dev
           case ModalName.DevToolsModal:

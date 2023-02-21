@@ -21,6 +21,12 @@ const reducers = createReducer({
   setTasksLoadingState(state, action: IAction<boolean>) {
     state.isTasksListLoading = action.payload;
   },
+  setIsTaskStatusUpdated(state, action: IAction<boolean>) {
+    state.isTaskStatusUpdated = action.payload;
+  },
+  setIsTaskReassignLoading(state, action: IAction<boolean>) {
+    state.isTaskReassignLoading = action.payload;
+  },
   setTaskCreateLoadingState(state, action: IAction<boolean>) {
     state.isTaskCreateLoading = action.payload;
   },

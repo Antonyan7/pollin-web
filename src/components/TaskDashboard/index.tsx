@@ -17,6 +17,8 @@ const TasksList = () => {
   const [page, setPage] = useState<number>(0);
   const [toggle, setToggle] = useState<boolean>(false);
   const { totalItems, pageSize, currentPage } = useAppSelector(tasksSelector.tasksList);
+  const createdTaskId = useAppSelector(tasksSelector.createdTaskId);
+  const isTaskStatusUpdated = useAppSelector(tasksSelector.isTaskStatusUpdated);
   const isTasksLoading = useAppSelector(tasksSelector.isTasksLoading);
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -35,8 +37,10 @@ const TasksList = () => {
       page: page + 1
     };
 
+    dispatch(tasksMiddleware.clearCreatedTaskState());
     dispatch(tasksMiddleware.getTasksList(data));
-  }, [page, sortField, sortOrder, toggle]);
+    dispatch(tasksMiddleware.setTaskStatusUpdate(false));
+  }, [page, sortField, sortOrder, toggle, createdTaskId, isTaskStatusUpdated]);
 
   return (
     <PatientListStyled>

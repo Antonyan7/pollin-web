@@ -7,10 +7,10 @@ import { ModalName } from 'types/modals';
 
 const useTaskDashboardActions = (row: { uuid: string }, actions: IStatusOptionAction[] = []) => {
   const handleTaskDashboardActions = useCallback(
-    (actionType: string) => {
+    (actionType: string, name: ModalName = ModalName.TaskStatusUpdateModal) => {
       dispatch(
         viewsMiddleware.openModal({
-          name: ModalName.TaskStatusUpdateModal,
+          name,
           props: { row, actionType }
         })
       );
@@ -50,7 +50,9 @@ const useTaskDashboardActions = (row: { uuid: string }, actions: IStatusOptionAc
     {
       id: ContextMenuAction.Reassign,
       title: getActionTitleById(ContextMenuAction.Reassign, actions),
-      actionCallback: () => {}
+      actionCallback: () => {
+        handleTaskDashboardActions(ContextMenuAction.Reassign, ModalName.ReassignTaskModal);
+      }
     }
   ];
 

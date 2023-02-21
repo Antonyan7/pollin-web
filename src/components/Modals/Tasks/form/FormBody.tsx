@@ -5,10 +5,9 @@ import DescriptionField from '@components/Modals/Tasks/form/fields/Description';
 import DueDateField from '@components/Modals/Tasks/form/fields/DueDate';
 import PatientField from '@components/Modals/Tasks/form/fields/Patient';
 import PriorityField from '@components/Modals/Tasks/form/fields/Priority';
+import TaskNameField from '@components/Modals/Tasks/form/fields/TaskName';
 import { DialogActions, DialogContent, Grid } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
-
-import TaskNameField from './fields/TaskName';
 
 const FormBody = () => (
   <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>

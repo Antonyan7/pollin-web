@@ -474,5 +474,12 @@
   "page.tasks.manager.modal.create.patient.description.placeholder": "Description/Notes (optional)",
   "page.tasks.manager.modal.create.patient.priority.placeholder": "Priority",
   "page.tasks.manager.modal.create.patient.assign.placeholder": "Assign to",
-  "page.tasks.manager.toast.successful.create": "Task created and sent to"
+  "page.tasks.manager.toast.successful.create": "Task created and sent to",
+  "page.tasks.manager.modal.reassign.title": "Reassign Task",
+  "page.tasks.manager.modal.reassign.field.patient": "Patient",
+  "page.tasks.manager.modal.reassign.field.reassign": "Reassign to",
+  "page.tasks.manager.modal.reassign.field.notes": "Reassignment Notes [Optional]",
+  "page.tasks.manager.modal.reassign.actions.reassign": "Reassign",
+  "page.tasks.manager.modal.reassign.actions.cancel": "Cancel",
+  "page.tasks.manager.toast.successful.reassign": "Task reassigned to"
 }

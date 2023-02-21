@@ -42,7 +42,8 @@ export enum ModalName {
   TaskDetailsModal = 'TaskDetailsModal',
   OrderValidationErrorModal = 'OrderValidationErrorModal',
   TaskStatusUpdateModal = 'TaskStatusUpdateModal',
-  CreateTaskModal = 'CreateTaskModal'
+  CreateTaskModal = 'CreateTaskModal',
+  ReassignTaskModal = 'ReassignTaskModal'
 }
 
 export enum OpenModalReason {

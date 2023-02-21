@@ -5,30 +5,29 @@ import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { maxLength } from 'helpers/constants';
 
-const DescriptionField = ({ disabled }: { disabled?: boolean }) => {
+const ReassignNotes = () => {
   const [t] = useTranslation();
   const { control, register } = useFormContext();
 
-  const descriptionFieldName = 'description';
-  const addDescriptionLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DESCRIPTION_PLACEHOLDER);
-  const { field } = useController({ control, name: descriptionFieldName });
+  const notesFieldName = 'notes';
+  const notesLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_NOTES);
+  const { field } = useController({ control, name: notesFieldName });
 
   return (
     <Grid item xs={12}>
       <TextField
         {...field}
-        {...register('description')}
+        {...register('notes')}
         fullWidth
-        disabled={disabled}
-        id={descriptionFieldName}
-        label={addDescriptionLabel}
+        id={notesFieldName}
+        label={notesLabel}
         rows={4}
         inputProps={{ maxLength }}
-        placeholder={addDescriptionLabel}
+        placeholder={notesLabel}
         multiline
       />
     </Grid>
   );
 };
 
-export default DescriptionField;
+export default ReassignNotes;

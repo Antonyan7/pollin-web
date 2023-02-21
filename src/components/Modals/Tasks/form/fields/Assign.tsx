@@ -16,7 +16,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const INITIAL_PAGE = 1;
 
-const AssignField = () => {
+const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
   const [t] = useTranslation();
   const labelFieldName = 'assign';
 
@@ -33,7 +33,7 @@ const AssignField = () => {
   const [inputValue, setInputValue] = useState(field.value);
   const labelHelperText = error?.message;
   const labelErrorText = !!error?.message;
-  const assignLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_ASSIGN_PLACEHOLDER);
+  const assignLabel = fieldLabel ?? t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_ASSIGN_PLACEHOLDER);
   const theme = useTheme();
 
   const onBottomReach = useCallback(

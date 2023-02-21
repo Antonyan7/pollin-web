@@ -7,6 +7,12 @@ export interface ITasksListReqBody {
   onlyUserTasks?: boolean;
 }
 
+export interface ITaskReassignReqBody {
+  staffUserId: string;
+  taskId: string;
+  reassignNotes?: string;
+}
+
 export enum TasksListSortFields {
   DUE = 'Due',
   PRIORITY = 'Priority',

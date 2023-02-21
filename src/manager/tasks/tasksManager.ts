@@ -1,12 +1,13 @@
 import {
   ITaskCreateReqBody,
+  ITaskReassignReqBody,
   ITasksListReqBody,
   ITasksPrioritiesResponse,
   ITasksStatusesResponse
 } from '@axios/tasks/tasksManagerTypes';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
-import { ITaskCreateProps,ITasksDetailsProps, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
+import { ITaskCreateProps, ITasksDetailsProps, ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const baseURL = '/clinic-tasks';
 
@@ -38,6 +39,16 @@ const resultsManager = {
       `${baseURL}/v1/tasks/statuses`
     );
   },
+
+  reassignTask(data: ITaskReassignReqBody) {
+    const { taskId, ...rest } = data;
+
+    return axiosInstance.patch<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(
+      `${baseURL}/v1/tasks/${data.taskId}/reassign`,
+      rest
+    );
+  },
+
   getTaskPriorities() {
     return axiosInstance.get<ITasksPrioritiesResponse, IAxiosResponse<ITasksPrioritiesResponse>>(
       `${baseURL}/v1/tasks/priorities`

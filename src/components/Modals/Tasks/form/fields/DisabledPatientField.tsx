@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-const TaskNameField = ({ disabled }: { disabled?: boolean }) => {
+const TaskNameField = () => {
   const { register } = useFormContext();
   const [t] = useTranslation();
 
@@ -12,10 +12,10 @@ const TaskNameField = ({ disabled }: { disabled?: boolean }) => {
     <Grid item xs={12}>
       <TextField
         fullWidth
-        disabled={disabled}
+        disabled
         variant="outlined"
-        {...register('taskName')}
-        label={t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_TASK_NAME_PLACEHOLDER)}
+        {...register('patient')}
+        label={t(Translation.PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_PATIENT)}
       />
     </Grid>
   );

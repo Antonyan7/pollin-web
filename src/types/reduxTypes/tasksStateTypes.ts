@@ -7,7 +7,9 @@ export interface ITasksManager {
   error: Error | null;
   statuses: ITaskStatusOption[];
   isTaskUpdated: boolean;
+  isTaskReassignLoading: boolean;
   isTaskCreateLoading: boolean;
+  isTaskStatusUpdated: boolean;
   createdTaskId: string;
   priorities: ITaskPriorityOption[];
   taskDetails: ITaskDetails;
