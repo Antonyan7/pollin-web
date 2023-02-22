@@ -18,12 +18,13 @@ interface GroupItemsWrapperProps {
 
 const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   const theme = useTheme();
-  const orderTypes = useSelector(ordersSelector.orderTypes);
+  const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderTypes = useMemo(
-    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.id === selectedOrderType)?.groups,
-    [orderTypes, selectedOrderType]
+    () =>
+      editableOrderDetails?.find((collection: IOrderTypesCollection) => collection.id === selectedOrderType)?.groups,
+    [editableOrderDetails, selectedOrderType]
   );
 
   const isEverythingSelected = useMemo(() => isAllGroupItemSelected(orderGroup.groupItems), [orderGroup.groupItems]);
@@ -52,7 +53,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         : defaultOrderGroup
     );
 
-    dispatch(ordersMiddleware.updateOrderTypes(selectedOrderType, updatedOrderTypes));
+    dispatch(ordersMiddleware.updateEditableOrderTypes(selectedOrderType, updatedOrderTypes));
   };
 
   return (

@@ -191,6 +191,8 @@
   "page.create.order.button.edit": "Edit",
   "page.create.order.button.next": "Next",
   "page.create.order.button.cancel": "Cancel",
+  "page.update.order.title": "Update Order",
+  "page.update.order.button.title": "Update Order",
   "page.order.details.title": "Order Details",
   "page.order.details.header.text": "Back to %s",
   "page.order.details.order.sets": "Order Sets",

@@ -87,6 +87,8 @@
   page.create.order.button.edit
   page.create.order.button.next
   page.create.order.button.cancel
+  page.update.order.title
+  page.update.order.button.title
   page.order.details.title
   page.order.details.header.text
   page.order.details.order.sets

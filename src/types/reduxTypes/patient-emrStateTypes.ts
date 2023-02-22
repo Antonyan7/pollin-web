@@ -99,6 +99,7 @@ export interface PatientProfile {
   subTitle: string;
   title: string;
   cycleStatus: string | boolean;
+  id?: string;
 }
 
 export interface IEncounterDataProps {

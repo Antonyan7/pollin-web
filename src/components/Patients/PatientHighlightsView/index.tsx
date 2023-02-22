@@ -34,7 +34,7 @@ const PatientHighlightsView = () => {
     return () => {
       // Clean previous highlightInTakeComplete status after component unmount
       dispatch(patientsSlice.actions.setIsPatientHighlightIntakeComplete(false));
-      dispatch(patientsMiddleware.getPatientProfile());
+      dispatch(patientsMiddleware.emptyPatientProfile());
     };
   }, [patientId]);
 

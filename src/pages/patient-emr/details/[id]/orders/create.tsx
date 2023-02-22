@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
-import CreateOrder from '@components/Orders/CreateOrder';
+import CreateEditOrder from '@components/Orders/CreateEditOrder';
 import { Paper, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -48,7 +48,7 @@ const CreateOrderPage = () => {
         }}
       />
       <Paper elevation={0}>
-        <CreateOrder />
+        <CreateEditOrder isEdit={false} />
       </Paper>
     </Stack>
   );

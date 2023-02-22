@@ -1,44 +1,45 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import resultsHelpers from '@axios/results/resultsHelpers';
 import GroupItemsList from '@components/Orders/OrderDetails/GroupItemsList';
 import { Button, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
-import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { updateOrderCreationStep } from 'context/actions/OrderCreationContextActions';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { paddings } from 'themes/themeConstants';
 
-const OrderConfirmation = () => {
+const OrderConfirmation = ({ isEdit }: { isEdit: boolean }) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const orderTypeOptions = useAppSelector(ordersSelector.orderTypeOptions);
-  const { orderCreationState } = useOrderCreationContext();
-  const { validatedOrderTypes } = orderCreationState;
+  const orderDetails = useAppSelector(ordersSelector.orderDetails);
+  const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const { dispatchOrderCreationState } = useOrderCreationContext();
   const onEditClick = (typeId: string) => () => {
     dispatch(ordersMiddleware.updateSelectedOrderType(typeId));
     dispatchOrderCreationState(updateOrderCreationStep(0));
   };
+  const pickedOrderTypes = useMemo(
+    () => resultsHelpers.getValidatedOrderDetails(editableOrderDetails) ?? [],
+    [editableOrderDetails]
+  );
 
   return (
     <Stack p={paddings.all24} borderBottom={`1px solid ${theme.palette.primary.light}`} gap={2}>
-      {validatedOrderTypes.map(({ id: orderTypeId, groups }) => (
+      {pickedOrderTypes.map(({ id: orderTypeId, groups }) => (
         <React.Fragment key={orderTypeId}>
           <Stack direction="row" justifyContent="space-between">
             <Typography variant="h3" color={theme.palette.common.black}>
               {orderTypeOptions.find(({ id }) => id === orderTypeId)?.title}
             </Typography>
-            <Button
-              color="primary"
-              variant="contained"
-              size="medium"
-              onClick={onEditClick(orderTypeId)}
-              data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_EDIT}
-            >
-              {t(Translation.PAGE_CREATE_ORDER_BUTTON_EDIT)}
-            </Button>
+            {(!isEdit || orderDetails.isEditable) && (
+              <Button color="primary" variant="contained" size="medium" onClick={onEditClick(orderTypeId)}>
+                {t(Translation.PAGE_ORDER_DETAILS_BUTTON_EDIT)}
+              </Button>
+            )}
           </Stack>
           {groups?.map(({ id, title, groupItems }) => (
             <Grid container key={id}>

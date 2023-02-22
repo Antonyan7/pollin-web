@@ -2,22 +2,26 @@ import API from '@axios/API';
 import {
   IOrderResultsListReqBody,
   IValidateOrderCreationReqBody,
+  IValidateOrderType,
   OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
+import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/orders/slice';
 import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { ModalName } from 'types/modals';
 import {
+  ICreateOrderReqBody,
   IOrderDetailsData,
   IOrderGroup,
-  IOrderGroupItem,
   IOrderResultsByPatientList,
   IOrdersListResponse,
   IOrderTypesCollection,
-  UpdateOrderGroupItem
+  IUpdateOrderReqBody
 } from 'types/reduxTypes/ordersStateTypes';
+
+import { collectionDeepMerge } from '@utils/collectionDeepMerge';
 
 import { viewsMiddleware } from '../views';
 
@@ -46,12 +50,36 @@ const {
   setOrdersStatuses,
   setOrderTypeOptions,
   setTestResultReleasedDate,
-  setTestResultReviewedDate
+  setTestResultReviewedDate,
+  setEditableOrderDetails
 } = slice.actions;
 
 const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(orderType));
 };
+
+const prepareEditableOrderDetails =
+  (orderTypes: IOrderTypesCollection[], orderDetails: IOrderDetailsData) => async (dispatch: AppDispatch) => {
+    if (orderDetails.orderTypes.length > 0 && orderTypes.length > 0) {
+      const editableOrderDetails = collectionDeepMerge(orderTypes, orderDetails.orderTypes, 'id');
+
+      dispatch(setEditableOrderDetails(editableOrderDetails));
+    } else {
+      dispatch(setEditableOrderDetails(orderTypes));
+    }
+  };
+
+const mergeEditableOrderDetailsWithOrderDetails =
+  (editableOrderDetails: IOrderTypesCollection[], orderDetails: IOrderDetailsData) => async (dispatch: AppDispatch) => {
+    if (orderDetails.orderTypes.length > 0) {
+      const updatedEditableOrders = collectionDeepMerge(editableOrderDetails, orderDetails.orderTypes, 'id');
+
+      dispatch(setEditableOrderDetails(updatedEditableOrders));
+      dispatch(
+        setOrderDetails({ ...orderDetails, orderTypes: updatedEditableOrders as IOrderDetailsData['orderTypes'] })
+      );
+    }
+  };
 
 const getOrderTypes = () => async (dispatch: AppDispatch) => {
   dispatch(setIsOrderTypesLoading(true));
@@ -65,6 +93,7 @@ const getOrderTypes = () => async (dispatch: AppDispatch) => {
 
     dispatch(setOrderTypes(response.data.data.orderTypes));
     dispatch(setOrderTypeOptions(orderTypeOptions));
+    dispatch(prepareEditableOrderDetails(response.data.data.orderTypes, store.getState().orders.orderDetails));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -73,38 +102,50 @@ const getOrderTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const updateOrderTypes =
+const updateEditableOrderTypes =
   (id: string, updatedOrderGroups: IOrderGroup[] = []) =>
   async (dispatch: AppDispatch) => {
-    const { orderTypes } = store.getState().orders;
+    const { editableOrderDetails } = store.getState().orders;
 
-    const updatedOrderTypes: IOrderTypesCollection[] = orderTypes.map((collection: IOrderTypesCollection) => {
-      if (collection.id === id) {
-        return {
-          id: collection.id,
-          title: collection.title,
-          groups: updatedOrderGroups
-        };
+    const updatedEditableOrderDetails: IOrderTypesCollection[] = editableOrderDetails.map(
+      (collection: IOrderTypesCollection) => {
+        if (collection.id === id) {
+          return {
+            id: collection.id,
+            title: collection.title,
+            groups: updatedOrderGroups
+          };
+        }
+
+        return collection;
       }
+    );
 
-      return collection;
-    });
-
-    dispatch(setOrderTypes(updatedOrderTypes));
+    dispatch(setEditableOrderDetails(updatedEditableOrderDetails));
   };
 
 const resetOrderTypesSelection = () => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(''));
   dispatch(setOrderTypes([]));
+  dispatch(
+    setOrderDetails({
+      id: '',
+      isEditable: false,
+      hasRequisition: false,
+      orderTypes: []
+    })
+  );
 };
 
 const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsOrderDetailsLoading(true));
 
+    const { editableOrderDetails } = store.getState().orders;
+
     const { data } = await API.results.getOrderDetails(orderId);
 
-    dispatch(setOrderDetails(data.order));
+    dispatch(mergeEditableOrderDetailsWithOrderDetails(editableOrderDetails, data.order));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -113,29 +154,58 @@ const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   }
 };
 
-const updateOrder = (orderId: string, orderDetailsData: IOrderDetailsData) => async (dispatch: AppDispatch) => {
-  try {
-    const parseGroupItems = (orderGroupItems: IOrderGroupItem[]): UpdateOrderGroupItem[] =>
-      orderGroupItems.map(({ id, groupItems }) =>
-        groupItems === undefined ? { id } : { id, groupItems: parseGroupItems(groupItems) }
+const createOrder =
+  (patientId: string, orderTypes: IValidateOrderType[], comment?: string) => async (dispatch: AppDispatch) => {
+    try {
+      const body: ICreateOrderReqBody = {
+        patientId,
+        ...(comment ? { comment } : {}),
+        orderTypes
+      };
+
+      await API.results.createOrder(body);
+
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: 'Order Created Successfully'
+          }
+        })
       );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+  };
 
-    const body = {
-      order: {
-        ...(orderDetailsData.comment !== undefined ? { comment: orderDetailsData.comment } : {}),
-        groups: (orderDetailsData.groups ?? []).map(({ id, groupItems }) => ({
-          id,
-          groupItems: parseGroupItems(groupItems)
-        }))
-      }
-    };
+const updateOrder =
+  (orderId: string, orderTypes: IValidateOrderType[], comment?: string) => async (dispatch: AppDispatch) => {
+    try {
+      const body: IUpdateOrderReqBody = {
+        order: {
+          ...(comment ? { comment } : {}),
+          orderTypes
+        }
+      };
 
-    await API.results.updateOrder(orderId, body);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
-};
+      await API.results.updateOrder(orderId, body);
+
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: 'Order Updated Successfully'
+          }
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+  };
 
 const getCancellationReasons = () => async (dispatch: AppDispatch) => {
   try {
@@ -331,8 +401,40 @@ const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: 
 const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => async (dispatch: AppDispatch) => {
   dispatch(setIsOrdersListLoading(true));
 
+  const { editableOrderDetails } = store.getState().orders;
+  const { orderDetails } = store.getState().orders;
+  const { orderTypes: defaultOrderTypes } = store.getState().orders;
+
   try {
-    await API.results.validateOrderCreation(orderTypes);
+    const { data } = await API.results.validateOrderCreation(orderTypes);
+
+    if (data?.message) {
+      const { title, html } = data.message;
+
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.OrderValidationErrorModal,
+          props: {
+            title,
+            html
+          }
+        })
+      );
+
+      dispatch(
+        mergeEditableOrderDetailsWithOrderDetails(defaultOrderTypes, {
+          ...orderDetails,
+          orderTypes: data.orderTypes as IOrderDetailsData['orderTypes']
+        })
+      );
+    } else {
+      dispatch(
+        mergeEditableOrderDetailsWithOrderDetails(editableOrderDetails, {
+          ...orderDetails,
+          orderTypes: data.orderTypes as IOrderDetailsData['orderTypes']
+        })
+      );
+    }
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -341,13 +443,20 @@ const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => asy
   dispatch(setIsOrdersListLoading(false));
 };
 
+const updateDetailsComment = (comment: string) => async (dispatch: AppDispatch) => {
+  const { orderDetails } = store.getState().orders;
+
+  dispatch(setOrderDetails({ ...orderDetails, comment }));
+};
+
 export default {
   updateSelectedOrderType,
   getOrderTypes,
-  updateOrderTypes,
+  updateEditableOrderTypes,
   resetOrderTypesSelection,
   getOrderDetails,
   updateOrder,
+  createOrder,
   getOrderResultsFilters,
   getOrderResultsListForPatient,
   getOrderResultsStatuses,
@@ -359,5 +468,6 @@ export default {
   cancelOrder,
   makeTestResultReleased,
   makeTestResultReviewed,
-  validateOrderCreation
+  validateOrderCreation,
+  updateDetailsComment
 };

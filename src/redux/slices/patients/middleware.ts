@@ -256,19 +256,22 @@ const getPatientRecentAppointments = (patientId: string) => async (dispatch: App
   }
 };
 
-const getPatientProfile = (patientId?: string) => async (dispatch: AppDispatch) => {
-  // Cleanup for patientProfile after component unmounting
-  if (!patientId) {
-    dispatch(setPatientProfile(null));
+const emptyPatientProfile = () => (dispatch: AppDispatch) => {
+  dispatch(setPatientProfile(null));
+};
 
-    return;
-  }
-
+const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) => {
   try {
     const response = await API.patients.getPatientProfile(patientId);
 
     dispatch(setIsPatientProfileLoading(true));
-    dispatch(setPatientProfile(response.data.data));
+
+    const patientProfile = {
+      id: patientId,
+      ...response.data.data
+    };
+
+    dispatch(setPatientProfile(patientProfile));
   } catch (error) {
     dispatch(setPatientProfile(null));
     Sentry.captureException(error);
@@ -538,6 +541,7 @@ export default {
   createEncounterNote,
   updateEncounterNote,
   getPatientProfile,
+  emptyPatientProfile,
   getPatientHighlight,
   getEncountersTypes,
   getEncounterDetailsInformation,

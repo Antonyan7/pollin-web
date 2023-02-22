@@ -29,6 +29,9 @@ const reducers = createReducer({
   setOrderTypes(state, action: IAction<IOrderTypesCollection[]>) {
     state.orderTypes = action.payload;
   },
+  setEditableOrderDetails(state, action: IAction<IOrderTypesCollection[]>) {
+    state.editableOrderDetails = action.payload;
+  },
   setIsOrderTypesLoading(state, action: IAction<boolean>) {
     state.isOrderTypesLoading = action.payload;
   },

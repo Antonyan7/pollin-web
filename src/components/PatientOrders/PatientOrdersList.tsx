@@ -54,6 +54,7 @@ const PatientOrdersList = () => {
 
   useEffect(() => {
     dispatch(ordersMiddleware.getOrderStatuses());
+    dispatch(ordersMiddleware.getOrderTypes());
   }, []);
 
   return (

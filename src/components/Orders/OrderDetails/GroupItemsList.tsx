@@ -32,7 +32,7 @@ const GroupItemsList = ({ groupItems, paddingFactor = 0 }: Props) => {
                 }
               }}
             >
-              <ListItemText primary={item.title} />
+              <ListItemText primary={`${item.title}${item.label ? ` - ${item.label}` : ''}`} />
               {isOpen[item.id] ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
             <Collapse in={isOpen[item.id]} timeout="auto" unmountOnExit>

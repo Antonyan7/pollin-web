@@ -1,23 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography, useTheme } from '@mui/material';
-import { useAppSelector } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { format } from 'util';
 
-const OrderDetailsHeader = () => {
+const OrderHeader = () => {
   const [t] = useTranslation();
-  const router = useRouter();
   const theme = useTheme();
-  const { id: currentPatientId } = router.query;
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
+  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
   const onBackClick = () => {
-    router.push(`/patient-emr/details/${currentPatientId}`);
+    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
+
+  useEffect(() => {
+    window.onpopstate = () => {
+      window.history.forward();
+      onBackClick();
+    };
+
+    return () => {
+      window.onpopstate = null;
+    };
+  }, []);
 
   return (
     <Grid
@@ -27,18 +38,18 @@ const OrderDetailsHeader = () => {
       columnGap={1}
       direction="row"
       justifyItems="center"
-      px={paddings.all24}
-      py={paddings.all12}
+      px={paddings.leftRight24}
+      py={paddings.topBottom12}
       borderBottom={`1px solid ${theme.palette.primary.light}`}
     >
       <IconButton onClick={onBackClick}>
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">
-        {format(t(Translation.PAGE_ORDER_DETAILS_HEADER_TEXT), patientProfile?.title ?? '')}
+        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientFullName)}
       </Typography>
     </Grid>
   );
 };
 
-export default OrderDetailsHeader;
+export default OrderHeader;

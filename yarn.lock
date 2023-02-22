@@ -3956,12 +3956,39 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash.keyby@npm:^4.6.7":
+  version: 4.6.7
+  resolution: "@types/lodash.keyby@npm:4.6.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 599ecefd8d4a1eb06c277b5f3f14e82ef9e58a1b7d8fc75490f0d5ee5e43069bae08f0408cb54675e7c1005c9f280ee57a537eafe69a22da5271cd6b815e4e1f
+  languageName: node
+  linkType: hard
+
+"@types/lodash.merge@npm:^4.6.7":
+  version: 4.6.7
+  resolution: "@types/lodash.merge@npm:4.6.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 94cd6fb8e606756a28f45d63c658aacfbce11a151f7fa322c4a3e87aa50d8bf26e0ae8cba0250070a7c5a6792fc51f79abf4c648bbb1850692be386cd76cd0ca
+  languageName: node
+  linkType: hard
+
 "@types/lodash.throttle@npm:^4.1.7":
   version: 4.1.7
   resolution: "@types/lodash.throttle@npm:4.1.7"
   dependencies:
     "@types/lodash": "*"
   checksum: 6e1b3836488fecbdc537b6ad9b3fe4855c7336b0fa388773cd57d486619f565a48cabc04b28677fd3819be3f2d13d2bb8f9d4428aa5632885c86cb99729bfd69
+  languageName: node
+  linkType: hard
+
+"@types/lodash.values@npm:^4.3.7":
+  version: 4.3.7
+  resolution: "@types/lodash.values@npm:4.3.7"
+  dependencies:
+    "@types/lodash": "*"
+  checksum: 39a21983b4fd5a79895ca5fa6371b4a97c662e21cb1f0357360ebcddac83832909786c4c899c24fb9ed4f084318c5736b58983bbed92025d15c2948fdd35d876
   languageName: node
   linkType: hard
 
@@ -8857,6 +8884,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lodash.keyby@npm:^4.6.0":
+  version: 4.6.0
+  resolution: "lodash.keyby@npm:4.6.0"
+  checksum: 9dd96cc8b83e05a71dc328f8e489056105bc84b57b4d7f8155d6bf5744dcdb0a5534acdf6e4e89e5ddf71f2bc6b93969b12c6da09d69fdf3b1cca65a8ed61e2b
+  languageName: node
+  linkType: hard
+
 "lodash.keys@npm:^4.0.8":
   version: 4.2.0
   resolution: "lodash.keys@npm:4.2.0"
@@ -8896,6 +8930,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
+"lodash.values@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.values@npm:4.3.0"
+  checksum: 857e122ddf6edb50137887f0b834d471f96d66692ebb5de8b048ed277c8a3dd1bc8f85d82cf31b0f5c6dbc5b72c036a591205f76eec86bb11818a1a6f7e5a28c
   languageName: node
   linkType: hard
 
@@ -10359,7 +10400,10 @@ __metadata:
     "@tabler/icons": ^1.119.0
     "@types/lodash.chunk": ^4.2.7
     "@types/lodash.debounce": ^4.0.7
+    "@types/lodash.keyby": ^4.6.7
+    "@types/lodash.merge": ^4.6.7
     "@types/lodash.throttle": ^4.1.7
+    "@types/lodash.values": ^4.3.7
     "@types/node": ^18.11.18
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
@@ -10396,7 +10440,10 @@ __metadata:
     lint-staged: ^13.1.0
     lodash.chunk: ^4.2.0
     lodash.debounce: ^4.0.8
+    lodash.keyby: ^4.6.0
+    lodash.merge: ^4.6.2
     lodash.throttle: ^4.1.1
+    lodash.values: ^4.3.0
     material-ui-popup-state: ^4.1.0
     next: 12.3.4
     next-compose-plugins: ^2.2.1
@@ -12132,11 +12179,11 @@ __metadata:
 
 "typescript@patch:typescript@4.9.4#~builtin<compat/typescript>":
   version: 4.9.4
-  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=ad5954"
+  resolution: "typescript@patch:typescript@npm%3A4.9.4#~builtin<compat/typescript>::version=4.9.4&hash=d73830"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 1caaea6cb7f813e64345190fddc4e6c924d0b698ab81189b503763c4a18f7f5501c69362979d36e19c042d89d936443e768a78b0675690b35eb663d19e0eae71
+  checksum: 37f6e2c3c5e2aa5934b85b0fddbf32eeac8b1bacf3a5b51d01946936d03f5377fe86255d4e5a4ae628fd0cd553386355ad362c57f13b4635064400f3e8e05b9d
   languageName: node
   linkType: hard
 

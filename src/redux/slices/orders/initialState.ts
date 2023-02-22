@@ -8,10 +8,12 @@ export const getInitialState = (): IOrdersState => ({
   isOrderTypesLoading: false,
   orderDetails: {
     id: '',
+    comment: '',
     isEditable: false,
     hasRequisition: false,
-    groups: null
+    orderTypes: []
   },
+  editableOrderDetails: [],
   isOrderDetailsLoading: false,
   cancellationReasons: {
     reasons: []

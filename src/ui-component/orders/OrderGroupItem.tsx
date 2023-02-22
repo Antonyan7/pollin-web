@@ -22,12 +22,13 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
   const theme = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
-  const orderTypes = useSelector(ordersSelector.orderTypes);
+  const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
 
   const activeOrderTypes = useMemo(
-    () => orderTypes?.find((collection: IOrderTypesCollection) => collection.id === selectedOrderType)?.groups,
-    [orderTypes, selectedOrderType]
+    () =>
+      editableOrderDetails?.find((collection: IOrderTypesCollection) => collection.id === selectedOrderType)?.groups,
+    [editableOrderDetails, selectedOrderType]
   );
 
   const onSelectChange: CheckboxProps['onChange'] = (event) => {
@@ -75,7 +76,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
       return orderGroup;
     });
 
-    dispatch(ordersMiddleware.updateOrderTypes(selectedOrderType, updatedOrderTypes));
+    dispatch(ordersMiddleware.updateEditableOrderTypes(selectedOrderType, updatedOrderTypes));
   };
 
   const isEverythingSelected = useMemo(() => {

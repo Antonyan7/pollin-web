@@ -25,6 +25,7 @@ import { AxiosResponse } from 'axios';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
+  ICreateOrderReqBody,
   IGetOrderDetailsResponse,
   IOrderResultsByPatientList,
   IOrdersListResponse,
@@ -328,6 +329,9 @@ const resultsManager = {
   },
   updateOrder(orderId: string, body: IUpdateOrderReqBody) {
     return axiosInstance.put<null, IAxiosResponse<null>>(`${baseURL}/v1/order/${orderId}`, body);
+  },
+  createOrder(body: ICreateOrderReqBody) {
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/order`, body);
   },
   validateOrderCreation(body: IValidateOrderCreationReqBody) {
     return axiosInstance

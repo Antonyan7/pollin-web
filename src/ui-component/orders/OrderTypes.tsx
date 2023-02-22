@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, CircularProgress, Grid, Stack } from '@mui/material';
-import { dispatch } from '@redux/hooks';
-import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { ordersSelector } from '@redux/slices/orders';
 import { paddings } from 'themes/themeConstants';
 import { IOrderGroup, IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
 
@@ -11,14 +10,10 @@ import GroupItemsWrapper from '@ui-component/orders/GroupItemsWrapper';
 const OrderTypes = () => {
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
   const isOrderTypesLoading = useSelector(ordersSelector.isOrderTypesLoading);
-  const orderTypes = useSelector(ordersSelector.orderTypes);
-
-  useEffect(() => {
-    dispatch(ordersMiddleware.getOrderTypes());
-  }, []);
+  const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
 
   const renderOrderTypes = () => {
-    const activeOrderTypes = orderTypes?.find(
+    const activeOrderTypes = editableOrderDetails?.find(
       (orderGroup: IOrderTypesCollection) => orderGroup.id === selectedOrderType
     );
 

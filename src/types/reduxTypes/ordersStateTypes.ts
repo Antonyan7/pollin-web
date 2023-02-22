@@ -1,5 +1,10 @@
 import { IPagination } from '@axios/axiosTypes';
-import { IOrdersStatusesItems, OrdersFilterOption, OrdersFilterType } from '@axios/results/resultsManagerTypes';
+import {
+  IOrdersStatusesItems,
+  IValidateOrderType,
+  OrdersFilterOption,
+  OrdersFilterType
+} from '@axios/results/resultsManagerTypes';
 import {
   CancellationReasons,
   IFinalResultType,
@@ -14,6 +19,7 @@ export interface IOrdersState {
   orderTypeOptions: IOrderTypeOption[];
   selectedOrderType: string;
   orderTypes: IOrderTypesCollection[];
+  editableOrderDetails: IOrderTypesCollection[];
   isOrderTypesLoading: boolean;
   orderDetails: IOrderDetailsData;
   isOrderDetailsLoading: boolean;
@@ -72,7 +78,7 @@ export interface IOrderDetails {
   comment?: string;
   isEditable: boolean;
   hasRequisition: boolean;
-  groups: IOrderGroup[];
+  orderTypes: IOrderTypesCollection[];
 }
 
 export interface IOrderDetailsData {
@@ -80,29 +86,23 @@ export interface IOrderDetailsData {
   comment?: string;
   isEditable: boolean;
   hasRequisition: boolean;
-  groups: IOrderGroup[] | null;
+  orderTypes: IOrderTypesCollection[];
 }
 export interface IGetOrderDetailsResponse {
   order: IOrderDetails;
 }
 
-export interface UpdateOrderGroupItem {
-  id: string;
-  groupItems?: UpdateOrderGroupItem[];
-}
-
-export interface UpdateOrderGroup {
-  id: string;
-  groupItems: UpdateOrderGroupItem[];
-}
-
-export interface UpdateOrderData {
-  comment?: string;
-  groups: UpdateOrderGroup[];
-}
-
 export interface IUpdateOrderReqBody {
-  order: UpdateOrderData;
+  order: {
+    comment?: string;
+    orderTypes: IValidateOrderType[];
+  };
+}
+
+export interface ICreateOrderReqBody {
+  patientId: string;
+  comment?: string;
+  orderTypes: IValidateOrderType[];
 }
 
 export enum OrdersListItemStatus {

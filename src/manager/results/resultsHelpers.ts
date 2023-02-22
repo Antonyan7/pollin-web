@@ -1,21 +1,26 @@
-import resultsManager from '@axios/results/resultsManager';
-import { IValidateOrderTypeGroupItem } from '@axios/results/resultsManagerTypes';
-import { IOrderGroup, IOrderGroupItem, IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
+import { IOrderTypesCollection } from 'types/reduxTypes/ordersStateTypes';
 
-const transformGroups = (groups: (IOrderGroup | IOrderGroupItem)[]): IValidateOrderTypeGroupItem[] =>
-  groups.map(({ id, groupItems }) => ({
-    id,
-    ...(groupItems !== undefined ? { groupItems: transformGroups(groupItems) } : {})
-  }));
+import { cherryPick } from '../../components/Orders/helpers/cherryPick';
+
 const getValidatedOrderCreationData = (orderTypes: IOrderTypesCollection[]) =>
-  resultsManager
-    .validateOrderCreation({
-      orderTypes: orderTypes.map(({ id, groups }) => ({ id, groups: transformGroups(groups) }))
-    })
-    .then(({ data }) => data);
+  cherryPick(
+    orderTypes,
+    ['id'],
+    'selected',
+    (object: { selected: boolean }) => object.selected
+  ) as IOrderTypesCollection[];
+
+const getValidatedOrderDetails = (orderTypes: IOrderTypesCollection[]) =>
+  cherryPick(
+    orderTypes,
+    ['id', 'title', 'label', 'groupItems'],
+    'selected',
+    (object: { selected: boolean }) => object.selected
+  ) as IOrderTypesCollection[];
 
 const resultsHelpers = {
-  getValidatedOrderCreationData
+  getValidatedOrderCreationData,
+  getValidatedOrderDetails
 };
 
 export default resultsHelpers;

@@ -6,6 +6,7 @@ const selector = (state: RootState) => state.orders;
 const orderTypeOptions = createSelector([selector], (state) => state.orderTypeOptions);
 const selectedOrderType = createSelector([selector], (state) => state.selectedOrderType);
 const orderTypes = createSelector([selector], (state) => state.orderTypes);
+const editableOrderDetails = createSelector([selector], (state) => state.editableOrderDetails);
 const isOrderTypesLoading = createSelector([selector], (state) => state.isOrderTypesLoading);
 const orderDetails = createSelector([selector], (state) => state.orderDetails);
 const isOrderDetailsLoading = createSelector([selector], (state) => state.isOrderDetailsLoading);
@@ -35,6 +36,7 @@ export default {
   orderTypeOptions,
   selectedOrderType,
   orderTypes,
+  editableOrderDetails,
   isOrderTypesLoading,
   orderDetails,
   isOrderDetailsLoading,
