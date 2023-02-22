@@ -12,6 +12,7 @@ module.exports = {
   plugins: ['react', '@emotion', '@typescript-eslint', 'simple-import-sort', '@next/eslint-plugin-next'],
   extends: [
     'eslint:recommended',
+    "plugin:cypress/recommended",
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
