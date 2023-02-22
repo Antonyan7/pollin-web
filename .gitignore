@@ -42,10 +42,12 @@ yarn-error.log*
 .vercel
 dist/
 
-#cypress
+# cypress
 /cypress/screenshots
 /cypress/videos
 /cypress/downloads
+# cypress secrets
+cypress.env.json
 
 #linter
 .eslintcache

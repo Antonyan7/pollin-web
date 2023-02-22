@@ -79,3 +79,25 @@ Redux Toolkit (Thunk) - For state management is used Redux Thunk with Toolkit. I
 # Application URLs
 
 1. DEV: https://pollin-clinic-portal-dev.nn.r.appspot.com/
+
+# E2E Testing
+
+1. Run BE docker emulator [README](https://github.com/OPN-Technologies/pollin-data-seeds/blob/master/README.md)
+
+2. Get E2E testing secrets
+
+```
+gcloud secrets versions access latest --secret=FRONTEND_E2E_TESTING --project=pollin-backend-integ-test > ./.env
+```
+
+3.  Get Cypress testing secrets
+
+```
+gcloud secrets versions access latest --secret=FRONTEND_CYPRESS_TESTING --project=pollin-backend-integ-test > ./cypress.env.json
+```
+
+4. Open cypress, select test to run
+
+```
+yarn run test:open
+```

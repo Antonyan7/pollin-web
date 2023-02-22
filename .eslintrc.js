@@ -5,7 +5,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  ignorePatterns: ['node_modules', 'dist', 'build', '.next'],
+  ignorePatterns: ['node_modules', 'dist', 'build', '.next', 'coverage'],
   globals: {
     RequestInit: 'readonly'
   },

@@ -2,7 +2,18 @@ import React from 'react';
 import * as Sentry from '@sentry/nextjs';
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { AppCheck, getToken, initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
-import { Auth, getAuth, getIdToken, onAuthStateChanged, SAMLAuthProvider, signInWithPopup, User } from 'firebase/auth';
+import {
+  Auth,
+  connectAuthEmulator,
+  EmailAuthProvider,
+  getAuth,
+  getIdToken,
+  onAuthStateChanged,
+  SAMLAuthProvider,
+  signInWithCredential,
+  signInWithPopup,
+  User
+} from 'firebase/auth';
 import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadBytesResumable } from 'firebase/storage';
 import { dispatchAuthError, dispatchIsAuthChecked, dispatchLoginUser } from 'layout/MainLayout/Login/loginHelpers';
 import { v4 } from 'uuid';
@@ -10,6 +21,10 @@ import { v4 } from 'uuid';
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 import { getFileExtension } from '@utils/stringUtils';
 
+export interface WindowWithCypress extends Window {
+  cypressEmailsPassSingIn: Function;
+}
+declare const window: WindowWithCypress;
 export class FirebaseManager {
   private static appCheck: AppCheck;
 
@@ -24,9 +39,22 @@ export class FirebaseManager {
   private static initializeAuth() {
     this.auth = getAuth(this.app);
 
-    const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID } = getEnvironmentVariables();
+    const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID, NEXT_PUBLIC_ENVIRONMENT } = getEnvironmentVariables();
 
     this.auth.tenantId = NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID;
+
+    if (NEXT_PUBLIC_ENVIRONMENT === 'e2eTesting') {
+      console.warn('Using Firebase Authentication emulator');
+      connectAuthEmulator(this.auth, 'http://localhost:9099');
+
+      // Expose sing in function via window object
+      window.cypressEmailsPassSingIn = (email: string, password: string) =>
+        signInWithCredential(this.auth, EmailAuthProvider.credential(email, password));
+
+      // Unset tenant since tenants export doesn't work on Firebase emulator
+      this.auth.tenantId = null;
+    }
+
     onAuthStateChanged(this.auth, (user) => {
       if (user) {
         this.user = user;
