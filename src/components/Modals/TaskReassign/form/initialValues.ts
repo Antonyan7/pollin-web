@@ -1,7 +1,7 @@
 export interface ICreateTaskForm {
   taskName: string;
   patient?: string;
-  dueDate: Date | null;
+  dueDate: string | null;
   description?: string;
   priority: string;
   assign: string;

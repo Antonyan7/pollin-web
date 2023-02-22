@@ -43,7 +43,7 @@ const ReassignTaskModalForm = ({ id }: { id: string }) => {
     reset({
       taskName: taskDetails.name,
       description: taskDetails.description,
-      dueDate: new Date(taskDetails.dueDate),
+      dueDate: taskDetails.dueDate,
       patient: taskDetails.patient?.name,
       priority: taskDetails.priorityId,
       assign: ''

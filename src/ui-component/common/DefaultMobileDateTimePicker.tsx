@@ -64,7 +64,8 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
       ? {
           minTime: MIN_SELECTABLE_DATE_TIME as TDate,
           maxTime: MAX_SELECTABLE_DATE_TIME as TDate,
-          maxDate: futureDate180DaysAfter as TDate
+          maxDate: futureDate180DaysAfter as TDate,
+          disablePast: true
         }
       : {})
   };
@@ -103,7 +104,6 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
       components={{ ActionBar: DatePickerActionBar }}
       ampm={false}
       label={label}
-      disablePast
       {...limitParams} // Don't allow to select days for future more than 180 days
       minutesStep={10}
       DialogProps={{

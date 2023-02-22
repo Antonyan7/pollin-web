@@ -24,6 +24,7 @@ const {
   setTaskPriorities,
   setTasksList,
   setIsTaskStatusUpdated,
+  setIsTaskReassigned,
   setIsTaskReassignLoading,
   setTasksLoadingState,
   setTaskStatuses,
@@ -116,7 +117,6 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
         ...(taskData.patient ? { patientId: taskData.patient } : {}),
         dueDate: taskData.dueDate,
         priorityId: taskData.priority,
-        staffUserId: taskData.assign,
         ...(taskData.description ? { description: taskData.description } : {})
       }
     };
@@ -157,12 +157,21 @@ const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
   }
 };
 
+const clearTaskReassignState = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsTaskReassigned(false));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+};
+
 const reassignTask = (reassignData: ITaskReassignReqBody, message: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsTaskReassignLoading(true));
 
     await API.tasks.reassignTask(reassignData);
-
+    dispatch(setIsTaskReassigned(true));
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: true,
@@ -215,6 +224,7 @@ export default {
   getTasksStatuses,
   setTaskStatusUpdate,
   updateTaskStatus,
+  clearTaskReassignState,
   reassignTask,
   clearCreatedTaskState,
   createTask,

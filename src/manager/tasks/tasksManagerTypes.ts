@@ -57,7 +57,6 @@ export interface ITaskCreate {
   patientId?: string;
   dueDate: string;
   priorityId: string;
-  staffUserId: string;
   description?: string;
 }
 
