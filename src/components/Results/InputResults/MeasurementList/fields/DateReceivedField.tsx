@@ -66,6 +66,12 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
                 ...params.InputProps,
                 endAdornment: <EventIcon />
               }}
+              /* Mui TextField has two params with similar name inputProps & InputProps */
+              /* inputProps -> Attributes applied to the input element. */
+              // eslint-disable-next-line react/jsx-no-duplicate-props
+              inputProps={{
+                placeholder: 'mm:dd:yyyy'
+              }}
             />
           )}
         />
