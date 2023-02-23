@@ -21,6 +21,7 @@ const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
     () => orderStatuses.find((orderStatus) => orderStatus.status === row.status),
     [orderStatuses, row]
   );
+
   const chipBackgroundColor = currentOrderStatus?.backgroundColor as string;
   const chipTextColor = currentOrderStatus?.textColor as string;
   const contextMenuOptions = currentOrderStatus?.possibleActions as ContextMenuAction[];

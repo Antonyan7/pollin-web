@@ -4,10 +4,10 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { filterActionBindings, getActionTitleById } from 'helpers/contextMenu';
 import { useRouter } from 'next/router';
 import { ModalName } from 'types/modals';
-import { OrdersActions } from 'types/reduxTypes/ordersStateTypes';
+import { OrdersActions, OrdersListItemStatus } from 'types/reduxTypes/ordersStateTypes';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
-const useOrderActions = (row: { id: string }, actions: ContextMenuAction[] = []) => {
+const useOrderActions = (row: { id: string; status: OrdersListItemStatus }, actions: ContextMenuAction[] = []) => {
   const router = useRouter();
   const handleOrderCancellationPopupAction = useCallback(() => {
     dispatch(
@@ -37,7 +37,10 @@ const useOrderActions = (row: { id: string }, actions: ContextMenuAction[] = [])
     },
     {
       id: OrdersActions.ViewAndEdit,
-      title: getActionTitleById(OrdersActions.ViewAndEdit, actions),
+      title: getActionTitleById(
+        row.status === OrdersListItemStatus.NotCollected ? OrdersActions.ViewAndEdit : OrdersActions.View,
+        actions
+      ),
       actionCallback: () => {
         handleOrderViewEditAction();
       }

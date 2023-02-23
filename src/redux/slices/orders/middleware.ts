@@ -10,6 +10,7 @@ import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransfor
 import slice from '@redux/slices/orders/slice';
 import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
+import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import {
   ICreateOrderReqBody,
@@ -23,6 +24,7 @@ import {
 
 import { collectionDeepMerge } from '@utils/collectionDeepMerge';
 
+import { Translation } from '../../../constants/translations';
 import { viewsMiddleware } from '../views';
 
 const {
@@ -170,7 +172,7 @@ const createOrder =
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: 'Order Created Successfully'
+            description: t(Translation.PAGE_CREATE_ORDER_SUCCESS_MESSAGE)
           }
         })
       );
@@ -197,7 +199,7 @@ const updateOrder =
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: 'Order Updated Successfully'
+            description: t(Translation.PAGE_ORDER_DETAILS_UPDATE_SUCCESS_MESSAGE)
           }
         })
       );

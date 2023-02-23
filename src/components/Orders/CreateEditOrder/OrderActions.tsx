@@ -51,6 +51,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.createOrder(patientId as string, orderTypesToValidate, orderDetails.comment));
+      router.push(`/patient-emr/details/${patientId}/orders`);
     }
   };
 
@@ -59,6 +60,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, orderDetails.comment));
+      router.push(`/patient-emr/details/${patientId}/orders`);
     }
   };
 
