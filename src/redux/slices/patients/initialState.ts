@@ -1,6 +1,17 @@
 import { PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import { SortOrder } from 'types/patient';
-import { AppointmentResponseStatus, PatientEmrProps } from 'types/reduxTypes/patient-emrStateTypes';
+import {
+  AppointmentResponseStatus,
+  MedicalBackgroundProps,
+  PatientEmrProps
+} from 'types/reduxTypes/patient-emrStateTypes';
+
+const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
+  contact: {
+    generalHealth: null,
+    isGeneralHealthLoading: false
+  }
+});
 
 export const getInitialState = (): PatientEmrProps => ({
   patientsList: {
@@ -85,5 +96,6 @@ export const getInitialState = (): PatientEmrProps => ({
     dateOfBirth: '',
     ohipNumber: '',
     ohipVersionCode: ''
-  }
+  },
+  medicalBackground: getMedicalBackgroundInitialState()
 });

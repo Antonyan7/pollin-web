@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MedicalBackgroundHeader from '@components/MedicalBackground/components/Header';
 import MedicalBackgroundTabPanel from '@components/MedicalBackground/components/MedicalBackgroundTabPanel';
+import PatientMedicalBackgroundSection from '@components/MedicalBackground/components/PatientMedicalBackgroundSection';
+import ContactPage from '@components/MedicalBackground/Contact';
 import { Box, Grid, Tab, Tabs } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
 import useReplaceCurrentUrl from '@hooks/useReplaceCurrentUrl';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
-
-import PatientMedicalBackgroundSection from './components/PatientMedicalBackgroundSection';
 
 const MedicalBackgroundTabs = () => {
   const [t] = useTranslation();
@@ -54,9 +54,7 @@ const MedicalBackgroundTabs = () => {
           </PatientMedicalBackgroundSection>
         </MedicalBackgroundTabPanel>
         <MedicalBackgroundTabPanel value={activePageValue} index={1}>
-          <PatientMedicalBackgroundSection title="Pass Page Title">
-            <Grid>Create Contact Page</Grid>
-          </PatientMedicalBackgroundSection>
+          <ContactPage />
         </MedicalBackgroundTabPanel>
       </Box>
     </SubCardStyled>

@@ -1,17 +1,19 @@
 import React, { ReactNode } from 'react';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { Grid, SxProps, Theme, Typography, useTheme } from '@mui/material';
-import { borders, paddings } from 'themes/themeConstants';
+import { borders, margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import CircularLoading from '@ui-component/circular-loading';
 
 interface PatientMedicalBackgroundSectionProps {
   children: ReactNode;
   title?: ReactNode;
   sx?: SxProps<Theme>;
+  isLoading?: boolean;
 }
 
-const PatientMedicalBackgroundSection = ({ children, title, sx }: PatientMedicalBackgroundSectionProps) => {
+const PatientMedicalBackgroundSection = ({ children, title, isLoading, sx }: PatientMedicalBackgroundSectionProps) => {
   const theme = useTheme();
 
   return (
@@ -49,7 +51,11 @@ const PatientMedicalBackgroundSection = ({ children, title, sx }: PatientMedical
         </Grid>
       }
     >
-      <Grid p={paddings.all20}>{children}</Grid>
+      {isLoading ? (
+        <CircularLoading sx={{ margin: margins.auto, marginTop: margins.top16, py: paddings.topBottom16 }} />
+      ) : (
+        <Grid>{children}</Grid>
+      )}
     </SubCardStyled>
   );
 };

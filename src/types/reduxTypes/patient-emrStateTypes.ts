@@ -7,6 +7,7 @@ import {
 } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IGeneralHealthProps,
   IPatientContactInformation,
   IProfileTestResults,
   ITestResultHistory,
@@ -22,6 +23,13 @@ interface IProfileProps {
   profileTestResults: IProfileTestResults | null;
   isTestResultsHistoryLoading: boolean;
   isProfileTestResultsLoading: boolean;
+}
+
+export interface MedicalBackgroundProps {
+  contact: {
+    generalHealth: IGeneralHealthProps | null;
+    isGeneralHealthLoading: boolean;
+  };
 }
 
 export interface PatientEmrProps {
@@ -47,6 +55,7 @@ export interface PatientEmrProps {
   isPatientAlertViewOpen: boolean;
   error: Error | null;
   patientProfile: PatientProfile | null;
+  medicalBackground: MedicalBackgroundProps;
   isPatientHighlightsLoading: boolean;
   isPatientHighlightIntakeComplete: boolean;
   isPatientHighlightIntakeReminderActive: boolean;

@@ -8,6 +8,7 @@ import {
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
+  IGeneralHealth,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
   IPatientContactInformationResponse,
@@ -155,6 +156,12 @@ const patientEmrManager = {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/notification/send-intake-reminder`, {
       patientId
     });
+  },
+  // medical background
+  getGeneralHealth(patientId: string) {
+    return axiosInstance.get<IGeneralHealth, IAxiosResponse<IGeneralHealth>>(
+      `${baseURL}/v1/medical-background/${patientId}/general-health`
+    );
   }
 };
 

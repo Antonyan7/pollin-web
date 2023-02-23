@@ -1,6 +1,7 @@
 import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IGeneralHealthProps,
   IPatientContactInformation,
   IProfileTestResults,
   ITestResultHistory
@@ -186,6 +187,12 @@ const reducers = createReducer({
   },
   setIsPatientHighlightIntakeReminderActive(state, action: IAction<boolean>) {
     state.isPatientHighlightIntakeReminderActive = action.payload;
+  },
+  setGeneralHealth(state, action: IAction<IGeneralHealthProps>) {
+    state.medicalBackground.contact.generalHealth = action.payload;
+  },
+  setIsGeneralHealthLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isGeneralHealthLoading = action.payload;
   }
 });
 

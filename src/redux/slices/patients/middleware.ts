@@ -66,7 +66,9 @@ const {
   setIsPatientHighlightIntakeReminderActive,
   setPatientAppointmentsRequestStatus,
   setPatientAlertViewState,
-  setPatientAlertDetailsLoading
+  setPatientAlertDetailsLoading,
+  setGeneralHealth,
+  setIsGeneralHealthLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -523,6 +525,21 @@ const resetAppointmentsList = () => async (dispatch: AppDispatch, getState: () =
   }
 };
 
+const getGeneralHealth = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsGeneralHealthLoading(true));
+
+  try {
+    const response = await API.patients.getGeneralHealth(patientId);
+
+    dispatch(setGeneralHealth(response.data.data.generalHealth));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsGeneralHealthLoading(false));
+};
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -557,5 +574,6 @@ export default {
   getPatientContactInformation,
   sendPatientIntakeReminder,
   cleanTestResultsHistory,
-  isPatientAlertViewOpen
+  isPatientAlertViewOpen,
+  getGeneralHealth
 };
