@@ -20,7 +20,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
   });
 
   const [t] = useTranslation();
-
+  const [isDatePickerFocused, setIsDatePickerFocused] = useState(false);
   const [openDatePicker, setOpenDatePicker] = useState(false);
 
   const onDateChange = (date: Date | null) => {
@@ -33,6 +33,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
 
   const onDatePickerClose = () => {
     setOpenDatePicker(false);
+    setIsDatePickerFocused(false);
   };
 
   const { value, ...otherFieldProps } = field;
@@ -58,7 +59,11 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
               sx={{ width: '320px', svg: { color: (theme) => theme.palette.primary.main } }}
               {...params}
               {...otherFieldProps}
-              onClick={() => setOpenDatePicker(true)}
+              onClick={() => {
+                setIsDatePickerFocused(true);
+                setOpenDatePicker(true);
+              }}
+              focused={isDatePickerFocused}
               onKeyDown={(event) => {
                 event.preventDefault();
               }}
@@ -67,9 +72,9 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
                 endAdornment: <EventIcon />
               }}
               /* Mui TextField has two params with similar name inputProps & InputProps */
-              /* inputProps -> Attributes applied to the input element. */
               // eslint-disable-next-line react/jsx-no-duplicate-props
               inputProps={{
+                ...params.inputProps,
                 placeholder: 'mm:dd:yyyy'
               }}
             />
