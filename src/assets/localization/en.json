@@ -34,6 +34,7 @@
   "page.patient.order.results.title": "Results",
   "page.patient.orders": "Orders",
   "page.patient.results": "Results",
+  "autocomplete.no.results.found": "No results found",
   "page.patient.profile.create.new.order": "Create New Order",
   "page.patient.profile.cells.date.title": "Date Created",
   "page.patient.profile.cells.order.name.title": "Order Name(s)",

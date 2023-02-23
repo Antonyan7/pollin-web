@@ -9,8 +9,10 @@ import {
   styled,
   TextField,
   TextFieldProps,
+  Theme,
   useTheme
 } from '@mui/material';
+import { makeStyles } from '@mui/styles';
 import { Box, shouldForwardProp } from '@mui/system';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
@@ -47,6 +49,14 @@ interface ResultFiltersProps {
   setPage: (page: number) => void;
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  noOptions: {
+    marginTop: margins.top2,
+    borderRadius: borderRadius.radius8,
+    border: `2px solid ${theme.palette.primary.main}`
+  }
+}));
+
 const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFiltersProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
@@ -54,6 +64,7 @@ const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFilt
   const filtersList = useAppSelector(resultsSelector.resultsFiltersList);
   const isFiltersLoading = useAppSelector(resultsSelector.isResultsFiltersLoading);
   const [selectedFilters, setSelectedFilters] = useState<IResultsFilterOption[]>([]);
+  const classes = useStyles();
 
   const filterPlaceholder = t(Translation.PAGE_RESULTS_LIST_FIELD_SEARCH);
 
@@ -102,6 +113,10 @@ const ResultFilters = ({ setSearchValue, setFiltersChange, setPage }: ResultFilt
       <Autocomplete
         fullWidth
         multiple
+        classes={{
+          noOptions: classes.noOptions
+        }}
+        noOptionsText={t(Translation.AUTOCOMPLETE_NO_RESULTS_FOUND)}
         loading={isFiltersLoading}
         ListboxProps={{
           style: {

@@ -75,7 +75,6 @@ const PatientField = () => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
-        freeSolo
         inputValue={inputValue}
         {...register(`${patientIdFieldName}`)}
         isLoading={isLoading}

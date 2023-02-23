@@ -82,7 +82,6 @@ const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
-        freeSolo
         inputValue={inputValue}
         {...register(`${labelFieldName}`)}
         isLoading={isStaffLoading}

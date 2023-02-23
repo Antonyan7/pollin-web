@@ -81,7 +81,6 @@ const PatientId = () => {
     <Grid item xs={12}>
       <BaseDropdownWithLoading
         data-cy={patientIdSelectCyId}
-        freeSolo
         inputValue={inputValue}
         isLoading={isLoading}
         ListboxProps={{

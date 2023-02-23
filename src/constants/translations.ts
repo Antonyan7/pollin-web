@@ -36,6 +36,7 @@ export enum Translation {
   PAGE_PATIENT_ORDER_RESULTS_TITLE = 'page.patient.order.results.title',
   PAGE_PATIENT_ORDERS = 'page.patient.orders',
   PAGE_PATIENT_RESULTS = 'page.patient.results',
+  AUTOCOMPLETE_NO_RESULTS_FOUND = 'autocomplete.no.results.found',
   PAGE_PATIENT_PROFILE_CREATE_NEW_ORDER = 'page.patient.profile.create.new.order',
   PAGE_PATIENT_PROFILE_CELLS_DATE_TITLE = 'page.patient.profile.cells.date.title',
   PAGE_PATIENT_PROFILE_CELLS_ORDER_NAME_TITLE = 'page.patient.profile.cells.order.name.title',

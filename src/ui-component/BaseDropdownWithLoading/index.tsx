@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Autocomplete,
   AutocompleteProps,
@@ -12,9 +13,11 @@ import {
   SelectProps,
   TextField,
   TextFieldProps,
-  useTheme
-} from '@mui/material';
-import { borderRadius } from 'themes/themeConstants';
+  Theme,
+  useTheme} from '@mui/material';
+import { makeStyles } from '@mui/styles';
+import { Translation } from 'constants/translations';
+import { borderRadius, margins } from 'themes/themeConstants';
 
 import { BaseDropdownWithLoadingContext } from './context/BaseDropdownWithLoadingContext';
 import BottomBarLoading from './BottomBarLoading';
@@ -37,6 +40,14 @@ const EndAdornmentLoading = () => (
   </InputAdornment>
 );
 
+const useStyles = makeStyles((theme: Theme) => ({
+  noOptions: {
+    marginTop: margins.top2,
+    borderRadius: borderRadius.radius8,
+    border: `2px solid ${theme.palette.primary.main}`
+  }
+}));
+
 const BaseDropdownWithLoading = <
   T,
   Multiple extends boolean | undefined,
@@ -52,6 +63,8 @@ const BaseDropdownWithLoading = <
   const innerRef = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef<number>(0);
   const theme = useTheme();
+  const classes = useStyles();
+  const [t] = useTranslation();
 
   useEffect(() => {
     if (isFirstLoading.current === null && isLoading) {
@@ -89,6 +102,10 @@ const BaseDropdownWithLoading = <
           },
           id: 'listBox'
         }}
+        classes={{
+          noOptions: classes.noOptions
+        }}
+        noOptionsText={t(Translation.AUTOCOMPLETE_NO_RESULTS_FOUND)}
         ListboxComponent={Listbox}
         renderInput={(params: AutocompleteRenderInputParams) => (
           <TextField

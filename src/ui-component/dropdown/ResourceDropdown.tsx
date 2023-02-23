@@ -128,7 +128,6 @@ const ResourceDropdown = ({
   return (
     <Box sx={{ maxWidth: '240px' }}>
       <BaseDropdownWithLoading
-        freeSolo
         isLoading={isGroupedServiceProvidersLoading}
         data-cy={dataCy}
         PopperComponent={GroupedServiceProvidersPopper}
