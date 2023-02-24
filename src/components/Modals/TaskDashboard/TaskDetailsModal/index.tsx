@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { DialogContent, Grid } from '@mui/material';
+import { DialogContent, Grid, Theme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { tasksMiddleware, tasksSelector } from '@redux/slices/tasks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
@@ -31,7 +31,17 @@ const TaskDetailsModal = ({ row }: TaskDetailsModalProps) => {
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.TaskDetailsModal));
 
   return (
-    <BaseModal isLoading={isTaskDetailsLoading} title={modalTitle} onClose={onClose}>
+    <BaseModal
+      isLoading={isTaskDetailsLoading}
+      title={modalTitle}
+      onClose={onClose}
+      sx={{
+        '& .MuiSvgIcon-root': {
+          fill: (theme: Theme) => theme.palette.primary.main
+        },
+        marginTop: margins.top8
+      }}
+    >
       <Grid>
         <DialogContent sx={{ p: paddings.all8 }}>
           <Grid container spacing={3}>

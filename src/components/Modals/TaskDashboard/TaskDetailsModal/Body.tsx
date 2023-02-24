@@ -20,7 +20,7 @@ const Body = () => {
   const isOverdue = getDate(taskDetails.dueDate) <= getDate(currentDay);
 
   return (
-    <Grid container spacing={1} sx={{ maxHeight: '581px', minWidth: '500px', overflowY: 'scroll' }}>
+    <Grid container spacing={1} sx={{ height: '541px', minWidth: '500px', overflowY: 'scroll' }}>
       <Grid item xs={4}>
         <Typography variant="subtitle1" fontWeight="bold">
           {t(Translation.MODAL_REVIEW_RESULTS_PATIENT_NAME)}:
@@ -63,8 +63,8 @@ const Body = () => {
       <Grid item xs={4}>
         <Typography variant="subtitle1">{taskDetails.createdBy.name} </Typography>
       </Grid>
-      <Grid item xs={4}>
-        <Typography variant="caption" align="right" sx={{ marginLeft: margins.all24 }}>
+      <Grid item xs={4} alignItems="end">
+        <Typography variant="caption" ml={margins.left4}>
           {formatDate(new Date(taskDetails.createdBy.date))}
         </Typography>
       </Grid>
@@ -98,10 +98,8 @@ const Body = () => {
                   {history.assignor.name}{' '}
                 </Typography>
               </Grid>
-              <Grid item xs={4}>
-                <Typography variant="caption" sx={{ marginLeft: margins.all20 }}>
-                  {formatDate(new Date(history.date))}
-                </Typography>
+              <Grid item xs={4} alignItems="end">
+                <Typography variant="caption">{formatDate(new Date(history.date))}</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle1" fontWeight="bold">

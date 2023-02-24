@@ -1,5 +1,5 @@
 import React, { useId } from 'react';
-import { Box, CircularProgress, DialogContent, SxProps } from '@mui/material';
+import { Box, CircularProgress, DialogContent, SxProps, Theme } from '@mui/material';
 import BaseModalTitle from 'ui-component/Modal/BaseModal/BaseModalTitle';
 
 import { BaseModalStyled } from '@ui-component/Modal/BaseModal/BaseModalStyled';
@@ -14,6 +14,7 @@ export interface BaseModalProps {
   dataCy?: string;
   disableDivider?: boolean;
   titleSx?: SxProps;
+  sx?: SxProps<Theme>;
 }
 
 const BaseModal = ({
@@ -25,7 +26,8 @@ const BaseModal = ({
   onClose,
   dataCy,
   disableDivider,
-  titleSx
+  titleSx,
+  sx
 }: BaseModalProps) => {
   const id = useId();
 
@@ -38,6 +40,7 @@ const BaseModal = ({
         {...(titleSx && {
           sx: titleSx
         })}
+        sx={sx}
       >
         {title}
       </BaseModalTitle>
