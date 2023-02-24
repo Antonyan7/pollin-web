@@ -1,6 +1,8 @@
 name: E2E Testing
+on:
   workflow_dispatch:
   schedule:
+    # Run 3 times a day every 8 hours
     - cron: '0 1,9,17 * * *'
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
