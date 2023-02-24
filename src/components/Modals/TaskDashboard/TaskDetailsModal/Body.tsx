@@ -9,11 +9,15 @@ import { formatDate } from 'helpers/time';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import { margins, paddings } from 'themes/themeConstants';
 
+import { getCurrentDate, getDate } from '@utils/dateUtils';
+
 const Body = () => {
   const [t] = useTranslation();
   const taskDetails = useAppSelector(tasksSelector.taskDetails);
   const taskStatuses = useAppSelector(tasksSelector.tasksStatusList);
   const status = findStatusByID(taskDetails.statusId, taskStatuses);
+  const currentDay = getCurrentDate();
+  const isOverdue = getDate(taskDetails.dueDate) <= getDate(currentDay);
 
   return (
     <Grid container spacing={1} sx={{ maxHeight: '581px', minWidth: '500px', overflowY: 'scroll' }}>
@@ -31,7 +35,9 @@ const Body = () => {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="subtitle1">{timeAdjuster(new Date(taskDetails.dueDate)).customizedDate}</Typography>
+        <Typography variant="subtitle1" color={(theme) => (isOverdue ? theme.palette.error.main : '')}>
+          {timeAdjuster(new Date(taskDetails.dueDate)).customizedDate}
+        </Typography>
       </Grid>
       <Grid item xs={4}>
         <Typography variant="subtitle1" fontWeight="bold">
