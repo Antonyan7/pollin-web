@@ -1,0 +1,50 @@
+name: E2E Testing
+  workflow_dispatch:
+  schedule:
+    - cron: '0 1,9,17 * * *'
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    timeout-minutes: 100
+    runs-on: self-hosted-FE
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Get Week
+        id: get-week
+        run: |
+          echo "::set-output name=week::$(/bin/date -u "+%U")"
+        shell: bash
+
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+          key: ${{ runner.os }}-${{ steps.get-week.outputs.week }}-${{ hashFiles('yarn.lock') }}
+
+      - name: setup-nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.13.0
+          registry-url: https://npm.pkg.github.com/
+          scope: '@OWNER'
+
+      - name: Checkout Data Seeds repo
+        if: success()
+        uses: actions/checkout@v2
+        with:
+          repository: OPN-Technologies/pollin-data-seeds
+          token: ${{ secrets.RELEASE_MANAGMENT_PAT }}
+          path: data-seeds
+
+      - name: E2E Testing
+        uses: ./.github/actions/ci-e2e-testing
+        env:
+          seeds_project_id: ${{ vars.SEED_PROJECT_ID }}
+          backend_builds_bucket_id: ${{ vars.BACKEND_BUILD_BUCKET_ID }}
+          integ_test_service_account: ${{ secrets.BACKEND_CODE_AND_SECRETS_FROM_GCP_INTEGRATION_TEST }}

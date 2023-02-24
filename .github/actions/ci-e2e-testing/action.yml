@@ -1,0 +1,88 @@
+name: 'e2e tests processing'
+inputs:
+  node_version:
+    description: 'Node version'
+    required: false
+    default: v16.17.0
+  pat_to_read_package:
+    description: 'Pat to read Packages'
+    required: true
+
+description: 'e2e test action'
+runs:
+  using: 'composite'
+  steps:
+    - name: Install Modules
+      run: |
+        echo "::group::Activate NodeJs version manager and install version"
+        export NVM_DIR=~/.nvm
+        source ~/.nvm/nvm.sh
+        nvm install ${{ inputs.node_version }}
+        nvm use ${{ inputs.node_version }}
+        echo "::endgroup::"
+
+        echo "::group::Install yarn modules"
+        yarn set version berry
+        rm -rf node_modules
+        yarn install --no-immutable
+        yarn add cypress
+        echo "::endgroup::"
+      shell: bash
+
+    - name: Auth with GCLOUD
+      run: |
+        echo "::group::Auth with GCLOUD"
+        cat >> service-account.json << EOF
+        ${{ env.integ_test_service_account }}
+        EOF
+        echo "Using PROJECT_ID: ${{ env.seeds_project_id }}"
+        gcloud auth activate-service-account --key-file=./service-account.json --project=${{ env.seeds_project_id }}
+        rm ./service-account.json
+        echo "::endgroup::"
+      shell: bash
+
+    - name: Setup and launch backend data seeds Docker
+      run: |
+        echo "::group::Setup backend data seeds"
+        # Download recent backend build code from the google cloud storage
+        gsutil cp -r gs://${{ env.backend_builds_bucket_id }}/latest ./data-seeds/backend-testing-dist
+
+        # Get backend testing secrets
+        gcloud secrets versions access latest --secret=BACKEND_E2E_TESTING --project=${{ env.seeds_project_id }} > ./data-seeds/.env
+        echo "::endgroup::"
+
+        echo "::group::Run backend with data seeds"
+        sudo docker compose -f ./data-seeds/docker-compose.yaml up --detach
+        echo "::endgroup::"
+      shell: bash
+
+    - name: Get testing secrets, Run project and Cypress, shutdown Docker
+      run: |
+        echo "Writing Environment Variables to: .env.e2e"
+        gcloud secrets versions access latest --secret=FRONTEND_E2E_TESTING --project=${{ env.seeds_project_id }} > ./.env
+
+        echo "Writing Environment Variables to: cypress/tools/.env"
+        gcloud secrets versions access latest --secret=FRONTEND_CYPRESS_TESTING --project=${{ env.seeds_project_id }} > ./cypress.env.json
+
+        echo "Set Cypress record key and project ID from the e2e secret"
+        read_var() {
+            VAR=$(grep $1 $2 | xargs)
+            IFS="=" read -ra VAR <<< "$VAR"
+            echo ${VAR[1]}
+        }
+        export CYPRESS_RECORD_KEY=$(read_var cypressRecordKey .env)
+        export CYPRESS_PROJECT_ID=$(read_var cypressProjectId .env)
+        echo "::endgroup::"
+
+        echo "::group::Build application"
+        yarn run build
+        echo "::endgroup::"
+
+        echo "::group::Run and record cypress"
+        yarn run cypress:record
+        echo "::endgroup::"
+
+        echo "::group::Shut down testing containers"
+        sudo docker compose -f ./data-seeds/docker-compose.yaml down
+        echo "::endgroup::"
+      shell: bash
