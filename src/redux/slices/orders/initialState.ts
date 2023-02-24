@@ -30,7 +30,7 @@ export const getInitialState = (): IOrdersState => ({
   orderResultsByPatientList: {
     testResults: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
     totalItems: 0
   },
   isOrderResultsByPatientListLoading: false,
@@ -41,7 +41,7 @@ export const getInitialState = (): IOrdersState => ({
   ordersList: {
     orders: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
     totalItems: 0
   },
   isOrdersListLoading: false

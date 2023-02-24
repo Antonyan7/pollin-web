@@ -26,7 +26,7 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
     folders: [],
     notFound: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
     totalItems: 0
   },
   labMachines: {
@@ -79,7 +79,7 @@ const getInHouseInitialState = (): IInHouseTestResultsProps => ({
   specimensList: {
     specimens: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
     totalItems: 0,
     notFound: []
   }
@@ -91,7 +91,7 @@ const getCommonTestResultsInitialState = (): ITestResultsCommonProps => ({
   allTestsSpecimensList: {
     specimens: [],
     currentPage: 1,
-    pageSize: 10,
+    pageSize: 25,
     totalItems: 0,
     notFound: []
   },

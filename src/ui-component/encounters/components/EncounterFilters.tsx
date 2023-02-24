@@ -51,7 +51,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
       patientId,
       ...(selectedEncountersFilters.length ? { filters: selectedEncountersFilters } : {}),
       ...(searchValue.length ? { searchString: searchValue } : {}),
-      ...(page ? { page } : {})
+      page: page + 1
     };
 
     if (patientId) {

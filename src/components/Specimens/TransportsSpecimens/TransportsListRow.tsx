@@ -18,7 +18,7 @@ interface AllTestsRowProps {
 
 export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
   const currentDay = getCurrentDate();
-  const isCurrentDay = getDate(currentDay) === getDate(row.date);
+  const isCurrentDay = getDate(currentDay ?? '') === getDate(row.date ?? '');
   const { customizedDate, customizedTransportCreationDate } = timeAdjuster(row.date);
   const folderCreateDate = isCurrentDay ? customizedTransportCreationDate : customizedDate;
   const actionBindings = useTransportActions(row, actions, !isCurrentDay);

@@ -22,7 +22,7 @@ import EncountersEmptyState from './EncountersEmptyState';
 
 const Encounters = () => {
   const [page, setPage] = useState<number>(0);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(25);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const { t } = useTranslation();
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const encountersList: IEncounterList = useAppSelector(patientsSelector.encountersList);
@@ -58,7 +58,7 @@ const Encounters = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {encounters.length && !isEncountersListLoading ? (
+            {!!encounters.length && !isEncountersListLoading && (
               <>
                 {encounters.map((encounter) => (
                   <EncounterNoteThumbnail
@@ -75,17 +75,17 @@ const Encounters = () => {
                   />
                 ))}
                 <TablePagination
-                  labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
-                  rowsPerPageOptions={[25, 40, 100]}
+                  labelRowsPerPage={t(Translation.COMMON_PAGINATION_ROWS_COUNT)}
+                  rowsPerPageOptions={[5, 25, 40, 100]}
                   component="div"
-                  count={encounters.length}
+                  count={encountersList.totalItems}
                   rowsPerPage={rowsPerPage}
                   page={page}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />
               </>
-            ) : null}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
