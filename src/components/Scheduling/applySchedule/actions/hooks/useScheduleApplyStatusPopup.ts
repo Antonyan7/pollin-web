@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { applyScheduleFormInitialValues } from '@components/Scheduling/applySchedule/constants/defaultValues';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
@@ -25,7 +26,7 @@ const useScheduleApplyStatusPopup = () => {
           }
         })
       );
-      reset();
+      reset(applyScheduleFormInitialValues);
     } else if (scheduleApplyStatus.fail) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({

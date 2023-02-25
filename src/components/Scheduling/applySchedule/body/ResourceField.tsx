@@ -1,4 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import CloseIcon from '@mui/icons-material/Close';
@@ -15,16 +16,19 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import ApplyScheduleFormRow from '../common/ApplyScheduleFormRow';
 import { defaultResource } from '../constants/defaultValues';
-import useFieldControl from '../hooks/useFieldControl';
 import { ApplyScheduleFields } from '../types';
 
 const ResourceField = () => {
   const [t] = useTranslation();
-  const { field, fieldState } = useFieldControl(ApplyScheduleFields.RESOURCE);
+  const { control, watch } = useFormContext();
+  const { field, fieldState } = useController({
+    name: ApplyScheduleFields.RESOURCE,
+    control
+  });
   const theme = useTheme();
   const resourceLabel = t(Translation.PAGE_SCHEDULING_APPLY_RESOURCE);
   const resourceCyId = CypressIds.PAGE_SCHEDULING_APPLY_RESOURCE;
-
+  const [inputValue, setInputValue] = useState('');
   const { onChange, onBlur, value: resourceId, ...fieldProps } = field;
   const { error } = fieldState;
   const groupedResourceProviders = useAppSelector(bookingSelector.groupedServiceProvidersList);
@@ -43,10 +47,20 @@ const ResourceField = () => {
       provider?.items.map((option) => ({ ...option, type: provider.groupTitle }))
     );
   const resourceFieldOptions = adaptedGroupedOptions();
-  const resourceFieldInputValue = useMemo(
-    () => resourceFieldOptions.find((fieldOption) => fieldOption.id === resourceId)?.title ?? '',
-    [resourceId, resourceFieldOptions]
-  );
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      if (typeof value.resource === 'string') {
+        setInputValue(resourceFieldOptions.find((fieldOption) => fieldOption.id === value.resource)?.title ?? '');
+      } else {
+        setInputValue('');
+      }
+    });
+
+    return () => subscription.unsubscribe();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch('resource')]);
 
   const onResourceProviderScroll = (event: React.UIEvent<HTMLUListElement, UIEvent>) => {
     const eventTarget = event.target as HTMLDivElement;
@@ -65,7 +79,12 @@ const ResourceField = () => {
       <BaseDropdownWithLoading
         isLoading={isGroupedResourceProvidersLoading}
         PopperComponent={GroupedServiceProvidersPopper}
-        inputValue={resourceFieldInputValue}
+        inputValue={inputValue}
+        onInputChange={(_, searchString, changeReason) => {
+          if (changeReason === 'input') {
+            setInputValue(searchString);
+          }
+        }}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
         onChange={(_event, resourceProvider) => {
           if (resourceProvider) {
