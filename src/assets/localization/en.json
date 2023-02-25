@@ -475,7 +475,7 @@
   "modal.review.results.reassigned.by": "Re-assigned by",
   "modal.review.results.reassignment.notes": "Reassignment Notes",
   "page.tasks.manager.modal.create.title": "Create Task",
-  "page.tasks.manager.modal.create.task.name.placeholder": "Task Name",
+  "page.tasks.manager.modal.create.task.name.placeholder": "Task",
   "page.tasks.manager.modal.create.patient.placeholder": "Patient (optional)",
   "page.tasks.manager.modal.create.patient.due.date.placeholder": "Due Date & Time",
   "page.tasks.manager.modal.create.patient.description.placeholder": "Description/Notes (optional)",
