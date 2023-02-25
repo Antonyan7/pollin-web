@@ -35,9 +35,9 @@ const Body = ({ row, actionType }: TestResultReviewConfirmationProps) => {
         </Typography>
       </Grid>
 
-      <Grid item xs={6}>
+      <Grid item xs={8}>
         <Typography variant="subtitle1">{row?.uuid} </Typography>
-        <Typography variant="subtitle1">{row?.patient.name}</Typography>
+        <Typography variant="subtitle1">{row?.patient?.name ?? 'N/A'}</Typography>
         <Typography variant="subtitle1">{previousStatus.title} </Typography>
         <Typography variant="subtitle1">{updatedStatus?.title} </Typography>
       </Grid>

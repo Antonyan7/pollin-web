@@ -4,12 +4,11 @@ import { Chip, Divider, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { Translation } from 'constants/translations';
+import { format } from 'date-fns';
 import { findStatusByID } from 'helpers/tasks';
-import { formatDate } from 'helpers/time';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { margins, paddings } from 'themes/themeConstants';
 
-import { getCurrentDate, getDate } from '@utils/dateUtils';
+import { convertToLocale , getCurrentDate, getDate } from '@utils/dateUtils';
 
 const Body = () => {
   const [t] = useTranslation();
@@ -17,17 +16,17 @@ const Body = () => {
   const taskStatuses = useAppSelector(tasksSelector.tasksStatusList);
   const status = findStatusByID(taskDetails.statusId, taskStatuses);
   const currentDay = getCurrentDate();
-  const isOverdue = getDate(taskDetails.dueDate) <= getDate(currentDay);
+  const isOverdue = getDate(taskDetails.dueDate) < getDate(currentDay);
 
   return (
-    <Grid container spacing={1} sx={{ height: '541px', minWidth: '500px', overflowY: 'scroll' }}>
+    <Grid container spacing={1} sx={{ maxHeight: '541px', minWidth: '500px', overflowY: 'scroll' }}>
       <Grid item xs={4}>
         <Typography variant="subtitle1" fontWeight="bold">
           {t(Translation.MODAL_REVIEW_RESULTS_PATIENT_NAME)}:
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <Typography variant="subtitle1">{taskDetails?.patient ? taskDetails?.patient.name : 'N/A'} </Typography>
+        <Typography variant="subtitle1">{taskDetails?.patient?.name ?? 'N/A'}</Typography>
       </Grid>
       <Grid item xs={4}>
         <Typography variant="subtitle1" fontWeight="bold">
@@ -36,7 +35,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={6}>
         <Typography variant="subtitle1" color={(theme) => (isOverdue ? theme.palette.error.main : '')}>
-          {timeAdjuster(new Date(taskDetails.dueDate)).customizedDate}
+          {format(new Date(convertToLocale(taskDetails.dueDate)), 'MMM dd, yyyy HH:mm')}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -65,7 +64,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={4} alignItems="end">
         <Typography variant="caption" ml={margins.left4}>
-          {formatDate(new Date(taskDetails.createdBy.date))}
+          {format(new Date(convertToLocale(taskDetails.createdBy.date)), 'MMM dd, yyyy HH:mm')}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -99,7 +98,9 @@ const Body = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4} alignItems="end">
-                <Typography variant="caption">{formatDate(new Date(history.date))}</Typography>
+                <Typography variant="caption">
+                  {format(new Date(convertToLocale(history.date)), 'MMM dd, yyyy HH:mm')}
+                </Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle1" fontWeight="bold">
