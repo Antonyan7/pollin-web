@@ -486,6 +486,7 @@
   "page.tasks.manager.modal.reassign.field.patient": "Patient",
   "page.tasks.manager.modal.reassign.field.reassign": "Reassign to",
   "page.tasks.manager.modal.reassign.field.notes": "Reassignment Notes [Optional]",
+  "page.tasks.manager.modal.create.actions.create": "Create Task",
   "page.tasks.manager.modal.reassign.actions.reassign": "Reassign",
   "page.tasks.manager.modal.reassign.actions.cancel": "Cancel",
   "page.tasks.manager.toast.successful.reassign": "Task reassigned to"

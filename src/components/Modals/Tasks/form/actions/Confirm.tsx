@@ -13,7 +13,7 @@ const ConfirmButton = () => {
   const theme = useTheme();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const { watch } = useFormContext();
-  const addButtonLabel = t(Translation.MODAL_CONFIRM_MACHINE_BUTTON_CONFIRM);
+  const addButtonLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_ACTIONS_CREATE);
   const isTasksCreateLoading = useAppSelector(tasksSelector.isTasksCreateLoading);
 
   useEffect(() => {

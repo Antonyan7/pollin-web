@@ -127,7 +127,6 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
       renderInput={(params: TextFieldProps) => (
         <TextField
           {...params}
-          {...renderInputProps}
           {...formattedParams}
           sx={{
             svg: { color: theme.palette.primary.main }
@@ -137,6 +136,7 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
             endAdornment: <EventIcon />
           }}
           fullWidth
+          {...renderInputProps}
         />
       )}
     />

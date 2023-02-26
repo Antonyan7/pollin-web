@@ -488,6 +488,7 @@ export enum Translation {
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_PATIENT = 'page.tasks.manager.modal.reassign.field.patient',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_REASSIGN = 'page.tasks.manager.modal.reassign.field.reassign',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_NOTES = 'page.tasks.manager.modal.reassign.field.notes',
+  PAGE_TASKS_MANAGER_MODAL_CREATE_ACTIONS_CREATE = 'page.tasks.manager.modal.create.actions.create',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_ACTIONS_REASSIGN = 'page.tasks.manager.modal.reassign.actions.reassign',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_ACTIONS_CANCEL = 'page.tasks.manager.modal.reassign.actions.cancel',
   PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_REASSIGN = 'page.tasks.manager.toast.successful.reassign'
