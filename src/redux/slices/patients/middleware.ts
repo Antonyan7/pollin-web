@@ -5,6 +5,7 @@ import {
   ICreateEncounterAddendumRequest,
   IUpdateEncounterAddendumRequest
 } from '@axios/patientEmr/managerPatientEmrTypes';
+import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
@@ -68,7 +69,9 @@ const {
   setPatientAlertViewState,
   setPatientAlertDetailsLoading,
   setGeneralHealth,
-  setIsGeneralHealthLoading
+  setIsGeneralHealthLoading,
+  setIsEditButtonClicked,
+  setIsGeneralHealthDataUpdating
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -540,6 +543,26 @@ const getGeneralHealth = (patientId: string) => async (dispatch: AppDispatch) =>
   dispatch(setIsGeneralHealthLoading(false));
 };
 
+const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
+  const editButtonState = getState().patients.medicalBackground.contact.isGeneralHealthEditButtonClicked;
+
+  dispatch(setIsEditButtonClicked(!editButtonState));
+};
+
+const updateGeneralHealthData =
+  (patientId: string, healthData: RecordedHealthType) => async (dispatch: AppDispatch) => {
+    dispatch(setIsGeneralHealthDataUpdating(true));
+
+    try {
+      await API.patients.updateGeneralHealth(patientId, healthData);
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+
+    dispatch(setIsGeneralHealthDataUpdating(false));
+  };
+
 export default {
   getPatientsList,
   getPatientSearchFilters,
@@ -575,5 +598,7 @@ export default {
   sendPatientIntakeReminder,
   cleanTestResultsHistory,
   isPatientAlertViewOpen,
-  getGeneralHealth
+  getGeneralHealth,
+  changeEditButtonClickState,
+  updateGeneralHealthData
 };

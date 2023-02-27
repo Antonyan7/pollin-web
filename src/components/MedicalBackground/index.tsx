@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MedicalBackgroundHeader from '@components/MedicalBackground/components/Header';
 import MedicalBackgroundTabPanel from '@components/MedicalBackground/components/MedicalBackgroundTabPanel';
-import PatientMedicalBackgroundSection from '@components/MedicalBackground/components/PatientMedicalBackgroundSection';
 import ContactPage from '@components/MedicalBackground/Contact';
 import { Box, Grid, Tab, Tabs } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -49,9 +48,7 @@ const MedicalBackgroundTabs = () => {
           </Tabs>
         </Box>
         <MedicalBackgroundTabPanel value={activePageValue} index={0}>
-          <PatientMedicalBackgroundSection title="Pass Page Title">
-            <Grid>Create Medical History Page</Grid>
-          </PatientMedicalBackgroundSection>
+          <Grid>Create Medical History Page</Grid>
         </MedicalBackgroundTabPanel>
         <MedicalBackgroundTabPanel value={activePageValue} index={1}>
           <ContactPage />

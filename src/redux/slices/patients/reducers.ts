@@ -193,6 +193,12 @@ const reducers = createReducer({
   },
   setIsGeneralHealthLoading(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isGeneralHealthLoading = action.payload;
+  },
+  setIsEditButtonClicked(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isGeneralHealthEditButtonClicked = action.payload;
+  },
+  setIsGeneralHealthDataUpdating(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isGeneralHealthDataUpdating = action.payload;
   }
 });
 

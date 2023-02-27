@@ -67,6 +67,14 @@ const isGeneralHealthLoading = createSelector(
   (state) => state.medicalBackground.contact.isGeneralHealthLoading
 );
 const generalHealth = createSelector([selector], (state) => state.medicalBackground.contact.generalHealth);
+const isGeneralHealthEditButtonClicked = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.isGeneralHealthEditButtonClicked
+);
+const isGeneralHealthDataUpdating = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.isGeneralHealthDataUpdating
+);
 
 export default {
   isTestResultsHistoryLoading,
@@ -116,5 +124,7 @@ export default {
   isPatientHighlightIntakeReminderActive,
   isPatientAlertDetailsLoading,
   isGeneralHealthLoading,
-  generalHealth
+  generalHealth,
+  isGeneralHealthEditButtonClicked,
+  isGeneralHealthDataUpdating
 };

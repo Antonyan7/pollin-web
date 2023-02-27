@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import { Grid, SxProps, Theme, Typography, useTheme } from '@mui/material';
+import { Grid, IconButton, SxProps, Theme, Typography, useTheme } from '@mui/material';
 import { borders, margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -11,9 +11,18 @@ interface PatientMedicalBackgroundSectionProps {
   title?: ReactNode;
   sx?: SxProps<Theme>;
   isLoading?: boolean;
+  isButtonClicked: boolean;
+  onClick: () => void;
 }
 
-const PatientMedicalBackgroundSection = ({ children, title, isLoading, sx }: PatientMedicalBackgroundSectionProps) => {
+const PatientMedicalBackgroundSection = ({
+  children,
+  title,
+  isLoading,
+  sx,
+  isButtonClicked,
+  onClick
+}: PatientMedicalBackgroundSectionProps) => {
   const theme = useTheme();
 
   return (
@@ -39,14 +48,16 @@ const PatientMedicalBackgroundSection = ({ children, title, isLoading, sx }: Pat
             </Typography>
           </Grid>
           <Grid>
-            <ModeEditOutlinedIcon
-              sx={{
-                color: theme.palette.primary.main,
-                '&:hover': {
-                  cursor: 'pointer'
-                }
-              }}
-            />
+            <IconButton disabled={isButtonClicked} onClick={onClick}>
+              <ModeEditOutlinedIcon
+                sx={{
+                  color: theme.palette.primary.main,
+                  '&:hover': {
+                    cursor: 'pointer'
+                  }
+                }}
+              />
+            </IconButton>
           </Grid>
         </Grid>
       }

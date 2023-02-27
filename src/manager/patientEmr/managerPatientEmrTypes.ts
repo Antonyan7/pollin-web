@@ -331,7 +331,6 @@ export interface DietProps extends MedicalBackgroundFieldValues {
 
 export interface ActiveConsultsListProps extends MedicalBackgroundFieldValues {
   value: boolean;
-  items: { title: string }[];
 }
 
 export interface AdditionalInformationProps extends MedicalBackgroundFieldValues {
@@ -350,7 +349,7 @@ export interface IGeneralHealthProps {
   drugAllergies: DrugAllergiesProps;
   foodAllergies: FoodAllergiesProps;
   latexAllergy: AllegiesFieldValues;
-  iodineALlergy: AllegiesFieldValues;
+  iodineAllergy: AllegiesFieldValues;
   smokeCigarettes: AllegiesFieldValues;
   drinkAlcohol: AllegiesFieldValues;
   useMarijuana: AllegiesFieldValues;

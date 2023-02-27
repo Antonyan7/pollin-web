@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+
 import { IGeneralHealthProps } from '@axios/patientEmr/managerPatientEmrTypes';
 
 interface HealthListRowProps {
@@ -62,3 +64,26 @@ export const mappedGeneralHealthData = (data: IGeneralHealthProps | null) => {
 
 export const showFalsyResult = (condition: boolean, falsyResult: string, initial?: string | boolean) =>
   condition ? falsyResult : initial;
+
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type RecordedHealthType = Record<string, unknown>;
+
+export const mergeObjects = <T extends RecordedHealthType, U extends RecordedHealthType>(
+  newData: T,
+  oldData: U
+): T & U => {
+  const result = { ...newData, ...oldData } as T & U;
+
+  for (const key in oldData) {
+    if (Object.prototype.hasOwnProperty.call(oldData, key)) {
+      if (typeof oldData[key] === 'object' && oldData[key] !== null && !Array.isArray(oldData[key])) {
+        result[key] = mergeObjects(newData[key] as RecordedHealthType, oldData[key] as RecordedHealthType) as (T &
+          U)[Extract<keyof U, string>];
+      } else {
+        result[key as keyof T & keyof U] = oldData[key] as T[keyof T & string] & U[keyof U & string];
+      }
+    }
+  }
+
+  return result;
+};

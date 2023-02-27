@@ -1,3 +1,4 @@
+import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import * as Sentry from '@sentry/nextjs';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
@@ -161,6 +162,12 @@ const patientEmrManager = {
   getGeneralHealth(patientId: string) {
     return axiosInstance.get<IGeneralHealth, IAxiosResponse<IGeneralHealth>>(
       `${baseURL}/v1/medical-background/${patientId}/general-health`
+    );
+  },
+  updateGeneralHealth(patientId: string, generalHealthData: RecordedHealthType) {
+    return axiosInstance.put<IGeneralHealth, IAxiosResponse<IGeneralHealth>>(
+      `${baseURL}/v1/medical-background/${patientId}/general-health`,
+      generalHealthData
     );
   }
 };

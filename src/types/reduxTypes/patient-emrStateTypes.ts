@@ -29,6 +29,8 @@ export interface MedicalBackgroundProps {
   contact: {
     generalHealth: IGeneralHealthProps | null;
     isGeneralHealthLoading: boolean;
+    isGeneralHealthEditButtonClicked: boolean;
+    isGeneralHealthDataUpdating: boolean;
   };
 }
 
