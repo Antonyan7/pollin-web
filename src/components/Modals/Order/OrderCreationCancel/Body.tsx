@@ -1,13 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Stack, Typography } from '@mui/material';
-import { dispatch } from '@redux/hooks';
-import { ordersMiddleware } from '@redux/slices/orders';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -16,8 +12,6 @@ const Body = () => {
   const router = useRouter();
   const { id: currentPatientId } = router.query;
   const onClickConfirm = () => {
-    dispatch(ordersMiddleware.resetOrderTypesSelection());
-    dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal));
     router.push(`/patient-emr/details/${currentPatientId}/orders`);
   };
 

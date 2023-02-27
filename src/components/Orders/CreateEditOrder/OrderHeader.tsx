@@ -1,13 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { Grid, IconButton, Typography, useTheme } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
+import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 import { format } from 'util';
 
 const OrderHeader = () => {
@@ -15,20 +14,11 @@ const OrderHeader = () => {
   const theme = useTheme();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
+  const router = useRouter();
+
   const onBackClick = () => {
-    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
+    router.push(`/patient-emr/details/${router.query.id}/profile`);
   };
-
-  useEffect(() => {
-    window.onpopstate = () => {
-      window.history.forward();
-      onBackClick();
-    };
-
-    return () => {
-      window.onpopstate = null;
-    };
-  }, []);
 
   return (
     <Grid

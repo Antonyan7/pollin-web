@@ -5,14 +5,12 @@ import resultsHelpers from '@axios/results/resultsHelpers';
 import { Button, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
-import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { updateIsValidationLoading, updateOrderCreationStep } from 'context/actions/OrderCreationContextActions';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 
 import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
 
@@ -30,7 +28,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
   );
 
   const onCancelClick = () => {
-    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
+    router.back();
   };
 
   const onNextButtonClick = async () => {
