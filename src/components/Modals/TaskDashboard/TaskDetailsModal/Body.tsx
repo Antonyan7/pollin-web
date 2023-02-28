@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import { findStatusByID } from 'helpers/tasks';
 import { margins, paddings } from 'themes/themeConstants';
 
-import { convertToLocale , getCurrentDate, getDate } from '@utils/dateUtils';
+import { convertToLocale, getCurrentDate, getDate } from '@utils/dateUtils';
 
 const Body = () => {
   const [t] = useTranslation();
@@ -19,7 +19,7 @@ const Body = () => {
   const isOverdue = getDate(taskDetails.dueDate) < getDate(currentDay);
 
   return (
-    <Grid container spacing={1} sx={{ maxHeight: '541px', minWidth: '500px', overflowY: 'scroll' }}>
+    <Grid container spacing={1} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'scroll' }}>
       <Grid item xs={4}>
         <Typography variant="subtitle1" fontWeight="bold">
           {t(Translation.MODAL_REVIEW_RESULTS_PATIENT_NAME)}:
