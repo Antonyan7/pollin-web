@@ -49,7 +49,7 @@ const OrderDetailsPage = () => {
             },
             {
               name: `${patientProfile?.title}`,
-              path: `/patient-emr/details/${currentPatientId}`
+              path: `/patient-emr/details/${currentPatientId}/orders`
             },
             {
               name: `${t(Translation.PAGE_ORDER_DETAILS_TITLE)}`,

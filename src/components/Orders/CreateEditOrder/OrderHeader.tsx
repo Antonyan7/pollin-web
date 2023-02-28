@@ -17,7 +17,7 @@ const OrderHeader = () => {
   const router = useRouter();
 
   const onBackClick = () => {
-    router.push(`/patient-emr/details/${router.query.id}/profile`);
+    router.push(`/patient-emr/details/${router.query.id}/orders`);
   };
 
   return (

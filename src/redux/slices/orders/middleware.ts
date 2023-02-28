@@ -3,6 +3,7 @@ import {
   IOrderResultsListReqBody,
   IValidateOrderCreationReqBody,
   IValidateOrderType,
+  OrderListSortFields,
   OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -12,6 +13,7 @@ import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
+import { ISortOrder, SortOrder } from 'types/patient';
 import {
   ICreateOrderReqBody,
   IOrderDetailsData,
@@ -23,6 +25,7 @@ import {
 } from 'types/reduxTypes/ordersStateTypes';
 
 import { collectionDeepMerge } from '@utils/collectionDeepMerge';
+import { capitalizeFirst } from '@utils/stringUtils';
 
 import { Translation } from '../../../constants/translations';
 import { viewsMiddleware } from '../views';
@@ -129,6 +132,7 @@ const updateEditableOrderTypes =
 const resetOrderTypesSelection = () => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(''));
   dispatch(setOrderTypes([]));
+  dispatch(setEditableOrderDetails([]));
   dispatch(
     setOrderDetails({
       id: '',
@@ -223,24 +227,6 @@ const getCancellationReasons = () => async (dispatch: AppDispatch) => {
     dispatch(setIsCancellationReasonsLoading(false));
   }
 };
-
-const cancelOrder =
-  (orderId: string, reasonId: string, cancellationReason?: string) => async (dispatch: AppDispatch) => {
-    dispatch(setIsCancelOrderLoading(true));
-
-    try {
-      const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
-
-      if (response) {
-        dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
-      }
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    }
-
-    dispatch(setIsCancelOrderLoading(false));
-  };
 
 const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsTestResultReviewed(true));
@@ -450,6 +436,35 @@ const updateDetailsComment = (comment: string) => async (dispatch: AppDispatch) 
 
   dispatch(setOrderDetails({ ...orderDetails, comment }));
 };
+
+const cancelOrder =
+  (patientId: string, orderId: string, reasonId: string, cancellationReason?: string) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setIsCancelOrderLoading(true));
+
+    try {
+      const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
+
+      const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Asc);
+      const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.Status);
+      const data: OrdersListDataProps = {
+        sortByField: capitalizedSortField,
+        patientId,
+        sortOrder: capitalizedSortOrder,
+        page: 1
+      };
+
+      if (response) {
+        dispatch(getOrdersList(data));
+        dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+
+    dispatch(setIsCancelOrderLoading(false));
+  };
 
 export default {
   updateSelectedOrderType,

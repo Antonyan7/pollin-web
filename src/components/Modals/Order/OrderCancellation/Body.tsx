@@ -7,6 +7,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
+import { useRouter } from 'next/router';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
@@ -24,9 +25,11 @@ const Body = ({ orderId }: BodyProps) => {
   const cancellationReasonsLoading = useAppSelector(ordersSelector.isCancellationReasonsLoading);
   const cancellationReasonsOptions = createOptionsGroup(cancellationReasons.reasons);
   const [reasonId, setReasonId] = useState('');
+  const router = useRouter();
+  const { id: patientId } = router.query;
 
   const onClickConfirm = () => {
-    dispatch(ordersMiddleware.cancelOrder(orderId, reasonId));
+    dispatch(ordersMiddleware.cancelOrder(patientId as string, orderId, reasonId));
   };
 
   return (

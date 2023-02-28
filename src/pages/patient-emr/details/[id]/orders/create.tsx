@@ -38,7 +38,7 @@ const CreateOrderPage = () => {
             },
             {
               name: `${patientFullName}`,
-              path: `/patient-emr/details/${currentPatientId}`
+              path: `/patient-emr/details/${currentPatientId}/orders`
             },
             {
               name: `${t(Translation.PAGE_CREATE_ORDER_TITLE)}`,
