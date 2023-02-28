@@ -1,21 +1,25 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import resultsHelpers from '@axios/results/resultsHelpers';
 import { Button, Stack } from '@mui/material';
-import { dispatch } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { viewsMiddleware, viewsSelector } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { updateIsValidationLoading, updateOrderCreationStep } from 'context/actions/OrderCreationContextActions';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
+import useStopRouteChange from '@hooks/useStopRouteChange';
 import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
 
 const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
   const [t] = useTranslation();
+  const [isSubmitActionCalled, setIsSubmitActionCalled] = useState(false);
   const { orderCreationState, dispatchOrderCreationState } = useOrderCreationContext();
   const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const orderDetails = useSelector(ordersSelector.orderDetails);
@@ -46,6 +50,8 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
 
   const onCreateOrderClick = () => {
     if (patientId) {
+      setIsSubmitActionCalled(true);
+
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.createOrder(patientId as string, orderTypesToValidate, orderDetails.comment));
@@ -55,6 +61,8 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
 
   const onConfirmOrderUpdateClick = () => {
     if (orderId) {
+      setIsSubmitActionCalled(true);
+
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, orderDetails.comment));
@@ -68,6 +76,18 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
         orderGroup?.groups?.some((group) => isAnyGroupItemSelected(group.groupItems))
       ),
     [editableOrderDetails]
+  );
+
+  const openedModals = useAppSelector(viewsSelector.modals);
+  const isCancelModalOpened = openedModals.find((modal) => modal.name === ModalName.CancelOrderCreationModal);
+
+  const openCancellationModal = () => {
+    dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
+  };
+
+  useStopRouteChange(
+    atLeastOneSelectedItemExists && !isCancelModalOpened && !isSubmitActionCalled,
+    openCancellationModal
   );
 
   const renderConfirmOrCreateButton = () => {

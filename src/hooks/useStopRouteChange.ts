@@ -24,7 +24,9 @@ const useStopRouteChange = (condition: boolean, action: () => void) => {
     return () => {
       router.events.off('routeChangeStart', exitingFunction);
     };
-  }, [router.events, condition, action]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [condition, action]);
 };
 
 export default useStopRouteChange;

@@ -196,9 +196,11 @@ export interface IOrdersPossibleActions {
 export interface IOrdersStatusesItems {
   status: OrdersListItemStatus;
   title: string;
-  possibleActions: IOrdersPossibleActions[];
-  textColor: string;
-  backgroundColor: string;
+  actions: IOrdersPossibleActions[];
+  label: {
+    textColor: string;
+    backgroundColor: string;
+  };
 }
 
 export enum OrdersFilterType {
@@ -215,7 +217,7 @@ export interface IOrdersFilters {
   filters: IOrdersFilterItems[];
 }
 export interface IOrdersStatuses {
-  items: IOrdersStatusesItems[];
+  variations: IOrdersStatusesItems[];
 }
 export interface OrderListDataFilter {
   id: string;
@@ -227,6 +229,7 @@ export enum OrderListSortFields {
 }
 export interface OrdersListDataProps {
   page: number;
+  patientId: string;
   filters?: OrderListDataFilter[];
   sortOrder: ISortOrder;
   sortByField: OrderListSortFields;

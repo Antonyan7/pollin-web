@@ -1,5 +1,3 @@
-import { IValidatedOrderType } from '@axios/results/resultsManagerTypes';
-
 import { OrderCreationContextActionTypes } from '../types/OrderCreationContextTypes';
 
 export interface IUpdateOrderCreationStepAction {
@@ -12,18 +10,6 @@ export const updateOrderCreationStep = (step: number): IUpdateOrderCreationStepA
   step
 });
 
-export interface IUpdateValidatedTypeGroupsAction {
-  type: typeof OrderCreationContextActionTypes.UPDATE_VALIDATED_ORDER_GROUPS;
-  validatedOrderTypes: IValidatedOrderType[];
-}
-
-export const updateValidatedOrderTypes = (
-  validatedOrderTypes: IValidatedOrderType[]
-): IUpdateValidatedTypeGroupsAction => ({
-  type: OrderCreationContextActionTypes.UPDATE_VALIDATED_ORDER_GROUPS,
-  validatedOrderTypes
-});
-
 export interface IUpdateIsValidationLoadingAction {
   type: typeof OrderCreationContextActionTypes.UPDATE_IS_VALIDATION_LOADING;
   isValidationLoading: boolean;
@@ -34,7 +20,4 @@ export const updateIsValidationLoading = (isValidationLoading: boolean): IUpdate
   isValidationLoading
 });
 
-export type OrderCreationContextActions =
-  | IUpdateOrderCreationStepAction
-  | IUpdateValidatedTypeGroupsAction
-  | IUpdateIsValidationLoadingAction;
+export type OrderCreationContextActions = IUpdateOrderCreationStepAction | IUpdateIsValidationLoadingAction;

@@ -22,9 +22,9 @@ const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
     [orderStatuses, row]
   );
 
-  const chipBackgroundColor = currentOrderStatus?.backgroundColor as string;
-  const chipTextColor = currentOrderStatus?.textColor as string;
-  const contextMenuOptions = currentOrderStatus?.possibleActions as ContextMenuAction[];
+  const chipBackgroundColor = currentOrderStatus?.label?.backgroundColor as string;
+  const chipTextColor = currentOrderStatus?.label?.textColor as string;
+  const contextMenuOptions = currentOrderStatus?.actions as ContextMenuAction[];
 
   const actionBindings = useOrderActions(row, contextMenuOptions);
 

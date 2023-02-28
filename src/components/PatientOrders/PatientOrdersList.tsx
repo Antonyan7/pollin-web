@@ -8,6 +8,7 @@ import {
 import { Box, CircularProgress, Grid, TableContainer, TablePagination } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { ISortOrder, SortOrder } from 'types/patient';
 
@@ -26,6 +27,8 @@ const PatientOrdersList = () => {
   const [filters, setFilters] = useState<OrderListDataFilter[]>([]);
   const [page, setPage] = useState<number>(0);
   const isOrdersListLoading = useAppSelector(ordersSelector.isOrdersListLoading);
+  const router = useRouter();
+  const { id: currentPatientId } = router.query;
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
@@ -44,13 +47,14 @@ const PatientOrdersList = () => {
     const capitalizedSortField = capitalizeFirst<OrderListSortFields>(sortField);
     const data: OrdersListDataProps = {
       sortByField: capitalizedSortField,
+      patientId: currentPatientId as string,
       sortOrder: capitalizedSortOrder,
       ...(filters.length > 0 ? { filters } : {}),
       page: page + 1
     };
 
     dispatch(ordersMiddleware.getOrdersList(data));
-  }, [filters, page, sortField, sortOrder]);
+  }, [filters, page, sortField, sortOrder, currentPatientId]);
 
   useEffect(() => {
     dispatch(ordersMiddleware.getOrderStatuses());

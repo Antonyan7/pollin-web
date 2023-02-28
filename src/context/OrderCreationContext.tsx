@@ -8,7 +8,6 @@ import { IOrderCreationState } from './types/OrderCreationContextTypes';
 
 const initialState: IOrderCreationState = {
   step: 0,
-  validatedOrderTypes: [],
   isValidationLoading: false
 };
 
