@@ -101,7 +101,8 @@ export enum CypressIds {
   PAGE_ORDER_DETAILS_BUTTON_EDIT = 'page.order.details.button.edit',
   PAGE_ORDER_DETAILS_BUTTON_DOWNLOAD_REQUISITIONS = 'page.order.details.button.download.requisitions',
   PAGE_ORDER_DETAILS_BUTTON_CONFIRM = 'page.order.details.button.confirm',
-  PAGE_ORDER_DETAILS_BUTTON_CANCEL = 'page.order.details.button.cancel'
+  PAGE_ORDER_DETAILS_BUTTON_CANCEL = 'page.order.details.button.cancel',
+  PAGE_PATIENT_WIDGET_TEST_RESULTS_BUTTON_VIEW_TEST_RESULTS = 'page.patient.widget.test.results.button.view.test.results'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

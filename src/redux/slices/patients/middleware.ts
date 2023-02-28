@@ -3,7 +3,8 @@ import bookingHelpers from '@axios/booking/bookingHelpers';
 import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import {
   ICreateEncounterAddendumRequest,
-  IUpdateEncounterAddendumRequest
+  IUpdateEncounterAddendumRequest,
+  TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -71,7 +72,9 @@ const {
   setGeneralHealth,
   setIsGeneralHealthLoading,
   setIsEditButtonClicked,
-  setIsGeneralHealthDataUpdating
+  setIsGeneralHealthDataUpdating,
+  setIsProfileTestResultDetailsLoading,
+  setProfileTestResultDetails
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -444,6 +447,22 @@ const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatc
   }
 };
 
+const getProfileTestResultDetails =
+  (id: string, type: TestResultItemType, patientId: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsProfileTestResultDetailsLoading(true));
+
+      const response = await API.patients.getProfileTestResultDetails(patientId, { id, type });
+
+      dispatch(setProfileTestResultDetails(response.data.data.testResults));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    } finally {
+      dispatch(setIsProfileTestResultsLoading(false));
+    }
+  };
+
 const getPatientContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setPatientContactInformationLoadingState(true));
 
@@ -591,6 +610,7 @@ export default {
   getProfileTestResultLatest,
   getProfileTestResultsHistory,
   getProfileTestResults,
+  getProfileTestResultDetails,
   getPatientAppointments,
   cleanEncountersList,
   setCurrentAppointmentType,

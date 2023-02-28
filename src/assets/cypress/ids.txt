@@ -99,3 +99,4 @@
   page.order.details.button.download.requisitions
   page.order.details.button.confirm
   page.order.details.button.cancel
+  page.patient.widget.test.results.button.view.test.results

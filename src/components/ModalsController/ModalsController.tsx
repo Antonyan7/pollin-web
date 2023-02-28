@@ -54,6 +54,7 @@ import PatientMedicationsModal, {
 import PatientPartnersModal, {
   PatientPartnersModalProps
 } from '@components/Patients/PatientModals/PatientPartnersModal';
+import PatientTestResultsModal from '@components/Patients/PatientModals/PatientTestResultsModal';
 import { useAppSelector } from 'redux/hooks';
 import { viewsSelector } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
@@ -124,6 +125,10 @@ const getPatientMedicationsModal = (modal: IOpenedModal<PatientMedicationsModalP
 );
 const getPatientPartnersModal = (modal: IOpenedModal<PatientPartnersModalProps>) => (
   <PatientPartnersModal key={modal.name} {...modal.props} />
+);
+
+const getPatientTestResultsModal = (modal: IOpenedModal<Record<string, never>>) => (
+  <PatientTestResultsModal key={modal.name} />
 );
 
 const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
@@ -224,6 +229,8 @@ export const ModalsController = () => {
             return getPatientMedicationsModal(modal);
           case ModalName.PatientPartnersModal:
             return getPatientPartnersModal(modal);
+          case ModalName.PatientTestResultDetailsModal:
+            return getPatientTestResultsModal(modal);
           case ModalName.InHouseTestResults:
             return getInHouseTestResultsModal();
           case ModalName.SpecimenCollection:

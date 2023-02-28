@@ -4,7 +4,8 @@ import {
   IGeneralHealthProps,
   IPatientContactInformation,
   IProfileTestResults,
-  ITestResultHistory
+  ITestResultHistory,
+  ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
@@ -122,8 +123,14 @@ const reducers = createReducer({
   setProfileTestResults(state, action: IAction<IProfileTestResults>) {
     state.profile.profileTestResults = action.payload;
   },
+  setProfileTestResultDetails(state, action: IAction<ProfileTestResultDetailsItem[]>) {
+    state.profileTestResultDetails = action.payload;
+  },
   setIsProfileTestResultsLoading(state, action: IAction<boolean>) {
     state.profile.isProfileTestResultsLoading = action.payload;
+  },
+  setIsProfileTestResultDetailsLoading(state, action: IAction<boolean>) {
+    state.isProfileTestResultDetailsLoading = action.payload;
   },
   setLatestTestResults(state, action: IAction<ITestResultLatest[]>) {
     state.latestTestResults = action.payload;

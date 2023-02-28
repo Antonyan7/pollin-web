@@ -89,6 +89,8 @@ export const getInitialState = (): PatientEmrProps => ({
     orderBy: PatientAppointmentsSortField.Date,
     status: AppointmentResponseStatus.IDLE
   },
+  isProfileTestResultDetailsLoading: false,
+  profileTestResultDetails: [],
   isPatientAppointmentFiltersLoading: false,
   currentPatientAppointmentFilterField: '',
   contactInformation: {

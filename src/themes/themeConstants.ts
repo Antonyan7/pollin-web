@@ -168,7 +168,13 @@ export const borders = {
 };
 
 export const heights = {
+  height18: '18px',
   height45: '45px'
+};
+
+export const widths = {
+  width18: '18px',
+  width45: '45px'
 };
 
 export const lineHeights = {

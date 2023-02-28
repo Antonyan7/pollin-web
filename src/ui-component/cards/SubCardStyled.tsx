@@ -1,26 +1,35 @@
-import React, { ReactNode, Ref } from 'react';
-import { Card, CardContent, CardHeader, Divider, Theme, Typography, TypographyTypeMap } from '@mui/material';
+import React, { ReactNode } from 'react';
+import {
+  Card,
+  CardContent,
+  CardContentProps,
+  CardHeader,
+  CardHeaderProps,
+  CardProps,
+  Divider,
+  Typography,
+  TypographyTypeMap
+} from '@mui/material';
 import { OverrideProps } from '@mui/material/OverridableComponent';
 import { useTheme } from '@mui/material/styles';
-import { SxProps, TypographyProps } from '@mui/system';
+import { TypographyProps } from '@mui/system';
 import { borders } from 'themes/themeConstants';
 
 interface SubCardProps {
   titleProps?: OverrideProps<TypographyTypeMap<TypographyProps, 'span'>, 'span'>;
-  children: ReactNode | string | null;
+  children?: ReactNode;
   content?: boolean;
   className?: string;
-  contentClass?: string;
+  contentClass?: CardContentProps['className'];
   darkTitle?: boolean;
-  secondary?: ReactNode | string;
-  sx?: SxProps<Theme>;
-  contentSX?: SxProps<Theme>;
-  title?: ReactNode | string;
+  secondary?: CardHeaderProps['action'];
+  contentSX?: CardContentProps['sx'];
+  title?: ReactNode;
 }
 
 // ==============================|| CUSTOM SUB CARD ||============================== //
 
-const SubCardStyled = React.forwardRef(
+const SubCardStyled = React.forwardRef<React.ComponentRef<typeof Card>, SubCardProps & Omit<CardProps, 'title'>>(
   (
     {
       children,
@@ -34,8 +43,8 @@ const SubCardStyled = React.forwardRef(
       titleProps = {},
       title,
       ...others
-    }: SubCardProps,
-    ref: Ref<HTMLDivElement>
+    },
+    ref
   ) => {
     const theme = useTheme();
 

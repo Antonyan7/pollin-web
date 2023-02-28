@@ -12,7 +12,8 @@ import {
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
-  LatestTestResultType
+  LatestTestResultType,
+  ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IEncountersFilterOption, IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
 
@@ -55,6 +56,8 @@ export interface PatientEmrProps {
   isPatientContactInformationLoading: boolean;
   isPatientAlertDetailsLoading: boolean;
   isPatientAlertViewOpen: boolean;
+  isProfileTestResultDetailsLoading: boolean;
+  profileTestResultDetails: ProfileTestResultDetailsItem[];
   error: Error | null;
   patientProfile: PatientProfile | null;
   medicalBackground: MedicalBackgroundProps;

@@ -221,11 +221,13 @@ export enum LatestTestResultType {
   Abnormal = 'Abnormal'
 }
 
+export interface ITestResultHistoryItem {
+  title: string;
+}
+
 export interface ITestResultHistory {
   widgetTitle: string;
-  items: {
-    title: string;
-  }[];
+  items: ITestResultHistoryItem[];
 }
 
 export interface IPatientTestResult {
@@ -238,17 +240,21 @@ export interface IProfileData {
   contribution: string;
 }
 
+export enum TestResultItemType {
+  NONE = 'None',
+  ORDER_GROUP = 'OrderGroup',
+  TEST_TYPE = 'TestType'
+}
+
 export interface ITestTypeItem {
   title: string;
-  testTypeId: string;
+  type: TestResultItemType;
+  testTypeId?: string;
 }
 
 export interface ITestResult {
   title: string;
-  items: {
-    title: string;
-    items: ITestTypeItem[];
-  }[];
+  items: ITestTypeItem[];
 }
 
 export interface IPartner {
@@ -262,6 +268,24 @@ export interface IProfileTestResults {
   partners?: IPartner[];
 }
 
+export interface IProfileTestResultDetailsReqBody {
+  id: string;
+  type: TestResultItemType;
+}
+
+export interface ProfileTestResultDetailsItem {
+  dateCompleted: string;
+  title: string;
+  unit: string;
+  testTypeId: string;
+  result: string;
+  status: string;
+  finalResultType: string;
+}
+
+export interface IProfileTestResultDetailsResponse {
+  testResults: ProfileTestResultDetailsItem[];
+}
 export interface MedicalBackgroundFieldValues {
   isEditable: boolean;
   note: string;

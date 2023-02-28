@@ -20,6 +20,8 @@ import {
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
+  IProfileTestResultDetailsReqBody,
+  IProfileTestResultDetailsResponse,
   IProfileTestResults,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
@@ -136,6 +138,14 @@ const patientEmrManager = {
   getProfileTestResults(patientId: string) {
     return axiosInstance.get<IProfileTestResults, IAxiosResponse<IProfileTestResults>>(
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}`
+    );
+  },
+  getProfileTestResultDetails(patientId: string, params: IProfileTestResultDetailsReqBody) {
+    return axiosInstance.get<IProfileTestResultDetailsResponse, IAxiosResponse<IProfileTestResultDetailsResponse>>(
+      `${baseURLTestsResults}/v1/profile-test-result/${patientId}/details`,
+      {
+        params
+      }
     );
   },
   getProfileTestResultLatest(patientId: string) {
