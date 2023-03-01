@@ -87,7 +87,7 @@ const Body = ({ orderId }: BodyProps) => {
             inputProps={{
               maxLength: 250
             }}
-            onBlur={(e) => {
+            onChange={(e) => {
               setOtherReasonContent(e.target.value);
             }}
           />
@@ -107,7 +107,7 @@ const Body = ({ orderId }: BodyProps) => {
               color="primary"
               variant="contained"
               onClick={onClickConfirm}
-              disabled={!reasonId}
+              disabled={!reasonId || (isOtherReasonSelected && otherReasonContent.length === 0)}
             >
               {t(Translation.COMMON_BUTTON_CONFIRM_LABEL)}
             </ButtonWithLoading>
