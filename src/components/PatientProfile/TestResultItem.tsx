@@ -12,7 +12,7 @@ import { Translation } from 'constants/translations';
 import { heights, margins, widths } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-const TestResultItem = ({ title, type, testTypeId }: ITestTypeItem) => {
+const TestResultItem = ({ title, type, id: testTypeId }: ITestTypeItem) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const currentPatientId = useAppSelector(patientsSelector.currentPatientId);

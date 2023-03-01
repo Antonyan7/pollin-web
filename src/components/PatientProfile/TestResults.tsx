@@ -51,9 +51,9 @@ const TestResults = () => {
               </Stack>
               <Stack flexBasis="10%">:</Stack>
               <Stack gap={margins.topBottom16}>
-                {items.map(({ title, type, testTypeId }, key) => (
+                {items.map(({ title, type, id }, key) => (
                   // eslint-disable-next-line react/no-array-index-key
-                  <TestResultItem key={key} testTypeId={testTypeId} title={title} type={type} />
+                  <TestResultItem key={key} id={id} title={title} type={type} />
                 ))}
               </Stack>
             </Stack>

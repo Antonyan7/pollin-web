@@ -249,7 +249,7 @@ export enum TestResultItemType {
 export interface ITestTypeItem {
   title: string;
   type: TestResultItemType;
-  testTypeId?: string;
+  id?: string;
 }
 
 export interface ITestResult {
