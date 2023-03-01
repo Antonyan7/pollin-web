@@ -14,7 +14,8 @@ import {
   TextField,
   TextFieldProps,
   Theme,
-  useTheme} from '@mui/material';
+  useTheme
+} from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins } from 'themes/themeConstants';

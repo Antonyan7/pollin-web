@@ -188,7 +188,7 @@ export interface ISpecimenCollectionData {
 }
 export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
-export interface IOrdersPossibleActions {
+export interface IOrdersAction {
   id: OrdersActions;
   title: string;
 }
@@ -196,7 +196,7 @@ export interface IOrdersPossibleActions {
 export interface IOrdersStatusesItems {
   status: OrdersListItemStatus;
   title: string;
-  actions: IOrdersPossibleActions[];
+  actions: IOrdersAction[];
   label: {
     textColor: string;
     backgroundColor: string;
