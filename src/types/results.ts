@@ -25,12 +25,12 @@ export interface OrderResultAction {
 export interface IOrderResultsStatus {
   status: OrderResultStatusEnum;
   title: string;
-  possibleActions: OrderResultAction[];
+  actions: OrderResultAction[];
   textColor: string;
   backgroundColor: string;
 }
 export interface IOrderResultsStatusesResponse {
-  items: IOrderResultsStatus[];
+  variations: IOrderResultsStatus[];
 }
 export interface ILabsResponse {
   labs: ILab[];

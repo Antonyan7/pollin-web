@@ -354,7 +354,7 @@ const getOrderResultsStatuses = () => async (dispatch: AppDispatch) => {
   try {
     const response = await API.results.getOrderResultsStatuses();
 
-    dispatch(setOrderResultsStatuses(response.data.data.items));
+    dispatch(setOrderResultsStatuses(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
