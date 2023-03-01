@@ -345,6 +345,7 @@ export enum Translation {
   MODAL_CONFIRM_ORDER_CANCELLATION_SELECTED_ORDER = 'modal.confirm.order.cancellation.selected.order',
   MODAL_CONFIRM_ORDER_CANCELLATION_MESSAGE_UNDONE = 'modal.confirm.order.cancellation.message.undone',
   MODAL_CONFIRM_ORDER_CANCELLATION_REASON = 'modal.confirm.order.cancellation.reason',
+  MODAL_CONFIRM_ORDER_CANCELLATION_SUCCESS_ALERT = 'modal.confirm.order.cancellation.success.alert',
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_TITLE = 'modal.confirm.order.create.cancel.title',
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_SUBTITLE1 = 'modal.confirm.order.create.cancel.subtitle1',
   MODAL_CONFIRM_ORDER_CREATE_CANCEL_SUBTITLE2 = 'modal.confirm.order.create.cancel.subtitle2',

@@ -153,3 +153,10 @@ export interface IOrdersList extends IPagination {
 export interface IOrdersListResponse extends IOrdersList {}
 
 export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}
+
+export interface ICancelOrderProps {
+  patientId: string;
+  orderId: string;
+  reasonId: string;
+  cancellationReason?: string;
+}

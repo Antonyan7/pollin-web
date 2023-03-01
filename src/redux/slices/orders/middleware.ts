@@ -15,6 +15,7 @@ import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import { ISortOrder, SortOrder } from 'types/patient';
 import {
+  ICancelOrderProps,
   ICreateOrderReqBody,
   IOrderDetailsData,
   IOrderGroup,
@@ -437,34 +438,43 @@ const updateDetailsComment = (comment: string) => async (dispatch: AppDispatch) 
   dispatch(setOrderDetails({ ...orderDetails, comment }));
 };
 
-const cancelOrder =
-  (patientId: string, orderId: string, reasonId: string, cancellationReason?: string) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(setIsCancelOrderLoading(true));
+const cancelOrder = (cancellationProps: ICancelOrderProps) => async (dispatch: AppDispatch) => {
+  dispatch(setIsCancelOrderLoading(true));
 
-    try {
-      const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
+  const { orderId, patientId, reasonId, cancellationReason } = cancellationProps;
 
-      const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Asc);
-      const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.Status);
-      const data: OrdersListDataProps = {
-        sortByField: capitalizedSortField,
-        patientId,
-        sortOrder: capitalizedSortOrder,
-        page: 1
-      };
+  try {
+    const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
 
-      if (response) {
-        dispatch(getOrdersList(data));
-        dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
-      }
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
+    const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Asc);
+    const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.Status);
+    const data: OrdersListDataProps = {
+      sortByField: capitalizedSortField,
+      patientId,
+      sortOrder: capitalizedSortOrder,
+      page: 1
+    };
+
+    if (response) {
+      dispatch(getOrdersList(data));
+      dispatch(viewsMiddleware.closeModal(ModalName.OrderCancellation));
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_SUCCESS_ALERT)
+          }
+        })
+      );
     }
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
 
-    dispatch(setIsCancelOrderLoading(false));
-  };
+  dispatch(setIsCancelOrderLoading(false));
+};
 
 export default {
   updateSelectedOrderType,

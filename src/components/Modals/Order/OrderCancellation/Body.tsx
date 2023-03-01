@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Grid, MenuItem, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
-import { createOptionsGroup } from 'helpers/berryFunctions';
 import { useRouter } from 'next/router';
-import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
+import { ICancelOrderProps } from 'types/reduxTypes/ordersStateTypes';
 
-import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
+import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 interface BodyProps {
@@ -19,18 +18,35 @@ interface BodyProps {
 
 const Body = ({ orderId }: BodyProps) => {
   const [t] = useTranslation();
-  const theme = useTheme();
   const cancellationReasons = useAppSelector(ordersSelector.cancellationReasons);
   const isCancelOrderLoading = useAppSelector(ordersSelector.isCancelOrderLoading);
   const cancellationReasonsLoading = useAppSelector(ordersSelector.isCancellationReasonsLoading);
-  const cancellationReasonsOptions = createOptionsGroup(cancellationReasons.reasons);
-  const [reasonId, setReasonId] = useState('');
+  const [reasonId, setReasonId] = useState<string>('');
+  const [otherReasonContent, setOtherReasonContent] = useState<string>('');
   const router = useRouter();
   const { id: patientId } = router.query;
 
-  const onClickConfirm = () => {
-    dispatch(ordersMiddleware.cancelOrder(patientId as string, orderId, reasonId));
+  const resetOrderReasons = () => {
+    setReasonId('');
+    setOtherReasonContent('');
   };
+
+  const onClickConfirm = () => {
+    const body: ICancelOrderProps = {
+      patientId: patientId as string,
+      orderId,
+      reasonId,
+      ...(otherReasonContent.length > 0 ? { cancellationReason: otherReasonContent } : {})
+    };
+
+    dispatch(ordersMiddleware.cancelOrder(body));
+    resetOrderReasons();
+  };
+
+  const isOtherReasonSelected = useMemo(
+    () => reasonId === cancellationReasons.reasons[cancellationReasons.reasons.length - 1].id,
+    [reasonId, cancellationReasons.reasons]
+  );
 
   return (
     <Grid container spacing={3}>
@@ -40,32 +56,43 @@ const Body = ({ orderId }: BodyProps) => {
       <Grid item xs={12}>
         <Typography>{t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_MESSAGE_UNDONE)}</Typography>
       </Grid>
-      <Grid item xs={12}>
-        <BaseDropdownWithLoading
+      <Grid sx={{ marginTop: margins.top16 }} item xs={12}>
+        <BaseSelectWithLoading
+          IconComponent={KeyboardArrowDownIcon}
           isLoading={cancellationReasonsLoading}
-          ListboxProps={{
-            style: {
-              maxHeight: 260,
-              borderRadius: `${borderRadius.radius8}`,
-              border: `${borders.solid2px} ${theme.palette.primary.main}`
-            }
+          id="cancel-order-label"
+          labelId="cancel-order-label"
+          label={t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_REASON)}
+          onChange={(e: SelectChangeEvent) => {
+            setReasonId(e.target.value);
           }}
-          isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
-          onChange={(_, value) => {
-            if (value && typeof value === 'object' && 'item' in value) {
-              setReasonId(value.item.id);
-            }
-          }}
-          options={cancellationReasonsOptions}
-          groupBy={(option) => option.firstLetter}
-          getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
-          clearIcon={<CloseIcon onClick={() => setReasonId('')} fontSize="small" />}
-          popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
-          renderInputProps={{
-            label: t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_REASON)
-          }}
-        />
+        >
+          {cancellationReasons.reasons.map((reasonItem) => (
+            <MenuItem value={reasonItem.id} key={reasonItem.title.toString()}>
+              {reasonItem.title}
+            </MenuItem>
+          ))}
+        </BaseSelectWithLoading>
       </Grid>
+
+      {isOtherReasonSelected && (
+        <Grid item xs={12}>
+          <TextField
+            fullWidth
+            id="reason_for_cancellation"
+            multiline
+            label={t(Translation.MODAL_CONFIRM_ORDER_CANCELLATION_REASON)}
+            name="reason_for_cancellation"
+            rows={4}
+            inputProps={{
+              maxLength: 250
+            }}
+            onBlur={(e) => {
+              setOtherReasonContent(e.target.value);
+            }}
+          />
+        </Grid>
+      )}
 
       <Grid container justifyContent="flex-end" alignItems="center" sx={{ marginTop: margins.top4 }}>
         <Grid item xs={12}>
@@ -74,7 +101,8 @@ const Body = ({ orderId }: BodyProps) => {
               isLoading={isCancelOrderLoading}
               sx={{
                 py: paddings.top12,
-                px: paddings.leftRight24
+                px: paddings.leftRight24,
+                marginTop: margins.top16
               }}
               color="primary"
               variant="contained"
