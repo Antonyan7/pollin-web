@@ -40,7 +40,7 @@ const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentSt
             />
             <SpecimenDataItem
               label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_ID)}
-              value={patientContactInformation.id}
+              value={patientContactInformation.patientIdentifier}
             />
             <SpecimenDataItem
               label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_DATE_OF_BIRTH)}
