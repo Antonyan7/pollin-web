@@ -164,7 +164,7 @@ const patientEmrManager = {
     );
   },
   sendIntakeReminder(patientId: string) {
-    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/notification/send-intake-reminder`, {
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/profile/send-intake-reminder`, {
       patientId
     });
   },
