@@ -45,7 +45,7 @@ const TestResultDetails: React.FC = () => {
     const blob = await dispatch(resultsMiddleware.downloadTestResultAttachment(attachmentId));
 
     if (blob && linkRef.current) {
-      const url = window.URL.createObjectURL(blob);
+      const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
 
       linkRef.current.href = url;
       linkRef.current.download = `${testResultsDetails.title}.pdf`;

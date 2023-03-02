@@ -770,7 +770,7 @@ const downloadTestResultAttachment = (attachmentId: string) => async (dispatch: 
   try {
     const response = await API.results.downloadTestResultAttachment(attachmentId);
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error as string));

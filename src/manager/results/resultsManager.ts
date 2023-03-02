@@ -319,7 +319,9 @@ const resultsManager = {
     return axiosInstance.get<IOrderTypesGroups, IAxiosResponse<IOrderTypesGroups>>(`${baseURL}/v1/order/group`);
   },
   downloadTestResultAttachment(attachmentId: string) {
-    return axiosInstance.get<Blob, IAxiosResponse<Blob>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`);
+    return axiosInstance.get<void, AxiosResponse<BlobPart>>(`${baseURL}/v1/test-result/attachment/${attachmentId}`, {
+      responseType: 'blob'
+    });
   },
   getOrderDetails(orderId: string) {
     return axiosInstance
