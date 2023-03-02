@@ -143,7 +143,6 @@ const resultsManager = {
       data
     );
   },
-
   getOrderResultsListForPatient(data: IOrderResultsListReqBody, patientId: string) {
     return axiosInstance.post<IOrderResultsByPatientList, IAxiosResponsePaginated<IOrderResultsByPatientList>>(
       `${baseURL}/v1/test-result`,

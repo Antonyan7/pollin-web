@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import resultsHelpers from '@axios/results/resultsHelpers';
@@ -19,7 +19,6 @@ import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
 
 const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
   const [t] = useTranslation();
-  const [isSubmitActionCalled, setIsSubmitActionCalled] = useState(false);
   const { orderCreationState, dispatchOrderCreationState } = useOrderCreationContext();
   const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const orderDetails = useSelector(ordersSelector.orderDetails);
@@ -50,8 +49,6 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
 
   const onCreateOrderClick = () => {
     if (patientId) {
-      setIsSubmitActionCalled(true);
-
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.createOrder(patientId as string, orderTypesToValidate, orderDetails.comment));
@@ -60,14 +57,13 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
   };
 
   const onConfirmOrderUpdateClick = () => {
-    if (orderId) {
-      setIsSubmitActionCalled(true);
-
+    if (orderId && orderDetails.isEditable && needValidation) {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, orderDetails.comment));
-      router.push(`/patient-emr/details/${patientId}/orders`);
     }
+
+    router.push(`/patient-emr/details/${patientId}/orders`);
   };
 
   const atLeastOneSelectedItemExists = useMemo(
@@ -85,10 +81,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
-  useStopRouteChange(
-    atLeastOneSelectedItemExists && !isCancelModalOpened && !isSubmitActionCalled,
-    openCancellationModal
-  );
+  useStopRouteChange(needValidation && atLeastOneSelectedItemExists && !isCancelModalOpened, openCancellationModal);
 
   const renderConfirmOrCreateButton = () => {
     if (isEdit) {

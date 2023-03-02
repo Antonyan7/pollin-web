@@ -8,7 +8,9 @@ import {
 } from '@axios/results/resultsManagerTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
+import { ordersMiddleware } from '@redux/slices/orders/index';
 import slice from '@redux/slices/orders/slice';
+import { resultsMiddleware } from '@redux/slices/results';
 import store, { AppDispatch } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import { t } from 'i18next';
@@ -229,29 +231,42 @@ const getCancellationReasons = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const makeTestResultReviewed = (testResultId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsTestResultReviewed(true));
+const makeTestResultReviewed =
+  (testResultId: string, patientId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
+    dispatch(setIsTestResultReviewed(true));
 
-  try {
-    const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
+    const testResultsReqBody: IOrderResultsListReqBody = {
+      page: 1
+    };
 
-    dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
-    dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
+    try {
+      const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
 
-  dispatch(setIsTestResultReviewed(false));
-};
+      dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
+      dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody, patientId));
+      dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
+      dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
 
-const makeTestResultReleased = (testResultId: string) => async (dispatch: AppDispatch) => {
+    dispatch(setIsTestResultReviewed(false));
+  };
+
+const makeTestResultReleased = (testResultId: string, patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsTestResultReleased(true));
+
+  const testResultsReqBody: IOrderResultsListReqBody = {
+    page: 1
+  };
 
   try {
     const response = await API.results.makeTestResultReleased(testResultId);
 
     dispatch(setTestResultReleasedDate(response.data.data.releaseDate));
+    dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody, patientId));
+    dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
     dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
   } catch (error) {
     Sentry.captureException(error);
@@ -446,8 +461,8 @@ const cancelOrder = (cancellationProps: ICancelOrderProps) => async (dispatch: A
   try {
     const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
 
-    const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Asc);
-    const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.Status);
+    const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Desc);
+    const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.DateCreated);
     const data: OrdersListDataProps = {
       sortByField: capitalizedSortField,
       patientId,

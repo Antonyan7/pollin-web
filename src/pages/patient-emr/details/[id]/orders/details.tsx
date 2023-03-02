@@ -4,7 +4,7 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import CreateEditOrder from '@components/Orders/CreateEditOrder';
 import { Paper, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { ordersMiddleware } from '@redux/slices/orders';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
@@ -18,8 +18,6 @@ const OrderDetailsPage = () => {
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
 
   const { orderId } = router.query;
-  const orderDetails = useAppSelector(ordersSelector.orderDetails);
-  const editableOrderDetails = useAppSelector(ordersSelector.editableOrderDetails);
 
   useEffect(() => {
     if (typeof currentPatientId === 'string' && patientProfile === null) {
@@ -28,12 +26,8 @@ const OrderDetailsPage = () => {
   }, [currentPatientId, patientProfile]);
 
   useEffect(() => {
-    const shouldGetOrderDetails = typeof orderId === 'string' && orderDetails.id === '' && editableOrderDetails.length;
-
-    if (shouldGetOrderDetails) {
-      dispatch(ordersMiddleware.getOrderDetails(orderId));
-    }
-  }, [orderDetails.id, orderId, editableOrderDetails]);
+    dispatch(ordersMiddleware.getOrderDetails(orderId as string));
+  }, [orderId]);
 
   return (
     <Stack gap={margins.all16}>

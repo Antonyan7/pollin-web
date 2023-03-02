@@ -22,8 +22,8 @@ import PatientOrdersTable from './PatientOrdersTable';
 
 const PatientOrdersList = () => {
   const ordersList = useAppSelector(ordersSelector.ordersList);
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Asc);
-  const [sortField, setSortField] = useState<OrderListSortFields>(OrderListSortFields.Status);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
+  const [sortField, setSortField] = useState<OrderListSortFields>(OrderListSortFields.DateCreated);
   const [filters, setFilters] = useState<OrderListDataFilter[]>([]);
   const [page, setPage] = useState<number>(0);
   const isOrdersListLoading = useAppSelector(ordersSelector.isOrdersListLoading);

@@ -5,6 +5,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
@@ -18,8 +19,10 @@ const Actions = ({ testResultId }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.COMMON_BUTTON_CONFIRM_LABEL);
   const isTestResultReleased = useAppSelector(ordersSelector.isTestResultReleased);
+  const router = useRouter();
+  const patientId = router.query.id as string;
   const onClickConfirm = () => {
-    dispatch(ordersMiddleware.makeTestResultReleased(testResultId));
+    dispatch(ordersMiddleware.makeTestResultReleased(testResultId, patientId));
     dispatch(viewsMiddleware.closeModal(ModalName.TestResultReleaseConfirmation));
   };
 

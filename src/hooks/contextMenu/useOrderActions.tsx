@@ -36,7 +36,7 @@ const useOrderActions = (row: { id: string; status: OrdersListItemStatus }, acti
       }
     },
     {
-      id: OrdersActions.ViewAndEdit,
+      id: row.status === OrdersListItemStatus.NotCollected ? OrdersActions.ViewAndEdit : OrdersActions.View,
       title: getActionTitleById(
         row.status === OrdersListItemStatus.NotCollected ? OrdersActions.ViewAndEdit : OrdersActions.View,
         actions

@@ -124,7 +124,7 @@ export interface IOrderResultsByPatientItem {
   status: OrderResultStatusEnum;
   panelName: string;
   finalResultType: IFinalResultType;
-  dateReported: string;
+  dateCompleted: string;
   measurement: IMeasurement[];
 }
 

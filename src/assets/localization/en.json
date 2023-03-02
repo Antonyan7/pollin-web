@@ -482,7 +482,7 @@
   "page.specimens.tracking.transports.in.house.success": "The following Specimen ID(s) have been received in-house:",
   "common.week.label.single": "Week",
   "common.week.label.multiple": "Weeks",
-  "page.patient.order.results.cells.date": "Date Reported",
+  "page.patient.order.results.cells.date": "Date Completed",
   "page.patient.order.results.cells.panelname": "Test/Panel Name",
   "page.patient.order.results.cells.unit": "Unit",
   "page.patient.order.results.cells.result": "Result",

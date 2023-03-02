@@ -4,6 +4,7 @@ import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
@@ -17,8 +18,11 @@ const Actions = ({ testResultId, reviewerComment }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.COMMON_BUTTON_CONFIRM_LABEL);
   const isTestResultReviewed = useAppSelector(ordersSelector.isTestResultReviewed);
+  const router = useRouter();
+  const patientId = router.query.id as string;
+
   const onClickConfirm = () => {
-    dispatch(ordersMiddleware.makeTestResultReviewed(testResultId, reviewerComment));
+    dispatch(ordersMiddleware.makeTestResultReviewed(testResultId, patientId, reviewerComment));
   };
 
   return (

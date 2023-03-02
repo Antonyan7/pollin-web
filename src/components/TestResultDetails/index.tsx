@@ -156,7 +156,7 @@ const TestResultDetails: React.FC = () => {
           {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_COMMENTS)}
         </Typography>
         <Typography variant="h5" mt={margins.top16}>
-          {testResultsDetails.comment ?? 'N/A'}
+          {testResultsDetails.comment?.length ? testResultsDetails.comment : 'N/A'}
         </Typography>
         <Divider sx={{ my: margins.topBottom24 }} />
         {testResultsDetails.attachments &&

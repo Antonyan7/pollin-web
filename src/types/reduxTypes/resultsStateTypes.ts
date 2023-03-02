@@ -11,12 +11,6 @@ import {
 
 import { SchedulingStateStatusProps } from './schedulingStateTypes';
 
-export interface ISpecimenProps {
-  pendingSpecimenStats: IPendingTestStats[];
-  isPendingSpecimenStatsLoading: boolean;
-  error: Error | null;
-}
-
 export enum ITestResultStatus {
   Pending = 'Pending',
   NotReceived = 'NotReceived',
@@ -304,7 +298,6 @@ export interface ITestResultDetailsReport {
 export interface ITestResultsDetails {
   id: string;
   isAttachmentRequired: boolean;
-  status: ITestResultStatus;
   title: string;
   finalResultType: IFinalResultType;
   comment?: string;

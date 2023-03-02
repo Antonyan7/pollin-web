@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, TextField, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
@@ -42,6 +42,18 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
     ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON)}: ${testResultsDetails.report.releaseDate}`
     : t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED);
 
+  const testResultStatus = useMemo(() => {
+    if (testResultsDetails.report?.releaseDate) {
+      return ITestResultStatus.Released;
+    }
+
+    if (testResultsDetails.report?.reviewDate) {
+      return ITestResultStatus.Reviewed;
+    }
+
+    return ITestResultStatus.Reported;
+  }, [testResultsDetails]);
+
   return (
     <>
       <Box>
@@ -49,7 +61,7 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
           {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS)}
         </Typography>
         <Typography variant="h5" mt={margins.top16}>
-          {testResultsDetails.status === ITestResultStatus.Reported ? (
+          {testResultStatus === ITestResultStatus.Reported ? (
             <TextField
               fullWidth
               variant="outlined"
@@ -59,9 +71,10 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
               onChange={({ target: { value } }) => setReviewerComment(value)}
               label={t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS_OPTIONAL)}
             />
-          ) : (
-            testResultsDetails.report?.comment ?? 'N/A'
-          )}
+          ) : null}
+          {testResultStatus !== ITestResultStatus.Reported ? (
+            <> {testResultsDetails.report?.comment.length ? testResultsDetails.report?.comment : 'N/A'} </>
+          ) : null}
         </Typography>
       </Box>
       <Box display="flex" justifyContent="space-between">
@@ -80,16 +93,15 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
           </Typography>
         </Box>
         <Box display="flex" flexDirection="column" justifyContent="flex-end">
-          {testResultsDetails.status === ITestResultStatus.Reported && (
+          {testResultStatus === ITestResultStatus.Reported ? (
             <Button variant="contained" sx={{ mb: margins.bottom32 }} onClick={reviewClickHandler}>
               {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_MARK_AS_REVIEWED)}
             </Button>
-          )}
-          {(testResultsDetails.status === ITestResultStatus.Reported ||
-            testResultsDetails.status === ITestResultStatus.Reviewed) && (
+          ) : null}
+          {(testResultStatus === ITestResultStatus.Reported || testResultStatus === ITestResultStatus.Reviewed) && (
             <Button
               variant="contained"
-              disabled={testResultsDetails.status === ITestResultStatus.Reported}
+              disabled={testResultStatus === ITestResultStatus.Reported}
               onClick={releaseClickHandler}
             >
               {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT)}
