@@ -19,27 +19,32 @@ const VitaminSupplementDetails = () => {
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.VitaminSupplements}.exists`;
   const vitaminSupplementField = getValues(GeneralHealthFormFields.VitaminSupplements);
-  const { fields: vitaminSupplements } = useVitaminSupplementsContext();
+  const { fields: vitaminSupplements, remove } = useVitaminSupplementsContext();
   const vitaminSupplementsInitialValue = getValues(fieldName);
   const [areVitaminSupplementsExists, setAreVitaminSupplementsExists] =
     useState<boolean>(vitaminSupplementsInitialValue);
   const onVitaminSupplementChange = (state: boolean) => setAreVitaminSupplementsExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (vitaminSupplementField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!areVitaminSupplementsExists) {
-      setValue(GeneralHealthFormFields.VitaminSupplements, {
-        ...vitaminSupplementField,
-        exists: areVitaminSupplementsExists,
-        items: []
-      });
-    }
-  }, [areVitaminSupplementsExists, vitaminSupplementField, setValue]);
+  useEffect(
+    () => {
+      if (!areVitaminSupplementsExists) {
+        const indexes = vitaminSupplements.map((item) => vitaminSupplements.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.VitaminSupplements, {
+          ...vitaminSupplementField,
+          exists: areVitaminSupplementsExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [areVitaminSupplementsExists, setValue]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -79,6 +84,7 @@ const VitaminSupplementDetails = () => {
             </Grid>
             <AddVitamin />
             <MedicalBackgroundNote
+              onClick={onNoteClick}
               visible={showAdditionalNote}
               fieldName={GeneralHealthFormFields.VitaminSupplements}
             />

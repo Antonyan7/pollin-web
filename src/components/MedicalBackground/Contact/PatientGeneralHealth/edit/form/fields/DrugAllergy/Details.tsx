@@ -20,26 +20,31 @@ const DrugAllergiesDetails = () => {
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.DrugAllergies}.exists`;
   const drugAllergyField = getValues(GeneralHealthFormFields.DrugAllergies);
-  const { fields: drugAllergies } = useDrugAllergyContext();
+  const { fields: drugAllergies, remove } = useDrugAllergyContext();
   const drugAllergyInitialValue = getValues(fieldName);
   const [isDrugAllergyExists, setIsDrugAllergyExists] = useState<boolean>(drugAllergyInitialValue);
   const onDrugAllergyChange = (state: boolean) => setIsDrugAllergyExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (drugAllergyField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!isDrugAllergyExists) {
-      setValue(GeneralHealthFormFields.DrugAllergies, {
-        ...drugAllergyField,
-        exists: isDrugAllergyExists,
-        items: []
-      });
-    }
-  }, [isDrugAllergyExists, drugAllergyField, setValue]);
+  useEffect(
+    () => {
+      if (!isDrugAllergyExists) {
+        const indexes = drugAllergies.map((item) => drugAllergies.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.DrugAllergies, {
+          ...drugAllergyField,
+          exists: isDrugAllergyExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isDrugAllergyExists, setValue]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -78,7 +83,11 @@ const DrugAllergiesDetails = () => {
               ))}
             </Grid>
             <AddDrugAllergy />
-            <MedicalBackgroundNote visible={showAdditionalNote} fieldName={GeneralHealthFormFields.DrugAllergies} />
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.DrugAllergies}
+            />
           </>
         ) : null}
       </Grid>

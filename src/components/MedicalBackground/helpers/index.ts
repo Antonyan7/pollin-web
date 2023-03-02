@@ -1,69 +1,43 @@
 /* eslint-disable no-restricted-syntax */
+import {
+  ActiveConsults,
+  AdditionalInformation,
+  BMI,
+  Diet,
+  DrugAllergy,
+  FamilyHistory,
+  FoodAllergy,
+  Height,
+  IodineAllergy,
+  LatexAllergy,
+  OtherMedicalProblems,
+  PastSurgery,
+  PatientAlerts,
+  ProblemAnesthetics,
+  RegularExercise,
+  SeeingTherapist,
+  STDHistory,
+  StressLevel,
+  UseAlcohol,
+  UseCigarettes,
+  UseMarijuana,
+  UseRecreationalDrugs,
+  VitaminSupplements,
+  Weight
+} from '@components/MedicalBackground/Contact/PatientGeneralHealth/view/fields';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 
-import { IGeneralHealthProps } from '@axios/patientEmr/managerPatientEmrTypes';
-
-interface HealthListRowProps {
-  note: string;
-  isEditable: boolean;
-  value?: string | boolean | { id: string }[];
-  exists?: boolean;
-  items?: { id: string }[];
-  inches?: string;
-}
-
-interface HealthListSubRowProps {
-  id: string;
-  dateOfSurgery?: string;
-  typeOfSurgery?: string;
-  name?: string;
-  dosage?: string;
-  title?: string;
-  familyMemberName?: string;
-}
-
-export const mappedGeneralHealthData = (data: IGeneralHealthProps | null) => {
-  if (data) {
-    const healthValues = Object.values(data);
-
-    const refactoredHealthData = healthValues
-      .map((healthRowType) => healthRowType as HealthListRowProps)
-      .map((healthListRow) => ({
-        note: healthListRow.note,
-        value: healthListRow.value ?? healthListRow.items ?? healthListRow.inches,
-        isEditable: healthListRow.isEditable
-      }))
-      .map((listRowValue) => ({
-        ...(Array.isArray(listRowValue.value) && listRowValue.value.length
-          ? {
-              ...listRowValue,
-              value: listRowValue.value
-                .map((healthSubListType) => healthSubListType as HealthListSubRowProps)
-                .map((subItemRow) => ({
-                  ...(subItemRow.id ? { id: subItemRow.id } : {}),
-                  ...(subItemRow.dateOfSurgery
-                    ? { id: `${subItemRow.typeOfSurgery} - ${subItemRow.dateOfSurgery}` }
-                    : {}),
-                  ...(subItemRow.name && subItemRow.dosage ? { id: `${subItemRow.name} - ${subItemRow.dosage}` } : {}),
-                  ...(subItemRow.title && subItemRow.dosage
-                    ? { id: `${subItemRow.title} - ${subItemRow.dosage}` }
-                    : {}),
-                  ...(subItemRow.title && subItemRow.familyMemberName
-                    ? { id: `${subItemRow.title} - ${subItemRow.familyMemberName}` }
-                    : {}),
-                  ...(subItemRow.title && Object.values(subItemRow).length === 1 ? { id: subItemRow.title } : {})
-                }))
-            }
-          : { ...listRowValue })
-      }));
-
-    return refactoredHealthData;
+export const defineSingleFieldValue = (fieldType?: boolean) => {
+  switch (fieldType) {
+    case fieldType:
+      return t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES);
+    case !fieldType:
+      return t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO);
+    default:
+      return '-';
   }
-
-  return null;
 };
-
-export const showFalsyResult = (condition: boolean, falsyResult: string, initial?: string | boolean) =>
-  condition ? falsyResult : initial;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type RecordedHealthType = Record<string, unknown>;
@@ -87,3 +61,34 @@ export const mergeObjects = <T extends RecordedHealthType, U extends RecordedHea
 
   return result;
 };
+
+export interface GeneralHealthComponentsProps {
+  componentIndex: number;
+}
+
+export const generalHealthRows = [
+  { Component: Height },
+  { Component: Weight },
+  { Component: BMI },
+  { Component: OtherMedicalProblems },
+  { Component: PastSurgery },
+  { Component: ProblemAnesthetics },
+  { Component: VitaminSupplements },
+  { Component: DrugAllergy },
+  { Component: FoodAllergy },
+  { Component: IodineAllergy },
+  { Component: LatexAllergy },
+  { Component: PatientAlerts },
+  { Component: UseCigarettes },
+  { Component: UseAlcohol },
+  { Component: UseMarijuana },
+  { Component: UseRecreationalDrugs },
+  { Component: RegularExercise },
+  { Component: StressLevel },
+  { Component: SeeingTherapist },
+  { Component: FamilyHistory },
+  { Component: STDHistory },
+  { Component: Diet },
+  { Component: ActiveConsults },
+  { Component: AdditionalInformation }
+];

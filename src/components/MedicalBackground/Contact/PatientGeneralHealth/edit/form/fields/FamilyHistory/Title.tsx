@@ -1,15 +1,33 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import DiagramTitle from '@components/MedicalBackground/components/common/DiagramTitle';
 import useFamilyHistoryContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useFamilyHistoryContext';
-import { DiagramTitleProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import {
+  DiagramTitleProps,
+  GeneralHealthFormFields
+} from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Translation } from 'constants/translations';
 
 const FamilyHistoryTitle = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
-  const { remove } = useFamilyHistoryContext();
+  const { remove, fields: familyHistory } = useFamilyHistoryContext();
+  const { getValues, setValue } = useFormContext();
+  const familyHistoryField = getValues(GeneralHealthFormFields.FamilyHistory);
   const onMinusClick = (selectedIndex: number) => {
-    remove(selectedIndex);
+    if (familyHistory.length === 1) {
+      setValue(GeneralHealthFormFields.FamilyHistory, {
+        ...familyHistoryField,
+        items: [
+          {
+            title: '',
+            familyMemberName: ''
+          }
+        ]
+      });
+    } else {
+      remove(selectedIndex);
+    }
   };
 
   return (

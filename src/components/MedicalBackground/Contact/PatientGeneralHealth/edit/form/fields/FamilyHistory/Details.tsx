@@ -20,26 +20,31 @@ const FamilyHistoryDetails = () => {
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.FamilyHistory}.exists`;
   const familyHistoryField = getValues(GeneralHealthFormFields.FamilyHistory);
-  const { fields: familyHistory } = useFamilyHistoryContext();
+  const { fields: familyHistory, remove } = useFamilyHistoryContext();
   const familyHistoryInitialValue = getValues(fieldName);
   const [isFamilyHistoryExists, setIsfamilyHistoryExists] = useState<boolean>(familyHistoryInitialValue);
   const onFamilyHistoryChange = (state: boolean) => setIsfamilyHistoryExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (familyHistoryField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!isFamilyHistoryExists) {
-      setValue(GeneralHealthFormFields.FamilyHistory, {
-        ...familyHistoryField,
-        exists: isFamilyHistoryExists,
-        items: []
-      });
-    }
-  }, [isFamilyHistoryExists, familyHistoryField, setValue]);
+  useEffect(
+    () => {
+      if (!isFamilyHistoryExists) {
+        const indexes = familyHistory.map((item) => familyHistory.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.FamilyHistory, {
+          ...familyHistoryField,
+          exists: isFamilyHistoryExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isFamilyHistoryExists, setValue]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -78,7 +83,11 @@ const FamilyHistoryDetails = () => {
               ))}
             </Grid>
             <AddFamilyHistory />
-            <MedicalBackgroundNote visible={showAdditionalNote} fieldName={GeneralHealthFormFields.FamilyHistory} />
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.FamilyHistory}
+            />
           </>
         ) : null}
       </Grid>

@@ -70,6 +70,8 @@
   "page.patient.profile.medical.background.contact.additional.information": "Additional Information",
   "page.patient.profile.medical.background.contact.additional.information.label": "Additional Information (Optional)",
   "page.patient.profile.medical.background.contact.additional.notes": "Additional Notes",
+  "page.patient.profile.medical.background.contact.patient.alerts": "Patient Alerts",
+  "page.patient.profile.medical.background.general.health": "General Health",
   "page.patient.partners.profile.name": "Name",
   "page.patient.partners.profile.contribution": "Contribution",
   "page.patient.profile.upcoming.appointments": "Upcoming Appointments",

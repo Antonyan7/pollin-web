@@ -19,26 +19,31 @@ const OtherMedicalProblemsDetails = () => {
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.MedicalProblems}.exists`;
   const medicalProblemField = getValues(GeneralHealthFormFields.MedicalProblems);
-  const { fields: medicalProblems } = useMedicalProblemContext();
+  const { fields: medicalProblems, remove } = useMedicalProblemContext();
   const medicalProblemsInitialValue = getValues(fieldName);
   const [isMedicalProblemExists, setIsMedicalProblemExists] = useState<boolean>(medicalProblemsInitialValue);
   const onMedicalProblemChange = (state: boolean) => setIsMedicalProblemExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (medicalProblemField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!isMedicalProblemExists) {
-      setValue(GeneralHealthFormFields.MedicalProblems, {
-        ...medicalProblemField,
-        exists: isMedicalProblemExists,
-        items: []
-      });
-    }
-  }, [isMedicalProblemExists, medicalProblemField, setValue]);
+  useEffect(
+    () => {
+      if (!isMedicalProblemExists) {
+        const indexes = medicalProblems.map((item) => medicalProblems.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.MedicalProblems, {
+          ...medicalProblemField,
+          exists: isMedicalProblemExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setValue, isMedicalProblemExists]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -77,7 +82,11 @@ const OtherMedicalProblemsDetails = () => {
               ))}
             </Grid>
             <AddMedicalProblem />
-            <MedicalBackgroundNote visible={showAdditionalNote} fieldName={GeneralHealthFormFields.MedicalProblems} />
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.MedicalProblems}
+            />
           </>
         ) : null}
       </Grid>

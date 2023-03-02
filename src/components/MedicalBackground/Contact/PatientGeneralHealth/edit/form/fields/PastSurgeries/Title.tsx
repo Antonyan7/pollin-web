@@ -1,15 +1,33 @@
 import React from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import DiagramTitle from '@components/MedicalBackground/components/common/DiagramTitle';
 import usePastSurgeryContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/usePastSurgeryContext';
-import { DiagramTitleProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import {
+  DiagramTitleProps,
+  GeneralHealthFormFields
+} from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Translation } from 'constants/translations';
 
 const PastSurgeriesTitle = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
-  const { remove } = usePastSurgeryContext();
+  const { fields: pastSurgeries, remove } = usePastSurgeryContext();
+  const { getValues, setValue } = useFormContext();
+  const pastSurgeryField = getValues(GeneralHealthFormFields.PastSurgeries);
   const onMinusClick = (selectedIndex: number) => {
-    remove(selectedIndex);
+    if (pastSurgeries.length === 1) {
+      setValue(GeneralHealthFormFields.PastSurgeries, {
+        ...pastSurgeryField,
+        items: [
+          {
+            typeOfSurgery: '',
+            dateOfSurgery: new Date()
+          }
+        ]
+      });
+    } else {
+      remove(selectedIndex);
+    }
   };
 
   return (

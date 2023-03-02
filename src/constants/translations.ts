@@ -72,6 +72,8 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION = 'page.patient.profile.medical.background.contact.additional.information',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION_LABEL = 'page.patient.profile.medical.background.contact.additional.information.label',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_NOTES = 'page.patient.profile.medical.background.contact.additional.notes',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_PATIENT_ALERTS = 'page.patient.profile.medical.background.contact.patient.alerts',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_GENERAL_HEALTH = 'page.patient.profile.medical.background.general.health',
   PAGE_PATIENT_PARTNERS_PROFILE_NAME = 'page.patient.partners.profile.name',
   PAGE_PATIENT_PARTNERS_PROFILE_CONTRIBUTION = 'page.patient.partners.profile.contribution',
   PAGE_PATIENT_PROFILE_UPCOMING_APPOINTMENTS = 'page.patient.profile.upcoming.appointments',

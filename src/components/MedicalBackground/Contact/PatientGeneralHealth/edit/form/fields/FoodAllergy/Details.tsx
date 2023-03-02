@@ -19,27 +19,32 @@ const FoodAllergiesDetails = () => {
   const [t] = useTranslation();
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.FoodAllergies}.exists`;
-  const { fields: foodAllergies } = useFoodAllergyContext();
+  const { fields: foodAllergies, remove } = useFoodAllergyContext();
   const foodAllergyField = getValues(GeneralHealthFormFields.FoodAllergies);
   const foodAllergyInitialValue = getValues(fieldName);
   const [isFoodAllergyExists, setIsFoodAllergyExists] = useState<boolean>(foodAllergyInitialValue);
   const onFoodAllergyChange = (state: boolean) => setIsFoodAllergyExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (foodAllergyField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!isFoodAllergyExists) {
-      setValue(GeneralHealthFormFields.FoodAllergies, {
-        ...foodAllergyField,
-        exists: isFoodAllergyExists,
-        items: []
-      });
-    }
-  }, [isFoodAllergyExists, foodAllergyField, setValue]);
+  useEffect(
+    () => {
+      if (!isFoodAllergyExists) {
+        const indexes = foodAllergies.map((item) => foodAllergies.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.FoodAllergies, {
+          ...foodAllergyField,
+          exists: isFoodAllergyExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isFoodAllergyExists, setValue]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -78,7 +83,11 @@ const FoodAllergiesDetails = () => {
               ))}
             </Grid>
             <AddFoodAllergy />
-            <MedicalBackgroundNote visible={showAdditionalNote} fieldName={GeneralHealthFormFields.FoodAllergies} />
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.FoodAllergies}
+            />
           </>
         ) : null}
       </Grid>

@@ -19,26 +19,31 @@ const PastSurgeriesDetails = () => {
   const { getValues, setValue } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.PastSurgeries}.exists`;
   const pastSurgeryField = getValues(GeneralHealthFormFields.PastSurgeries);
-  const { fields: pastSurgeries } = usePastSurgeryContext();
+  const { fields: pastSurgeries, remove } = usePastSurgeryContext();
   const pastSurgeriesInitialValue = getValues(fieldName);
   const [arePastSurgeriesExists, setArePastSurgeriesExists] = useState<boolean>(pastSurgeriesInitialValue);
   const onPastSurgeryChange = (state: boolean) => setArePastSurgeriesExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
-    if (pastSurgeryField.note) {
-      setShowAdditionalNote(!showAdditionalNote);
-    }
+    setShowAdditionalNote(!showAdditionalNote);
   };
 
-  useEffect(() => {
-    if (!arePastSurgeriesExists) {
-      setValue(GeneralHealthFormFields.PastSurgeries, {
-        ...pastSurgeryField,
-        exists: arePastSurgeriesExists,
-        items: []
-      });
-    }
-  }, [arePastSurgeriesExists, pastSurgeryField, setValue]);
+  useEffect(
+    () => {
+      if (!arePastSurgeriesExists) {
+        const indexes = pastSurgeries.map((item) => pastSurgeries.indexOf(item));
+
+        remove(indexes);
+        setValue(GeneralHealthFormFields.PastSurgeries, {
+          ...pastSurgeryField,
+          exists: arePastSurgeriesExists,
+          items: []
+        });
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [arePastSurgeriesExists, setValue]
+  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -77,7 +82,11 @@ const PastSurgeriesDetails = () => {
               ))}
             </Grid>
             <AddSurgery />
-            <MedicalBackgroundNote visible={showAdditionalNote} fieldName={GeneralHealthFormFields.PastSurgeries} />
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.PastSurgeries}
+            />
           </>
         ) : null}
       </Grid>
