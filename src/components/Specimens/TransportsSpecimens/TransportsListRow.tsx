@@ -1,6 +1,7 @@
 import React from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
+import { bookingSelector } from '@redux/slices/booking';
 import { resultsSelector } from '@redux/slices/results';
 import { timeAdjuster } from 'helpers/timeAdjuster';
 import Link from 'next/link';
@@ -19,9 +20,11 @@ interface AllTestsRowProps {
 export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
   const currentDay = getCurrentDate();
   const isCurrentDay = getDate(currentDay ?? '') === getDate(row.date ?? '');
+  const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const isCurrentDateEqualsToCalendarDate = getDate(currentDay ?? '') === getDate(calendarDate ?? '');
   const { customizedDate, customizedTransportCreationDate } = timeAdjuster(row.date);
   const folderCreateDate = isCurrentDay ? customizedTransportCreationDate : customizedDate;
-  const actionBindings = useTransportActions(row, actions, !isCurrentDay);
+  const actionBindings = useTransportActions(row, actions, !isCurrentDateEqualsToCalendarDate);
   const actionVariations = useAppSelector(resultsSelector.transportActions);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
