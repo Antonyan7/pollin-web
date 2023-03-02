@@ -474,6 +474,7 @@ export enum Translation {
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_LAB_DESTINATION = 'page.specimens.tracking.transports.cells.lab.destination',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_DRIVER_NAME = 'page.specimens.tracking.transports.cells.driver.name',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE = 'page.specimens.tracking.transports.empty.table',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE_FILTER = 'page.specimens.tracking.transports.empty.table.filter',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_CELLS_STATUS = 'page.specimens.tracking.transports.cells.status',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK = 'page.specimens.tracking.transports.go.back',
   PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST = 'page.specimens.tracking.transports.download.manifest',

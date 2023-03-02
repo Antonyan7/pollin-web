@@ -472,6 +472,7 @@
   "page.specimens.tracking.transports.cells.lab.destination": "Lab Destination",
   "page.specimens.tracking.transports.cells.driver.name": "Driver Name",
   "page.specimens.tracking.transports.empty.table": "Create a Transport Folder to start grouping specimens",
+  "page.specimens.tracking.transports.empty.table.filter": "Specimen ID(s) not found",
   "page.specimens.tracking.transports.cells.status": "Status",
   "page.specimens.tracking.transports.go.back": "Go to Specimen Tracking",
   "page.specimens.tracking.transports.download.manifest": "Download Manifest",

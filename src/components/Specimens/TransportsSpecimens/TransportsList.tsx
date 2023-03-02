@@ -118,7 +118,9 @@ const TransportsList = () => {
           <Grid container justifyContent="center" padding="20px">
             <Grid item>
               <Typography color={theme.palette.primary.main} variant="h4">
-                {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE)}
+                {!searchedItems.length
+                  ? t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE)
+                  : t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_EMPTY_TABLE_FILTER)}
               </Typography>
             </Grid>
           </Grid>
