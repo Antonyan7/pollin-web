@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LatestTestResultType } from '@axios/patientEmr/managerPatientEmrTypes';
+import TestHistoryHint from '@components/PatientProfile/TestHistoryHint';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   Button,
@@ -114,7 +115,7 @@ const PatientTestResultsModal = () => {
               </TableHead>
               <TableBody>
                 {testResultDetailItems?.map(
-                  ({ dateCompleted, title, unit, result, status, finalResultType }, index) => {
+                  ({ dateCompleted, title, unit, result, status, finalResultType, testTypeId }, index) => {
                     const cellChipColor = finalResultType === LatestTestResultType.Normal ? 'active' : 'inActive';
 
                     return (
@@ -123,7 +124,17 @@ const PatientTestResultsModal = () => {
                         <TableCell>{formatDate(dateCompleted, 'MMM dd, yyy')}</TableCell>
                         <TableCell>{title}</TableCell>
                         <TableCell>{unit}</TableCell>
-                        <TableCell>{result}</TableCell>
+                        <TableCell>
+                          {testTypeId ? (
+                            <TestHistoryHint testResultId={testTypeId}>
+                              <Typography component="span" sx={{ '&:hover': { textDecoration: 'underline' } }}>
+                                {result}
+                              </Typography>
+                            </TestHistoryHint>
+                          ) : (
+                            result
+                          )}
+                        </TableCell>
                         <TableCell>{status}</TableCell>
                         <TableCell>
                           <Chip chipColor={cellChipColor} label={finalResultType} />

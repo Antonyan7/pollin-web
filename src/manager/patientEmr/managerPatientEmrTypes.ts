@@ -277,7 +277,7 @@ export interface ProfileTestResultDetailsItem {
   dateCompleted: string;
   title: string;
   unit: string;
-  testTypeId: string;
+  testTypeId?: string;
   result: string;
   status: string;
   finalResultType: string;
