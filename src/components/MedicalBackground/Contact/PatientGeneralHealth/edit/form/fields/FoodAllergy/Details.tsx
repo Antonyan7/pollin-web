@@ -9,15 +9,20 @@ import { AddFoodAllergy } from '@components/MedicalBackground/Contact/PatientGen
 import useFoodAllergyContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useFoodAllergyContext';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
 import FoodAllergyContent from './Content';
 import FoodAllergyTitle from './Title';
+import FoodAllergyViewMode from './ViewMode';
 
 const FoodAllergiesDetails = () => {
   const [t] = useTranslation();
   const { getValues, setValue } = useFormContext();
+  const generalHealth = useAppSelector(patientsSelector.generalHealth);
+  const foodAllergy = generalHealth?.foodAllergies;
   const fieldName = `${GeneralHealthFormFields.FoodAllergies}.exists`;
   const { fields: foodAllergies, remove } = useFoodAllergyContext();
   const foodAllergyField = getValues(GeneralHealthFormFields.FoodAllergies);
@@ -66,30 +71,36 @@ const FoodAllergiesDetails = () => {
         />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        <Grid>
-          <MedicalFormRadio fieldName={fieldName} onChangeState={onFoodAllergyChange} />
-        </Grid>
-        {isFoodAllergyExists ? (
+        {foodAllergy?.isEditable ? (
           <>
             <Grid>
-              {foodAllergies.map((allergy, allergyIndex) => (
-                <Diagram
-                  titleComponent={<FoodAllergyTitle titleIndex={allergyIndex} />}
-                  titleContent={allergy}
-                  key={allergy.id}
-                >
-                  <FoodAllergyContent titleIndex={allergyIndex} />
-                </Diagram>
-              ))}
+              <MedicalFormRadio fieldName={fieldName} onChangeState={onFoodAllergyChange} />
             </Grid>
-            <AddFoodAllergy />
-            <MedicalBackgroundNote
-              onClick={onNoteClick}
-              visible={showAdditionalNote}
-              fieldName={GeneralHealthFormFields.FoodAllergies}
-            />
+            {isFoodAllergyExists ? (
+              <>
+                <Grid>
+                  {foodAllergies.map((allergy, allergyIndex) => (
+                    <Diagram
+                      titleComponent={<FoodAllergyTitle titleIndex={allergyIndex} />}
+                      titleContent={allergy}
+                      key={allergy.id}
+                    >
+                      <FoodAllergyContent titleIndex={allergyIndex} />
+                    </Diagram>
+                  ))}
+                </Grid>
+                <AddFoodAllergy />
+                <MedicalBackgroundNote
+                  onClick={onNoteClick}
+                  visible={showAdditionalNote}
+                  fieldName={GeneralHealthFormFields.FoodAllergies}
+                />
+              </>
+            ) : null}
           </>
-        ) : null}
+        ) : (
+          <FoodAllergyViewMode />
+        )}
       </Grid>
     </Grid>
   );

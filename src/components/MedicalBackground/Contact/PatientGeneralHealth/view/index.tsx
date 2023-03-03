@@ -5,7 +5,7 @@ import { paddings } from 'themes/themeConstants';
 import { v4 } from 'uuid';
 
 const PatientGeneralHealthView = () => (
-  <Grid py={paddings.topBottom16}>
+  <Grid py={paddings.topBottom24}>
     {generalHealthRows.map(({ Component }, componentIndex) => (
       <Component key={v4()} componentIndex={componentIndex} />
     ))}

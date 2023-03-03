@@ -1,15 +1,18 @@
 import React, { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Grid, Typography, useTheme } from '@mui/material';
+import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
 interface FieldWrapperProps {
   fieldName: string;
   children: ReactNode;
-  componentIndex: number;
+  componentIndex?: number;
 }
 
 const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps) => {
   const theme = useTheme();
+  const [t] = useTranslation();
 
   return (
     <Grid
@@ -21,14 +24,15 @@ const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps
       py={paddings.topBottom8}
       xs={12}
       sx={{
-        backgroundColor: componentIndex % 2 ? theme.palette.common.white : theme.palette.secondary[200]
+        backgroundColor:
+          componentIndex && componentIndex % 2 ? theme.palette.common.white : theme.palette.secondary[200]
       }}
     >
       <Grid item container justifyContent="space-between" direction="column" xs={4} gap={3}>
         <Typography
           sx={{
             fontWeight: 600,
-            color: theme.palette.common.black,
+            color: theme.palette.secondary[800],
             fontSize: theme.typography.pxToRem(15)
           }}
         >
@@ -40,15 +44,15 @@ const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps
             color: theme.palette.common.black
           }}
         >
-          Additional Notes
+          {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_NOTES)}
         </Typography>
       </Grid>
       <Grid item container xs={0.5} direction="column" justifyContent="space-between">
         <Grid item xs={0.5}>
-          :
+          <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
         </Grid>
         <Grid item xs={0.5}>
-          :
+          <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
         </Grid>
       </Grid>
       {children}

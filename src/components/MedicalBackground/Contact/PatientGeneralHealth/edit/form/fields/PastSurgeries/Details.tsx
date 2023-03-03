@@ -11,12 +11,18 @@ import PastSurgeriesTitle from '@components/MedicalBackground/Contact/PatientGen
 import usePastSurgeryContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/usePastSurgeryContext';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
+
+import PastSurgeriesViewMode from './ViewMode';
 
 const PastSurgeriesDetails = () => {
   const [t] = useTranslation();
   const { getValues, setValue } = useFormContext();
+  const generalHealth = useAppSelector(patientsSelector.generalHealth);
+  const pastSurgery = generalHealth?.pastSurgeries;
   const fieldName = `${GeneralHealthFormFields.PastSurgeries}.exists`;
   const pastSurgeryField = getValues(GeneralHealthFormFields.PastSurgeries);
   const { fields: pastSurgeries, remove } = usePastSurgeryContext();
@@ -65,30 +71,36 @@ const PastSurgeriesDetails = () => {
         />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        <Grid>
-          <MedicalFormRadio fieldName={fieldName} onChangeState={onPastSurgeryChange} />
-        </Grid>
-        {arePastSurgeriesExists ? (
+        {pastSurgery?.isEditable ? (
           <>
             <Grid>
-              {pastSurgeries.map((surgery, surgeryIndex) => (
-                <Diagram
-                  titleComponent={<PastSurgeriesTitle titleIndex={surgeryIndex} />}
-                  titleContent={surgery}
-                  key={surgery.id}
-                >
-                  <PastSurgeriesContent titleIndex={surgeryIndex} />
-                </Diagram>
-              ))}
+              <MedicalFormRadio fieldName={fieldName} onChangeState={onPastSurgeryChange} />
             </Grid>
-            <AddSurgery />
-            <MedicalBackgroundNote
-              onClick={onNoteClick}
-              visible={showAdditionalNote}
-              fieldName={GeneralHealthFormFields.PastSurgeries}
-            />
+            {arePastSurgeriesExists ? (
+              <>
+                <Grid>
+                  {pastSurgeries.map((surgery, surgeryIndex) => (
+                    <Diagram
+                      titleComponent={<PastSurgeriesTitle titleIndex={surgeryIndex} />}
+                      titleContent={surgery}
+                      key={surgery.id}
+                    >
+                      <PastSurgeriesContent titleIndex={surgeryIndex} />
+                    </Diagram>
+                  ))}
+                </Grid>
+                <AddSurgery />
+                <MedicalBackgroundNote
+                  onClick={onNoteClick}
+                  visible={showAdditionalNote}
+                  fieldName={GeneralHealthFormFields.PastSurgeries}
+                />
+              </>
+            ) : null}
           </>
-        ) : null}
+        ) : (
+          <PastSurgeriesViewMode />
+        )}
       </Grid>
     </Grid>
   );

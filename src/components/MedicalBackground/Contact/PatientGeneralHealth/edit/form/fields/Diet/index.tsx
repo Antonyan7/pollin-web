@@ -3,13 +3,17 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
-import { Grid, TextField } from '@mui/material';
+import { Grid, TextField, Typography } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
 const Diet = () => {
   const [t] = useTranslation();
   const fieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_DIET);
+  const generalHealth = useAppSelector(patientsSelector.generalHealth);
+  const diet = generalHealth?.diet;
   const { control } = useFormContext();
   const { field } = useController({
     name: `${GeneralHealthFormFields.Diet}.value`,
@@ -23,7 +27,11 @@ const Diet = () => {
           <ConsultationTitleWithIcon description={fieldLabel} />
         </Grid>
         <Grid item container direction="row" justifyContent="space-between" xs={7}>
-          <TextField color="primary" fullWidth label={fieldLabel} {...field} value={field.value} ref={field.ref} />
+          {diet?.isEditable ? (
+            <TextField color="primary" fullWidth label={fieldLabel} {...field} value={field.value} ref={field.ref} />
+          ) : (
+            <Typography>{diet?.value}</Typography>
+          )}
         </Grid>
       </Grid>
     </Grid>

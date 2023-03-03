@@ -11,12 +11,18 @@ import OtherMedicalProblemTitle from '@components/MedicalBackground/Contact/Pati
 import useMedicalProblemContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useMedicalProblemContext';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
+
+import MedicalProblemsViewMode from './ViewMode';
 
 const OtherMedicalProblemsDetails = () => {
   const [t] = useTranslation();
   const { getValues, setValue } = useFormContext();
+  const generalHealth = useAppSelector(patientsSelector.generalHealth);
+  const medicalProblem = generalHealth?.medicalProblems;
   const fieldName = `${GeneralHealthFormFields.MedicalProblems}.exists`;
   const medicalProblemField = getValues(GeneralHealthFormFields.MedicalProblems);
   const { fields: medicalProblems, remove } = useMedicalProblemContext();
@@ -65,30 +71,36 @@ const OtherMedicalProblemsDetails = () => {
         />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        <Grid>
-          <MedicalFormRadio fieldName={fieldName} onChangeState={onMedicalProblemChange} />
-        </Grid>
-        {isMedicalProblemExists ? (
+        {medicalProblem?.isEditable ? (
           <>
             <Grid>
-              {medicalProblems.map((problem, problemIndex) => (
-                <Diagram
-                  titleComponent={<OtherMedicalProblemTitle titleIndex={problemIndex} />}
-                  titleContent={problem}
-                  key={problem.id}
-                >
-                  <MedicalPropblemContent titleIndex={problemIndex} />
-                </Diagram>
-              ))}
+              <MedicalFormRadio fieldName={fieldName} onChangeState={onMedicalProblemChange} />
             </Grid>
-            <AddMedicalProblem />
-            <MedicalBackgroundNote
-              onClick={onNoteClick}
-              visible={showAdditionalNote}
-              fieldName={GeneralHealthFormFields.MedicalProblems}
-            />
+            {isMedicalProblemExists ? (
+              <>
+                <Grid>
+                  {medicalProblems.map((problem, problemIndex) => (
+                    <Diagram
+                      titleComponent={<OtherMedicalProblemTitle titleIndex={problemIndex} />}
+                      titleContent={problem}
+                      key={problem.id}
+                    >
+                      <MedicalPropblemContent titleIndex={problemIndex} />
+                    </Diagram>
+                  ))}
+                </Grid>
+                <AddMedicalProblem />
+                <MedicalBackgroundNote
+                  onClick={onNoteClick}
+                  visible={showAdditionalNote}
+                  fieldName={GeneralHealthFormFields.MedicalProblems}
+                />
+              </>
+            ) : null}
           </>
-        ) : null}
+        ) : (
+          <MedicalProblemsViewMode />
+        )}
       </Grid>
     </Grid>
   );

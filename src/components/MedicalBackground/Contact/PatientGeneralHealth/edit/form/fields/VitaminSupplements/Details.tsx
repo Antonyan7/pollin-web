@@ -11,12 +11,18 @@ import VitaminSupplementsTitle from '@components/MedicalBackground/Contact/Patie
 import useVitaminSupplementsContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useVitaminSupplementsContext';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
+
+import VitaminSupplementsViewMode from './ViewMode';
 
 const VitaminSupplementDetails = () => {
   const [t] = useTranslation();
   const { getValues, setValue } = useFormContext();
+  const generalHealth = useAppSelector(patientsSelector.generalHealth);
+  const vitaminSupplement = generalHealth?.vitaminSupplements;
   const fieldName = `${GeneralHealthFormFields.VitaminSupplements}.exists`;
   const vitaminSupplementField = getValues(GeneralHealthFormFields.VitaminSupplements);
   const { fields: vitaminSupplements, remove } = useVitaminSupplementsContext();
@@ -66,30 +72,36 @@ const VitaminSupplementDetails = () => {
         />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        <Grid>
-          <MedicalFormRadio fieldName={fieldName} onChangeState={onVitaminSupplementChange} />
-        </Grid>
-        {areVitaminSupplementsExists ? (
+        {vitaminSupplement?.isEditable ? (
           <>
             <Grid>
-              {vitaminSupplements.map((supplement, supplementIndex) => (
-                <Diagram
-                  titleComponent={<VitaminSupplementsTitle titleIndex={supplementIndex} />}
-                  titleContent={supplement}
-                  key={supplement.id}
-                >
-                  <VitaminSupplementsContent titleIndex={supplementIndex} />
-                </Diagram>
-              ))}
+              <MedicalFormRadio fieldName={fieldName} onChangeState={onVitaminSupplementChange} />
             </Grid>
-            <AddVitamin />
-            <MedicalBackgroundNote
-              onClick={onNoteClick}
-              visible={showAdditionalNote}
-              fieldName={GeneralHealthFormFields.VitaminSupplements}
-            />
+            {areVitaminSupplementsExists ? (
+              <>
+                <Grid>
+                  {vitaminSupplements.map((supplement, supplementIndex) => (
+                    <Diagram
+                      titleComponent={<VitaminSupplementsTitle titleIndex={supplementIndex} />}
+                      titleContent={supplement}
+                      key={supplement.id}
+                    >
+                      <VitaminSupplementsContent titleIndex={supplementIndex} />
+                    </Diagram>
+                  ))}
+                </Grid>
+                <AddVitamin />
+                <MedicalBackgroundNote
+                  onClick={onNoteClick}
+                  visible={showAdditionalNote}
+                  fieldName={GeneralHealthFormFields.VitaminSupplements}
+                />
+              </>
+            ) : null}
           </>
-        ) : null}
+        ) : (
+          <VitaminSupplementsViewMode />
+        )}
       </Grid>
     </Grid>
   );

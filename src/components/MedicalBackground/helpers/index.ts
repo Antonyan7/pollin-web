@@ -63,7 +63,7 @@ export const mergeObjects = <T extends RecordedHealthType, U extends RecordedHea
 };
 
 export interface GeneralHealthComponentsProps {
-  componentIndex: number;
+  componentIndex?: number;
 }
 
 export const generalHealthRows = [
