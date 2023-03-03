@@ -9,6 +9,7 @@ export const getInitialState = (): ITasksManager => ({
   },
   isTaskCreateLoading: false,
   isTaskStatusUpdated: false,
+  isStatusChangeLoading: false,
   isTaskReassignLoading: false,
   isTaskReassigned: false,
   createdTaskId: '',

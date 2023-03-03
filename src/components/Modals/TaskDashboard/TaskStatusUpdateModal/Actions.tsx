@@ -5,10 +5,8 @@ import { TestResultReviewConfirmationProps } from '@components/Modals/TaskDashbo
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { tasksMiddleware, tasksSelector } from '@redux/slices/tasks';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -22,7 +20,6 @@ const Actions = ({ row, actionType }: TestResultReviewConfirmationProps) => {
   const message = `${t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_NOTIFICATION)} ${updatedStatus?.title}`;
   const onClickConfirm = () => {
     dispatch(tasksMiddleware.updateTaskStatus(row.uuid, actionType, message));
-    dispatch(viewsMiddleware.closeModal(ModalName.TaskStatusUpdateModal));
   };
 
   return (

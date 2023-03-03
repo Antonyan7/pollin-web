@@ -15,6 +15,8 @@ import * as Sentry from '@sentry/nextjs';
 import { ModalName } from 'types/modals';
 import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
+import { calculateTimeInUTC, convertToLocale } from '@utils/dateUtils';
+
 const {
   setError,
   setTaskDetails,
@@ -64,6 +66,7 @@ const updateTaskStatus = (rowId: string, statusId: string, message: string) => a
         }
       })
     );
+    dispatch(viewsMiddleware.closeModal(ModalName.TaskStatusUpdateModal));
     dispatch(setIsTaskStatusUpdated(true));
   } catch (error) {
     Sentry.captureException(error);
@@ -115,7 +118,7 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
         name: taskData.taskName,
         assigneeId: taskData.assign,
         ...(taskData.patient ? { patientId: taskData.patient } : {}),
-        dueDate: taskData.dueDate,
+        dueDate: calculateTimeInUTC(taskData.dueDate),
         priorityId: taskData.priority,
         ...(taskData.description ? { description: taskData.description } : {})
       }
@@ -148,7 +151,9 @@ const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
 
     const response = await API.tasks.getTaskDetails(taskId);
 
-    dispatch(setTaskDetails(response.data.data.task));
+    const data = { ...response.data.data.task, dueDate: convertToLocale(response.data.data.task.dueDate) };
+
+    dispatch(setTaskDetails(data));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));

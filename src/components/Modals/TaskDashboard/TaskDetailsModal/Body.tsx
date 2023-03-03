@@ -35,7 +35,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={6}>
         <Typography variant="subtitle1" color={(theme) => (isOverdue ? theme.palette.error.main : '')}>
-          {format(new Date(convertToLocale(taskDetails.dueDate)), 'MMM dd, yyyy HH:mm')}
+          {`${format(new Date(taskDetails.dueDate), 'MMM dd, yyyy HH:mm')} [EST]`}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -64,7 +64,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={4} alignItems="end">
         <Typography variant="caption" ml={margins.left4}>
-          {format(new Date(convertToLocale(taskDetails.createdBy.date)), 'MMM dd, yyyy HH:mm')}
+          {`${format(new Date(convertToLocale(taskDetails.createdBy.date)), 'MMM dd, yyyy HH:mm')} [EST]`}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -99,7 +99,7 @@ const Body = () => {
               </Grid>
               <Grid item xs={4} alignItems="end">
                 <Typography variant="caption">
-                  {format(new Date(convertToLocale(history.date)), 'MMM dd, yyyy HH:mm')}
+                  {`${format(new Date(convertToLocale(history.date)), 'MMM dd, yyyy HH:mm')} [EST]`}
                 </Typography>
               </Grid>
               <Grid item xs={4}>
