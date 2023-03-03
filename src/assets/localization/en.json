@@ -1,4 +1,5 @@
 {
+  "google.autocomplete.label.title": "Street Address",
   "page.patient.list.title": "Patient List",
   "page.patient.list.title.emr": "Patient List/EMR",
   "page.patient.list.field.search": "Search Patients",

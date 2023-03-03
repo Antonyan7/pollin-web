@@ -1,6 +1,7 @@
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
 
 export enum Translation {
+  GOOGLE_AUTOCOMPLETE_LABEL_TITLE = 'google.autocomplete.label.title',
   PAGE_PATIENT_LIST_TITLE = 'page.patient.list.title',
   PAGE_PATIENT_LIST_TITLE_EMR = 'page.patient.list.title.emr',
   PAGE_PATIENT_LIST_FIELD_SEARCH = 'page.patient.list.field.search',

@@ -3,13 +3,19 @@ import createEmotionServer from '@emotion/server/create-instance';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
 import { createEmotionCache } from '@utils/createEmotionCache';
+import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 
 class CustomDocument extends Document {
   render() {
+    const { NEXT_PUBLIC_GOOGLE_PLACES_KEY } = getEnvironmentVariables();
+
     return (
       <Html lang="en">
         <Head>
           <style>@import url(`https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap`);</style>
+          <script
+            src={`https://maps.googleapis.com/maps/api/js?key=${NEXT_PUBLIC_GOOGLE_PLACES_KEY}&libraries=places`}
+           />
         </Head>
         <body>
           <Main />
