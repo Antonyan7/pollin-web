@@ -57,7 +57,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
   };
 
   const onConfirmOrderUpdateClick = () => {
-    if (orderId && orderDetails.isEditable && needValidation) {
+    if (orderId && orderDetails.isEditable) {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
       dispatch(ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, orderDetails.comment));
