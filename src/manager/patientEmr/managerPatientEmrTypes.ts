@@ -391,3 +391,46 @@ export interface IGeneralHealthProps {
 export interface IGeneralHealth {
   generalHealth: IGeneralHealthProps;
 }
+
+export interface IsTryingForPregnancyFieldValues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface UsingLubricantsFieldValues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface SeenFertilitySpecialistFieldValues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface OvulationIntercourseFieldValues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface OvulationTrackingFieldValues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface MonthsConceivingFieldValues extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface PreviousTreatmentFieldProps extends MedicalBackgroundFieldValues {
+  exists: boolean;
+  treatments: { id?: string; type: string; cycles: string }[];
+}
+
+export interface IFertilityHistoryProps {
+  isTryingForPregnancy?: IsTryingForPregnancyFieldValues;
+  monthsConceiving?: MonthsConceivingFieldValues;
+  ovulationTracking?: OvulationTrackingFieldValues;
+  ovulationIntercourse?: OvulationIntercourseFieldValues;
+  usingLubricants?: UsingLubricantsFieldValues;
+  seenFertilitySpecialist?: SeenFertilitySpecialistFieldValues;
+  previousTreatment?: PreviousTreatmentFieldProps;
+}
+
+export interface IFertilityHistory {
+  fertilityHistory: IFertilityHistoryProps;
+}

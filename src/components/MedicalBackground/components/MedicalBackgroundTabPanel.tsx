@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 interface MedicalBackgroundTabPanelProps {
@@ -19,11 +19,7 @@ const MedicalBackgroundTabPanel = (props: MedicalBackgroundTabPanelProps) => {
       aria-labelledby={`medical-background-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box sx={{ p: paddings.all24 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box sx={{ px: paddings.leftRight24, pt: paddings.top48 }}>{children}</Box>}
     </div>
   );
 };

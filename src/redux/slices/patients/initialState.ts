@@ -12,6 +12,11 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
     isGeneralHealthLoading: false,
     isGeneralHealthEditButtonClicked: false,
     isGeneralHealthDataUpdating: false
+  },
+  medicalHistory: {
+    fertilityHistory: null,
+    isFertilityHistoryLoading: false,
+    isFertilityHistoryDataUpdating: false
   }
 });
 

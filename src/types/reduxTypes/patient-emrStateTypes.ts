@@ -7,6 +7,7 @@ import {
 } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IFertilityHistoryProps,
   IGeneralHealthProps,
   IPatientContactInformation,
   IProfileTestResults,
@@ -32,6 +33,11 @@ export interface MedicalBackgroundProps {
     isGeneralHealthLoading: boolean;
     isGeneralHealthEditButtonClicked: boolean;
     isGeneralHealthDataUpdating: boolean;
+  };
+  medicalHistory: {
+    fertilityHistory: IFertilityHistoryProps | null;
+    isFertilityHistoryLoading: boolean;
+    isFertilityHistoryDataUpdating: boolean;
   };
 }
 

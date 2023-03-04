@@ -9,6 +9,7 @@ import {
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
+  IFertilityHistory,
   IGeneralHealth,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
@@ -178,6 +179,11 @@ const patientEmrManager = {
     return axiosInstance.put<IGeneralHealth, IAxiosResponse<IGeneralHealth>>(
       `${baseURL}/v1/medical-background/${patientId}/general-health`,
       generalHealthData
+    );
+  },
+  getFertilityHistory(patientId: string) {
+    return axiosInstance.get<IFertilityHistory, IAxiosResponse<IFertilityHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/fertility-history`
     );
   }
 };

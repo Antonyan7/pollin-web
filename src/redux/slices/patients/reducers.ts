@@ -1,6 +1,7 @@
 import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
   IEncounterDetailsProps,
+  IFertilityHistoryProps,
   IGeneralHealthProps,
   IPatientContactInformation,
   IProfileTestResults,
@@ -206,6 +207,15 @@ const reducers = createReducer({
   },
   setIsGeneralHealthDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isGeneralHealthDataUpdating = action.payload;
+  },
+  setFertilityHistory(state, action: IAction<IFertilityHistoryProps | null>) {
+    state.medicalBackground.medicalHistory.fertilityHistory = action.payload;
+  },
+  setIsFertilityHistoryLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFertilityHistoryLoading = action.payload;
+  },
+  setIsFertilityHistoryDataUpdating(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFertilityHistoryDataUpdating = action.payload;
   }
 });
 

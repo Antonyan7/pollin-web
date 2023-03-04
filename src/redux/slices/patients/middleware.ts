@@ -74,7 +74,9 @@ const {
   setIsEditButtonClicked,
   setIsGeneralHealthDataUpdating,
   setIsProfileTestResultDetailsLoading,
-  setProfileTestResultDetails
+  setProfileTestResultDetails,
+  setFertilityHistory,
+  setIsFertilityHistoryLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -562,6 +564,21 @@ const getGeneralHealth = (patientId: string) => async (dispatch: AppDispatch) =>
   dispatch(setIsGeneralHealthLoading(false));
 };
 
+const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFertilityHistoryLoading(true));
+
+  try {
+    const response = await API.patients.getFertilityHistory(patientId);
+
+    dispatch(setFertilityHistory(response.data.data.fertilityHistory));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsFertilityHistoryLoading(false));
+};
+
 const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
   const editButtonState = getState().patients.medicalBackground.contact.isGeneralHealthEditButtonClicked;
 
@@ -620,5 +637,6 @@ export default {
   isPatientAlertViewOpen,
   getGeneralHealth,
   changeEditButtonClickState,
-  updateGeneralHealthData
+  updateGeneralHealthData,
+  getFertilityHistory
 };
