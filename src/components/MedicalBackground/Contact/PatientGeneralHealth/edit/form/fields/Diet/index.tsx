@@ -7,6 +7,7 @@ import { Grid, TextField, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 
 const Diet = () => {
@@ -15,10 +16,11 @@ const Diet = () => {
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const diet = generalHealth?.diet;
   const { control } = useFormContext();
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.Diet}.value`,
     control
   });
+  const errorHelperText = generateErrorMessage(fieldLabel);
 
   return (
     <Grid px={paddings.leftRight32} py={paddings.topBottom12} xs={12} gap={4} container item direction="column">
@@ -28,7 +30,16 @@ const Diet = () => {
         </Grid>
         <Grid item container direction="row" justifyContent="space-between" xs={7}>
           {diet?.isEditable ? (
-            <TextField color="primary" fullWidth label={fieldLabel} {...field} value={field.value} ref={field.ref} />
+            <TextField
+              color="primary"
+              fullWidth
+              helperText={fieldState?.error && errorHelperText}
+              error={Boolean(fieldState?.error)}
+              label={fieldLabel}
+              {...field}
+              value={field.value}
+              ref={field.ref}
+            />
           ) : (
             <Typography>{diet?.value}</Typography>
           )}

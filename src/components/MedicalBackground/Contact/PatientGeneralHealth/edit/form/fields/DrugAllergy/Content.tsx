@@ -7,15 +7,18 @@ import {
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 
 const DrugAllergyContent = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
   const { control } = useFormContext();
-  const { field } = useController({
+  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_DRUG_ALLERGY);
+  const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.DrugAllergies}.items.${titleIndex}.title`,
     control
   });
+  const errorHelperText = generateErrorMessage(label);
 
   return (
     <Grid item container direction="column" gap={3} padding={paddings.all20}>
@@ -23,7 +26,9 @@ const DrugAllergyContent = ({ titleIndex }: DiagramTitleProps) => {
         <TextField
           color="primary"
           fullWidth
-          label={t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_DRUG_ALLERGY)}
+          label={label}
+          helperText={fieldState?.error && errorHelperText}
+          error={Boolean(fieldState?.error)}
           {...field}
           value={field.value}
           ref={field.ref}

@@ -7,6 +7,7 @@ import { Grid, TextField, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 
 const FieldWeight = () => {
@@ -15,10 +16,11 @@ const FieldWeight = () => {
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const weightInLbs = generalHealth?.weightInLbs;
   const { control } = useFormContext();
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.Weigth}.value`,
     control
   });
+  const errorHelperText = generateErrorMessage(fieldLabel);
 
   return (
     <Grid px={paddings.leftRight32} py={paddings.topBottom12} xs={12} gap={4} container item direction="column">
@@ -28,7 +30,16 @@ const FieldWeight = () => {
         </Grid>
         <Grid item container direction="row" justifyContent="space-between" xs={7}>
           {weightInLbs?.isEditable ? (
-            <TextField color="primary" fullWidth label={fieldLabel} {...field} value={field.value} ref={field.ref} />
+            <TextField
+              color="primary"
+              fullWidth
+              label={fieldLabel}
+              helperText={fieldState?.error && errorHelperText}
+              error={Boolean(fieldState?.error)}
+              {...field}
+              value={field.value}
+              ref={field.ref}
+            />
           ) : (
             <Typography>{weightInLbs?.value}</Typography>
           )}

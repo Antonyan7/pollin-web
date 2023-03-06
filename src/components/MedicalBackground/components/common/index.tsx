@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Grid, RadioGroup, styled, Typography } from '@mui/material';
-import { borders } from 'themes/themeConstants';
+import { borders, margins } from 'themes/themeConstants';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
 
@@ -46,3 +46,13 @@ export const ConsultationTitleWithIcon = ({ description, onClick }: { descriptio
     </Grid>
   </Grid>
 );
+
+export const RenderSingleValueAndNote = ({ value, note }: { value?: string | number; note?: string }) => (
+  <Grid item container xs={5} direction="column" justifyContent="space-between">
+    <Grid>{value}</Grid>
+    {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
+    <Grid>{note || '-'}</Grid>
+  </Grid>
+);
+
+export const RenderMappedNote = ({ note }: { note: string }) => <Grid mt={margins.top16}>{note || '-'}</Grid>;

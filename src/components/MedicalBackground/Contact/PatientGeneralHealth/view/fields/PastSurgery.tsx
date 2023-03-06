@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { RenderMappedNote } from '@components/MedicalBackground/components/common';
 import FieldWrapper from '@components/MedicalBackground/components/common/FieldWrapper';
 import {
   MedicalFormTitleNo,
@@ -11,7 +12,7 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { timeAdjuster } from 'helpers/timeAdjuster';
-import { margins, paddings } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { v4 } from 'uuid';
 
 const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
@@ -34,7 +35,7 @@ const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
                   <Grid key={v4()} py={paddings.leftRight8}>{`${fieldItem.typeOfSurgery}; ${dateOfSurgery}`}</Grid>
                 );
               })}
-              <Grid mt={margins.top16}>{fieldValue.note ?? '-'}</Grid>
+              <RenderMappedNote note={fieldValue.note} />
             </Grid>
           </>
         ) : (

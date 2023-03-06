@@ -25,6 +25,7 @@
   "page.patient.profile.appointments.list.table.header.date": "Date",
   "page.patient.profile.appointments.list.table.header.time": "Time",
   "page.patient.profile.appointments.list.table.header.status": "Status",
+  "page.patient.profile.medical.background.success.toast.message": "Changes Saved",
   "page.patient.profile.medical.background.title": "Medical Background",
   "page.patient.profile.medical.background.medical.history": "Medical History",
   "page.patient.profile.medical.contact": "Contact",

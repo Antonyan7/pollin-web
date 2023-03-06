@@ -4,21 +4,26 @@ import { useTranslation } from 'react-i18next';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
 const Inches = () => {
   const [t] = useTranslation();
+  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INCHES);
   const { control } = useFormContext();
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.Height}.inches`,
     control
   });
+  const errorHelperText = generateErrorMessage(label);
 
   return (
     <Grid item xs={6}>
       <TextField
         color="primary"
         fullWidth
-        label={t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INCHES)}
+        label={label}
+        helperText={fieldState?.error && errorHelperText}
+        error={Boolean(fieldState?.error)}
         {...field}
         value={field.value}
         ref={field.ref}

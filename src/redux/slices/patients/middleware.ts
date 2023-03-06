@@ -10,6 +10,8 @@ import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
+import { Translation } from 'constants/translations';
+import { t } from 'i18next';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch, RootState } from 'redux/store';
 import { IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
@@ -590,8 +592,29 @@ const updateGeneralHealthData =
     dispatch(setIsGeneralHealthDataUpdating(true));
 
     try {
-      await API.patients.updateGeneralHealth(patientId, healthData);
+      const respone = await API.patients.updateGeneralHealth(patientId, healthData);
+
+      if (respone) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_TOAST_MESSAGE)
+            }
+          })
+        );
+      }
     } catch (error) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // change when error message will be ready.
+          }
+        })
+      );
       Sentry.captureException(error);
       dispatch(setError(error));
     }

@@ -27,6 +27,7 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_DATE = 'page.patient.profile.appointments.list.table.header.date',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_TIME = 'page.patient.profile.appointments.list.table.header.time',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_STATUS = 'page.patient.profile.appointments.list.table.header.status',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_TOAST_MESSAGE = 'page.patient.profile.medical.background.success.toast.message',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_TITLE = 'page.patient.profile.medical.background.title',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY = 'page.patient.profile.medical.background.medical.history',
   PAGE_PATIENT_PROFILE_MEDICAL_CONTACT = 'page.patient.profile.medical.contact',

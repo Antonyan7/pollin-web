@@ -7,6 +7,7 @@ import { Grid, TextField, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 
 const AdditionalInformation = () => {
@@ -14,11 +15,13 @@ const AdditionalInformation = () => {
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const additionalInfo = generalHealth?.additionalInformation;
   const fieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION);
+  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION_LABEL);
   const { control } = useFormContext();
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.AdditionalInformation}.value`,
     control
   });
+  const errorHelperText = generateErrorMessage(label);
 
   return (
     <Grid px={paddings.leftRight32} py={paddings.topBottom12} xs={12} gap={4} container item direction="column">
@@ -31,7 +34,9 @@ const AdditionalInformation = () => {
             <TextField
               color="primary"
               fullWidth
-              label={t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION_LABEL)}
+              label={label}
+              helperText={fieldState?.error && errorHelperText}
+              error={Boolean(fieldState?.error)}
               {...field}
               value={field.value}
               ref={field.ref}
