@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Button, ListItem, Stack, Typography, useTheme } from '@mui/material';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import { Button, Stack, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -15,7 +16,7 @@ const PatientAlertView = () => {
   const rowId = router.query.id as string;
   const theme = useTheme();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
-  const [isAlertClosed, setIsAlertClosed] = useState<Partial<Record<string, boolean>>>({});
+  const [isAlertClosed, setIsAlertClosed] = useState(false);
   const isPatientAlertViewOpen = useAppSelector(patientsSelector.isPatientAlertViewOpen);
   const [t] = useTranslation();
 
@@ -25,16 +26,7 @@ const PatientAlertView = () => {
     }
   }, [rowId]);
 
-  useEffect(() => {
-    const allAlertsAreClosed = patientAlertDetails.reduce(
-      (accumulator, _, index) => accumulator && !!isAlertClosed[index],
-      true
-    );
-
-    dispatch(patientsMiddleware.isPatientAlertViewOpen(!allAlertsAreClosed));
-  }, [isAlertClosed, patientAlertDetails]);
-
-  return patientAlertDetails?.length && isPatientAlertViewOpen ? (
+  return (
     <Stack
       width="100%"
       mb={margins.bottom16}
@@ -43,48 +35,64 @@ const PatientAlertView = () => {
       py={paddings.topBottom12}
       borderRadius={borderRadius.radius16}
     >
-      {patientAlertDetails.map(
-        (titleContent: AlertDetailsProps, index) =>
-          !isAlertClosed[index] && (
-            // eslint-disable-next-line react/no-array-index-key
-            <Stack key={index} direction="row" justifyContent="space-between">
-              <Stack>
-                <Stack direction="row" alignItems="center" color={theme.palette.warning.dark} gap={1}>
-                  <Stack flexBasis={24}>
-                    <InfoOutlinedIcon />
+      {patientAlertDetails?.length && isPatientAlertViewOpen ? (
+        <>
+          {patientAlertDetails.map(
+            (titleContent: AlertDetailsProps, index) =>
+              !isAlertClosed && (
+                <Stack direction="row" justifyContent="space-between">
+                  <Stack direction="row" alignItems="center" gap={1}>
+                    <Stack flexBasis={24}>
+                      <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
+                    </Stack>
+                    <Stack>
+                      <Typography fontWeight="600" variant="subtitle1">
+                        {titleContent.title}
+                      </Typography>
+                      {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
+                        <Stack
+                          gap={1}
+                          direction="row"
+                          color={theme.palette.warning.dark}
+                          key={`${titleContent.id}-${message.title}`}
+                        >
+                          <Typography
+                            variant="subtitle2"
+                            color={theme.palette.common.black}
+                            marginBottom={margins.bottom8}
+                          >
+                            {message.title}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    </Stack>
                   </Stack>
-                  <Stack>
-                    <Typography color={theme.palette.warning.dark}>{titleContent.title}</Typography>
-                  </Stack>
+                  {index === 0 ? (
+                    <Button sx={{ color: theme.palette.warning.dark }} onClick={() => setIsAlertClosed(true)}>
+                      <CloseIcon sx={{ fontSize: theme.typography.pxToRem(20) }} />
+                    </Button>
+                  ) : null}
                 </Stack>
-                {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-                  <Stack
-                    gap={1}
-                    direction="row"
-                    color={theme.palette.warning.dark}
-                    key={`${titleContent.id}-${message.title}`}
-                  >
-                    <ListItem sx={{ display: 'list-item', pl: paddings.left12 }}>{message.title}</ListItem>
-                  </Stack>
-                ))}
-              </Stack>
-              <Stack>
-                <Button
-                  sx={{
-                    color: theme.palette.warning.dark
-                  }}
-                  size="small"
-                  onClick={() => setIsAlertClosed((prevState) => ({ ...prevState, [index]: true }))}
-                >
-                  {t(Translation.PAGE_PATIENT_ALERT_DISMISS)}
-                  <CloseIcon sx={{ fontSize: '12px' }} />
-                </Button>
-              </Stack>
-            </Stack>
-          )
-      )}
+              )
+          )}
+        </>
+      ) : null}
+
+      <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
+        <Button
+          sx={{
+            color: theme.palette.warning.dark
+          }}
+          size="small"
+        >
+          <Stack flexBasis={24}>
+            <AddIcon />
+          </Stack>
+          <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
+        </Button>
+      </Stack>
     </Stack>
-  ) : null;
+  );
 };
 
 export default PatientAlertView;
