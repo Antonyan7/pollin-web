@@ -15,7 +15,12 @@ import {
   User
 } from 'firebase/auth';
 import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadBytesResumable } from 'firebase/storage';
-import { dispatchAuthError, dispatchIsAuthChecked, dispatchLoginUser } from 'layout/MainLayout/Login/loginHelpers';
+import {
+  dispatchAuthError,
+  dispatchDisabledUser,
+  dispatchIsAuthChecked,
+  dispatchLoginUser
+} from 'layout/MainLayout/Login/loginHelpers';
 import { v4 } from 'uuid';
 
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
@@ -76,8 +81,13 @@ export class FirebaseManager {
     signInWithPopup(this.auth, samlProvider)
       .then((credential) => {
         dispatchLoginUser(credential.user);
+        dispatchDisabledUser(false);
       })
       .catch((error) => {
+        if (error.code === 'auth/user-disabled') {
+          dispatchDisabledUser(true);
+        }
+
         dispatchAuthError(error);
       });
   }

@@ -9,6 +9,10 @@ const reducers = createReducer({
   setAuthCheckStatus(state, action: IAction<boolean>) {
     state.isAuthChecked = action.payload;
   },
+  setIsUserDisabled(state, action: IAction<boolean>) {
+    state.isUserDisabled = action.payload;
+  },
+
   setUser(state, action: IAction<IUser | null>) {
     state.user = action.payload;
   },

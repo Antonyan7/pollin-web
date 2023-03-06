@@ -11,6 +11,8 @@ import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { drawerWidth, margins, paddings } from 'themes/themeConstants';
 import { MainStyleProps } from 'types';
 
+import AccessDeniedContent from '../../pages/access-denied';
+
 import Login from './Login/Login';
 import Header from './Header';
 import Sidebar from './Sidebar';
@@ -106,16 +108,21 @@ const PortalContent = ({ children }: PropsWithChildren) => {
 const LayoutContent = ({ children }: PropsWithChildren) => {
   const router = useRouter();
   const user = useAppSelector(userSelector.user);
+  const isUserDisabled = useAppSelector(userSelector.isUserDisabled);
   const isSignedIn = useMemo(() => !!user, [user]);
 
   const isAccessDenied = router.pathname === '/access-denied';
 
-  if (!isSignedIn) {
-    return <Login />;
+  if (isAccessDenied || isUserDisabled) {
+    return (
+      <PortalDefaultContent>
+        <AccessDeniedContent />
+      </PortalDefaultContent>
+    );
   }
 
-  if (isAccessDenied) {
-    return <PortalDefaultContent>{children}</PortalDefaultContent>;
+  if (!isSignedIn) {
+    return <Login />;
   }
 
   return <PortalContent>{children}</PortalContent>;

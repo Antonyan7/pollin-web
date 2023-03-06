@@ -11,6 +11,10 @@ export const dispatchLoginUser = (user: User | null) => {
   dispatch(userMiddleware.onLogin(user));
 };
 
+export const dispatchDisabledUser = (status: boolean) => {
+  dispatch(userMiddleware.onDisabledUser(status));
+};
+
 export const dispatchLogoutUser = () => {
   dispatch(userMiddleware.onLogout());
 };
