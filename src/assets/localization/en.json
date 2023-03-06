@@ -548,5 +548,6 @@
   "page.tasks.manager.modal.reassign.actions.reassign": "Reassign",
   "page.tasks.manager.modal.reassign.actions.cancel": "Cancel",
   "page.tasks.manager.toast.successful.reassign": "Task reassigned to",
-  "page.check.in.title": "Patient Check In"
+  "page.check.in.title": "Patient Check In",
+  "page.patient.check.in.title": "Check In"
 }

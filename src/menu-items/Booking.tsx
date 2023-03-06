@@ -37,7 +37,7 @@ const Booking: BookingProps = {
     },
     {
       id: 'Check in',
-      title: t(Translation.PAGE_CHECK_IN_TITLE),
+      title: t(Translation.PAGE_PATIENT_CHECK_IN_TITLE),
       type: 'item',
       url: '/booking/check-in',
       icon: CheckinIcon,

@@ -550,7 +550,8 @@ export enum Translation {
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_ACTIONS_REASSIGN = 'page.tasks.manager.modal.reassign.actions.reassign',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_ACTIONS_CANCEL = 'page.tasks.manager.modal.reassign.actions.cancel',
   PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_REASSIGN = 'page.tasks.manager.toast.successful.reassign',
-  PAGE_CHECK_IN_TITLE = 'page.check.in.title'
+  PAGE_CHECK_IN_TITLE = 'page.check.in.title',
+  PAGE_PATIENT_CHECK_IN_TITLE = 'page.patient.check.in.title'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */
