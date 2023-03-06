@@ -5,6 +5,6 @@ export enum CardMode {
 
 export interface MedicalBackgroundCardProps {
   title: string;
-  ViewComponent: () => JSX.Element;
-  EditComponent: () => JSX.Element;
+  ViewModeContent: () => JSX.Element;
+  EditModeContent: () => JSX.Element;
 }

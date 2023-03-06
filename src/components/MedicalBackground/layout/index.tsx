@@ -7,7 +7,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 import { CardMode, MedicalBackgroundCardProps } from './types';
 
-const MedicalBackgroundCard: FC<MedicalBackgroundCardProps> = ({ title, ViewComponent, EditComponent }) => {
+const MedicalBackgroundCard: FC<MedicalBackgroundCardProps> = ({ title, ViewModeContent, EditModeContent }) => {
   const [mode, setMode] = useState(CardMode.View);
   const isViewMode = mode === CardMode.View;
   const theme = useTheme();
@@ -68,7 +68,7 @@ const MedicalBackgroundCard: FC<MedicalBackgroundCardProps> = ({ title, ViewComp
         </Grid>
       }
     >
-      {isViewMode ? <ViewComponent /> : <EditComponent />}
+      {isViewMode ? <ViewModeContent /> : <EditModeContent />}
     </SubCardStyled>
   );
 };

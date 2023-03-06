@@ -119,7 +119,6 @@ const Appointments = () => {
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <Stack spacing={3}>
                 <DesktopDatePicker
-                  data-cy={CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER}
                   disableMaskedInput
                   maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
                   open={datePickerOpen}
@@ -138,6 +137,7 @@ const Appointments = () => {
                   renderInput={(params) => (
                     <TextField
                       disabled
+                      data-cy={CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER}
                       sx={{
                         width: 300,
                         [`.${outlinedInputClasses.notchedOutline}`]: {

@@ -3,13 +3,13 @@ import { DiagramTitleProps } from '@components/MedicalBackground/Contact/Patient
 import { Grid } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
-import FamilyMamberName from './fields/FamilyMamberName';
+import FamilyMemberName from './fields/FamilyMemberName';
 import InheritedDisease from './fields/InheritedDisease';
 
 const FamilyHistoryContent = ({ titleIndex }: DiagramTitleProps) => (
   <Grid item container direction="row" justifyContent="space-between" spacing={2} p={paddings.all16}>
     <InheritedDisease titleIndex={titleIndex} />
-    <FamilyMamberName titleIndex={titleIndex} />
+    <FamilyMemberName titleIndex={titleIndex} />
   </Grid>
 );
 

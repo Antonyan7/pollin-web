@@ -4,6 +4,7 @@ import { SeveritiesType } from '@components/Scheduling/types';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 
 const useAppointmentStatusState = () => {
@@ -11,7 +12,7 @@ const useAppointmentStatusState = () => {
   const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const createAppointmentErrorState = useAppSelector(bookingSelector.createAppointmentErrorState);
   const editAppointmentErrorState = useAppSelector(bookingSelector.editAppointmentErrorState);
-  const cancellAppointmentErrorState = useAppSelector(bookingSelector.cancellAppointmentErrorState);
+  const cancelAppointmentErrorState = useAppSelector(bookingSelector.cancelAppointmentErrorState);
   const resetBookingStatus = useCallback(() => {
     dispatch(bookingMiddleware.resetAppointmentStatus());
     dispatch(bookingMiddleware.clearCreateAppointmentErrorState());
@@ -19,8 +20,8 @@ const useAppointmentStatusState = () => {
 
   useEffect(() => {
     const isCreateAppointmentActionFailed = appointmentStatus.create.fail && createAppointmentErrorState.message;
-    const isEditAppoitmentActionFailed = appointmentStatus.edit.fail && editAppointmentErrorState.message;
-    const isCancellAppointmentFailed = appointmentStatus.cancel.fail && cancellAppointmentErrorState.message;
+    const isEditAppointmentActionFailed = appointmentStatus.edit.fail && editAppointmentErrorState.message;
+    const isCancelAppointmentFailed = appointmentStatus.cancel.fail && cancelAppointmentErrorState.message;
 
     if (appointmentStatus.create.success) {
       dispatch(
@@ -28,7 +29,8 @@ const useAppointmentStatusState = () => {
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)
+            description: t(Translation.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS),
+            dataCy: CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS
           }
         })
       );
@@ -40,7 +42,8 @@ const useAppointmentStatusState = () => {
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS)
+            description: t(Translation.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS),
+            dataCy: CypressIds.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS
           }
         })
       );
@@ -52,7 +55,8 @@ const useAppointmentStatusState = () => {
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS)
+            description: t(Translation.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS),
+            dataCy: CypressIds.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS
           }
         })
       );
@@ -64,31 +68,34 @@ const useAppointmentStatusState = () => {
           open: true,
           props: {
             severityType: SeveritiesType.error,
-            description: createAppointmentErrorState.message
+            description: createAppointmentErrorState.message,
+            dataCy: CypressIds.PAGE_APPOINTMENTS_CREATE_FAILED_STATUS
           }
         })
       );
     }
 
-    if (isEditAppoitmentActionFailed) {
+    if (isEditAppointmentActionFailed) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,
-            description: editAppointmentErrorState.message
+            description: editAppointmentErrorState.message,
+            dataCy: CypressIds.PAGE_APPOINTMENTS_EDIT_FAILED_STATUS
           }
         })
       );
     }
 
-    if (isCancellAppointmentFailed) {
+    if (isCancelAppointmentFailed) {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
           open: true,
           props: {
             severityType: SeveritiesType.error,
-            description: cancellAppointmentErrorState.message
+            description: cancelAppointmentErrorState.message,
+            dataCy: CypressIds.PAGE_APPOINTMENTS_CANCEL_FAILED_STATUS
           }
         })
       );
@@ -102,7 +109,7 @@ const useAppointmentStatusState = () => {
     appointmentStatus.cancel.success,
     createAppointmentErrorState.message,
     editAppointmentErrorState.message,
-    cancellAppointmentErrorState.message,
+    cancelAppointmentErrorState.message,
     resetBookingStatus
   ]);
 };

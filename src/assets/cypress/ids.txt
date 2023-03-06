@@ -26,6 +26,12 @@
   page.appointments.title
   page.appointments.button.today
   page.appointments.desktop.date.picker
+  page.appointments.create.success.status
+  page.appointments.edit.success.status
+  page.appointments.cancel.success.status
+  page.appointments.create.failed.status
+  page.appointments.edit.failed.status
+  page.appointments.cancel.failed.status
   page.appointments.select.resource
   common.full.calendar.loading.indicator
   common.full.calendar.component

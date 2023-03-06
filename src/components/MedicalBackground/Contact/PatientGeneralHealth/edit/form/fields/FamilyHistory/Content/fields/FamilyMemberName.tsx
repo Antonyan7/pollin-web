@@ -9,10 +9,10 @@ import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
-const FamilyMamberName = ({ titleIndex }: DiagramTitleProps) => {
+const FamilyMemberName = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
   const { control } = useFormContext();
-  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_FAMILY_HISTORY_PROBLEM_FAMILY_MAMBER);
+  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_FAMILY_HISTORY_PROBLEM_FAMILY_MEMBER);
   const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.FamilyHistory}.items.${titleIndex}.familyMemberName`,
     control
@@ -35,4 +35,4 @@ const FamilyMamberName = ({ titleIndex }: DiagramTitleProps) => {
   );
 };
 
-export default FamilyMamberName;
+export default FamilyMemberName;
