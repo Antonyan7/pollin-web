@@ -25,10 +25,10 @@ const Item: FC<ItemProps> = ({ title, index, value, note }) => {
     : value;
 
   return (
-    <FieldWrapper fieldName={title} componentIndex={index}>
+    <FieldWrapper fieldName={title} componentIndex={index} hasNote={!!note}>
       <Grid item container xs={5} direction="column" justifyContent="space-between">
         <Grid>{renderedValue}</Grid>
-        <Grid>{note ?? '-'}</Grid>
+        <Grid>{note || ''}</Grid>
       </Grid>
     </FieldWrapper>
   );

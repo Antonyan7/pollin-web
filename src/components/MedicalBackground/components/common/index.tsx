@@ -51,8 +51,8 @@ export const RenderSingleValueAndNote = ({ value, note }: { value?: string | num
   <Grid item container xs={5} direction="column" justifyContent="space-between">
     <Grid>{value}</Grid>
     {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-    <Grid>{note || '-'}</Grid>
+    <Grid>{note || ''}</Grid>
   </Grid>
 );
 
-export const RenderMappedNote = ({ note }: { note: string }) => <Grid mt={margins.top16}>{note || '-'}</Grid>;
+export const RenderMappedNote = ({ note }: { note: string }) => <Grid mt={margins.top16}>{note || ''}</Grid>;

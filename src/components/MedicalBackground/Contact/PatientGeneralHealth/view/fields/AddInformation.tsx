@@ -14,7 +14,7 @@ const AdditionalInformation = ({ componentIndex }: GeneralHealthComponentsProps)
   const fieldName = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_INFORMATION);
 
   return (
-    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex}>
+    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
       <RenderSingleValueAndNote value={fieldValue?.value} note={fieldValue?.note} />
     </FieldWrapper>
   );

@@ -15,7 +15,7 @@ const LatexAllergy = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const field = defineSingleFieldValue(fieldValue?.value);
 
   return (
-    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex}>
+    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
       <RenderSingleValueAndNote value={field} note={fieldValue?.note} />
     </FieldWrapper>
   );

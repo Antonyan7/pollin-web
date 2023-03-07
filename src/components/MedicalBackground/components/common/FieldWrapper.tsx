@@ -8,9 +8,10 @@ interface FieldWrapperProps {
   fieldName: string;
   children: ReactNode;
   componentIndex?: number;
+  hasNote: boolean;
 }
 
-const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps) => {
+const FieldWrapper = ({ children, fieldName, componentIndex, hasNote }: FieldWrapperProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
 
@@ -41,7 +42,8 @@ const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps
         <Typography
           sx={{
             fontWeight: 600,
-            color: theme.palette.common.black
+            color: theme.palette.common.black,
+            display: hasNote ? 'block' : 'none'
           }}
         >
           {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_NOTES)}
@@ -51,7 +53,7 @@ const FieldWrapper = ({ children, fieldName, componentIndex }: FieldWrapperProps
         <Grid item xs={0.5}>
           <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
         </Grid>
-        <Grid item xs={0.5}>
+        <Grid item xs={0.5} sx={{ display: hasNote ? 'grid' : 'none' }}>
           <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
         </Grid>
       </Grid>

@@ -1,5 +1,7 @@
 import { IFertilityHistoryProps, PreviousTreatmentFieldProps } from '@axios/patientEmr/managerPatientEmrTypes';
 
+import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
+
 type CustomAccessorItem = PreviousTreatmentFieldProps;
 
 type Mapper = Record<string, MapperProps>;
@@ -13,7 +15,8 @@ export const createObjectWithTitle = (itemTitle: string) => ({
   title: itemTitle
 });
 
-export const getLabelByBoolean = (isItTrue: boolean) => (isItTrue ? 'Yes' : 'No');
+export const getLabelByBoolean = (isItTrue: boolean) =>
+  isItTrue ? MedicalFormRadioValues.Yes : MedicalFormRadioValues.No;
 
 export const mapObjectByPattern = (target: IFertilityHistoryProps | null, mappingPattern: Mapper) =>
   target

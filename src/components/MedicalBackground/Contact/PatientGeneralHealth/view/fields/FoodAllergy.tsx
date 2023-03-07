@@ -21,7 +21,7 @@ const FoodAllergy = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const fieldName = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_FOOD_ALLERGY);
 
   return (
-    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex}>
+    <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
       <Grid item container xs={5} justifyContent="flex-start" direction="column">
         {fieldValue?.items.length ? (
           <>

@@ -10,7 +10,6 @@ import IodineAllergy from './IodineAllergy';
 import LatexAllergy from './LatexAllergy';
 import OtherMedicalProblems from './OtherMedicalProblems';
 import PastSurgery from './PastSurgery';
-import PatientAlerts from './PatientAlerts';
 import ProblemAnesthetics from './ProblemAnesthetics';
 import RegularExercise from './RegularExercise';
 import SeeingTherapist from './SeeingTherapist';
@@ -36,7 +35,6 @@ export {
   LatexAllergy,
   OtherMedicalProblems,
   PastSurgery,
-  PatientAlerts,
   ProblemAnesthetics,
   RegularExercise,
   SeeingTherapist,
