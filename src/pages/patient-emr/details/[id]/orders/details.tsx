@@ -20,10 +20,10 @@ const OrderDetailsPage = () => {
   const { orderId } = router.query;
 
   useEffect(() => {
-    if (typeof currentPatientId === 'string' && patientProfile === null) {
+    if (typeof currentPatientId === 'string') {
       dispatch(patientsMiddleware.getPatientProfile(currentPatientId));
     }
-  }, [currentPatientId, patientProfile]);
+  }, [currentPatientId]);
 
   useEffect(() => {
     dispatch(ordersMiddleware.getOrderDetails(orderId as string));

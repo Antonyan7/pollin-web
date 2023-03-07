@@ -13,7 +13,7 @@ const BaseModalTitle = ({ children, onClose, ...other }: DialogTitleProps) => (
         position: 'absolute',
         right: 20,
         top: 20,
-        color: (theme) => theme.palette.grey[500]
+        color: (theme) => theme.palette.primary.main
       }}
       data-cy={other.dataCy}
     >

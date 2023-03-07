@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import OrderConfirmation from '@components/Orders/CreateEditOrder/OrderConfirmation';
 import OrderEditOrCreate from '@components/Orders/CreateEditOrder/OrderEditOrCreate';
 import OrderLoading from '@components/Orders/CreateEditOrder/OrderLoading';
-import OrderDetailsComments from '@components/Orders/OrderDetails/OrderDetailsComments';
+import OrderDetailsInformation from '@components/Orders/OrderDetails/OrderDetailsInformation';
 import { Stack } from '@mui/material';
 import { ordersSelector } from '@redux/slices/orders';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
@@ -31,7 +31,7 @@ const OrderBody = ({ isEdit }: { isEdit: boolean }) => {
       {/* TODO: use Switch statement with memo to get components for current step */}
       {!isValidationLoading && step === 0 ? <OrderEditOrCreate /> : null}
       {!isValidationLoading && step === 1 ? <OrderConfirmation isEdit={isEdit} /> : null}
-      {!isValidationLoading && step === 1 ? <OrderDetailsComments /> : null}
+      {!isValidationLoading && step === 1 ? <OrderDetailsInformation isEdit={isEdit} /> : null}
     </Stack>
   );
 };

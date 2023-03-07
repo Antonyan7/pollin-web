@@ -9,6 +9,7 @@ import { OrderCreationContext } from 'context/OrderCreationContext';
 
 const CreateEditOrder = ({ isEdit }: { isEdit: boolean }) => {
   const editableOrderDetails = useAppSelector(ordersSelector.editableOrderDetails);
+  const { isEditable } = useAppSelector(ordersSelector.orderDetails);
 
   useEffect(() => {
     if (editableOrderDetails.length === 0) {
@@ -27,7 +28,7 @@ const CreateEditOrder = ({ isEdit }: { isEdit: boolean }) => {
       <OrderCreationContext>
         <OrderHeader />
         <OrderBody isEdit={isEdit} />
-        <OrderActions isEdit={isEdit} />
+        {isEditable || !isEdit ? <OrderActions isEdit={isEdit} /> : null}
       </OrderCreationContext>
     </Stack>
   );

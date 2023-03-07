@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Tab, Tabs, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
@@ -14,29 +14,35 @@ const EmrOrdersAndResultsTabs = ({ children }: PropsWithChildren) => {
 
   const { t } = useTranslation();
 
-  const handleChange = (_: React.SyntheticEvent<Element, Event>, value: string) => {
-    router.push(value);
-  };
+  const detectedTabIndex = useMemo(() => (router.asPath.includes('results') ? 1 : 0), [router.asPath]);
 
   return (
     <Box sx={{ marginTop: margins.top16 }}>
       <Tabs
-        value={router.asPath}
+        value={detectedTabIndex}
         indicatorColor="primary"
         textColor="primary"
-        onChange={handleChange}
         variant="fullWidth"
         sx={{
           '& .MuiTabs-indicator': {
-            height: 3,
-            backgroundColor: theme.palette.primary.main
+            backgroundColor: theme.palette.primary.main,
+            height: '2px'
+          },
+          '& .MuiTabs-flexContainer': {
+            borderBottom: '2px solid',
+            borderColor: theme.palette.primary.light
           }
         }}
       >
-        <Tab value={`/patient-emr/details/${patientId}/orders`} label={t(Translation.PAGE_PATIENT_ORDER_TITLE)} />
         <Tab
-          value={`/patient-emr/details/${patientId}/orders/results`}
+          value={0}
+          label={t(Translation.PAGE_PATIENT_ORDER_TITLE)}
+          onClick={() => router.push(`/patient-emr/details/${patientId}/orders`)}
+        />
+        <Tab
+          value={1}
           label={t(Translation.PAGE_PATIENT_ORDER_RESULTS_TITLE)}
+          onClick={() => router.push(`/patient-emr/details/${patientId}/orders/results`)}
         />
       </Tabs>
       <Box pt={paddings.top24}>{children}</Box>

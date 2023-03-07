@@ -100,7 +100,7 @@ const LatestTestResults = () => {
           </TableContainer>
           <CardActions>
             <Grid container justifyContent="right">
-              <Button variant="text" onClick={() => router.push(`/patient-emr/details/${patientId}/orders`)}>
+              <Button variant="text" onClick={() => router.push(`/patient-emr/details/${patientId}/orders/results`)}>
                 {t(Translation.COMMON_BUTTON_VIEW_ALL)}
                 <ChevronRightOutlinedIcon />
               </Button>

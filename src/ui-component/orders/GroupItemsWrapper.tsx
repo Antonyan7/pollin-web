@@ -59,10 +59,10 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
   return (
     <Stack
       direction="row"
-      borderBottom={`1px solid ${theme.palette.primary.light}`}
       px={paddings.all24}
-      py={paddings.all12}
+      py={paddings.all24}
       gap={2}
+      borderTop={`1px solid ${theme.palette.primary.light}`}
     >
       <Stack direction="row" flexBasis={2} flexGrow={2}>
         <FormGroup>

@@ -29,13 +29,6 @@ const useOrderActions = (row: { id: string; status: OrdersListItemStatus }, acti
 
   const actionBindings = [
     {
-      id: OrdersActions.Cancel,
-      title: getActionTitleById(OrdersActions.Cancel, actions),
-      actionCallback: () => {
-        handleOrderCancellationPopupAction();
-      }
-    },
-    {
       id: row.status === OrdersListItemStatus.NotCollected ? OrdersActions.ViewAndEdit : OrdersActions.View,
       title: getActionTitleById(
         row.status === OrdersListItemStatus.NotCollected ? OrdersActions.ViewAndEdit : OrdersActions.View,
@@ -43,6 +36,13 @@ const useOrderActions = (row: { id: string; status: OrdersListItemStatus }, acti
       ),
       actionCallback: () => {
         handleOrderViewEditAction();
+      }
+    },
+    {
+      id: OrdersActions.Cancel,
+      title: getActionTitleById(OrdersActions.Cancel, actions),
+      actionCallback: () => {
+        handleOrderCancellationPopupAction();
       }
     }
   ];

@@ -85,6 +85,10 @@ export interface IOrderDetailsData {
   id: string;
   comment?: string;
   isEditable: boolean;
+  cancellation?: {
+    reason: string;
+    date: string;
+  };
   hasRequisition: boolean;
   orderTypes: IOrderTypesCollection[];
 }

@@ -28,10 +28,15 @@ const OrderConfirmation = ({ isEdit }: { isEdit: boolean }) => {
   );
 
   return (
-    <Stack p={paddings.all24} borderBottom={`1px solid ${theme.palette.primary.light}`} gap={2}>
+    <Stack
+      paddingTop={paddings.all24}
+      paddingBottom={paddings.all24}
+      gap={2}
+      borderBottom={`1px solid ${theme.palette.primary.light}`}
+    >
       {pickedOrderTypes.map(({ id: orderTypeId, groups }) => (
         <React.Fragment key={orderTypeId}>
-          <Stack direction="row" justifyContent="space-between">
+          <Stack p={paddings.all24} direction="row" justifyContent="space-between">
             <Typography variant="h3" color={theme.palette.common.black}>
               {orderTypeOptions.find(({ id }) => id === orderTypeId)?.title}
             </Typography>
@@ -42,7 +47,7 @@ const OrderConfirmation = ({ isEdit }: { isEdit: boolean }) => {
             )}
           </Stack>
           {groups?.map(({ id, title, groupItems }) => (
-            <Grid container key={id}>
+            <Grid p={paddings.all24} container key={id}>
               <Grid item xs={6}>
                 <Typography variant="h4" color={theme.palette.common.black}>
                   {title}

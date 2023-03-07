@@ -77,8 +77,12 @@ export default ({ children }: PropsWithChildren) => {
           variant="fullWidth"
           sx={{
             '& .MuiTabs-indicator': {
-              height: 3,
-              backgroundColor: theme.palette.primary.main
+              backgroundColor: theme.palette.primary.main,
+              height: '2px'
+            },
+            '& .MuiTabs-flexContainer': {
+              borderBottom: '2px solid',
+              borderColor: theme.palette.primary.light
             }
           }}
         >

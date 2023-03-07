@@ -24,15 +24,8 @@ const OrderTypeDropdown = () => {
   );
 
   return (
-    <Box p={paddings.all24} justifyContent="end" borderTop={`1px solid ${theme.palette.primary.light}`}>
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="flex-start"
-        px={paddings.leftRight12}
-        pb={paddings.bottom24}
-        borderBottom={`1px solid ${theme.palette.primary.light}`}
-      >
+    <Box justifyContent="end" alignItems="center">
+      <Stack direction="row" alignItems="center" justifyContent="flex-start" p={paddings.all24}>
         <Typography sx={{ flexGrow: 1, width: '240px', fontSize: '16px', color: theme.palette.secondary[800] }}>
           {label}
         </Typography>
