@@ -9,7 +9,7 @@ const Body = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={8}>
-        <Typography>{t(Translation.MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MARK_AS_REVIEWS)}</Typography>
+        <Typography>{t(Translation.MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE)}</Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography>{t(Translation.MODAL_TEST_RESULT_REVIEW_CONFIRMATION_MESSAGE_UNDONE)}</Typography>

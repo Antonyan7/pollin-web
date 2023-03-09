@@ -330,6 +330,7 @@ export enum Translation {
   MODAL_PATIENT_TEST_RESULTS_TABLE_STATUS = 'modal.patient.test.results.table.status',
   MODAL_PATIENT_TEST_RESULTS_TABLE_FINAL_RESULT_TYPE = 'modal.patient.test.results.table.final.result.type',
   MODAL_PATIENT_TEST_RESULTS_BUTTON_GO_TO_TEST_RESULTS = 'modal.patient.test.results.button.go.to.test.results',
+  PAGE_PATIENT_TEST_RESULTS_NO_AVAILABLE_TEST_RESULTS = 'page.patient.test.results.no.available.test.results',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_TITLE = 'modal.appointments.confirm.cancel.title',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION = 'modal.appointments.confirm.cancel.description',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON = 'modal.appointments.confirm.cancel.select.reason',

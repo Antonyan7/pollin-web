@@ -5,13 +5,17 @@ import { HeadCell } from '@components/Table/HeadCell';
 import {
   Box,
   CircularProgress,
+  Divider,
+  Grid,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TablePagination,
-  TableRow
+  TableRow,
+  Typography,
+  useTheme
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
@@ -29,6 +33,7 @@ import { headCellsData } from './OrderResultsHeadCellMockData';
 import { OrderResultsRow } from './OrderResultsRow';
 
 const OrderResults = () => {
+  const theme = useTheme();
   const [page, setPage] = useState<number>(0);
   const [sortField, setSortField] = useState<OrderResultsSortFields | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
@@ -119,6 +124,18 @@ const OrderResults = () => {
         <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
           <CircularProgress sx={{ margin: margins.auto }} />
         </Box>
+      ) : null}
+      {!isOrderResultsByPatientListLoading && orderResultsByPatientList.totalItems === 0 ? (
+        <>
+          <Grid container justifyContent="center" padding={paddings.all20}>
+            <Grid item>
+              <Typography color={theme.palette.primary.main} variant="h4">
+                {t(Translation.PAGE_PATIENT_TEST_RESULTS_NO_AVAILABLE_TEST_RESULTS)}
+              </Typography>
+            </Grid>
+          </Grid>
+          <Divider />
+        </>
       ) : null}
       <TablePagination
         component="div"
