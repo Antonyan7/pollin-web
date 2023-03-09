@@ -1,3 +1,15 @@
+import {
+  EmailAddress,
+  MailingAddress,
+  MostResponsiblePhysician,
+  OHIP,
+  PatientIdentifier,
+  PatientName,
+  PatientPreferredName,
+  PhoneNumber,
+  PrimaryAddress,
+  PrimaryPatientContribution
+} from '@components/MedicalBackground/Contact/PatientContactInformation/view/fields';
 /* eslint-disable no-restricted-syntax */
 import {
   ActiveConsults,
@@ -26,6 +38,8 @@ import {
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/view/fields';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
+
+import { AddressProps } from '../../../manager/patientEmr/managerPatientEmrTypes';
 
 export const defineSingleFieldValue = (fieldType?: boolean) => {
   switch (fieldType) {
@@ -89,4 +103,31 @@ export const generalHealthRows = [
   { Component: Diet },
   { Component: ActiveConsults },
   { Component: AdditionalInformation }
+];
+
+export const getFullAddress = (address?: AddressProps) => {
+  let fullAddress = '';
+
+  if (address) {
+    const { note, isEditable, ...addresses } = address;
+    const arrayOfAddresses = Object.values(addresses);
+    const extractFalsyValues = arrayOfAddresses.filter((addressValue) => addressValue);
+
+    fullAddress = extractFalsyValues.join(', ');
+  }
+
+  return fullAddress;
+};
+
+export const contactInformationRows = [
+  { Component: PatientIdentifier },
+  { Component: PatientName },
+  { Component: PatientPreferredName },
+  { Component: PrimaryPatientContribution },
+  { Component: PrimaryAddress },
+  { Component: MailingAddress },
+  { Component: EmailAddress },
+  { Component: PhoneNumber },
+  { Component: OHIP },
+  { Component: MostResponsiblePhysician }
 ];

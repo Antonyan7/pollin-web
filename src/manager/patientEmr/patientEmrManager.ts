@@ -13,6 +13,7 @@ import {
   IGeneralHealth,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
+  IMedicalContactInformation,
   IPatientContactInformationResponse,
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
@@ -184,6 +185,11 @@ const patientEmrManager = {
   getFertilityHistory(patientId: string) {
     return axiosInstance.get<IFertilityHistory, IAxiosResponse<IFertilityHistory>>(
       `${baseURL}/v1/medical-background/${patientId}/fertility-history`
+    );
+  },
+  getPatientContactInformation(patientId: string) {
+    return axiosInstance.get<IMedicalContactInformation, IAxiosResponse<IMedicalContactInformation>>(
+      `${baseURL}/v1/medical-background/${patientId}/contact-information`
     );
   }
 };

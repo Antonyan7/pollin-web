@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import { Grid, IconButton, SxProps, Theme, Typography, useTheme } from '@mui/material';
+import { cardHeaderClasses, Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { borders, margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -9,7 +9,6 @@ import CircularLoading from '@ui-component/circular-loading';
 interface PatientMedicalBackgroundSectionProps {
   children: ReactNode;
   title?: ReactNode;
-  sx?: SxProps<Theme>;
   isLoading?: boolean;
   isButtonClicked: boolean;
   onClick: () => void;
@@ -19,7 +18,6 @@ const PatientMedicalBackgroundSection = ({
   children,
   title,
   isLoading,
-  sx,
   isButtonClicked,
   onClick
 }: PatientMedicalBackgroundSectionProps) => {
@@ -28,10 +26,14 @@ const PatientMedicalBackgroundSection = ({
   return (
     <SubCardStyled
       sx={{
-        ...sx,
         outline: `${borders.solid1px} ${theme.palette.primary.main}`,
         '& > .MuiDivider-root': {
           borderColor: theme.palette.primary.main
+        },
+        [`.${cardHeaderClasses.root}`]: {
+          py: paddings.topBottom16,
+          pl: paddings.left20,
+          pr: paddings.right16
         }
       }}
       title={
@@ -40,15 +42,21 @@ const PatientMedicalBackgroundSection = ({
             <Typography
               sx={{
                 fontWeight: 600,
-                fontSize: theme.typography.pxToRem(21),
-                color: theme.palette.common.black
+                fontSize: theme.typography.pxToRem(16),
+                color: theme.palette.secondary[800]
               }}
             >
               {title}
             </Typography>
           </Grid>
           <Grid>
-            <IconButton disabled={isButtonClicked} onClick={onClick}>
+            <IconButton
+              disabled={isButtonClicked}
+              onClick={onClick}
+              sx={{
+                padding: 0
+              }}
+            >
               <ModeEditOutlinedIcon
                 sx={{
                   color: theme.palette.primary.main,

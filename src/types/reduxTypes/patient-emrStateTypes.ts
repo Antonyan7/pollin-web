@@ -10,6 +10,7 @@ import {
   IFertilityHistoryProps,
   IGeneralHealthProps,
   IPatientContactInformation,
+  IPatientContactInformationProps,
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
@@ -30,6 +31,9 @@ interface IProfileProps {
 export interface MedicalBackgroundProps {
   contact: {
     generalHealth: IGeneralHealthProps | null;
+    patientContactInformation: IPatientContactInformationProps | null;
+    isContactInformationLoading: boolean;
+    isContactInformationEditButtonClicked: boolean;
     isGeneralHealthLoading: boolean;
     isGeneralHealthEditButtonClicked: boolean;
     isGeneralHealthDataUpdating: boolean;

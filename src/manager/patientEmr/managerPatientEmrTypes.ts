@@ -434,3 +434,64 @@ export interface IFertilityHistoryProps {
 export interface IFertilityHistory {
   fertilityHistory: IFertilityHistoryProps;
 }
+
+export interface IdentifierFieldProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface PatientNameProps extends MedicalBackgroundFieldValues {
+  firstName: string;
+  middleName: string;
+  lastName: string;
+}
+
+export interface PreferredNamaProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface ContributionProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface AddressProps extends MedicalBackgroundFieldValues {
+  streetAddress: string;
+  unitNumber: string;
+  postalCode: string;
+  province: string;
+  city: string;
+  country: string;
+}
+
+export interface EmailAddressProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface PhoneNumberProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface OHIPProps extends MedicalBackgroundFieldValues {
+  number: string;
+  versionCode: string;
+}
+
+export interface ResponsiblePhysicianProps extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IPatientContactInformationProps {
+  identifier: IdentifierFieldProps;
+  patientName: PatientNameProps;
+  preferredName: PreferredNamaProps;
+  contribution: ContributionProps;
+  primaryAddress: AddressProps;
+  mailingAddress: AddressProps;
+  emailAddress: EmailAddressProps;
+  phoneNumber: PhoneNumberProps;
+  OHIP: OHIPProps;
+  responsiblePhysician: ResponsiblePhysicianProps;
+}
+
+export interface IMedicalContactInformation {
+  contactInformation: IPatientContactInformationProps;
+}

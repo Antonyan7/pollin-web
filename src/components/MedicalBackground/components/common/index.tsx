@@ -48,11 +48,11 @@ export const ConsultationTitleWithIcon = ({ description, onClick }: { descriptio
 );
 
 export const RenderSingleValueAndNote = ({ value, note }: { value?: string | number; note?: string }) => (
-  <Grid item container xs={5} direction="column" justifyContent="space-between">
+  <Grid item container xs={7} direction="column" justifyContent="space-between">
     <Grid>{value}</Grid>
     {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
     <Grid>{note || ''}</Grid>
   </Grid>
 );
 
-export const RenderMappedNote = ({ note }: { note: string }) => <Grid mt={margins.top16}>{note || ''}</Grid>;
+export const RenderMappedNote = ({ note }: { note: string }) => (note ? <Grid mt={margins.top16}>{note}</Grid> : null);

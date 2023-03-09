@@ -71,10 +71,22 @@ const isGeneralHealthLoading = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.isGeneralHealthLoading
 );
+const isContactInformationLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.isContactInformationLoading
+);
 const generalHealth = createSelector([selector], (state) => state.medicalBackground.contact.generalHealth);
+const contactInformation = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientContactInformation
+);
 const isGeneralHealthEditButtonClicked = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.isGeneralHealthEditButtonClicked
+);
+const isContactInformationButtonClicked = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.isContactInformationEditButtonClicked
 );
 const isGeneralHealthDataUpdating = createSelector(
   [selector],
@@ -147,5 +159,8 @@ export default {
   isGeneralHealthDataUpdating,
   fertilityHistory,
   isFertilityHistoryDataUpdating,
-  isFertilityHistoryLoading
+  isFertilityHistoryLoading,
+  isContactInformationButtonClicked,
+  isContactInformationLoading,
+  contactInformation
 };

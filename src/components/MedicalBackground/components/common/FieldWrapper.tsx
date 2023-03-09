@@ -42,7 +42,7 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote }: FieldWra
         <Typography
           sx={{
             fontWeight: 600,
-            color: theme.palette.common.black,
+            color: theme.palette.secondary[800],
             display: hasNote ? 'block' : 'none'
           }}
         >

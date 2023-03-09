@@ -28,6 +28,8 @@ import {
   PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
 
+import { IPatientContactInformationProps } from '../../../manager/patientEmr/managerPatientEmrTypes';
+
 const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
@@ -216,6 +218,15 @@ const reducers = createReducer({
   },
   setIsFertilityHistoryDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isFertilityHistoryDataUpdating = action.payload;
+  },
+  setMedicalPatientContactInformation(state, action: IAction<IPatientContactInformationProps>) {
+    state.medicalBackground.contact.patientContactInformation = action.payload;
+  },
+  setIsMedicalPatientContactInformationLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isContactInformationLoading = action.payload;
+  },
+  setIsContactInformationEditButtonClicked(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isContactInformationEditButtonClicked = action.payload;
   }
 });
 
