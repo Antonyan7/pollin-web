@@ -44,6 +44,7 @@ const {
   setEncountersType,
   setEncounterDetailsInfo,
   setRecentAppointments,
+  setIsVerifyPatientProfilePhotoLoading,
   setIsRecentAppointmentsLoading,
   setPatientProfile,
   setIsPatientProfileLoading,
@@ -268,6 +269,19 @@ const getPatientRecentAppointments = (patientId: string) => async (dispatch: App
     dispatch(setError(error));
   } finally {
     dispatch(setIsRecentAppointmentsLoading(false));
+  }
+};
+
+const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsVerifyPatientProfilePhotoLoading(true));
+
+    await API.patients.verifyPatientProfilePhoto(patientId, accepted);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsVerifyPatientProfilePhotoLoading(false));
   }
 };
 
@@ -648,6 +662,7 @@ const updateGeneralHealthData =
 
 export default {
   getPatientsList,
+  verifyPatientProfilePhoto,
   getPatientSearchFilters,
   getPatientAlertDetails,
   resetPatientAlerts,

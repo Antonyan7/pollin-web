@@ -574,5 +574,11 @@
   "page.tasks.manager.modal.reassign.actions.cancel": "Cancel",
   "page.tasks.manager.toast.successful.reassign": "Task reassigned to",
   "page.check.in.title": "Patient Check In",
-  "page.patient.check.in.title": "Check In"
+  "page.patient.check.in.title": "Check In",
+  "modal.verify.patient.photo.title": "Verify Patient Photo",
+  "modal.verify.patient.photo.name": "Patient Name",
+  "modal.verify.patient.photo.id": "Patient ID",
+  "modal.verify.patient.photo.date": "Patient Date of Birth",
+  "modal.verify.patient.photo.reject": "Reject Photo",
+  "modal.verify.patient.photo.approve": "Approve Photo"
 }

@@ -14,6 +14,7 @@ import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Mo
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
+import ImageModal, { ImageModalProps } from '@components/Modals/ImageModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
@@ -44,6 +45,7 @@ import TaskStatusUpdateModal, {
 } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
 import ReassignTaskModal from '@components/Modals/TaskReassign';
 import CreateTaskModal from '@components/Modals/Tasks';
+import VerifyPatientPhotoModal from '@components/Modals/VerifyPatientPhotoModal';
 import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -179,6 +181,8 @@ const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmati
   <TaskStatusUpdateModal key={modal.name} {...modal.props} />
 );
 
+const getVerifyPatientPhotoModal = () => <VerifyPatientPhotoModal />;
+const getImageModal = (modal: IOpenedModal<ImageModalProps>) => <ImageModal key={modal.name} {...modal.props} />;
 // dev
 const getDevToolsModal = () => <DevToolsModal />;
 
@@ -263,6 +267,11 @@ export const ModalsController = () => {
             return getTaskStatusUpdateModal(modal);
           case ModalName.ReassignTaskModal:
             return getReassignTaskModal(modal);
+
+          case ModalName.VerifyPatientPhotoModal:
+            return getVerifyPatientPhotoModal();
+          case ModalName.ImageModal:
+            return getImageModal(modal);
 
           // dev
           case ModalName.DevToolsModal:

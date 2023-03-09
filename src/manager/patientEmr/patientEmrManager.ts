@@ -53,6 +53,11 @@ const patientEmrManager = {
       data
     );
   },
+  verifyPatientProfilePhoto(patientId: string, accepted: boolean) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/profile/${patientId}/verify-photo`, {
+      accepted
+    });
+  },
   getPatientsList(data: IPatientsReqBody) {
     return axiosInstance.post<IPatientsListResponse, IAxiosResponsePaginated<IPatientsListResponse>>(
       `${baseURL}/v1/patients/search`,
