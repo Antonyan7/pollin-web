@@ -8,7 +8,7 @@ const Body = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={8}>
+      <Grid item xs={9}>
         <Typography>{t(Translation.MODAL_TEST_RESULT_RELEASE_CONFIRMATION_MESSAGE)}</Typography>
       </Grid>
       <Grid item xs={12}>

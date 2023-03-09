@@ -252,6 +252,7 @@ export enum Translation {
   PAGE_ORDER_DETAILS_ORDER_SETS = 'page.order.details.order.sets',
   PAGE_ORDER_DETAILS_INDIVIDUAL_TESTS = 'page.order.details.individual.tests',
   PAGE_ORDER_DETAILS_COMMENTS = 'page.order.details.comments',
+  PAGE_ORDER_DETAILS_DOWNLOAD_NOTE = 'page.order.details.download.note',
   PAGE_ORDER_DETAILS_CANCELLATION_TITLE = 'page.order.details.cancellation.title',
   PAGE_ORDER_DETAILS_CANCELLATION_REASON = 'page.order.details.cancellation.reason',
   PAGE_ORDER_DETAILS_CANCELLATION_DATE = 'page.order.details.cancellation.date',

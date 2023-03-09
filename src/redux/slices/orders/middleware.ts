@@ -27,7 +27,7 @@ import {
   IUpdateOrderReqBody
 } from 'types/reduxTypes/ordersStateTypes';
 
-import { collectionDeepMerge } from '@utils/collectionDeepMerge';
+import { collectionDeepMerge } from '@utils/deepMerge/collectionDeepMerge';
 import { capitalizeFirst } from '@utils/stringUtils';
 
 import { Translation } from '../../../constants/translations';
@@ -69,7 +69,11 @@ const updateSelectedOrderType = (orderType: string) => async (dispatch: AppDispa
 const prepareEditableOrderDetails =
   (orderTypes: IOrderTypesCollection[], orderDetails: IOrderDetailsData) => async (dispatch: AppDispatch) => {
     if (orderDetails.orderTypes.length > 0 && orderTypes.length > 0) {
-      const editableOrderDetails = collectionDeepMerge(orderTypes, orderDetails.orderTypes, 'id');
+      const editableOrderDetails = collectionDeepMerge(
+        structuredClone(orderTypes) as never,
+        orderDetails.orderTypes as never,
+        'id' as never
+      );
 
       dispatch(setEditableOrderDetails(editableOrderDetails));
     } else {
@@ -80,7 +84,11 @@ const prepareEditableOrderDetails =
 const mergeEditableOrderDetailsWithOrderDetails =
   (editableOrderDetails: IOrderTypesCollection[], orderDetails: IOrderDetailsData) => async (dispatch: AppDispatch) => {
     if (orderDetails.orderTypes.length > 0) {
-      const updatedEditableOrders = collectionDeepMerge(editableOrderDetails, orderDetails.orderTypes, 'id');
+      const updatedEditableOrders = collectionDeepMerge(
+        structuredClone(editableOrderDetails as never),
+        orderDetails.orderTypes as never,
+        'id' as never
+      );
 
       dispatch(setEditableOrderDetails(updatedEditableOrders));
       dispatch(
@@ -132,7 +140,7 @@ const updateEditableOrderTypes =
     dispatch(setEditableOrderDetails(updatedEditableOrderDetails));
   };
 
-const resetOrderTypesSelection = () => async (dispatch: AppDispatch) => {
+const resetOrderTypesState = () => async (dispatch: AppDispatch) => {
   dispatch(setSelectedOrderType(''));
   dispatch(setOrderTypes([]));
   dispatch(setEditableOrderDetails([]));
@@ -150,11 +158,11 @@ const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsOrderDetailsLoading(true));
 
-    const { editableOrderDetails } = store.getState().orders;
+    const { orderTypes } = store.getState().orders;
 
     const { data } = await API.results.getOrderDetails(orderId);
 
-    dispatch(mergeEditableOrderDetailsWithOrderDetails(editableOrderDetails, data.order));
+    dispatch(mergeEditableOrderDetailsWithOrderDetails(orderTypes, data.order));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
@@ -166,13 +174,23 @@ const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
 const createOrder =
   (patientId: string, orderTypes: IValidateOrderType[], comment?: string) => async (dispatch: AppDispatch) => {
     try {
-      const body: ICreateOrderReqBody = {
+      const createOrderReqBody: ICreateOrderReqBody = {
         patientId,
         ...(comment ? { comment } : {}),
         orderTypes
       };
 
-      await API.results.createOrder(body);
+      const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Desc);
+      const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.DateCreated);
+      const getOrderListReqBody: OrdersListDataProps = {
+        sortByField: capitalizedSortField,
+        patientId,
+        sortOrder: capitalizedSortOrder,
+        page: 1
+      };
+
+      await API.results.createOrder(createOrderReqBody);
+      dispatch(ordersMiddleware.getOrdersList(getOrderListReqBody));
 
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
@@ -190,16 +208,26 @@ const createOrder =
   };
 
 const updateOrder =
-  (orderId: string, orderTypes: IValidateOrderType[], comment?: string) => async (dispatch: AppDispatch) => {
+  (orderId: string, orderTypes: IValidateOrderType[], patientId: string, comment?: string) =>
+  async (dispatch: AppDispatch) => {
     try {
-      const body: IUpdateOrderReqBody = {
+      const updateOrderReqBody: IUpdateOrderReqBody = {
         order: {
           ...(comment ? { comment } : {}),
           orderTypes
         }
       };
+      const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Desc);
+      const capitalizedSortField = capitalizeFirst<OrderListSortFields>(OrderListSortFields.DateCreated);
+      const getOrderListReqBody: OrdersListDataProps = {
+        sortByField: capitalizedSortField,
+        patientId,
+        sortOrder: capitalizedSortOrder,
+        page: 1
+      };
 
-      await API.results.updateOrder(orderId, body);
+      await API.results.updateOrder(orderId, updateOrderReqBody);
+      dispatch(ordersMiddleware.getOrdersList(getOrderListReqBody));
 
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
@@ -495,7 +523,7 @@ export default {
   updateSelectedOrderType,
   getOrderTypes,
   updateEditableOrderTypes,
-  resetOrderTypesSelection,
+  resetOrderTypesState,
   getOrderDetails,
   updateOrder,
   createOrder,

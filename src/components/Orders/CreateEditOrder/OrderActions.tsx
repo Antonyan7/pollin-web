@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import resultsHelpers from '@axios/results/resultsHelpers';
@@ -17,11 +17,15 @@ import { ModalName } from 'types/modals';
 import useStopRouteChange from '@hooks/useStopRouteChange';
 import { isAnyGroupItemSelected } from '@ui-component/orders/helpers';
 
-const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
+const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
   const [t] = useTranslation();
   const { orderCreationState, dispatchOrderCreationState } = useOrderCreationContext();
   const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const orderDetails = useSelector(ordersSelector.orderDetails);
+  const [defaultCommentValue] = useState(orderDetails.comment);
+  const [isDirtyOrderType, setIsDirtyOrderType] = useState(false);
+  const [isDirtyComment, setIsDirtyComment] = useState(false);
+  const [submissionProcessed, setSubmissionProcessed] = useState(false);
   const router = useRouter();
   const { id: patientId, orderId } = router.query;
 
@@ -29,6 +33,20 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
     () => window.btoa(JSON.stringify(editableOrderDetails)) !== window.btoa(JSON.stringify(orderDetails?.orderTypes)),
     [editableOrderDetails, orderDetails.orderTypes]
   );
+
+  useEffect(() => {
+    if (needValidation && orderCreationState.step === 1) {
+      setIsDirtyOrderType(true);
+    }
+  }, [needValidation, orderCreationState.step]);
+
+  useEffect(() => {
+    if (defaultCommentValue !== orderDetails.comment) {
+      setIsDirtyComment(true);
+    } else {
+      setIsDirtyComment(false);
+    }
+  }, [defaultCommentValue, orderDetails.comment]);
 
   const onCancelClick = () => {
     router.back();
@@ -51,6 +69,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
     if (patientId) {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
+      setSubmissionProcessed(true);
       dispatch(ordersMiddleware.createOrder(patientId as string, orderTypesToValidate, orderDetails.comment));
       router.push(`/patient-emr/details/${patientId}/orders`);
     }
@@ -60,7 +79,10 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
     if (orderId && orderDetails.isEditable) {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
-      dispatch(ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, orderDetails.comment));
+      setSubmissionProcessed(true);
+      dispatch(
+        ordersMiddleware.updateOrder(orderId as string, orderTypesToValidate, patientId as string, orderDetails.comment)
+      );
     }
 
     router.push(`/patient-emr/details/${patientId}/orders`);
@@ -81,7 +103,10 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
-  useStopRouteChange(needValidation && atLeastOneSelectedItemExists && !isCancelModalOpened, openCancellationModal);
+  const isRouteChangeAllowed =
+    ((needValidation && atLeastOneSelectedItemExists) || isDirtyComment) && !isCancelModalOpened;
+
+  useStopRouteChange(isRouteChangeAllowed, submissionProcessed, openCancellationModal);
 
   const renderConfirmOrCreateButton = () => {
     if (isEdit) {
@@ -92,6 +117,7 @@ const OrderActions = ({ isEdit }: { isEdit?: boolean }) => {
           onClick={onConfirmOrderUpdateClick}
           variant="contained"
           size="large"
+          disabled={!(isDirtyOrderType || isDirtyComment)}
         >
           {t(Translation.PAGE_ORDER_DETAILS_BUTTON_CONFIRM)}
         </Button>

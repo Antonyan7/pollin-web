@@ -34,9 +34,14 @@ const OrderConfirmation = ({ isEdit }: { isEdit: boolean }) => {
       gap={2}
       borderBottom={`1px solid ${theme.palette.primary.light}`}
     >
-      {pickedOrderTypes.map(({ id: orderTypeId, groups }) => (
+      {pickedOrderTypes.map(({ id: orderTypeId, groups }, index: number) => (
         <React.Fragment key={orderTypeId}>
-          <Stack p={paddings.all24} direction="row" justifyContent="space-between">
+          <Stack
+            p={paddings.all24}
+            direction="row"
+            justifyContent="space-between"
+            borderTop={index !== 0 ? `1px solid ${theme.palette.primary.light}` : 'none'}
+          >
             <Typography variant="h3" color={theme.palette.common.black}>
               {orderTypeOptions.find(({ id }) => id === orderTypeId)?.title}
             </Typography>

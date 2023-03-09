@@ -4,7 +4,7 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import CreateEditOrder from '@components/Orders/CreateEditOrder';
 import { Paper, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { ordersMiddleware } from '@redux/slices/orders';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
@@ -16,6 +16,8 @@ const OrderDetailsPage = () => {
   const router = useRouter();
   const { id: currentPatientId } = router.query;
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
+  const orderDetails = useAppSelector(ordersSelector.orderDetails);
+  const orderTypes = useAppSelector(ordersSelector.orderTypes);
 
   const { orderId } = router.query;
 
@@ -26,8 +28,12 @@ const OrderDetailsPage = () => {
   }, [currentPatientId]);
 
   useEffect(() => {
-    dispatch(ordersMiddleware.getOrderDetails(orderId as string));
-  }, [orderId]);
+    const shouldGetOrderDetails = typeof orderId === 'string' && orderDetails.id === '' && orderTypes.length !== 0;
+
+    if (shouldGetOrderDetails) {
+      dispatch(ordersMiddleware.getOrderDetails(orderId));
+    }
+  }, [orderDetails.id, orderId, orderTypes]);
 
   return (
     <Stack gap={margins.all16}>

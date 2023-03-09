@@ -28,7 +28,7 @@ const OrderDetailsInformation = ({ isEdit }: { isEdit: boolean }) => {
             placeholder={t(Translation.PAGE_ORDER_DETAILS_COMMENTS_PLACEHOLDER) ?? undefined}
             color={theme.palette.primary.dark}
             defaultValue={comment}
-            onBlur={updateDetailsComment}
+            onChange={updateDetailsComment}
           />
         ) : (
           comment ?? 'N/A'

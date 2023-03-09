@@ -8,6 +8,8 @@ import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { ITestResultStatus, TestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 
+import { dateInputValue } from '@utils/dateUtils';
+
 interface IReportSectionProps {
   testResultsDetails: TestResultsDetails;
 }
@@ -35,11 +37,15 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
   };
 
   const reportReviewText = testResultsDetails?.report?.reviewDate
-    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON)}: ${testResultsDetails.report.reviewDate}`
+    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON)}: ${dateInputValue(
+        testResultsDetails.report.reviewDate
+      )}`
     : t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_REVIEWED);
 
   const reportReleaseText = testResultsDetails?.report?.releaseDate
-    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON)}: ${testResultsDetails.report.releaseDate}`
+    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON)}: ${dateInputValue(
+        testResultsDetails.report.releaseDate
+      )}`
     : t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED);
 
   const testResultStatus = useMemo(() => {

@@ -8,20 +8,21 @@ import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { OrderCreationContext } from 'context/OrderCreationContext';
 
 const CreateEditOrder = ({ isEdit }: { isEdit: boolean }) => {
-  const editableOrderDetails = useAppSelector(ordersSelector.editableOrderDetails);
+  const orderTypes = useAppSelector(ordersSelector.orderTypes);
   const { isEditable } = useAppSelector(ordersSelector.orderDetails);
 
   useEffect(() => {
-    if (editableOrderDetails.length === 0) {
+    if (orderTypes.length === 0) {
       dispatch(ordersMiddleware.getOrderTypes());
     }
-  }, [editableOrderDetails]);
+  }, [orderTypes]);
 
-  useEffect(() => {
-    if (!isEdit) {
-      dispatch(ordersMiddleware.resetOrderTypesSelection());
-    }
-  }, [isEdit]);
+  useEffect(
+    () => () => {
+      dispatch(ordersMiddleware.resetOrderTypesState());
+    },
+    []
+  );
 
   return (
     <Stack>

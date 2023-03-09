@@ -276,7 +276,7 @@ export interface ITestResultItem {
   type: string;
   unit: string;
   result: string;
-  dateReceived: string;
+  dateReceived: Date;
   resultType?: TestResultMeasurementType;
   possibleResultOptions?: IPossibleResultOptions[];
 }

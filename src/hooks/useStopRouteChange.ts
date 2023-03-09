@@ -3,12 +3,12 @@ import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { useRouter } from 'next/router';
 
-const useStopRouteChange = (condition: boolean, action: () => void) => {
+const useStopRouteChange = (condition: boolean, stopOnSubmission: boolean, action: () => void) => {
   const router = useRouter();
 
   useEffect(() => {
     const exitingFunction = () => {
-      if (condition) {
+      if (condition && !stopOnSubmission) {
         router.events.emit('routeChangeError');
         action();
 

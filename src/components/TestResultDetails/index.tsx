@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Box, Button, CircularProgress, Divider, Grid, Link, Typography, useTheme } from '@mui/material';
+import { Box, Button, CircularProgress, Divider, Grid, Link, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
@@ -40,6 +40,7 @@ const TestResultDetails: React.FC = () => {
   const router = useRouter();
   const linkRef = useRef<HTMLAnchorElement | null>(null);
   const { t } = useTranslation();
+  const testResultId = `${router.query.testResultId}`;
 
   const handleAttachmentDownloadClick = async (attachmentId: string) => {
     const blob = await dispatch(resultsMiddleware.downloadTestResultAttachment(attachmentId));
@@ -54,8 +55,6 @@ const TestResultDetails: React.FC = () => {
     }
   };
 
-  const testResultId = `${router.query.testResultId}`;
-
   useEffect(() => {
     if (testResultId) {
       dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
@@ -69,8 +68,8 @@ const TestResultDetails: React.FC = () => {
   ) : (
     testResultsDetails && (
       <>
-        <Typography variant="h4" component="h3">
-          {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_TEST_NAME)}
+        <Typography variant="h3" component="h3">
+          {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_TEST_NAME)} : {testResultsDetails.title}
         </Typography>
         <Grid container spacing={2} mt={margins.top8}>
           <Grid item xs={12} sm={4}>
@@ -144,7 +143,8 @@ const TestResultDetails: React.FC = () => {
               {item.result}
             </Grid>
             <Grid item xs={12} sm={3}>
-              {item.dateReceived}
+              {/* TODO: This is permanent solution it will be updated once we will have timezone functions updates */}
+              {item.dateReceived ? format(new Date(item.dateReceived), 'MMM dd, yyyy') : '-'}
             </Grid>
             <Grid item xs={12} sm={2}>
               {item.resultType}
@@ -170,7 +170,12 @@ const TestResultDetails: React.FC = () => {
                 {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_DOWNLOAD_ATTACHED_FILE)}
               </Button>
               <Link component="a" ref={linkRef} hidden href="#download" />
-              {attachment.title}
+              <Stack direction="column" alignItems="flex-start" ml={margins.left24}>
+                <Typography variant="h5" fontWeight={600}>
+                  {t(Translation.PAGE_ORDER_DETAILS_DOWNLOAD_NOTE)}:
+                </Typography>
+                <Typography>{attachment.note?.length ? attachment.note : 'N/A'}</Typography>
+              </Stack>
             </Box>
           ))}
         <Divider sx={{ my: margins.topBottom24, mx: -margins.leftRight24 }} />
