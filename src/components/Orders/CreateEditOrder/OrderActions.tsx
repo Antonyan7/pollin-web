@@ -40,13 +40,16 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
     }
   }, [needValidation, orderCreationState.step]);
 
-  const isDirtyComment = useMemo(
-    () => defaultCommentValue !== orderDetails.comment,
-    [defaultCommentValue, orderDetails.comment]
-  );
+  const isDirtyComment = useMemo(() => {
+    if (orderDetails.comment) {
+      return defaultCommentValue !== orderDetails.comment;
+    }
+
+    return false;
+  }, [defaultCommentValue, orderDetails.comment]);
 
   const onCancelClick = () => {
-    router.back();
+    router.push(`/patient-emr/details/${patientId}/orders`);
   };
 
   const onNextButtonClick = async () => {
@@ -101,9 +104,10 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
-  const isRouteChangeNotAllowed = needValidation || isValidationHappened || (isDirtyComment && !isCancelModalOpened);
+  const isRouteChangeNotAllowed =
+    (needValidation && atLeastOneSelectedItemExists) || isValidationHappened || isDirtyComment;
 
-  useStopRouteChange(isRouteChangeNotAllowed, submissionProcessed, openCancellationModal);
+  useStopRouteChange(isRouteChangeNotAllowed && !isCancelModalOpened, submissionProcessed, openCancellationModal);
 
   const renderConfirmOrCreateButton = () => {
     if (isEdit) {
