@@ -24,7 +24,7 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
   const orderDetails = useSelector(ordersSelector.orderDetails);
   const [defaultCommentValue] = useState(orderDetails.comment);
   const [isDirtyOrderType, setIsDirtyOrderType] = useState(false);
-  const [isDirtyComment, setIsDirtyComment] = useState(false);
+  const [isValidationHappened, setIsValidationHappened] = useState(false);
   const [submissionProcessed, setSubmissionProcessed] = useState(false);
   const router = useRouter();
   const { id: patientId, orderId } = router.query;
@@ -40,13 +40,10 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
     }
   }, [needValidation, orderCreationState.step]);
 
-  useEffect(() => {
-    if (defaultCommentValue !== orderDetails.comment) {
-      setIsDirtyComment(true);
-    } else {
-      setIsDirtyComment(false);
-    }
-  }, [defaultCommentValue, orderDetails.comment]);
+  const isDirtyComment = useMemo(
+    () => defaultCommentValue !== orderDetails.comment,
+    [defaultCommentValue, orderDetails.comment]
+  );
 
   const onCancelClick = () => {
     router.back();
@@ -58,6 +55,7 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
     if (needValidation) {
       const orderTypesToValidate = resultsHelpers.getValidatedOrderCreationData(editableOrderDetails);
 
+      setIsValidationHappened(true);
       dispatch(ordersMiddleware.validateOrderCreation({ orderTypes: orderTypesToValidate }));
     }
 
@@ -103,10 +101,9 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
 
-  const isRouteChangeAllowed =
-    ((needValidation && atLeastOneSelectedItemExists) || isDirtyComment) && !isCancelModalOpened;
+  const isRouteChangeNotAllowed = needValidation || isValidationHappened || (isDirtyComment && !isCancelModalOpened);
 
-  useStopRouteChange(isRouteChangeAllowed, submissionProcessed, openCancellationModal);
+  useStopRouteChange(isRouteChangeNotAllowed, submissionProcessed, openCancellationModal);
 
   const renderConfirmOrCreateButton = () => {
     if (isEdit) {

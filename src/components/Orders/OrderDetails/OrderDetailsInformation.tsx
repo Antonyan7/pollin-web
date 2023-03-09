@@ -8,6 +8,8 @@ import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
+import { dateInputValue } from '@utils/dateUtils';
+
 const OrderDetailsInformation = ({ isEdit }: { isEdit: boolean }) => {
   const [t] = useTranslation();
   const theme = useTheme();
@@ -53,7 +55,7 @@ const OrderDetailsInformation = ({ isEdit }: { isEdit: boolean }) => {
             <Grid item xs={6}>
               <Stack color={theme.palette.common.black}>{cancellation.reason}</Stack>
               <Stack mt={3} color={theme.palette.common.black}>
-                {cancellation.date}
+                {cancellation.date ? dateInputValue(cancellation.date) : 'N/A'}
               </Stack>
             </Grid>
           </Grid>

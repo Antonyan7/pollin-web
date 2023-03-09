@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import resultsHelpers from '@axios/results/resultsHelpers';
 import GroupItemsList from '@components/Orders/OrderDetails/GroupItemsList';
-import { Button, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { Button, CircularProgress, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { Translation } from 'constants/translations';
@@ -34,39 +34,45 @@ const OrderConfirmation = ({ isEdit }: { isEdit: boolean }) => {
       gap={2}
       borderBottom={`1px solid ${theme.palette.primary.light}`}
     >
-      {pickedOrderTypes.map(({ id: orderTypeId, groups }, index: number) => (
-        <React.Fragment key={orderTypeId}>
-          <Stack
-            p={paddings.all24}
-            direction="row"
-            justifyContent="space-between"
-            borderTop={index !== 0 ? `1px solid ${theme.palette.primary.light}` : 'none'}
-          >
-            <Typography variant="h3" color={theme.palette.common.black}>
-              {orderTypeOptions.find(({ id }) => id === orderTypeId)?.title}
-            </Typography>
-            {(!isEdit || orderDetails.isEditable) && (
-              <Button color="primary" variant="contained" size="medium" onClick={onEditClick(orderTypeId)}>
-                {t(Translation.PAGE_ORDER_DETAILS_BUTTON_EDIT)}
-              </Button>
-            )}
-          </Stack>
-          {groups?.map(({ id, title, groupItems }) => (
-            <Grid p={paddings.all24} container key={id}>
-              <Grid item xs={6}>
-                <Typography variant="h4" color={theme.palette.common.black}>
-                  {title}
-                </Typography>
+      {pickedOrderTypes.length ? (
+        pickedOrderTypes.map(({ id: orderTypeId, groups }, index: number) => (
+          <React.Fragment key={orderTypeId}>
+            <Stack
+              p={paddings.all24}
+              direction="row"
+              justifyContent="space-between"
+              borderTop={index !== 0 ? `1px solid ${theme.palette.primary.light}` : 'none'}
+            >
+              <Typography variant="h3" color={theme.palette.common.black}>
+                {orderTypeOptions.find(({ id }) => id === orderTypeId)?.title}
+              </Typography>
+              {(!isEdit || orderDetails.isEditable) && (
+                <Button color="primary" variant="contained" size="medium" onClick={onEditClick(orderTypeId)}>
+                  {t(Translation.PAGE_ORDER_DETAILS_BUTTON_EDIT)}
+                </Button>
+              )}
+            </Stack>
+            {groups?.map(({ id, title, groupItems }) => (
+              <Grid p={paddings.all24} container key={id}>
+                <Grid item xs={6}>
+                  <Typography variant="h4" color={theme.palette.common.black}>
+                    {title}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Stack width="60%">
+                    <GroupItemsList groupItems={groupItems} />
+                  </Stack>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <Stack width="60%">
-                  <GroupItemsList groupItems={groupItems} />
-                </Stack>
-              </Grid>
-            </Grid>
-          ))}
-        </React.Fragment>
-      ))}
+            ))}
+          </React.Fragment>
+        ))
+      ) : (
+        <Grid display="flex" justifyContent="center" alignItems="center">
+          <CircularProgress />
+        </Grid>
+      )}
     </Stack>
   );
 };
