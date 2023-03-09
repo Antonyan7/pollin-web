@@ -8,7 +8,7 @@ import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
 import { margins, paddings } from 'themes/themeConstants';
 
 const PopperStyle = styled(Popper, { shouldForwardProp })(({ theme }) => ({
-  zIndex: 1100,
+  zIndex: 1305,
   width: '99%',
   top: '-55px',
   padding: `${paddings.topBottom0} ${paddings.leftRight12}`,

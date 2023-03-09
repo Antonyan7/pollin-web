@@ -5,6 +5,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import { CalendarLoading } from '@ui-component/calendar/CalendarLoading';
 import FullCalendarWrapper from '@ui-component/calendar/FullCalendarWrapper';
@@ -95,17 +96,22 @@ const SpecimenCollectionCalendar = () => {
 
   useEffect(() => {
     const calendarEvents: ISpecimenCollectionSlot[] = specimenAppointments.map(
-      ({ startTime, timeUnits, id, color, title }) => ({
-        allDay: false,
-        classNames: ['specimen-slot'],
-        start: startTime,
-        end: calculateEndTime(startTime, timeUnits),
-        title,
-        id,
-        color: color ?? 'transparent',
-        textColor: 'black',
-        ...(!color ? { borderColor: 'black' } : {})
-      })
+      ({ startTime, timeUnits, id, color, title, status, isEditable }) => {
+        const classNames =
+          !isEditable || status === AppointmentStatus.Done ? ['specimen-slot', 'fc-non-clickable'] : ['specimen-slot'];
+
+        return {
+          allDay: false,
+          classNames,
+          start: startTime,
+          end: calculateEndTime(startTime, timeUnits),
+          title,
+          id,
+          color: color ?? 'transparent',
+          textColor: 'black',
+          ...(!color ? { borderColor: 'black' } : {})
+        };
+      }
     );
 
     setSlots(calendarEvents);

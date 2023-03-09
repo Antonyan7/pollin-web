@@ -1,6 +1,5 @@
 import React from 'react';
 import { ISpecimenCollectionSlot } from '@components/SpecimenCollection/SpecimenCollectionCalendar/SpecimenCollectionCalendarTypes';
-import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
@@ -23,10 +22,6 @@ interface Props {
 const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarDate }: Props) => {
   const { timeZone } = useAppSelector(coreSelector.clinicConfigs);
 
-  const onRangeSelect: CalendarOptions['select'] = () => {
-    // TODO: open modal
-  };
-
   const onEventClick = useOnSpecimenCollectionEventClick();
 
   return (
@@ -35,7 +30,6 @@ const SpecimenCollectionFullCalendarContainer = ({ slots, calendarRef, calendarD
       timeZone={timeZone}
       events={slots}
       ref={calendarRef}
-      select={() => onRangeSelect}
       eventClick={onEventClick as () => void}
       initialDate={calendarDate}
       plugins={[listPlugin, dayGridPlugin, timelinePlugin, timeGridPlugin, interactionPlugin]}

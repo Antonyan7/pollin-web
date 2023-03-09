@@ -30,7 +30,7 @@ const useOnSpecimenCollectionEventClick = () => {
 
       const { id } = initialEventObject.event;
       const targetSpecimenAppointment = specimenAppointments.find(
-        (specimentAppointment) => specimentAppointment.id === id
+        (specimenAppointment) => specimenAppointment.id === id
       );
 
       if (targetSpecimenAppointment?.id) {

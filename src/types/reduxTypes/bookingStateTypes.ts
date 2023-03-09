@@ -151,5 +151,11 @@ export interface ISpecimenAppointmentsState {
 
 export enum AppointmentStatus {
   Booked = 'Booked',
-  InProgress = 'InProgress'
+  InProgress = 'InProgress',
+  Cancelled = 'Cancelled',
+  CheckedIn = 'CheckedIn',
+  Confirmed = 'Confirmed',
+  NoShow = 'NoShow',
+  Done = 'Done',
+  RunningLate = 'RunningLate'
 }

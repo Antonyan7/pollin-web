@@ -1,6 +1,7 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
 import {
+  AppointmentStatus,
   IAppointment,
   ICancelStatusItem,
   IGroupedServiceProvider,
@@ -195,6 +196,7 @@ export interface IProvidersCollectionCalendarAppointment {
   title: string;
   isEditable: boolean;
   color?: string;
+  status?: AppointmentStatus;
 }
 
 export interface IGetProvidersCollectionCalendarAppointments {
