@@ -8,15 +8,14 @@ import { format } from 'date-fns';
 import { findStatusByID } from 'helpers/tasks';
 import { margins, paddings } from 'themes/themeConstants';
 
-import { convertToLocale, getCurrentDate, getDate } from '@utils/dateUtils';
+import { convertToLocale } from '@utils/dateUtils';
 
 const Body = () => {
   const [t] = useTranslation();
   const taskDetails = useAppSelector(tasksSelector.taskDetails);
   const taskStatuses = useAppSelector(tasksSelector.tasksStatusList);
   const status = findStatusByID(taskDetails.statusId, taskStatuses);
-  const currentDay = getCurrentDate();
-  const isOverdue = getDate(taskDetails.dueDate) < getDate(currentDay);
+  const isOverdue = new Date(taskDetails.dueDate).valueOf() < new Date().valueOf();
 
   return (
     <Grid container spacing={1} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'scroll' }}>
