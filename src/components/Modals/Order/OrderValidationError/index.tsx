@@ -22,7 +22,17 @@ const OrderValidationErrorModal = ({ title, html }: OrderValidationErrorModalPro
   const onClose = useCallback(() => dispatch(viewsMiddleware.closeModal(ModalName.OrderValidationErrorModal)), []);
 
   return (
-    <BaseModal isLoading={false} title={title} onClose={onClose}>
+    <BaseModal
+      isLoading={false}
+      title={title}
+      onClose={onClose}
+      hideCloseIcon
+      sx={{
+        '& MuiIconButton-root': {
+          display: 'none'
+        }
+      }}
+    >
       <Grid>
         <DialogContent sx={{ p: paddings.all8 }}>
           <Stack width="500px" color={theme.palette.common.black}>

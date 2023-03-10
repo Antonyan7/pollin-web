@@ -9005,13 +9005,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.keyby@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "lodash.keyby@npm:4.6.0"
-  checksum: 9dd96cc8b83e05a71dc328f8e489056105bc84b57b4d7f8155d6bf5744dcdb0a5534acdf6e4e89e5ddf71f2bc6b93969b12c6da09d69fdf3b1cca65a8ed61e2b
-  languageName: node
-  linkType: hard
-
 "lodash.keys@npm:^4.0.8":
   version: 4.2.0
   resolution: "lodash.keys@npm:4.2.0"
@@ -9051,13 +9044,6 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
-  languageName: node
-  linkType: hard
-
-"lodash.values@npm:^4.3.0":
-  version: 4.3.0
-  resolution: "lodash.values@npm:4.3.0"
-  checksum: 857e122ddf6edb50137887f0b834d471f96d66692ebb5de8b048ed277c8a3dd1bc8f85d82cf31b0f5c6dbc5b72c036a591205f76eec86bb11818a1a6f7e5a28c
   languageName: node
   linkType: hard
 
@@ -10563,10 +10549,7 @@ __metadata:
     lint-staged: ^13.1.2
     lodash.chunk: ^4.2.0
     lodash.debounce: ^4.0.8
-    lodash.keyby: ^4.6.0
-    lodash.merge: ^4.6.2
     lodash.throttle: ^4.1.1
-    lodash.values: ^4.3.0
     material-ui-popup-state: ^4.1.0
     next: 12.3.4
     next-compose-plugins: ^2.2.1
@@ -12338,11 +12321,11 @@ __metadata:
 
 "typescript@patch:typescript@4.9.5#~builtin<compat/typescript>":
   version: 4.9.5
-  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=ad5954"
+  resolution: "typescript@patch:typescript@npm%3A4.9.5#~builtin<compat/typescript>::version=4.9.5&hash=d73830"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 8f6260acc86b56bfdda6004bc53f32ea548f543e8baef7071c8e34d29d292f3e375c8416556c8de10b24deef6933cd1c16a8233dc84a3dd43a13a13265d0faab
+  checksum: 2eee5c37cad4390385db5db5a8e81470e42e8f1401b0358d7390095d6f681b410f2c4a0c496c6ff9ebd775423c7785cdace7bcdad76c7bee283df3d9718c0f20
   languageName: node
   linkType: hard
 

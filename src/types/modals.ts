@@ -6,6 +6,7 @@ export interface DialogTitleProps {
   id: string;
   dataCy?: string;
   children?: React.ReactNode;
+  hideCloseIcon?: boolean;
   sx?: SxProps<Theme>;
   onClose: () => void;
 }

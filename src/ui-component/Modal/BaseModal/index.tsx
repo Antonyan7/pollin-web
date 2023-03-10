@@ -14,6 +14,7 @@ export interface BaseModalProps {
   dataCy?: string;
   disableDivider?: boolean;
   titleSx?: SxProps;
+  hideCloseIcon?: boolean;
   sx?: SxProps<Theme>;
 }
 
@@ -27,6 +28,7 @@ const BaseModal = ({
   dataCy,
   disableDivider,
   titleSx,
+  hideCloseIcon,
   sx
 }: BaseModalProps) => {
   const id = useId();
@@ -40,6 +42,7 @@ const BaseModal = ({
         {...(titleSx && {
           sx: titleSx
         })}
+        hideCloseIcon={hideCloseIcon}
         sx={sx}
       >
         {title}
