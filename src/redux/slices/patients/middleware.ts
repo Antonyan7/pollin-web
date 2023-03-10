@@ -16,7 +16,7 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch, RootState } from 'redux/store';
-import { IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
+import { CustomAlerts, IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
   GroupedFiltersOption,
@@ -74,6 +74,7 @@ const {
   setPatientAppointmentsRequestStatus,
   setPatientAlertViewState,
   setPatientAlertDetailsLoading,
+  setIsPatientCustomAlertCreated,
   setGeneralHealth,
   setIsGeneralHealthLoading,
   setIsEditButtonClicked,
@@ -169,6 +170,35 @@ const getPatientAlertDetails = (alertId: string, abortSignal?: AbortSignal) => a
     dispatch(setPatientAlertDetailsLoading(false));
   }
 };
+
+const createPatientAlert = (patientId: string, alert: CustomAlerts) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientCustomAlertCreated(true));
+
+    const response = await API.patients.createPatientAlert(patientId, alert);
+
+    dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
+  } catch (error) {
+    dispatch(setPatientAlertDetails([]));
+  } finally {
+    dispatch(setIsPatientCustomAlertCreated(false));
+  }
+};
+
+const editPatientAlert = (patientId: string, alert: CustomAlerts) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientCustomAlertCreated(true));
+
+    const response = await API.patients.editPatientAlert(patientId, alert);
+
+    dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
+  } catch (error) {
+    dispatch(setPatientAlertDetails([]));
+  } finally {
+    dispatch(setIsPatientCustomAlertCreated(false));
+  }
+};
+
 const resetPatientAlerts = () => (dispatch: AppDispatch) => {
   dispatch(setPatientAlertDetails([]));
 };
@@ -717,6 +747,8 @@ export default {
   getPatientProfileOverview,
   setEncountersLoadingState,
   resetAppointmentsList,
+  createPatientAlert,
+  editPatientAlert,
   getEncounterList,
   getPatientRecentAppointments,
   setEncounterSearch,

@@ -1,4 +1,7 @@
 import React from 'react';
+import AddOrEditCustomAlertModal, {
+  AddOrEditCustomAlertModalProps
+} from '@components/Modals/Alerts/AddOrEditCustomAlert';
 import AddAppointmentDuplicatePatientModal, {
   AddAppointmentDuplicatePatientModalProps
 } from '@components/Modals/Booking/AddAppointmentDuplicatePatientModal';
@@ -188,6 +191,12 @@ const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmati
 
 const getVerifyPatientPhotoModal = () => <VerifyPatientPhotoModal />;
 const getImageModal = (modal: IOpenedModal<ImageModalProps>) => <ImageModal key={modal.name} {...modal.props} />;
+
+// Alerts
+const getAddOrEditCustomAlertModal = (modal: IOpenedModal<AddOrEditCustomAlertModalProps>) => (
+  <AddOrEditCustomAlertModal key={modal.name} {...modal.props} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -273,11 +282,13 @@ export const ModalsController = () => {
             return getTaskStatusUpdateModal(modal);
           case ModalName.ReassignTaskModal:
             return getReassignTaskModal(modal);
-
           case ModalName.VerifyPatientPhotoModal:
             return getVerifyPatientPhotoModal();
           case ModalName.ImageModal:
             return getImageModal(modal);
+          // Alerts
+          case ModalName.AddOrEditCustomAlertModal:
+            return getAddOrEditCustomAlertModal(modal);
 
           // dev
           case ModalName.DevToolsModal:

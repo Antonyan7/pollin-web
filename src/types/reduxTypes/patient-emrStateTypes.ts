@@ -55,6 +55,7 @@ export interface PatientEmrProps {
   selectedEncountersFilters: IEncountersFilterOption[];
   encounters: IEncountersProps;
   recentAppointments: IPatientRecentAppointment[] | null;
+  isPatientCustomAlertCreated: boolean;
   isRecentAppointmentsLoading: boolean;
   isPatientProfileLoading: boolean;
   isPatientsListLoading: boolean;
@@ -207,8 +208,13 @@ export interface AlertDetailsMessagesProps {
 }
 
 export interface AlertDetailsProps {
-  id: string;
   title: string;
+  id?: string;
+  isEditable: boolean;
+  createdBy?: {
+    name: string;
+    date: string;
+  };
   messages: AlertDetailsMessagesProps[];
 }
 

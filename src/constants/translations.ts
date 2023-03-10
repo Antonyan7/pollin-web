@@ -440,6 +440,9 @@ export enum Translation {
   COMMON_BUTTON_CANCEL_LABEL = 'common.button.cancel.label',
   COMMON_BUTTON_CLOSE_LABEL = 'common.button.close.label',
   COMMON_BUTTON_CONFIRM_LABEL = 'common.button.confirm.label',
+  COMMON_BUTTON_SAVE_LABEL = 'common.button.save.label',
+  COMMON_BUTTON_EDIT_LABEL = 'common.button.edit.label',
+  COMMON_BUTTON_DELETE_LABEL = 'common.button.delete.label',
   COMMON_MODAL_HEADER_CANCEL_CONFIRMATION = 'common.modal.header.cancel.confirmation',
   COMMON_TABLE_NO_RESULTS_FOUND = 'common.table.no.results.found',
   PAGE_IN_HOUSE_RESULTS_TEST_CANCEL_MODAL_BODY1 = 'page.in.house.results.test.cancel.modal.body1',
@@ -591,7 +594,11 @@ export enum Translation {
   MODAL_VERIFY_PATIENT_PHOTO_ID = 'modal.verify.patient.photo.id',
   MODAL_VERIFY_PATIENT_PHOTO_DATE = 'modal.verify.patient.photo.date',
   MODAL_VERIFY_PATIENT_PHOTO_REJECT = 'modal.verify.patient.photo.reject',
-  MODAL_VERIFY_PATIENT_PHOTO_APPROVE = 'modal.verify.patient.photo.approve'
+  MODAL_VERIFY_PATIENT_PHOTO_APPROVE = 'modal.verify.patient.photo.approve',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_TITLE = 'modal.add.or.edit.patient.alert.title',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_EDIT_TITLE = 'modal.add.or.edit.patient.alert.edit.title',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD = 'modal.add.or.edit.patient.alert.field',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION = 'modal.add.or.edit.patient.alert.description'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

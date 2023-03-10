@@ -186,7 +186,7 @@ export interface IUpdateEncounterNoteRequest {
   content: string;
 }
 
-export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest { }
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];

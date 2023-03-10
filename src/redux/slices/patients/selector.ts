@@ -11,6 +11,7 @@ const patientsErrors = createSelector([selector], (state) => state.error);
 const filtersList = createSelector([selector], (state) => state.patientsList.searchFilters);
 const patientAlertDetails = createSelector([selector], (state) => state.patientsList.patientAlertDetails);
 const encountersList = createSelector([selector], (state) => state.encounters.list);
+const isPatientCustomAlertCreated = createSelector([selector], (state) => state.isPatientCustomAlertCreated);
 const isEncountersListLoading = createSelector([selector], (state) => state.isEncountersListLoading);
 const encountersTypes = createSelector([selector], (state) => state.encounters.types);
 const recentAppointments = createSelector([selector], (state) => state.recentAppointments);
@@ -128,6 +129,7 @@ export default {
   patientsErrors,
   filtersList,
   patientAlertDetails,
+  isPatientCustomAlertCreated,
   isPatientAlertViewOpen,
   encountersList,
   encounterFilters,

@@ -34,6 +34,7 @@ export const getInitialState = (): PatientEmrProps => ({
     currentPatientId: '',
     currentEncounterId: ''
   },
+  isPatientCustomAlertCreated: false,
   isPatientsListLoading: false,
   isPatientProfileLoading: false,
   isEncountersListLoading: false,

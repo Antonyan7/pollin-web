@@ -438,6 +438,9 @@
   "common.button.cancel.label": "Cancel",
   "common.button.close.label": "Close",
   "common.button.confirm.label": "Confirm",
+  "common.button.save.label": "Save",
+  "common.button.edit.label": "Edit",
+  "common.button.delete.label": "Delete",
   "common.modal.header.cancel.confirmation": "Cancel Confirmation",
   "common.table.no.results.found": "No results found",
   "page.in.house.results.test.cancel.modal.body1": "Are you sure you want to cancel?",
@@ -589,5 +592,9 @@
   "modal.verify.patient.photo.id": "Patient ID",
   "modal.verify.patient.photo.date": "Patient Date of Birth",
   "modal.verify.patient.photo.reject": "Reject Photo",
-  "modal.verify.patient.photo.approve": "Approve Photo"
+  "modal.verify.patient.photo.approve": "Approve Photo",
+  "modal.add.or.edit.patient.alert.title": "Add Patient Alert",
+  "modal.add.or.edit.patient.alert.edit.title": "Edit Patient Alert",
+  "modal.add.or.edit.patient.alert.field": "Alert Title",
+  "modal.add.or.edit.patient.alert.description": "Alert Description"
 }

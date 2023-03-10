@@ -30,7 +30,7 @@ import {
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmrTypes';
-import { IEncountersReqBody, IPatientsReqBody } from 'types/patient';
+import { CustomAlerts, IEncountersReqBody, IPatientsReqBody } from 'types/patient';
 import { IEncounterDetailsResponse, ILatestTestResult } from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
@@ -45,6 +45,24 @@ const patientEmrManager = {
       {
         params: { patientId },
         signal
+      }
+    );
+  },
+  createPatientAlert(patientId: string, alert: CustomAlerts) {
+    return axiosInstance.post<IAlertDetailsResponse, IAxiosResponse<IAlertDetailsResponse>>(
+      `${baseURL}/v1/patients/custom-alerts`,
+      {
+        patientId,
+        alert
+      }
+    );
+  },
+  editPatientAlert(patientId: string, alert: CustomAlerts) {
+    return axiosInstance.put<IAlertDetailsResponse, IAxiosResponse<IAlertDetailsResponse>>(
+      `${baseURL}/v1/patients/custom-alerts`,
+      {
+        patientId,
+        alert
       }
     );
   },

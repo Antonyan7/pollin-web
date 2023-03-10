@@ -94,6 +94,9 @@ const reducers = createReducer({
   setIsRecentAppointmentsLoading(state, action: IAction<boolean>) {
     state.isRecentAppointmentsLoading = action.payload;
   },
+  setIsPatientCustomAlertCreated(state, action: IAction<boolean>) {
+    state.isPatientCustomAlertCreated = action.payload;
+  },
   setIsVerifyPatientProfilePhotoLoading(state, action: IAction<boolean>) {
     state.setIsVerifyPatientProfilePhotoLoading = action.payload;
   },

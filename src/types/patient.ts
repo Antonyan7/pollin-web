@@ -22,6 +22,11 @@ interface AlertInfo {
     title: string;
   };
 }
+export interface CustomAlerts {
+  id?: string;
+  title: string;
+  description: string;
+}
 
 export enum SortOrder {
   Asc = 'asc',
