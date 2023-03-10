@@ -26,6 +26,8 @@ import { v4 } from 'uuid';
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 import { getFileExtension } from '@utils/stringUtils';
 
+const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID, NEXT_PUBLIC_ENVIRONMENT } = getEnvironmentVariables();
+
 export interface WindowWithCypress extends Window {
   cypressEmailsPassSingIn: Function;
 }
@@ -43,8 +45,6 @@ export class FirebaseManager {
 
   private static initializeAuth() {
     this.auth = getAuth(this.app);
-
-    const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID, NEXT_PUBLIC_ENVIRONMENT } = getEnvironmentVariables();
 
     this.auth.tenantId = NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID;
 
@@ -182,9 +182,10 @@ export class FirebaseManager {
 
   static async getIdToken(): Promise<string> {
     let idToken = '';
+    const apps = getApps();
 
-    if (!FirebaseManager.appCheck) {
-      Sentry.captureException('App check not initiated');
+    if (!apps.length) {
+      Sentry.captureException('Firebase client SDK not initiated, no Firebase apps');
 
       return '';
     }

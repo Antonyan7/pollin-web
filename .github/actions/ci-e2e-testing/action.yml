@@ -44,6 +44,9 @@ runs:
     - name: Setup and launch backend data seeds Docker
       run: |
         echo "::group::Setup backend data seeds"
+        # Clear BE code folder
+        rm -rf ./data-seeds/backend-testing-dist && mkdir ./data-seeds/backend-testing-dist
+
         # Download recent backend build code from the google cloud storage
         gsutil cp -r gs://${{ env.backend_builds_bucket_id }}/latest ./data-seeds/backend-testing-dist
 
@@ -52,7 +55,7 @@ runs:
         echo "::endgroup::"
 
         echo "::group::Run backend with data seeds"
-        sudo docker compose -f ./data-seeds/docker-compose.yaml up --detach
+        sudo docker compose -f ./data-seeds/docker-compose.yaml up --detach --force-recreate
         echo "::endgroup::"
       shell: bash
 
