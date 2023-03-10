@@ -2,7 +2,9 @@ import API from '@axios/API';
 import bookingHelpers from '@axios/booking/bookingHelpers';
 import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import {
+  AddManuallyAddressModalProps,
   ICreateEncounterAddendumRequest,
+  IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
   TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -82,7 +84,10 @@ const {
   setIsFertilityHistoryLoading,
   setMedicalPatientContactInformation,
   setIsMedicalPatientContactInformationLoading,
-  setIsContactInformationEditButtonClicked
+  setIsContactInformationEditButtonClicked,
+  setManuallyAddressForMailing,
+  setManuallyAddressForPrimary,
+  setIsContactInformationUpdateLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -604,6 +609,14 @@ const changeContactInformationEditButtonState = () => async (dispatch: AppDispat
   dispatch(setIsContactInformationEditButtonClicked(!editButtonState));
 };
 
+const changeManuallyAddressForPrimary = (address: AddManuallyAddressModalProps) => async (dispatch: AppDispatch) => {
+  dispatch(setManuallyAddressForPrimary(address));
+};
+
+const changeManuallyAddressForMailing = (address: AddManuallyAddressModalProps) => async (dispatch: AppDispatch) => {
+  dispatch(setManuallyAddressForMailing(address));
+};
+
 const getMedicalContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsMedicalPatientContactInformationLoading(true));
 
@@ -660,6 +673,41 @@ const updateGeneralHealthData =
     dispatch(setIsGeneralHealthDataUpdating(false));
   };
 
+const updatePatientContactInformation =
+  (patientId: string, contactData: IPatientContactInformationProps) => async (dispatch: AppDispatch) => {
+    dispatch(setIsContactInformationUpdateLoading(true));
+
+    try {
+      const respone = await API.patients.updatePatientContactInformation(patientId, contactData);
+
+      if (respone) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_TOAST_MESSAGE)
+            }
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // change when error message will be ready.
+          }
+        })
+      );
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+
+    dispatch(setIsContactInformationUpdateLoading(false));
+  };
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -702,5 +750,8 @@ export default {
   updateGeneralHealthData,
   getFertilityHistory,
   changeContactInformationEditButtonState,
-  getMedicalContactInformation
+  getMedicalContactInformation,
+  changeManuallyAddressForPrimary,
+  changeManuallyAddressForMailing,
+  updatePatientContactInformation
 };

@@ -1,5 +1,6 @@
-import { array, number, object, string } from 'yup';
+import { array, boolean, number, object, string } from 'yup';
 
+import { ContactInformationFormFields } from '../Contact/PatientContactInformation/edit/types/index';
 import { GeneralHealthFormFields } from '../Contact/PatientGeneralHealth/edit/types';
 
 export const patientGeneralHealthValidationSchema = object({
@@ -69,5 +70,40 @@ export const patientGeneralHealthValidationSchema = object({
   }),
   [GeneralHealthFormFields.AdditionalInformation]: object({
     value: string().notRequired()
+  })
+});
+
+export const patientContactInformationValidationSchema = object({
+  [ContactInformationFormFields.PatientName]: object({
+    firstName: string().required(),
+    lastName: string().required(),
+    middleName: string().notRequired()
+  }),
+  [ContactInformationFormFields.PreferredName]: object({
+    value: string().required()
+  }),
+  [ContactInformationFormFields.Contribution]: object({
+    value: string().required()
+  }),
+  [ContactInformationFormFields.PrimaryAddress]: object({
+    streetAddress: string().required(),
+    unitNumber: string().notRequired()
+  }),
+  [ContactInformationFormFields.MailingAddress]: object({
+    streetAddress: string().required(),
+    unitNumber: string().notRequired()
+  }),
+  [ContactInformationFormFields.OHIP]: object({
+    exists: boolean(),
+    number: string().when('exists', {
+      is: true,
+      then: string().required(),
+      otherwise: string().notRequired()
+    }),
+    versionCode: string().when('exists', {
+      is: true,
+      then: string().required(),
+      otherwise: string().notRequired()
+    })
   })
 });

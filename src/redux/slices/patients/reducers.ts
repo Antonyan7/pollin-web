@@ -1,5 +1,6 @@
 import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
+  AddManuallyAddressModalProps,
   IEncounterDetailsProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
@@ -230,6 +231,15 @@ const reducers = createReducer({
   },
   setIsContactInformationEditButtonClicked(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isContactInformationEditButtonClicked = action.payload;
+  },
+  setManuallyAddressForPrimary(state, action: IAction<AddManuallyAddressModalProps>) {
+    state.medicalBackground.contact.manuallyAddressForPrimary = action.payload;
+  },
+  setManuallyAddressForMailing(state, action: IAction<AddManuallyAddressModalProps>) {
+    state.medicalBackground.contact.manuallyAddressForMailing = action.payload;
+  },
+  setIsContactInformationUpdateLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.isContactInformationDataUpdating = action.payload;
   }
 });
 

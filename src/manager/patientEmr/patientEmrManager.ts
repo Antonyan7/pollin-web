@@ -14,6 +14,7 @@ import {
   IGetPatientsRequestBody,
   IGetPatientsResponse,
   IMedicalContactInformation,
+  IPatientContactInformationProps,
   IPatientContactInformationResponse,
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
@@ -195,6 +196,14 @@ const patientEmrManager = {
   getPatientContactInformation(patientId: string) {
     return axiosInstance.get<IMedicalContactInformation, IAxiosResponse<IMedicalContactInformation>>(
       `${baseURL}/v1/medical-background/${patientId}/contact-information`
+    );
+  },
+  updatePatientContactInformation(patientId: string, data: IPatientContactInformationProps) {
+    return axiosInstance.put<IMedicalContactInformation, IAxiosResponse<IMedicalContactInformation>>(
+      `${baseURL}/v1/medical-background/${patientId}/contact-information`,
+      {
+        contactInformation: data
+      }
     );
   }
 };

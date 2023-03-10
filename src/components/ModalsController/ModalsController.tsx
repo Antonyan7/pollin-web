@@ -16,6 +16,7 @@ import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
 import ImageModal, { ImageModalProps } from '@components/Modals/ImageModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
+import AddAddressManually, { AddAddressManuallyProps } from '@components/Modals/MedicalBackground/AddAddressManually';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import OrderValidationErrorModal, {
@@ -67,6 +68,7 @@ import {
   IPatientContactInformationModalProps
 } from 'types/reduxTypes/resultsStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
+import { v4 } from 'uuid';
 
 // <BOOKING>
 // appointments
@@ -99,6 +101,9 @@ const getScheduleTemplatesErrorModal = (modal: IOpenedModal<ScheduleTemplatesErr
 // encounters
 const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesErrorModalProps>) => (
   <EncountersCancelChangesModal key={modal.name} />
+);
+const getAddAddressManuallyModal = (modal: IOpenedModal<AddAddressManuallyProps>) => (
+  <AddAddressManually key={v4()} {...modal.props} />
 );
 // <EXTERNAL RESULTS>
 const getExternalResultsPatientInformationModal = (modal: IOpenedModal<IPatientContactInformationModalProps>) => (
@@ -133,7 +138,7 @@ const getPatientTestResultsModal = (modal: IOpenedModal<Record<string, never>>) 
   <PatientTestResultsModal key={modal.name} />
 );
 
-const getInHouseTestResultsModal = () => <InHouseInputResultsModal />;
+const getInHouseTestResultsModal = () => <InHouseInputResultsModal key={v4()} />;
 const getHandoffConfirmationModal = (modal: IOpenedModal<HandoffConfirmationModalProps>) => (
   <HandoffConfirmation key={modal.name} {...modal.props} />
 );
@@ -160,13 +165,13 @@ const getMoveToAnotherTransport = (modal: IOpenedModal<MoveToAnotherTransportPro
   <MoveToAnotherTransport key={modal.name} {...modal.props} />
 );
 
-const getTaskCreateModal = () => <CreateTaskModal />;
+const getTaskCreateModal = () => <CreateTaskModal key={v4()} />;
 
 // Patient Partner confirmation (Are you want to go to profile partners profile)
-const getOrderCreationCancelModal = () => <CancelOrderCreationModal />;
+const getOrderCreationCancelModal = () => <CancelOrderCreationModal key={v4()} />;
 
 // Error modal
-const getErrorModal = () => <ErrorModal />;
+const getErrorModal = () => <ErrorModal key={v4()} />;
 
 // Task Management
 const getTaskDetailsModal = (modal: IOpenedModal<TaskDetailsModalProps>) => (
@@ -184,7 +189,7 @@ const getTaskStatusUpdateModal = (modal: IOpenedModal<TestResultReviewConfirmati
 const getVerifyPatientPhotoModal = () => <VerifyPatientPhotoModal />;
 const getImageModal = (modal: IOpenedModal<ImageModalProps>) => <ImageModal key={modal.name} {...modal.props} />;
 // dev
-const getDevToolsModal = () => <DevToolsModal />;
+const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
 export const ModalsController = () => {
   const modals = useAppSelector(viewsSelector.modals);
@@ -213,9 +218,10 @@ export const ModalsController = () => {
           case ModalName.ScheduleTemplatesErrorModal:
             return getScheduleTemplatesErrorModal(modal);
           // <PATIENT EMR>
-          // encounters
           case ModalName.EncountersCancelChangesModal:
             return getEncountersCancelChangesModal(modal);
+          case ModalName.AddAddressManually:
+            return getAddAddressManuallyModal(modal);
           // <EXTERNAL RESULTS>
           case ModalName.PatientContactInformation:
             return getExternalResultsPatientInformationModal(modal);

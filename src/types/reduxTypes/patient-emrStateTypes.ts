@@ -6,6 +6,7 @@ import {
   PatientAppointmentsFilterOption
 } from '@axios/booking/managerBookingTypes';
 import {
+  AddManuallyAddressModalProps,
   IEncounterDetailsProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
@@ -32,11 +33,14 @@ export interface MedicalBackgroundProps {
   contact: {
     generalHealth: IGeneralHealthProps | null;
     patientContactInformation: IPatientContactInformationProps | null;
+    manuallyAddressForPrimary: AddManuallyAddressModalProps | null;
+    manuallyAddressForMailing: AddManuallyAddressModalProps | null;
     isContactInformationLoading: boolean;
     isContactInformationEditButtonClicked: boolean;
     isGeneralHealthLoading: boolean;
     isGeneralHealthEditButtonClicked: boolean;
     isGeneralHealthDataUpdating: boolean;
+    isContactInformationDataUpdating: boolean;
   };
   medicalHistory: {
     fertilityHistory: IFertilityHistoryProps | null;

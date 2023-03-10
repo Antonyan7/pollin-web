@@ -186,7 +186,7 @@ export interface IUpdateEncounterNoteRequest {
   content: string;
 }
 
-export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest { }
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];
@@ -471,6 +471,7 @@ export interface PhoneNumberProps extends MedicalBackgroundFieldValues {
 }
 
 export interface OHIPProps extends MedicalBackgroundFieldValues {
+  exists: boolean;
   number: string;
   versionCode: string;
 }
@@ -494,4 +495,12 @@ export interface IPatientContactInformationProps {
 
 export interface IMedicalContactInformation {
   contactInformation: IPatientContactInformationProps;
+}
+export interface AddManuallyAddressModalProps {
+  streetAddress: string;
+  unitNumber: string;
+  province: string;
+  postalCode: string;
+  city: string;
+  country: string;
 }

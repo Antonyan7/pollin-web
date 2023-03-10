@@ -96,6 +96,14 @@ const isGeneralHealthDataUpdating = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.isGeneralHealthDataUpdating
 );
+const manuallyAddressForPrimary = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.manuallyAddressForPrimary
+);
+const manuallyAddressForMailing = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.manuallyAddressForMailing
+);
 
 /* Medical History */
 const fertilityHistory = createSelector([selector], (state) => state.medicalBackground.medicalHistory.fertilityHistory);
@@ -167,5 +175,7 @@ export default {
   isFertilityHistoryLoading,
   isContactInformationButtonClicked,
   isContactInformationLoading,
-  contactInformation
+  contactInformation,
+  manuallyAddressForMailing,
+  manuallyAddressForPrimary
 };

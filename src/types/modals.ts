@@ -46,7 +46,8 @@ export enum ModalName {
   ReassignTaskModal = 'ReassignTaskModal',
   PatientTestResultDetailsModal = 'PatientTestResultDetailsModal',
   VerifyPatientPhotoModal = 'VerifyPatientPhotoModal',
-  ImageModal = 'ImageModal'
+  ImageModal = 'ImageModal',
+  AddAddressManually = 'AddAddressManually'
 }
 
 export enum OpenModalReason {
