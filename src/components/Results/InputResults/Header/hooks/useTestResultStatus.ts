@@ -4,52 +4,52 @@ import { useTranslation } from 'react-i18next';
 import { useAppSelector } from '@redux/hooks';
 import { resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
+import { UnitResultType } from 'types/reduxTypes/resultsStateTypes';
 import { FinalResultChipColor } from 'types/results';
 
 const useTestResultStatusData = (currentFormFieldName: string) => {
   const { control } = useFormContext();
   const measurement = useWatch({ name: currentFormFieldName, control });
+
   const [t] = useTranslation();
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
-  const initialResultValue = t(Translation.MODAL_EXTERNAL_RESULTS_RESULT_TEXT);
+  const initialResultValue = t(Translation.PAGE_INPUT_EXTERNAL_RESULTS_RESULT_TEXT);
 
   return useMemo(() => {
     if (!isTestResultsDetailsLoading && measurement?.items?.length > 0) {
       // Optional used here because during page refresh we can have case when we wait form default data which comes from API
-      const allElementsWithNormalStatus = measurement?.items.map((item: { resultType: TestResultMeasurementType }) => {
-        // Here we are setting falsy value for the cases when nothing was returned from API
-        if (!item.resultType) {
-          return 0;
+      let finalTestResultType = '';
+
+      measurement?.items.forEach(({ resultType }: { resultType: UnitResultType }) => {
+        if (finalTestResultType === UnitResultType.TestNotComplete) {
+          return;
         }
 
-        // If Result type will be something different from normal we will get falsy value
-        return item.resultType === TestResultMeasurementType.Normal;
+        if (resultType !== UnitResultType.Abnormal && resultType !== UnitResultType.Normal) {
+          finalTestResultType = UnitResultType.TestNotComplete;
+        } else if (resultType === UnitResultType.Abnormal || finalTestResultType === UnitResultType.Abnormal) {
+          finalTestResultType = UnitResultType.Abnormal;
+        } else {
+          finalTestResultType = UnitResultType.Normal;
+        }
       });
 
-      const allTestResultsStatusesAreEmpty = allElementsWithNormalStatus?.every(
-        (elementStatus: boolean | number) => elementStatus === 0
-      );
-      const allTestResultStatusesFilledAsNormal = allElementsWithNormalStatus?.every(
-        (elementStatus: boolean | number) => elementStatus === true
-      );
-
-      if (allTestResultsStatusesAreEmpty) {
+      if (finalTestResultType === UnitResultType.TestNotComplete) {
         return {
           testResultStatusLabel: initialResultValue,
           testResultStatusColor: FinalResultChipColor.Initial
         };
       }
 
-      if (allTestResultStatusesFilledAsNormal) {
+      if (finalTestResultType === UnitResultType.Normal) {
         return {
-          testResultStatusLabel: TestResultMeasurementType.Normal,
+          testResultStatusLabel: UnitResultType.Normal,
           testResultStatusColor: FinalResultChipColor.Normal
         };
       }
 
       return {
-        testResultStatusLabel: TestResultMeasurementType.Abnormal,
+        testResultStatusLabel: UnitResultType.Abnormal,
         testResultStatusColor: FinalResultChipColor.Abnormal
       };
     }

@@ -242,11 +242,18 @@ export interface IObjectWithId {
   id: string;
 }
 
-export enum TestResultMeasurementType {
+export enum FinalResultType {
+  Normal = 'Normal',
+  Abnormal = 'Abnormal',
+  TestNotComplete = 'Test not complete'
+}
+
+export enum UnitResultType {
   Normal = 'Normal',
   Abnormal = 'Abnormal',
   Inconclusive = 'Inconclusive',
-  Retest = 'Retest'
+  Indeterminate = 'Indeterminate',
+  TestNotComplete = 'Test not complete'
 }
 
 // TODO: refactor this
@@ -277,7 +284,7 @@ export interface ITestResultItem {
   unit: string;
   result: string;
   dateReceived: Date;
-  resultType?: TestResultMeasurementType;
+  resultType?: FinalResultType | UnitResultType;
   possibleResultOptions?: IPossibleResultOptions[];
 }
 

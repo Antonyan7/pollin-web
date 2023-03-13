@@ -5,9 +5,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { styled } from '@mui/system';
 import { Translation } from 'constants/translations';
-import { TestResultMeasurementType } from 'types/reduxTypes/resultsStateTypes';
+import { FinalResultType, UnitResultType } from 'types/reduxTypes/resultsStateTypes';
 
-import { IMeasurementListField } from '../../types';
+import useTestResultsContext from '../../hooks/useTestResultsContext';
+import { IMeasurementListField, InputResultTestType } from '../../types';
 
 const StyledKeyboardArrowDownIcon = styled(KeyboardArrowDownIcon)(({ theme }) => ({
   fill: theme.palette.primary.main
@@ -15,7 +16,10 @@ const StyledKeyboardArrowDownIcon = styled(KeyboardArrowDownIcon)(({ theme }) =>
 
 const ResultTypeField = ({ name, control }: IMeasurementListField) => {
   const [t] = useTranslation();
+  const { type } = useTestResultsContext();
 
+  const resultTypeOptions =
+    type === InputResultTestType.InHouse ? Object.values(FinalResultType) : Object.values(UnitResultType);
   const { field } = useController({
     name,
     control
@@ -30,7 +34,7 @@ const ResultTypeField = ({ name, control }: IMeasurementListField) => {
         onChange={(e) => field.onChange(e.target.value)}
         IconComponent={StyledKeyboardArrowDownIcon}
       >
-        {Object.values(TestResultMeasurementType).map((resultMeasurementType) => (
+        {resultTypeOptions.map((resultMeasurementType) => (
           <MenuItem key={resultMeasurementType} value={resultMeasurementType}>
             {resultMeasurementType}
           </MenuItem>

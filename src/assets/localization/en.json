@@ -450,6 +450,7 @@
   "page.input.results.test.attach.file.notes.form.lab": "Notes from Lab (Optional)",
   "page.input.results.test.save.as.final": "Save as Final",
   "page.input.results.test.save.as.pending": "Save as Pending",
+  "page.input.external.results.result.text": "Test not complete",
   "page.in.house.title": "In-House Tests",
   "page.in.house.results.back.to.in.house.tests": "Back to In-House Tests",
   "page.in.house.results.test.save.as.completed": "Save as Completed",

@@ -452,6 +452,7 @@ export enum Translation {
   PAGE_INPUT_RESULTS_TEST_ATTACH_FILE_NOTES_FORM_LAB = 'page.input.results.test.attach.file.notes.form.lab',
   PAGE_INPUT_RESULTS_TEST_SAVE_AS_FINAL = 'page.input.results.test.save.as.final',
   PAGE_INPUT_RESULTS_TEST_SAVE_AS_PENDING = 'page.input.results.test.save.as.pending',
+  PAGE_INPUT_EXTERNAL_RESULTS_RESULT_TEXT = 'page.input.external.results.result.text',
   PAGE_IN_HOUSE_TITLE = 'page.in.house.title',
   PAGE_IN_HOUSE_RESULTS_BACK_TO_IN_HOUSE_TESTS = 'page.in.house.results.back.to.in.house.tests',
   PAGE_IN_HOUSE_RESULTS_TEST_SAVE_AS_COMPLETED = 'page.in.house.results.test.save.as.completed',

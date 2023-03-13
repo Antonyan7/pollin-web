@@ -16,6 +16,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import CircularLoading from '@ui-component/circular-loading';
 
 import ResultsCancelButton from '../CancelButton';
+import TestResultsContext from '../context/TestResult';
 import InputResultsHeader from '../Header';
 import { InputResultTestType, MeasurementListFormProps } from '../types';
 
@@ -55,74 +56,83 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ testType = '' }) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [testResultsDetails]);
 
-  return (
-    <SubCardStyled
-      sx={{
-        mt: margins.top20
-      }}
-      title={<ListHeader isInHouseTest={isInHouseTest} />}
-    >
-      {isTestResultsDetailsLoading ? (
-        <Grid p={paddings.all24}>
-          <CircularLoading />
-        </Grid>
-      ) : (
-        <FormProvider {...methods}>
-          {testResultsDetails.map((testResultDetails, index) => {
-            const currentFormFieldName = `data_${testResultDetails.id}`;
-            const currentFormCommentFieldName = `${currentFormFieldName}.comment`;
-            // Show specimenId only when it is available and when it is first test result;
-            const shouldShowSpecimenId = index === 0 && isInHouseTest;
-            // Pick last item of test results and show save button
-            const shouldShowSaveButton = index === testResultsDetails.length - 1;
-            // Is multiple test results
-            const shouldShowSaveAsCompleted = !!isInHouseTest;
+  const testResultValues = useMemo(
+    () => ({
+      type: testType
+    }),
+    [testType]
+  );
 
-            return (
-              <Fragment key={testResultDetails.id}>
-                <InputResultsHeader
-                  title={testResultDetails.title}
-                  dates={testResultDetails.dates}
-                  lab={testResultDetails.lab}
-                  currentFormFieldName={currentFormFieldName}
-                  isInHouseTest={isInHouseTest}
-                  {...(shouldShowSpecimenId && { specimenId: `${router.query?.specimenId}` })}
-                />
-                {testResultDetails.items.length > 0 && (
-                  <MeasurementList
-                    listItems={testResultDetails.items}
-                    currentFormFieldName={currentFormFieldName}
+  return (
+    <TestResultsContext.Provider value={testResultValues}>
+      <SubCardStyled
+        sx={{
+          mt: margins.top20
+        }}
+        title={<ListHeader isInHouseTest={isInHouseTest} />}
+      >
+        {isTestResultsDetailsLoading ? (
+          <Grid p={paddings.all24}>
+            <CircularLoading />
+          </Grid>
+        ) : (
+          <FormProvider {...methods}>
+            {testResultsDetails.map((testResultDetails, index) => {
+              const currentFormFieldName = `data_${testResultDetails.id}`;
+              const currentFormCommentFieldName = `${currentFormFieldName}.comment`;
+              // Show specimenId only when it is available and when it is first test result;
+              const shouldShowSpecimenId = index === 0 && isInHouseTest;
+              // Pick last item of test results and show save button
+              const shouldShowSaveButton = index === testResultsDetails.length - 1;
+              // Is multiple test results
+              const shouldShowSaveAsCompleted = !!isInHouseTest;
+
+              return (
+                <Fragment key={testResultDetails.id}>
+                  <InputResultsHeader
                     title={testResultDetails.title}
+                    dates={testResultDetails.dates}
+                    lab={testResultDetails.lab}
+                    currentFormFieldName={currentFormFieldName}
+                    isInHouseTest={isInHouseTest}
+                    {...(shouldShowSpecimenId && { specimenId: `${router.query?.specimenId}` })}
                   />
-                )}
-                <Grid px={paddings.leftRight24}>
-                  <Divider sx={{ my: margins.topBottom8 }} />
-                  <TextFieldWithLabel
-                    label={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
-                    placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
-                    currentFormFieldName={currentFormCommentFieldName}
-                  />
-                  <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
-                  <AttachFile currentFormFieldName={currentFormFieldName} />
-                </Grid>
-                <Divider sx={{ mt: margins.top12 }} />
-                {shouldShowSaveButton && (
-                  <Grid item p={paddings.all20} display="flex" justifyContent="end">
-                    <Stack display="flex" flexDirection="row" columnGap={2}>
-                      {shouldShowSaveAsCompleted && <ResultsCancelButton />}
-                      <ResultsSaveButton
-                        shouldSaveAsCompleted={shouldShowSaveAsCompleted}
-                        currentFormFieldNames={formFieldNames}
-                      />
-                    </Stack>
+                  {testResultDetails.items.length > 0 && (
+                    <MeasurementList
+                      listItems={testResultDetails.items}
+                      currentFormFieldName={currentFormFieldName}
+                      title={testResultDetails.title}
+                    />
+                  )}
+                  <Grid px={paddings.leftRight24}>
+                    <Divider sx={{ my: margins.topBottom8 }} />
+                    <TextFieldWithLabel
+                      label={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
+                      placeholder={t(Translation.COMMENTS_TEXT_FIELD_LABEL)}
+                      currentFormFieldName={currentFormCommentFieldName}
+                    />
+                    <Divider sx={{ mt: margins.top24, mb: margins.bottom16 }} />
+                    <AttachFile currentFormFieldName={currentFormFieldName} />
                   </Grid>
-                )}
-              </Fragment>
-            );
-          })}
-        </FormProvider>
-      )}
-    </SubCardStyled>
+                  <Divider sx={{ mt: margins.top12 }} />
+                  {shouldShowSaveButton && (
+                    <Grid item p={paddings.all20} display="flex" justifyContent="end">
+                      <Stack display="flex" flexDirection="row" columnGap={2}>
+                        {shouldShowSaveAsCompleted && <ResultsCancelButton />}
+                        <ResultsSaveButton
+                          shouldSaveAsCompleted={shouldShowSaveAsCompleted}
+                          currentFormFieldNames={formFieldNames}
+                        />
+                      </Stack>
+                    </Grid>
+                  )}
+                </Fragment>
+              );
+            })}
+          </FormProvider>
+        )}
+      </SubCardStyled>
+    </TestResultsContext.Provider>
   );
 };
 

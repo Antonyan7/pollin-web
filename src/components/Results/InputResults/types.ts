@@ -1,8 +1,9 @@
 import { Control } from 'react-hook-form';
 import {
+  FinalResultType,
   ITestResultAttachment,
   ITestResultsDetails,
-  TestResultMeasurementType
+  UnitResultType
 } from 'types/reduxTypes/resultsStateTypes';
 
 // Interfaces
@@ -30,7 +31,7 @@ export interface IMeasurementsFieldValues {
   [data: `${string}`]: {
     items: {
       id: string;
-      resultType?: TestResultMeasurementType;
+      resultType?: FinalResultType | UnitResultType;
       dateReceived: string;
       result: string;
     };

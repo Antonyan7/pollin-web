@@ -7,9 +7,10 @@ import {
   OrdersListItemStatus
 } from 'types/reduxTypes/ordersStateTypes';
 import {
+  FinalResultType,
   ISpecimensListItemShort,
   ITestResultsDetails,
-  TestResultMeasurementType
+  UnitResultType
 } from 'types/reduxTypes/resultsStateTypes';
 import { IResultsFilterOption } from 'types/results';
 
@@ -137,7 +138,7 @@ export interface ITestResultsData {
   comment: string;
   items: {
     id: string;
-    resultType?: TestResultMeasurementType;
+    resultType?: FinalResultType | UnitResultType;
     dateReceived: string;
     result: string;
   };
