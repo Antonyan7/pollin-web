@@ -92,6 +92,8 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
 
   const isMoveToAnother = modalName === ModalName.MoveToAnotherTransport;
 
+  const isTransportFoldersEmpty = onlyReadyForTransitFolders?.length === 0;
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -110,6 +112,10 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   label={selectDropdownLabel}
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleTransportFolderChange}
+                  {...(isTransportFoldersEmpty && {
+                    disabled: true,
+                    label: t(Translation.PAGE_SPECIMENS_TRACKING_NO_TRANSPORT_FOLDERS)
+                  })}
                 >
                   {onlyReadyForTransitFolders.map((transport: ITransportListFolderProps) => (
                     <MenuItem value={transport.id} key={transport.id}>

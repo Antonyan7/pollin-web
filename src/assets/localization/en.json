@@ -540,6 +540,7 @@
   "page.specimens.tracking.transports.search.success": "Applied successfully",
   "page.specimens.tracking.transports.search.fail": "The following Specimen ID(s) were not found within any transport folders. Please try again.",
   "page.specimens.tracking.transports.in.house.success": "The following Specimen ID(s) have been received in-house:",
+  "page.specimens.tracking.no.transport.folders": "No Transport Folders",
   "common.week.label.single": "Week",
   "common.week.label.multiple": "Weeks",
   "page.patient.order.results.cells.date": "Date Completed",
