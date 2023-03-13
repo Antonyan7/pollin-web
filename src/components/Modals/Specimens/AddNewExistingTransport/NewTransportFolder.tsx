@@ -15,8 +15,7 @@ import {
   SelectChangeEvent,
   Stack,
   TextField,
-  Theme,
-  Typography
+  Theme
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -117,14 +116,6 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
             <DatePickerWithTodayButton />
-            <Grid container item xs={12} justifyContent="space-between">
-              <Grid item xs={6}>
-                <Typography variant="subtitle1" fontWeight="bold">
-                  {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID)}
-                  :
-                </Typography>
-              </Grid>
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 onChange={(event) => onTransportFolderNameChange(event.target.value)}

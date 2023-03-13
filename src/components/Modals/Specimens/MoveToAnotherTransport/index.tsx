@@ -25,9 +25,7 @@ const MoveToAnotherTransport: FC<MoveToAnotherTransportProps> = ({ specimenIds, 
   const moveToAnotherTransportDescription = t(
     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_MOVE_TO_ANOTHER_TRANSPORT_MODAL_DESCRIPTION
   );
-  const moveToAnotherTransportSpecimenIdLabel = t(
-    Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_MOVE_TO_ANOTHER_TRANSPORT_MODAL_SPECIMEN_ID_LABEL
-  );
+  const moveToAnotherTransportSpecimenIdLabel = t(Translation.COMMON_MODAL_SPECIMEN_ID_LABEL);
 
   return (
     <BaseModal

@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux';
 import ExistingTransportFolder from '@components/Modals/Specimens/AddNewExistingTransport/ExistingTransportFolder';
 import NewTransportFolder from '@components/Modals/Specimens/AddNewExistingTransport/NewTransportFolder';
 import TabPanel from '@components/Specimens/TabPanel';
+import TargetsList from '@components/TargetsList';
 import { Box, DialogContent, Grid, styled, Tab, Tabs } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
+import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
@@ -37,6 +39,8 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
     'aria-controls': `simple-tabpanel-${index}`
   });
 
+  const specimenIdLabel = t(Translation.COMMON_MODAL_SPECIMEN_ID_LABEL);
+
   return (
     <BaseModal
       isLoading={isPatientContactInformationLoading}
@@ -45,6 +49,9 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
     >
       <Grid>
         <DialogContent sx={{ padding: 0 }}>
+          <Grid pb={paddings.bottom24} pt={paddings.top12}>
+            <TargetsList label={specimenIdLabel} values={selectedIdentifiers} />
+          </Grid>
           <Box sx={{ width: '100%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
