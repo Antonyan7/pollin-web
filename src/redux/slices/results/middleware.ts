@@ -438,7 +438,7 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
 const getTransportList =
   (
     resultsListData: ITransportListReqBody = {
-      date: format(new Date(store.getState().booking.date), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
+      date: new Date(store.getState().booking.date),
       page: 0,
       sortByField: TransportsSortFields.STATUS,
       sortOrder: SortOrder.Desc
@@ -446,6 +446,7 @@ const getTransportList =
   ) =>
   async (dispatch: AppDispatch) => {
     try {
+      resultsListData.date = format(new Date(resultsListData.date), 'yyyy-MM-dd');
       dispatch(setIsTransportListLoading(true));
 
       let testResultsReqBody = resultsListData;

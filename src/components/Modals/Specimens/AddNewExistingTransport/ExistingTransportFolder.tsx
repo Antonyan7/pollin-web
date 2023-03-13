@@ -19,7 +19,6 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
@@ -81,7 +80,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
 
   useEffect(() => {
     const body = {
-      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
+      date: new Date(calendarDate),
       page: 1,
       sortByField: TransportsSortFields.STATUS,
       sortOrder: SortOrder.Asc

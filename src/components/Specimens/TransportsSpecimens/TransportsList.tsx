@@ -18,7 +18,6 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
@@ -49,7 +48,7 @@ const TransportsList = () => {
 
   useEffect(() => {
     const data: ITransportListReqBody = {
-      date: format(new Date(calendarDate), "yyyy-MM-dd'T'HH:mm:ss+00:00"),
+      date: new Date(calendarDate),
       page: page + 1,
       ...(searchedItems.length > 0 ? { specimens: searchedItems.map((identifier) => ({ identifier })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
