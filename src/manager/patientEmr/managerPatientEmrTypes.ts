@@ -435,6 +435,98 @@ export interface IFertilityHistory {
   fertilityHistory: IFertilityHistoryProps;
 }
 
+export interface IPregnancy {
+  id: string;
+  type: string;
+  details: IPregnancyDetails;
+}
+
+export interface IPregnancyDetails {
+  year: string;
+  type?: string;
+  birthOutcome?: string;
+  monthsToConceive?: string;
+  location?: string;
+}
+
+export interface IPreviousPregnancies extends MedicalBackgroundFieldValues {
+  value: boolean;
+  id: string;
+  pregnancies?: IPregnancy[];
+}
+
+export interface IFemalePregnancyInformationProps {
+  previousPregnancies: IPreviousPregnancies;
+  numberOfPregnancies: number;
+}
+
+export interface IFemalePregnancyInformation {
+  GTPAETALS: IFemalePregnancyInformationProps;
+}
+
+export enum DropdownOptionType {
+  MonthsConceiving = 'MonthsConceiving',
+  FertilityTreatmentCycles = 'FertilityTreatmentCycles',
+  TypeOfPregnancy = 'TypeOfPregnancy',
+  YearOfBirth = 'YearOfBirth',
+  VOrCs = 'VOrCs',
+  BirthOutcome = 'BirthOutcome',
+  MonthsToConceive = 'MonthsToConceive',
+  YearOfEctopic = 'YearOfEctopic',
+  PregnancySide = 'PregnancySide',
+  YearOfMiscarriage = 'YearOfMiscarriage',
+  MenstrualFlow = 'MenstrualFlow',
+  DaysOfBleeding = 'DaysOfBleeding',
+  MenstrualPain = 'MenstrualPain',
+  ProceduresDueToAbnormalPap = 'ProceduresDueToAbnormalPap',
+  MissCarriagePregnancyTreatment = 'MissCarriagePregnancyTreatment',
+  EctopicPregnancyTreatment = 'EctopicPregnancyTreatment',
+  GynecologicalConditions = 'GynecologicalConditions',
+  Hyperprolactinemia = 'Hyperprolactinemia',
+  SignsOfPOI = 'SignsOfPOI',
+  PrimaryPatientContributionMale = 'PrimaryPatientContributionMale',
+  PrimaryPatientContributionFemale = 'PrimaryPatientContributionFemale',
+  Province = 'Province',
+  SignsOfPCOS = 'SignsOfPCOS',
+  Pronouns = 'Pronouns',
+  Gender = 'Gender',
+  SexualOrientation = 'SexualOrientation',
+  RelationshipStatus = 'RelationshipStatus',
+  Relationship = 'Relationship',
+  StressLevel = 'StressLevel',
+  FamilyMember = 'FamilyMember',
+  DiagnosedConditions = 'DiagnosedConditions',
+  PrimaryPatientContribution = 'PrimaryPatientContribution'
+}
+
+export interface IDropdownOption {
+  id: string;
+  title: string;
+}
+export interface IDropdown {
+  type: DropdownOptionType;
+  options: IDropdownOption[];
+}
+
+export interface IDropdownsResponse {
+  dropdowns: IDropdown[];
+}
+
+export enum TypeOfPregnancy {
+  FullTerm = 'FullTerm',
+  Preterm = 'Preterm',
+  EctopicTubal = 'EctopicTubal',
+  Miscarriage = 'Miscarriage',
+  ElectiveTermination = 'ElectiveTermination'
+}
+
+export enum TypeOfPregnancyLabel {
+  FullTerm = 'Full Term (T)',
+  Preterm = 'Preterm (P)',
+  EctopicTubal = 'Ectopic/Tubal (E)',
+  Miscarriage = 'Miscarriage (A)',
+  ElectiveTermination = 'Elective Termination (TA)'
+}
 export interface IdentifierFieldProps extends MedicalBackgroundFieldValues {
   value: string;
 }

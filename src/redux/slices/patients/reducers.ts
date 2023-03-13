@@ -1,7 +1,9 @@
 import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
   AddManuallyAddressModalProps,
+  IDropdown,
   IEncounterDetailsProps,
+  IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
   IPatientContactInformation,
@@ -225,6 +227,21 @@ const reducers = createReducer({
   },
   setIsFertilityHistoryDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isFertilityHistoryDataUpdating = action.payload;
+  },
+  setFemalePregnancyInformation(state, action: IAction<IFemalePregnancyInformationProps | null>) {
+    state.medicalBackground.medicalHistory.femalePregnancyInformation = action.payload;
+  },
+  setIsFemalePregnancyInformationLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFemalePregnancyInformationLoading = action.payload;
+  },
+  setIsFemalePregnancyInformationDataUpdating(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFemalePregnancyInformationDataUpdating = action.payload;
+  },
+  setDropdowns(state, action: IAction<IDropdown[]>) {
+    state.medicalBackground.common.dropdowns = action.payload;
+  },
+  setIsDropdownsLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.common.isDropdownsLoading = action.payload;
   },
   setMedicalPatientContactInformation(state, action: IAction<IPatientContactInformationProps>) {
     state.medicalBackground.contact.patientContactInformation = action.payload;

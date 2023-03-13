@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar,Box } from '@mui/material';
+import { Avatar, Box } from '@mui/material';
 import Modal from '@mui/material/Modal';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';

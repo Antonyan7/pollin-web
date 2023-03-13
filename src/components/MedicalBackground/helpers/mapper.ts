@@ -1,4 +1,8 @@
-import { IFertilityHistoryProps, PreviousTreatmentFieldProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import {
+  IFertilityHistoryProps,
+  IPreviousPregnancies,
+  PreviousTreatmentFieldProps
+} from '@axios/patientEmr/managerPatientEmrTypes';
 
 import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
 
@@ -18,7 +22,9 @@ export const createObjectWithTitle = (itemTitle: string) => ({
 export const getLabelByBoolean = (isItTrue: boolean) =>
   isItTrue ? MedicalFormRadioValues.Yes : MedicalFormRadioValues.No;
 
-export const mapObjectByPattern = (target: IFertilityHistoryProps | null, mappingPattern: Mapper) =>
+type MappingTarget = IPreviousPregnancies | IFertilityHistoryProps | null;
+
+export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper) =>
   target
     ? Object.entries(target).map((item) => {
         const itemId = item[0];

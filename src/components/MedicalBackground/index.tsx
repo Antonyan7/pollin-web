@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import MedicalBackgroundHeader from '@components/MedicalBackground/components/Header';
 import MedicalBackgroundTabPanel from '@components/MedicalBackground/components/MedicalBackgroundTabPanel';
 import ContactPage from '@components/MedicalBackground/Contact';
 import { Box, Tab, Tabs } from '@mui/material';
+import { dispatch } from '@redux/hooks';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
@@ -15,6 +17,10 @@ import MedicalHistory from './MedicalHistory';
 const MedicalBackgroundTabs = () => {
   const [t] = useTranslation();
   const [activePageValue, setActivePageValue] = useState<number>(0);
+
+  useEffect(() => {
+    dispatch(patientsMiddleware.getPatientMedicalBackgroundDropdownOptions());
+  }, []);
 
   useReplaceCurrentUrl(activePageValue);
 

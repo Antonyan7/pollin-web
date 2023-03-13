@@ -92,7 +92,8 @@ const PortalContent = ({ children }: PropsWithChildren) => {
         color="inherit"
         elevation={0}
         sx={{
-          transition: drawerOpen ? theme.transitions.create('width') : 'none'
+          transition: drawerOpen ? theme.transitions.create('width') : 'none',
+          zIndex: 1306
         }}
       >
         <PortalHeader />

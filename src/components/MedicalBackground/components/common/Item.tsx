@@ -1,22 +1,22 @@
 import React, { FC } from 'react';
-import { Grid } from '@mui/material';
+import { Grid, GridProps } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 import FieldWrapper from './FieldWrapper';
 
-interface ItemProps {
+interface ItemProps extends Partial<GridProps> {
   title: string;
-  index: number;
-  value: string | string[];
-  note: string;
+  index?: number;
+  value?: number | string | string[];
+  note?: string;
 }
 
-const Item: FC<ItemProps> = ({ title, index, value, note }) => {
+const Item: FC<ItemProps> = ({ title, index, value, note, ...props }) => {
   const renderedValue = Array.isArray(value)
-    ? value.map((valueItem, valueIndex) => (
+    ? value?.map((valueItem, valueIndex) => (
         <Grid
           {...(valueIndex > 1 && {
-            py: paddings.top8
+            py: paddings.topBottom4
           })}
         >
           {valueItem}
@@ -25,10 +25,10 @@ const Item: FC<ItemProps> = ({ title, index, value, note }) => {
     : value;
 
   return (
-    <FieldWrapper fieldName={title} componentIndex={index} hasNote={!!note}>
+    <FieldWrapper fieldName={title} componentIndex={index} hasNote={!!note} {...props}>
       <Grid item container xs={5} direction="column" justifyContent="space-between">
         <Grid>{renderedValue}</Grid>
-        <Grid>{note || ''}</Grid>
+        {note && <Grid>{note ?? ''}</Grid>}
       </Grid>
     </FieldWrapper>
   );

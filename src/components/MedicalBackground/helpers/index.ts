@@ -1,3 +1,5 @@
+/* eslint-disable no-restricted-syntax */
+import { DropdownOptionType, IDropdown, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
 import {
   EmailAddress,
   MailingAddress,
@@ -10,7 +12,6 @@ import {
   PrimaryAddress,
   PrimaryPatientContribution
 } from '@components/MedicalBackground/Contact/PatientContactInformation/view/fields';
-/* eslint-disable no-restricted-syntax */
 import {
   ActiveConsults,
   AdditionalInformation,
@@ -104,6 +105,16 @@ export const generalHealthRows = [
   { Component: ActiveConsults },
   { Component: AdditionalInformation }
 ];
+
+const getDropdownByType = (dropdowns: IDropdown[], dropdownType: DropdownOptionType | string) =>
+  dropdowns.find((dropdown) => dropdown.type === dropdownType);
+
+export const getDropdownOptionTitle = (dropdowns: IDropdown[], dropdownType: string, optionId: string) => {
+  const dropdown = getDropdownByType(dropdowns, dropdownType) as IDropdown;
+  const { options = [] } = dropdown ?? {};
+
+  return options.find((option: IDropdownOption) => option.id === optionId)?.title;
+};
 
 export const getFullAddress = (address?: AddressProps) => {
   let fullAddress = '';

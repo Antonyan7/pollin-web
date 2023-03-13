@@ -116,6 +116,22 @@ const isFertilityHistoryLoading = createSelector(
   [selector],
   (state) => state.medicalBackground.medicalHistory.isFertilityHistoryLoading
 );
+const femalePregnancyInformation = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.femalePregnancyInformation
+);
+const isFemalePregnancyInformationDataUpdating = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePregnancyInformationDataUpdating
+);
+const isFemalePregnancyInformationLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePregnancyInformationLoading
+);
+
+const dropdowns = createSelector([selector], (state) => state.medicalBackground.common.dropdowns);
+
+const isDropdownsLoading = createSelector([selector], (state) => state.medicalBackground.common.isDropdownsLoading);
 
 export default {
   isTestResultsHistoryLoading,
@@ -175,6 +191,11 @@ export default {
   fertilityHistory,
   isFertilityHistoryDataUpdating,
   isFertilityHistoryLoading,
+  femalePregnancyInformation,
+  dropdowns,
+  isDropdownsLoading,
+  isFemalePregnancyInformationDataUpdating,
+  isFemalePregnancyInformationLoading,
   isContactInformationButtonClicked,
   isContactInformationLoading,
   contactInformation,

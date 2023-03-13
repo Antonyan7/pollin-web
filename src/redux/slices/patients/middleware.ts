@@ -83,6 +83,10 @@ const {
   setProfileTestResultDetails,
   setFertilityHistory,
   setIsFertilityHistoryLoading,
+  setFemalePregnancyInformation,
+  setIsFemalePregnancyInformationLoading,
+  setDropdowns,
+  setIsDropdownsLoading,
   setMedicalPatientContactInformation,
   setIsMedicalPatientContactInformationLoading,
   setIsContactInformationEditButtonClicked,
@@ -643,6 +647,35 @@ const changeManuallyAddressForPrimary = (address: AddManuallyAddressModalProps) 
   dispatch(setManuallyAddressForPrimary(address));
 };
 
+const getFemalePregnancyInformation = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFemalePregnancyInformationLoading(true));
+
+  try {
+    const response = await API.patients.getFemalePregnancyInformation(patientId);
+
+    dispatch(setFemalePregnancyInformation(response.data.data.GTPAETALS));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsFemalePregnancyInformationLoading(false));
+};
+
+const getPatientMedicalBackgroundDropdownOptions = () => async (dispatch: AppDispatch) => {
+  dispatch(setIsDropdownsLoading(true));
+
+  try {
+    const response = await API.patients.getPatientMedicalBackgroundDropdownOptions();
+
+    dispatch(setDropdowns(response.data.data.dropdowns));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsDropdownsLoading(false));
+};
 const changeManuallyAddressForMailing = (address: AddManuallyAddressModalProps) => async (dispatch: AppDispatch) => {
   dispatch(setManuallyAddressForMailing(address));
 };
@@ -781,6 +814,8 @@ export default {
   changeEditButtonClickState,
   updateGeneralHealthData,
   getFertilityHistory,
+  getFemalePregnancyInformation,
+  getPatientMedicalBackgroundDropdownOptions,
   changeContactInformationEditButtonState,
   getMedicalContactInformation,
   changeManuallyAddressForPrimary,

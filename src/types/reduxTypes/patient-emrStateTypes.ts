@@ -7,7 +7,9 @@ import {
 } from '@axios/booking/managerBookingTypes';
 import {
   AddManuallyAddressModalProps,
+  IDropdown,
   IEncounterDetailsProps,
+  IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
   IPatientContactInformation,
@@ -46,6 +48,13 @@ export interface MedicalBackgroundProps {
     fertilityHistory: IFertilityHistoryProps | null;
     isFertilityHistoryLoading: boolean;
     isFertilityHistoryDataUpdating: boolean;
+    femalePregnancyInformation: IFemalePregnancyInformationProps | null;
+    isFemalePregnancyInformationLoading: boolean;
+    isFemalePregnancyInformationDataUpdating: boolean;
+  };
+  common: {
+    dropdowns: IDropdown[];
+    isDropdownsLoading: boolean;
   };
 }
 

@@ -1,19 +1,21 @@
 import React, { ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Typography, useTheme } from '@mui/material';
+import { Grid, GridProps, Typography, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
-interface FieldWrapperProps {
+interface FieldWrapperProps extends Partial<GridProps> {
   fieldName: string;
   children: ReactNode;
   componentIndex?: number;
   hasNote: boolean;
 }
 
-const FieldWrapper = ({ children, fieldName, componentIndex, hasNote }: FieldWrapperProps) => {
+const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }: FieldWrapperProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
+
+  const isBackgroundColored = typeof componentIndex === 'undefined' || (componentIndex && componentIndex % 2);
 
   return (
     <Grid
@@ -25,9 +27,9 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote }: FieldWra
       py={paddings.topBottom8}
       xs={12}
       sx={{
-        backgroundColor:
-          componentIndex && componentIndex % 2 ? theme.palette.common.white : theme.palette.secondary[200]
+        backgroundColor: isBackgroundColored ? theme.palette.common.white : theme.palette.secondary[200]
       }}
+      {...props}
     >
       <Grid item container justifyContent="space-between" direction="column" xs={4} gap={3}>
         <Typography

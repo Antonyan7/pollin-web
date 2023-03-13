@@ -22,7 +22,14 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
   medicalHistory: {
     fertilityHistory: null,
     isFertilityHistoryLoading: false,
-    isFertilityHistoryDataUpdating: false
+    isFertilityHistoryDataUpdating: false,
+    femalePregnancyInformation: null,
+    isFemalePregnancyInformationLoading: false,
+    isFemalePregnancyInformationDataUpdating: false
+  },
+  common: {
+    dropdowns: [],
+    isDropdownsLoading: false
   }
 });
 

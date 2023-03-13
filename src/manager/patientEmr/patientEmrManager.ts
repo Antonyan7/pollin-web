@@ -6,9 +6,11 @@ import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
+  IDropdownsResponse,
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
+  IFemalePregnancyInformation,
   IFertilityHistory,
   IGeneralHealth,
   IGetPatientsRequestBody,
@@ -222,6 +224,21 @@ const patientEmrManager = {
       {
         contactInformation: data
       }
+    );
+  },
+  getFemalePregnancyInformation(patientId: string) {
+    return axiosInstance.get<IFemalePregnancyInformation, IAxiosResponse<IFemalePregnancyInformation>>(
+      `${baseURL}/v1/medical-background/${patientId}/gtpaetals`
+    );
+  },
+  updateFemalePregnancyInformation(patientId: string) {
+    return axiosInstance.put<IFemalePregnancyInformation, IAxiosResponse<IFemalePregnancyInformation>>(
+      `${baseURL}/v1/medical-background/${patientId}/gtpaetals`
+    );
+  },
+  getPatientMedicalBackgroundDropdownOptions() {
+    return axiosInstance.get<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
+      `${baseURL}/v1/medical-background/dropdown-options`
     );
   }
 };
