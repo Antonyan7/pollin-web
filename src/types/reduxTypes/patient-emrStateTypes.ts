@@ -65,6 +65,7 @@ export interface PatientEmrProps {
   encounters: IEncountersProps;
   recentAppointments: IPatientRecentAppointment[] | null;
   isPatientCustomAlertCreated: boolean;
+  isAlertDeleted: boolean;
   isRecentAppointmentsLoading: boolean;
   isPatientProfileLoading: boolean;
   isPatientsListLoading: boolean;

@@ -68,6 +68,12 @@ const patientEmrManager = {
       }
     );
   },
+  deletePatientAlert(alertId: string) {
+    return axiosInstance.delete<IAlertDetailsResponse, IAxiosResponse<IAlertDetailsResponse>>(
+      `${baseURL}/v1/patients/custom-alerts`,
+      { data: { alertId } }
+    );
+  },
   getPatients(data: IGetPatientsRequestBody) {
     return axiosInstance.post<IGetPatientsResponse, IAxiosResponsePaginated<IGetPatientsResponse>>(
       `${baseURL}/v1/patients`,

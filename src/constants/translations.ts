@@ -619,7 +619,9 @@ export enum Translation {
   MODAL_ADD_OR_EDIT_PATIENT_ALERT_TITLE = 'modal.add.or.edit.patient.alert.title',
   MODAL_ADD_OR_EDIT_PATIENT_ALERT_EDIT_TITLE = 'modal.add.or.edit.patient.alert.edit.title',
   MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD = 'modal.add.or.edit.patient.alert.field',
-  MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION = 'modal.add.or.edit.patient.alert.description'
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION = 'modal.add.or.edit.patient.alert.description',
+  MODAL_DELETE_ALERT_TITLE = 'modal.delete.alert.title',
+  MODAL_DELETE_ALERT_MESSAGE = 'modal.delete.alert.message'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

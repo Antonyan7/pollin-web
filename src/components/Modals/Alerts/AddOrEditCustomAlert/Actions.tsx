@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -14,34 +15,41 @@ import { ButtonWithLoading } from '@ui-component/common/buttons';
 interface ActionsProps {
   title?: string;
   alertId?: string;
-  fieldValue: string;
-  descriptionValue: string;
 }
 
-const Actions = ({ title, alertId, fieldValue, descriptionValue }: ActionsProps) => {
+const Actions = ({ title, alertId }: ActionsProps) => {
   const [t] = useTranslation();
-  const confirmButtonLabel = t(Translation.COMMON_BUTTON_SAVE_LABEL);
-  const deleteButtonLabel = t(Translation.COMMON_BUTTON_DELETE_LABEL);
+  const theme = useTheme();
   const router = useRouter();
   const patientId = router.query.id as string;
-  const theme = useTheme();
-  const isDisabled = !fieldValue || !descriptionValue;
+
+  const { control } = useFormContext();
+  const titleField = useController({ control, name: 'title' }).field;
+  const descriptionField = useController({ control, name: 'description' }).field;
+
+  const isDisabled = !titleField.value || !descriptionField.value;
   const isPatientCustomAlertCreated = useAppSelector(patientsSelector.isPatientCustomAlertCreated);
+
   const onSaveClick = useCallback(() => {
     if (alertId) {
       dispatch(
         patientsMiddleware.editPatientAlert(patientId, {
           id: alertId,
-          title: fieldValue,
-          description: descriptionValue
+          title: titleField.value,
+          description: descriptionField.value
         })
       );
     } else {
-      dispatch(patientsMiddleware.createPatientAlert(patientId, { title: fieldValue, description: descriptionValue }));
+      dispatch(
+        patientsMiddleware.createPatientAlert(patientId, {
+          title: titleField.value,
+          description: descriptionField.value
+        })
+      );
     }
 
     dispatch(viewsMiddleware.closeModal(ModalName.AddOrEditCustomAlertModal));
-  }, [fieldValue, descriptionValue, patientId, alertId]);
+  }, [titleField, descriptionField, patientId, alertId]);
 
   return (
     <DialogActions>
@@ -59,10 +67,15 @@ const Actions = ({ title, alertId, fieldValue, descriptionValue }: ActionsProps)
               }}
               variant="outlined"
               onClick={() => {
-                // TODO add delete modal
+                dispatch(
+                  viewsMiddleware.openModal({
+                    name: ModalName.ConfirmAlertDeleteModal,
+                    props: { alertId }
+                  })
+                );
               }}
             >
-              {deleteButtonLabel}
+              {t(Translation.COMMON_BUTTON_DELETE_LABEL)}
             </ButtonWithLoading>
           </Grid>
         ) : null}
@@ -79,7 +92,7 @@ const Actions = ({ title, alertId, fieldValue, descriptionValue }: ActionsProps)
             onClick={onSaveClick}
             disabled={isDisabled}
           >
-            {confirmButtonLabel}
+            {t(Translation.COMMON_BUTTON_SAVE_LABEL)}
           </ButtonWithLoading>
         </Grid>
       </Grid>

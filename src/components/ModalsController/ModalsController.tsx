@@ -2,6 +2,7 @@ import React from 'react';
 import AddOrEditCustomAlertModal, {
   AddOrEditCustomAlertModalProps
 } from '@components/Modals/Alerts/AddOrEditCustomAlert';
+import ConfirmAlertDeleteModal, { ConfirmAlertDeleteModalProps } from '@components/Modals/Alerts/ConfirmAlertDelete';
 import AddAppointmentDuplicatePatientModal, {
   AddAppointmentDuplicatePatientModalProps
 } from '@components/Modals/Booking/AddAppointmentDuplicatePatientModal';
@@ -196,6 +197,9 @@ const getImageModal = (modal: IOpenedModal<ImageModalProps>) => <ImageModal key=
 const getAddOrEditCustomAlertModal = (modal: IOpenedModal<AddOrEditCustomAlertModalProps>) => (
   <AddOrEditCustomAlertModal key={modal.name} {...modal.props} />
 );
+const getConfirmAlertDeleteModal = (modal: IOpenedModal<ConfirmAlertDeleteModalProps>) => (
+  <ConfirmAlertDeleteModal key={modal.name} {...modal.props} />
+);
 
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
@@ -289,7 +293,8 @@ export const ModalsController = () => {
           // Alerts
           case ModalName.AddOrEditCustomAlertModal:
             return getAddOrEditCustomAlertModal(modal);
-
+          case ModalName.ConfirmAlertDeleteModal:
+            return getConfirmAlertDeleteModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

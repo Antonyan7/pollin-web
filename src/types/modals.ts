@@ -49,6 +49,7 @@ export enum ModalName {
   VerifyPatientPhotoModal = 'VerifyPatientPhotoModal',
   ImageModal = 'ImageModal',
   AddOrEditCustomAlertModal = 'AddOrEditCustomAlertModal',
+  ConfirmAlertDeleteModal = 'ConfirmAlertDeleteModal',
   AddAddressManually = 'AddAddressManually'
 }
 

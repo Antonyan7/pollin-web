@@ -75,6 +75,7 @@ const {
   setPatientAlertViewState,
   setPatientAlertDetailsLoading,
   setIsPatientCustomAlertCreated,
+  setIsAlertDeleted,
   setGeneralHealth,
   setIsGeneralHealthLoading,
   setIsEditButtonClicked,
@@ -200,6 +201,20 @@ const editPatientAlert = (patientId: string, alert: CustomAlerts) => async (disp
     dispatch(setPatientAlertDetails([]));
   } finally {
     dispatch(setIsPatientCustomAlertCreated(false));
+  }
+};
+
+const deletePatientAlert = (alertId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsAlertDeleted(true));
+
+    const response = await API.patients.deletePatientAlert(alertId);
+
+    dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
+  } catch (error) {
+    dispatch(setPatientAlertDetails([]));
+  } finally {
+    dispatch(setIsAlertDeleted(false));
   }
 };
 
@@ -782,6 +797,7 @@ export default {
   resetAppointmentsList,
   createPatientAlert,
   editPatientAlert,
+  deletePatientAlert,
   getEncounterList,
   getPatientRecentAppointments,
   setEncounterSearch,

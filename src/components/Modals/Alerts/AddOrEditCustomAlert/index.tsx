@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid, Theme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { tasksSelector } from '@redux/slices/tasks';
+import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
@@ -19,22 +20,29 @@ export interface AddOrEditCustomAlertModalProps {
   description?: string;
 }
 
+const getInitialValues = (title?: string, description?: string) => ({
+  title: title ?? '',
+  description: description ?? ''
+});
+
 const AddOrEditCustomAlertModal = ({ alertId, title, description }: AddOrEditCustomAlertModalProps) => {
-  const isTaskDetailsLoading = useAppSelector(tasksSelector.isTaskDetailsLoading);
+  const isPatientCustomAlertCreated = useAppSelector(patientsSelector.isPatientCustomAlertCreated);
+
+  const methods = useForm({
+    defaultValues: getInitialValues(title, description),
+    mode: 'onSubmit'
+  });
 
   const [t] = useTranslation();
   const modalTitle = !title
     ? t(Translation.MODAL_ADD_OR_EDIT_PATIENT_ALERT_TITLE)
     : t(Translation.MODAL_ADD_OR_EDIT_PATIENT_ALERT_EDIT_TITLE);
 
-  const [fieldValue, setFieldValue] = useState(title ?? '');
-  const [descriptionValue, setDescriptionValue] = useState(description ?? '');
-
   const onClose = () => dispatch(viewsMiddleware.closeModal(ModalName.AddOrEditCustomAlertModal));
 
   return (
     <BaseModal
-      isLoading={isTaskDetailsLoading}
+      isLoading={isPatientCustomAlertCreated}
       title={modalTitle}
       onClose={onClose}
       sx={{
@@ -45,21 +53,18 @@ const AddOrEditCustomAlertModal = ({ alertId, title, description }: AddOrEditCus
       }}
     >
       <Grid>
-        <DialogContent sx={{ p: paddings.all8 }}>
-          <Grid container spacing={3}>
-            <Grid item xs={12}>
-              <Body
-                fieldValue={fieldValue}
-                setFieldValue={setFieldValue}
-                descriptionValue={descriptionValue}
-                setDescriptionValue={setDescriptionValue}
-              />
+        <FormProvider {...methods}>
+          <DialogContent sx={{ p: paddings.all8 }}>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <Body />
+              </Grid>
+              <Grid item xs={12}>
+                <Actions alertId={alertId} title={title} />
+              </Grid>
             </Grid>
-            <Grid item xs={12}>
-              <Actions alertId={alertId} title={title} fieldValue={fieldValue} descriptionValue={descriptionValue} />
-            </Grid>
-          </Grid>
-        </DialogContent>
+          </DialogContent>
+        </FormProvider>
       </Grid>
     </BaseModal>
   );
