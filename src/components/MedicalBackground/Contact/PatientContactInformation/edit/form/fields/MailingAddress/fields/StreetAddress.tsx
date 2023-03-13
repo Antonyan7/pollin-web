@@ -9,7 +9,7 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 
 const StreetAddress = () => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, getValues } = useFormContext();
   const { isSameAddressChecked } = useSamePrimaryContext();
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const mailingAddress = contactInformation?.mailingAddress;
@@ -21,14 +21,21 @@ const StreetAddress = () => {
     name: `${ContactInformationFormFields.PrimaryAddress}.streetAddress`,
     control
   });
+  const primaryAddress = getValues(ContactInformationFormFields.PrimaryAddress);
   const manuallyAddress = useAppSelector(patientsSelector.manuallyAddressForMailing);
 
   useEffect(() => {
     if (manuallyAddress && manuallyAddress.streetAddress) {
       const fullAddress = getFullAddress(manuallyAddress as AddressProps);
+      const { unitNumber, postalCode, province, city, country } = manuallyAddress;
 
       setValue(ContactInformationFormFields.MailingAddress, {
         ...mailingAddress,
+        unitNumber,
+        postalCode,
+        province,
+        city,
+        country,
         streetAddress: fullAddress
       });
     }
@@ -36,12 +43,19 @@ const StreetAddress = () => {
 
   useEffect(() => {
     if (isSameAddressChecked) {
+      const { unitNumber, postalCode, province, city, country } = primaryAddress;
+
       setValue(ContactInformationFormFields.MailingAddress, {
         ...mailingAddress,
+        unitNumber,
+        postalCode,
+        province,
+        city,
+        country,
         streetAddress: primaryAddressField.value
       });
     }
-  }, [isSameAddressChecked, mailingAddress, primaryAddressField.value, setValue]);
+  }, [isSameAddressChecked, mailingAddress, primaryAddressField.value, setValue, primaryAddress]);
 
   return <GoogleAutocomplete field={field} fieldState={fieldState} />;
 };

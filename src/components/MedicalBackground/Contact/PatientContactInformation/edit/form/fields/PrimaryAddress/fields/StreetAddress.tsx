@@ -20,9 +20,15 @@ const StreetAddress = () => {
   useEffect(() => {
     if (manuallyAddress && manuallyAddress.streetAddress) {
       const fullAddress = getFullAddress(manuallyAddress as AddressProps);
+      const { unitNumber, postalCode, province, city, country } = manuallyAddress;
 
       setValue(ContactInformationFormFields.PrimaryAddress, {
         ...primaryAddress,
+        unitNumber,
+        postalCode,
+        province,
+        city,
+        country,
         streetAddress: fullAddress
       });
     }

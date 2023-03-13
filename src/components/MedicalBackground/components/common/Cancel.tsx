@@ -1,21 +1,20 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyledButton } from '@components/common/MaterialComponents';
-import { dispatch } from '@redux/hooks';
-import { patientsMiddleware } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
-const CancelButton = () => {
+export interface CancelButtonProps {
+  onClick: () => void;
+}
+
+const CancelButton = ({ onClick }: CancelButtonProps) => {
   const [t] = useTranslation();
-  const onCancelClick = () => {
-    dispatch(patientsMiddleware.changeEditButtonClickState());
-  };
 
   return (
     <StyledButton
       color="primary"
-      onClick={onCancelClick}
+      onClick={onClick}
       variant="outlined"
       size="large"
       sx={{ marginRight: margins.all20, marginLeft: margins.auto }}

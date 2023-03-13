@@ -14,24 +14,32 @@ import {
   FieldResponsiblePhysician
 } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/form/fields';
 import { Grid } from '@mui/material';
+import { dispatch } from '@redux/hooks';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { paddings } from 'themes/themeConstants';
 
-const PatientContactInformationEditForm = () => (
-  <Grid sx={{ py: paddings.topBottom32 }}>
-    <SamePrimaryAddressProvider>
-      <FieldPatientID />
-      <FieldPatientName />
-      <FieldPreferredName />
-      <FieldPatientContribution />
-      <FieldPrimaryAddress />
-      <FieldMailingAddress />
-      <FieldEmailAddress />
-      <FieldPhoneNumber />
-      <FieldOHIP />
-      <FieldResponsiblePhysician />
-      <FormSubmit />
-    </SamePrimaryAddressProvider>
-  </Grid>
-);
+const PatientContactInformationEditForm = () => {
+  const onCancelClick = () => {
+    dispatch(patientsMiddleware.changeContactInformationEditButtonState());
+  };
+
+  return (
+    <Grid sx={{ py: paddings.topBottom32 }}>
+      <SamePrimaryAddressProvider>
+        <FieldPatientID />
+        <FieldPatientName />
+        <FieldPreferredName />
+        <FieldPatientContribution />
+        <FieldPrimaryAddress />
+        <FieldMailingAddress />
+        <FieldEmailAddress />
+        <FieldPhoneNumber />
+        <FieldOHIP />
+        <FieldResponsiblePhysician />
+        <FormSubmit onClick={onCancelClick} />
+      </SamePrimaryAddressProvider>
+    </Grid>
+  );
+};
 
 export default PatientContactInformationEditForm;

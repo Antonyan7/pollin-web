@@ -23,41 +23,29 @@ const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
   const googleLabel = t(Translation.GOOGLE_AUTOCOMPLETE_LABEL_TITLE);
   const { onChange, onBlur, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(googleLabel);
-  const [openAutocomplete, setOpenAutocomplete] = useState<boolean>(false);
   const [address, setAddress] = useState<string>(fieldProps.value);
-  const handleSelect = (addressName: string) => {
-    setAddress(addressName);
-    onChange(addressName);
-    setOpenAutocomplete(false);
-  };
+
   const onPlaceChange = (placeAddress: string) => {
     setAddress(placeAddress);
     onChange(placeAddress);
-
-    if (placeAddress.length > 0) {
-      setOpenAutocomplete(true);
-    } else {
-      setOpenAutocomplete(false);
-    }
   };
 
-  useEffect(() => {
-    if (fieldProps.value) {
-      setAddress(fieldProps.value);
-    }
-  }, [fieldProps.value]);
+  useEffect(
+    () => {
+      if (fieldProps.value) {
+        onPlaceChange(fieldProps.value);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fieldProps.value]
+  );
 
   return (
-    <PlacesAutocomplete
-      value={address}
-      onChange={(currentAddress) => onPlaceChange(currentAddress)}
-      onSelect={handleSelect}
-    >
+    <PlacesAutocomplete value={address} onChange={(currentAddress) => onPlaceChange(currentAddress)}>
       {({ getInputProps, suggestions, loading }) => (
         <Grid>
           <BaseDropdownWithLoading
             id="google-autocomplete-dropdown"
-            open={openAutocomplete}
             ListboxProps={{
               style: {
                 maxHeight: 260,
@@ -72,7 +60,7 @@ const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
             inputValue={address}
             onInputChange={(_event, value) => {
               if (value) {
-                onPlaceChange(value);
+                onPlaceChange(address);
               }
             }}
             sx={{
@@ -97,7 +85,6 @@ const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
             onChange={(_, value) =>
               value && typeof value === 'object' && 'description' in value && onChange(value.description)
             }
-            onClose={() => setOpenAutocomplete(false)}
             options={suggestions.length ? suggestions : []}
             isOptionEqualToValue={(option, value) => option.id === value.id}
             getOptionLabel={(option) => (typeof option === 'object' ? option.description ?? '' : option)}
