@@ -1,5 +1,5 @@
 import React from 'react';
-import { TableCell, TableRow } from '@mui/material';
+import { Stack, TableCell, TableRow } from '@mui/material';
 import { format } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
@@ -9,6 +9,8 @@ import useOrderResultsActions from '@hooks/contextMenu/useOrderResultsActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 import { convertToLocale } from '@utils/dateUtils';
+
+import { margins } from '../../themes/themeConstants';
 
 interface OrderResultsRowProps {
   row: IOrderResultsByPatientItem;
@@ -30,11 +32,16 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
   return (
     <TableRow role="checkbox" hover key={row.id} onClick={handleOrderResultRowClick} sx={{ cursor: 'pointer' }}>
       <TableCell>{dateCompleted}</TableCell>
-      <TableCell>{row.panelName}</TableCell>
+      <TableCell>
+        {row.panelName}
+        <Stack alignItems="left" justifyContent="center" marginLeft={margins.left16}>
+          {row.measurement?.length > 1 && row.measurement.map((item) => <span>{item.title}</span>)}
+        </Stack>
+      </TableCell>
       <TableCell>
         {row.measurement?.map((measurement, index) => (
           <span key={measurement.title.concat('-', index.toString())}>
-            {`${measurement.title} ${measurement.unit}`}
+            {measurement.unit}
             <br />
           </span>
         ))}
