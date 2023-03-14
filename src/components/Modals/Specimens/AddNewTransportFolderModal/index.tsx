@@ -24,7 +24,6 @@ import { patientsSelector } from '@redux/slices/patients';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
@@ -65,7 +64,7 @@ const AddNewTransportFolderModal = () => {
     const body = {
       name: transportFolderName,
       labId,
-      date: format(new Date(calendarDate), 'yyyy-MM-dd')
+      date: calendarDate
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));

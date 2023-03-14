@@ -22,7 +22,6 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -68,7 +67,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
     const body = {
       name: transportFolderName,
       labId,
-      date: format(new Date(calendarDate), 'yyyy-MM-dd')
+      date: calendarDate
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));

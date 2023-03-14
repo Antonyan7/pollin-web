@@ -48,7 +48,7 @@ const TransportsList = () => {
 
   useEffect(() => {
     const data: ITransportListReqBody = {
-      date: new Date(calendarDate),
+      date: calendarDate,
       page: page + 1,
       ...(searchedItems.length > 0 ? { specimens: searchedItems.map((identifier) => ({ identifier })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
