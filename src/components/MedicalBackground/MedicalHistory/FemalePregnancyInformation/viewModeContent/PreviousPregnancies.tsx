@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPreviousPregnancies } from '@axios/patientEmr/managerPatientEmrTypes';
 import Item from '@components/MedicalBackground/components/common/Item';
-import { getDropdownOptionTitle } from '@components/MedicalBackground/helpers';
+import { getDropdownOption } from '@components/MedicalBackground/helpers';
 import mappingPattern, { typeOfPregnancyLabels } from '@components/MedicalBackground/mapper/femalePregnancyInformation';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -36,7 +36,7 @@ const PreviousPregnancies = ({ previousPregnancies }: { previousPregnancies: IPr
             <Item
               key={v4()}
               title={label}
-              value={getDropdownOptionTitle(dropdownOptions, dropdownType, value) as string}
+              value={getDropdownOption(dropdownOptions, dropdownType, value)?.title as string}
             />
           );
         });

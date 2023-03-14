@@ -106,14 +106,14 @@ export const generalHealthRows = [
   { Component: AdditionalInformation }
 ];
 
-const getDropdownByType = (dropdowns: IDropdown[], dropdownType: DropdownOptionType | string) =>
+export const getDropdownByType = (dropdowns: IDropdown[], dropdownType: DropdownOptionType | string) =>
   dropdowns.find((dropdown) => dropdown.type === dropdownType);
 
-export const getDropdownOptionTitle = (dropdowns: IDropdown[], dropdownType: string, optionId: string) => {
+export const getDropdownOption = (dropdowns: IDropdown[], dropdownType: string, optionId: string) => {
   const dropdown = getDropdownByType(dropdowns, dropdownType) as IDropdown;
   const { options = [] } = dropdown ?? {};
 
-  return options.find((option: IDropdownOption) => option.id === optionId)?.title;
+  return options.find((option: IDropdownOption) => option.id === optionId);
 };
 
 export const getFullAddress = (address?: AddressProps) => {

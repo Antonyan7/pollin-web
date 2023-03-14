@@ -1,10 +1,14 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
+import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
@@ -13,12 +17,24 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const FieldPatientContribution = () => {
   const [t] = useTranslation();
+  const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
+  const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_PRIMARY_CONTRIBUTION);
   const { control } = useFormContext();
   const { field, fieldState } = useController({
     name: `${ContactInformationFormFields.Contribution}.value`,
     control
   });
+  const { onChange, onBlur, ...fieldProps } = field;
+  const contributionOptions = getDropdownByType(
+    dropdownOptions,
+    DropdownOptionType.PrimaryPatientContribution
+  )?.options;
+  const defaultContributionValue = getDropdownOption(
+    dropdownOptions,
+    DropdownOptionType.PrimaryPatientContribution,
+    fieldProps.value
+  );
   const errorHelperText = generateErrorMessage(label);
 
   return (
@@ -28,13 +44,21 @@ const FieldPatientContribution = () => {
       </Grid>
       <Grid item xs={7}>
         <BaseDropdownWithLoading
-          isLoading={false}
-          options={[]}
+          isLoading={isDropdownsLoading}
+          defaultValue={defaultContributionValue}
+          options={contributionOptions as IDropdownOption[]}
+          onChange={(_, value) => {
+            if (value && typeof value === 'object' && 'id' in value) {
+              onChange(value.id);
+            }
+          }}
+          getOptionLabel={(contribution) => (typeof contribution === 'object' ? contribution.title : contribution)}
+          isOptionEqualToValue={(option, value) => option.id === value.id}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInputProps={{
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
-            ...field,
+            ...fieldProps,
             label
           }}
         />
