@@ -634,12 +634,25 @@ const markInTransitAction =
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error));
-      dispatch(
-        setTestResultsState({
-          success: false,
-          fail: true
-        })
-      );
+
+      if (axios.isAxiosError(error)) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.error,
+              description: error?.response?.data.status.message
+            }
+          })
+        );
+      } else {
+        dispatch(
+          setTestResultsState({
+            success: false,
+            fail: true
+          })
+        );
+      }
     }
   };
 

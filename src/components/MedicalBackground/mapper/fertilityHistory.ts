@@ -1,8 +1,7 @@
-import { PreviousTreatmentFieldProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { createObjectWithTitle, getLabelByBoolean } from '../helpers/mapper';
+import { createObjectWithTitle, CustomAccessorItem, getLabelByBoolean } from '../helpers/mapper';
 
 const mappingPattern = {
   isTryingForPregnancy: createObjectWithTitle(
@@ -33,7 +32,7 @@ const mappingPattern = {
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_PREVIOUS_FERTILITY_TREATMENT
       )
     ),
-    customAccessor: (item: PreviousTreatmentFieldProps) => {
+    customAccessor: (item: CustomAccessorItem) => {
       const values = item.treatments.map((treatment) => `${treatment.type}; ${treatment.cycles}`);
       const finalValues = [getLabelByBoolean(item.exists), ...values];
 

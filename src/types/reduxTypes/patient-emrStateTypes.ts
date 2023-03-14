@@ -9,6 +9,8 @@ import {
   AddManuallyAddressModalProps,
   IDropdown,
   IEncounterDetailsProps,
+  IFemalePatientGynecologicalHistoryProps,
+  IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
@@ -51,6 +53,12 @@ export interface MedicalBackgroundProps {
     femalePregnancyInformation: IFemalePregnancyInformationProps | null;
     isFemalePregnancyInformationLoading: boolean;
     isFemalePregnancyInformationDataUpdating: boolean;
+    femalePatientGynecologicalHistory: IFemalePatientGynecologicalHistoryProps | null;
+    isFemalePatientGynecologicalHistoryLoading: boolean;
+    isFemalePatientGynecologicalHistoryDataUpdating: boolean;
+    femalePatientMenstrualCycleHistory: IFemalePatientMenstrualCycleHistoryProps | null;
+    isFemalePatientMenstrualCycleHistoryLoading: boolean;
+    isFemalePatientMenstrualCycleHistoryDataUpdating: boolean;
   };
   common: {
     dropdowns: IDropdown[];

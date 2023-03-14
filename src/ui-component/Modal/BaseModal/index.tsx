@@ -13,7 +13,7 @@ export interface BaseModalProps {
   onClose: () => void;
   dataCy?: string;
   disableDivider?: boolean;
-  titleSx?: SxProps;
+  titleSx?: SxProps<Theme>;
   hideCloseIcon?: boolean;
   sx?: SxProps<Theme>;
 }
@@ -34,7 +34,7 @@ const BaseModal = ({
   const id = useId();
 
   return (
-    <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby={id}>
+    <BaseModalStyled open onClose={onClose} data-cy={dataCy} aria-labelledby={id} sx={sx}>
       <BaseModalTitle
         data-cy={closeIconDataCy}
         id={id}
@@ -43,7 +43,6 @@ const BaseModal = ({
           sx: titleSx
         })}
         hideCloseIcon={hideCloseIcon}
-        sx={sx}
       >
         {title}
       </BaseModalTitle>

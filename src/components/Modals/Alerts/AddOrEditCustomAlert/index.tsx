@@ -45,7 +45,7 @@ const AddOrEditCustomAlertModal = ({ alertId, title, description }: AddOrEditCus
       isLoading={isPatientCustomAlertCreated}
       title={modalTitle}
       onClose={onClose}
-      sx={{
+      titleSx={{
         '& .MuiSvgIcon-root': {
           fill: (theme: Theme) => theme.palette.primary.main
         },

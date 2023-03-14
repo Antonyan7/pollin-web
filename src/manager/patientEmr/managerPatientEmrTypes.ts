@@ -464,6 +464,69 @@ export interface IFemalePregnancyInformation {
   GTPAETALS: IFemalePregnancyInformationProps;
 }
 
+export interface IMedicalBackgroundFieldValuesWithValue extends MedicalBackgroundFieldValues {
+  value: string | boolean;
+}
+
+export interface IFemalePatientGynecologicalHistoryFieldItem {
+  id: string;
+}
+
+export interface IMedicalBackgroundFieldValuesWithItems extends MedicalBackgroundFieldValues {
+  items: IFemalePatientGynecologicalHistoryFieldItem[];
+}
+
+export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue {}
+
+export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue {}
+
+export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue {}
+
+export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue {}
+
+export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue {}
+
+export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems {}
+
+export interface IFemalePatientGynecologicalHistoryProps {
+  takingBirthControl: ITakingBirthControl;
+  isOvulating: IIsOvulating;
+  previousPapTest: IPreviousPapTest;
+  papTestLastDate: IPapTestLastDate;
+  abnormalPap: IAbnormalPap;
+  abnormalPapProcedures: IMedicalBackgroundFieldValuesWithItems;
+  gynecologicalConditions: IMedicalBackgroundFieldValuesWithItems;
+  signsOfPCOS: IMedicalBackgroundFieldValuesWithItems;
+  hyperprolactinemia: IMedicalBackgroundFieldValuesWithItems;
+  signsOfPOI: IMedicalBackgroundFieldValuesWithItems;
+  breastfeeding: IMedicalBackgroundFieldValuesWithValue;
+  cervixTreatment: IMedicalBackgroundFieldValuesWithValue;
+  intercoursePain: IMedicalBackgroundFieldValuesWithValue;
+}
+
+export interface IFemalePatientGynecologicalHistory {
+  gynecologicalHistory: IFemalePatientGynecologicalHistoryProps;
+}
+
+export interface IFemalePatientMenstrualCycleHistoryCycleLength extends MedicalBackgroundFieldValues {
+  number?: string;
+}
+
+export interface IFemalePatientMenstrualCycleHistoryProps {
+  hasPeriod: IMedicalBackgroundFieldValuesWithValue;
+  cycleLength: IFemalePatientMenstrualCycleHistoryCycleLength;
+  firstDayOfLastPeriod: IMedicalBackgroundFieldValuesWithValue;
+  flow: IMedicalBackgroundFieldValuesWithValue;
+  daysOfBleeding: IMedicalBackgroundFieldValuesWithValue;
+  pain: IMedicalBackgroundFieldValuesWithValue;
+  clots: IMedicalBackgroundFieldValuesWithValue;
+  symptoms: IMedicalBackgroundFieldValuesWithValue;
+}
+
+export interface IFemalePatientMenstrualCycleHistory {
+  menstrualHistory: IFemalePatientMenstrualCycleHistoryProps;
+}
+
 export enum DropdownOptionType {
   MonthsConceiving = 'MonthsConceiving',
   FertilityTreatmentCycles = 'FertilityTreatmentCycles',

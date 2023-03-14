@@ -130,6 +130,32 @@ const isFemalePregnancyInformationLoading = createSelector(
   (state) => state.medicalBackground.medicalHistory.isFemalePregnancyInformationLoading
 );
 
+const femalePatientGynecologicalHistory = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.femalePatientGynecologicalHistory
+);
+const isFemalePatientGynecologicalHistoryDataUpdating = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryDataUpdating
+);
+const isFemalePatientGynecologicalHistoryLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryLoading
+);
+
+const femalePatientMenstrualCycleHistory = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.femalePatientMenstrualCycleHistory
+);
+const isFemalePatientMenstrualCycleHistoryDataUpdating = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientMenstrualCycleHistoryDataUpdating
+);
+const isFemalePatientMenstrualCycleHistoryLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientMenstrualCycleHistoryLoading
+);
+
 const dropdowns = createSelector([selector], (state) => state.medicalBackground.common.dropdowns);
 
 const isDropdownsLoading = createSelector([selector], (state) => state.medicalBackground.common.isDropdownsLoading);
@@ -193,9 +219,15 @@ export default {
   fertilityHistory,
   isFertilityHistoryDataUpdating,
   isFertilityHistoryLoading,
-  femalePregnancyInformation,
+  femalePatientMenstrualCycleHistory,
+  isFemalePatientMenstrualCycleHistoryDataUpdating,
+  isFemalePatientMenstrualCycleHistoryLoading,
+  femalePatientGynecologicalHistory,
+  isFemalePatientGynecologicalHistoryDataUpdating,
+  isFemalePatientGynecologicalHistoryLoading,
   dropdowns,
   isDropdownsLoading,
+  femalePregnancyInformation,
   isFemalePregnancyInformationDataUpdating,
   isFemalePregnancyInformationLoading,
   isContactInformationButtonClicked,

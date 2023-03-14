@@ -10,6 +10,8 @@ import {
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
+  IFemalePatientGynecologicalHistory,
+  IFemalePatientMenstrualCycleHistory,
   IFemalePregnancyInformation,
   IFertilityHistory,
   IGeneralHealth,
@@ -219,6 +221,14 @@ const patientEmrManager = {
       `${baseURL}/v1/medical-background/${patientId}/fertility-history`
     );
   },
+  updateFertilityHistory(patientId: string, data: IFertilityHistory) {
+    return axiosInstance.put<IFertilityHistory, IAxiosResponse<IFertilityHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/fertility-history`,
+      {
+        fertilityHistory: data
+      }
+    );
+  },
   getPatientContactInformation(patientId: string) {
     return axiosInstance.get<IMedicalContactInformation, IAxiosResponse<IMedicalContactInformation>>(
       `${baseURL}/v1/medical-background/${patientId}/contact-information`
@@ -237,14 +247,43 @@ const patientEmrManager = {
       `${baseURL}/v1/medical-background/${patientId}/gtpaetals`
     );
   },
-  updateFemalePregnancyInformation(patientId: string) {
+  updateFemalePregnancyInformation(patientId: string, data: IFemalePregnancyInformation) {
     return axiosInstance.put<IFemalePregnancyInformation, IAxiosResponse<IFemalePregnancyInformation>>(
-      `${baseURL}/v1/medical-background/${patientId}/gtpaetals`
+      `${baseURL}/v1/medical-background/${patientId}/gtpaetals`,
+      {
+        GTPAETALS: data
+      }
     );
   },
   getPatientMedicalBackgroundDropdownOptions() {
     return axiosInstance.get<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
       `${baseURL}/v1/medical-background/dropdown-options`
+    );
+  },
+  getFemalePatientMenstrualCycleHistory(patientId: string) {
+    return axiosInstance.get<IFemalePatientMenstrualCycleHistory, IAxiosResponse<IFemalePatientMenstrualCycleHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/menstrual-history`
+    );
+  },
+  updateFemalePatientMenstrualCycleHistory(patientId: string, data: IFemalePatientMenstrualCycleHistory) {
+    return axiosInstance.put<IFemalePatientMenstrualCycleHistory, IAxiosResponse<IFemalePatientMenstrualCycleHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/menstrual-history`,
+      {
+        menstrualHistory: data
+      }
+    );
+  },
+  getFemalePatientGynecologicalHistory(patientId: string) {
+    return axiosInstance.get<IFemalePatientGynecologicalHistory, IAxiosResponse<IFemalePatientGynecologicalHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/gynecological-history`
+    );
+  },
+  updateFemalePatientGynecologicalHistory(patientId: string, data: IFemalePatientGynecologicalHistory) {
+    return axiosInstance.put<IFemalePatientGynecologicalHistory, IAxiosResponse<IFemalePatientGynecologicalHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/gynecological-history`,
+      {
+        gynecologicalHistory: data
+      }
     );
   }
 };

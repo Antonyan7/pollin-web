@@ -1,4 +1,6 @@
 import {
+  IFemalePatientMenstrualCycleHistoryCycleLength,
+  IFemalePatientMenstrualCycleHistoryProps,
   IFertilityHistoryProps,
   IPreviousPregnancies,
   PreviousTreatmentFieldProps
@@ -6,13 +8,15 @@ import {
 
 import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
 
-type CustomAccessorItem = PreviousTreatmentFieldProps;
+export interface CustomAccessorItem
+  extends PreviousTreatmentFieldProps,
+    IFemalePatientMenstrualCycleHistoryCycleLength {}
 
 type Mapper = Record<string, MapperProps>;
 
 export interface MapperProps {
   title: string;
-  customAccessor?: (item: CustomAccessorItem) => string[];
+  customAccessor?: (item: CustomAccessorItem) => string[] | string;
 }
 
 export const createObjectWithTitle = (itemTitle: string) => ({
@@ -22,7 +26,7 @@ export const createObjectWithTitle = (itemTitle: string) => ({
 export const getLabelByBoolean = (isItTrue: boolean) =>
   isItTrue ? MedicalFormRadioValues.Yes : MedicalFormRadioValues.No;
 
-type MappingTarget = IPreviousPregnancies | IFertilityHistoryProps | null;
+type MappingTarget = IPreviousPregnancies | IFertilityHistoryProps | IFemalePatientMenstrualCycleHistoryProps | null;
 
 export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper) =>
   target

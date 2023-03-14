@@ -86,6 +86,10 @@ const {
   setIsFertilityHistoryLoading,
   setFemalePregnancyInformation,
   setIsFemalePregnancyInformationLoading,
+  setFemalePatientGynecologicalHistory,
+  setIsFemalePatientGynecologicalHistoryLoading,
+  setFemalePatientMenstrualCycleHistory,
+  setIsFemalePatientMenstrualCycleHistoryLoading,
   setDropdowns,
   setIsDropdownsLoading,
   setMedicalPatientContactInformation,
@@ -652,6 +656,36 @@ const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch)
   dispatch(setIsFertilityHistoryLoading(false));
 };
 
+const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(true));
+
+  try {
+    const response = await API.patients.getFemalePatientMenstrualCycleHistory(patientId);
+
+    dispatch(setFemalePatientMenstrualCycleHistory(response.data.data.menstrualHistory));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(false));
+};
+
+const getFemalePatientGynecologicalHistory = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFemalePatientGynecologicalHistoryLoading(true));
+
+  try {
+    const response = await API.patients.getFemalePatientGynecologicalHistory(patientId);
+
+    dispatch(setFemalePatientGynecologicalHistory(response.data.data.gynecologicalHistory));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsFemalePatientGynecologicalHistoryLoading(false));
+};
+
 const changeContactInformationEditButtonState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
   const editButtonState = getState().patients.medicalBackground.contact.isContactInformationEditButtonClicked;
 
@@ -836,5 +870,7 @@ export default {
   getMedicalContactInformation,
   changeManuallyAddressForPrimary,
   changeManuallyAddressForMailing,
-  updatePatientContactInformation
+  updatePatientContactInformation,
+  getFemalePatientMenstrualCycleHistory,
+  getFemalePatientGynecologicalHistory
 };
