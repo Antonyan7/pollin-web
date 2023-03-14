@@ -24,6 +24,7 @@ const PatientAlertView = () => {
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
   const isPatientAlertViewOpen = useAppSelector(patientsSelector.isPatientAlertViewOpen);
   const [t] = useTranslation();
+  const patientCustomAlerts = patientAlertDetails.filter((alert) => alert.id);
 
   useEffect(() => {
     if (rowId) {
@@ -120,27 +121,29 @@ const PatientAlertView = () => {
         </>
       ) : null}
 
-      <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
-        <Button
-          sx={{
-            color: theme.palette.warning.dark
-          }}
-          size="small"
-          onClick={() => {
-            dispatch(
-              viewsMiddleware.openModal({
-                name: ModalName.AddOrEditCustomAlertModal,
-                props: {}
-              })
-            );
-          }}
-        >
-          <Stack flexBasis={24}>
-            <AddIcon />
-          </Stack>
-          <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
-        </Button>
-      </Stack>
+      {patientCustomAlerts.length < 10 ? (
+        <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
+          <Button
+            sx={{
+              color: theme.palette.warning.dark
+            }}
+            size="small"
+            onClick={() => {
+              dispatch(
+                viewsMiddleware.openModal({
+                  name: ModalName.AddOrEditCustomAlertModal,
+                  props: {}
+                })
+              );
+            }}
+          >
+            <Stack flexBasis={24}>
+              <AddIcon />
+            </Stack>
+            <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
+          </Button>
+        </Stack>
+      ) : null}
     </Stack>
   );
 };

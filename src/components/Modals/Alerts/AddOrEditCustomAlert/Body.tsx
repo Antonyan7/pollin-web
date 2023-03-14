@@ -15,7 +15,12 @@ const Body = () => {
   return (
     <Grid container spacing={2} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'scroll' }}>
       <Grid item xs={12}>
-        <TextField {...titleFieldProps} label={t(Translation.MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD)} fullWidth />
+        <TextField
+          {...titleFieldProps}
+          inputProps={{ maxLength: 50 }}
+          label={t(Translation.MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD)}
+          fullWidth
+        />
       </Grid>
       <Grid item xs={12}>
         <TextField
@@ -23,6 +28,7 @@ const Body = () => {
           label={t(Translation.MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION)}
           fullWidth
           minRows={4}
+          inputProps={{ maxLength: 300 }}
           multiline
         />
       </Grid>
