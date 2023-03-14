@@ -56,7 +56,7 @@ const StatusAppointmentLabel = () => {
             label={statusAppointmentLabel}
             {...fieldProps}
           >
-            <MenuItem disabled value={AppointmentStatus.Booked}>
+            <MenuItem disabled value={AppointmentStatus.Booked} sx={{ display: 'none' }}>
               {AppointmentStatus.Booked}
             </MenuItem>
             {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
