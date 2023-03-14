@@ -15,7 +15,9 @@ export const HeadCell = <SortFieldType,>({
   const theme = useTheme();
   const router = useRouter();
   const onSort = (field: SortFieldType) => {
-    setSortField(field);
+    if (setSortField) {
+      setSortField(field);
+    }
 
     // ? Every new field which will be sorted first state(default) for that should be ASC then second click DESC for next click ASC etc.
     // ? To identify it we using this approach in bellow if it's the same field sort by ASC -> DESC or DESC -> ASC logic if it's a new sorted field first of set ASC.
@@ -30,7 +32,9 @@ export const HeadCell = <SortFieldType,>({
 
     router.push(url, undefined, { shallow: true });
 
-    setSortOrder(sortDirection);
+    if (setSortOrder) {
+      setSortOrder(sortDirection);
+    }
   };
 
   const tableSortLabelProps = headCell.isSortable

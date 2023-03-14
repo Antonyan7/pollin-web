@@ -10,6 +10,7 @@ import {
   BookingProps,
   IAppointment,
   IAppointmentErrorState,
+  ICheckinAppointment,
   IGroupedServiceProviders,
   IPatientList,
   IServiceProviders,
@@ -114,6 +115,12 @@ const reducers = createReducer({
   setAppointmentStatus(state, action: IAction<AppointmentStatusState>) {
     state.appointmentStatus = action.payload;
   },
+  setIsCheckInLoading(state, action: IAction<boolean>) {
+    state.isCheckInLoading = action.payload;
+  },
+  setIsCheckInSuccess(state, action: IAction<boolean>) {
+    state.isCheckInSuccess = action.payload;
+  },
   setCreateAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
     state.createAppointmentError = action.payload;
   },
@@ -134,6 +141,12 @@ const reducers = createReducer({
   },
   setSpecimenAppointments(state, action: IAction<IProvidersCollectionCalendarAppointment[]>) {
     state.specimenAppointments.list = action.payload;
+  },
+  setIsCheckInAppointmentsLoading(state, action: IAction<boolean>) {
+    state.isCheckInAppointmentsLoading = action.payload;
+  },
+  setCheckInAppointments(state, action: IAction<ICheckinAppointment[]>) {
+    state.checkInAppointmentsList = action.payload;
   }
 });
 

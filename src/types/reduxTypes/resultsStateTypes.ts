@@ -1,6 +1,7 @@
 import { IPagination } from '@axios/axiosTypes';
 import { ISpecimenLocation, ISpecimensForAppointment } from '@axios/results/resultsManagerTypes';
 import { ModalName } from 'types/modals';
+import { ICheckinAppointment } from 'types/reduxTypes/bookingStateTypes';
 import {
   IResultsFilterOption,
   ITransportFolder,
@@ -259,6 +260,7 @@ export enum UnitResultType {
 // TODO: refactor this
 export type TableRowCheckboxProps =
   | IAllTestsSpecimensListItem
+  | ICheckinAppointment
   | ISpecimensListItem
   | ITransportListFolderProps
   | ISpecimensInTransportListItem;

@@ -622,11 +622,17 @@
   "modal.verify.patient.photo.id": "Patient ID",
   "modal.verify.patient.photo.date": "Patient Date of Birth",
   "modal.verify.patient.photo.reject": "Reject Photo",
-  "modal.verify.patient.photo.approve": "Approve Photo",
   "modal.add.or.edit.patient.alert.title": "Add Patient Alert",
   "modal.add.or.edit.patient.alert.edit.title": "Edit Patient Alert",
   "modal.add.or.edit.patient.alert.field": "Alert Title",
   "modal.add.or.edit.patient.alert.description": "Alert Description",
   "modal.delete.alert.title": "Are you sure you want to delete this?",
-  "modal.delete.alert.message": "Please note that this action is permanent and cannot be undone."
+  "modal.delete.alert.message": "Please note that this action is permanent and cannot be undone.",
+  "modal.verify.patient.photo.approve": "Approve Photo",
+  "page.patient.check.in.appointments.name": "Appointments",
+  "page.patient.check.in.table.header.name": "Appointment",
+  "page.patient.check.in.table.header.appointment.time": "Appointment Time",
+  "page.patient.check.in.table.header.status": "Status",
+  "page.patient.check.in.patient.label": "Patient name",
+  "page.patient.check.in.alert.success": "has been checked-in"
 }

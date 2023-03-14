@@ -22,6 +22,8 @@ export const toUTCIsoString = (value: Date) => {
   return '';
 };
 
+export const getClinicTimezone = () => store.getState().core.clinicConfig.timeZone;
+
 export const pickOnlyValidTime = (value: Date | string) => {
   const dateTime = new Date(value);
   const minutes = dateTime.getMinutes();
@@ -218,4 +220,12 @@ export const formatDate = (initialDate: string, formatValue: string) => {
   const date = new Date(dateWithNeutralHour);
 
   return format(date, formatValue);
+};
+
+export const convertTZ = (date: string | Date | null, tzString: string): Date | string => {
+  if (!date) {
+    return '';
+  }
+
+  return new Date((typeof date === 'string' ? new Date(date) : date).toLocaleString('en-US', { timeZone: tzString }));
 };

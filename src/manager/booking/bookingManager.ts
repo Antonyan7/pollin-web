@@ -5,9 +5,11 @@ import {
   IAppointmentListResponse,
   IAppointmentTypesData,
   ICancelAppointmentReqBody,
+  ICheckInReqBody,
   ICreateAppointmentBody,
   ICreatedAppointmentResponse,
   IEditAppointmentBody,
+  IGetCheckInAppointmentResponse,
   IGetCollectionCalendarAppointmentFilters,
   IGetPatientAppointments,
   IGetPatientAppointmentsListFiltersResponse,
@@ -24,7 +26,7 @@ import {
   IUpdatedAppointmentResponse
 } from '@axios/booking/managerBookingTypes';
 import { Axios } from 'manager/axiosInstance';
-import { ISpecimenCollectionAppointment } from 'types/reduxTypes/bookingStateTypes';
+import { ICheckInSuccessResponse, ISpecimenCollectionAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 const baseURL = '/clinic-booking';
 
@@ -84,6 +86,12 @@ const bookingManager = {
       { appointment }
     );
   },
+  checkInAppointment(body: ICheckInReqBody) {
+    return axiosInstance.patch<ICheckInSuccessResponse, IAxiosResponse<ICheckInSuccessResponse>>(
+      `${baseURL}/v1/appointment/check-in`,
+      body
+    );
+  },
 
   cancelAppointment(appointmentId: string, body: ICancelAppointmentReqBody) {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/appointment/${appointmentId}/cancel`, body);
@@ -132,6 +140,14 @@ const bookingManager = {
         `${baseURL}/v1/profile-appointment/${patientId}/recent`
       )
       .then(({ data }) => data);
+  },
+  getCheckInAppointments(patientId: string) {
+    return axiosInstance.get<IGetCheckInAppointmentResponse, IAxiosResponse<IGetCheckInAppointmentResponse>>(
+      `${baseURL}/v1/appointment/check-in-list`,
+      {
+        params: { patientId }
+      }
+    );
   }
 };
 

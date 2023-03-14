@@ -1,5 +1,6 @@
 import API from '@axios/API';
 import {
+  ICheckInReqBody,
   ICreateAppointmentBody,
   IEditAppointmentBody,
   IGroupedServiceProvidersParams,
@@ -7,6 +8,8 @@ import {
   ProvidersCollectionCalendarAppointmentsReqBodyFilter
 } from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
+import { SeveritiesType } from '@components/Scheduling/types';
+import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import axios from 'axios';
 import store, { AppDispatch } from 'redux/store';
@@ -36,6 +39,8 @@ const {
   setCurrentServiceProviderId,
   setCurrentSpecimenServiceProviderId,
   setCalendarLoadingState,
+  setIsCheckInAppointmentsLoading,
+  setCheckInAppointments,
   setPatientsList,
   setPatientListLoading,
   setIsServiceTypesLoading,
@@ -44,6 +49,8 @@ const {
   setAppointmentDetails,
   setPatientAlerts,
   setAppointmentLoading,
+  setIsCheckInLoading,
+  setIsCheckInSuccess,
   setSaveButtonDisabled,
   setAppointmentStatus,
   setCreateAppointmentErrorState,
@@ -277,6 +284,21 @@ const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: Ap
   }
 };
 
+const getCheckInAppointments = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCheckInAppointmentsLoading(true));
+
+    const response = await API.booking.getCheckInAppointments(patientId);
+
+    dispatch(setCheckInAppointments(response.data.data.appointments));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error as string));
+  } finally {
+    dispatch(setIsCheckInAppointmentsLoading(false));
+  }
+};
+
 const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
   const resetOption = {
     success: false,
@@ -290,6 +312,30 @@ const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
       cancel: resetOption
     })
   );
+};
+
+const checkInAppointment = (checkInValues: ICheckInReqBody, message: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCheckInLoading(true));
+
+    await API.booking.checkInAppointment(checkInValues);
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: message
+        }
+      })
+    );
+    dispatch(setIsCheckInSuccess(true));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setIsCheckInSuccess(false));
+    dispatch(setError(error as string));
+  } finally {
+    dispatch(setIsCheckInLoading(false));
+  }
 };
 
 const clearCreateAppointmentErrorState = () => async (dispatch: AppDispatch) => {
@@ -515,10 +561,12 @@ export default {
   getServiceTypes,
   createAppointment,
   getAppointmentDetails,
+  checkInAppointment,
   editAppointment,
   clearAppointmentDetails,
   getPatientAlerts,
   setEditSaveButtonDisabled,
+  getCheckInAppointments,
   resetAppointmentStatus,
   clearCreateAppointmentErrorState,
   getSpecimenAppointmentsFilters,

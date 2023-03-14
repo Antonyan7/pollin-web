@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import CheckIn from '@components/CheckIn';
 import { Box } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
@@ -23,6 +24,7 @@ const Checkin = () => {
           items: [{ name: t(Translation.PAGE_PATIENT_LIST_TITLE), path: '/booking/check-in' }]
         }}
       />
+      <CheckIn />
     </Box>
   );
 };

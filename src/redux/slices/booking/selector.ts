@@ -36,6 +36,10 @@ export const editAppointmentErrorState = createSelector([selector], (state) => s
 export const cancelAppointmentErrorState = createSelector([selector], (state) => state.cancelAppointmentErrorState);
 export const specimenAppointments = createSelector([selector], (state) => state.specimenAppointments);
 export const specimenAppointmentsFilters = createSelector([specimenAppointments], (state) => state.filters);
+export const checkInAppointmentsList = createSelector([selector], (state) => state.checkInAppointmentsList);
+export const isCheckInAppointmentsLoading = createSelector([selector], (state) => state.isCheckInAppointmentsLoading);
+export const isCheckInLoading = createSelector([selector], (state) => state.isCheckInLoading);
+export const isCheckInSuccess = createSelector([selector], (state) => state.isCheckInSuccess);
 export const selectedSpecimenAppointmentsFilters = createSelector(
   [specimenAppointments],
   (state) => state.selectedFilters
@@ -61,6 +65,8 @@ export default {
   specimenServiceProviderId,
   isCalendarLoading,
   patientList,
+  isCheckInLoading,
+  isCheckInSuccess,
   serviceTypes,
   appointmentDetails,
   patientAlerts,
@@ -73,6 +79,8 @@ export default {
   specimenAppointments,
   specimenAppointmentsFilters,
   selectedSpecimenAppointmentsFilters,
+  checkInAppointmentsList,
+  isCheckInAppointmentsLoading,
   isSpecimenAppointmentsFiltersArrayLoading,
   specimenAppointmentsList
 };

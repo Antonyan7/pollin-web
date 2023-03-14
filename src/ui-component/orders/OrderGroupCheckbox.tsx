@@ -1,21 +1,25 @@
 import React, { ChangeEvent } from 'react';
 import { Box, Checkbox, useTheme } from '@mui/material';
+import { CheckboxProps } from '@mui/material/Checkbox/Checkbox';
 
 import { LineIcon } from '@assets/icons/LineIcon';
+
+interface ICheckBox extends CheckboxProps {
+  checkedColor: string;
+  checkedIcon: React.ReactNode;
+  onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
+  indeterminate?: boolean;
+  checked?: boolean;
+}
 
 const OrderGroupCheckbox = ({
   checkedColor,
   checkedIcon,
   onChange,
   indeterminate,
-  checked
-}: {
-  checkedColor: string;
-  checkedIcon: React.ReactNode;
-  onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
-  indeterminate?: boolean;
-  checked: boolean;
-}) => {
+  checked,
+  ...otherProps
+}: ICheckBox) => {
   const theme = useTheme();
 
   const checkBoxStyles = {
@@ -45,6 +49,7 @@ const OrderGroupCheckbox = ({
     <Checkbox
       checkedIcon={<Box sx={checkBoxStyles.checkedStyle}>{checkedIcon}</Box>}
       color="default"
+      {...otherProps}
       checked={checked}
       indeterminateIcon={
         <Box sx={checkBoxStyles.lineStyle}>

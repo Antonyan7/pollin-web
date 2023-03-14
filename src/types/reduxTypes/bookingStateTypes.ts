@@ -49,11 +49,15 @@ export interface BookingProps {
   isSpecimenGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
   currentServiceProviderId: string;
+  isCheckInLoading: boolean;
+  isCheckInSuccess: boolean;
   currentSpecimenServiceProviderId: string;
   isCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
   patientList: IPatientList;
+  isCheckInAppointmentsLoading: boolean;
+  checkInAppointmentsList: ICheckinAppointment[];
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
@@ -82,6 +86,22 @@ export interface IServiceProviders extends IPagination {
   providers: IServiceProvider[];
 }
 export interface IServiceProvider extends IUniqueItem {}
+
+export enum CheckInStatuses {
+  Booked = 'Booked',
+  Confirmed = 'Confirmed',
+  CheckedIn = 'Checked In',
+  NoShow = 'No Show',
+  InProgress = 'In Progress'
+}
+
+export interface ICheckinAppointment {
+  id: string;
+  type: string;
+  status: CheckInStatuses;
+  date: string;
+  checkInAllowed: boolean;
+}
 
 export interface IGroupedServiceProviders extends IPagination {
   providers: IGroupedServiceProvider[];
@@ -121,6 +141,19 @@ export interface IAppointment {
 export interface ISpecimenCollectionAppointment {
   id: string;
   status: AppointmentStatus.InProgress;
+}
+
+export interface ICheckInSuccessResponse {
+  appointments: ISingleCheckInAppointment[];
+}
+
+export interface ISingleCheckInAppointment {
+  id: string;
+  type: string;
+  status: string;
+  date: string;
+  checkInAllowed: boolean;
+  askForPartners: boolean;
 }
 
 export interface ICalendarSlot {

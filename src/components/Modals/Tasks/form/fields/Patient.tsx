@@ -16,7 +16,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const INITIAL_PAGE = 1;
 
-const PatientField = () => {
+const PatientField = ({ label }: { label?: string }) => {
   const [t] = useTranslation();
   const [openAutocompleteList, setOpenAutocompleteList] = useState(false);
   const patientIdFieldName = 'patient';
@@ -33,7 +33,7 @@ const PatientField = () => {
   const [inputValue, setInputValue] = useState(field.value);
   const patientIdHelperText = error?.message;
   const patientIdErrorText = !!error?.message;
-  const patientIdSelectLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_PLACEHOLDER);
+  const patientIdSelectLabel = label ?? t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_PLACEHOLDER);
   const patientsListCurrentPage = useRef(INITIAL_PAGE);
   const patientsListRef = useRef<HTMLDivElement | null>(null);
   const scrollPosition = useRef(0);

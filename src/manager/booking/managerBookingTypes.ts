@@ -4,6 +4,7 @@ import {
   AppointmentStatus,
   IAppointment,
   ICancelStatusItem,
+  ICheckinAppointment,
   IGroupedServiceProvider,
   IPatientInfo,
   IServiceProvider,
@@ -46,6 +47,11 @@ export interface IPatientNamesResponseData {
 
 export interface IAppointmentTypesData {
   serviceTypes: IServiceType[];
+}
+
+export interface ICheckInReqBody {
+  patientId: string;
+  appointments: { id: string }[];
 }
 
 export interface ICreateAppointmentBody {
@@ -217,6 +223,10 @@ export interface IPatientRecentAppointment {
   id: string;
   type: string;
   date: string;
+}
+
+export interface IGetCheckInAppointmentResponse {
+  appointments: ICheckinAppointment[];
 }
 
 export interface IGetPatientRecentAppointments {
