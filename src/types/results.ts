@@ -131,6 +131,7 @@ export enum TestResultsFilters {
 export enum FinalResultChipColor {
   Normal = 'active',
   Abnormal = 'inActive',
+  TestNotComplete = 'testNotComplete',
   Initial = 'initial'
 }
 

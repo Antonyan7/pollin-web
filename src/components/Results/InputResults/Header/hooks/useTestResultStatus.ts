@@ -37,7 +37,7 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
       if (finalTestResultType === UnitResultType.TestNotComplete) {
         return {
           testResultStatusLabel: initialResultValue,
-          testResultStatusColor: FinalResultChipColor.Initial
+          testResultStatusColor: FinalResultChipColor.TestNotComplete
         };
       }
 
@@ -56,7 +56,7 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
 
     return {
       testResultStatusLabel: initialResultValue,
-      testResultStatusColor: FinalResultChipColor.Initial
+      testResultStatusColor: FinalResultChipColor.TestNotComplete
     };
   }, [isTestResultsDetailsLoading, measurement, initialResultValue]);
 };

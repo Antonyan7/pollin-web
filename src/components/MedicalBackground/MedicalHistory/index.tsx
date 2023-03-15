@@ -1,6 +1,7 @@
 import React from 'react';
 import { Stack } from '@mui/material';
 
+import FemaleGynecologicalHistory from './FemaleGynecologicalHistory';
 import FemalePatientMenstrualCycleHistory from './FemalePatientMenstrualCycleHistory';
 import FemalePregnancyInformation from './FemalePregnancyInformation';
 import FertilityHistory from './FertilityHistory';
@@ -10,6 +11,7 @@ const MedicalHistory = () => (
     <FertilityHistory />
     <FemalePregnancyInformation />
     <FemalePatientMenstrualCycleHistory />
+    <FemaleGynecologicalHistory />
   </Stack>
 );
 

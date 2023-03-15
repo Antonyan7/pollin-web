@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from 'react';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
-import mappingPattern from '@components/MedicalBackground/mapper/fertilityHistory';
+import mappingPattern from '@components/MedicalBackground/mapper/femalePatientGynecologicalHistory';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
@@ -12,26 +12,31 @@ import CircularLoading from '@ui-component/circular-loading';
 
 const ViewModeContent = () => {
   const router = useRouter();
-  const fertilityHistory = useAppSelector(patientsSelector.fertilityHistory);
-  const isFertilityHistoryLoading = useAppSelector(patientsSelector.isFertilityHistoryLoading);
+  const femalePatientGynecologicalHistory = useAppSelector(patientsSelector.femalePatientGynecologicalHistory);
+  const isFemalePatientGynecologicalHistoryLoading = useAppSelector(
+    patientsSelector.isFemalePatientGynecologicalHistoryLoading
+  );
 
   useEffect(() => {
     if (typeof router.query.id === 'string') {
-      dispatch(patientsMiddleware.getFertilityHistory(router.query.id));
+      dispatch(patientsMiddleware.getFemalePatientGynecologicalHistory(router.query.id));
     }
   }, [router.query.id]);
 
-  const mappedItems = useMemo(() => mapObjectByPattern(fertilityHistory, mappingPattern), [fertilityHistory]);
+  const mappedItems = useMemo(
+    () => mapObjectByPattern(femalePatientGynecologicalHistory, mappingPattern),
+    [femalePatientGynecologicalHistory]
+  );
 
-  return !isFertilityHistoryLoading ? (
+  return !isFemalePatientGynecologicalHistoryLoading ? (
     <CardContentWrapper>
       {mappedItems.map((mappedItem, index) => (
         <Item
           key={v4()}
           title={mappedItem?.title as string}
           index={index}
-          value={mappedItem?.item?.value}
-          note={mappedItem?.item?.note}
+          value={mappedItem?.item.value}
+          note={mappedItem?.item.note}
         />
       ))}
     </CardContentWrapper>

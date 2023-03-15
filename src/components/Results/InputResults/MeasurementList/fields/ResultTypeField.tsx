@@ -19,7 +19,7 @@ const ResultTypeField = ({ name, control }: IMeasurementListField) => {
   const { type } = useTestResultsContext();
 
   const resultTypeOptions =
-    type === InputResultTestType.InHouse ? Object.values(FinalResultType) : Object.values(UnitResultType);
+    type === InputResultTestType.InHouse ? Object.entries(FinalResultType) : Object.entries(UnitResultType);
   const { field } = useController({
     name,
     control
@@ -34,11 +34,15 @@ const ResultTypeField = ({ name, control }: IMeasurementListField) => {
         onChange={(e) => field.onChange(e.target.value)}
         IconComponent={StyledKeyboardArrowDownIcon}
       >
-        {resultTypeOptions.map((resultMeasurementType) => (
-          <MenuItem key={resultMeasurementType} value={resultMeasurementType}>
-            {resultMeasurementType}
-          </MenuItem>
-        ))}
+        {resultTypeOptions.map((resultMeasurementType) => {
+          const [id, label] = resultMeasurementType;
+
+          return (
+            <MenuItem key={id} value={id}>
+              {label}
+            </MenuItem>
+          );
+        })}
       </Select>
     </FormControl>
   );

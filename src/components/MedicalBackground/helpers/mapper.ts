@@ -1,4 +1,5 @@
 import {
+  IFemalePatientGynecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryCycleLength,
   IFemalePatientMenstrualCycleHistoryProps,
   IFertilityHistoryProps,
@@ -10,7 +11,8 @@ import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/typ
 
 export interface CustomAccessorItem
   extends PreviousTreatmentFieldProps,
-    IFemalePatientMenstrualCycleHistoryCycleLength {}
+    IFemalePatientMenstrualCycleHistoryCycleLength,
+    IFemalePatientGynecologicalHistoryProps {}
 
 type Mapper = Record<string, MapperProps>;
 
@@ -26,7 +28,12 @@ export const createObjectWithTitle = (itemTitle: string) => ({
 export const getLabelByBoolean = (isItTrue: boolean) =>
   isItTrue ? MedicalFormRadioValues.Yes : MedicalFormRadioValues.No;
 
-type MappingTarget = IPreviousPregnancies | IFertilityHistoryProps | IFemalePatientMenstrualCycleHistoryProps | null;
+type MappingTarget =
+  | IPreviousPregnancies
+  | IFertilityHistoryProps
+  | IFemalePatientMenstrualCycleHistoryProps
+  | IFemalePatientGynecologicalHistoryProps
+  | null;
 
 export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper) =>
   target
@@ -38,13 +45,14 @@ export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper
         const currentItemValue =
           typeof itemData?.value === 'boolean' || itemData?.value === null ? currentItemLabeledValue : itemData.value;
 
+        const finalValue =
+          typeof mappingItem?.customAccessor === 'function' ? mappingItem.customAccessor(itemData) : currentItemValue;
+
         return {
           title: mappingItem.title,
           item: {
-            value:
-              typeof mappingItem?.customAccessor === 'function'
-                ? mappingItem.customAccessor(itemData)
-                : currentItemValue,
+            // When there are not any values for field just show NO label.
+            value: finalValue ?? getLabelByBoolean(false),
             note: itemData?.note
           }
         };
