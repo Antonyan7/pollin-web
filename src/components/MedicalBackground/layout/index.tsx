@@ -34,7 +34,7 @@ const MedicalBackgroundCard: FC<MedicalBackgroundCardProps> = ({ title, ViewMode
           <Grid>
             <Typography
               sx={{
-                fontWeight: 600,
+                fontWeight: 500,
                 fontSize: theme.typography.pxToRem(16),
                 color: theme.palette.secondary[800]
               }}

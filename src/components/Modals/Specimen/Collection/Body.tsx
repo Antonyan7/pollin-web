@@ -67,7 +67,7 @@ const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentSt
         </Grid>
       ) : (
         <Grid item display="flex" justifyContent="center">
-          <Typography sx={{ fontWeight: 600, color: (theme) => theme.palette.primary.main }} alignContent="center">
+          <Typography sx={{ fontWeight: 500, color: (theme) => theme.palette.primary.main }} alignContent="center">
             {t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_NO_ORDERS_MESSAGE)}
           </Typography>
         </Grid>

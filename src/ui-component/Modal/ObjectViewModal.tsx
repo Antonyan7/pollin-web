@@ -38,13 +38,7 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
     <ViewModal
       open={open}
       header={
-        <DialogTitle
-          variant="h2"
-          mb={3}
-          fontWeight="bold"
-          color={theme.palette.common.black}
-          textTransform="capitalize"
-        >
+        <DialogTitle variant="h2" mb={3} fontWeight={500} color={theme.palette.common.black} textTransform="capitalize">
           {title}
         </DialogTitle>
       }
@@ -61,7 +55,7 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
                 // eslint-disable-next-line react/no-array-index-key
                 <React.Fragment key={index}>
                   <Grid item xs={5}>
-                    <Typography fontWeight="bold" color={theme.palette.common.black}>
+                    <Typography fontWeight={500} color={theme.palette.common.black}>
                       {index === 0 && `${key}:`}
                     </Typography>
                   </Grid>

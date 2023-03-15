@@ -63,7 +63,7 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
   return (
     <>
       <Box>
-        <Typography variant="h4" fontWeight={600}>
+        <Typography variant="h4" fontWeight={500}>
           {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_PRACTITIONER_COMMENTS)}
         </Typography>
         <Typography variant="h5" mt={margins.top16}>
@@ -85,13 +85,13 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
       </Box>
       <Box display="flex" justifyContent="space-between">
         <Box>
-          <Typography variant="h4" fontWeight={600} mt={margins.top24}>
+          <Typography variant="h4" fontWeight={500} mt={margins.top24}>
             {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEW)}
           </Typography>
           <Typography variant="h5" mt={margins.top16}>
             {reportReviewText}
           </Typography>
-          <Typography variant="h4" fontWeight={600} mt={margins.top24}>
+          <Typography variant="h4" fontWeight={500} mt={margins.top24}>
             {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASE_TO_PATIENT)}
           </Typography>
           <Typography variant="h5" mt={margins.top16}>

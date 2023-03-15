@@ -78,7 +78,7 @@ const PatientHighlightsView = () => {
                 {patientHighlightColumn.map(({ uiid, title, items }) => (
                   <React.Fragment key={title}>
                     <Grid item xs={12} sm={4}>
-                      <Typography fontWeight="bold" color={theme.palette.common.black}>
+                      <Typography fontWeight={500} color={theme.palette.common.black}>
                         {title}:
                       </Typography>
                     </Grid>
@@ -90,7 +90,7 @@ const PatientHighlightsView = () => {
                       ))}
                       {uiid && (
                         <Typography
-                          fontWeight="bolder"
+                          fontWeight={500}
                           color={theme.palette.common.black}
                           sx={{ cursor: 'pointer', '&:hover': { textDecoration: 'underline' } }}
                           onClick={onDetailsClick(uiid)}

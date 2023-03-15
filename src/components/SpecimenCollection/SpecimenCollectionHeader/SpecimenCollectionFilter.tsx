@@ -32,7 +32,7 @@ const useStyles = makeStyles({
   },
   selectedValue: {
     margin: `${margins.topBottom2} ${margins.leftRight0}`,
-    fontWeight: 600
+    fontWeight: 500
   }
 });
 

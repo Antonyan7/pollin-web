@@ -147,13 +147,13 @@ const AppointmentsCard = ({
                         >
                           {type}
                         </Typography>
-                        <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
+                        <Typography fontWeight="400" variant="h6" color={theme.palette.grey[700]}>
                           {status}
                         </Typography>
                       </TableCell>
                       <TableCell width="35%" sx={{ verticalAlign: 'middle' }}>
                         <Typography variant="h5">{timeAdjuster(new Date(date)).customizedDate}</Typography>
-                        <Typography fontWeight="lighter" variant="h6" color={theme.palette.grey[700]}>
+                        <Typography fontWeight="400" variant="h6" color={theme.palette.grey[700]}>
                           {time}
                         </Typography>
                       </TableCell>

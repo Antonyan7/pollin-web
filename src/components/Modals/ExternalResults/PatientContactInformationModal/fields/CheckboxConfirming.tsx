@@ -38,7 +38,7 @@ const CheckboxConfirming = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={4}>
         <Grid item xs={12}>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_CONFIRM_DETAILS)}
           </Typography>
           <FormGroup>

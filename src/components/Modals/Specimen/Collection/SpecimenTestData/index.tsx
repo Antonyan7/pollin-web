@@ -55,7 +55,7 @@ const SpecimenTestData: React.FC<SpecimenTestDataProps> = ({ specimenTestData, i
               />
               <Typography
                 variant="h5"
-                fontWeight={600}
+                fontWeight={500}
                 sx={{
                   color: (theme) => theme.palette.primary.dark
                 }}

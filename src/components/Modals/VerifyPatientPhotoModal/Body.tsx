@@ -42,7 +42,7 @@ const Body = () => {
         <Grid item xs={8}>
           <Grid container justifyContent="center" alignItems="center" spacing={2} marginTop={margins.top12}>
             <Grid item xs={6}>
-              <Typography variant="h5" fontWeight={600}>
+              <Typography variant="h5" fontWeight={500}>
                 {t(Translation.MODAL_VERIFY_PATIENT_PHOTO_NAME)}:
               </Typography>
             </Grid>
@@ -50,7 +50,7 @@ const Body = () => {
               {patientProfile?.title}
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h5" fontWeight={600}>
+              <Typography variant="h5" fontWeight={500}>
                 {t(Translation.MODAL_VERIFY_PATIENT_PHOTO_ID)}:
               </Typography>
             </Grid>
@@ -58,7 +58,7 @@ const Body = () => {
               {patientProfile?.identifier}
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h5" fontWeight={600}>
+              <Typography variant="h5" fontWeight={500}>
                 {t(Translation.MODAL_VERIFY_PATIENT_PHOTO_DATE)}:
               </Typography>
             </Grid>

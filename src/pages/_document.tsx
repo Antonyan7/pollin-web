@@ -12,10 +12,12 @@ class CustomDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <style>@import url(`https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap`);</style>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+          <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&display=swap" rel="stylesheet" />
           <script
             src={`https://maps.googleapis.com/maps/api/js?key=${NEXT_PUBLIC_GOOGLE_PLACES_KEY}&libraries=places`}
-           />
+          />
         </Head>
         <body>
           <Main />

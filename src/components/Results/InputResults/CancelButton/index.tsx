@@ -32,7 +32,7 @@ const ResultsCancelButton = () => {
   return (
     <Button
       onClick={handleResultsCancel}
-      sx={{ fontWeight: 600, px: paddings.leftRight16, py: paddings.topBottom12 }}
+      sx={{ fontWeight: 500, px: paddings.leftRight16, py: paddings.topBottom12 }}
       variant="outlined"
     >
       {t(Translation.COMMON_BUTTON_CANCEL_LABEL)}

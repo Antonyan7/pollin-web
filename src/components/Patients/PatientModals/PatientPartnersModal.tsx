@@ -31,13 +31,7 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
     <ViewModal
       onClose={closeOnOutsideClick}
       header={
-        <DialogTitle
-          variant="h2"
-          mb={3}
-          fontWeight="bold"
-          color={theme.palette.common.black}
-          textTransform="capitalize"
-        >
+        <DialogTitle variant="h2" mb={3} fontWeight={500} color={theme.palette.common.black} textTransform="capitalize">
           {title}
         </DialogTitle>
       }
@@ -83,13 +77,13 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
                         <Grid item container xs={11} columnGap={0.5} alignItems="start">
                           {fieldValue.patientId ? (
                             <Link href={`/patient-emr/details/${fieldValue.patientId}`} onClick={onClose}>
-                              <Typography fontWeight="bolder" align="justify" margin="unset" display="inline">
+                              <Typography fontWeight={500} align="justify" margin="unset" display="inline">
                                 <u>{fieldValue.name}</u>
                               </Typography>
                             </Link>
                           ) : (
                             <Typography
-                              fontWeight="bolder"
+                              fontWeight={500}
                               align="justify"
                               margin="unset"
                               display="inline"
@@ -99,27 +93,15 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
                             </Typography>
                           )}
 
-                          <Typography fontWeight="normal" display="inline">
-                            {fieldValue.pronoun && `(${fieldValue.pronoun})`}
-                          </Typography>
+                          <Typography display="inline">{fieldValue.pronoun && `(${fieldValue.pronoun})`}</Typography>
                         </Grid>
                         <Grid item container xs={11} columnGap={0.5} alignItems="start">
-                          <Typography
-                            variant="caption"
-                            fontWeight="normal"
-                            display="inline"
-                            color={theme.palette.grey[800]}
-                          >
+                          <Typography variant="caption" display="inline" color={theme.palette.grey[800]}>
                             {fieldValue.subTitle}
                           </Typography>
                         </Grid>
                         <Grid item container xs={11} columnGap={0.5} alignItems="start">
-                          <Typography
-                            variant="caption"
-                            fontWeight="normal"
-                            display="inline"
-                            color={theme.palette.grey[800]}
-                          >
+                          <Typography variant="caption" display="inline" color={theme.palette.grey[800]}>
                             {fieldValue.relation}
                           </Typography>
                         </Grid>

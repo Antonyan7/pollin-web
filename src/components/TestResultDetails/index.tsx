@@ -21,7 +21,7 @@ const DetailCellRenderer = ({ title, value }: { title: string; value: string }) 
   return (
     <Grid container spacing={1} mt={margins.top0}>
       <Grid item xs={4}>
-        <Typography variant="h6" fontWeight={600}>
+        <Typography variant="h6" fontWeight={500}>
           {title}
         </Typography>
       </Grid>
@@ -73,7 +73,7 @@ const TestResultDetails: React.FC = () => {
         </Typography>
         <Grid container spacing={2} mt={margins.top8}>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h5" fontWeight={600}>
+            <Typography variant="h5" fontWeight={500}>
               {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_LAB_INFORMATION)}
             </Typography>
             <DetailCellRenderer
@@ -90,7 +90,7 @@ const TestResultDetails: React.FC = () => {
             />
           </Grid>
           <Grid item xs={12} sm={4}>
-            <Typography variant="h5" fontWeight={600}>
+            <Typography variant="h5" fontWeight={500}>
               {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_DATE)}
             </Typography>
             <DetailCellRenderer
@@ -114,7 +114,7 @@ const TestResultDetails: React.FC = () => {
           </Grid>
         </Grid>
         <Divider sx={{ my: margins.topBottom24 }} />
-        <Typography component={Grid} container variant="h5" fontWeight={600}>
+        <Typography component={Grid} container variant="h5" fontWeight={500}>
           <Grid item xs={12} sm={3}>
             {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_TYPE)}
           </Grid>
@@ -132,7 +132,7 @@ const TestResultDetails: React.FC = () => {
           </Grid>
         </Typography>
         {testResultsDetails.items?.map((item) => (
-          <Typography component={Grid} container variant="body2" fontWeight={600} mt={margins.top16}>
+          <Typography component={Grid} container variant="body2" fontWeight={500} mt={margins.top16}>
             <Grid item xs={12} sm={3}>
               {item.type}
             </Grid>
@@ -152,7 +152,7 @@ const TestResultDetails: React.FC = () => {
           </Typography>
         ))}
         <Divider sx={{ my: margins.topBottom24 }} />
-        <Typography variant="h5" fontWeight={600}>
+        <Typography variant="h5" fontWeight={500}>
           {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_COMMENTS)}
         </Typography>
         <Typography variant="h5" mt={margins.top16}>
@@ -171,7 +171,7 @@ const TestResultDetails: React.FC = () => {
               </Button>
               <Link component="a" ref={linkRef} hidden href="#download" />
               <Stack direction="column" alignItems="flex-start" ml={margins.left24}>
-                <Typography variant="h5" fontWeight={600}>
+                <Typography variant="h5" fontWeight={500}>
                   {t(Translation.PAGE_ORDER_DETAILS_DOWNLOAD_NOTE)}:
                 </Typography>
                 <Typography>{attachment.note?.length ? attachment.note : 'N/A'}</Typography>

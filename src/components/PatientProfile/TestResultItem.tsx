@@ -51,7 +51,7 @@ const TestResultItem = ({ title, type, id: testTypeId }: ITestTypeItem) => {
           }}
           onClick={onViewTestResultsClick}
         >
-          <Typography component="span" display="flex" alignItems="center" fontWeight="bold" gap={margins.leftRight8}>
+          <Typography component="span" display="flex" alignItems="center" fontWeight={500} gap={margins.leftRight8}>
             {t(Translation.PAGE_PATIENT_WIDGET_TEST_RESULTS_BUTTON_VIEW_TEST_RESULTS)}
             <ChevronRightIcon fontSize="small" sx={{ height: heights.height18, width: widths.width18 }} />
           </Typography>

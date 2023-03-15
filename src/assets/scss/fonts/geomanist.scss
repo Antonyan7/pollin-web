@@ -10,17 +10,14 @@
   font-style: normal;
 }
 
-// ? Skip medium font face for now it will break all fonts because FE font weights is not match with design for now.
-// ? Fix it after closing all priority tickets.
-
-// @font-face {
-//     font-family: 'Geomanist';
-//     src: url('/fonts/geomanist/medium/geomanist-medium-webfont.eot');
-//     src: url('/fonts/geomanist/?#iefix') format('embedded-opentype'),
-//          url('/fonts/geomanist/medium/geomanist-medium-webfont.woff2') format('woff2'),
-//          url('/fonts/geomanist/medium/geomanist-medium-webfont.woff') format('woff'),
-//          url('/fonts/geomanist/medium/geomanist-medium-webfont.ttf') format('truetype'),
-//          url('/fonts/geomanist/medium/geomanist-medium-webfont.svg#geomanistmedium') format('svg');
-//     font-weight: 500;
-//     font-style: normal;
-// }
+@font-face {
+  font-family: 'Geomanist';
+  src: url('/fonts/geomanist/medium/geomanist-medium-webfont.eot');
+  src: url('/fonts/geomanist/?#iefix') format('embedded-opentype'),
+    url('/fonts/geomanist/medium/geomanist-medium-webfont.woff2') format('woff2'),
+    url('/fonts/geomanist/medium/geomanist-medium-webfont.woff') format('woff'),
+    url('/fonts/geomanist/medium/geomanist-medium-webfont.ttf') format('truetype'),
+    url('/fonts/geomanist/medium/geomanist-medium-webfont.svg#geomanistmedium') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}

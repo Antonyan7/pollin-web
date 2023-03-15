@@ -20,7 +20,7 @@ const Body = () => {
   return (
     <Grid container spacing={1} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'scroll' }}>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_PATIENT_NAME)}:
         </Typography>
       </Grid>
@@ -28,7 +28,7 @@ const Body = () => {
         <Typography variant="subtitle1">{taskDetails?.patient?.name ?? 'N/A'}</Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_DUE)}:
         </Typography>
       </Grid>
@@ -38,7 +38,7 @@ const Body = () => {
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_DESCRIPTION)}:
         </Typography>
       </Grid>
@@ -46,7 +46,7 @@ const Body = () => {
         <Typography variant="subtitle1">{taskDetails?.description} </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_PRIORITY)}:
         </Typography>
       </Grid>
@@ -54,7 +54,7 @@ const Body = () => {
         <Typography variant="subtitle1">{taskDetails?.priorityId}</Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_CREATED_BY)}:
         </Typography>
       </Grid>
@@ -67,7 +67,7 @@ const Body = () => {
         </Typography>
       </Grid>
       <Grid item xs={4}>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_REVIEW_RESULTS_STATUS)}:
         </Typography>
       </Grid>
@@ -87,7 +87,7 @@ const Body = () => {
                 <Divider />
               </Grid>
               <Grid item xs={4}>
-                <Typography variant="subtitle1" fontWeight="bold">
+                <Typography variant="subtitle1" fontWeight={500}>
                   {t(Translation.MODAL_REVIEW_RESULTS_REASSIGNED_BY)}:
                 </Typography>
               </Grid>
@@ -102,7 +102,7 @@ const Body = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4}>
-                <Typography variant="subtitle1" fontWeight="bold">
+                <Typography variant="subtitle1" fontWeight={500}>
                   {t(Translation.MODAL_REVIEW_RESULTS_REASSIGNMENT_NOTES)}:
                 </Typography>
               </Grid>

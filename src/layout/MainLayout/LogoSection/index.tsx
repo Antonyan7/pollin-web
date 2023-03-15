@@ -14,7 +14,8 @@ const LogoSection = () => {
         <Typography
           variant="h2"
           sx={{
-            fontFamily: 'Lora'
+            fontFamily: 'Lora',
+            fontWeight: 700
           }}
           color={theme.palette.primary[800]}
           my={margins.topBottom4}

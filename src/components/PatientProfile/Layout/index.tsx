@@ -22,7 +22,7 @@ const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading,
       }}
       title={data?.widgetTitle ?? emptyWidgetTitle}
       titleProps={{
-        fontWeight: 600,
+        fontWeight: 500,
         fontSize: '14px',
         color: (theme: Theme) => theme.palette.secondary[800]
       }}

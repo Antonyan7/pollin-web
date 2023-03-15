@@ -65,7 +65,7 @@ const SpecimensInTransport = () => {
           <IconButton color="primary" onClick={() => router.push('/clinic-test-results/specimen-tracking/transports')}>
             <ArrowBackIos fontSize="small" />
           </IconButton>
-          <Typography variant="h4" fontWeight={600}>
+          <Typography variant="h4" fontWeight={500}>
             {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_GO_BACK)}
           </Typography>
         </Box>
@@ -77,7 +77,7 @@ const SpecimensInTransport = () => {
           justifyContent="space-between"
           sx={{ marginTop: 2, marginBottom: 4 }}
         >
-          <Typography variant="h4" fontWeight={600} color="primary">
+          <Typography variant="h4" fontWeight={500} color="primary">
             {transportFolderTitle}
           </Typography>
           <ButtonWithLoading

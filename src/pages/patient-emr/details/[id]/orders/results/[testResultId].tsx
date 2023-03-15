@@ -57,7 +57,7 @@ const TestResultDetailsPage = () => {
                 >
                   <ArrowBackIos fontSize="small" />
                 </IconButton>
-                <Typography variant="h4" fontWeight={600}>
+                <Typography variant="h4" fontWeight={500}>
                   {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.title}`)}
                 </Typography>
               </Stack>

@@ -61,7 +61,7 @@ const PatientTestResultsModal = () => {
           mt={margins.top12}
           mb={margins.bottom24}
           mx={margins.leftRight16}
-          fontWeight="bold"
+          fontWeight={500}
           color={theme.palette.common.black}
           textTransform="capitalize"
           borderBottom={`1px solid ${theme.palette.grey[300]}`}
@@ -88,26 +88,26 @@ const PatientTestResultsModal = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_DATE_COMPLETED)}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_TEST_PANEL_NAME)}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_UNIT)}</Typography>
+                    <Typography fontWeight={500}>{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_UNIT)}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_RESULT)}</Typography>
+                    <Typography fontWeight={500}>{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_RESULT)}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_STATUS)}</Typography>
+                    <Typography fontWeight={500}>{t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_STATUS)}</Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.MODAL_PATIENT_TEST_RESULTS_TABLE_FINAL_RESULT_TYPE)}
                     </Typography>
                   </TableCell>

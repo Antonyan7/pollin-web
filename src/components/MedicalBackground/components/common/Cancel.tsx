@@ -19,7 +19,7 @@ const CancelButton = ({ onClick }: CancelButtonProps) => {
       size="large"
       sx={{ marginRight: margins.all20, marginLeft: margins.auto }}
     >
-      {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_CONTACT_BUTTON_CANCEL)}
+      {t(Translation.COMMON_BUTTON_CANCEL_LABEL)}
     </StyledButton>
   );
 };

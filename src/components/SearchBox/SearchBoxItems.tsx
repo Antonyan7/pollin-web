@@ -45,7 +45,7 @@ export const SearchBoxItems: React.FC<SearchBoxItemsProps> = ({
               borderRadius: borderRadius.radius7,
               border: isSearchedItemInvalid ? `1px solid ${theme.palette.error.main}` : 'none',
               color: theme.palette.primary.dark,
-              fontWeight: 600,
+              fontWeight: 500,
               py: paddings.topBottom2,
               fontSize: theme.typography.pxToRem(14),
               lineHeight: '140%',

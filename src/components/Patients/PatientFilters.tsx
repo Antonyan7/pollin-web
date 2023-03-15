@@ -120,7 +120,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
         ChipProps={{
           deleteIcon: <HighlightOffTwoToneIcon />,
           style: {
-            fontWeight: 600
+            fontWeight: 500
           }
         }}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}

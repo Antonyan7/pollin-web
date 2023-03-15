@@ -21,7 +21,7 @@ const FormHeader = () => {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: margins.top8, marginLeft: margins.left8 }}>
-        <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
+        <DialogTitle sx={{ fontWeight: 500 }} id="mui-6">
           {t(Translation.MODAL_APPOINTMENTS_ADD_TITLE)}
         </DialogTitle>
         <IconButton

@@ -4,7 +4,7 @@ import { DialogTitle, IconButton } from '@mui/material';
 import { DialogTitleProps } from 'types/modals';
 
 const BaseModalTitle = ({ children, onClose, hideCloseIcon = false, ...other }: DialogTitleProps) => (
-  <DialogTitle sx={other.sx ? other.sx : { m: 0, px: 4, py: 3, fontSize: '1.25rem', fontWeight: 700 }} {...other}>
+  <DialogTitle sx={other.sx ? other.sx : { m: 0, px: 4, py: 3, fontSize: '1.25rem', fontWeight: 500 }} {...other}>
     {children}
     {!hideCloseIcon ? (
       <IconButton

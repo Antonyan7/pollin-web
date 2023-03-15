@@ -45,14 +45,14 @@ const getDesktopDatePickerDefaultProps = (theme: Theme) => ({
       },
       [`.${pickersCalendarHeaderClasses.label}`]: {
         color: theme.palette.secondary[800],
-        fontWeight: 600
+        fontWeight: 500
       },
       [`.MuiPickersArrowSwitcher-spacer `]: {
         width: 12
       },
       [`.${dayPickerClasses.weekDayLabel}`]: {
         color: theme.palette.secondary[800],
-        fontWeight: 600
+        fontWeight: 500
       },
       [`.${pickersDayClasses.today}:not(.Mui-selected)`]: {
         border: `1px solid ${theme.palette.primary.main}`,
@@ -61,7 +61,7 @@ const getDesktopDatePickerDefaultProps = (theme: Theme) => ({
       [`.${pickersDayClasses.dayWithMargin}`]: {
         background: 'transparent',
         color: theme.palette.secondary[800],
-        fontWeight: 600
+        fontWeight: 500
       },
       [`.${pickersDayClasses.selected}`]: {
         background: theme.palette.primary.main,

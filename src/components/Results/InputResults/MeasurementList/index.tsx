@@ -58,7 +58,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
           <TableRow>
             {MEASUREMENT_LIST_TABLE_HEADERS.map(({ width, key }) => (
               <TableCell sx={{ border: 0 }} key={key} width={width}>
-                <Typography fontWeight={600} component="h4">
+                <Typography fontWeight={500} component="h4">
                   {t(key)}
                 </Typography>
               </TableCell>
@@ -69,7 +69,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
           {fields?.length > 1 ? (
             <StyledTableRow>
               <StyledTableCell>
-                <Typography variant="h5" component="h5" fontWeight={600}>
+                <Typography variant="h5" component="h5" fontWeight={500}>
                   {t(title)}
                 </Typography>
               </StyledTableCell>
@@ -86,7 +86,7 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
                   <Typography
                     variant="h5"
                     component="h5"
-                    fontWeight={600}
+                    fontWeight={500}
                     sx={{
                       color: (theme) => theme.palette.secondary[800]
                     }}

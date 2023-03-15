@@ -7,7 +7,7 @@ import { InputResultsHeaderSectionProps } from '../types';
 const InputResultsHeaderSection: React.FC<InputResultsHeaderSectionProps> = ({ title, rows }) => (
   <Grid pt={paddings.top8} flexBasis="maxContent" flexGrow={0.1} key={title}>
     <Grid display="flex" flexDirection="column" rowGap={1.25}>
-      <Typography variant="h5" component="h5" fontWeight={600}>
+      <Typography variant="h5" component="h5" fontWeight={500}>
         {title}
       </Typography>
       {rows.map(

@@ -107,7 +107,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                     >
                       <Typography
                         variant="body2"
-                        fontWeight="bold"
+                        fontWeight={500}
                         color={
                           patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }
@@ -132,7 +132,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                     >
                       <Typography
                         variant="body2"
-                        fontWeight="bold"
+                        fontWeight={500}
                         color={
                           patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }
@@ -157,7 +157,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                     >
                       <Typography
                         variant="body2"
-                        fontWeight="bold"
+                        fontWeight={500}
                         color={
                           patientHighlightHeader.doctor.uiid ? theme.palette.primary[800] : theme.palette.primary[200]
                         }

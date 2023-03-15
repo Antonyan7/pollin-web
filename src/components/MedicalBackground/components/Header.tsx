@@ -24,7 +24,7 @@ const MedicalBackgroundHeader = () => {
       <IconButton color="primary" onClick={handleBackToProfilePage}>
         <ArrowBackIos fontSize="small" />
       </IconButton>
-      <Typography variant="h4" fontWeight={600}>
+      <Typography variant="h4" fontWeight={500}>
         {medicalBackgroundBackToPageLabel}
       </Typography>
     </Box>

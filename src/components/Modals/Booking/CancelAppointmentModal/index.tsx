@@ -49,7 +49,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
               <Typography
                 sx={{
                   fontSize: '1.25rem',
-                  fontWeight: 700
+                  fontWeight: 500
                 }}
               >
                 {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_TITLE)}

@@ -58,7 +58,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
         padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
         width: '160px',
         color: theme.palette.success[800],
-        fontWeight: 600,
+        fontWeight: 500,
         backgroundColor: theme.palette.success.light,
         ':hover': {
           color: theme.palette.success.light,
@@ -71,7 +71,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
         padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
         width: '160px',
         color: theme.palette.error[800],
-        fontWeight: 600,
+        fontWeight: 500,
         backgroundColor: theme.palette.error.light,
         ':hover': {
           color: theme.palette.error.light,
@@ -84,7 +84,7 @@ const Chip = ({ chipColor, disabled, sx = {}, variant, ...others }: IChipProps) 
         padding: `${paddings.topBottom16} ${paddings.leftRight16}`,
         width: '180px',
         color: theme.palette.grey[500],
-        fontWeight: 600,
+        fontWeight: 500,
         border: `1px solid ${theme.palette.grey[500]}`,
         backgroundColor: theme.palette.secondary.light,
         ':hover': {

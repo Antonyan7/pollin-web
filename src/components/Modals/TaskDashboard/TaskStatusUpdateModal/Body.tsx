@@ -21,16 +21,16 @@ const Body = ({ row, actionType }: TestResultReviewConfirmationProps) => {
         <Typography>{t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_MESSAGE)}</Typography>
       </Grid>
       <Grid item width="fit-content">
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_TASK)}
         </Typography>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_PATIENT)}
         </Typography>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_PREVIOUS_STATUS)}
         </Typography>
-        <Typography variant="subtitle1" fontWeight="bold">
+        <Typography variant="subtitle1" fontWeight={500}>
           {t(Translation.MODAL_TASK_MANAGEMENT_TASK_STATUS_UPDATE_UPDATED_STATUS)}
         </Typography>
       </Grid>

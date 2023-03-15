@@ -15,7 +15,7 @@ const FormHeader = () => {
   return (
     <>
       <Grid item container direction="row" justifyContent="space-between" p={`${paddings.all8}`}>
-        <DialogTitle sx={{ fontWeight: 700 }}>
+        <DialogTitle sx={{ fontWeight: 500 }}>
           {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_ADD_ADDRESS_MANUALLY_MODAL_TITLE)}
         </DialogTitle>
         <IconButton

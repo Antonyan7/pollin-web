@@ -86,10 +86,10 @@ const AppointmentsListTable = () => {
                         direction={isDirectionMatch ? order : undefined}
                         onClick={() => onTableHeadCellClick(headCell.id as Exclude<HeadCell['id'], 'time'>)}
                       >
-                        <Typography fontWeight="bold">{t(headCell.label)}</Typography>
+                        <Typography fontWeight={500}>{t(headCell.label)}</Typography>
                       </TableSortLabel>
                     ) : (
-                      <Typography fontWeight="bold" sx={{ userSelect: 'none' }}>
+                      <Typography fontWeight={500} sx={{ userSelect: 'none' }}>
                         {t(headCell.label)}
                       </Typography>
                     )}

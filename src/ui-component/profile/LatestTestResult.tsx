@@ -41,7 +41,7 @@ const LatestTestResults = () => {
     <SubCardStyled
       title={t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TITLE)}
       titleProps={{
-        fontWeight: 600,
+        fontWeight: 500,
         pr: paddings.right12,
         fontSize: '14px',
         color: (theme: Theme) => theme.palette.secondary[800]
@@ -55,17 +55,17 @@ const LatestTestResults = () => {
               <TableHead>
                 <TableRow>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST)}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED)}
                     </Typography>
                   </TableCell>
                   <TableCell>
-                    <Typography fontWeight="bold">
+                    <Typography fontWeight={500}>
                       {t(Translation.PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT)}
                     </Typography>
                   </TableCell>
@@ -78,7 +78,7 @@ const LatestTestResults = () => {
                   return (
                     <TableRow hover key={latestTestResult.title}>
                       <TableCell>
-                        <Typography fontWeight="bold" variant="h5">
+                        <Typography fontWeight={500} variant="h5">
                           {latestTestResult.title}
                         </Typography>
                       </TableCell>

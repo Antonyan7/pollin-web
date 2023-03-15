@@ -71,7 +71,7 @@ const PatientAlertView = () => {
                     <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
                   </Grid>
                   <Grid item xs={10.5}>
-                    <Typography fontWeight="600" variant="subtitle1">
+                    <Typography fontWeight={500} variant="subtitle1">
                       {titleContent.title}
                     </Typography>
                     {titleContent.messages.map((message: AlertDetailsMessagesProps) => (

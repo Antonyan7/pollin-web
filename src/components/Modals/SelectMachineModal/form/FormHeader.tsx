@@ -36,7 +36,7 @@ const FormHeader = ({ actionType }: FormHeaderProps) => {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: margins.top8, marginLeft: margins.left8 }}>
-        <DialogTitle sx={{ fontWeight: 700 }} id="mui-6">
+        <DialogTitle sx={{ fontWeight: 500 }} id="mui-6">
           {modalName}
         </DialogTitle>
         <IconButton

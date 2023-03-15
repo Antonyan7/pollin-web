@@ -93,7 +93,7 @@ const ScheduleBoxWrapper = styled(Box)<BoxProps>(({ theme }) => ({
 
 const GroupedServiceProvidersPopper = styled(Popper)(({ theme }) => ({
   '& .MuiAutocomplete-groupLabel': {
-    fontWeight: 600,
+    fontWeight: 500,
     color: theme.palette.common.black
   }
 }));

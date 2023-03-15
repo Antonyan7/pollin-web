@@ -4,7 +4,7 @@ import { styled } from '@mui/system';
 const ProgressBarIndicator = styled(Chip)(({ theme, disabled }) => ({
   backgroundColor: disabled ? theme.palette.secondary.dark : theme.palette.primary.main,
   color: 'white',
-  fontWeight: 600,
+  fontWeight: 500,
   '& > span': {
     display: 'flex',
     justifyContent: 'center'

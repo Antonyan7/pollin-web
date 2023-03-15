@@ -73,7 +73,7 @@ const ResultsSaveButton: React.FC<ResultsSaveButtonProps> = ({ shouldSaveAsCompl
       disabled={shouldDisableSaveButton}
       isLoading={isTestResultsSubmitLoading}
       onClick={handleSubmit(onTestResultsSubmit)}
-      sx={{ fontWeight: 600 }}
+      sx={{ fontWeight: 500 }}
     >
       {saveButtonLabel}
     </ButtonWithLoading>

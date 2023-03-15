@@ -60,7 +60,7 @@ const DevToolsModal = () => {
               <Typography
                 sx={{
                   fontSize: '1.25rem',
-                  fontWeight: 700
+                  fontWeight: 500
                 }}
               >
                 Dev tools

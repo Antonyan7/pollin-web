@@ -86,7 +86,7 @@ const AddNewTransportFolderModal = () => {
                   <DatePickerWithTodayButton />
                   <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs={6}>
-                      <Typography variant="subtitle1" fontWeight="bold">
+                      <Typography variant="subtitle1" fontWeight={500}>
                         {t(
                           Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_ID
                         )}

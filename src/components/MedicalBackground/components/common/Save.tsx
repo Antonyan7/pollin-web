@@ -17,7 +17,7 @@ const SaveButton = () => {
         height: 45
       }}
     >
-      {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_CONTACT_BUTTON_SAVE)}
+      {t(Translation.COMMON_BUTTON_SAVE_LABEL)}
     </ButtonWithLoading>
   );
 };

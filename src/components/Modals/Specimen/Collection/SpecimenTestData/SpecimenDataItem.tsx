@@ -8,7 +8,7 @@ interface SpecimenDataItemProps {
 
 const SpecimenDataItem: React.FC<SpecimenDataItemProps> = ({ label, value }) => (
   <Grid display="flex" item alignItems="center">
-    <Typography variant="h5" fontWeight={600} sx={{ width: 170 }}>{`${label}:`}</Typography>
+    <Typography variant="h5" fontWeight={500} sx={{ width: 170 }}>{`${label}:`}</Typography>
     {typeof value === 'string' ? <Typography variant="h5">{value}</Typography> : value}
   </Grid>
 );

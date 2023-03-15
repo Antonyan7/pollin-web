@@ -21,7 +21,7 @@ const ListLayout = ({ items, title, renderAsList, componentProps, listItemsHeadi
       {...componentProps?.list}
     >
       {listItemsHeading && (
-        <Typography pb={paddings.bottom16} component="h5" variant="h5" fontWeight={600}>
+        <Typography pb={paddings.bottom16} component="h5" variant="h5" fontWeight={500}>
           {listItemsHeading}
         </Typography>
       )}
@@ -37,7 +37,7 @@ const ListLayout = ({ items, title, renderAsList, componentProps, listItemsHeadi
                   flexBasis: renderAsList ? '100%' : '30%'
                 }}
               >
-                <Typography {...(!renderAsList && { color: (theme) => theme.palette.secondary[800], fontWeight: 600 })}>
+                <Typography {...(!renderAsList && { color: (theme) => theme.palette.secondary[800], fontWeight: 500 })}>
                   {item.title}
                 </Typography>
               </Box>

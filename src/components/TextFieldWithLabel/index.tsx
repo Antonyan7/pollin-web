@@ -44,7 +44,7 @@ const TextFieldWithLabel: React.FC<TextFieldWithLabelProps> = ({
       rowGap={3}
     >
       <Grid item>
-        <Typography sx={{ color: (theme) => theme.palette.secondary[800], fontWeight: 600, ...labelStyles }}>
+        <Typography sx={{ color: (theme) => theme.palette.secondary[800], fontWeight: 500, ...labelStyles }}>
           {label}
         </Typography>
       </Grid>

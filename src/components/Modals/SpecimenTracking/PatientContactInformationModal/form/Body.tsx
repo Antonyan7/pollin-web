@@ -51,10 +51,10 @@ const Body = ({ row }: BodyProps) => {
         <Grid item xs={8}>
           <Grid container spacing={4}>
             <Grid item xs={6}>
-              <Typography variant="subtitle1" fontWeight="bold">
+              <Typography variant="subtitle1" fontWeight={500}>
                 {t(Translation.MODAL_HANDOFF_CONFIRMATION_TRANSPORT_FOLDER)}:
               </Typography>
-              <Typography variant="subtitle1" fontWeight="bold">
+              <Typography variant="subtitle1" fontWeight={500}>
                 {t(Translation.MODAL_HANDOFF_CONFIRMATION_LAB_DESTINATION)}:
               </Typography>
             </Grid>

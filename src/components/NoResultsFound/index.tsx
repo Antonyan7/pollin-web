@@ -21,7 +21,7 @@ const NoResultsFound: React.FC<NoResultsFoundProps> = ({ label = '', ...props })
     >
       <Typography
         variant="h5"
-        fontWeight={600}
+        fontWeight={500}
         sx={{
           py: paddings.topBottom32,
           color: (theme) => theme.palette.primary.dark

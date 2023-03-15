@@ -32,7 +32,7 @@ const TestResults = () => {
     <SubCardStyled
       title={widgetTitle}
       titleProps={{
-        fontWeight: 600,
+        fontWeight: 500,
         fontSize: theme.typography.pxToRem(14),
         color: theme.palette.secondary[800]
       }}
@@ -45,7 +45,7 @@ const TestResults = () => {
             // eslint-disable-next-line react/no-array-index-key
             <Stack direction="row" key={index}>
               <Stack flexBasis="30%">
-                <Typography fontWeight="bold" color={theme.palette.secondary[800]}>
+                <Typography fontWeight={500} color={theme.palette.secondary[800]}>
                   {testResultTitle}
                 </Typography>
               </Stack>

@@ -20,19 +20,19 @@ const PatientInformation = () => {
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={4}>
         <Grid item xs={6}>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_NAME)}:
           </Typography>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_ID)}:
           </Typography>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_DATE_OF_BIRTH)}:
           </Typography>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_OHIP_HEALTH_NUMBER)}:
           </Typography>
-          <Typography variant="subtitle1" fontWeight="bold">
+          <Typography variant="subtitle1" fontWeight={500}>
             {t(Translation.MODAL_EXTERNAL_RESULTS_OHIP_VERSION_CODE)}:
           </Typography>
         </Grid>

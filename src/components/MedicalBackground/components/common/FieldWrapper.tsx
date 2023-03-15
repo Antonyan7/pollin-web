@@ -34,7 +34,7 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }
       <Grid item container justifyContent="space-between" direction="column" xs={4} gap={3}>
         <Typography
           sx={{
-            fontWeight: 600,
+            fontWeight: 500,
             color: theme.palette.secondary[800],
             fontSize: theme.typography.pxToRem(15)
           }}
@@ -43,7 +43,7 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }
         </Typography>
         <Typography
           sx={{
-            fontWeight: 600,
+            fontWeight: 500,
             color: theme.palette.secondary[800],
             display: hasNote ? 'block' : 'none'
           }}
