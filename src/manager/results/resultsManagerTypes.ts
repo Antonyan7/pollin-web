@@ -136,13 +136,15 @@ interface ITestResultAttachmentData {
 export interface ITestResultsData {
   id: string;
   comment: string;
-  items: {
-    id: string;
-    resultType?: FinalResultType | UnitResultType;
-    dateReceived: string;
-    result: string;
-  };
+  items: ITestResultsItem[];
   attachments?: ITestResultAttachmentData[];
+}
+
+export interface ITestResultsItem {
+  id: string;
+  resultType?: FinalResultType | UnitResultType;
+  dateReceived: string;
+  result: string;
 }
 
 export interface ITestResultsDetailsBody {

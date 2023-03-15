@@ -1,10 +1,6 @@
 import { Control } from 'react-hook-form';
-import {
-  FinalResultType,
-  ITestResultAttachment,
-  ITestResultsDetails,
-  UnitResultType
-} from 'types/reduxTypes/resultsStateTypes';
+import { ITestResultsItem } from '@axios/results/resultsManagerTypes';
+import { ITestResultAttachment, ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 
 // Interfaces
 export interface InputResultsProps {
@@ -29,12 +25,7 @@ export interface InputTestResultsHeaderProps extends Partial<ITestResultsDetails
 
 export interface IMeasurementsFieldValues {
   [data: `${string}`]: {
-    items: {
-      id: string;
-      resultType?: FinalResultType | UnitResultType;
-      dateReceived: string;
-      result: string;
-    };
+    items: ITestResultsItem[];
     id: string;
     comment?: string;
     attachments?: ITestResultAttachment[];

@@ -6,6 +6,8 @@ import { FirebaseManager } from '@axios/firebase';
 import { ITestResultsData } from '@axios/results/resultsManagerTypes';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { isDate } from 'date-fns';
+import { format } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 
 import { IMeasurementsFieldValues } from '../../types';
@@ -95,6 +97,14 @@ const useSubmitTestResults = () => {
           ...(allAttachments.length > 0 && { attachments: allAttachments })
         });
       }
+
+      testResults.forEach((testResult) => {
+        testResult.items.forEach((item) => {
+          item.dateReceived = isDate(item.dateReceived)
+            ? format(new Date(`${item.dateReceived}`), 'yyyy-MM-dd')
+            : item.dateReceived;
+        });
+      });
 
       await dispatch(resultsMiddleware.submitTestResults(testResults));
     },

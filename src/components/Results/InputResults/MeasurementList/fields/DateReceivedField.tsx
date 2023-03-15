@@ -6,7 +6,6 @@ import { Stack, TextField, TextFieldProps } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
 import { futureDate180DaysAfter } from '@utils/dateUtils';
@@ -22,12 +21,11 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
   const [t] = useTranslation();
   const [isDatePickerFocused, setIsDatePickerFocused] = useState(false);
   const [openDatePicker, setOpenDatePicker] = useState(false);
+  const { value, ...otherFieldProps } = field;
 
   const onDateChange = (date: Date | null) => {
     if (date) {
-      const formattedDate = format(date, 'yyyy-MM-dd');
-
-      field.onChange(formattedDate);
+      field.onChange(date);
     }
   };
 
@@ -35,8 +33,6 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
     setOpenDatePicker(false);
     setIsDatePickerFocused(false);
   };
-
-  const { value, ...otherFieldProps } = field;
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -48,7 +44,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
           onClose={onDatePickerClose}
           label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED)}
           inputFormat="MMM dd, yyyy"
-          value={value ? new Date(`${value}`) : null}
+          value={value ?? null}
           onChange={(date: Date | null) => onDateChange(date)}
           components={{
             OpenPickerIcon: CalendarIcon
@@ -69,14 +65,11 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
               }}
               InputProps={{
                 ...params.InputProps,
+                placeholder: 'mm:dd:yyyy',
                 endAdornment: <EventIcon />
               }}
               /* Mui TextField has two params with similar name inputProps & InputProps */
               // eslint-disable-next-line react/jsx-no-duplicate-props
-              inputProps={{
-                ...params.inputProps,
-                placeholder: 'mm:dd:yyyy'
-              }}
             />
           )}
         />
