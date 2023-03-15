@@ -35,9 +35,9 @@ const isPatientHighlightIntakeReminderActive = createSelector(
   [selector],
   (state) => state.isPatientHighlightIntakeReminderActive
 );
-const setIsVerifyPatientProfilePhotoLoading = createSelector(
+const isVerifyPatientProfilePhotoLoading = createSelector(
   [selector],
-  (state) => state.setIsVerifyPatientProfilePhotoLoading
+  (state) => state.isVerifyPatientProfilePhotoLoading
 );
 const latestTestResults = createSelector([selector], (state) => state.latestTestResults);
 const patientProfileOverview = createSelector([selector], (state) => state.profile.overview);
@@ -165,7 +165,6 @@ export default {
   isProfileTestResultsLoading,
   patientsListData,
   patientsList,
-  setIsVerifyPatientProfilePhotoLoading,
   isPatientsFiltersLoading,
   isPatientsListLoading,
   isPatientProfileLoading,
@@ -228,6 +227,7 @@ export default {
   dropdowns,
   isDropdownsLoading,
   femalePregnancyInformation,
+  isVerifyPatientProfilePhotoLoading,
   isFemalePregnancyInformationDataUpdating,
   isFemalePregnancyInformationLoading,
   isContactInformationButtonClicked,

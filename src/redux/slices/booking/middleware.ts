@@ -328,6 +328,7 @@ const checkInAppointment = (checkInValues: ICheckInReqBody, message: string) => 
         }
       })
     );
+    dispatch(getCheckInAppointments(checkInValues.patientId));
     dispatch(setIsCheckInSuccess(true));
   } catch (error) {
     Sentry.captureException(error);

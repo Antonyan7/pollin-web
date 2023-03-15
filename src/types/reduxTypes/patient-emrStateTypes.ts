@@ -81,7 +81,7 @@ export interface PatientEmrProps {
   isPatientsFiltersLoading: boolean;
   isEncountersAddendumLoading: boolean;
   isEncountersFiltersLoading: boolean;
-  setIsVerifyPatientProfilePhotoLoading: boolean;
+  isVerifyPatientProfilePhotoLoading: boolean;
   isEncountersDetailsLoading: boolean;
   isCreateEncounterNoteLoading: boolean;
   isUpdateEncounterNoteLoading: boolean;
@@ -144,12 +144,13 @@ export interface PatientHighlight {
 export enum ProfilePhotoStatus {
   Verified = 'Verified',
   Pending = 'Pending',
-  Rejected = 'Rejected'
+  Rejected = 'Rejected',
+  Missing = 'Missing'
 }
 
 export interface PatientProfile {
-  imageURL: string;
   subTitle: string;
+  isIntakeComplete: boolean;
   title: string;
   cycleStatus: string | boolean;
   id: string;

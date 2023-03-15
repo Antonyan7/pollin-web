@@ -16,6 +16,7 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
 import { AppDispatch, RootState } from 'redux/store';
+import { ModalName } from 'types/modals';
 import { CustomAlerts, IEncountersFilterOption, IEncountersReqBody, IPatientsReqBody, SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
@@ -327,19 +328,6 @@ const getPatientRecentAppointments = (patientId: string) => async (dispatch: App
     dispatch(setError(error));
   } finally {
     dispatch(setIsRecentAppointmentsLoading(false));
-  }
-};
-
-const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsVerifyPatientProfilePhotoLoading(true));
-
-    await API.patients.verifyPatientProfilePhoto(patientId, accepted);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  } finally {
-    dispatch(setIsVerifyPatientProfilePhotoLoading(false));
   }
 };
 
@@ -784,6 +772,21 @@ const updateGeneralHealthData =
 
     dispatch(setIsGeneralHealthDataUpdating(false));
   };
+
+const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsVerifyPatientProfilePhotoLoading(true));
+
+    await API.patients.verifyPatientProfilePhoto(patientId, accepted);
+    dispatch(getPatientProfile(patientId));
+    dispatch(viewsMiddleware.closeModal(ModalName.VerifyPatientPhotoModal));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsVerifyPatientProfilePhotoLoading(false));
+  }
+};
 
 const updatePatientContactInformation =
   (patientId: string, contactData: IPatientContactInformationProps) => async (dispatch: AppDispatch) => {

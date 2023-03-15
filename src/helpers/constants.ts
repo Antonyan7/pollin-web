@@ -6,6 +6,8 @@ export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'NoShow'
 
 export const TIME_CONFIG = '[EST]';
 
+export const UTC_TIMEZONE = 'Europe/London';
+
 export const cancellationReasons = [
   'Personal Emergency',
   'Work Conflict',

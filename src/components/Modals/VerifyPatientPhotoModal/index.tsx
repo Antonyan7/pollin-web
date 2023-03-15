@@ -1,25 +1,18 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid, Theme } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { tasksSelector } from '@redux/slices/tasks';
+import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
 import BaseModal from '@ui-component/Modal/BaseModal';
 
 import Actions from './Actions';
 import Body from './Body';
 
-export interface VerifyPatientPhotoModalProps {
-  row: ITask;
-}
-
 const VerifyPatientPhotoModal = () => {
-  const isTaskDetailsLoading = useAppSelector(tasksSelector.isTaskDetailsLoading);
   const [t] = useTranslation();
   const modalTitle = t(Translation.MODAL_VERIFY_PATIENT_PHOTO_TITLE);
 
@@ -27,7 +20,6 @@ const VerifyPatientPhotoModal = () => {
 
   return (
     <BaseModal
-      isLoading={isTaskDetailsLoading}
       title={modalTitle}
       onClose={onClose}
       titleSx={{

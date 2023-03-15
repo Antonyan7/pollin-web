@@ -3,10 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
-import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -16,7 +14,7 @@ const Actions = () => {
   const approvePhotoLabel = t(Translation.MODAL_VERIFY_PATIENT_PHOTO_APPROVE);
 
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const setIsVerifyPatientProfilePhotoLoading = useAppSelector(patientsSelector.setIsVerifyPatientProfilePhotoLoading);
+  const isVerifyPatientProfilePhotoLoading = useAppSelector(patientsSelector.isVerifyPatientProfilePhotoLoading);
 
   const theme = useTheme();
 
@@ -25,8 +23,6 @@ const Actions = () => {
       if (patientProfile?.id) {
         dispatch(patientsMiddleware.verifyPatientProfilePhoto(patientProfile.id, value));
       }
-
-      dispatch(viewsMiddleware.closeModal(ModalName.VerifyPatientPhotoModal));
     },
     [patientProfile?.id]
   );
@@ -37,7 +33,7 @@ const Actions = () => {
         <Grid item xs={12}>
           <Stack direction="row" alignItems="center" justifyContent="flex-end">
             <ButtonWithLoading
-              isLoading={setIsVerifyPatientProfilePhotoLoading}
+              isLoading={isVerifyPatientProfilePhotoLoading}
               sx={{
                 py: paddings.top12,
                 px: paddings.leftRight24,
@@ -52,7 +48,7 @@ const Actions = () => {
               {rejectPhotoLabel}
             </ButtonWithLoading>
             <ButtonWithLoading
-              isLoading={setIsVerifyPatientProfilePhotoLoading}
+              isLoading={isVerifyPatientProfilePhotoLoading}
               sx={{
                 py: paddings.top12,
                 px: paddings.leftRight24

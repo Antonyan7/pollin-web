@@ -9,7 +9,8 @@ import {
   IPatientListData,
   PatientHighlight,
   PatientHighlightHeader,
-  PatientProfileOverview
+  PatientProfileOverview,
+  ProfilePhotoStatus
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 export interface IGetPatientsRequestBody {
@@ -104,9 +105,13 @@ export interface IEncounterDetailsProps {
 
 export interface IPatientProfileResponse {
   title: string;
+  isIntakeComplete: boolean;
+  avatar?: {
+    imageURL: string;
+    status: ProfilePhotoStatus;
+  };
   subTitle: string;
   cycleStatus: string;
-  imageURL: string;
 }
 
 export interface IPatientHighlightResponse {

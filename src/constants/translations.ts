@@ -638,19 +638,25 @@ export enum Translation {
   MODAL_VERIFY_PATIENT_PHOTO_ID = 'modal.verify.patient.photo.id',
   MODAL_VERIFY_PATIENT_PHOTO_DATE = 'modal.verify.patient.photo.date',
   MODAL_VERIFY_PATIENT_PHOTO_REJECT = 'modal.verify.patient.photo.reject',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_TITLE = 'modal.add.or.edit.patient.alert.title',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_EDIT_TITLE = 'modal.add.or.edit.patient.alert.edit.title',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD = 'modal.add.or.edit.patient.alert.field',
+  MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION = 'modal.add.or.edit.patient.alert.description',
+  MODAL_DELETE_ALERT_TITLE = 'modal.delete.alert.title',
+  MODAL_DELETE_ALERT_MESSAGE = 'modal.delete.alert.message',
+  MODAL_VERIFY_PATIENT_PHOTO_APPROVE = 'modal.verify.patient.photo.approve',
   PAGE_PATIENT_CHECK_IN_APPOINTMENTS_NAME = 'page.patient.check.in.appointments.name',
   PAGE_PATIENT_CHECK_IN_TABLE_HEADER_NAME = 'page.patient.check.in.table.header.name',
   PAGE_PATIENT_CHECK_IN_TABLE_HEADER_APPOINTMENT_TIME = 'page.patient.check.in.table.header.appointment.time',
   PAGE_PATIENT_CHECK_IN_TABLE_HEADER_STATUS = 'page.patient.check.in.table.header.status',
   PAGE_PATIENT_CHECK_IN_PATIENT_LABEL = 'page.patient.check.in.patient.label',
   PAGE_PATIENT_CHECK_IN_ALERT_SUCCESS = 'page.patient.check.in.alert.success',
-  MODAL_VERIFY_PATIENT_PHOTO_APPROVE = 'modal.verify.patient.photo.approve',
-  MODAL_ADD_OR_EDIT_PATIENT_ALERT_TITLE = 'modal.add.or.edit.patient.alert.title',
-  MODAL_ADD_OR_EDIT_PATIENT_ALERT_EDIT_TITLE = 'modal.add.or.edit.patient.alert.edit.title',
-  MODAL_ADD_OR_EDIT_PATIENT_ALERT_FIELD = 'modal.add.or.edit.patient.alert.field',
-  MODAL_ADD_OR_EDIT_PATIENT_ALERT_DESCRIPTION = 'modal.add.or.edit.patient.alert.description',
-  MODAL_DELETE_ALERT_TITLE = 'modal.delete.alert.title',
-  MODAL_DELETE_ALERT_MESSAGE = 'modal.delete.alert.message'
+  PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_TITLE = 'page.patient.check.in.alert.verification.title',
+  PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_DESCRIPTION = 'page.patient.check.in.alert.verification.description',
+  PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY = 'page.patient.check.in.alert.verification.action.verify',
+  PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS = 'page.patient.check.in.verify.modal.years',
+  PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE = 'page.patient.check.in.alert.intake.title',
+  PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION = 'page.patient.check.in.alert.intake.description'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

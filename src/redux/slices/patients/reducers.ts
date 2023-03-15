@@ -105,7 +105,7 @@ const reducers = createReducer({
     state.isAlertDeleted = action.payload;
   },
   setIsVerifyPatientProfilePhotoLoading(state, action: IAction<boolean>) {
-    state.setIsVerifyPatientProfilePhotoLoading = action.payload;
+    state.isVerifyPatientProfilePhotoLoading = action.payload;
   },
   setPatientProfile(state, action: IAction<PatientProfile | null>) {
     state.patientProfile = action.payload;

@@ -79,6 +79,7 @@ export const margins = {
 
 export const paddings = {
   auto: 'auto',
+  all0: '0px',
   all2: '2px',
   all4: '4px',
   all8: '8px',

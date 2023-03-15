@@ -62,7 +62,7 @@ const PatientHighlightsView = () => {
     <Paper sx={{ padding: '15px' }}>
       <Grid item xs={12}>
         <ContactList
-          avatar={patientProfile?.imageURL}
+          avatar={patientProfile?.avatar?.imageURL}
           name={patientProfile?.title}
           date={patientProfile?.subTitle}
           setOpen={setOpen}

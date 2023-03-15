@@ -648,5 +648,11 @@
   "page.patient.check.in.table.header.appointment.time": "Appointment Time",
   "page.patient.check.in.table.header.status": "Status",
   "page.patient.check.in.patient.label": "Patient name",
-  "page.patient.check.in.alert.success": "has been checked-in"
+  "page.patient.check.in.alert.success": "has been checked-in",
+  "page.patient.check.in.alert.verification.title": "Pending Photo Verification",
+  "page.patient.check.in.alert.verification.description": "has uploaded a new profile photo. Please verify.",
+  "page.patient.check.in.alert.verification.action.verify": "Verify",
+  "page.patient.check.in.verify.modal.years": "yrs",
+  "page.patient.check.in.alert.intake.title": "Patient cannot be checked in",
+  "page.patient.check.in.alert.intake.description": "Patient intake incomplete. Ask the patient to complete intake to check them in."
 }
