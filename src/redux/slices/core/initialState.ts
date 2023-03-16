@@ -1,4 +1,6 @@
-export const getInitialState = () => ({
+import { CoreProps } from 'types/reduxTypes/coreStateTypes';
+
+export const getInitialState = (): CoreProps => ({
   clinicConfig: {
     timeZone: '',
     currentDate: new Date().toDateString(),

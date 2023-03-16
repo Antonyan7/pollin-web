@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
     "lint:fix": "yarn run lint -- --fix",
+    "lint:win-fix": "yarn run lint --fix",
     "prepare": "husky install",
     "copy:assets": "cp app.yaml dist",
     "prettier": "prettier --write .",
