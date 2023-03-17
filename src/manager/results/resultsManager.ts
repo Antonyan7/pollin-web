@@ -143,11 +143,10 @@ const resultsManager = {
       data
     );
   },
-  getOrderResultsListForPatient(data: IOrderResultsListReqBody, patientId: string) {
+  getOrderResultsListForPatient(data: IOrderResultsListReqBody) {
     return axiosInstance.post<IOrderResultsByPatientList, IAxiosResponsePaginated<IOrderResultsByPatientList>>(
       `${baseURL}/v1/test-result`,
-      data,
-      { params: { patientId } }
+      data
     );
   },
   addMachineForSpecimen(specimenIds: ISpecimensReqBody[], machineId: string) {

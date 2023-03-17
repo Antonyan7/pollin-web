@@ -101,6 +101,7 @@ export interface ISpecimensListReqBody {
 }
 
 export interface IOrderResultsListReqBody {
+  patientId: string;
   page: number;
   sortOrder?: SortOrder;
   filters?: Omit<IResultsFilterOption, 'group' | 'title'>[];

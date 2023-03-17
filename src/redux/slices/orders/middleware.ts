@@ -264,6 +264,7 @@ const makeTestResultReviewed =
     dispatch(setIsTestResultReviewed(true));
 
     const testResultsReqBody: IOrderResultsListReqBody = {
+      patientId,
       page: 1
     };
 
@@ -271,7 +272,7 @@ const makeTestResultReviewed =
       const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
 
       dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
-      dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody, patientId));
+      dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody));
       dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
       dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
     } catch (error) {
@@ -286,6 +287,7 @@ const makeTestResultReleased = (testResultId: string, patientId: string) => asyn
   dispatch(setIsTestResultReleased(true));
 
   const testResultsReqBody: IOrderResultsListReqBody = {
+    patientId,
     page: 1
   };
 
@@ -293,7 +295,7 @@ const makeTestResultReleased = (testResultId: string, patientId: string) => asyn
     const response = await API.results.makeTestResultReleased(testResultId);
 
     dispatch(setTestResultReleasedDate(response.data.data.releaseDate));
-    dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody, patientId));
+    dispatch(ordersMiddleware.getOrderResultsListForPatient(testResultsReqBody));
     dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
     dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
   } catch (error) {
@@ -304,36 +306,35 @@ const makeTestResultReleased = (testResultId: string, patientId: string) => asyn
   dispatch(setIsTestResultReleased(false));
 };
 
-const getOrderResultsListForPatient =
-  (data: IOrderResultsListReqBody, patientId: string) => async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setIsOrderResultsByPatientListLoading(true));
+const getOrderResultsListForPatient = (data: IOrderResultsListReqBody) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsOrderResultsByPatientListLoading(true));
 
-      const body = (data.sortOrder !== null ? sortOrderTransformer(data) : data) as IOrderResultsListReqBody;
+    const body = (data.sortOrder !== null ? sortOrderTransformer(data) : data) as IOrderResultsListReqBody;
 
-      const response = await API.results.getOrderResultsListForPatient(body, patientId);
-      const {
-        totalItems,
-        currentPage,
-        pageSize,
-        data: { testResults }
-      } = response.data;
+    const response = await API.results.getOrderResultsListForPatient(body);
+    const {
+      totalItems,
+      currentPage,
+      pageSize,
+      data: { testResults }
+    } = response.data;
 
-      const results: IOrderResultsByPatientList = {
-        totalItems,
-        currentPage,
-        pageSize,
-        testResults
-      };
+    const results: IOrderResultsByPatientList = {
+      totalItems,
+      currentPage,
+      pageSize,
+      testResults
+    };
 
-      dispatch(setOrderResultsByPatientList(results));
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    } finally {
-      dispatch(setIsOrderResultsByPatientListLoading(false));
-    }
-  };
+    dispatch(setOrderResultsByPatientList(results));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrderResultsByPatientListLoading(false));
+  }
+};
 
 const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsRequisitionDownloaded(true));

@@ -61,13 +61,14 @@ const OrderResults = () => {
 
   useEffect(() => {
     const data: IOrderResultsListReqBody = {
+      patientId,
       ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortField && sortOrder ? { sortOrder } : {}),
       page: page + 1
     };
 
-    dispatch(ordersMiddleware.getOrderResultsListForPatient(data, patientId));
+    dispatch(ordersMiddleware.getOrderResultsListForPatient(data));
   }, [page, selectedFilters, sortField, sortOrder, patientId]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
