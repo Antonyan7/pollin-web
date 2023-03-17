@@ -1,8 +1,3 @@
-export interface IClinicConfigResponse {
-  currentDate: Date | string;
-  timeZone: string;
-  workingHours: {
-    start: string;
-    end: string;
-  };
-}
+import { IClinicConfig } from 'types/reduxTypes/coreStateTypes';
+
+export interface IClinicConfigResponse extends IClinicConfig {}

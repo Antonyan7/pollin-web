@@ -8,6 +8,12 @@ export interface IClinicConfig {
   workingHours: IWorkingHoursConfig;
 }
 
+export interface IInitializationStatus {
+  firebase: boolean;
+  featureFlags: boolean;
+}
+
 export interface CoreProps {
   clinicConfig: IClinicConfig;
+  initializationStatus: IInitializationStatus;
 }

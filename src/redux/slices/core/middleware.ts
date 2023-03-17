@@ -6,7 +6,7 @@ import { DateUtil } from '@utils/date/DateUtil';
 
 import slice from './slice';
 
-const { setClinicConfig } = slice.actions;
+const { setClinicConfig, setFirebaseInitializationStatus, setFeatureFlagsReadyStatus } = slice.actions;
 
 export const getClinicConfig = () => async (dispatch: AppDispatch) => {
   try {
@@ -20,6 +20,16 @@ export const getClinicConfig = () => async (dispatch: AppDispatch) => {
   }
 };
 
+export const updateFirebaseInitializationStatus = (status: boolean) => (dispatch: AppDispatch) => {
+  dispatch(setFirebaseInitializationStatus(status));
+};
+
+export const updateFeatureFlagsReadyStatus = (status: boolean) => (dispatch: AppDispatch) => {
+  dispatch(setFeatureFlagsReadyStatus(status));
+};
+
 export default {
-  getClinicConfig
+  getClinicConfig,
+  updateFirebaseInitializationStatus,
+  updateFeatureFlagsReadyStatus
 };

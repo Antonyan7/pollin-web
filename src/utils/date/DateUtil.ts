@@ -1,7 +1,7 @@
 import { isDate } from 'date-fns';
 import { format, formatInTimeZone } from 'date-fns-tz';
 
-type DateAcceptableType = Date | string;
+export type DateAcceptableType = Date | string;
 
 const label = `EST`;
 const fullDateISO3339Format = "yyyy-MM-dd'T'HH:mm:ss+00:00"; // workaround for date-fns handling of UTC 0 time zone to show only Z

@@ -7,7 +7,9 @@ import { guid } from 'helpers/guid';
 
 import { getFromCookie } from '@utils/cookies';
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
+import { errorLog } from '@utils/logger';
 
+import { convertRequest, convertResponse, logError, logRequest, logResponse } from './axiosUtils';
 import { FirebaseManager } from './firebase';
 
 const generateRequestId = () => guid();
@@ -45,6 +47,20 @@ class RequestManager {
     axiosInstance.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
       const requestConfig = config;
 
+      try {
+        const { LOGS_ENABLED, GLOBAL_DATE_CONVERTING_ENABLED } = FirebaseManager.getRemoteFlags();
+
+        if (GLOBAL_DATE_CONVERTING_ENABLED) {
+          convertRequest(requestConfig);
+        }
+
+        if (LOGS_ENABLED) {
+          logRequest(requestConfig);
+        }
+      } catch (error) {
+        errorLog('time converting error', error);
+      }
+
       const captchaToken = await FirebaseManager?.getToken();
       const idToken = await FirebaseManager?.getIdToken();
       const { NEXT_PUBLIC_APP_VERSION } = getEnvironmentVariables();
@@ -63,8 +79,23 @@ class RequestManager {
     });
 
     axiosInstance.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        const { LOGS_ENABLED, GLOBAL_DATE_CONVERTING_ENABLED } = FirebaseManager.getRemoteFlags();
+        const convertedResponse = convertResponse(response);
+
+        if (LOGS_ENABLED) {
+          logResponse(response);
+        }
+
+        return GLOBAL_DATE_CONVERTING_ENABLED ? convertedResponse : response;
+      },
       (error) => {
+        const { LOGS_ENABLED } = FirebaseManager.getRemoteFlags();
+
+        if (LOGS_ENABLED) {
+          logError(error);
+        }
+
         if (error.response.status === 403) {
           dispatch(
             viewsMiddleware.setRedirectionState({

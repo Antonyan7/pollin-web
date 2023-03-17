@@ -1,4 +1,6 @@
 import React from 'react';
+import { dispatch } from '@redux/hooks';
+import { coreMiddleware } from '@redux/slices/core';
 import * as Sentry from '@sentry/nextjs';
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { AppCheck, getToken, initializeAppCheck, ReCaptchaEnterpriseProvider } from 'firebase/app-check';
@@ -14,6 +16,7 @@ import {
   signInWithPopup,
   User
 } from 'firebase/auth';
+import { fetchAndActivate, getAll, getRemoteConfig, RemoteConfig } from 'firebase/remote-config';
 import { FirebaseStorage, getDownloadURL, getStorage, ref, StorageError, uploadBytesResumable } from 'firebase/storage';
 import {
   dispatchAuthError,
@@ -26,12 +29,19 @@ import { v4 } from 'uuid';
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 import { getFileExtension } from '@utils/stringUtils';
 
-const { NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID, NEXT_PUBLIC_ENVIRONMENT } = getEnvironmentVariables();
+const {
+  NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID,
+  NEXT_PUBLIC_ENVIRONMENT,
+  NEXT_PUBLIC_IDENTITY_PROVIDER_ID,
+  NEXT_PUBLIC_FIREBASE_CONFIG,
+  NEXT_PUBLIC_RECAPTURE_SITE_KEY
+} = getEnvironmentVariables();
 
 export interface WindowWithCypress extends Window {
   cypressEmailsPassSingIn: Function;
 }
 declare const window: WindowWithCypress;
+
 export class FirebaseManager {
   private static appCheck: AppCheck;
 
@@ -43,12 +53,17 @@ export class FirebaseManager {
 
   private static user: User;
 
+  private static remoteConfig: RemoteConfig;
+
+  private static featureFlags: Record<string, boolean>;
+
   private static initializeAuth() {
     this.auth = getAuth(this.app);
 
     this.auth.tenantId = NEXT_PUBLIC_IDENTITY_PROVIDER_TENANT_ID;
 
     if (NEXT_PUBLIC_ENVIRONMENT === 'e2eTesting') {
+      // eslint-disable-next-line no-console
       console.warn('Using Firebase Authentication emulator');
       connectAuthEmulator(this.auth, 'http://localhost:9099');
 
@@ -74,8 +89,44 @@ export class FirebaseManager {
     this.storage = getStorage(this.app);
   }
 
+  private static initiateRemoteConfig() {
+    this.remoteConfig = getRemoteConfig(this.app);
+    this.remoteConfig.settings.minimumFetchIntervalMillis = 1000;
+
+    if (!!this.app && !!this.remoteConfig) {
+      fetchAndActivate(this.remoteConfig).then(() => {
+        this.retrieveRemoteFlags();
+      });
+    }
+  }
+
+  private static retrieveRemoteFlags(): void {
+    if (this.featureFlags) {
+      return;
+    }
+
+    const prefix = `WEB_`;
+
+    try {
+      const fetchedFlags = getAll(this.remoteConfig);
+      const remoteFlags: Record<string, boolean> = {};
+
+      Object.entries(fetchedFlags)
+        .filter(([key]) => key.startsWith(prefix))
+        .forEach(([key, config]) => {
+          remoteFlags[key.replace(prefix, '')] = config.asBoolean();
+        });
+
+      this.featureFlags = remoteFlags;
+    } catch (error) {
+      Sentry.captureException(error);
+      this.featureFlags = {};
+    }
+
+    dispatch(coreMiddleware.updateFeatureFlagsReadyStatus(true));
+  }
+
   public static async login() {
-    const { NEXT_PUBLIC_IDENTITY_PROVIDER_ID } = getEnvironmentVariables();
     const samlProvider = new SAMLAuthProvider(NEXT_PUBLIC_IDENTITY_PROVIDER_ID);
 
     signInWithPopup(this.auth, samlProvider)
@@ -96,6 +147,10 @@ export class FirebaseManager {
     this.auth.signOut();
   }
 
+  public static getRemoteFlags() {
+    return this.featureFlags ?? {};
+  }
+
   static initiate() {
     // eslint-disable-next-line no-console
     console.debug('Initiate firebase');
@@ -108,8 +163,6 @@ export class FirebaseManager {
       const apps = getApps();
 
       [this.app] = apps;
-
-      const { NEXT_PUBLIC_FIREBASE_CONFIG, NEXT_PUBLIC_RECAPTURE_SITE_KEY } = getEnvironmentVariables();
 
       if (!apps.length) {
         this.app = initializeApp(JSON.parse(NEXT_PUBLIC_FIREBASE_CONFIG));
@@ -129,6 +182,12 @@ export class FirebaseManager {
       if (!this.storage) {
         this.initiateStorage();
       }
+
+      if (!this.remoteConfig) {
+        this.initiateRemoteConfig();
+      }
+
+      dispatch(coreMiddleware.updateFirebaseInitializationStatus(true));
     } catch (error) {
       Sentry.captureException(error);
     }

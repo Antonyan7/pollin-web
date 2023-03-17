@@ -8,5 +8,9 @@ export const getInitialState = (): CoreProps => ({
       start: '',
       end: ''
     }
+  },
+  initializationStatus: {
+    firebase: false,
+    featureFlags: false
   }
 });
