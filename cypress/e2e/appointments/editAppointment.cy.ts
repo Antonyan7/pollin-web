@@ -1,10 +1,10 @@
-import dayjs from 'dayjs';
+import {addDays, format} from "date-fns";
 
 import {CypressIds} from "../../../src/constants/cypressIds";
 import {CyUtils} from "../../helpers/cypressIdsUtils";
 import {StatusesEnum} from "../../helpers/helpers";
 
-const futureDate = Number(dayjs().add(2, 'day').format('D'));
+const futureDate = Number(format(addDays(new Date(), 2), 'd'));
 
 describe('Edit appointments', () => {
 
@@ -45,7 +45,7 @@ describe('Edit appointments', () => {
                 cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER))
                     .should('exist').click()
                 cy.get(`.MuiCalendarOrClockPicker-root`)
-                    .contains(futureDate).click().then(() => {
+                    .contains(RegExp(`^${futureDate}$`)).click().then(() => {
 
                     cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist')
                     cy.contains(StatusesEnum.Booked).click({force: true})

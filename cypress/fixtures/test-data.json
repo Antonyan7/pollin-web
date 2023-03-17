@@ -1,6 +1,11 @@
 {
   "e2e_patient": "E2E Patient",
   "service_type_1": "E2E - Test N2",
+  "service_type_2": "E2E - Test Auto",
   "service_provider_1": "Test_Auto",
-  "service_provider_2": "Test_Service_Provider"
+  "service_provider_2": "Test_Service_Provider",
+  "templateName1": "service type template",
+  "templateName2": "block template",
+  "templateName3": "edit template",
+  "comment": "comment"
 }

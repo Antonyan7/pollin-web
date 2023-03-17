@@ -1,9 +1,9 @@
-import dayjs from 'dayjs';
+import {addDays, format} from "date-fns";
 
 import {CypressIds} from "../../../src/constants/cypressIds";
 import {CyUtils} from "../../helpers/cypressIdsUtils";
 
-const futureDate = Number(dayjs().add(3, 'day').format('D'));
+const futureDate = Number(format(addDays(new Date(), 3), 'd'));
 
 describe('Appointments', () => {
 
@@ -81,7 +81,7 @@ describe('Appointments', () => {
                 cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER))
                     .should('exist').click()
                 cy.get(`.MuiCalendarOrClockPicker-root`)
-                    .contains(futureDate).click().then(() => {
+                    .contains(RegExp(`^${futureDate}$`)).click().then(() => {
                     cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist')
                     cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT))
                         .should('contain', `${data.e2e_patient} |`)
