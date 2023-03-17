@@ -3,14 +3,15 @@ import { format, formatInTimeZone } from 'date-fns-tz';
 
 type DateAcceptableType = Date | string;
 
+const label = `EST`;
 const fullDateISO3339Format = "yyyy-MM-dd'T'HH:mm:ss+00:00"; // workaround for date-fns handling of UTC 0 time zone to show only Z
 const fullDateISO8601Format = 'yyyy-MM-dd HH:mm:ssXXX';
 const dateOnlyValueFormat = 'yyyy-MM-dd';
 const timeOnlyValueFormat = 'HH:mm:ss';
 
-const dateTimeDisplayFormat = "MMM dd, yyyy HH:mm ['EST']";
-const dateOnlyDisplayFormat = 'MMM dd, yyyy';
-const timeOnlyDisplayFormat = 'HH:mm';
+export const dateTimeDisplayFormat = `MMM dd, yyyy HH:mm ['${label}']`;
+export const dateOnlyDisplayFormat = 'MMM dd, yyyy';
+export const timeOnlyDisplayFormat = `HH:mm ['${label}']`;
 
 const timeZoneOffsetFormat = 'XXX';
 
@@ -108,9 +109,14 @@ export class DateUtil {
   }
 
   // expects date in local time zone
-  public static formatTimeOnly(date: DateAcceptableType): string {
+  public static formatTimeOnlyFromDate(date: DateAcceptableType): string {
     const dateInstance: Date = this.getLocalDateInstance(date);
 
     return format(dateInstance, timeOnlyDisplayFormat);
+  }
+
+  // expects time string
+  public static formatTimeOnly(timeString: string): string {
+    return timeString ? `${timeString} [${label}]` : '';
   }
 }
