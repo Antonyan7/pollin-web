@@ -7,15 +7,12 @@ import { Button, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography,
 import { styled } from '@mui/material/styles';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
-
-import { convertToLocale } from '@utils/dateUtils';
 
 const PatientAlertView = () => {
   const router = useRouter();
@@ -60,8 +57,7 @@ const PatientAlertView = () => {
                 title={
                   titleContent.id ? (
                     <>
-                      {titleContent?.createdBy?.name} -{' '}
-                      {`${format(new Date(convertToLocale(titleContent?.createdBy?.date)), 'MMM dd, yyyy HH:mm')} EST`}
+                      {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
                     </>
                   ) : null
                 }
