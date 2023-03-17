@@ -7,7 +7,7 @@ import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { Avatar, Box, Button, ButtonProps, Grid, Stack, Tooltip, Typography, useTheme } from '@mui/material';
-import { dispatch } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { IconBell } from '@tabler/icons';
@@ -30,6 +30,12 @@ interface ContactListProps {
   open: boolean;
 }
 
+const disabledButtonStyled = {
+  '&[disabled]': {
+    opacity: 0.5
+  }
+};
+
 // eslint-disable-next-line max-lines-per-function
 const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
   const theme = useTheme();
@@ -41,6 +47,8 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   const patientHighlightHeader = useSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
   const isPatientHighlightIntakeReminderActive = useSelector(patientsSelector.isPatientHighlightIntakeReminderActive);
+  const patientProfile = useAppSelector(patientsSelector.patientProfile);
+
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
     async () => {
@@ -104,6 +112,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                       }
                       disabled={!patientHighlightHeader.contact.uiid}
                       onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
+                      sx={disabledButtonStyled}
                     >
                       <Typography
                         variant="body2"
@@ -129,6 +138,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                       }
                       disabled={!patientHighlightHeader.ohip.uiid}
                       onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
+                      sx={disabledButtonStyled}
                     >
                       <Typography
                         variant="body2"
@@ -152,8 +162,9 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
                           }}
                         />
                       }
-                      disabled={!patientHighlightHeader.doctor.uiid}
+                      disabled={!patientHighlightHeader.doctor.uiid || !patientProfile?.isIntakeComplete}
                       onClick={onButtonClick(patientHighlightHeader.doctor.uiid)}
+                      sx={disabledButtonStyled}
                     >
                       <Typography
                         variant="body2"
