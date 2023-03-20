@@ -10,6 +10,7 @@ import {
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { SeveritiesType } from '@components/Scheduling/types';
+import { patientsMiddleware } from '@redux/slices/patients/index';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import { Translation } from 'constants/translations';
@@ -166,11 +167,11 @@ const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const getPatientAlertDetails = (alertId: string, abortSignal?: AbortSignal) => async (dispatch: AppDispatch) => {
+const getPatientAlertDetails = (patientId: string, abortSignal?: AbortSignal) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setPatientAlertDetailsLoading(true));
 
-    const response = await API.patients.getPatientAlertDetails(alertId, abortSignal);
+    const response = await API.patients.getPatientAlertDetails(patientId, abortSignal);
 
     dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
   } catch (error) {
@@ -185,9 +186,10 @@ const createPatientAlert = (patientId: string, alert: CustomAlerts) => async (di
   try {
     dispatch(setIsPatientCustomAlertCreated(true));
 
-    const response = await API.patients.createPatientAlert(patientId, alert);
+    await API.patients.createPatientAlert(patientId, alert);
 
-    dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
+    dispatch(getPatientAlertDetails(patientId));
+    dispatch(patientsMiddleware.isPatientAlertViewOpen(true));
   } catch (error) {
     dispatch(setPatientAlertDetails([]));
   } finally {

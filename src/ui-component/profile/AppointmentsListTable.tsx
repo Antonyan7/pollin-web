@@ -121,7 +121,6 @@ const AppointmentsListTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[pageSize]}
         component="div"
         count={totalItems}
         rowsPerPage={pageSize}

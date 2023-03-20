@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
-import { Button, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography, useTheme } from '@mui/material';
+import { Box, Button, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
@@ -52,66 +52,72 @@ const PatientAlertView = () => {
         <>
           {patientAlertDetails.map((titleContent: AlertDetailsProps, index) => (
             <Grid container>
-              <MuiTooltip
-                followCursor
-                title={
-                  titleContent.id ? (
-                    <>
-                      {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
-                    </>
-                  ) : null
-                }
-              >
-                <Grid item container alignItems="center" justifyContent="center">
-                  <Grid item xs={0.5}>
-                    <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
-                  </Grid>
-                  <Grid item xs={10.5}>
-                    <Typography fontWeight={500} variant="subtitle1">
-                      {titleContent.title}
-                    </Typography>
-                    {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-                      <Typography variant="subtitle2" color={theme.palette.common.black} marginBottom={margins.bottom8}>
-                        {message.title}
-                      </Typography>
-                    ))}
-                  </Grid>
-                  <Grid item xs={0.5} container alignItems="center" justifyContent="center">
-                    {patientAlertDetails[index].isEditable ? (
-                      <Button
-                        sx={{ color: theme.palette.warning.dark, mr: margins.right32 }}
-                        variant="text"
-                        onClick={() => {
-                          dispatch(
-                            viewsMiddleware.openModal({
-                              name: ModalName.AddOrEditCustomAlertModal,
-                              props: {
-                                alertId: titleContent.id,
-                                title: titleContent.title,
-                                description: titleContent.messages[0].title
-                              }
-                            })
-                          );
-                        }}
-                      >
-                        <Typography variant="subtitle2" color={theme.palette.warning.dark}>
-                          {t(Translation.COMMON_BUTTON_EDIT_LABEL)}
-                        </Typography>
-                      </Button>
-                    ) : null}
-                  </Grid>
-                  <Grid item xs={0.5} container alignItems="center" justifyContent="center">
-                    {index === 0 ? (
-                      <Button
-                        sx={{ color: theme.palette.warning.dark }}
-                        onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen(false))}
-                      >
-                        <CloseIcon sx={{ fontSize: theme.typography.pxToRem(20) }} />
-                      </Button>
-                    ) : null}
-                  </Grid>
+              <Grid item container alignItems="center" justifyContent="center">
+                <Grid item xs={0.5}>
+                  <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
                 </Grid>
-              </MuiTooltip>
+                <Grid item xs={10.5}>
+                  <MuiTooltip
+                    followCursor
+                    title={
+                      titleContent.id ? (
+                        <>
+                          {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
+                        </>
+                      ) : null
+                    }
+                  >
+                    <Box sx={{ width: 'fit-content' }}>
+                      <Typography fontWeight={500} variant="subtitle1">
+                        {titleContent.title}
+                      </Typography>
+                      {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
+                        <Typography
+                          variant="subtitle2"
+                          color={theme.palette.common.black}
+                          marginBottom={margins.bottom8}
+                        >
+                          {message.title}
+                        </Typography>
+                      ))}
+                    </Box>
+                  </MuiTooltip>
+                </Grid>
+                <Grid item xs={0.5} container alignItems="center" justifyContent="center">
+                  {patientAlertDetails[index].isEditable ? (
+                    <Button
+                      sx={{ color: theme.palette.warning.dark, mr: margins.right32 }}
+                      variant="text"
+                      onClick={() => {
+                        dispatch(
+                          viewsMiddleware.openModal({
+                            name: ModalName.AddOrEditCustomAlertModal,
+                            props: {
+                              alertId: titleContent.id,
+                              title: titleContent.title,
+                              description: titleContent.messages[0].title
+                            }
+                          })
+                        );
+                      }}
+                    >
+                      <Typography variant="subtitle2" color={theme.palette.warning.dark}>
+                        {t(Translation.COMMON_BUTTON_EDIT_LABEL)}
+                      </Typography>
+                    </Button>
+                  ) : null}
+                </Grid>
+                <Grid item xs={0.5} container alignItems="center" justifyContent="center">
+                  {index === 0 ? (
+                    <Button
+                      sx={{ color: theme.palette.warning.dark }}
+                      onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen(false))}
+                    >
+                      <CloseIcon sx={{ fontSize: theme.typography.pxToRem(20) }} />
+                    </Button>
+                  ) : null}
+                </Grid>
+              </Grid>
             </Grid>
           ))}
         </>

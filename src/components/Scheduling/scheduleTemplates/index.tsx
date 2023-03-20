@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ScheduleBoxWrapper, StyledButtonNew } from '@components/common/MaterialComponents';
-import { tableRowCount } from '@constants';
 import AddIcon from '@mui/icons-material/Add';
 import { TablePagination, Typography, useTheme } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { ScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
-import { rowsPerPage } from 'helpers/constants';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
@@ -66,11 +64,11 @@ const ScheduleTemplates = () => {
           <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
         </ScheduleTemplatesContext>
         <TablePagination
-          rowsPerPageOptions={[rowsPerPage]}
           component="div"
           count={scheduleTemplates.totalItems}
-          rowsPerPage={tableRowCount}
+          rowsPerPage={scheduleTemplates.pageSize}
           page={page}
+          labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
           onPageChange={handleChangePage}
         />
       </ScheduleBoxWrapper>
