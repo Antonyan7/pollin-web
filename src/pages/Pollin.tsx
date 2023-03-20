@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { FirebaseManager } from '@axios/firebase';
 import { EmotionCache } from '@emotion/react';
 import type { AppProps } from 'next/app';
+import { useRouter } from 'next/router';
 import Main from 'pages';
 
 import { NavigationScroll } from '../components';
@@ -15,7 +16,7 @@ export type PollinAppProps = AppProps & {
   };
 };
 
-const Pollin = ({ Component, pageProps }: PollinAppProps) => {
+export const Pollin = ({ Component, pageProps }: PollinAppProps) => {
   useEffect(() => {
     FirebaseManager.initiate();
   }, []);
@@ -35,4 +36,14 @@ const Pollin = ({ Component, pageProps }: PollinAppProps) => {
   );
 };
 
-export default Pollin;
+const Default = () => {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/');
+  }, [router]);
+
+  return null;
+};
+
+export default Default;

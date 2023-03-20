@@ -27,7 +27,7 @@ const SafeHydrate = ({ children }: PropsWithChildren) => (
   <div suppressHydrationWarning>{typeof window === 'undefined' ? null : children}</div>
 );
 
-const DynamicPollin = dynamic(() => import('./Pollin'), {
+const DynamicPollin = dynamic(() => import('./Pollin').then((module) => module.Pollin), {
   ssr: false
 });
 

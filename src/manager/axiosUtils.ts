@@ -58,7 +58,7 @@ export const logResponse = (response: AxiosResponse): void => {
   ];
 
   if (response.config.data) {
-    args.push({ body: response.config.data });
+    args.push({ body: JSON.parse(response.config.data) });
   }
 
   if (response.config.params) {
