@@ -195,13 +195,7 @@ export interface IGetCollectionCalendarAppointmentFilters {
   filters: ICollectionCalendarAppointmentFilter[];
 }
 
-export interface IProvidersCollectionCalendarAppointment {
-  id: string;
-  startTime: string;
-  timeUnits: number;
-  title: string;
-  isEditable: boolean;
-  color?: string;
+export interface IProvidersCollectionCalendarAppointment extends IAppointment {
   status?: AppointmentStatus;
 }
 

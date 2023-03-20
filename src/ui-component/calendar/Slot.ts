@@ -1,7 +1,7 @@
 import { Colors, SlotTypes, Styles } from 'types/calendar';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 
-const shortAppointmentClassname = 'short-appointment';
+const shortAppointmentClassName = 'short-appointment';
 
 const appointmentDuration = (start: string, end: string): number => {
   const startTime = new Date(start).getTime();
@@ -17,7 +17,8 @@ export const CreateSlot = (
   end: string,
   title: string,
   slotId?: string,
-  color?: string
+  color?: string,
+  addonClasses?: string[]
 ): ICalendarSlot => {
   const BackgroundColors: Colors = {
     AppointmentBooked: '#18A0FB',
@@ -48,8 +49,12 @@ export const CreateSlot = (
     ServiceType: ['open-slot', 'font-type']
   };
 
-  const isAppointmentShort = appointmentDuration(start, end) <= 10 ? [shortAppointmentClassname] : [];
+  const isAppointmentShort = appointmentDuration(start, end) <= 10 ? [shortAppointmentClassName] : [];
   const classNames = ClassNames[type] ? [...ClassNames[type], ...isAppointmentShort] : isAppointmentShort;
+
+  if (addonClasses) {
+    classNames.push(...addonClasses);
+  }
 
   return <ICalendarSlot>{
     ...(slotId ? { id: slotId } : {}),

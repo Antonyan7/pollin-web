@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import EventIcon from '@mui/icons-material/Event';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
@@ -7,7 +7,7 @@ import { DateTimePickerWrapperProps } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import { dateTimeDisplayFormat, DateUtil } from '@utils/date/DateUtil';
+import { dateTimeDisplayFormat } from '@utils/date/DateUtil';
 
 const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
@@ -22,10 +22,6 @@ const DateTimePickerWrapper = ({
   const { MIN_SELECTABLE_DATE_TIME, MAX_SELECTABLE_DATE_TIME, futureDate180DaysLimit, fitSelectedTimeToConfig } =
     useClinicConfig();
   const { isLimitedByWorkingHours } = otherProps;
-
-  useEffect(() => {
-    console.log(DateUtil.formatFullDate(new Date()));
-  }, []);
 
   return (
     <MobileDateTimePicker

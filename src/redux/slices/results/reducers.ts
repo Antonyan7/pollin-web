@@ -123,6 +123,9 @@ const reducers = createReducer({
   setTestResultsState(state, action: IAction<SchedulingStateStatusProps>) {
     state.tracking.testResultStateStatus = action.payload;
   },
+  setTransportListDate(state, action: IAction<Date>) {
+    state.tracking.transportListDate = action.payload;
+  },
   setIsTransportListLoading(state, action: IAction<boolean>) {
     state.tracking.isTransportListLoading = action.payload;
   },

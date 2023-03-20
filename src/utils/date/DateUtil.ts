@@ -80,6 +80,14 @@ export class DateUtil {
     return formatInTimeZone(new Date(clinicDate), 'UTC', fullDateISO3339Format);
   }
 
+  public static representInClinicDate(date: DateAcceptableType = new Date()): Date {
+    const dateInstance: Date = isDate(date) ? (date as Date) : new Date(date);
+    const clinicDate: string = formatInTimeZone(dateInstance, this.clinicTimeZone, fullDateISO8601Format);
+    const convertedFromClinic = this.convertFromClinic(clinicDate);
+
+    return new Date(convertedFromClinic);
+  }
+
   public static convertToDateOnly(date: DateAcceptableType): string {
     const dateInstance: Date = this.getLocalDateInstance(date);
 
@@ -118,5 +126,12 @@ export class DateUtil {
   // expects time string
   public static formatTimeOnly(timeString: string): string {
     return timeString ? `${timeString} [${label}]` : '';
+  }
+
+  public static isSameDate(
+    firstDate: DateAcceptableType,
+    secondDate: DateAcceptableType = DateUtil.representInClinicDate()
+  ): boolean {
+    return this.convertToDateOnly(firstDate) === this.convertToDateOnly(secondDate);
   }
 }

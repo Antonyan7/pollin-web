@@ -1,105 +1,73 @@
 /* eslint-disable simple-import-sort/imports */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import FullCalendar from '@fullcalendar/react';
-import { calculateEndTime } from '@utils/dateUtils';
-import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
-import { Translation } from 'constants/translations';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { IAppointment, ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
+import { IAppointment } from 'types/reduxTypes/bookingStateTypes';
 import { CypressIds } from 'constants/cypressIds';
+import { EventClickArg } from '@fullcalendar/common';
 import { CreateSlot } from './Slot';
-import { bookingMiddleware, bookingSelector } from '../../redux/slices/booking';
 import { StyledDisabledLayer } from './StyledDisabledLayer';
 import FullCalendarContainer from './FullCalendarContainer';
 import FullCalendarWrapper from './FullCalendarWrapper';
 import { CalendarLoading } from './CalendarLoading';
+import { calculateSlotEndDate } from './util/calendarUtils';
 
 interface CalendarProps {
-  calendarDate: string;
+  calendarDate: Date;
+  onEventClick: (initialEventObject: EventClickArg) => void;
+  disable: {
+    state: boolean;
+    title: string;
+  };
+  appointments: {
+    list: IAppointment[];
+    isLoading: boolean;
+    slotStyleCallback?: <T extends IAppointment>(appointment: T) => string[];
+  };
 }
 
-const Calendar: React.FC<CalendarProps> = ({ calendarDate }) => {
+const Calendar: React.FC<CalendarProps> = ({ calendarDate, onEventClick, disable, appointments }) => {
   const calendarRef = useRef<FullCalendar>(null);
-  const [slots, setSlots] = useState<ICalendarSlot[]>([]);
-  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
-  const appointments = useAppSelector(bookingSelector.appointmentsList);
-  const isCalendarLoading = useAppSelector(bookingSelector.isCalendarLoading);
-  const router = useRouter();
-  const [t] = useTranslation();
+  const fullCalendarComponentCypressId = CypressIds.COMMON_FULL_CALENDAR_COMPONENT;
+
+  const slots = useMemo(
+    () =>
+      appointments.list?.map((item: IAppointment) =>
+        CreateSlot(
+          item.type,
+          item.startTime,
+          calculateSlotEndDate(item.startTime, item.timeUnits),
+          item.title,
+          item.id,
+          item.color,
+          appointments.slotStyleCallback?.(item)
+        )
+      ) ?? [],
+    [appointments]
+  );
 
   useEffect(() => {
-    if (router.isReady) {
-      if (router.query.date) {
-        dispatch(bookingMiddleware.setDateValue(router.query?.date as string));
-      }
-
-      if (router.query.resource) {
-        dispatch(bookingMiddleware.applyResource(router.query?.resource as string));
-      }
-    }
-
-    // We are disabling this since linter is asking for router props date and resource include in deps, but it shouldn't
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.isReady]);
-
-  useEffect(() => {
-    if (serviceProviderId) {
-      dispatch(bookingMiddleware.getAppointments(serviceProviderId, calendarDate));
-    } else {
-      dispatch(bookingMiddleware.clearAppointments());
-    }
-
     if (calendarDate) {
-      const calendarEl = calendarRef.current;
+      const calendarComponent = calendarRef.current;
 
-      if (calendarEl) {
-        const calendarApi = calendarEl.getApi();
+      if (calendarComponent) {
+        const calendarApi = calendarComponent.getApi();
 
         calendarApi.gotoDate(calendarDate);
       }
     }
-
-    router.push({
-      query: {
-        ...(serviceProviderId
-          ? {
-              resource: serviceProviderId
-            }
-          : {}),
-        ...(calendarDate ? { date: calendarDate } : {})
-      }
-    });
-
-    // We are disabling this since linter is asking for router include in deps, but it shouldn't
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [calendarDate, serviceProviderId]);
-
-  useEffect(() => {
-    const calendarEvents = appointments?.map((item: IAppointment) =>
-      CreateSlot(
-        item.type,
-        item.startTime,
-        calculateEndTime(item.startTime, item.timeUnits),
-        item.title,
-        item.id,
-        item.color
-      )
-    );
-
-    setSlots(calendarEvents);
-  }, [appointments]);
-
-  const fullCalendarComponentCypressId = CypressIds.COMMON_FULL_CALENDAR_COMPONENT;
+  }, [calendarDate, calendarRef]);
 
   return (
     <div style={{ position: 'relative' }} data-cy={fullCalendarComponentCypressId}>
-      {isCalendarLoading && <CalendarLoading />}
+      {appointments.isLoading ? <CalendarLoading /> : null}
       <FullCalendarWrapper>
-        {serviceProviderId === '' && (
-          <StyledDisabledLayer>{t(Translation.PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED)}</StyledDisabledLayer>
-        )}
-        <FullCalendarContainer slots={slots} calendarDate={calendarDate} calendarRef={calendarRef} />
+        {disable.state ? <StyledDisabledLayer>{disable.title}</StyledDisabledLayer> : null}
+        <FullCalendarContainer
+          slots={slots}
+          calendarDate={calendarDate}
+          calendarRef={calendarRef}
+          onEventClick={onEventClick}
+        />
       </FullCalendarWrapper>
     </div>
   );

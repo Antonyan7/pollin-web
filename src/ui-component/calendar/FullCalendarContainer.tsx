@@ -8,27 +8,29 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
 import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 
-import { useAppSelector } from '@redux/hooks';
-import { coreSelector } from '@redux/slices/core';
-import useOnCalendarEventClick from './hooks/useOnCalenderEventClick';
+import { EventClickArg } from '@fullcalendar/common';
 import useOnRangeSelect from './hooks/useOnRangeSelect';
-import FULL_CALENDAR_DEFAULT_PROPS from './constants/fullCalendarDefaultProps';
+import { useCalendarDefaultConfig } from './hooks/useCalendarDefaultConfig';
 
 interface FullCalendarContainerProps {
   slots: ICalendarSlot[];
-  calendarDate: string;
+  calendarDate: Date;
   calendarRef: FullCalendar['elRef'];
+  onEventClick: (initialEventObject: EventClickArg) => void;
 }
 
-const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({ slots, calendarDate, calendarRef }) => {
-  const onEventClick = useOnCalendarEventClick();
+const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({
+  slots,
+  calendarDate,
+  calendarRef,
+  onEventClick
+}) => {
   const onRangeSelect = useOnRangeSelect();
-  const { timeZone } = useAppSelector(coreSelector.clinicConfigs);
+  const calendarDefaultConfig = useCalendarDefaultConfig();
 
   return (
     <FullCalendar
-      {...FULL_CALENDAR_DEFAULT_PROPS}
-      timeZone={timeZone}
+      {...calendarDefaultConfig}
       events={slots}
       ref={calendarRef}
       select={onRangeSelect as () => void}

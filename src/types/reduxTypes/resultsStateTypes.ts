@@ -57,6 +57,7 @@ export interface IExternalTestResults {
 }
 
 export interface ITestResultsTracking {
+  transportListDate: Date;
   transportList: ITransportList;
   specimensInTransportList: ISpecimensInTransportList;
   shouldRefetchInTransportList: boolean;

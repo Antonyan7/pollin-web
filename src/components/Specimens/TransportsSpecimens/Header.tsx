@@ -11,7 +11,7 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-import DefaultDatePicker from '@ui-component/common/DefaultDatePicker';
+import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
 
 import { HeaderProps } from './types';
 
@@ -27,6 +27,8 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
   const transportList = useAppSelector(resultsSelector.transportList);
   const isSpecimensListLoading = useAppSelector(resultsSelector.isSpecimensListLoading);
   const invalidSearchedItems = transportList?.notFound?.map((notFoundItem) => notFoundItem.identifier);
+
+  const calendarDate = useAppSelector(resultsSelector.transportListDate);
 
   useEffect(() => {
     const shouldShowToast = searchedItems.length > 0 && !isSpecimensListLoading;
@@ -69,6 +71,12 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
     }
   }, [labList]);
 
+  const onDateChange = useCallback((date?: Date | null) => {
+    if (date) {
+      dispatch(resultsMiddleware.updateTransportListDate(date));
+    }
+  }, []);
+
   const onAddTransportNewFolderClick = useCallback(() => {
     dispatch(resultsMiddleware.resetLastCreatedTransportFolderId());
 
@@ -89,7 +97,7 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
       />
       <Grid display="flex" justifyContent="space-between" my={margins.topBottom20}>
         <Grid item xs={3}>
-          <DefaultDatePicker />
+          <PollinDatePickerWithTodayButton calendarDate={calendarDate} onChange={onDateChange} />
         </Grid>
         <Grid item xs={3} display="flex">
           <Button variant="contained" endIcon={<Add />} onClick={onAddTransportNewFolderClick}>

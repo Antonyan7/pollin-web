@@ -39,7 +39,7 @@ export interface ILabsResponse {
 export interface ICreateTransportFolderReqBody {
   name: string;
   labId: string;
-  date: string;
+  date: Date | string;
 }
 
 export interface IGetSpecimensInTransportListParams {

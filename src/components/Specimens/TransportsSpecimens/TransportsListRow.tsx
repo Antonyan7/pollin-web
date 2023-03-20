@@ -1,15 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
 import { resultsSelector } from '@redux/slices/results';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import Link from 'next/link';
 import { ContextMenuAction, ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
 import useTransportActions from '@hooks/contextMenu/useTransportActions';
 import { ContextMenu } from '@ui-component/contextMenu';
-import { getCurrentDate, getDate } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 import { getStatusTitle } from '@utils/mappings';
 
 interface AllTestsRowProps {
@@ -18,13 +16,10 @@ interface AllTestsRowProps {
 }
 
 export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
-  const currentDay = getCurrentDate();
-  const isCurrentDay = getDate(currentDay ?? '') === getDate(row.date ?? '');
-  const calendarDate = useAppSelector(bookingSelector.calendarDate);
-  const isCurrentDateEqualsToCalendarDate = getDate(currentDay ?? '') === getDate(calendarDate ?? '');
-  const { customizedDate, customizedTransportCreationDate } = timeAdjuster(row.date);
-  const folderCreateDate = isCurrentDay ? customizedTransportCreationDate : customizedDate;
-  const actionBindings = useTransportActions(row, actions, !isCurrentDateEqualsToCalendarDate);
+  const calendarDate = useAppSelector(resultsSelector.transportListDate);
+  const isCurrentDay = useMemo(() => DateUtil.isSameDate(calendarDate), [calendarDate]);
+  const folderCreateDate = DateUtil.formatDateOnly(row.date);
+  const actionBindings = useTransportActions(row, actions, !isCurrentDay);
   const actionVariations = useAppSelector(resultsSelector.transportActions);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 

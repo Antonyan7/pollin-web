@@ -15,7 +15,6 @@ import {
   useTheme
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import findCurrentAction from 'helpers/findCurrentAction';
@@ -37,7 +36,7 @@ const TransportsList = () => {
   const [sortField, setSortField] = useState<TransportsSortFields | null>(TransportsSortFields.STATUS);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Asc);
   const [searchedItems, setSearchedItems] = useState<string[]>([]);
-  const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const calendarDate = useAppSelector(resultsSelector.transportListDate);
   const transportList = useAppSelector(resultsSelector.transportList);
   const isLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const actionVariations = useAppSelector(resultsSelector.transportActions);

@@ -1,20 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AppointmentsContent from '@components/common/AppointmentsContent';
 import { StyledButtonNew } from '@components/common/MaterialComponents';
-import getDesktopDatePickerDefaultProps from '@components/DefaultDesktopDatePicker/defaultProps';
-import { CalendarTodayTwoTone } from '@mui/icons-material';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Divider, outlinedInputClasses, Stack, styled, TextField, Typography, useTheme } from '@mui/material';
+import { Box, Divider, styled, Typography, useTheme } from '@mui/material';
 import { BoxProps } from '@mui/system';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
@@ -23,8 +19,10 @@ import { ModalName } from 'types/modals';
 
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
+import useOnCalendarEventClick from '@ui-component/calendar/hooks/useOnCalenderEventClick';
 import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
-import { futureDate180DaysAfter, getCurrentDate, getDate, neutralDateTime } from '@utils/dateUtils';
+import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
@@ -33,10 +31,6 @@ export const MainHeader = styled(Box)<BoxProps>(() => ({
   flexDirection: 'row',
   flexWrap: 'wrap',
   justifyContent: 'space-between'
-}));
-
-const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
-  color: theme.palette.primary.main
 }));
 
 const formControlStyle = { minWidth: '210px', marginTop: margins.top32, marginRight: margins.right12 };
@@ -49,35 +43,71 @@ const dateFormControlStyle = {
 };
 
 const Appointments = () => {
-  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const isLoading = useAppSelector(bookingSelector.isBookingCalendarLoading);
   const groupedServiceProvidersList = useAppSelector(bookingSelector.groupedServiceProvidersList);
   const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
   const isGroupedServiceProvidersLoading = useAppSelector(bookingSelector.isGroupedServiceProvidersLoading);
+  const appointments = useAppSelector(bookingSelector.appointmentsList);
   const theme = useTheme();
   const [t] = useTranslation();
+  const router = useRouter();
 
-  const currentDay = getCurrentDate();
-  const isToday = getDate(calendarDate) === getDate(currentDay);
+  const onCalendarEventClick = useOnCalendarEventClick();
+  const calendarDisabledStateTitle = t(Translation.PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED);
+
   const onOpenAppointmentsModalAdd = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.AddResourceAppointmentModal, props: {} }));
   }, []);
-  const onDateDatePickerOpen = useCallback(() => {
-    setDatePickerOpen(true);
-  }, []);
-  const onDateDatePickerClose = useCallback(() => {
-    setDatePickerOpen(false);
-  }, []);
-  const onDateChange = useCallback((date: Date | null) => {
+
+  const onDateChange = useCallback((date?: Date | null) => {
     if (date) {
-      dispatch(bookingMiddleware.setDateValue(format(date, 'yyyy-MM-dd')));
+      dispatch(bookingMiddleware.setDateValue(date));
     }
-  }, []);
-  const onTodayClick = useCallback(() => {
-    dispatch(bookingMiddleware.setDateValue(getDate(getCurrentDate())));
   }, []);
 
   useAppointmentStatusState();
+
+  const onServiceProviderChange = useCallback((providerOption?: GroupedServiceProvidersOption) => {
+    dispatch(bookingMiddleware.updateBookingResourceId(providerOption?.id ?? ''));
+  }, []);
+
+  useEffect(() => {
+    if (router.isReady) {
+      if (router.query.date) {
+        dispatch(bookingMiddleware.setDateValue(new Date(router.query?.date as string)));
+      }
+
+      if (router.query.resource) {
+        dispatch(bookingMiddleware.updateBookingResourceId(router.query?.resource as string));
+      }
+    }
+
+    // We are disabling this since linter is asking for router props date and resource include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.isReady]);
+
+  useEffect(() => {
+    if (serviceProviderId) {
+      dispatch(bookingMiddleware.getBookingAppointments(serviceProviderId, calendarDate));
+    } else {
+      dispatch(bookingMiddleware.clearBookingCalendarAppointments());
+    }
+
+    router.push({
+      query: {
+        ...(serviceProviderId
+          ? {
+              resource: serviceProviderId
+            }
+          : {}),
+        ...(calendarDate ? { date: DateUtil.convertToDateOnly(calendarDate) } : {})
+      }
+    });
+
+    // We are disabling this since linter is asking for router include in deps, but it shouldn't
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarDate, serviceProviderId]);
 
   return (
     <Box>
@@ -100,61 +130,15 @@ const Appointments = () => {
             <ResourceDropdown
               groupedServiceProvidersList={groupedServiceProvidersList}
               serviceProviderId={serviceProviderId}
-              isGroupedServiceProvidersLoading={isGroupedServiceProvidersLoading}
+              isLoading={isGroupedServiceProvidersLoading}
               dataCy={CypressIds.PAGE_APPOINTMENTS_SELECT_RESOURCE}
               label={t(Translation.PAGE_APPOINTMENTS_SELECT_RESOURCE)}
+              onChange={onServiceProviderChange}
+              isSpecimenCollection={false}
             />
           </Box>
           <Box sx={dateFormControlStyle}>
-            <StyledButtonNew
-              variant="outlined"
-              onClick={onTodayClick}
-              disabled={isToday}
-              data-cy={CypressIds.PAGE_APPOINTMENTS_BUTTON_TODAY}
-            >
-              <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
-                {t(Translation.PAGE_APPOINTMENTS_BUTTON_TODAY)}
-              </Typography>
-            </StyledButtonNew>
-            <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <Stack spacing={3}>
-                <DesktopDatePicker
-                  disableMaskedInput
-                  maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
-                  open={datePickerOpen}
-                  onOpen={onDateDatePickerOpen}
-                  onClose={onDateDatePickerClose}
-                  label={t(Translation.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER)}
-                  inputFormat="MMM dd, yyyy"
-                  value={new Date(`${calendarDate}${neutralDateTime}`)}
-                  onChange={(date: Date | null) => onDateChange(date)}
-                  components={{
-                    OpenPickerIcon: CalendarPopupIcon
-                  }}
-                  // TODO: Make DesktopDatePicker one component with all updated styles.
-                  {...getDesktopDatePickerDefaultProps(theme)}
-                  showToolbar={false}
-                  renderInput={(params) => (
-                    <TextField
-                      disabled
-                      data-cy={CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER}
-                      sx={{
-                        width: 300,
-                        [`.${outlinedInputClasses.notchedOutline}`]: {
-                          borderWidth: `1px !important`
-                        }
-                      }}
-                      {...params}
-                      focused={datePickerOpen}
-                      onClick={() => setDatePickerOpen(true)}
-                      onKeyDown={(event) => {
-                        event.preventDefault();
-                      }}
-                    />
-                  )}
-                />
-              </Stack>
-            </LocalizationProvider>
+            <PollinDatePickerWithTodayButton calendarDate={calendarDate} onChange={onDateChange} />
           </Box>
           <StyledButtonNew
             disabled={!serviceProviderId}
@@ -176,7 +160,12 @@ const Appointments = () => {
             </Typography>
           </StyledButtonNew>
         </MainHeader>
-        <DynamicCalendar calendarDate={calendarDate} />
+        <DynamicCalendar
+          calendarDate={calendarDate}
+          onEventClick={onCalendarEventClick}
+          disable={{ title: calendarDisabledStateTitle, state: !serviceProviderId }}
+          appointments={{ list: appointments, isLoading }}
+        />
       </AppointmentsContent>
     </Box>
   );

@@ -22,11 +22,14 @@ import { AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 const createReducer = <T extends SliceCaseReducers<BookingProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setAppointments(state, action: IAction<IAppointment[]>) {
+  setBookingAppointments(state, action: IAction<IAppointment[]>) {
     state.appointments = action.payload;
   },
-  setDate(state, action: IAction<string>) {
+  setDate(state, action: IAction<Date>) {
     state.date = action.payload;
+  },
+  setCollectionCalendarDate(state, action: IAction<Date>) {
+    state.specimenAppointments.date = action.payload;
   },
   updateServiceProviders(state, action: IAction<IServiceProviders>) {
     state.serviceProviders.providers = [...state.serviceProviders.providers, ...action.payload.providers];
@@ -78,8 +81,11 @@ const reducers = createReducer({
   setCurrentAppointmentId(state, action: IAction<string>) {
     state.currentAppointmentId = action.payload;
   },
-  setCalendarLoadingState(state, action: IAction<boolean>) {
-    state.isCalendarLoading = action.payload;
+  setBookingCalendarLoadingState(state, action: IAction<boolean>) {
+    state.isBookingCalendarLoading = action.payload;
+  },
+  setCollectionCalendarLoadingState(state, action: IAction<boolean>) {
+    state.isCollectionCalendarLoading = action.payload;
   },
   setError(state, action: IAction<string>) {
     state.error = action.payload;

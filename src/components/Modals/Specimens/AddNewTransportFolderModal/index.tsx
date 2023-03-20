@@ -18,8 +18,7 @@ import {
   Typography
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
+import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -29,8 +28,9 @@ import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import BaseModal from '@ui-component/Modal/BaseModal';
+import { DateUtil } from '@utils/date/DateUtil';
 
-import DatePickerWithTodayButton from '../AddNewExistingTransport/DatePickerWithTodayButton';
+import PollinDatePickerWithTodayButton from '../../../../ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
 
 const useStyles = makeStyles(() => ({
   menuPaper: {
@@ -42,7 +42,7 @@ const AddNewTransportFolderModal = () => {
   const classes = useStyles();
   const isPatientContactInformationLoading = useSelector(patientsSelector.isPatientContactInformationLoading);
   const labList = useSelector(resultsSelector.testResultLabs);
-  const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const [calendarDate, setCalendarDate] = useState<Date | null>(DateUtil.representInClinicDate());
   const [t] = useTranslation();
   const addNewTransportFolderModalTitleLabel = t(
     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TITLE
@@ -64,7 +64,7 @@ const AddNewTransportFolderModal = () => {
     const body = {
       name: transportFolderName,
       labId,
-      date: calendarDate
+      date: calendarDate as Date
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
@@ -83,7 +83,7 @@ const AddNewTransportFolderModal = () => {
             <Grid item xs={12}>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
-                  <DatePickerWithTodayButton />
+                  <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
                   <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs={6}>
                       <Typography variant="subtitle1" fontWeight={500}>

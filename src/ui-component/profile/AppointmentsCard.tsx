@@ -110,7 +110,7 @@ const AppointmentsCard = ({
 
   useEffect(() => {
     if (appointmentDetails?.provider) {
-      dispatch(bookingMiddleware.applyResource(appointmentDetails.provider.id));
+      dispatch(bookingMiddleware.updateBookingResourceId(appointmentDetails.provider.id));
     }
   }, [appointmentDetails?.provider]);
 

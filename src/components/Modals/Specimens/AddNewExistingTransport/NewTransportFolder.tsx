@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -19,7 +18,6 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import defineSpecimenId from 'helpers/defineSpecimenId';
@@ -28,6 +26,8 @@ import { ModalName } from 'types/modals';
 import { IAddNewExistingTransportModalProps } from 'types/reduxTypes/resultsStateTypes';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
+import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const useStyles = makeStyles((theme: Theme) => ({
   menuPaper: {
@@ -48,7 +48,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   const classes = useStyles();
   const labList = useSelector(resultsSelector.testResultLabs);
   const lastCreatedTransportFolder = useAppSelector(resultsSelector.lastCreatedTransportFolder);
-  const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const [calendarDate, setCalendarDate] = useState<Date | null>(DateUtil.representInClinicDate());
   const [t] = useTranslation();
   const [labId, setLabId] = useState<string>('');
   const [transportFolderName, setTransportFolderName] = useState<string>('');
@@ -67,7 +67,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
     const body = {
       name: transportFolderName,
       labId,
-      date: calendarDate
+      date: calendarDate as Date
     };
 
     dispatch(resultsMiddleware.createTransportFolder(body));
@@ -114,7 +114,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       <Grid item xs={12}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
-            <DatePickerWithTodayButton />
+            <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
             <Grid item xs={12}>
               <TextField
                 onChange={(event) => onTransportFolderNameChange(event.target.value)}

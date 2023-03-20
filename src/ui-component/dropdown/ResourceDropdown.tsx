@@ -18,8 +18,9 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 interface ResourceDropdownProps {
   groupedServiceProvidersList: IGroupedServiceProviders;
   serviceProviderId: string;
-  isGroupedServiceProvidersLoading: boolean;
-  specimenCollection?: boolean;
+  isLoading: boolean;
+  isSpecimenCollection?: boolean;
+  onChange: (value?: GroupedServiceProvidersOption) => void;
   dataCy: string;
   label: string;
 }
@@ -27,8 +28,9 @@ interface ResourceDropdownProps {
 const ResourceDropdown = ({
   groupedServiceProvidersList,
   serviceProviderId,
-  isGroupedServiceProvidersLoading,
-  specimenCollection = false,
+  isSpecimenCollection,
+  isLoading,
+  onChange,
   dataCy,
   label
 }: ResourceDropdownProps) => {
@@ -50,54 +52,51 @@ const ResourceDropdown = ({
     [groupedServiceProvidersList.providers]
   );
 
-  const onServiceProviderChange = useCallback(
-    (providerOption?: GroupedServiceProvidersOption) => {
-      dispatch(bookingMiddleware.applyResource(providerOption?.id ?? '', specimenCollection));
-    },
-    [specimenCollection]
-  );
-
   useEffect(() => {
     if (typeof resource === 'string') {
       const option = adaptedGroupedOptions.find(({ id }) => id === resource);
 
       if (option) {
         setGroupedServiceProvidersSelectedOption(option);
-        onServiceProviderChange(option);
+        onChange(option);
       }
     }
-  }, [adaptedGroupedOptions, onServiceProviderChange, resource]);
+  }, [adaptedGroupedOptions, onChange, resource]);
 
   useEffect(() => {
     if (groupedServiceProvidersList.providers.length === 0 && groupedServiceProvidersList.currentPage === 0) {
       dispatch(
-        bookingMiddleware.getGroupedServiceProviders({
-          page: 1,
-          ...(specimenCollection ? { specimenCollection } : {})
-        })
+        bookingMiddleware.getGroupedServiceProviders(
+          {
+            page: 1
+          },
+          isSpecimenCollection
+        )
       );
     }
-  }, [specimenCollection, groupedServiceProvidersList]);
+  }, [isSpecimenCollection, groupedServiceProvidersList]);
 
   const onBottomReach = useCallback(
     (currentPage: number) => {
       dispatch(
-        bookingMiddleware.getNewGroupedServiceProviders({
-          page: currentPage,
-          ...(specimenCollection ? { specimenCollection } : {}),
-          ...(groupedServiceProvidersList.searchString
-            ? { searchString: groupedServiceProvidersList.searchString }
-            : {})
-        })
+        bookingMiddleware.getNewGroupedServiceProviders(
+          {
+            page: currentPage,
+            ...(groupedServiceProvidersList.searchString
+              ? { searchString: groupedServiceProvidersList.searchString }
+              : {})
+          },
+          isSpecimenCollection
+        )
       );
     },
-    [specimenCollection, groupedServiceProvidersList.searchString]
+    [isSpecimenCollection, groupedServiceProvidersList.searchString]
   );
 
   const { onScroll: onServiceProviderScroll, resetScroll } = usePaginatedAutoCompleteScroll(
     1,
     Math.max(groupedServiceProvidersList.currentPage, 1),
-    isGroupedServiceProvidersLoading,
+    isLoading,
     groupedServiceProvidersList.pageSize,
     groupedServiceProvidersList.totalItems,
     onBottomReach
@@ -106,14 +105,16 @@ const ResourceDropdown = ({
   const handleThrottleSearch = useCallback(
     (searchString: string) => {
       dispatch(
-        bookingMiddleware.getGroupedServiceProviders({
-          page: 1,
-          ...(specimenCollection ? { specimenCollection } : {}),
-          searchString
-        })
+        bookingMiddleware.getGroupedServiceProviders(
+          {
+            page: 1,
+            searchString
+          },
+          isSpecimenCollection
+        )
       );
     },
-    [specimenCollection]
+    [isSpecimenCollection]
   );
 
   const throttleFn = useLodashThrottle(handleThrottleSearch);
@@ -128,7 +129,7 @@ const ResourceDropdown = ({
   return (
     <Box sx={{ maxWidth: '240px' }}>
       <BaseDropdownWithLoading
-        isLoading={isGroupedServiceProvidersLoading}
+        isLoading={isLoading}
         data-cy={dataCy}
         PopperComponent={GroupedServiceProvidersPopper}
         popupIcon={<KeyboardArrowDownIcon color="primary" />}
@@ -149,11 +150,11 @@ const ResourceDropdown = ({
         isOptionEqualToValue={(option, value) => option.id === value.id}
         onChange={(_event, option, reason) => {
           if (reason === 'clear') {
-            onServiceProviderChange();
+            onChange();
             setGroupedServiceProvidersSelectedOption(null);
           } else if (option) {
             setGroupedServiceProvidersSelectedOption(option as GroupedServiceProvidersOption);
-            onServiceProviderChange(option as GroupedServiceProvidersOption);
+            onChange(option as GroupedServiceProvidersOption);
           }
         }}
         onInputChange={(_event, searchString, reason) => {

@@ -19,6 +19,7 @@ import {
   IServiceProviders
 } from 'types/reduxTypes/bookingStateTypes';
 
+import { DateUtil } from '@utils/date/DateUtil';
 import { calculateTimeInUTC, convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
@@ -35,10 +36,12 @@ const {
   setSpecimenGroupedServiceProviders,
   setError,
   setDate,
-  setAppointments,
+  setCollectionCalendarDate,
+  setBookingAppointments,
   setCurrentServiceProviderId,
   setCurrentSpecimenServiceProviderId,
-  setCalendarLoadingState,
+  setBookingCalendarLoadingState,
+  setCollectionCalendarLoadingState,
   setIsCheckInAppointmentsLoading,
   setCheckInAppointments,
   setPatientsList,
@@ -96,9 +99,10 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
 };
 
 const getGroupedServiceProviders =
-  (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
+  (serviceProvidersData: IGroupedServiceProvidersParams, isSpecimenCollection = false) =>
+  async (dispatch: AppDispatch) => {
     try {
-      const isSpecimenCollection = serviceProvidersData.specimenCollection;
+      serviceProvidersData.specimenCollection = isSpecimenCollection;
 
       dispatch(
         isSpecimenCollection
@@ -148,9 +152,10 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
 };
 
 const getNewGroupedServiceProviders =
-  (serviceProvidersData: IGroupedServiceProvidersParams) => async (dispatch: AppDispatch) => {
+  (serviceProvidersData: IGroupedServiceProvidersParams, isSpecimenCollection = false) =>
+  async (dispatch: AppDispatch) => {
     try {
-      const isSpecimenCollection = serviceProvidersData.specimenCollection;
+      serviceProvidersData.specimenCollection = isSpecimenCollection;
 
       dispatch(
         isSpecimenCollection
@@ -179,36 +184,46 @@ const getNewGroupedServiceProviders =
     }
   };
 
-const getAppointments = (resourceId: string, date: string) => async (dispatch: AppDispatch) => {
+const getBookingAppointments = (resourceId: string, date: Date) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setCalendarLoadingState(true));
+    dispatch(setBookingCalendarLoadingState(true));
 
-    const response = await API.booking.getAppointments({ resourceId, date });
+    const response = await API.booking.getAppointments({ resourceId, date: DateUtil.convertToDateOnly(date) });
 
-    dispatch(setAppointments(response.data.data.slots));
-    dispatch(setCalendarLoadingState(false));
+    dispatch(setBookingAppointments(response.data.data.slots));
+    dispatch(setBookingCalendarLoadingState(false));
   } catch (error) {
-    dispatch(setAppointments([]));
-    dispatch(setCalendarLoadingState(false));
+    dispatch(setBookingAppointments([]));
+    dispatch(setBookingCalendarLoadingState(false));
     Sentry.captureException(error);
     dispatch(setError(error as string));
   }
 };
 
-const clearAppointments = () => (dispatch: AppDispatch) => {
-  dispatch(setAppointments([]));
+const clearBookingCalendarAppointments = () => (dispatch: AppDispatch) => {
+  dispatch(setBookingAppointments([]));
+};
+const clearCollectionCalendarAppointments = () => (dispatch: AppDispatch) => {
+  dispatch(setSpecimenAppointments([]));
 };
 
-const setDateValue = (value: string) => (dispatch: AppDispatch) => {
+const setDateValue = (value: Date) => (dispatch: AppDispatch) => {
   dispatch(setDate(value));
+};
+
+const updateCollectionCalendarDate = (value: Date) => (dispatch: AppDispatch) => {
+  dispatch(setCollectionCalendarDate(value));
 };
 
 const setEditSaveButtonDisabled = (value: boolean) => (dispatch: AppDispatch) => {
   dispatch(setSaveButtonDisabled(value));
 };
 
-const applyResource = (value: string, isSpecimenCollection?: boolean) => (dispatch: AppDispatch) => {
-  dispatch(isSpecimenCollection ? setCurrentSpecimenServiceProviderId(value) : setCurrentServiceProviderId(value));
+const updateBookingResourceId = (value: string) => (dispatch: AppDispatch) => {
+  dispatch(setCurrentServiceProviderId(value));
+};
+const updateSpecimenResourceId = (value: string) => (dispatch: AppDispatch) => {
+  dispatch(setCurrentSpecimenServiceProviderId(value));
 };
 
 const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async (dispatch: AppDispatch) => {
@@ -372,7 +387,7 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
         }
       })
     );
-    dispatch(getAppointments(providerId, calendarDate));
+    dispatch(getBookingAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
 
@@ -433,7 +448,7 @@ const editAppointment =
           }
         })
       );
-      dispatch(getAppointments(providerId, calendarDate));
+      dispatch(getBookingAppointments(providerId, calendarDate));
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error as string));
@@ -491,7 +506,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
         }
       })
     );
-    dispatch(getAppointments(providerId, calendarDate));
+    dispatch(getBookingAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
 
@@ -526,20 +541,25 @@ const getSpecimenAppointmentsFilters = () => async (dispatch: AppDispatch) => {
 };
 
 const getSpecimenAppointments =
-  (resourceId: string, date: string, filters: ProvidersCollectionCalendarAppointmentsReqBodyFilter[]) =>
+  (resourceId: string, date: Date, filters: ProvidersCollectionCalendarAppointmentsReqBodyFilter[]) =>
   async (dispatch: AppDispatch) => {
     try {
-      dispatch(setCalendarLoadingState(true));
+      dispatch(setCollectionCalendarLoadingState(true));
 
-      const response = await API.booking.getProvidersCollectionCalendarAppointments({ resourceId, date, filters });
+      const response = await API.booking.getProvidersCollectionCalendarAppointments({
+        resourceId,
+        date: DateUtil.convertToDateOnly(date),
+        filters
+      });
 
       dispatch(setSpecimenAppointments(response.data.appointments));
     } catch (error) {
       Sentry.captureException(error);
+      dispatch(setCollectionCalendarLoadingState(false));
       dispatch(setSpecimenAppointments([]));
       dispatch(setError(error as string));
     } finally {
-      dispatch(setCalendarLoadingState(false));
+      dispatch(setCollectionCalendarLoadingState(false));
     }
   };
 
@@ -553,10 +573,13 @@ export default {
   getServiceProviders,
   getGroupedServiceProviders,
   setDateValue,
-  getAppointments,
-  clearAppointments,
+  updateCollectionCalendarDate,
+  getBookingAppointments,
+  clearBookingCalendarAppointments,
+  clearCollectionCalendarAppointments,
   cancelAppointment,
-  applyResource,
+  updateBookingResourceId,
+  updateSpecimenResourceId,
   getPatients,
   getNewPatients,
   getServiceTypes,

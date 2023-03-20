@@ -11,7 +11,9 @@ export const specimenGroupedServiceProvidersList = createSelector(
   (state) => state.specimenGroupedServiceProviders
 );
 export const calendarDate = createSelector([selector], (state) => state.date);
-export const isCalendarLoading = createSelector([selector], (state) => state.isCalendarLoading);
+export const specimenCollectionCalendarDate = createSelector([selector], (state) => state.specimenAppointments.date);
+export const isBookingCalendarLoading = createSelector([selector], (state) => state.isBookingCalendarLoading);
+export const isCollectionCalendarLoading = createSelector([selector], (state) => state.isCollectionCalendarLoading);
 export const serviceProviderId = createSelector([selector], (state) => state.currentServiceProviderId);
 export const specimenServiceProviderId = createSelector([selector], (state) => state.currentSpecimenServiceProviderId);
 export const patientList = createSelector([selector], (state) => state.patientList);
@@ -61,9 +63,11 @@ export default {
   groupedServiceProvidersList,
   specimenGroupedServiceProvidersList,
   calendarDate,
+  specimenCollectionCalendarDate,
   serviceProviderId,
   specimenServiceProviderId,
-  isCalendarLoading,
+  isBookingCalendarLoading,
+  isCollectionCalendarLoading,
   patientList,
   isCheckInLoading,
   isCheckInSuccess,

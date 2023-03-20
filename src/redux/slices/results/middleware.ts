@@ -23,7 +23,6 @@ import store, { AppDispatch, RootState } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
 import axios from 'axios';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
 import { SortOrder } from 'types/patient';
@@ -44,6 +43,8 @@ import {
   ResultsErrorMessages
 } from 'types/results';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import { bookingMiddleware } from '../booking';
 
 const {
@@ -62,6 +63,7 @@ const {
   setIsTestResultsDetailsLoading,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
+  setTransportListDate,
   setIsTransportFolderDownloaded,
   setIsTransportFoldersLoading,
   setIsTransportListLoading,
@@ -435,10 +437,14 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const updateTransportListDate = (date: Date) => (dispatch: AppDispatch) => {
+  dispatch(setTransportListDate(date));
+};
+
 const getTransportList =
   (
     resultsListData: ITransportListReqBody = {
-      date: format(new Date(store.getState().booking.date), 'yyyy-MM-dd'),
+      date: new Date(store.getState().results.tracking.transportListDate),
       page: 0,
       sortByField: TransportsSortFields.STATUS,
       sortOrder: SortOrder.Desc
@@ -446,6 +452,7 @@ const getTransportList =
   ) =>
   async (dispatch: AppDispatch) => {
     try {
+      resultsListData.date = DateUtil.convertToDateOnly(resultsListData.date);
       dispatch(setIsTransportListLoading(true));
 
       let testResultsReqBody = resultsListData;
@@ -582,6 +589,7 @@ const submitSpecimenCollections =
 
 const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (dispatch: AppDispatch) => {
   try {
+    data.date = DateUtil.convertToDateOnly(data.date);
     dispatch(setIsCreatingTransportFolderLoading(true));
 
     const response = await API.results.createTransportFolder(data);
@@ -817,6 +825,7 @@ export default {
   getTestResultsDetails,
   getTransportActions,
   getTransportFolders,
+  updateTransportListDate,
   getTransportList,
   markInTransitAction,
   applyMoveToAllTests,

@@ -40,7 +40,7 @@ export interface IAppointmentErrorState {
 
 export interface BookingProps {
   appointments: IAppointment[];
-  date: string;
+  date: Date;
   serviceProviders: IServiceProviders;
   groupedServiceProviders: IGroupedServiceProviders;
   specimenGroupedServiceProviders: IGroupedServiceProviders;
@@ -52,7 +52,8 @@ export interface BookingProps {
   isCheckInLoading: boolean;
   isCheckInSuccess: boolean;
   currentSpecimenServiceProviderId: string;
-  isCalendarLoading: boolean;
+  isBookingCalendarLoading: boolean;
+  isCollectionCalendarLoading: boolean;
   currentAppointmentId: string;
   error: string | null;
   patientList: IPatientList;
@@ -160,7 +161,7 @@ export interface ICalendarSlot {
   id?: string;
   title: string;
   allDay: boolean;
-  borderColor: string;
+  borderColor?: string;
   classNames: string[];
   display?: string;
   textColor: string;
@@ -176,6 +177,7 @@ export interface ISpecimenAppointmentsFilter {
 }
 
 export interface ISpecimenAppointmentsState {
+  date: Date;
   list: IProvidersCollectionCalendarAppointment[];
   filters: ISpecimenAppointmentsFilter[] | null;
   selectedFilters: SpecimenCollectionFilterOption[];

@@ -7,6 +7,8 @@ import {
   ITestResultsTracking
 } from 'types/reduxTypes/resultsStateTypes';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 const getExternalResultsInitialState = (): IExternalTestResults => ({
   resultsList: {
     testResults: [],
@@ -22,6 +24,7 @@ const getExternalResultsInitialState = (): IExternalTestResults => ({
 });
 
 const getTrackingInitialState = (): ITestResultsTracking => ({
+  transportListDate: DateUtil.representInClinicDate(),
   transportList: {
     folders: [],
     notFound: [],

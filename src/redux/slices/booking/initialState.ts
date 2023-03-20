@@ -1,16 +1,18 @@
-import { format } from 'date-fns';
 import { BookingProps } from 'types/reduxTypes/bookingStateTypes';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 export const getInitialState = (): BookingProps => ({
   appointments: [],
-  date: format(new Date(), 'yyyy-MM-dd'),
+  date: DateUtil.representInClinicDate(),
   serviceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
   groupedServiceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
   specimenGroupedServiceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
   isServiceProvidersLoading: false,
   isGroupedServiceProvidersLoading: false,
   isSpecimenGroupedServiceProvidersLoading: false,
-  isCalendarLoading: false,
+  isBookingCalendarLoading: false,
+  isCollectionCalendarLoading: false,
   isServiceTypesLoading: false,
   isCheckInLoading: false,
   isCheckInSuccess: false,
@@ -50,6 +52,7 @@ export const getInitialState = (): BookingProps => ({
     message: ''
   },
   specimenAppointments: {
+    date: DateUtil.representInClinicDate(),
     list: [],
     filters: null,
     selectedFilters: [],

@@ -24,7 +24,6 @@
   page.appointments.button.new.calendar
   page.appointments.button.new.appointment
   page.appointments.title
-  page.appointments.button.today
   page.appointments.desktop.date.picker
   page.appointments.create.success.status
   page.appointments.edit.success.status
@@ -33,6 +32,7 @@
   page.appointments.edit.failed.status
   page.appointments.cancel.failed.status
   page.appointments.select.resource
+  common.button.today
   common.full.calendar.loading.indicator
   common.full.calendar.component
   common.time.picker.button.save
@@ -83,7 +83,6 @@
   page.scheduling.templates.button.create
   page.scheduling.templates.button.delete
   page.specimen.collection.title
-  page.specimen.collection.button.today
   page.specimen.collection.desktop.date.picker
   page.specimen.collection.select.resource
   page.specimen.collection.select.filters

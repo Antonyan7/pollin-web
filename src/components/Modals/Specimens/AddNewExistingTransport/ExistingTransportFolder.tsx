@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TransportsSortFields } from '@axios/results/resultsManagerTypes';
-import DatePickerWithTodayButton from '@components/Modals/Specimens/AddNewExistingTransport/DatePickerWithTodayButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
   Box,
@@ -16,7 +15,6 @@ import {
 } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import defineSpecimenId from 'helpers/defineSpecimenId';
@@ -29,6 +27,8 @@ import { TransportFolderStatus } from 'types/results';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
+import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const useStyles = makeStyles((theme: Theme) => ({
   menuPaper: {
@@ -55,7 +55,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
   );
   const isTransportListLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const isSpecimenAddedToFolder = useAppSelector(resultsSelector.isSpecimenAddedToFolder);
-  const calendarDate = useAppSelector(bookingSelector.calendarDate);
+  const [calendarDate, setCalendarDate] = useState<Date | null>(DateUtil.representInClinicDate());
   const [t] = useTranslation();
   const [transportFolder, setTransportFolder] = useState<string>('');
   const confirmButtonLabel = t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_CONTACT_INFORMATION_CONFIRMATION_BUTTON);
@@ -80,7 +80,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
 
   useEffect(() => {
     const body = {
-      date: new Date(calendarDate),
+      date: calendarDate as Date,
       page: 1,
       sortByField: TransportsSortFields.STATUS,
       sortOrder: SortOrder.Asc
@@ -98,7 +98,9 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       <Grid item xs={12}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
-            {!isMoveToAnother && <DatePickerWithTodayButton />}
+            {!isMoveToAnother && (
+              <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
+            )}
             <Grid item xs={12}>
               <FormControl fullWidth>
                 <BaseSelectWithLoading

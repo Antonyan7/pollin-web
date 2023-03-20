@@ -58,7 +58,7 @@ class RequestManager {
           logRequest(requestConfig);
         }
       } catch (error) {
-        errorLog('time converting error', error);
+        errorLog('time converting error', error, requestConfig?.data);
       }
 
       const captchaToken = await FirebaseManager?.getToken();
