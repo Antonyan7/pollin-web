@@ -160,6 +160,11 @@ export interface PatientProfile {
   };
   identifier?: string;
   dateOfBirth?: string;
+  sexAtBirth?: SexAtBirth;
+}
+export enum SexAtBirth {
+  Female = 'Female',
+  Male = 'Male'
 }
 
 export interface IEncounterDataProps {

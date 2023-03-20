@@ -656,7 +656,8 @@ export enum Translation {
   PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY = 'page.patient.check.in.alert.verification.action.verify',
   PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS = 'page.patient.check.in.verify.modal.years',
   PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE = 'page.patient.check.in.alert.intake.title',
-  PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION = 'page.patient.check.in.alert.intake.description'
+  PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION = 'page.patient.check.in.alert.intake.description',
+  PAGE_PATIENT_CHECK_IN_PATIENT_PROFILE_DOB_PREFIX = 'page.patient.check.in.patient.profile.dob.prefix'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

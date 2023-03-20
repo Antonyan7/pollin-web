@@ -98,7 +98,15 @@ const PatientField = ({ label }: { label?: string }) => {
           }
         }}
         onBlur={onBlur}
-        clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
+        clearIcon={
+          <CloseIcon
+            onClick={() => {
+              onChange('');
+              dispatch(patientsMiddleware.emptyPatientProfile());
+            }}
+            fontSize="small"
+          />
+        }
         onInputChange={(event: React.SyntheticEvent, value: string) => {
           onInputChange(event, value);
         }}

@@ -15,6 +15,8 @@ import { ProfilePhotoStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import { margins } from '../../themes/themeConstants';
 
+import PatientProfile from './PatientProfile';
+
 const CheckIn = () => {
   const appointments = useAppSelector(bookingSelector.checkInAppointmentsList);
   const isAppointmentsLoading = useAppSelector(bookingSelector.isCheckInAppointmentsLoading);
@@ -48,6 +50,12 @@ const CheckIn = () => {
     const subscription = watch((value, { name }) => {
       const { patient, checkInAppointments } = value;
 
+      if (patient) {
+        dispatch(patientsMiddleware.getPatientProfile(patient));
+        dispatch(patientsMiddleware.getPatientHighlight(patient));
+        dispatch(patientsMiddleware.setCurrentPatient(patient));
+      }
+
       if (patient && name === 'patient') {
         dispatch(bookingMiddleware.getCheckInAppointments(patient));
         dispatch(patientsMiddleware.getPatientProfile(patient));
@@ -71,7 +79,6 @@ const CheckIn = () => {
 
   const onSubmit = (values: ICheckInFormValues) => {
     const patientName = patientsList.patients.find((item) => item.id === values.patient)?.name;
-
     const data = {
       patientId: values.patient,
       appointments: values.checkInAppointments.map((item) => ({
@@ -102,6 +109,8 @@ const CheckIn = () => {
               {isIntakeWarningVisible ? <PatientAlertView /> : null}
               {isVerificationWarningVisible ? <PatientAlertView verification /> : null}
             </Grid>
+
+            <PatientProfile />
             {isTableVisible ? (
               <AppointmentsTableField
                 isAppointmentsLoading={isAppointmentsLoading}

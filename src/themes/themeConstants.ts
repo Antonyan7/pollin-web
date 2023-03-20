@@ -161,6 +161,7 @@ export const borderRadius = {
   radius4: '4px',
   radius7: '7px',
   radius8: '8px',
+  radius10: '10px',
   radius12: '12px',
   radius16: '16px'
 };
