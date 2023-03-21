@@ -8,12 +8,12 @@ import { ConsultationFormSubTitle } from '.';
 interface MedicalFormAddDiagramProps {
   onClick: () => void;
   subTitle: string;
-  fields: Record<'id', string>[];
+  fields?: Record<'id', string>[];
 }
 
-const MedicalFormAddDiagram = ({ onClick, subTitle, fields }: MedicalFormAddDiagramProps) => {
+const MedicalFormAddDiagram = ({ onClick, subTitle, fields = [] }: MedicalFormAddDiagramProps) => {
   const theme = useTheme();
-  const isAddButtonDisabled = fields.length > 4;
+  const isAddButtonDisabled = fields?.length > 4;
 
   return (
     <Grid item container alignItems="center" justifyContent="center">

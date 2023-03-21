@@ -5,7 +5,7 @@ import ExistingTransportFolder from '@components/Modals/Specimens/AddNewExisting
 import NewTransportFolder from '@components/Modals/Specimens/AddNewExistingTransport/NewTransportFolder';
 import TabPanel from '@components/Specimens/TabPanel';
 import TargetsList from '@components/TargetsList';
-import { Box, DialogContent, Grid, paperClasses, styled, Tab, Tabs } from '@mui/material';
+import { Box, DialogContent, Grid, styled, Tab, Tabs } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -46,11 +46,6 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
       isLoading={isPatientContactInformationLoading}
       title={addNewTransportFolderModalTitleLabel}
       onClose={onClose}
-      sx={{
-        [`.${paperClasses.root}`]: {
-          maxHeight: 'calc(100vh - 200px)'
-        }
-      }}
     >
       <Grid>
         <DialogContent sx={{ padding: 0 }}>

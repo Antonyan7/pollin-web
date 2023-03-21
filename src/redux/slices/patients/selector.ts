@@ -130,17 +130,17 @@ const isFemalePregnancyInformationLoading = createSelector(
   (state) => state.medicalBackground.medicalHistory.isFemalePregnancyInformationLoading
 );
 
-const femalePatientGynecologicalHistory = createSelector(
+const femalePatientGynaecologicalHistory = createSelector(
   [selector],
-  (state) => state.medicalBackground.medicalHistory.femalePatientGynecologicalHistory
+  (state) => state.medicalBackground.medicalHistory.femalePatientGynaecologicalHistory
 );
-const isFemalePatientGynecologicalHistoryDataUpdating = createSelector(
+const isFemalePatientGynaecologicalHistoryDataUpdating = createSelector(
   [selector],
-  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryDataUpdating
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryDataUpdating
 );
-const isFemalePatientGynecologicalHistoryLoading = createSelector(
+const isFemalePatientGynaecologicalHistoryLoading = createSelector(
   [selector],
-  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryLoading
+  (state) => state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryLoading
 );
 
 const femalePatientMenstrualCycleHistory = createSelector(
@@ -221,9 +221,9 @@ export default {
   femalePatientMenstrualCycleHistory,
   isFemalePatientMenstrualCycleHistoryDataUpdating,
   isFemalePatientMenstrualCycleHistoryLoading,
-  femalePatientGynecologicalHistory,
-  isFemalePatientGynecologicalHistoryDataUpdating,
-  isFemalePatientGynecologicalHistoryLoading,
+  femalePatientGynaecologicalHistory,
+  isFemalePatientGynaecologicalHistoryDataUpdating,
+  isFemalePatientGynaecologicalHistoryLoading,
   dropdowns,
   isDropdownsLoading,
   femalePregnancyInformation,

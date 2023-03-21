@@ -5,6 +5,7 @@ import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledButton } from '@components/common/MaterialComponents';
 import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -134,6 +135,7 @@ const SimpleTextEditor = ({
                   labelId="encounter-label"
                   id="encounter-type"
                   label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+                  data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_TYPE_SELECT}
                   value={typeField.value}
                   onChange={(event) => typeField.onChange(event.target.value)}
                 >
@@ -152,6 +154,7 @@ const SimpleTextEditor = ({
                   label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_PAST_APPOINTMENT)}
                   value={recentAppointmentsField.value}
                   onChange={(event) => recentAppointmentsField.onChange(event.target.value)}
+                  data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_PAST_APPOINTMENT}
                 >
                   {recentAppointments?.map(({ id, type, date }) => (
                     <MenuItem value={id} key={id}>
@@ -169,12 +172,23 @@ const SimpleTextEditor = ({
               setEditorValue(event);
             }}
             {...fieldProps}
+            data-cy={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}
           />
           <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
-            <StyledButton type="button" variant="outlined" onClick={handleCancel}>
+            <StyledButton
+              type="button"
+              variant="outlined"
+              onClick={handleCancel}
+              data-cy={CypressIds.COMMON_TEXT_EDITOR_CANCEL_BTN}
+            >
               {t(Translation.PAGE_ENCOUNTERS_CANCEL_LABEL)}
             </StyledButton>
-            <ButtonWithLoading isLoading={buttonWithLoadingState} type="submit" variant="contained">
+            <ButtonWithLoading
+              isLoading={buttonWithLoadingState}
+              type="submit"
+              variant="contained"
+              data-cy={CypressIds.COMMON_TEXT_EDITOR_SAVE_BTN}
+            >
               <Typography mr={buttonWithLoadingState ? margins.right8 : margins.all0}>
                 {!buttonWithLoadingState
                   ? t(Translation.PAGE_ENCOUNTERS_SAVE_LABEL)

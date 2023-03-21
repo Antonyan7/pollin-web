@@ -6,5 +6,5 @@ export enum CardMode {
 export interface MedicalBackgroundCardProps {
   title: string;
   ViewModeContent: () => JSX.Element;
-  EditModeContent: () => JSX.Element;
+  EditModeContent: ({ handleClose }: { handleClose: () => void }) => JSX.Element;
 }

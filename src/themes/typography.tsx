@@ -37,7 +37,7 @@ const Typography = (theme: Theme, borderRadius: number, fontFamily: string): Typ
   },
   subtitle1: {
     fontSize: '0.875rem',
-    fontWeight: 500,
+    fontWeight: 400,
     color: theme.palette.text.dark
   },
   subtitle2: {

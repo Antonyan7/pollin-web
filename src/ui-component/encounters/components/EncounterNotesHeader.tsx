@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Button, Grid, IconButton, Typography, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { borderRadius, margins } from 'themes/themeConstants';
@@ -41,6 +42,7 @@ const EncounterNotesHeader = ({ page }: { page: number }) => {
             </IconButton>
           }
           onClick={handleCreateEncounterNoteClick}
+          data-cy={CypressIds.PAGE_PATIENT_ENCOUNTERS_CREATE_ENCOUNTER_BTN}
         >
           {t(Translation.PAGE_ENCOUNTERS_CREATE_ENCOUNTER)}
         </Button>

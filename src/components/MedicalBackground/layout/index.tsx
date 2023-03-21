@@ -68,7 +68,10 @@ const MedicalBackgroundCard: FC<MedicalBackgroundCardProps> = ({ title, ViewMode
         </Grid>
       }
     >
-      {isViewMode ? <ViewModeContent /> : <EditModeContent />}
+      <Grid hidden={!isViewMode}>
+        <ViewModeContent />
+      </Grid>
+      {!isViewMode && <EditModeContent handleClose={handleToggle} />}
     </SubCardStyled>
   );
 };

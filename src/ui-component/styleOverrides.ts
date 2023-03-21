@@ -30,7 +30,7 @@ export const MuiListItemButton = (textColor: string, menuSelected: string, menuS
 export const MuiButton = (color: string) => ({
   styleOverrides: {
     root: {
-      fontWeight: 500,
+      fontWeight: 400,
       borderRadius: '4px',
       borderColor: color
     }
@@ -154,7 +154,7 @@ export const MuiOutlinedInput = (
       }
     },
     input: {
-      fontWeight: 500,
+      fontWeight: 400,
       background: outlinedFilled ? bgColor : 'transparent',
       padding: `${paddings.topBottom16} ${paddings.leftRight12}`,
       borderRadius: `${borderRadius}px`,
@@ -328,7 +328,7 @@ export const MuiTableCell = (borderColor: string, textColor: string) => ({
       '&.MuiTableCell-head': {
         fontSize: '0.875rem',
         color: textColor,
-        fontWeight: 500
+        fontWeight: 400
       }
     }
   }
@@ -367,7 +367,7 @@ export const MuiPickersToolbar = () => ({
         gridColumnGap: '8px',
         '& button span': {
           color: 'black',
-          fontWeight: '400'
+          fontWeight: 400
         },
         '& button:nth-child(2) span': {
           paddingTop: paddings.top2

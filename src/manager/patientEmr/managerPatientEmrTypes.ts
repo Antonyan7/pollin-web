@@ -473,12 +473,12 @@ export interface IMedicalBackgroundFieldValuesWithValue extends MedicalBackgroun
   value: string | boolean;
 }
 
-export interface IFemalePatientGynecologicalHistoryFieldItem {
+export interface IFemalePatientGynaecologicalHistoryFieldItem {
   id: string;
 }
 
 export interface IMedicalBackgroundFieldValuesWithItems extends MedicalBackgroundFieldValues {
-  items: IFemalePatientGynecologicalHistoryFieldItem[];
+  items: IFemalePatientGynaecologicalHistoryFieldItem[];
 }
 
 export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue {}
@@ -493,14 +493,14 @@ export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue {}
 
 export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems {}
 
-export interface IFemalePatientGynecologicalHistoryProps {
+export interface IFemalePatientGynaecologicalHistoryProps {
   takingBirthControl: ITakingBirthControl;
   isOvulating: IIsOvulating;
   previousPapTest: IPreviousPapTest;
   papTestLastDate: IPapTestLastDate;
   abnormalPap: IAbnormalPap;
   abnormalPapProcedures: IMedicalBackgroundFieldValuesWithItems;
-  gynecologicalConditions: IMedicalBackgroundFieldValuesWithItems;
+  gynaecologicalConditions: IMedicalBackgroundFieldValuesWithItems;
   signsOfPCOS: IMedicalBackgroundFieldValuesWithItems;
   hyperprolactinemia: IMedicalBackgroundFieldValuesWithItems;
   signsOfPOI: IMedicalBackgroundFieldValuesWithItems;
@@ -509,8 +509,8 @@ export interface IFemalePatientGynecologicalHistoryProps {
   intercoursePain: IMedicalBackgroundFieldValuesWithValue;
 }
 
-export interface IFemalePatientGynecologicalHistory {
-  gynecologicalHistory: IFemalePatientGynecologicalHistoryProps;
+export interface IFemalePatientGynaecologicalHistory {
+  gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
 }
 
 export interface IFemalePatientMenstrualCycleHistoryCycleLength extends MedicalBackgroundFieldValues {
@@ -549,7 +549,7 @@ export enum DropdownOptionType {
   ProceduresDueToAbnormalPap = 'ProceduresDueToAbnormalPap',
   MissCarriagePregnancyTreatment = 'MissCarriagePregnancyTreatment',
   EctopicPregnancyTreatment = 'EctopicPregnancyTreatment',
-  GynecologicalConditions = 'GynecologicalConditions',
+  GynaecologicalConditions = 'GynaecologicalConditions',
   Hyperprolactinemia = 'Hyperprolactinemia',
   SignsOfPOI = 'SignsOfPOI',
   PrimaryPatientContributionMale = 'PrimaryPatientContributionMale',

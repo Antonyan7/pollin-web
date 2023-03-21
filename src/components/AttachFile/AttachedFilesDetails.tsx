@@ -48,7 +48,7 @@ const AttachedFilesDetails: React.FC<IAttachedFilesDetailsProps> = ({
                   overflow: 'hidden',
                   textOverflow: 'ellipsis'
                 }}
-                fontWeight={500}
+                fontWeight={400}
               >
                 {field.title}
               </Typography>

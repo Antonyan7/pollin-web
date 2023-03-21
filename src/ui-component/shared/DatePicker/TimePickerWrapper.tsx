@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { TextField, useTheme } from '@mui/material';
 import { TextFieldProps as MuiTextFieldPropsType } from '@mui/material/TextField/TextField';
 import { TimePicker } from '@mui/x-date-pickers';
+import { CypressIds } from 'constants/cypressIds';
 import { TimePickerWrapperProps } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
@@ -64,6 +65,7 @@ const TimePickerWrapper = ({ value, onChange, label, ...otherProps }: TimePicker
           }}
           onKeyDown={(e) => e.preventDefault()}
           onClick={() => setIsOpen(true)}
+          data-cy={CypressIds.COMMON_TIME_PICKER}
         />
       )}
       {...otherProps}

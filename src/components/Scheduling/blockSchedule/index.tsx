@@ -92,7 +92,8 @@ const BlockTemplates = () => {
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS)
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS),
+            dataCy: CypressIds.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS
           }
         })
       );

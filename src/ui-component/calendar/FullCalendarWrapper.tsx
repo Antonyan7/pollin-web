@@ -60,7 +60,8 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
 
   '& .fc .fc-col-header-cell-cushion': {
     color: theme.palette.grey[900],
-    padding: paddings.all16
+    padding: paddings.all16,
+    fontWeight: 400
   },
 
   // events

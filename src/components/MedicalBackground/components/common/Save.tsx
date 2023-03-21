@@ -4,18 +4,19 @@ import { Translation } from 'constants/translations';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const SaveButton = () => {
+const SaveButton = ({ isLoading = false, isDisabled = false }: { isLoading?: boolean; isDisabled?: boolean }) => {
   const [t] = useTranslation();
 
   return (
     <ButtonWithLoading
-      isLoading={false}
+      isLoading={isLoading}
       color="primary"
       variant="contained"
       type="submit"
       sx={{
         height: 45
       }}
+      disabled={isDisabled}
     >
       {t(Translation.COMMON_BUTTON_SAVE_LABEL)}
     </ButtonWithLoading>

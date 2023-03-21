@@ -35,8 +35,8 @@ const ViewModeContent = () => {
           key={v4()}
           title={mappedItem?.title as string}
           index={index}
-          value={mappedItem?.item.value}
-          note={mappedItem?.item.note}
+          value={mappedItem?.viewValue}
+          note={mappedItem?.note}
         />
       ))}
     </CardContentWrapper>

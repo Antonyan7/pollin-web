@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
 import { styled, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { CypressIds } from 'constants/cypressIds';
 import { DatePickerWrapperProps } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
@@ -46,6 +47,7 @@ const DatePickerWrapper = ({ value, onChange, label, ...otherProps }: DatePicker
           onKeyDown={(event) => {
             event.preventDefault();
           }}
+          data-cy={CypressIds.COMMON_DATE_PICKER}
         />
       )}
       {...otherProps}

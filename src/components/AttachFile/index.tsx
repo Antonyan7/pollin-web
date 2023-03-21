@@ -74,7 +74,7 @@ const AttachFile: FC<AttachedFileProps> = ({ currentFormFieldName }) => {
           })
         }}
         labelSx={{
-          fontWeight: 500
+          fontWeight: 400
         }}
         onClick={() => fileInputRef?.current?.click()}
         icon={

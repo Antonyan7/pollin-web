@@ -3,7 +3,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Box, CircularProgress, Grid, IconButton, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -11,11 +12,11 @@ import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { margins } from 'themes/themeConstants';
 import { IEncountersFormBody, IEncountersFormDefaultProps, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+import CircularLoading from '@ui-component/circular-loading';
 
 import { getEditEncounterInitialValues } from '../helpers/initialValues';
 
@@ -41,7 +42,7 @@ const EditEncounterAddendumTitle = ({ handleClose, mode, updatedOn }: EditEncoun
     <Grid container alignItems="center" justifyContent="space-between">
       <Grid container item xs={6} sx={{ p: 2 }} alignItems="center">
         <Grid item xs={1}>
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleClose} data-cy={CypressIds.PAGE_PATIENT_EDIT_ENCOUNTER_BACK_BTN}>
             <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
           </IconButton>
         </Grid>
@@ -60,7 +61,7 @@ const EditEncounterAddendumTitle = ({ handleClose, mode, updatedOn }: EditEncoun
   );
 };
 
-const EditAddednumHeaderTitle = () => {
+const EditAddendumHeaderTitle = () => {
   const [t] = useTranslation();
 
   return (
@@ -192,7 +193,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
       >
         <Grid container>
           <Grid item container xs={12} spacing={1} direction="column">
-            <EditAddednumHeaderTitle />
+            <EditAddendumHeaderTitle />
             <EditAddendumHeader mode={mode} encounterData={encounterData} />
             {mode === SimpleEditorMode.Edit_Addendum && showFilteredAddendums
               ? firstPartAddendums.map((addendum) => <CurrentAddendum currentAddendum={addendum} key={addendum.id} />)
@@ -210,16 +211,7 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
       </EncountersWrapper>
     </FormProvider>
   ) : (
-    <Box
-      sx={{
-        display: 'grid',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: margins.top16
-      }}
-    >
-      <CircularProgress sx={{ margin: margins.auto }} />
-    </Box>
+    <CircularLoading />
   );
 };
 

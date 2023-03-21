@@ -8,6 +8,7 @@ const Actions = () => {
   const { onClose, data, toConfirm } = useContext(StaticDataContext);
   const confirmButtonLabel = data.confirmLabel;
   const cancelButtonLabel = data.cancelLabel;
+  const confirmCyKey = data?.confirmCy;
   const handleConfirmation = () => {
     toConfirm();
   };
@@ -42,6 +43,7 @@ const Actions = () => {
               color="primary"
               variant="contained"
               onClick={handleConfirmation}
+              data-cy={confirmCyKey}
             >
               {confirmButtonLabel}
             </Button>

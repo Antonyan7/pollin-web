@@ -21,6 +21,9 @@ import PatientContactInformationModal from '@components/Modals/ExternalResults/P
 import ImageModal, { ImageModalProps } from '@components/Modals/ImageModal';
 import InHouseInputResultsModal from '@components/Modals/InHouseTests/InputResults';
 import AddAddressManually, { AddAddressManuallyProps } from '@components/Modals/MedicalBackground/AddAddressManually';
+import MedicalBackgroundUnsavedChanges, {
+  MedicalBackgroundUnsavedChangesProps
+} from '@components/Modals/MedicalBackground/UnsavedChanges';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import OrderValidationErrorModal, {
@@ -201,6 +204,11 @@ const getConfirmAlertDeleteModal = (modal: IOpenedModal<ConfirmAlertDeleteModalP
   <ConfirmAlertDeleteModal key={modal.name} {...modal.props} />
 );
 
+// Medical Background
+const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBackgroundUnsavedChangesProps>) => (
+  <MedicalBackgroundUnsavedChanges key={modal.name} confirmChanges={modal.props.confirmChanges} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -295,6 +303,9 @@ export const ModalsController = () => {
             return getAddOrEditCustomAlertModal(modal);
           case ModalName.ConfirmAlertDeleteModal:
             return getConfirmAlertDeleteModal(modal);
+          // Medical Background
+          case ModalName.MedicalBackgroundUnsavedChanges:
+            return getMedicalBackgroundUnsavedChangesModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

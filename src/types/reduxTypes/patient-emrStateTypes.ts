@@ -9,7 +9,7 @@ import {
   AddManuallyAddressModalProps,
   IDropdown,
   IEncounterDetailsProps,
-  IFemalePatientGynecologicalHistoryProps,
+  IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
@@ -53,9 +53,9 @@ export interface MedicalBackgroundProps {
     femalePregnancyInformation: IFemalePregnancyInformationProps | null;
     isFemalePregnancyInformationLoading: boolean;
     isFemalePregnancyInformationDataUpdating: boolean;
-    femalePatientGynecologicalHistory: IFemalePatientGynecologicalHistoryProps | null;
-    isFemalePatientGynecologicalHistoryLoading: boolean;
-    isFemalePatientGynecologicalHistoryDataUpdating: boolean;
+    femalePatientGynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps | null;
+    isFemalePatientGynaecologicalHistoryLoading: boolean;
+    isFemalePatientGynaecologicalHistoryDataUpdating: boolean;
     femalePatientMenstrualCycleHistory: IFemalePatientMenstrualCycleHistoryProps | null;
     isFemalePatientMenstrualCycleHistoryLoading: boolean;
     isFemalePatientMenstrualCycleHistoryDataUpdating: boolean;
@@ -267,6 +267,7 @@ export interface IEncounterListItem {
   createdOn: string;
   contentPreview: string;
   author: string;
+  index?: number;
 }
 
 interface IEncounterNoteProps {

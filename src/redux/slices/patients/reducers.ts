@@ -3,7 +3,7 @@ import {
   AddManuallyAddressModalProps,
   IDropdown,
   IEncounterDetailsProps,
-  IFemalePatientGynecologicalHistoryProps,
+  IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
@@ -251,14 +251,14 @@ const reducers = createReducer({
   setIsFemalePatientMenstrualCycleHistoryDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isFemalePatientMenstrualCycleHistoryDataUpdating = action.payload;
   },
-  setFemalePatientGynecologicalHistory(state, action: IAction<IFemalePatientGynecologicalHistoryProps | null>) {
-    state.medicalBackground.medicalHistory.femalePatientGynecologicalHistory = action.payload;
+  setFemalePatientGynaecologicalHistory(state, action: IAction<IFemalePatientGynaecologicalHistoryProps | null>) {
+    state.medicalBackground.medicalHistory.femalePatientGynaecologicalHistory = action.payload;
   },
-  setIsFemalePatientGynecologicalHistoryLoading(state, action: IAction<boolean>) {
-    state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryLoading = action.payload;
+  setIsFemalePatientGynaecologicalHistoryLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryLoading = action.payload;
   },
-  setIsFemalePatientGynecologicalHistoryDataUpdating(state, action: IAction<boolean>) {
-    state.medicalBackground.medicalHistory.isFemalePatientGynecologicalHistoryDataUpdating = action.payload;
+  setIsFemalePatientGynaecologicalHistoryDataUpdating(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryDataUpdating = action.payload;
   },
   setDropdowns(state, action: IAction<IDropdown[]>) {
     state.medicalBackground.common.dropdowns = action.payload;

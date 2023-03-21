@@ -73,7 +73,7 @@ export default ({ children }: PropsWithChildren) => {
           indicatorColor="primary"
           textColor="primary"
           onChange={handleChange}
-          aria-label="simple tabs example"
+          aria-label="patient navigation tabs"
           variant="fullWidth"
           sx={{
             '& .MuiTabs-indicator': {
@@ -98,6 +98,9 @@ export default ({ children }: PropsWithChildren) => {
                   href={`/patient-emr/details/${currentPatientId}/${link.href}`}
                   label={link.linkName}
                   {...allyProps(linkIndex)}
+                  {...(link['data-cy'] && {
+                    [`data-cy`]: link?.['data-cy']
+                  })}
                 />
               )
             );

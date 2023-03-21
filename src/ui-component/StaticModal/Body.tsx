@@ -9,11 +9,11 @@ const Body = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Typography variant="h5">{data.explanationMessage}</Typography>
+        <Typography variant="subtitle1">{data.explanationMessage}</Typography>
       </Grid>
       {data.actualQuestion && (
         <Grid item xs={12}>
-          <Typography variant="h5">{data.actualQuestion}</Typography>
+          <Typography variant="subtitle1">{data.actualQuestion}</Typography>
         </Grid>
       )}
     </Grid>

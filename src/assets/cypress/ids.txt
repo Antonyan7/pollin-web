@@ -6,6 +6,7 @@
   modal.appointments.add.close.icon
   modal.appointments.confirm.cancel.select.reason
   modal.appointments.confirm.cancel.button.confirm
+  modal.scheduling.deletion.button.confirm
   modal.appointments.details.button.view
   modal.appointments.details.popup
   modal.appointments.edit.button.cancel
@@ -33,12 +34,19 @@
   page.appointments.cancel.failed.status
   page.appointments.select.resource
   common.button.today
+  common.date.picker
+  common.time.picker
+  common.date.time.picker
+  common.text.editor.save.btn
+  common.text.editor.cancel.btn
+  common.text.editor.text.field
   common.full.calendar.loading.indicator
   common.full.calendar.component
   common.time.picker.button.save
   common.time.picker.button.cancel
   common.time.picker.modal.dialog
   common.time.picker.modal.dialog.component
+  common.loading.indicator
   schedule.templates.delete.icon
   page.scheduling.templates.checkbox.select.all
   page.scheduling.templates.checkbox.select
@@ -57,7 +65,9 @@
   page.scheduling.block.date.start.after.end.error
   page.scheduling.block.time.start.after.end.error
   page.scheduling.block.time.end.after.end.error
+  page.scheduling.block.alert.message.success
   page.scheduling.apply.button.apply
+  page.scheduling.apply.alert.success
   page.scheduling.apply.resource
   page.scheduling.apply.title
   page.scheduling.apply.every
@@ -78,6 +88,7 @@
   page.scheduling.create.templates.service.types
   page.scheduling.create.templates.block
   page.scheduling.templates.loading.indicator
+  page.scheduling.templates.templates.table
   page.scheduling.create.templates.start
   page.scheduling.create.templates.end
   page.scheduling.templates.button.create
@@ -105,3 +116,24 @@
   page.order.details.button.confirm
   page.order.details.button.cancel
   page.patient.widget.test.results.button.view.test.results
+  page.patient.add.addendum.back.btn
+  page.patient.details.back.btn
+  page.patient.details.share.btn
+  page.patient.details.print.btn
+  page.patient.details.add.addendum.btn
+  page.patient.details.addendum.edit.icon
+  page.patient.encounters.create.encounter.btn
+  page.patient.encounters.search.input
+  page.patient.encounters.filter
+  page.patient.encounters.item
+  page.patient.edit.encounter.back.btn
+  page.patient.edit.encounter.btn
+  page.patient.create.encounter.back.btn
+  page.patient.create.encounter.past.appointment
+  page.patient.create.encounter.type.select
+  page.patient.details.profile.contact.info
+  page.patient.details.profile.ohip.info
+  page.patient.details.profile.doctor.info
+  page.patient.details.tab.patient.profile
+  page.patient.details.tab.encounters
+  page.patient.details.tab.orders.and.results

@@ -9,12 +9,12 @@ interface FieldWrapperProps extends Partial<GridProps> {
   children: ReactNode;
   componentIndex?: number;
   hasNote: boolean;
+  isHeader?: boolean;
 }
 
-const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }: FieldWrapperProps) => {
+const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, isHeader, ...props }: FieldWrapperProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
-
   const isBackgroundColored = typeof componentIndex === 'undefined' || (componentIndex && componentIndex % 2);
 
   return (
@@ -34,7 +34,6 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }
       <Grid item container justifyContent="space-between" direction="column" xs={4} gap={3}>
         <Typography
           sx={{
-            fontWeight: 500,
             color: theme.palette.secondary[800],
             fontSize: theme.typography.pxToRem(15)
           }}
@@ -43,7 +42,6 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }
         </Typography>
         <Typography
           sx={{
-            fontWeight: 500,
             color: theme.palette.secondary[800],
             display: hasNote ? 'block' : 'none'
           }}
@@ -51,14 +49,16 @@ const FieldWrapper = ({ children, fieldName, componentIndex, hasNote, ...props }
           {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ADDITIONAL_NOTES)}
         </Typography>
       </Grid>
-      <Grid item container xs={0.5} direction="column" justifyContent="space-between">
-        <Grid item xs={0.5}>
-          <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
+      {!isHeader && (
+        <Grid item container xs={0.5} direction="column" justifyContent="space-between">
+          <Grid item xs={0.5}>
+            <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
+          </Grid>
+          <Grid item xs={0.5} sx={{ display: hasNote ? 'grid' : 'none' }}>
+            <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
+          </Grid>
         </Grid>
-        <Grid item xs={0.5} sx={{ display: hasNote ? 'grid' : 'none' }}>
-          <Typography sx={{ color: theme.palette.secondary[800] }}>:</Typography>
-        </Grid>
-      </Grid>
+      )}
       {children}
     </Grid>
   );

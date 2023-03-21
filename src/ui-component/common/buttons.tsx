@@ -63,7 +63,7 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
   >
     <Typography
       sx={{
-        fontWeight: 500,
+        fontWeight: 400,
         ...labelSx
       }}
     >
@@ -84,6 +84,7 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 
 interface ButtonWithLoadingProps extends ButtonProps {
   isLoading: boolean;
+  dataCy?: string;
 }
 
 export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWithLoadingProps) => (

@@ -4,6 +4,7 @@ import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/bookin
 import {
   AddManuallyAddressModalProps,
   ICreateEncounterAddendumRequest,
+  IFertilityHistory,
   IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
   TestResultItemType
@@ -88,8 +89,8 @@ const {
   setIsFertilityHistoryLoading,
   setFemalePregnancyInformation,
   setIsFemalePregnancyInformationLoading,
-  setFemalePatientGynecologicalHistory,
-  setIsFemalePatientGynecologicalHistoryLoading,
+  setFemalePatientGynaecologicalHistory,
+  setIsFemalePatientGynaecologicalHistoryLoading,
   setFemalePatientMenstrualCycleHistory,
   setIsFemalePatientMenstrualCycleHistoryLoading,
   setDropdowns,
@@ -99,7 +100,8 @@ const {
   setIsContactInformationEditButtonClicked,
   setManuallyAddressForMailing,
   setManuallyAddressForPrimary,
-  setIsContactInformationUpdateLoading
+  setIsContactInformationUpdateLoading,
+  setIsFertilityHistoryDataUpdating
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -339,9 +341,9 @@ const emptyPatientProfile = () => (dispatch: AppDispatch) => {
 
 const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) => {
   try {
-    const response = await API.patients.getPatientProfile(patientId);
-
     dispatch(setIsPatientProfileLoading(true));
+
+    const response = await API.patients.getPatientProfile(patientId);
 
     const patientProfile = {
       id: patientId,
@@ -646,6 +648,19 @@ const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch)
   dispatch(setIsFertilityHistoryLoading(false));
 };
 
+const updateFertilityHistory = (patientId: string, data: IFertilityHistory) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFertilityHistoryDataUpdating(true));
+
+  try {
+    await API.patients.updateFertilityHistory(patientId, data);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsFertilityHistoryDataUpdating(false));
+};
+
 const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(true));
 
@@ -661,19 +676,19 @@ const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(false));
 };
 
-const getFemalePatientGynecologicalHistory = (patientId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsFemalePatientGynecologicalHistoryLoading(true));
+const getFemalePatientGynaecologicalHistory = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsFemalePatientGynaecologicalHistoryLoading(true));
 
   try {
-    const response = await API.patients.getFemalePatientGynecologicalHistory(patientId);
+    const response = await API.patients.getFemalePatientGynaecologicalHistory(patientId);
 
-    dispatch(setFemalePatientGynecologicalHistory(response.data.data.gynecologicalHistory));
+    dispatch(setFemalePatientGynaecologicalHistory(response.data.data.gynaecologicalHistory));
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setError(error));
   }
 
-  dispatch(setIsFemalePatientGynecologicalHistoryLoading(false));
+  dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
 const changeContactInformationEditButtonState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
@@ -745,9 +760,9 @@ const updateGeneralHealthData =
     dispatch(setIsGeneralHealthDataUpdating(true));
 
     try {
-      const respone = await API.patients.updateGeneralHealth(patientId, healthData);
+      const response = await API.patients.updateGeneralHealth(patientId, healthData);
 
-      if (respone) {
+      if (response) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
@@ -795,9 +810,9 @@ const updatePatientContactInformation =
     dispatch(setIsContactInformationUpdateLoading(true));
 
     try {
-      const respone = await API.patients.updatePatientContactInformation(patientId, contactData);
+      const response = await API.patients.updatePatientContactInformation(patientId, contactData);
 
-      if (respone) {
+      if (response) {
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,
@@ -877,5 +892,6 @@ export default {
   changeManuallyAddressForMailing,
   updatePatientContactInformation,
   getFemalePatientMenstrualCycleHistory,
-  getFemalePatientGynecologicalHistory
+  getFemalePatientGynaecologicalHistory,
+  updateFertilityHistory
 };

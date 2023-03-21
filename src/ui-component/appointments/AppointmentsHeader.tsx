@@ -39,7 +39,7 @@ const AppointmentsHeader = () => {
         endIcon={<AddIcon />}
         onClick={onNewCalendarClick}
       >
-        <Typography color={theme.palette.common.white} variant="h4" sx={{ marginRight: margins.right12 }}>
+        <Typography color={theme.palette.common.white} variant="subtitle1" sx={{ marginRight: margins.right12 }}>
           {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR)}
         </Typography>
       </StyledButtonNew>

@@ -7,6 +7,7 @@ import { Avatar, Box, Button, ButtonProps, Grid, Stack, Typography, useTheme } f
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { format } from 'date-fns';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
@@ -58,114 +59,107 @@ const PatientProfile = () => {
     return patientProfile.subTitle;
   };
 
-  if (patientProfile) {
-    if (isPatientProfileLoading) {
-      return (
-        <CircularLoading
-          sx={{
-            p: paddings.all16
-          }}
-        />
-      );
-    }
+  if (isPatientProfileLoading) {
+    return <CircularLoading />;
+  }
 
-    return (
-      <Box
-        sx={{
-          border: `1px solid ${theme.palette.primary.light}`,
-          borderRadius: borderRadius.radius10,
-          marginBottom: margins.bottom16
-        }}
-      >
-        <Box py={paddings.topBottom16} borderBottom={`${borders.solid1px} ${theme.palette.grey[100]}!important`}>
-          <Grid container alignItems="center">
-            <Grid item xs={12} style={{ cursor: 'pointer' }}>
-              <Grid container alignItems="center" flexWrap="nowrap">
-                <Grid item>
-                  <Avatar
-                    alt={patientProfile.title}
-                    src={patientProfile?.avatar?.imageURL}
-                    sx={{ width: 60, height: 60, m: margins.all24 }}
-                  />
-                </Grid>
-                <Grid item sm zeroMinWidth>
-                  <Grid container spacing={0}>
-                    <Grid container item xs={10} direction="row" alignItems="center" columnGap={2}>
-                      <Typography variant="h4" component="div">
-                        {patientProfile.title}
-                      </Typography>
-                      <Button variant="outlined" disabled sx={{ borderRadius: '60px', height: 23 }}>
-                        {/* TODO: remove hardcoded value change logic here after cyclestatus solution */}
-                        NotActive
-                      </Button>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography variant="caption">{getDateOfBirth(patientProfile?.dateOfBirth as string)}</Typography>
-                    </Grid>
-                    <Stack gap={2} direction="row" justifyContent="center" alignItems="center" flexWrap="wrap">
-                      <Stack flexShrink={0}>
-                        <Button
-                          startIcon={
-                            <CallOutlinedIcon
-                              sx={{
-                                color: iconCommonColor
-                              }}
-                            />
-                          }
-                          disabled={!patientHighlightHeader.contact.uiid}
-                          onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
-                        >
-                          <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
-                            {patientHighlightHeader.contact.title}
-                          </Typography>
-                        </Button>
-                      </Stack>
-                      <Stack flexShrink={0}>
-                        <Button
-                          startIcon={
-                            <AssignmentIcon
-                              sx={{
-                                color: iconCommonColor
-                              }}
-                            />
-                          }
-                          disabled={!patientHighlightHeader.ohip.uiid}
-                          onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
-                        >
-                          <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
-                            {patientHighlightHeader.ohip.title}
-                          </Typography>
-                        </Button>
-                      </Stack>
-                      <Stack flexShrink={0}>
-                        <Button
-                          startIcon={
-                            <DoctorIcon
-                              sx={{
-                                color: iconCommonColor
-                              }}
-                            />
-                          }
-                          disabled={!isUiidExists}
-                          onClick={onButtonClick(isUiidExists)}
-                        >
-                          <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
-                            {patientHighlightHeader.doctor.title}
-                          </Typography>
-                        </Button>
-                      </Stack>
-                    </Stack>
+  return patientProfile ? (
+    <Box
+      sx={{
+        border: `1px solid ${theme.palette.primary.light}`,
+        borderRadius: borderRadius.radius10,
+        marginBottom: margins.bottom16
+      }}
+    >
+      <Box py={paddings.topBottom16} borderBottom={`${borders.solid1px} ${theme.palette.grey[100]}!important`}>
+        <Grid container alignItems="center">
+          <Grid item xs={12} style={{ cursor: 'pointer' }}>
+            <Grid container alignItems="center" flexWrap="nowrap">
+              <Grid item>
+                <Avatar
+                  alt={patientProfile.title}
+                  src={patientProfile?.avatar?.imageURL}
+                  sx={{ width: 60, height: 60, m: margins.all24 }}
+                />
+              </Grid>
+              <Grid item sm zeroMinWidth>
+                <Grid container spacing={0}>
+                  <Grid container item xs={10} direction="row" alignItems="center" columnGap={2}>
+                    <Typography variant="h4" component="div">
+                      {patientProfile.title}
+                    </Typography>
+                    <Button variant="outlined" disabled sx={{ borderRadius: '60px', height: 23 }}>
+                      {/* TODO: remove hardcoded value change logic here after cyclestatus solution */}
+                      NotActive
+                    </Button>
                   </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="caption">{getDateOfBirth(patientProfile?.dateOfBirth as string)}</Typography>
+                  </Grid>
+                  <Stack gap={2} direction="row" justifyContent="center" alignItems="center" flexWrap="wrap">
+                    <Stack flexShrink={0}>
+                      <Button
+                        startIcon={
+                          <CallOutlinedIcon
+                            sx={{
+                              color: iconCommonColor
+                            }}
+                          />
+                        }
+                        data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_CONTACT_INFO}
+                        disabled={!patientHighlightHeader.contact.uiid}
+                        onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
+                      >
+                        <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
+                          {patientHighlightHeader.contact.title}
+                        </Typography>
+                      </Button>
+                    </Stack>
+                    <Stack flexShrink={0}>
+                      <Button
+                        startIcon={
+                          <AssignmentIcon
+                            sx={{
+                              color: iconCommonColor
+                            }}
+                          />
+                        }
+                        disabled={!patientHighlightHeader.ohip.uiid}
+                        onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
+                        data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_OHIP_INFO}
+                      >
+                        <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
+                          {patientHighlightHeader.ohip.title}
+                        </Typography>
+                      </Button>
+                    </Stack>
+                    <Stack flexShrink={0}>
+                      <Button
+                        startIcon={
+                          <DoctorIcon
+                            sx={{
+                              color: iconCommonColor
+                            }}
+                          />
+                        }
+                        disabled={!isUiidExists}
+                        onClick={onButtonClick(isUiidExists)}
+                        data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_DOCTOR_INFO}
+                      >
+                        <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
+                          {patientHighlightHeader.doctor.title}
+                        </Typography>
+                      </Button>
+                    </Stack>
+                  </Stack>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-        </Box>
+        </Grid>
       </Box>
-    );
-  }
-
-  return null;
+    </Box>
+  ) : null;
 };
 
 export default PatientProfile;

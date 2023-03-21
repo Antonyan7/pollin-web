@@ -50,7 +50,8 @@ export enum ModalName {
   ImageModal = 'ImageModal',
   AddOrEditCustomAlertModal = 'AddOrEditCustomAlertModal',
   ConfirmAlertDeleteModal = 'ConfirmAlertDeleteModal',
-  AddAddressManually = 'AddAddressManually'
+  AddAddressManually = 'AddAddressManually',
+  MedicalBackgroundUnsavedChanges = 'MedicalBackgroundUnsavedChanges'
 }
 
 export enum OpenModalReason {

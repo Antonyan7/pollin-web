@@ -10,7 +10,7 @@ import {
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
-  IFemalePatientGynecologicalHistory,
+  IFemalePatientGynaecologicalHistory,
   IFemalePatientMenstrualCycleHistory,
   IFemalePregnancyInformation,
   IFertilityHistory,
@@ -273,16 +273,16 @@ const patientEmrManager = {
       }
     );
   },
-  getFemalePatientGynecologicalHistory(patientId: string) {
-    return axiosInstance.get<IFemalePatientGynecologicalHistory, IAxiosResponse<IFemalePatientGynecologicalHistory>>(
-      `${baseURL}/v1/medical-background/${patientId}/gynecological-history`
+  getFemalePatientGynaecologicalHistory(patientId: string) {
+    return axiosInstance.get<IFemalePatientGynaecologicalHistory, IAxiosResponse<IFemalePatientGynaecologicalHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/gynaecological-history`
     );
   },
-  updateFemalePatientGynecologicalHistory(patientId: string, data: IFemalePatientGynecologicalHistory) {
-    return axiosInstance.put<IFemalePatientGynecologicalHistory, IAxiosResponse<IFemalePatientGynecologicalHistory>>(
-      `${baseURL}/v1/medical-background/${patientId}/gynecological-history`,
+  updateFemalePatientGynaecologicalHistory(patientId: string, data: IFemalePatientGynaecologicalHistory) {
+    return axiosInstance.put<IFemalePatientGynaecologicalHistory, IAxiosResponse<IFemalePatientGynaecologicalHistory>>(
+      `${baseURL}/v1/medical-background/${patientId}/gynaecological-history`,
       {
-        gynecologicalHistory: data
+        gynaecologicalHistory: data
       }
     );
   }

@@ -33,12 +33,7 @@ const FormActions = () => {
     <DialogActions sx={{ padding: `${paddings.top32} ${paddings.right8} ${paddings.bottom24} ${paddings.left8}` }}>
       <Grid container justifyContent="space-between">
         <Grid item>
-          <StyledButton
-            data-cy={cancelButtonLabelCyId}
-            sx={{ width: '160px' }}
-            variant="outlined"
-            onClick={onCancelAppointmentClick}
-          >
+          <StyledButton data-cy={cancelButtonLabelCyId} variant="outlined" onClick={onCancelAppointmentClick}>
             {cancelButtonLabel}
           </StyledButton>
         </Grid>

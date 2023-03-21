@@ -17,6 +17,6 @@ import '@cypress/code-coverage/support';
 import './commands';
 import './appointmentCommands';
 import './schedulingCommands';
-import "cypress-real-events";
+import 'cypress-real-events';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

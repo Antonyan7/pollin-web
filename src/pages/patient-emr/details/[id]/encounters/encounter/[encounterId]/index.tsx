@@ -1,10 +1,11 @@
 import React, { Fragment, useCallback, useEffect } from 'react';
 import { AddendumsProps, IEncounterDetailsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ArrowBackIos, EditOutlined, PrintOutlined, ShareOutlined } from '@mui/icons-material';
-import { Box, CircularProgress, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import parse from 'html-react-parser';
 import { t } from 'i18next';
@@ -12,6 +13,7 @@ import EncountersLayout from 'layout/EncountersLayout';
 import { useRouter, withRouter } from 'next/router';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
+import CircularLoading from '@ui-component/circular-loading';
 import { ButtonWithIcon } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 import EncountersWrapper from '@ui-component/encounters/components/EncountersWrapper';
@@ -36,7 +38,10 @@ const EncounterDetailsPageTitle = ({
     <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
       <Grid item>
         <IconButton onClick={handleBack}>
-          <ArrowBackIos sx={{ color: (theme) => theme.palette.primary.main }} />
+          <ArrowBackIos
+            sx={{ color: (theme) => theme.palette.primary.main }}
+            data-cy={CypressIds.PAGE_PATIENT_DETAILS_BACK_BTN}
+          />
         </IconButton>
       </Grid>
       <Grid item xs={7}>
@@ -73,6 +78,7 @@ const FooterEncounter = () => {
             border: `${borders.solid1px} ${theme.palette.primary.main}`
           }}
           label={t(Translation.PAGE_ENCOUNTERS_BTN_SHARE)}
+          data-cy={CypressIds.PAGE_PATIENT_DETAILS_SHARE_BTN}
           icon={<ShareOutlined fontSize="small" />}
         />
         <ButtonWithIcon
@@ -82,6 +88,7 @@ const FooterEncounter = () => {
             border: `${borders.solid1px} ${theme.palette.primary.main}`
           }}
           label={t(Translation.PAGE_ENCOUNTERS_BTN_PRINT)}
+          data-cy={CypressIds.PAGE_PATIENT_DETAILS_PRINT_BTN}
           icon={<PrintOutlined fontSize="small" />}
         />
       </Box>
@@ -94,6 +101,7 @@ const FooterEncounter = () => {
             height: '100%'
           }}
           label={t(Translation.PAGE_ENCOUNTERS_BTN_ADD_ADDENDUM)}
+          data-cy={CypressIds.PAGE_PATIENT_DETAILS_ADD_ADDENDUM_BTN}
           icon={<EditOutlined fontSize="small" />}
         />
       </Box>
@@ -164,6 +172,7 @@ const EncounterDetailsPage = () => {
                   borderRadius: borderRadius.radius8
                 }}
                 onClick={goToEditEncounterPage}
+                data-cy={`${CypressIds.PAGE_PATIENT_EDIT_ENCOUNTER_BTN}`}
               >
                 <EditOutlined />
               </IconButton>
@@ -180,7 +189,7 @@ const EncounterDetailsPage = () => {
               </Typography>
             </Grid>
             <Grid item container direction="column" gap={2} sx={{ pt: paddings.top16 }}>
-              {encounterData.addendums.map((addendum: AddendumsProps) => {
+              {encounterData.addendums.map((addendum: AddendumsProps, index) => {
                 const isEditedTitle = addendum?.isEdited
                   ? t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_UPDATED_ON)
                   : t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_CREATED_ON);
@@ -199,6 +208,7 @@ const EncounterDetailsPage = () => {
                           borderRadius: borderRadius.radius8
                         }}
                         onClick={() => goToEditAddendumPage(addendum.id)}
+                        data-cy={`${CypressIds.PAGE_PATIENT_DETAILS_ADDENDUM_EDIT_ICON}-${index}`}
                       >
                         <EditOutlined />
                       </IconButton>
@@ -220,11 +230,7 @@ const EncounterDetailsPage = () => {
           </Grid>
         </EncountersWrapper>
       ) : null}
-      {isEncountersDetailsLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : null}
+      {isEncountersDetailsLoading ? <CircularLoading /> : null}
     </EncountersLayout>
   );
 };

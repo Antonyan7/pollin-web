@@ -9,9 +9,10 @@ interface ItemProps extends Partial<GridProps> {
   index?: number;
   value?: number | string | string[];
   note?: string;
+  isHeader?: boolean;
 }
 
-const Item: FC<ItemProps> = ({ title, index, value, note, ...props }) => {
+const Item: FC<ItemProps> = ({ title, index, value, note, isHeader, ...props }) => {
   const renderedValue = Array.isArray(value)
     ? value?.map((valueItem, valueIndex) => (
         <Grid
@@ -25,7 +26,7 @@ const Item: FC<ItemProps> = ({ title, index, value, note, ...props }) => {
     : value;
 
   return (
-    <FieldWrapper fieldName={title} componentIndex={index} hasNote={!!note} {...props}>
+    <FieldWrapper fieldName={title} componentIndex={index} hasNote={!!note} isHeader={isHeader} {...props}>
       <Grid item container xs={5} direction="column" justifyContent="space-between">
         <Grid>{renderedValue}</Grid>
         {note && <Grid>{note ?? ''}</Grid>}

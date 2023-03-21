@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { PropsWithChildren, ReactNode } from 'react';
 import { Grid } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
 
 import MedicalFormRadio from './MedicalFormRadio';
 import { ConsultationTitleWithIcon } from '.';
 
-interface MedicalComponentWithRadioProps {
+interface MedicalComponentWithRadioProps extends PropsWithChildren {
   iconTitle: string;
   fieldName: string;
+  children?: ReactNode;
 }
 
-const MedicalComponentWithRadio = ({ iconTitle, fieldName }: MedicalComponentWithRadioProps) => (
+const MedicalComponentWithRadio = ({ iconTitle, fieldName, children }: MedicalComponentWithRadioProps) => (
   <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
     <Grid
       item
@@ -30,6 +31,7 @@ const MedicalComponentWithRadio = ({ iconTitle, fieldName }: MedicalComponentWit
       <Grid>
         <MedicalFormRadio fieldName={fieldName} />
       </Grid>
+      {children}
     </Grid>
   </Grid>
 );

@@ -7,6 +7,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { BoxProps, InputAdornment, Typography, useTheme } from '@mui/material';
 import { Box, styled } from '@mui/system';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -130,6 +131,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
               </InputAdornment>
             ) : null
           }
+          data-cy={CypressIds.PAGE_PATIENT_ENCOUNTERS_SEARCH_INPUT}
         />
         {showSearchValueResult ? (
           <Typography
@@ -156,6 +158,7 @@ const EncounterFilters = ({ page }: { page: number }) => {
             selectedOption.filter((option): option is GroupedByTitlesProps => typeof option === 'object')
           );
         }}
+        data-cy={CypressIds.PAGE_PATIENT_ENCOUNTERS_FILTER}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
         clearIcon={<CloseIcon onClick={() => onAutoCompleteChange([])} fontSize="small" />}
         renderInputProps={{

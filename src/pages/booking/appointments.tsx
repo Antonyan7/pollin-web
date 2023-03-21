@@ -150,7 +150,7 @@ const Appointments = () => {
             onClick={onOpenAppointmentsModalAdd}
           >
             <Typography
-              variant="h4"
+              variant="subtitle1"
               sx={{
                 marginRight: margins.right12,
                 color: !serviceProviderId ? theme.palette.grey[300] : theme.palette.primary.main

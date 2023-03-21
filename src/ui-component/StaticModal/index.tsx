@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { Grid } from '@mui/material';
+import { paddings } from 'themes/themeConstants';
 
 import BaseModal from '@ui-component/Modal/BaseModal';
 
@@ -20,7 +21,14 @@ const StaticModal: React.FC<StaticModalProps> = ({ data, onClose, toConfirm }) =
 
   return (
     <StaticDataContext.Provider value={staticModalValues}>
-      <BaseModal title={data.headerTitle} onClose={onClose}>
+      <BaseModal
+        title={data.headerTitle}
+        onClose={onClose}
+        disableDivider
+        titleSx={{
+          px: paddings.left24
+        }}
+      >
         <Grid>
           <Grid container>
             <Grid item xs={12}>

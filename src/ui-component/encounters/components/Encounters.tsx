@@ -1,20 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  CircularProgress,
-  Table,
-  TableBody,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow
-} from '@mui/material';
+import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { margins } from 'themes/themeConstants';
 import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
+
+import CircularLoading from '@ui-component/circular-loading';
 
 import EncounterNotesHeader from './EncounterNotesHeader';
 import EncounterNoteThumbnail from './EncounterNoteThumbnail';
@@ -60,12 +52,13 @@ const Encounters = () => {
           <TableBody>
             {!!encounters.length && !isEncountersListLoading && (
               <>
-                {encounters.map((encounter) => (
+                {encounters.map((encounter, index) => (
                   <EncounterNoteThumbnail
                     key={encounter.id}
                     id={encounter.id}
                     author={encounter.author}
                     title={encounter.title}
+                    index={index}
                     contentPreview={encounter.contentPreview}
                     createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
                       day: 'numeric',
@@ -89,13 +82,7 @@ const Encounters = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isEncountersListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : (
-        <EncountersEmptyState />
-      )}
+      {isEncountersListLoading ? <CircularLoading /> : <EncountersEmptyState />}
     </>
   );
 };

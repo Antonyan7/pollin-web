@@ -6,6 +6,7 @@ import { SeveritiesType } from '@components/Scheduling/types';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 
 const useScheduleApplyStatusPopup = () => {
@@ -22,7 +23,8 @@ const useScheduleApplyStatusPopup = () => {
           open: true,
           props: {
             severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS),
+            dataCy: CypressIds.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS
           }
         })
       );

@@ -5,15 +5,13 @@ import { borders, margins } from 'themes/themeConstants';
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
 
 export const ConsultationFormSubTitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.black,
-  fontSize: theme.typography.pxToRem(16),
-  fontWeight: 500
+  color: theme.palette.secondary[800],
+  fontSize: theme.typography.pxToRem(16)
 }));
 
 export const ConsultationFormTitle = styled(Typography)(({ theme }) => ({
-  color: theme.palette.common.black,
-  fontSize: theme.typography.pxToRem(21),
-  fontWeight: 500
+  color: theme.palette.secondary[800],
+  fontSize: theme.typography.pxToRem(21)
 }));
 
 export const ConsultationDivider = styled(Divider)(({ theme }) => ({

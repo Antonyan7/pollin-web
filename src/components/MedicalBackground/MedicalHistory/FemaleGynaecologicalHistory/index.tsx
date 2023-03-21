@@ -6,19 +6,19 @@ import { Translation } from 'constants/translations';
 import EditModeContent from './editModeContent';
 import ViewModeContent from './viewModeContent';
 
-const FemaleGynecologicalHistory = () => {
+const FemaleGynaecologicalHistory = () => {
   const [t] = useTranslation();
-  const femaleGynecologicalHistoryTitle = t(
-    Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNECOLOGICAL_HISTORY_TITLE
+  const femaleGynaecologicalHistoryTitle = t(
+    Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_TITLE
   );
 
   return (
     <MedicalBackgroundCard
-      title={femaleGynecologicalHistoryTitle}
+      title={femaleGynaecologicalHistoryTitle}
       ViewModeContent={ViewModeContent}
       EditModeContent={EditModeContent}
     />
   );
 };
 
-export default FemaleGynecologicalHistory;
+export default FemaleGynaecologicalHistory;

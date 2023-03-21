@@ -29,7 +29,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
   const [orderBy, setOrderBy] = React.useState<string>('calories');
   const { selected, setSelected } = useScheduleTemplatesContext();
   const loadingIndicatorCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR;
-
+  const tableCyId = CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE;
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       const newSelectedId = rows.map((n) => n.id);
@@ -70,7 +70,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
 
   return (
     <TableContainer>
-      <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+      <Table sx={{ minWidth: 750 }} data-cy={tableCyId}>
         <ScheduleTemplatesHead
           order={order}
           orderBy={orderBy}

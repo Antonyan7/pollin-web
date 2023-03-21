@@ -3,6 +3,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -34,7 +35,7 @@ const AddEncounterNoteTitle = ({ handleClose, encounterNoteEditedTime }: AddEnco
     <Grid container alignItems="center" justifyContent="space-between">
       <Grid container item xs={6} sx={{ p: 2 }} alignItems="center">
         <Grid item xs={1}>
-          <IconButton onClick={handleClose}>
+          <IconButton onClick={handleClose} data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_BACK_BTN}>
             <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
           </IconButton>
         </Grid>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { CircularProgress, CircularProgressProps, Grid, SxProps } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { margins, paddings } from 'themes/themeConstants';
 
 interface CircularLoadingProps {
@@ -21,7 +22,7 @@ const CircularLoading: React.FC<CircularLoadingProps> = ({ loadingProps, sx }) =
       ...sx
     }}
   >
-    <CircularProgress size={40} {...loadingProps} />
+    <CircularProgress size={40} {...loadingProps} data-cy={CypressIds.COMMON_LOADING_INDICATOR} />
   </Grid>
 );
 

@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
 import { timeAdjuster } from 'helpers/timeAdjuster';
@@ -34,7 +35,7 @@ const AddAddendumTitle = ({ handleClose, encounterNoteEditedTime }: AddAddendumT
   <Grid container alignItems="center" justifyContent="space-between">
     <Grid container item xs={8} sx={{ p: paddings.all16 }} alignItems="center">
       <Grid item xs={1}>
-        <IconButton onClick={handleClose}>
+        <IconButton onClick={handleClose} data-cy={CypressIds.PAGE_PATIENT_ADD_ADDENDUM_BACK_BTN}>
           <ArrowBackIosIcon sx={{ color: (theme) => theme.palette.primary.main }} />
         </IconButton>
       </Grid>

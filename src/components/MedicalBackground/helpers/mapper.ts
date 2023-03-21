@@ -1,5 +1,5 @@
 import {
-  IFemalePatientGynecologicalHistoryProps,
+  IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryCycleLength,
   IFemalePatientMenstrualCycleHistoryProps,
   IFertilityHistoryProps,
@@ -7,18 +7,22 @@ import {
   PreviousTreatmentFieldProps
 } from '@axios/patientEmr/managerPatientEmrTypes';
 
+import { MedicalBackgroundItemType } from '../components/types';
 import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
 
 export interface CustomAccessorItem
   extends PreviousTreatmentFieldProps,
     IFemalePatientMenstrualCycleHistoryCycleLength,
-    IFemalePatientGynecologicalHistoryProps {}
+    IFemalePatientGynaecologicalHistoryProps {}
 
 type Mapper = Record<string, MapperProps>;
 
 export interface MapperProps {
   title: string;
   customAccessor?: (item: CustomAccessorItem) => string[] | string;
+  componentData?: {
+    type?: MedicalBackgroundItemType;
+  };
 }
 
 export const createObjectWithTitle = (itemTitle: string) => ({
@@ -32,7 +36,7 @@ type MappingTarget =
   | IPreviousPregnancies
   | IFertilityHistoryProps
   | IFemalePatientMenstrualCycleHistoryProps
-  | IFemalePatientGynecologicalHistoryProps
+  | IFemalePatientGynaecologicalHistoryProps
   | null;
 
 export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper) =>
@@ -40,21 +44,21 @@ export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper
     ? Object.entries(target).map((item) => {
         const itemId = item[0];
         const itemData = item[1];
-        const mappingItem = mappingPattern[itemId];
+        const { title, customAccessor, componentData } = mappingPattern[itemId];
         const currentItemLabeledValue = getLabelByBoolean(itemData?.value);
         const currentItemValue =
           typeof itemData?.value === 'boolean' || itemData?.value === null ? currentItemLabeledValue : itemData.value;
 
-        const finalValue =
-          typeof mappingItem?.customAccessor === 'function' ? mappingItem.customAccessor(itemData) : currentItemValue;
+        const finalValue = typeof customAccessor === 'function' ? customAccessor(itemData) : currentItemValue;
 
         return {
-          title: mappingItem.title,
-          item: {
-            // When there are not any values for field just show NO label.
-            value: finalValue ?? getLabelByBoolean(false),
-            note: itemData?.note
-          }
+          title,
+          viewValue: finalValue ?? getLabelByBoolean(false),
+          ...itemData,
+          fieldName: itemId,
+          ...(componentData && {
+            componentData
+          })
         };
       })
     : [];

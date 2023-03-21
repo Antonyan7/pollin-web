@@ -3,6 +3,7 @@ import EventIcon from '@mui/icons-material/Event';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
 import { CalendarOrClockPickerView } from '@mui/x-date-pickers/internals/models';
+import { CypressIds } from 'constants/cypressIds';
 import { DateTimePickerWrapperProps } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
@@ -66,6 +67,7 @@ const DateTimePickerWrapper = ({
           }}
           fullWidth
           {...renderInputProps}
+          data-cy={CypressIds.COMMON_DATE_TIME_PICKER}
         />
       )}
       {...otherProps}

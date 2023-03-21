@@ -25,7 +25,7 @@ const BreadcrumbNavItem = ({ page, index }: IBreadcrumbNavItemProp) => {
             fontSize: theme.typography.pxToRem(16),
             cursor: 'pointer'
           }}
-          variant="h3"
+          variant="subtitle1"
         >
           {page.name}
         </Typography>

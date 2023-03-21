@@ -1,4 +1,4 @@
-import { Dialog, styled } from '@mui/material';
+import { Dialog, dialogClasses, paperClasses, styled } from '@mui/material';
 
 export const BaseModalStyled = styled(Dialog)(({ theme }) => ({
   '.Dialog-box': {
@@ -8,5 +8,11 @@ export const BaseModalStyled = styled(Dialog)(({ theme }) => ({
     marginTop: theme.spacing(2),
     width: '500px',
     height: '200px'
+  },
+  [`.${paperClasses.root}`]: {
+    maxHeight: '80%'
+  },
+  [`.${dialogClasses.container}`]: {
+    marginTop: 40
   }
 }));

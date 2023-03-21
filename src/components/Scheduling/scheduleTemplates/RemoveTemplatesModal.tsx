@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { CardProps, Grid, Modal } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { dispatch } from 'redux/hooks';
@@ -32,7 +33,8 @@ const Body = React.forwardRef(({ handleOpenClose }: BodyProps) => {
         headerTitle: t(Translation.MODAL_SCHEDULING_DELETION_TITLE),
         explanationMessage: t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_MAIN),
         actualQuestion: t(Translation.MODAL_SCHEDULING_DELETION_CONTENT_FOOTNOTE) ?? '',
-        confirmLabel: t(Translation.COMMON_BUTTON_CONFIRM_LABEL)
+        confirmLabel: t(Translation.COMMON_BUTTON_CONFIRM_LABEL),
+        confirmCy: CypressIds.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM
       }}
       onClose={handleOpenClose}
       toConfirm={handleConfirm}

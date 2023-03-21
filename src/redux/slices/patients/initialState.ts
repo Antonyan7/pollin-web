@@ -26,9 +26,9 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
     femalePregnancyInformation: null,
     isFemalePregnancyInformationLoading: false,
     isFemalePregnancyInformationDataUpdating: false,
-    femalePatientGynecologicalHistory: null,
-    isFemalePatientGynecologicalHistoryLoading: false,
-    isFemalePatientGynecologicalHistoryDataUpdating: false,
+    femalePatientGynaecologicalHistory: null,
+    isFemalePatientGynaecologicalHistoryLoading: false,
+    isFemalePatientGynaecologicalHistoryDataUpdating: false,
     femalePatientMenstrualCycleHistory: null,
     isFemalePatientMenstrualCycleHistoryLoading: false,
     isFemalePatientMenstrualCycleHistoryDataUpdating: false

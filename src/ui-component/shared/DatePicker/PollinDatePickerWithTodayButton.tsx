@@ -29,7 +29,7 @@ const PollinDatePickerWithTodayButton = ({ calendarDate, onChange }: DatePickerW
     <Grid item columnGap={3} container xs={12}>
       <Grid item xs={3}>
         <StyledButtonNew data-cy={cypressId} variant="outlined" onClick={onTodayClick} disabled={isToday}>
-          <Typography sx={{ color: theme.palette.primary.main }} variant="h4">
+          <Typography sx={{ color: theme.palette.primary.main }} variant="subtitle1">
             {t(Translation.COMMON_BUTTON_TODAY)}
           </Typography>
         </StyledButtonNew>

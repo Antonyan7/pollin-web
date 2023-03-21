@@ -1,3 +1,5 @@
+import { CypressIds } from 'constants/cypressIds';
+
 export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const longWeekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -23,11 +25,11 @@ export const standardDate = new Date(1970, 0, 1, 15, 0, 0, 0);
 export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export const patientListTabLinks = [
-  { linkName: 'Patient Profile', href: 'profile' },
+  { linkName: 'Patient Profile', href: 'profile', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_PATIENT_PROFILE },
   { linkName: 'Plans', href: 'plans' },
-  { linkName: 'Encounters', href: 'encounters' },
+  { linkName: 'Encounters', href: 'encounters', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_ENCOUNTERS },
   { linkName: 'Medications', href: 'medications' },
-  { linkName: 'Orders & Results', href: 'orders' },
+  { linkName: 'Orders & Results', href: 'orders', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS },
   { linkName: 'Consents', href: 'consents' },
   { linkName: 'Medical Background', href: 'medicalbackground' },
   { linkName: 'Referrals', href: 'referrals' }

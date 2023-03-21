@@ -4,6 +4,7 @@ interface StaticModalData {
   actualQuestion?: string;
   cancelLabel?: string;
   confirmLabel: string;
+  confirmCy?: string;
 }
 
 export interface StaticModalProps {

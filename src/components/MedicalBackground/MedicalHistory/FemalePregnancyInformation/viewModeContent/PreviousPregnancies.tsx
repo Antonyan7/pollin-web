@@ -53,6 +53,7 @@ const PreviousPregnancies = ({ previousPregnancies }: { previousPregnancies: IPr
                 }
               )}
               index={0}
+              isHeader
             />
             {pregnancyType}
             {renderedValues}
