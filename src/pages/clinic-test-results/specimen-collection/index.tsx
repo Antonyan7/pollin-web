@@ -56,7 +56,8 @@ const SpecimenCollection = () => {
         ...(calendarDate ? { date: DateUtil.convertToDateOnly(calendarDate) } : {})
       }
     });
-  }, [calendarDate, serviceProviderId, router]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [calendarDate, serviceProviderId]);
 
   useEffect(() => {
     if (serviceProviderId) {
