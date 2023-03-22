@@ -1,26 +1,26 @@
+import 'react-quill/dist/quill.snow.css';
+
+import { Divider, Grid, GridProps, MenuItem, Typography, styled, useTheme } from '@mui/material';
+import { EncountersFormField, IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 import React, { useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import ReactQuill from 'react-quill';
-import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import { StyledButton } from '@components/common/MaterialComponents';
-import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
-import { CypressIds } from 'constants/cypressIds';
-import { Translation } from 'constants/translations';
-import parse from 'html-react-parser';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
-import { EncountersFormField, IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
+import { useController, useFormContext } from 'react-hook-form';
 
+import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
-import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import ParserTypographyWrapper from '@ui-component/common/Typography';
 import CurrentAddendum from '@ui-component/encounters/components/CurrentAddendum';
+import { CypressIds } from 'constants/cypressIds';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
+import ReactQuill from 'react-quill';
+import { StyledButton } from '@components/common/MaterialComponents';
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import { Translation } from 'constants/translations';
 import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
-
-import 'react-quill/dist/quill.snow.css';
+import parse from 'html-react-parser';
+import { useTranslation } from 'react-i18next';
 
 const EditorWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   width: '100%',
@@ -155,6 +155,7 @@ const SimpleTextEditor = ({
                   value={recentAppointmentsField.value}
                   onChange={(event) => recentAppointmentsField.onChange(event.target.value)}
                   data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_PAST_APPOINTMENT}
+                  disabled={!typeField.value}
                 >
                   {recentAppointments?.map(({ id, type, date }) => (
                     <MenuItem value={id} key={id}>
