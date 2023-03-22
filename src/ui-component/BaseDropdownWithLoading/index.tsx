@@ -124,6 +124,7 @@ const BaseDropdownWithLoading = <
             }}
             InputProps={{
               ...params.InputProps,
+              startAdornment: renderInputProps?.InputProps?.startAdornment,
               endAdornment:
                 isFirstLoading.current && isLoading ? <EndAdornmentLoading /> : params?.InputProps?.endAdornment
             }}
