@@ -71,6 +71,18 @@ const isPatientContactInformationLoading = createSelector(
   [selector],
   (state) => state.isPatientContactInformationLoading
 );
+const patientBackgroundInformation = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientBackground.patientBackgroundInformation
+);
+const isPatientBackgroundInformationLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientBackground.isPatientBackgroundInformationLoading
+);
+const isPatientBackgroundEditButtonClicked = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked
+);
 
 const isPatientProfileLoading = createSelector([selector], (state) => state.isPatientProfileLoading);
 const isGeneralHealthLoading = createSelector(
@@ -232,6 +244,9 @@ export default {
   isFemalePregnancyInformationLoading,
   isContactInformationButtonClicked,
   isContactInformationLoading,
+  patientBackgroundInformation,
+  isPatientBackgroundInformationLoading,
+  isPatientBackgroundEditButtonClicked,
   contactInformation,
   manuallyAddressForMailing,
   manuallyAddressForPrimary

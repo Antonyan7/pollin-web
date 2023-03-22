@@ -8,6 +8,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
+  IPatientBackgroundPartners,
   IPatientContactInformation,
   IProfileTestResults,
   ITestResultHistory,
@@ -274,6 +275,15 @@ const reducers = createReducer({
   },
   setIsContactInformationEditButtonClicked(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isContactInformationEditButtonClicked = action.payload;
+  },
+  setIsPatientBackgroundEditButtonClicked(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked = action.payload;
+  },
+  setBackgroundInformation(state, action: IAction<IPatientBackgroundPartners>) {
+    state.medicalBackground.contact.patientBackground.patientBackgroundInformation = action.payload;
+  },
+  setIsPatientBackgroundInformationLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.patientBackground.isPatientBackgroundInformationLoading = action.payload;
   },
   setManuallyAddressForPrimary(state, action: IAction<AddManuallyAddressModalProps>) {
     state.medicalBackground.contact.manuallyAddressForPrimary = action.payload;

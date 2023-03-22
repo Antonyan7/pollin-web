@@ -1,5 +1,12 @@
 /* eslint-disable no-restricted-syntax */
 import { DropdownOptionType, IDropdown, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
+import CurrentOccupation from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/CurrentOccupation';
+import DateOfBirth from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/DateOfBirth';
+import FamilyPhysician from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/FamilyPhysician';
+import PhysicianName from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/PhysicianName';
+import Pronouns from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/Pronouns';
+import SexAtBirth from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/SexAtBirth';
+import SexualOrientation from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/SexualOrientation';
 import {
   EmailAddress,
   MailingAddress,
@@ -41,6 +48,10 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { AddressProps } from '../../../manager/patientEmr/managerPatientEmrTypes';
+import Age from '../Contact/PatientBackgroundInformation/view/fields/Age';
+import CancerPatient from '../Contact/PatientBackgroundInformation/view/fields/CancerPatient';
+import Gender from '../Contact/PatientBackgroundInformation/view/fields/Gender';
+import RelationshipStatus from '../Contact/PatientBackgroundInformation/view/fields/RelationshipStatus';
 
 export const defineSingleFieldValue = (fieldType?: boolean) => {
   switch (fieldType) {
@@ -141,4 +152,18 @@ export const contactInformationRows = [
   { Component: PhoneNumber },
   { Component: OHIP },
   { Component: MostResponsiblePhysician }
+];
+
+export const backgroundInformationRows = [
+  { Component: SexAtBirth },
+  { Component: CancerPatient },
+  { Component: Gender },
+  { Component: SexualOrientation },
+  { Component: Pronouns },
+  { Component: RelationshipStatus },
+  { Component: DateOfBirth },
+  { Component: Age },
+  { Component: CurrentOccupation },
+  { Component: PhysicianName },
+  { Component: FamilyPhysician }
 ];

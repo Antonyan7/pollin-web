@@ -31,7 +31,6 @@ export const patientListTabLinks = [
   { linkName: 'Medications', href: 'medications' },
   { linkName: 'Orders & Results', href: 'orders', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS },
   { linkName: 'Consents', href: 'consents' },
-  { linkName: 'Medical Background', href: 'medicalbackground' },
   { linkName: 'Referrals', href: 'referrals' }
 ];
 export const rowsPerPage = 10;

@@ -8,6 +8,11 @@ import {
 
 const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
   contact: {
+    patientBackground: {
+      patientBackgroundInformation: null,
+      isPatientBackgroundInformationLoading: false,
+      isPatientBackgroundEditButtonClicked: false
+    },
     generalHealth: null,
     patientContactInformation: null,
     manuallyAddressForPrimary: null,

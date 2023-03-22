@@ -664,3 +664,67 @@ export interface AddManuallyAddressModalProps {
   city: string;
   country: string;
 }
+
+export interface IPatientBackgroundPartners {
+  sexAtBirth: ISexAtBirth;
+  cancerPatient: ICancerPatient;
+  gender: IGender;
+  sexualOrientation: ISexualOrientation;
+  preferredPronouns: IPreferredPronouns;
+  relationship: IRelationship;
+  dateOfBirth: IDateOfBirth;
+  age: IAge;
+  currentOccupation: ICurrentOccupation;
+  referringDoctor: IReferringDoctor;
+  familyDoctor: IFamilyDoctor;
+}
+
+export interface IPatientBackground {
+  partners: IPatientBackgroundPartners;
+}
+
+export interface ISexAtBirth extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface ICancerPatient extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IGender extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface ISexualOrientation extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IPreferredPronouns extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IRelationship extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IDateOfBirth extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IAge extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface ICurrentOccupation extends MedicalBackgroundFieldValues {
+  value: string;
+}
+
+export interface IReferringDoctor extends MedicalBackgroundFieldValues {
+  value: string;
+  name: string;
+}
+
+export interface IFamilyDoctor extends MedicalBackgroundFieldValues {
+  value: string;
+  name: string;
+}

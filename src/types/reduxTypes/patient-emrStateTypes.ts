@@ -14,6 +14,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
+  IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
   IProfileTestResults,
@@ -33,8 +34,15 @@ interface IProfileProps {
   isProfileTestResultsLoading: boolean;
 }
 
+interface IPatientBackgroundProps {
+  patientBackgroundInformation: IPatientBackgroundPartners | null;
+  isPatientBackgroundInformationLoading: boolean;
+  isPatientBackgroundEditButtonClicked: boolean;
+}
+
 export interface MedicalBackgroundProps {
   contact: {
+    patientBackground: IPatientBackgroundProps;
     generalHealth: IGeneralHealthProps | null;
     patientContactInformation: IPatientContactInformationProps | null;
     manuallyAddressForPrimary: AddManuallyAddressModalProps | null;

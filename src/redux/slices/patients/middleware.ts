@@ -64,6 +64,8 @@ const {
   setPatientAppointments,
   setEncountersDetailsLoadingState,
   setIsProfileTestResultsLoading,
+  setIsPatientBackgroundInformationLoading,
+  setBackgroundInformation,
   setIsTestResultsHistoryLoading,
   setCurrentAppointmentFilterType,
   setCreateEncounterNoteLoadingState,
@@ -97,6 +99,7 @@ const {
   setIsDropdownsLoading,
   setMedicalPatientContactInformation,
   setIsMedicalPatientContactInformationLoading,
+  setIsPatientBackgroundEditButtonClicked,
   setIsContactInformationEditButtonClicked,
   setManuallyAddressForMailing,
   setManuallyAddressForPrimary,
@@ -697,6 +700,13 @@ const changeContactInformationEditButtonState = () => async (dispatch: AppDispat
   dispatch(setIsContactInformationEditButtonClicked(!editButtonState));
 };
 
+const changePatientBackgroundEditButtonState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
+  const editButtonState =
+    getState().patients.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked;
+
+  dispatch(setIsPatientBackgroundEditButtonClicked(!editButtonState));
+};
+
 const changeManuallyAddressForPrimary = (address: AddManuallyAddressModalProps) => async (dispatch: AppDispatch) => {
   dispatch(setManuallyAddressForPrimary(address));
 };
@@ -747,6 +757,21 @@ const getMedicalContactInformation = (patientId: string) => async (dispatch: App
   }
 
   dispatch(setIsMedicalPatientContactInformationLoading(false));
+};
+
+const getPatientBackgroundInformation = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientBackgroundInformationLoading(true));
+
+    const response = await API.patients.getPatientBackgroundInformation(patientId);
+
+    dispatch(setBackgroundInformation(response.data.data.partners));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsPatientBackgroundInformationLoading(false));
+  }
 };
 
 const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
@@ -887,7 +912,9 @@ export default {
   getFemalePregnancyInformation,
   getPatientMedicalBackgroundDropdownOptions,
   changeContactInformationEditButtonState,
+  getPatientBackgroundInformation,
   getMedicalContactInformation,
+  changePatientBackgroundEditButtonState,
   changeManuallyAddressForPrimary,
   changeManuallyAddressForMailing,
   updatePatientContactInformation,
