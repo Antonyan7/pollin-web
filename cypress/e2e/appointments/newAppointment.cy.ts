@@ -15,7 +15,6 @@ describe('Appointments', () => {
     cy.SignInViaEmulator(email, pass);
   });
   beforeEach(() => {
-    cy.intercept(`/clinic-booking/v2/provider`).as('getProviders');
     cy.visit('/booking/appointments');
     cy.url().should('include', '/booking/appointments');
   });
@@ -27,7 +26,6 @@ describe('Appointments', () => {
 
   it(`should verify adding new appointment flow`, () => {
     cy.fixture('test-data').then((data) => {
-      cy.wait('@getProviders');
       cy.ChooseProvider(data.service_provider_1).then(() => {
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_DIALOG_FORM)).should('be.visible');
@@ -50,7 +48,6 @@ describe('Appointments', () => {
 
   it(`should verify that appointment displays in calendar`, () => {
     cy.fixture('test-data').then((data) => {
-      cy.wait('@getProviders');
       cy.ChooseProvider(data.service_provider_1).then(() => {
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_DIALOG_FORM)).should('be.visible');
@@ -67,7 +64,7 @@ describe('Appointments', () => {
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();
 
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)).should('exist');
-        cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_DESKTOP_DATE_PICKER)).should('exist').click();
+        cy.get(CyUtils.getSelector(CypressIds.COMMON_DATE_PICKER)).should('exist').click();
         cy.get(`.MuiCalendarOrClockPicker-root`)
           .contains(RegExp(`^${futureDate}$`))
           .click()

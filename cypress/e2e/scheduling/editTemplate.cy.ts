@@ -45,8 +45,6 @@ describe('edit template', () => {
     cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should('not.exist');
     cy.fixture('test-data').then((data) => {
       cy.get(`table > tbody > tr`).each((elem, index) => {
-        cy.log(`index = ${index}`);
-        cy.log(`elem = ${elem.text()}`);
 
         if (elem.text().includes(data.templateName3)) {
           cy.wrap(elem).realClick();
