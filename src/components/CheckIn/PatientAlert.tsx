@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
@@ -21,9 +22,16 @@ const PatientAlert = ({ verification }: { verification?: boolean }) => {
   const description = verification
     ? `${patientProfile?.title} ${t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_DESCRIPTION)}`
     : t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION);
+  const button = verification
+    ? t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY)
+    : t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_REFRESH);
 
   const openVerifyModal = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.VerifyPatientPhotoModal, props: null }));
+  };
+
+  const refresh = () => {
+    dispatch(bookingMiddleware.refreshCheckInAppointments(true));
   };
 
   return (
@@ -52,13 +60,9 @@ const PatientAlert = ({ verification }: { verification?: boolean }) => {
           </Grid>
         </Grid>
         <Grid item xs={3} justifyContent="flex-end" display="flex">
-          {verification ? (
-            <Button onClick={openVerifyModal} color="warning">
-              <Typography fontWeight="bold">
-                {t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY)}
-              </Typography>
-            </Button>
-          ) : null}
+          <Button onClick={verification ? openVerifyModal : refresh} color="warning">
+            <Typography fontWeight="bold">{button}</Typography>
+          </Button>
         </Grid>
       </Grid>
     </Stack>

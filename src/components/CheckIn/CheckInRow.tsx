@@ -2,6 +2,8 @@ import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { statuses } from '@components/CheckIn/checkInStatuses';
 import { TableCell, TableRow, useTheme } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { format } from 'date-fns';
 import { ICheckinAppointment } from 'types/reduxTypes/bookingStateTypes';
 
@@ -12,6 +14,7 @@ import { convertToLocale, convertTZ, getClinicTimezone } from '@utils/dateUtils'
 
 const CheckInRow = ({ row }: { row: ICheckinAppointment }) => {
   const theme = useTheme();
+  const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const { control, register, setValue } = useFormContext();
   const { field } = useController({
     name: `checkInAppointments`,
@@ -45,7 +48,7 @@ const CheckInRow = ({ row }: { row: ICheckinAppointment }) => {
   return (
     <TableRow tabIndex={-1} key={row.id}>
       <TableCell padding="checkbox">
-        {row.checkInAllowed ? (
+        {row.checkInAllowed && patientProfile?.isIntakeComplete ? (
           <CustomCheckbox
             checkedIcon={<CheckedIcon />}
             key={row.id}

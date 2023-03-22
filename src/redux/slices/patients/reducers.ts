@@ -10,6 +10,7 @@ import {
   IGeneralHealthProps,
   IPatientBackgroundPartners,
   IPatientContactInformation,
+  IPatientContactInformationProps,
   IProfileTestResults,
   ITestResultHistory,
   ProfileTestResultDetailsItem
@@ -33,8 +34,6 @@ import {
   PatientProfile,
   PatientProfileOverview
 } from 'types/reduxTypes/patient-emrStateTypes';
-
-import { IPatientContactInformationProps } from '../../../manager/patientEmr/managerPatientEmrTypes';
 
 const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
 

@@ -17,6 +17,7 @@ export const getInitialState = (): BookingProps => ({
   isCheckInLoading: false,
   isCheckInSuccess: false,
   isCheckInAppointmentsLoading: false,
+  isRefreshCheckInAppointments: false,
   checkInAppointmentsList: [],
   currentServiceProviderId: '',
   currentSpecimenServiceProviderId: '',

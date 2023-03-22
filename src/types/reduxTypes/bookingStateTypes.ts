@@ -48,6 +48,7 @@ export interface BookingProps {
   isGroupedServiceProvidersLoading: boolean;
   isSpecimenGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
+  isRefreshCheckInAppointments: boolean;
   currentServiceProviderId: string;
   isCheckInLoading: boolean;
   isCheckInSuccess: boolean;

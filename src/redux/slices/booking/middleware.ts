@@ -52,6 +52,7 @@ const {
   setAppointmentDetails,
   setPatientAlerts,
   setAppointmentLoading,
+  setIsRefreshCheckInAppointments,
   setIsCheckInLoading,
   setIsCheckInSuccess,
   setSaveButtonDisabled,
@@ -311,6 +312,15 @@ const getCheckInAppointments = (patientId: string) => async (dispatch: AppDispat
     dispatch(setError(error as string));
   } finally {
     dispatch(setIsCheckInAppointmentsLoading(false));
+  }
+};
+
+const refreshCheckInAppointments = (isRefresh: boolean) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsRefreshCheckInAppointments(isRefresh));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error as string));
   }
 };
 
@@ -582,6 +592,7 @@ export default {
   updateSpecimenResourceId,
   getPatients,
   getNewPatients,
+  refreshCheckInAppointments,
   getServiceTypes,
   createAppointment,
   getAppointmentDetails,

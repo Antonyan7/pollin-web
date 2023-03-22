@@ -21,6 +21,7 @@ const CheckIn = () => {
   const appointments = useAppSelector(bookingSelector.checkInAppointmentsList);
   const isAppointmentsLoading = useAppSelector(bookingSelector.isCheckInAppointmentsLoading);
   const isCheckInLoading = useAppSelector(bookingSelector.isCheckInLoading);
+  const isRefreshCheckInAppointments = useAppSelector(bookingSelector.isRefreshCheckInAppointments);
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const patientsList = useAppSelector(patientsSelector.patientsList);
   const [isTableVisible, setIsTableVisible] = useState(false);
@@ -75,7 +76,22 @@ const CheckIn = () => {
     });
 
     return () => subscription.unsubscribe();
-  }, [watch]);
+  }, [watch, isRefreshCheckInAppointments]);
+
+  useEffect(() => {
+    const { patient } = watch();
+
+    if (isRefreshCheckInAppointments) {
+      dispatch(patientsMiddleware.getPatientProfile(patient));
+      dispatch(patientsMiddleware.getPatientHighlight(patient));
+      dispatch(patientsMiddleware.setCurrentPatient(patient));
+      dispatch(bookingMiddleware.getCheckInAppointments(patient));
+      dispatch(patientsMiddleware.getPatientProfile(patient));
+      dispatch(bookingMiddleware.refreshCheckInAppointments(false));
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRefreshCheckInAppointments]);
 
   const onSubmit = (values: ICheckInFormValues) => {
     const patientName = patientsList.patients.find((item) => item.id === values.patient)?.name;
@@ -92,8 +108,8 @@ const CheckIn = () => {
   };
 
   useEffect(() => {
-    setIsCheckInButtonVisible(appointments.some((item) => item.checkInAllowed));
-  }, [appointments]);
+    setIsCheckInButtonVisible(appointments.some((item) => item.checkInAllowed) && !isIntakeWarningVisible);
+  }, [appointments, isIntakeWarningVisible]);
 
   return (
     <PatientListStyled>

@@ -673,6 +673,7 @@ export enum Translation {
   PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_TITLE = 'page.patient.check.in.alert.verification.title',
   PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_DESCRIPTION = 'page.patient.check.in.alert.verification.description',
   PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY = 'page.patient.check.in.alert.verification.action.verify',
+  PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_REFRESH = 'page.patient.check.in.alert.verification.action.refresh',
   PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS = 'page.patient.check.in.verify.modal.years',
   PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE = 'page.patient.check.in.alert.intake.title',
   PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION = 'page.patient.check.in.alert.intake.description',

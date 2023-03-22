@@ -47,7 +47,9 @@ const PatientProfile = () => {
       return '';
     }
 
-    if (patientProfile.isIntakeComplete) {
+    const isDateValid = !Number.isNaN(Date.parse(date));
+
+    if (patientProfile.isIntakeComplete && isDateValid) {
       const dateOfBirth = convertTZ(date, UTC_TIMEZONE) as Date;
       const patientAge = new Date().getFullYear() - dateOfBirth.getFullYear();
 
@@ -73,7 +75,7 @@ const PatientProfile = () => {
     >
       <Box py={paddings.topBottom16} borderBottom={`${borders.solid1px} ${theme.palette.grey[100]}!important`}>
         <Grid container alignItems="center">
-          <Grid item xs={12} style={{ cursor: 'pointer' }}>
+          <Grid item xs={12}>
             <Grid container alignItems="center" flexWrap="nowrap">
               <Grid item>
                 <Avatar
@@ -142,7 +144,7 @@ const PatientProfile = () => {
                             }}
                           />
                         }
-                        disabled={!isUiidExists}
+                        disabled={!isUiidExists || !patientProfile.isIntakeComplete}
                         onClick={onButtonClick(isUiidExists)}
                         data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_DOCTOR_INFO}
                       >
