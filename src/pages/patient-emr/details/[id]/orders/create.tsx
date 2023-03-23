@@ -22,7 +22,6 @@ const CreateOrderPage = () => {
   }, [currentPatientId]);
 
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
 
   return (
     <Stack gap={margins.all16}>
@@ -37,7 +36,7 @@ const CreateOrderPage = () => {
               path: `/patient-emr/list`
             },
             {
-              name: `${patientFullName}`,
+              name: patientProfile?.fullName,
               path: `/patient-emr/details/${currentPatientId}/orders`
             },
             {

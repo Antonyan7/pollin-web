@@ -8,6 +8,7 @@ import { dispatch } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector, patientsSlice } from 'redux/slices/patients';
 
 import ContactList from '@ui-component/common/ContactList';
+import { isDashValue } from '@utils/stringUtils';
 
 const PatientHighlightsView = () => {
   const theme = useTheme();
@@ -63,7 +64,9 @@ const PatientHighlightsView = () => {
       <Grid item xs={12}>
         <ContactList
           avatar={patientProfile?.avatar?.imageURL}
-          name={patientProfile?.title}
+          name={`${patientProfile?.fullName} ${
+            isDashValue(patientProfile?.pronoun as string) ? '' : ` (${patientProfile?.pronoun})`
+          } - ${patientProfile?.identifier ?? ''}`}
           date={patientProfile?.subTitle}
           setOpen={setOpen}
           open={open}

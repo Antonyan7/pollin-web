@@ -5,7 +5,6 @@ import { Box, IconButton, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import getPatientName from 'helpers/getPatientName';
 import { useRouter } from 'next/router';
 import { format } from 'util';
 
@@ -13,9 +12,11 @@ const MedicalBackgroundHeader = () => {
   const [t] = useTranslation();
   const router = useRouter();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const patientFullName = getPatientName(patientProfile?.title as string);
 
-  const medicalBackgroundBackToPageLabel = format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientFullName);
+  const medicalBackgroundBackToPageLabel = format(
+    t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT),
+    patientProfile?.fullName
+  );
 
   const handleBackToProfilePage = () => router.push(`/patient-emr/details/${router.query.id}/profile`);
 

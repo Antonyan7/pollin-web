@@ -35,7 +35,7 @@ const Body = () => {
       <Grid container spacing={1} direction="row">
         <Grid item xs={4}>
           <Avatar
-            alt={patientProfile?.title}
+            alt={patientProfile?.fullName}
             src={imgSrc}
             onClick={() =>
               dispatch(
@@ -43,7 +43,7 @@ const Body = () => {
                   name: ModalName.ImageModal,
                   props: {
                     imgSrc,
-                    alt: patientProfile?.title
+                    alt: patientProfile?.fullName
                   }
                 })
               )
@@ -63,7 +63,7 @@ const Body = () => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              {patientProfile?.title}
+              {patientProfile?.fullName} {patientProfile?.pronoun} - {patientProfile?.identifier}
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h5" fontWeight={500}>

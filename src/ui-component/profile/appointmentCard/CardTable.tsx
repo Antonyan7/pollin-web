@@ -1,4 +1,6 @@
+import React, { useMemo } from 'react';
 import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
+import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
   IconButton,
   Stack,
@@ -10,15 +12,12 @@ import {
   Typography,
   useTheme
 } from '@mui/material';
-import React, { useMemo } from 'react';
-
-import { AppointmentType } from 'types/patientProfile';
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { ModalName } from 'types/modals';
-import { bookingMiddleware } from '@redux/slices/booking';
 import { dispatch } from '@redux/hooks';
-import { timeAdjuster } from 'helpers/timeAdjuster';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
+import { timeAdjuster } from 'helpers/timeAdjuster';
+import { ModalName } from 'types/modals';
+import { AppointmentType } from 'types/patientProfile';
 
 const CardTable = ({
   appointmentsList,

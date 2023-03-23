@@ -7,24 +7,33 @@ import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { AlertStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import WarningAlert from '@assets/icons/AlertIcon/WarningAlert';
 
 import { Translation } from '../../constants/translations';
 
-const PatientAlert = ({ verification }: { verification?: boolean }) => {
+const PatientAlert = ({ alert }: { alert: AlertStatus }) => {
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const theme = useTheme();
   const [t] = useTranslation();
-  const title = verification
-    ? t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_TITLE)
-    : t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE);
-  const description = verification
-    ? `${patientProfile?.title} ${t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_DESCRIPTION)}`
-    : t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION);
-  const button = verification
-    ? t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY)
-    : t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_REFRESH);
+  let title;
+  let description;
+  let buttonLabel;
+
+  if (alert === AlertStatus.Verification) {
+    title = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_TITLE);
+    description = `${patientProfile?.fullName} ${t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_DESCRIPTION)}`;
+    buttonLabel = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_VERIFY);
+  } else if (alert === AlertStatus.Intake) {
+    title = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE);
+    description = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION);
+    buttonLabel = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_VERIFICATION_ACTION_REFRESH);
+  } else if (alert === AlertStatus.PhotoMissing) {
+    title = t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_PENDING_PHOTO_TITLE);
+    description = `${patientProfile?.fullName} ${t(Translation.PAGE_PATIENT_CHECK_IN_ALERT_PENDING_PHOTO_DESCRIPTION)}`;
+    buttonLabel = '';
+  }
 
   const openVerifyModal = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.VerifyPatientPhotoModal, props: null }));
@@ -60,9 +69,11 @@ const PatientAlert = ({ verification }: { verification?: boolean }) => {
           </Grid>
         </Grid>
         <Grid item xs={3} justifyContent="flex-end" display="flex">
-          <Button onClick={verification ? openVerifyModal : refresh} color="warning">
-            <Typography fontWeight="bold">{button}</Typography>
-          </Button>
+          {alert !== AlertStatus.PhotoMissing ? (
+            <Button onClick={alert === AlertStatus.Verification ? openVerifyModal : refresh} color="warning">
+              <Typography fontWeight="bold">{buttonLabel}</Typography>
+            </Button>
+          ) : null}
         </Grid>
       </Grid>
     </Stack>

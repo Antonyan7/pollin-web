@@ -38,7 +38,7 @@ const TestResultDetailsPage = () => {
           basePath: '/',
           items: [
             { name: t(Translation.PAGE_PATIENT_LIST_TITLE_EMR), path: '/patient-emr/list' },
-            { name: patientProfile?.title, path: `/patient-emr/details/${currentPatientId}/orders/results` },
+            { name: patientProfile?.fullName, path: `/patient-emr/details/${currentPatientId}/orders/results` },
             {
               name: t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_TITLE),
               path: `/patient-emr/details/${currentPatientId}/orders/results/${testResultId}`
@@ -49,7 +49,7 @@ const TestResultDetailsPage = () => {
       <Card sx={{ marginTop: margins.top20 }}>
         <CardHeader
           title={
-            patientProfile?.title && (
+            patientProfile?.fullName && (
               <Stack direction="row" alignItems="center">
                 <IconButton
                   color="primary"
@@ -58,7 +58,7 @@ const TestResultDetailsPage = () => {
                   <ArrowBackIos fontSize="small" />
                 </IconButton>
                 <Typography variant="h4" fontWeight={500}>
-                  {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.title}`)}
+                  {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.fullName}`)}
                 </Typography>
               </Stack>
             )

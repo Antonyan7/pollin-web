@@ -156,10 +156,17 @@ export enum ProfilePhotoStatus {
   Missing = 'Missing'
 }
 
+export enum AlertStatus {
+  Intake = 'Intake',
+  Verification = 'Verification',
+  PhotoMissing = 'PhotoMissing'
+}
+
 export interface PatientProfile {
   subTitle: string;
   isIntakeComplete: boolean;
-  title: string;
+  fullName: string;
+  pronoun: string;
   cycleStatus: string | boolean;
   id: string;
   avatar?: {

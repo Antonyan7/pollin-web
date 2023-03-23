@@ -28,3 +28,5 @@ export const toQueryString = (queryParams?: Record<string, string | string[] | u
     }, [])
     .join('&')}`;
 };
+
+export const isDashValue = (value: string) => value === '-';

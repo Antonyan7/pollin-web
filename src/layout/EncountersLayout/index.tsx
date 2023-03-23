@@ -5,7 +5,6 @@ import { Main } from '@components/common/AppointmentsContent';
 import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
 import { Translation } from 'constants/translations';
-import getPatientName from 'helpers/getPatientName';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -23,18 +22,16 @@ const EncountersLayout = ({ children }: PropsWithChildren) => {
     }
   }, [currentPatientId, router.query.id]);
 
-  const patientFullName = getPatientName(patientProfile?.title as string);
-
   return (
     <>
       <MainBreadcrumb
-        currentPage={patientFullName}
+        currentPage={patientProfile?.fullName as string}
         navigation={{
           basePath: '/',
           items: [
             { name: t(Translation.PAGE_PATIENT_LIST_TITLE), path: '/patient-emr/list' },
             {
-              name: patientFullName,
+              name: patientProfile?.fullName,
               path: `/patient-emr/details/${currentPatientId}`
             },
             {

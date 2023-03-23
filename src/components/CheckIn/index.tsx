@@ -11,7 +11,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { ProfilePhotoStatus } from 'types/reduxTypes/patient-emrStateTypes';
+import { AlertStatus, ProfilePhotoStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import { margins } from '../../themes/themeConstants';
 
@@ -30,6 +30,10 @@ const CheckIn = () => {
   const [t] = useTranslation();
   const isIntakeWarningVisible = useMemo(
     () => isTableVisible && patientProfile && !patientProfile?.isIntakeComplete,
+    [isTableVisible, patientProfile]
+  );
+  const isPhotoMissingWarningVisible = useMemo(
+    () => isTableVisible && patientProfile && patientProfile?.avatar?.status === ProfilePhotoStatus.Missing,
     [isTableVisible, patientProfile]
   );
   const isVerificationWarningVisible = useMemo(
@@ -125,8 +129,9 @@ const CheckIn = () => {
               </Grid>
             </Grid>
             <Grid xs={12} sx={{ mt: margins.top24 }}>
-              {isIntakeWarningVisible ? <PatientAlertView /> : null}
-              {isVerificationWarningVisible ? <PatientAlertView verification /> : null}
+              {isIntakeWarningVisible ? <PatientAlertView alert={AlertStatus.Intake} /> : null}
+              {isVerificationWarningVisible ? <PatientAlertView alert={AlertStatus.Verification} /> : null}
+              {isPhotoMissingWarningVisible ? <PatientAlertView alert={AlertStatus.PhotoMissing} /> : null}
             </Grid>
 
             {isTableVisible ? (

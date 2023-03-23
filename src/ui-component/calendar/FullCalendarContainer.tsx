@@ -14,8 +14,8 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
-import { useCalendarDefaultConfig } from './hooks/useCalendarDefaultConfig';
 import { viewsMiddleware } from '@redux/slices/views';
+import { useCalendarDefaultConfig } from './hooks/useCalendarDefaultConfig';
 
 interface FullCalendarContainerProps {
   slots: ICalendarSlot[];
@@ -35,6 +35,7 @@ const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({
   const onRangeSelect = useCallback(
     (arg: DateSelectArg) => {
       const isRangeStartEarlierThanToday = new Date(arg.start).getTime() < new Date().setHours(0, 0, 0, 0);
+
       if (isRangeStartEarlierThanToday) {
         return;
       }

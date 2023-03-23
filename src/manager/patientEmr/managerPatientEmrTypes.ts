@@ -104,7 +104,8 @@ export interface IEncounterDetailsProps {
 }
 
 export interface IPatientProfileResponse {
-  title: string;
+  fullName: string;
+  pronoun: string;
   isIntakeComplete: boolean;
   avatar?: {
     imageURL: string;

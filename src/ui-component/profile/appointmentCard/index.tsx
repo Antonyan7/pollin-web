@@ -1,24 +1,24 @@
-import { Button, CardActions, Grid, IconButton, Typography } from '@mui/material';
-import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import React, { useCallback, useEffect } from 'react';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector, patientsSlice } from '@redux/slices/patients';
-
+import { useTranslation } from 'react-i18next';
+import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
 import AddIcon from '@mui/icons-material/Add';
-import { AppointmentType } from 'types/patientProfile';
-import CardTable from '@ui-component/profile/appointmentCard/CardTable';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
-import { ModalName } from 'types/modals';
-import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
-import { SortOrder } from 'types/patient';
-import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import { Button, CardActions, Grid, IconButton, Typography } from '@mui/material';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector, patientsSlice } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { paddings } from 'themes/themeConstants';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
-import { useTranslation } from 'react-i18next';
+import { PatientProfilePageName } from 'context/types/PatientProfileNavigatorContextTypes';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
+import { SortOrder } from 'types/patient';
+import { AppointmentType } from 'types/patientProfile';
+
+import SubCardStyled from '@ui-component/cards/SubCardStyled';
+import CardTable from '@ui-component/profile/appointmentCard/CardTable';
 
 interface AppointmentsCardProps {
   appointmentType: AppointmentType;
@@ -78,7 +78,7 @@ const AppointmentsCard = ({
         props: {
           patient: {
             id: patientProfile?.id,
-            name: patientProfile?.title
+            name: patientProfile?.fullName
           },
           source: AddAppointmentSources.Profile
         }

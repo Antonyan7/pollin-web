@@ -6,7 +6,6 @@ import { Box } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import getPatientName from 'helpers/getPatientName';
 import { useRouter } from 'next/router';
 
 const MedicalBackground = () => {
@@ -14,7 +13,6 @@ const MedicalBackground = () => {
   const router = useRouter();
   const currentPatientId = router.query.id;
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const patientFullName = getPatientName(patientProfile?.title as string);
 
   useEffect(() => {
     if (typeof currentPatientId === 'string') {
@@ -34,7 +32,7 @@ const MedicalBackground = () => {
               path: '/patient-emr/list'
             },
             {
-              name: patientFullName,
+              name: patientProfile?.fullName,
               path: `/patient-emr/details/${currentPatientId}/profile`
             },
             {

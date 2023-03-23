@@ -15,6 +15,7 @@ import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
 import CircularLoading from '@ui-component/circular-loading';
 import { convertTZ } from '@utils/dateUtils';
+import { isDashValue } from '@utils/stringUtils';
 
 import { Translation } from '../../constants/translations';
 import { UTC_TIMEZONE } from '../../helpers/constants';
@@ -81,7 +82,7 @@ const PatientProfile = () => {
             <Grid container alignItems="center" flexWrap="nowrap">
               <Grid item>
                 <Avatar
-                  alt={patientProfile.title}
+                  alt={patientProfile.fullName}
                   src={patientProfile?.avatar?.imageURL}
                   sx={{ width: 60, height: 60, m: margins.all24 }}
                 />
@@ -90,7 +91,9 @@ const PatientProfile = () => {
                 <Grid container spacing={0}>
                   <Grid container item xs={10} direction="row" alignItems="center" columnGap={2}>
                     <Typography variant="h4" component="div">
-                      {patientProfile.title}
+                      {patientProfile?.fullName}
+                      {isDashValue(patientProfile?.pronoun as string) ? '' : ` (${patientProfile?.pronoun})`} -{' '}
+                      {patientProfile?.identifier}
                     </Typography>
                     <Button variant="outlined" disabled sx={{ borderRadius: '60px', height: 23 }}>
                       {/* TODO: remove hardcoded value change logic here after cyclestatus solution */}

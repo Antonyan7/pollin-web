@@ -1,17 +1,17 @@
-import { DialogContent, Grid } from '@mui/material';
-
-import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
-import AppointmentDescription from '../fields/AppointmentDescription';
-import DateAndStartTime from '../fields/DateAndStartTime';
-import DisabledPatientId from '@components/Modals/Booking/EditAppointmentsModal/fields/DisabledPatient';
-import { ModalName } from 'types/modals';
-import PatientId from '../fields/PatientId';
 import React from 'react';
-import Resource from '../fields/Resource';
-import ServiceType from '../fields/ServiceType';
-import { paddings } from 'themes/themeConstants';
+import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
+import DisabledPatientId from '@components/Modals/Booking/EditAppointmentsModal/fields/DisabledPatient';
+import { DialogContent, Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { viewsSelector } from '@redux/slices/views';
+import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
+
+import AppointmentDescription from '../fields/AppointmentDescription';
+import DateAndStartTime from '../fields/DateAndStartTime';
+import PatientId from '../fields/PatientId';
+import Resource from '../fields/Resource';
+import ServiceType from '../fields/ServiceType';
 
 const FormBody = () => {
   const modals = useAppSelector(viewsSelector.modals);

@@ -48,7 +48,7 @@ const OrderDetailsPage = () => {
               path: `/patient-emr/list`
             },
             {
-              name: `${patientProfile?.title}`,
+              name: `${patientProfile?.fullName}`,
               path: `/patient-emr/details/${currentPatientId}/orders`
             },
             {

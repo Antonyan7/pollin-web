@@ -13,7 +13,6 @@ const OrderHeader = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const patientFullName = (patientProfile?.title ?? '').split(' ').slice(0, 2).join(' ');
   const router = useRouter();
 
   const onBackClick = () => {
@@ -36,7 +35,7 @@ const OrderHeader = () => {
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">
-        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientFullName)}
+        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientProfile?.fullName)}
       </Typography>
     </Grid>
   );
