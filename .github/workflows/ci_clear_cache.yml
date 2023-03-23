@@ -10,6 +10,12 @@ jobs:
     timeout-minutes: 60
     runs-on: self-hosted-FE
     steps:
+      - name: setup-nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18.12.1
+          registry-url: https://npm.pkg.github.com/
+          scope: '@OWNER'
       - run: yarn cache clean
       - run: npm cache verify
       - run: cypress cache clear
