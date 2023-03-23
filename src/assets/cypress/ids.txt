@@ -126,6 +126,8 @@
   page.patient.encounters.search.input
   page.patient.encounters.filter
   page.patient.encounters.item
+  page.patient.list.search.input
+  page.patient.list.filter
   page.patient.edit.encounter.back.btn
   page.patient.edit.encounter.btn
   page.patient.create.encounter.back.btn
@@ -137,3 +139,5 @@
   page.patient.details.tab.patient.profile
   page.patient.details.tab.encounters
   page.patient.details.tab.orders.and.results
+  modal.scheduling.deletion.component 
+  navigation.tab.patient.list

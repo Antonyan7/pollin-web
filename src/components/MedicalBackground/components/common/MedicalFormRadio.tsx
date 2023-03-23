@@ -23,7 +23,7 @@ const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) =
   };
 
   return (
-    <ConsultationFormRadioGroup {...fieldProps} value={field.value} onChange={onRadioFieldChange} ref={field.ref}>
+    <ConsultationFormRadioGroup {...fieldProps} value={!!field.value} onChange={onRadioFieldChange} ref={field.ref}>
       <FormControlLabel
         value
         control={<Radio />}

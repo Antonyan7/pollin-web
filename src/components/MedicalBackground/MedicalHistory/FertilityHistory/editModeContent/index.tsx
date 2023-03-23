@@ -8,6 +8,7 @@ import MedicalComponentWithRadio from '@components/MedicalBackground/components/
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
 import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
+import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
 import mappingPattern from '@components/MedicalBackground/mapper/fertilityHistory';
 import { Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -48,11 +49,12 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
   const isFormChanged = Object.values(dirtyFields).length > 0;
   const onClose = useCloseMedicalBackgroundFormWithChangesModal(isFormChanged, handleClose);
+  const onSave = useSaveMedicalBackgroundDataWithToast(handleClose);
 
   const { handleSubmit } = methods;
 
   const handleSave = (data: IFertilityHistory) => {
-    dispatch(patientsMiddleware.updateFertilityHistory(id as string, data));
+    dispatch(patientsMiddleware.updateFertilityHistory(id as string, data, onSave));
   };
 
   return (

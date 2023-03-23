@@ -21,7 +21,7 @@ const EndTime = () => {
   return (
     <DatePickerField
       label={endTimeLabel}
-      data-cy={endDateCyId}
+      dataCy={endDateCyId}
       value={field.value}
       onChange={field.onChange}
       errorMessage={endDateTimeErrorMessage ?? ''}

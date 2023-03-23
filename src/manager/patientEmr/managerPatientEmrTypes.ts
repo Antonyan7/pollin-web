@@ -422,7 +422,7 @@ export interface MonthsConceivingFieldValues extends MedicalBackgroundFieldValue
 }
 
 export interface PreviousTreatmentFieldProps extends MedicalBackgroundFieldValues {
-  exists: boolean;
+  exist: boolean;
   treatments: { id?: string; type: string; cycles: string }[];
 }
 

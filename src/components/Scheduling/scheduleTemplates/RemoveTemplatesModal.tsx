@@ -49,6 +49,7 @@ const RemoveTemplatesModal = ({ handleOpenClose, open }: SimpleModalProps) => (
       onClose={handleOpenClose}
       aria-labelledby="simple-modal-title"
       aria-describedby="simple-modal-description"
+      data-cy={CypressIds.MODAL_SCHEDULING_DELETION_COMPONENT}
     >
       <Body handleOpenClose={handleOpenClose} />
     </Modal>

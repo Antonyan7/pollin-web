@@ -129,6 +129,8 @@ export enum CypressIds {
   PAGE_PATIENT_ENCOUNTERS_SEARCH_INPUT = 'page.patient.encounters.search.input',
   PAGE_PATIENT_ENCOUNTERS_FILTER = 'page.patient.encounters.filter',
   PAGE_PATIENT_ENCOUNTERS_ITEM = 'page.patient.encounters.item',
+  PAGE_PATIENT_LIST_SEARCH_INPUT = 'page.patient.list.search.input',
+  PAGE_PATIENT_LIST_FILTER = 'page.patient.list.filter',
   PAGE_PATIENT_EDIT_ENCOUNTER_BACK_BTN = 'page.patient.edit.encounter.back.btn',
   PAGE_PATIENT_EDIT_ENCOUNTER_BTN = 'page.patient.edit.encounter.btn',
   PAGE_PATIENT_CREATE_ENCOUNTER_BACK_BTN = 'page.patient.create.encounter.back.btn',
@@ -139,7 +141,9 @@ export enum CypressIds {
   PAGE_PATIENT_DETAILS_PROFILE_DOCTOR_INFO = 'page.patient.details.profile.doctor.info',
   PAGE_PATIENT_DETAILS_TAB_PATIENT_PROFILE = 'page.patient.details.tab.patient.profile',
   PAGE_PATIENT_DETAILS_TAB_ENCOUNTERS = 'page.patient.details.tab.encounters',
-  PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS = 'page.patient.details.tab.orders.and.results'
+  PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS = 'page.patient.details.tab.orders.and.results',
+  MODAL_SCHEDULING_DELETION_COMPONENT = 'modal.scheduling.deletion.component',
+  NAVIGATION_TAB_PATIENT_LIST = 'navigation.tab.patient.list'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

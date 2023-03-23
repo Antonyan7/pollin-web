@@ -27,7 +27,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
 }) => {
   const parentFieldName = `${fieldName}.${itemsFieldName}`;
   const { control } = useFormContext();
-  const { fields, remove, append } = useFieldArray({
+  const { fields, remove, append, update } = useFieldArray({
     control,
     name: parentFieldName
   });
@@ -63,7 +63,13 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   }, [isExists, areThereAnyFields]);
 
   const handleRemove = (index: number) => {
-    remove(index);
+    if (fields.length > 1) {
+      remove(index);
+    }
+
+    if (fields.length === 1) {
+      update(index, initialFields);
+    }
   };
 
   const shouldShowAddNewItemButton = isExists && addNewItemButtonLabel;

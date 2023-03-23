@@ -651,18 +651,26 @@ const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch)
   dispatch(setIsFertilityHistoryLoading(false));
 };
 
-const updateFertilityHistory = (patientId: string, data: IFertilityHistory) => async (dispatch: AppDispatch) => {
-  dispatch(setIsFertilityHistoryDataUpdating(true));
+const updateFertilityHistory =
+  (patientId: string, data: IFertilityHistory, onSave: (isSuccessfullySaved: boolean) => void) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setIsFertilityHistoryDataUpdating(true));
 
-  try {
-    await API.patients.updateFertilityHistory(patientId, data);
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-  }
+    try {
+      const response = await API.patients.updateFertilityHistory(patientId, data);
 
-  dispatch(setIsFertilityHistoryDataUpdating(false));
-};
+      if (response) {
+        dispatch(getFertilityHistory(patientId));
+        onSave(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+      onSave(false);
+    }
+
+    dispatch(setIsFertilityHistoryDataUpdating(false));
+  };
 
 const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(true));

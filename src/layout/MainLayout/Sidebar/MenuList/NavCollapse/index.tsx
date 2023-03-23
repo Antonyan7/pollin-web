@@ -62,9 +62,9 @@ const NavCollapse = ({ menu, level }: NavCollapseProps) => {
   const { pathname } = useRouter();
 
   useEffect(() => {
-    const childrens = menu.children ? menu.children : [];
+    const children = menu.children ? menu.children : [];
 
-    childrens.forEach((item: NavGroupProps['item']) => {
+    children.forEach((item: NavGroupProps['item']) => {
       if (pathname && pathname.includes('product-details')) {
         if (item.url && item.url.includes('product-details')) {
           setOpen(true);

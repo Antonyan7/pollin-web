@@ -12,6 +12,7 @@ export interface DatePickerFieldProps {
   value: string | Date | null;
   onChange: (value: React.SetStateAction<string | Date | null>) => void;
   errorMessage: string;
+  dataCy?: string;
 }
 
 export interface ApplyScheduleFormRowProps {

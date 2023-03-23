@@ -6,6 +6,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
 import { InputAdornment, OutlinedInput, styled, useTheme } from '@mui/material';
 import { Box, shouldForwardProp } from '@mui/system';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import debounce from 'lodash.debounce';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -89,6 +90,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
     <Box display="flex">
       <StyledOutlinedInput
         id="input-search-patients"
+        data-cy={CypressIds.PAGE_PATIENT_LIST_SEARCH_INPUT}
         placeholder={searchPlaceholder}
         onChange={onSearchChange}
         startAdornment={
@@ -123,6 +125,7 @@ const PatientFilters = ({ setSearchValue, setFiltersChange }: PatientFiltersProp
             fontWeight: 500
           }
         }}
+        dataCy={CypressIds.PAGE_PATIENT_LIST_FILTER}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
         isOptionEqualToValue={(option, value) => option.id === value.id}
         onChange={(_event, filters) => onFilterUpdate(filters as IPatientsFilterOption[])}

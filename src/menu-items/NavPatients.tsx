@@ -1,5 +1,6 @@
 import React from 'react';
 import { PeopleAltOutlined } from '@mui/icons-material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
@@ -17,6 +18,7 @@ interface PatientsProps {
     url: string;
     icon: OverrideIcon['overrideIcon'];
     breadcrumbs: boolean;
+    dataCy?: string;
   }[];
 }
 
@@ -30,6 +32,7 @@ const NavPatients: PatientsProps = {
       title: 'Patient List',
       type: 'item',
       url: '/patient-emr/list',
+      dataCy: CypressIds.NAVIGATION_TAB_PATIENT_LIST,
       icon: PeopleAltOutlined,
       breadcrumbs: false
     }

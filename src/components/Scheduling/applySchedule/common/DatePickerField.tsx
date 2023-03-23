@@ -50,6 +50,7 @@ const DatePickerField = ({ label, value, onChange, errorMessage, ...otherProps }
               }}
               error={!!errorMessage}
               helperText={errorMessage}
+              data-cy={otherProps?.dataCy}
             />
           )}
           onChange={(date: Date | null) => onDateUpdate(date)}

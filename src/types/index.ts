@@ -31,6 +31,7 @@ export interface NavItemType {
   caption?: React.ReactNode | string;
   breadcrumbs?: boolean;
   disabled?: boolean;
+  dataCy?: string;
   chip?: ChipProps;
 }
 export interface SnackbarStateProps {

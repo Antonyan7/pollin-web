@@ -678,7 +678,9 @@ export enum Translation {
   PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_TITLE = 'page.patient.check.in.alert.intake.title',
   PAGE_PATIENT_CHECK_IN_ACTIONS_CHECK_IN = 'page.patient.check.in.actions.check.in',
   PAGE_PATIENT_CHECK_IN_ALERT_INTAKE_DESCRIPTION = 'page.patient.check.in.alert.intake.description',
-  PAGE_PATIENT_CHECK_IN_PATIENT_PROFILE_DOB_PREFIX = 'page.patient.check.in.patient.profile.dob.prefix'
+  PAGE_PATIENT_CHECK_IN_PATIENT_PROFILE_DOB_PREFIX = 'page.patient.check.in.patient.profile.dob.prefix',
+  TOAST_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_MESSAGE = 'toast.patient.profile.medical.background.success.message',
+  TOAST_PATIENT_PROFILE_MEDICAL_BACKGROUND_FAIL_MESSAGE = 'toast.patient.profile.medical.background.fail.message'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

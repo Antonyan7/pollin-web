@@ -21,7 +21,7 @@ const StartTime = () => {
   return (
     <DatePickerField
       label={startTimeLabel}
-      data-cy={startDateCyId}
+      dataCy={startDateCyId}
       value={field.value}
       onChange={field.onChange}
       errorMessage={startDateTimeErrorMessage ?? ''}

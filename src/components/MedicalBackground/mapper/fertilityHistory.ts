@@ -55,8 +55,12 @@ const mappingPattern = {
       )
     ),
     customAccessor: (item: CustomAccessorItem) => {
-      const values = item.treatments.map((treatment) => `${treatment.type}; ${treatment.cycles}`);
-      const finalValues = [getLabelByBoolean(item.exists), ...values];
+      const values = item.treatments.map((treatment) => {
+        const separator = treatment.type ? ';' : '';
+
+        return `${treatment.type} ${separator} ${treatment.cycles}`;
+      });
+      const finalValues = [getLabelByBoolean(item.exist), ...values];
 
       return finalValues;
     },
@@ -79,29 +83,12 @@ const mappingPattern = {
             dropdownType: DropdownOptionType.FertilityTreatmentCycles,
             type: MedicalBackgroundItemType.Dropdown
           }
-        ],
-        [
-          {
-            fieldName: 'type',
-            label: t(
-              Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_TYPE
-            ),
-            type: MedicalBackgroundItemType.Input
-          },
-          {
-            fieldName: 'cycles',
-            label: t(
-              Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_CYCLES
-            ),
-            dropdownType: DropdownOptionType.FertilityTreatmentCycles,
-            type: MedicalBackgroundItemType.Dropdown
-          }
         ]
       ],
       tableTitle: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT
       ),
-      controlFieldName: 'exists',
+      controlFieldName: 'exist',
       itemsFieldName: 'treatments',
       addNewItemButtonLabel: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_ADD_BTN_LABEL
