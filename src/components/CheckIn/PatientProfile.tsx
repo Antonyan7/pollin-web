@@ -41,6 +41,8 @@ const PatientProfile = () => {
 
   const isUiidExists = patientHighlightHeader.doctor.uiid;
   const iconCommonColor = isUiidExists ? theme.palette.primary[800] : theme.palette.primary[200];
+  const doctorIconColor =
+    isUiidExists && patientProfile?.isIntakeComplete ? theme.palette.primary[800] : theme.palette.primary[200];
 
   const getDateOfBirth = (date: string) => {
     if (!patientProfile) {
@@ -140,7 +142,7 @@ const PatientProfile = () => {
                         startIcon={
                           <DoctorIcon
                             sx={{
-                              color: iconCommonColor
+                              color: doctorIconColor
                             }}
                           />
                         }
@@ -148,7 +150,7 @@ const PatientProfile = () => {
                         onClick={onButtonClick(isUiidExists)}
                         data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_DOCTOR_INFO}
                       >
-                        <Typography variant="body2" fontWeight="bold" color={iconCommonColor}>
+                        <Typography variant="body2" fontWeight="bold" color={doctorIconColor}>
                           {patientHighlightHeader.doctor.title}
                         </Typography>
                       </Button>
