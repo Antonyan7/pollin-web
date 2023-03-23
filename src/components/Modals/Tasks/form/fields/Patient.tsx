@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
-import SearchIcon from '@mui/icons-material/Search';
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -17,15 +16,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 const INITIAL_PAGE = 1;
 
-const PatientField = ({
-  searchIcon,
-  isPlaceholder,
-  label
-}: {
-  searchIcon?: boolean;
-  isPlaceholder?: boolean;
-  label?: string;
-}) => {
+const PatientField = ({ label }: { label?: string }) => {
   const [t] = useTranslation();
   const [openAutocompleteList, setOpenAutocompleteList] = useState(false);
   const patientIdFieldName = 'patient';
@@ -121,8 +112,7 @@ const PatientField = ({
         }}
         renderInputProps={{
           ...fieldProps,
-          ...(searchIcon ? { InputProps: { startAdornment: <SearchIcon /> } } : {}),
-          ...(isPlaceholder ? { placeholder: patientIdSelectLabel } : { label: patientIdSelectLabel }),
+          label: patientIdSelectLabel,
           name: patientIdFieldName,
           helperText: patientIdHelperText,
           error: patientIdErrorText

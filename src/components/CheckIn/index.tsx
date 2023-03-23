@@ -121,7 +121,7 @@ const CheckIn = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container justifyContent="center">
               <Grid item xs={6}>
-                <PatientField isPlaceholder searchIcon label={patientLabel} />
+                <PatientField label={patientLabel} />
               </Grid>
             </Grid>
             <Grid xs={12} sx={{ mt: margins.top24 }}>
