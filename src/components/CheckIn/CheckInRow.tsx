@@ -5,14 +5,14 @@ import { TableCell, TableRow, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { format } from 'date-fns';
-import { ICheckinAppointment } from 'types/reduxTypes/bookingStateTypes';
+import { ICheckInAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
 import { convertToLocale, convertTZ, getClinicTimezone } from '@utils/dateUtils';
 
-const CheckInRow = ({ row }: { row: ICheckinAppointment }) => {
+const CheckInRow = ({ row }: { row: ICheckInAppointment }) => {
   const theme = useTheme();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const { control, register, setValue } = useFormContext();

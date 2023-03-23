@@ -6,7 +6,7 @@ import { useAppSelector } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { tasksSelector } from '@redux/slices/tasks';
 import { IHeadCell } from 'types/patient';
-import { ICheckinAppointment } from 'types/reduxTypes/bookingStateTypes';
+import { ICheckInAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 import CheckInRow from './CheckInRow';
 import { headCellsData } from './HeadCellData';
@@ -29,7 +29,7 @@ const TableComponent = () => {
       </TableHead>
 
       <TableBody>
-        {!isTasksLoading ? appointments?.map((row: ICheckinAppointment) => <CheckInRow row={row} />) : null}
+        {!isTasksLoading ? appointments?.map((row: ICheckInAppointment) => <CheckInRow row={row} />) : null}
       </TableBody>
     </Table>
   );

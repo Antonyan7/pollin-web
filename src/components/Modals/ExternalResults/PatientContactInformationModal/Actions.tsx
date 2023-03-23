@@ -26,11 +26,11 @@ const Actions = ({ row, shouldOpenSpecimenCollection }: IPatientInfoProps) => {
 
   const redirectToTestResultsDetailsPage = () => {
     if (row.shouldBeRedirected) {
-      const currentPath = router.asPath;
       const testResultId = row.id;
-      const inputTestPageURL = `${currentPath}/input-results/${testResultId}`;
 
-      router.push(inputTestPageURL);
+      const externalResultsTestPagePath = `/clinic-test-results/external-results/input-results/${testResultId}`;
+
+      router.push(externalResultsTestPagePath);
     }
 
     dispatch(viewsMiddleware.closeModal(ModalName.PatientContactInformation));

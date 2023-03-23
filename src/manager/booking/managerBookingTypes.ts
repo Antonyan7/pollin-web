@@ -4,7 +4,7 @@ import {
   AppointmentStatus,
   IAppointment,
   ICancelStatusItem,
-  ICheckinAppointment,
+  ICheckInAppointment,
   IGroupedServiceProvider,
   IPatientInfo,
   IServiceProvider,
@@ -219,7 +219,7 @@ export interface IPatientRecentAppointment {
 }
 
 export interface IGetCheckInAppointmentResponse {
-  appointments: ICheckinAppointment[];
+  appointments: ICheckInAppointment[];
 }
 
 export interface IGetPatientRecentAppointments {

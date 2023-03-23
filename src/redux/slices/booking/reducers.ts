@@ -10,7 +10,7 @@ import {
   BookingProps,
   IAppointment,
   IAppointmentErrorState,
-  ICheckinAppointment,
+  ICheckInAppointment,
   IGroupedServiceProviders,
   IPatientList,
   IServiceProviders,
@@ -154,7 +154,7 @@ const reducers = createReducer({
   setIsCheckInAppointmentsLoading(state, action: IAction<boolean>) {
     state.isCheckInAppointmentsLoading = action.payload;
   },
-  setCheckInAppointments(state, action: IAction<ICheckinAppointment[]>) {
+  setCheckInAppointments(state, action: IAction<ICheckInAppointment[]>) {
     state.checkInAppointmentsList = action.payload;
   }
 });

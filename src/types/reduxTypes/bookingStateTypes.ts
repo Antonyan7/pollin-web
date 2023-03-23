@@ -60,7 +60,7 @@ export interface BookingProps {
   error: string | null;
   patientList: IPatientList;
   isCheckInAppointmentsLoading: boolean;
-  checkInAppointmentsList: ICheckinAppointment[];
+  checkInAppointmentsList: ICheckInAppointment[];
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
@@ -97,7 +97,7 @@ export enum CheckInStatuses {
   InProgress = 'InProgress'
 }
 
-export interface ICheckinAppointment {
+export interface ICheckInAppointment {
   id: string;
   type: string;
   status: CheckInStatuses;
