@@ -92,9 +92,9 @@ export interface IServiceProvider extends IUniqueItem {}
 export enum CheckInStatuses {
   Booked = 'Booked',
   Confirmed = 'Confirmed',
-  CheckedIn = 'Checked In',
-  NoShow = 'No Show',
-  InProgress = 'In Progress'
+  CheckedIn = 'CheckedIn',
+  NoShow = 'NoShow',
+  InProgress = 'InProgress'
 }
 
 export interface ICheckinAppointment {

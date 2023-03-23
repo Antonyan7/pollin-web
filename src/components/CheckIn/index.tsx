@@ -28,7 +28,10 @@ const CheckIn = () => {
   const [isCheckInButtonDisabled, setIsCheckInButtonDisabled] = useState(true);
   const [isCheckInButtonVisible, setIsCheckInButtonVisible] = useState(true);
   const [t] = useTranslation();
-  const isIntakeWarningVisible = useMemo(() => patientProfile && !patientProfile?.isIntakeComplete, [patientProfile]);
+  const isIntakeWarningVisible = useMemo(
+    () => isTableVisible && patientProfile && !patientProfile?.isIntakeComplete,
+    [isTableVisible, patientProfile]
+  );
   const isVerificationWarningVisible = useMemo(
     () => patientProfile?.avatar?.status === ProfilePhotoStatus.Pending,
     [patientProfile]
@@ -126,15 +129,17 @@ const CheckIn = () => {
               {isVerificationWarningVisible ? <PatientAlertView verification /> : null}
             </Grid>
 
-            <PatientProfile />
             {isTableVisible ? (
-              <AppointmentsTableField
-                isAppointmentsLoading={isAppointmentsLoading}
-                isCheckInButtonDisabled={isCheckInButtonDisabled}
-                isCheckInButtonVisible={isCheckInButtonVisible}
-                isCheckInLoading={isCheckInLoading}
-                isNoResultsFound={isNoResultsFound}
-              />
+              <>
+                <PatientProfile />
+                <AppointmentsTableField
+                  isAppointmentsLoading={isAppointmentsLoading}
+                  isCheckInButtonDisabled={isCheckInButtonDisabled}
+                  isCheckInButtonVisible={isCheckInButtonVisible}
+                  isCheckInLoading={isCheckInLoading}
+                  isNoResultsFound={isNoResultsFound}
+                />
+              </>
             ) : null}
           </form>
         </FormProvider>
