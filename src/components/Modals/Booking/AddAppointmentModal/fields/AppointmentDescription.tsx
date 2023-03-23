@@ -21,8 +21,8 @@ const AppointmentDescription = () => {
   return (
     <Grid item xs={12}>
       <TextField
-        data-cy={addDescriptionCyId}
         {...field}
+        data-cy={addDescriptionCyId}
         fullWidth
         id={descriptionFieldName}
         label={addDescriptionLabel}

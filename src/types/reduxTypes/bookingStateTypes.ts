@@ -48,6 +48,7 @@ export interface BookingProps {
   isGroupedServiceProvidersLoading: boolean;
   isSpecimenGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
+  isAppointmentEditLoading: boolean;
   isRefreshCheckInAppointments: boolean;
   currentServiceProviderId: string;
   isCheckInLoading: boolean;
@@ -64,7 +65,6 @@ export interface BookingProps {
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
   isAppointmentLoading: boolean;
-  isSaveButtonDisabled: boolean;
   appointmentStatus: AppointmentStatusState;
   createAppointmentError: IAppointmentErrorState;
   editAppointmentErrorState: IAppointmentErrorState;

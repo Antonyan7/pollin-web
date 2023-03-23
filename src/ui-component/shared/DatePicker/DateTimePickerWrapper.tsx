@@ -17,12 +17,14 @@ const DateTimePickerWrapper = ({
   value,
   onChange,
   label,
+  isLimitedByWorkingHours,
+  errorMessage,
+  isError,
   ...otherProps
 }: DateTimePickerWrapperProps) => {
   const theme = useTheme();
   const { MIN_SELECTABLE_DATE_TIME, MAX_SELECTABLE_DATE_TIME, futureDate180DaysLimit, fitSelectedTimeToConfig } =
     useClinicConfig();
-  const { isLimitedByWorkingHours } = otherProps;
 
   return (
     <MobileDateTimePicker
@@ -67,6 +69,8 @@ const DateTimePickerWrapper = ({
           }}
           fullWidth
           {...renderInputProps}
+          error={isError}
+          helperText={errorMessage ?? ''}
           data-cy={CypressIds.COMMON_DATE_TIME_PICKER}
         />
       )}

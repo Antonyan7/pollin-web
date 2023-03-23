@@ -6,9 +6,8 @@ import ConfirmAlertDeleteModal, { ConfirmAlertDeleteModalProps } from '@componen
 import AddAppointmentDuplicatePatientModal, {
   AddAppointmentDuplicatePatientModalProps
 } from '@components/Modals/Booking/AddAppointmentDuplicatePatientModal';
-import AddResourceAppointmentModal, {
-  AddResourceAppointmentModalProps
-} from '@components/Modals/Booking/AddResourceAppointmentModal';
+import AddAppointmentModal from '@components/Modals/Booking/AddAppointmentModal';
+import { AddAppointmentModalProps } from '@components/Modals/Booking/AddAppointmentModal/types';
 import CancelAppointmentModal from '@components/Modals/Booking/CancelAppointmentModal';
 import { CancelAppointmentModalProps } from '@components/Modals/Booking/CancelAppointmentModal/types';
 import DetailsAppointmentModal, {
@@ -54,7 +53,6 @@ import TaskStatusUpdateModal, {
 import ReassignTaskModal from '@components/Modals/TaskReassign';
 import CreateTaskModal from '@components/Modals/Tasks';
 import VerifyPatientPhotoModal from '@components/Modals/VerifyPatientPhotoModal';
-import AddPatientAppointmentsModal from '@components/Patients/PatientModals/AddPatientAppointment';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
 } from '@components/Patients/PatientModals/PatientLineItemsModal';
@@ -82,10 +80,9 @@ import { v4 } from 'uuid';
 const getDetailsAppointmentModal = (modal: IOpenedModal<DetailsAppointmentModalProps>) => (
   <DetailsAppointmentModal key={modal.name} {...modal.props} />
 );
-const getAddResourceAppointmentModal = (modal: IOpenedModal<AddResourceAppointmentModalProps>) => (
-  <AddResourceAppointmentModal key={modal.name} {...modal.props} />
+const getAddAppointmentModal = (modal: IOpenedModal<AddAppointmentModalProps>) => (
+  <AddAppointmentModal key={modal.name} {...modal.props} />
 );
-const getAddPatientAppointmentsModal = () => <AddPatientAppointmentsModal />;
 const getSelectMachineModal = (modal: IOpenedModal<SelectMachineModalProps>) => (
   <SelectMachineModal key={modal.name} {...modal.props} />
 );
@@ -223,10 +220,8 @@ export const ModalsController = () => {
           // appointments
           case ModalName.DetailsAppointmentModal:
             return getDetailsAppointmentModal(modal);
-          case ModalName.AddResourceAppointmentModal:
-            return getAddResourceAppointmentModal(modal);
-          case ModalName.AddPatientAppointmentsModal:
-            return getAddPatientAppointmentsModal();
+          case ModalName.AddAppointmentModal:
+            return getAddAppointmentModal(modal);
           case ModalName.SelectMachineModal:
             return getSelectMachineModal(modal);
           case ModalName.EditAppointmentModal:

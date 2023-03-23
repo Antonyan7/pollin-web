@@ -45,12 +45,10 @@ describe('edit template', () => {
     cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should('not.exist');
     cy.fixture('test-data').then((data) => {
       cy.get(`table > tbody > tr`).each((elem, index) => {
-
         if (elem.text().includes(data.templateName3)) {
           cy.wrap(elem).realClick();
           cy.wrap(elem).get(`[data-cy="${CypressIds.PAGE_SCHEDULING_TEMPLATES_EDIT_ICON}-${index}"]`).realClick();
         }
-
         cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should('not.exist');
 
         cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-2"]`).click();

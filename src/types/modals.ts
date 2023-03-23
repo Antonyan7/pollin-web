@@ -13,8 +13,7 @@ export interface DialogTitleProps {
 
 export enum ModalName {
   NONE = '',
-  AddPatientAppointmentsModal = 'AddPatientAppointmentsModal',
-  AddResourceAppointmentModal = 'AddResourceAppointmentModal',
+  AddAppointmentModal = 'AddAppointmentModal',
   EditAppointmentModal = 'EditAppointmentModal',
   CancelAppointmentModal = 'CancelAppointmentModal',
   DetailsAppointmentModal = 'DetailsAppointmentModal',

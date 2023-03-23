@@ -1,46 +1,47 @@
-import React, { useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import React, { useMemo } from 'react';
+import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ICreateAppointmentBody } from '@axios/booking/managerBookingTypes';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { createOptionsGroup } from 'helpers/berryFunctions';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { useAppSelector } from 'redux/hooks';
+import { bookingSelector } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-const AppointmentType = () => {
+const ServiceType = () => {
   const { control } = useFormContext<ICreateAppointmentBody>();
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
+  const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
   const [t] = useTranslation();
   const serviceTypeIdFieldName = 'serviceTypeId';
-  const resourceIdFieldName = 'providerId';
-  const serviceTypeSelectLabel = t(Translation.MODAL_PATIENT_APPOINTMENTS_SELECT_SERVICE_TYPE);
+  const serviceTypeSelectLabel = t(Translation.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE);
+  const serviceTypeSelectCyId = CypressIds.MODAL_APPOINTMENTS_ADD_SELECT_SERVICE_TYPE;
   const { field, fieldState } = useController({
     name: serviceTypeIdFieldName,
     control
   });
-  const { field: resourceField } = useController({
-    name: resourceIdFieldName
-  });
-  const { onChange, onBlur, ...fieldProps } = field;
+  const providerId = useWatch({ name: 'providerId', control });
+  const { onChange, onBlur, ref, ...fieldProps } = field;
   const { error } = fieldState;
   const serviceTypeIdHelperText = error?.message;
   const serviceTypeErrorText = !!error?.message;
   const theme = useTheme();
-
-  useEffect(() => {
-    dispatch(bookingMiddleware.getServiceTypes({ resourceId: resourceField.value }));
-  }, [resourceField.value]);
+  const serviceTypeValue = useMemo(
+    () => serviceTypeOptions.find((option) => option.item.id === fieldProps.value) ?? null,
+    [fieldProps.value, serviceTypeOptions]
+  );
 
   return (
     <Grid item xs={12}>
       <BaseDropdownWithLoading
-        isLoading={false}
+        data-cy={serviceTypeSelectCyId}
+        isLoading={isServiceTypesLoading}
         ListboxProps={{
           style: {
             maxHeight: 260,
@@ -48,22 +49,22 @@ const AppointmentType = () => {
             border: `${borders.solid2px} ${theme.palette.primary.main}`
           }
         }}
-        disabled={!resourceField.value}
+        disabled={!providerId}
         id={serviceTypeIdFieldName}
-        onChange={(_, value) => {
-          if (value && typeof value === 'object' && 'item' in value) {
-            onChange(value.item.id);
-          }
-        }}
+        onChange={(_, value) => value && typeof value === 'object' && 'item' in value && onChange(value.item.id)}
         onBlur={onBlur}
         isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
         options={serviceTypeOptions}
+        ref={ref}
+        value={serviceTypeValue}
         groupBy={(option) => option.firstLetter}
         getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
         clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
         renderInputProps={{
           ...fieldProps,
+          ref,
           label: serviceTypeSelectLabel,
+          name: serviceTypeIdFieldName,
           helperText: serviceTypeIdHelperText,
           error: serviceTypeErrorText
         }}
@@ -72,4 +73,4 @@ const AppointmentType = () => {
   );
 };
 
-export default AppointmentType;
+export default ServiceType;

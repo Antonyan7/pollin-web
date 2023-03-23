@@ -1,12 +1,11 @@
 import { IEditAppointmentBody } from '@axios/booking/managerBookingTypes';
+import { IEditAppointmentForm } from '@components/Modals/Booking/EditAppointmentsModal/form/initialValues';
 
-import { IFormValues } from '../types';
-
-export const mergeAppointmentDetails = (values: IFormValues): IEditAppointmentBody => ({
+export const mergeAppointmentDetails = (values: IEditAppointmentForm): IEditAppointmentBody => ({
   appointment: {
-    date: values.appointment.date,
-    status: values.appointment.status,
-    description: values.appointment.description
+    date: values.date,
+    status: values.status,
+    description: values.description
   },
-  serviceTypeId: values?.serviceType?.id ?? ''
+  serviceTypeId: values.serviceTypeId
 });

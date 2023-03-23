@@ -30,7 +30,7 @@ export const isSpecimenGroupedServiceProvidersLoading = createSelector(
   (state) => state.isSpecimenGroupedServiceProvidersLoading
 );
 export const isAppointmentLoading = createSelector([selector], (state) => state.isAppointmentLoading);
-export const isSaveButtonDisabled = createSelector([selector], (state) => state.isSaveButtonDisabled);
+export const isAppointmentEditLoading = createSelector([selector], (state) => state.isAppointmentEditLoading);
 export const isServiceTypesLoading = createSelector([selector], (state) => state.isServiceTypesLoading);
 export const appointmentStatus = createSelector([selector], (state) => state.appointmentStatus);
 export const createAppointmentErrorState = createSelector([selector], (state) => state.createAppointmentError);
@@ -73,11 +73,11 @@ export default {
   isCheckInLoading,
   isCheckInSuccess,
   serviceTypes,
+  isAppointmentEditLoading,
   isRefreshCheckInAppointments,
   appointmentDetails,
   patientAlerts,
   isAppointmentLoading,
-  isSaveButtonDisabled,
   appointmentStatus,
   createAppointmentErrorState,
   cancelAppointmentErrorState,

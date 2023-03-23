@@ -10,6 +10,8 @@ export enum PollinDatePickerType {
 
 interface CustomTimePickerProps {
   isLimitedByWorkingHours?: boolean;
+  isError?: boolean;
+  errorMessage?: string;
 }
 
 export interface TimePickerWrapperProps

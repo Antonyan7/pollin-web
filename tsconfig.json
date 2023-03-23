@@ -34,9 +34,6 @@
       "@hooks/*": [
         "hooks/*"
       ],
-      "@types/*": [
-        "types/*"
-      ],
       "@utils/*": [
         "utils/*"
       ],

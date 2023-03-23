@@ -8,7 +8,10 @@ export const isValidDateString = (value: Date | string): boolean => {
   // eslint-disable-next-line no-useless-escape
   const regex = /^\d{4}\-(0[1-9]|1[012])\-(0[1-9]|[12][0-9]|3[01])$/;
 
-  if ((typeof value === 'string' && !!value.match(regex)) || !Number.isNaN(+value)) {
+  const isDateOnlyString = typeof value === 'string' && regex.test(value);
+  const isNotDateButIsNumericString = !isDate(value) && !Number.isNaN(+value);
+
+  if (isDateOnlyString || isNotDateButIsNumericString) {
     return false;
   }
 

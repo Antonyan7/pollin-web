@@ -1,28 +1,29 @@
+import { Box, Divider, Typography, styled, useTheme } from '@mui/material';
 import React, { useCallback, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
-import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
-import AppointmentsContent from '@components/common/AppointmentsContent';
-import { StyledButtonNew } from '@components/common/MaterialComponents';
+import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { dispatch, useAppSelector } from 'redux/hooks';
+
+import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Divider, styled, Typography, useTheme } from '@mui/material';
+import AppointmentsContent from '@components/common/AppointmentsContent';
+import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import { BoxProps } from '@mui/system';
 import { CypressIds } from 'constants/cypressIds';
+import { DateUtil } from '@utils/date/DateUtil';
+import { GroupedServiceProvidersOption } from '@axios/booking/managerBookingTypes';
+import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import { ModalName } from 'types/modals';
+import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
+import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
+import { StyledButtonNew } from '@components/common/MaterialComponents';
 import { Translation } from 'constants/translations';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
-import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
-
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
-import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import useOnCalendarEventClick from '@ui-component/calendar/hooks/useOnCalenderEventClick';
-import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
-import PollinDatePickerWithTodayButton from '@ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
-import { DateUtil } from '@utils/date/DateUtil';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+import { viewsMiddleware } from 'redux/slices/views';
 
 const DynamicCalendar = dynamic(() => import('ui-component/calendar'));
 
@@ -57,8 +58,16 @@ const Appointments = () => {
   const calendarDisabledStateTitle = t(Translation.PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED);
 
   const onOpenAppointmentsModalAdd = useCallback(() => {
-    dispatch(viewsMiddleware.openModal({ name: ModalName.AddResourceAppointmentModal, props: {} }));
-  }, []);
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.AddAppointmentModal,
+        props: {
+          providerId: serviceProviderId,
+          source: AddAppointmentSources.Booking
+        }
+      })
+    );
+  }, [serviceProviderId]);
 
   const onDateChange = useCallback((date?: Date | null) => {
     if (date) {

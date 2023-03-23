@@ -55,10 +55,9 @@ export interface ICheckInReqBody {
 }
 
 export interface ICreateAppointmentBody {
-  resourceId?: string;
+  providerId?: string;
   serviceTypeId: string;
   patientId: string;
-  providerId?: string;
   description?: string;
   date: Date | string | null;
 }

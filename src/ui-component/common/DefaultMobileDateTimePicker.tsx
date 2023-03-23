@@ -55,7 +55,7 @@ const DefaultMobileDateTimePicker = <TInputDate, TDate>({
 
   const formattedParams = {
     inputProps: {
-      value: formattedDate
+      value: initialValue ? formattedDate : null
     }
   };
 

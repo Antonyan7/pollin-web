@@ -34,7 +34,10 @@ describe('new template', () => {
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)).should('be.enabled').click();
 
       cy.url().should('include', '/scheduling/schedule-templates');
-      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should("contain",data.templateName1);
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should(
+        'contain',
+        data.templateName1
+      );
     });
   });
 
@@ -53,7 +56,10 @@ describe('new template', () => {
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)).should('be.enabled').click();
 
       cy.url().should('include', '/scheduling/schedule-templates');
-      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should("contain",data.templateName2);
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should(
+        'contain',
+        data.templateName2
+      );
     });
   });
 });

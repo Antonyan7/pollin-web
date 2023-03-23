@@ -14,8 +14,9 @@ import { SortOrder } from 'types/patient';
 import { AppointmentType } from 'types/patientProfile';
 
 import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
-import AppointmentsCard from '@ui-component/profile/AppointmentsCard';
 import LatestTestResults from '@ui-component/profile/LatestTestResult';
+
+import AppointmentsCard from './appointmentCard';
 
 const PatientProfile = () => {
   const router = useRouter();

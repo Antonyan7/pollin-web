@@ -12,8 +12,7 @@ import FormBody from './FormBody';
 import FormHeader from './FormHeader';
 
 const AddAppointmentsModalForm = () => {
-  const { handleSubmit } = useFormContext<ICreateAppointmentBody>();
-  const { control } = useFormContext<ICreateAppointmentBody>();
+  const { control, handleSubmit } = useFormContext<ICreateAppointmentBody>();
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
   const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
 
@@ -28,13 +27,12 @@ const AddAppointmentsModalForm = () => {
   }, [patientAlerts]);
 
   const patientId = useWatch({ name: 'patientId', control });
+  const providerId = useWatch({ name: 'providerId', control });
 
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddResourceAppointmentModal));
+    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
     dispatch(bookingMiddleware.getPatientAlerts(''));
   }, []);
-
-  const providerId = useAppSelector(bookingSelector.serviceProviderId);
 
   useEffect(() => {
     if (isDuplicatePatientName) {

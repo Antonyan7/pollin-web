@@ -31,10 +31,10 @@ export const getInitialState = (): BookingProps => ({
     totalItems: 0
   },
   serviceTypes: [],
+  isAppointmentEditLoading: false,
   appointmentDetails: null,
   patientAlerts: [],
   isAppointmentLoading: false,
-  isSaveButtonDisabled: true,
   appointmentStatus: {
     create: { fail: false, success: false },
     edit: { fail: false, success: false },

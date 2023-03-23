@@ -4,7 +4,6 @@ import { StyledButton } from '@components/common/MaterialComponents';
 import { DialogActions, DialogContent, Grid, Stack } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
@@ -12,7 +11,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 import BaseModal from '@ui-component/Modal/BaseModal';
-import { convertToLocale } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 export interface DetailsAppointmentModalProps {
   appointmentId: string;
@@ -70,10 +69,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE_START_TIME)}
-              body={
-                timeAdjuster(convertToLocale(details?.appointment.date as string) as string)
-                  ?.customizedFullDate as string
-              }
+              body={details?.appointment.date ? DateUtil.formatFullDate(details?.appointment.date) : ''}
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}

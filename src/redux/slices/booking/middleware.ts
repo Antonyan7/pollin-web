@@ -20,7 +20,6 @@ import {
 } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
-import { calculateTimeInUTC, convertToLocale, toLocalIsoString } from '@utils/dateUtils';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
 import slice from './slice';
@@ -36,7 +35,6 @@ const {
   setSpecimenGroupedServiceProviders,
   setError,
   setDate,
-  setCollectionCalendarDate,
   setBookingAppointments,
   setCurrentServiceProviderId,
   setCurrentSpecimenServiceProviderId,
@@ -45,6 +43,7 @@ const {
   setIsCheckInAppointmentsLoading,
   setCheckInAppointments,
   setPatientsList,
+  setIsAppointmentEditLoading,
   setPatientListLoading,
   setIsServiceTypesLoading,
   updatePatientsList,
@@ -55,7 +54,7 @@ const {
   setIsRefreshCheckInAppointments,
   setIsCheckInLoading,
   setIsCheckInSuccess,
-  setSaveButtonDisabled,
+  setCollectionCalendarDate,
   setAppointmentStatus,
   setCreateAppointmentErrorState,
   setEditAppointmentErrorState,
@@ -216,10 +215,6 @@ const updateCollectionCalendarDate = (value: Date) => (dispatch: AppDispatch) =>
   dispatch(setCollectionCalendarDate(value));
 };
 
-const setEditSaveButtonDisabled = (value: boolean) => (dispatch: AppDispatch) => {
-  dispatch(setSaveButtonDisabled(value));
-};
-
 const updateBookingResourceId = (value: string) => (dispatch: AppDispatch) => {
   dispatch(setCurrentServiceProviderId(value));
 };
@@ -286,6 +281,7 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
 };
 const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setServiceTypes([]));
     dispatch(setIsServiceTypesLoading(true));
 
     const response = await API.booking.getServiceTypes(params);
@@ -298,6 +294,10 @@ const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: Ap
   } finally {
     dispatch(setIsServiceTypesLoading(false));
   }
+};
+
+const clearServiceTypes = () => (dispatch: AppDispatch) => {
+  dispatch(setServiceTypes([]));
 };
 
 const getCheckInAppointments = (patientId: string) => async (dispatch: AppDispatch) => {
@@ -386,7 +386,6 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
     dispatch(setAppointmentLoading(true));
 
     appointmentValues.providerId = providerId;
-    appointmentValues.date = calculateTimeInUTC(toLocalIsoString(appointmentValues.date as Date));
     await API.booking.createAppointment(appointmentValues);
     dispatch(
       setAppointmentStatus({
@@ -442,13 +441,13 @@ const editAppointment =
     const { appointmentStatus } = store.getState().booking;
 
     try {
+      dispatch(setIsAppointmentEditLoading(true));
+
       const providerId = store.getState().booking.currentServiceProviderId;
       const calendarDate = store.getState().booking.date;
 
-      appointmentValues.appointment.date = calculateTimeInUTC(
-        convertToLocale(appointmentValues.appointment.date as string)
-      );
       await API.booking.editAppointment(appointmentId, appointmentValues);
+      dispatch(setIsAppointmentEditLoading(false));
       dispatch(
         setAppointmentStatus({
           ...appointmentStatus,
@@ -460,6 +459,7 @@ const editAppointment =
       );
       dispatch(getBookingAppointments(providerId, calendarDate));
     } catch (error) {
+      dispatch(setIsAppointmentEditLoading(false));
       Sentry.captureException(error);
       dispatch(setError(error as string));
 
@@ -594,15 +594,15 @@ export default {
   getNewPatients,
   refreshCheckInAppointments,
   getServiceTypes,
+  clearServiceTypes,
   createAppointment,
   getAppointmentDetails,
   checkInAppointment,
   editAppointment,
   clearAppointmentDetails,
   getPatientAlerts,
-  setEditSaveButtonDisabled,
-  getCheckInAppointments,
   resetAppointmentStatus,
+  getCheckInAppointments,
   clearCreateAppointmentErrorState,
   getSpecimenAppointmentsFilters,
   getSpecimenAppointments,

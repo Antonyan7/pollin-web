@@ -118,8 +118,8 @@ const reducers = createReducer({
   setIsRefreshCheckInAppointments(state, action: IAction<boolean>) {
     state.isRefreshCheckInAppointments = action.payload;
   },
-  setSaveButtonDisabled(state, action: IAction<boolean>) {
-    state.isSaveButtonDisabled = action.payload;
+  setIsAppointmentEditLoading(state, action: IAction<boolean>) {
+    state.isAppointmentEditLoading = action.payload;
   },
   setAppointmentStatus(state, action: IAction<AppointmentStatusState>) {
     state.appointmentStatus = action.payload;

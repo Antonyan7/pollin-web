@@ -5,24 +5,21 @@ import { DialogActions, Grid } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
-import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
+import { bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const FormActions = () => {
+const FormActions = ({ isSaveDisabled }: { isSaveDisabled: boolean }) => {
   const [t] = useTranslation();
   const details = useAppSelector(bookingSelector.appointmentDetails);
   const appointmentId = details?.appointment.id ?? '';
   const onCancelAppointmentClick = useCallback(() => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelAppointmentModal, props: { appointmentId } }));
-    dispatch(bookingMiddleware.clearAppointmentDetails());
   }, [appointmentId]);
-  const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentLoading);
-  const isSaveButtonDisabled = useAppSelector(bookingSelector.isSaveButtonDisabled);
-
+  const isConfirmationLoading = useAppSelector(bookingSelector.isAppointmentEditLoading);
   const cancelButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL);
   const saveButtonLabel = t(Translation.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE);
 
@@ -40,7 +37,7 @@ const FormActions = () => {
         <Grid item>
           <ButtonWithLoading
             data-cy={saveButtonLabelCyId}
-            disabled={isSaveButtonDisabled}
+            disabled={isSaveDisabled}
             isLoading={isConfirmationLoading}
             sx={{ width: '60px' }}
             type="submit"

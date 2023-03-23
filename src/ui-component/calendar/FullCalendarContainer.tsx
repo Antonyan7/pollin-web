@@ -1,16 +1,21 @@
 /* eslint-disable simple-import-sort/imports */
-import React from 'react';
+
+import { DateSelectArg, EventClickArg } from '@fullcalendar/common';
+import React, { useCallback } from 'react';
+import { dispatch, useAppSelector } from '@redux/hooks';
+
+import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
 import FullCalendar from '@fullcalendar/react';
+import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
+import { ModalName } from 'types/modals';
+import { bookingSelector } from '@redux/slices/booking';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import timelinePlugin from '@fullcalendar/timeline';
-import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
-
-import { EventClickArg } from '@fullcalendar/common';
-import useOnRangeSelect from './hooks/useOnRangeSelect';
 import { useCalendarDefaultConfig } from './hooks/useCalendarDefaultConfig';
+import { viewsMiddleware } from '@redux/slices/views';
 
 interface FullCalendarContainerProps {
   slots: ICalendarSlot[];
@@ -25,8 +30,28 @@ const FullCalendarContainer: React.FC<FullCalendarContainerProps> = ({
   calendarRef,
   onEventClick
 }) => {
-  const onRangeSelect = useOnRangeSelect();
   const calendarDefaultConfig = useCalendarDefaultConfig();
+  const serviceProviderId = useAppSelector(bookingSelector.serviceProviderId);
+  const onRangeSelect = useCallback(
+    (arg: DateSelectArg) => {
+      const isRangeStartEarlierThanToday = new Date(arg.start).getTime() < new Date().setHours(0, 0, 0, 0);
+      if (isRangeStartEarlierThanToday) {
+        return;
+      }
+
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.AddAppointmentModal,
+          props: {
+            start: arg.startStr,
+            source: AddAppointmentSources.Booking,
+            providerId: serviceProviderId
+          }
+        })
+      );
+    },
+    [serviceProviderId]
+  );
 
   return (
     <FullCalendar
