@@ -64,7 +64,7 @@ const AppointmentsTableField = ({
                 variant="contained"
                 type="submit"
               >
-                {t(Translation.COMMON_BUTTON_CONFIRM_LABEL)}
+                {t(Translation.PAGE_PATIENT_CHECK_IN_ACTIONS_CHECK_IN)}
               </ButtonWithLoading>
             ) : null}
           </Grid>
