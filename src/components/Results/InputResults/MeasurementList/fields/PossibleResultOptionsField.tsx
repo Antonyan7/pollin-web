@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldValues, useController, UseFormRegister } from 'react-hook-form';
+import { FieldValues, useController, useFormContext, UseFormRegister } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
@@ -21,13 +21,13 @@ const StyledKeyboardArrowDownIcon = styled(KeyboardArrowDownIcon)(({ theme }) =>
 
 const PossibleResultOptionsField = ({
   name,
-  control,
   resultOptions,
   showResultOptionsDropdown,
   register
 }: PossibleResultOptionsProps) => {
   const [t] = useTranslation();
   const testResultNameLabel = t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_RESULT);
+  const { control } = useFormContext();
   const { field } = useController({
     name,
     control

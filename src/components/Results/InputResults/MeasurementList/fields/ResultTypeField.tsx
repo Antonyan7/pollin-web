@@ -1,5 +1,5 @@
 import React from 'react';
-import { useController } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
@@ -14,9 +14,10 @@ const StyledKeyboardArrowDownIcon = styled(KeyboardArrowDownIcon)(({ theme }) =>
   fill: theme.palette.primary.main
 }));
 
-const ResultTypeField = ({ name, control }: IMeasurementListField) => {
+const ResultTypeField = ({ name }: IMeasurementListField) => {
   const [t] = useTranslation();
   const { type } = useTestResultsContext();
+  const { control } = useFormContext();
 
   const resultTypeOptions =
     type === InputResultTestType.InHouse ? Object.entries(FinalResultType) : Object.entries(UnitResultType);

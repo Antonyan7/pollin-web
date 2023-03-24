@@ -10,6 +10,7 @@ import { margins } from 'themes/themeConstants';
 import { FinalResultChipColor } from 'types/results';
 
 import Chip from '@ui-component/patient/Chip';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import ReportSection from './ReportSection';
 
@@ -143,8 +144,7 @@ const TestResultDetails: React.FC = () => {
               {item.result}
             </Grid>
             <Grid item xs={12} sm={3}>
-              {/* TODO: This is permanent solution it will be updated once we will have timezone functions updates */}
-              {item.dateReceived ? format(new Date(item.dateReceived), 'MMM dd, yyyy') : '-'}
+              {item.dateReceived ? DateUtil.formatDateOnly(item.dateReceived) : '-'}
             </Grid>
             <Grid item xs={12} sm={2}>
               {item.resultType}

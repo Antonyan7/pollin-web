@@ -1,4 +1,3 @@
-import { Control } from 'react-hook-form';
 import { ITestResultsItem } from '@axios/results/resultsManagerTypes';
 import { ITestResultAttachment, ITestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 
@@ -32,8 +31,6 @@ export interface IMeasurementsFieldValues {
   };
 }
 
-export interface IMeasurementsControl extends Control<IMeasurementsFieldValues> {}
-
 export interface IMeasurementListField {
   name:
     | `${string}`
@@ -42,7 +39,6 @@ export interface IMeasurementListField {
     | `${string}.${number}.result`
     | `${string}.${number}.dateReceived`
     | `${string}.${number}.resultType`;
-  control: IMeasurementsControl;
 }
 
 export interface ResultsSaveButtonProps {

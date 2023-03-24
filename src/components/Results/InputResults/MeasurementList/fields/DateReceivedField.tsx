@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
-import { useController } from 'react-hook-form';
+import React from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import EventIcon from '@mui/icons-material/Event';
-import { Stack, TextField, TextFieldProps } from '@mui/material';
-import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Translation } from 'constants/translations';
 
-import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
-import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
+import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 
+import { PollinDatePickerType } from '../../../../../types/datePicker';
 import { IMeasurementListField } from '../../types';
 
-const DateReceivedField = ({ name, control }: IMeasurementListField) => {
+const DateReceivedField = ({ name }: IMeasurementListField) => {
+  const { control } = useFormContext();
+
   const { field } = useController({
     name,
     control
   });
 
   const [t] = useTranslation();
-  const { futureDate180DaysLimit } = useClinicConfig();
-  const [isDatePickerFocused, setIsDatePickerFocused] = useState(false);
-  const [openDatePicker, setOpenDatePicker] = useState(false);
-  const { value, ...otherFieldProps } = field;
+  const { value } = field;
 
   const onDateChange = (date: Date | null) => {
     if (date) {
@@ -30,52 +25,16 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
     }
   };
 
-  const onDatePickerClose = () => {
-    setOpenDatePicker(false);
-    setIsDatePickerFocused(false);
-  };
-
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Stack spacing={3}>
-        <DesktopDatePicker
-          disableMaskedInput
-          maxDate={futureDate180DaysLimit} // Don't allow to select days for future more than 180 days
-          open={openDatePicker}
-          onClose={onDatePickerClose}
-          label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED)}
-          inputFormat="MMM dd, yyyy"
-          value={value ?? null}
-          onChange={(date: Date | null) => onDateChange(date)}
-          components={{
-            OpenPickerIcon: CalendarIcon
-          }}
-          renderInput={(params: JSX.IntrinsicAttributes & TextFieldProps) => (
-            <TextField
-              disabled
-              sx={{ width: '320px', svg: { color: (theme) => theme.palette.primary.main } }}
-              {...params}
-              {...otherFieldProps}
-              onClick={() => {
-                setIsDatePickerFocused(true);
-                setOpenDatePicker(true);
-              }}
-              focused={isDatePickerFocused}
-              onKeyDown={(event) => {
-                event.preventDefault();
-              }}
-              InputProps={{
-                ...params.InputProps,
-                placeholder: 'mm:dd:yyyy',
-                endAdornment: <EventIcon />
-              }}
-              /* Mui TextField has two params with similar name inputProps & InputProps */
-              // eslint-disable-next-line react/jsx-no-duplicate-props
-            />
-          )}
-        />
-      </Stack>
-    </LocalizationProvider>
+    <PollinDatePicker
+      type={PollinDatePickerType.Date}
+      pickerConfigs={{
+        label: t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED),
+        onChange: onDateChange,
+        value,
+        disableMaskedInput: true
+      }}
+    />
   );
 };
 

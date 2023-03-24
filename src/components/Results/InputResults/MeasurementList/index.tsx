@@ -99,19 +99,15 @@ const MeasurementList: React.FC<MeasurementListProps> = ({ listItems, currentFor
                   <PossibleResultOptionsField
                     showResultOptionsDropdown={showResultOptionsDropdown}
                     name={`${currentFormFieldDataItems}.${fieldIndex}.result`}
-                    control={control}
                     resultOptions={listItems[fieldIndex].possibleResultOptions as IPossibleResultOptions[]}
                     register={register}
                   />
                 </StyledTableCell>
                 <StyledTableCell>
-                  <DateReceivedField
-                    name={`${currentFormFieldDataItems}.${fieldIndex}.dateReceived`}
-                    control={control}
-                  />
+                  <DateReceivedField name={`${currentFormFieldDataItems}.${fieldIndex}.dateReceived`} />
                 </StyledTableCell>
                 <StyledTableCell>
-                  <ResultTypeField name={`${currentFormFieldDataItems}.${fieldIndex}.resultType`} control={control} />
+                  <ResultTypeField name={`${currentFormFieldDataItems}.${fieldIndex}.resultType`} />
                 </StyledTableCell>
               </TableRow>
             );
