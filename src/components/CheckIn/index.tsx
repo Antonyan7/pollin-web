@@ -37,8 +37,8 @@ const CheckIn = () => {
     [isTableVisible, patientProfile]
   );
   const isVerificationWarningVisible = useMemo(
-    () => patientProfile?.avatar?.status === ProfilePhotoStatus.Pending,
-    [patientProfile]
+    () => isTableVisible && patientProfile?.avatar?.status === ProfilePhotoStatus.Pending,
+    [isTableVisible, patientProfile?.avatar?.status]
   );
   const isNoResultsFound = useMemo(
     () => !isAppointmentsLoading && !appointments.length,
@@ -58,13 +58,10 @@ const CheckIn = () => {
     const subscription = watch((value, { name }) => {
       const { patient, checkInAppointments } = value;
 
-      if (patient) {
+      if (patient && name === 'patient') {
         dispatch(patientsMiddleware.getPatientProfile(patient));
         dispatch(patientsMiddleware.getPatientHighlight(patient));
         dispatch(patientsMiddleware.setCurrentPatient(patient));
-      }
-
-      if (patient && name === 'patient') {
         dispatch(bookingMiddleware.getCheckInAppointments(patient));
         dispatch(patientsMiddleware.getPatientProfile(patient));
         setIsTableVisible(true);
