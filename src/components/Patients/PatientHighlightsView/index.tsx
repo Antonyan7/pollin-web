@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import API from '@axios/API';
-import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
+import patientEmrHelpers from '@axios/patientEmr/patientEmrHelpers';
 import { Collapse, Divider, Grid, Paper, Typography, TypographyProps, useTheme } from '@mui/material';
 import { viewsMiddleware } from '@redux/slices/views';
 import { dispatch } from 'redux/hooks';

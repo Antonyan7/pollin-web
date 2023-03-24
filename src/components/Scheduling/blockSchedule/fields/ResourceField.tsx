@@ -15,7 +15,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
 
-const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
+const ResourceField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   const { control } = useFormContext<IBlockScheduleForm>();
 
   const { field, fieldState } = useController<IBlockScheduleForm>({
@@ -98,4 +98,4 @@ const AutoCompleteTextField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
   );
 };
 
-export default AutoCompleteTextField;
+export default ResourceField;

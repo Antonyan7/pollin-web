@@ -16,7 +16,6 @@ import {
   Typography
 } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -24,6 +23,7 @@ import { margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import Chip from '@ui-component/patient/Chip';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const LatestTestResults = () => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
@@ -82,7 +82,7 @@ const LatestTestResults = () => {
                           {latestTestResult.title}
                         </Typography>
                       </TableCell>
-                      <TableCell>{timeAdjuster(new Date(latestTestResult.dateCollected)).customizedDate}</TableCell>
+                      <TableCell>{DateUtil.formatDateOnly(latestTestResult.dateCollected)}</TableCell>
                       <TableCell width={30}>
                         <Chip
                           sx={{

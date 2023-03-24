@@ -41,8 +41,13 @@ const ServiceTypesField: React.FC<{ index: number }> = ({ index }) => {
       options={serviceTypeOptions}
       groupBy={(option) => option.firstLetter}
       getOptionLabel={(option) => (typeof option === 'object' ? option.item.title : option)}
-      isOptionEqualToValue={(option, value) => option.item.title === value.item.title}
-      value={[...selectedTypeOptions]}
+      isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+      renderOption={(props, option) => (
+        <li {...props} key={option.item.id}>
+          {option.item.title}
+        </li>
+      )}
+      value={selectedTypeOptions}
       color="primary"
       onChange={(_, newValues) => {
         onChange(newValues.map((newValue) => (typeof newValue === 'object' ? newValue.item.id : newValue)));

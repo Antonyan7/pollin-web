@@ -5,7 +5,6 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import parse from 'html-react-parser';
 import { t } from 'i18next';
 import dynamic from 'next/dynamic';
@@ -18,8 +17,8 @@ import { IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
+import { DateUtil } from '@utils/date/DateUtil';
 
-import { encountersCustomizedDate } from '../helpers/encountersDate';
 import { getAddAddendumInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
@@ -63,12 +62,16 @@ const AddAddendum = () => {
   const encounterData = useAppSelector(patientsSelector.encounterDetails);
   const isCreateEncounterAddendumLoading = useAppSelector(patientsSelector.isCreateEncounterAddendumLoading);
   const [editorValue, setEditorValue] = useState<string>('');
-  const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
+  const encounterNoteEditedTime = DateUtil.formatDateOnly(new Date());
   const encounterId = router.query.encounterId as string;
   const isEncounterNoteUpdated =
     new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
-  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
-  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
+  const encounterNoteCreatedTime = encounterData?.createdOn
+    ? DateUtil.formatFullDate(encounterData?.createdOn)
+    : encounterData?.createdOn;
+  const encounterNoteUpdatedTime = encounterData?.updatedOn
+    ? DateUtil.formatFullDate(encounterData?.updatedOn)
+    : encounterData?.updatedOn;
 
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);

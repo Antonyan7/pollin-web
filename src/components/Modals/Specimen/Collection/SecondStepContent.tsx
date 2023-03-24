@@ -5,9 +5,9 @@ import { CircularProgress, Grid, MenuItem, Stack, Typography } from '@mui/materi
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import SpecimenDataItem from './SpecimenTestData/SpecimenDataItem';
 
@@ -28,10 +28,6 @@ const SecondStepContent = () => {
     reset();
   }, [reset]);
 
-  const { customizedDate: collectionCreatedOnDate, customizedTime } = timeAdjuster(
-    specimensForAppointment?.collectionDate as string
-  );
-  const collectionCreatedOnTime = customizedTime.replace(/PM|AM/, '[EST]');
   const collectedOnLabel = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECTED_ON_TITLE);
   const collectedOnTimeLabel = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECTED_ON_TIME_LABEL);
   const collectedOnDateLabel = t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECTED_ON_DATE_LABEL);
@@ -40,8 +36,22 @@ const SecondStepContent = () => {
     <Stack spacing={3}>
       <Typography variant="h4">{collectedOnLabel}:</Typography>
       <Stack spacing={1}>
-        <SpecimenDataItem label={collectedOnDateLabel} value={collectionCreatedOnDate} />
-        <SpecimenDataItem label={collectedOnTimeLabel} value={collectionCreatedOnTime} />
+        <SpecimenDataItem
+          label={collectedOnDateLabel}
+          value={
+            specimensForAppointment?.collectionDate
+              ? DateUtil.formatDateOnly(specimensForAppointment?.collectionDate)
+              : specimensForAppointment?.collectionDate
+          }
+        />
+        <SpecimenDataItem
+          label={collectedOnTimeLabel}
+          value={
+            specimensForAppointment?.collectionDate
+              ? DateUtil.formatTimeOnly(specimensForAppointment?.collectionDate)
+              : specimensForAppointment?.collectionDate
+          }
+        />
       </Stack>
       {fields.map((field, index) => (
         <Stack key={field.id} display="flex" spacing={3}>

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
 import { Grid, styled } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { toRoundupTime } from 'helpers/time';
 
+import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import DefaultMobileDateTimePicker from '@ui-component/common/DefaultMobileDateTimePicker';
 
 type DateAndStartTimeType = Date | null;
@@ -16,13 +16,14 @@ const DueDateField = ({ disabled }: { disabled?: boolean }) => {
   }));
   const fieldName = 'dueDate';
   const { control, register } = useFormContext();
+  const { fitSelectedTimeToConfig } = useClinicConfig();
   const [t] = useTranslation();
   const { field } = useController({
     name: fieldName,
     control
   });
   const { onChange, value, ...fieldProps } = field;
-  const initialValue: DateAndStartTimeType = toRoundupTime(value);
+  const initialValue: DateAndStartTimeType = value ? fitSelectedTimeToConfig(value) : value;
 
   return (
     <Grid item xs={12}>

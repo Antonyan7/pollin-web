@@ -9,8 +9,8 @@ export enum ApplyScheduleFields {
 
 export interface DatePickerFieldProps {
   label: string;
-  value: string | Date | null;
-  onChange: (value: React.SetStateAction<string | Date | null>) => void;
+  value: Date | null;
+  onChange: (value: React.SetStateAction<Date | null>) => void;
   errorMessage: string;
   dataCy?: string;
 }

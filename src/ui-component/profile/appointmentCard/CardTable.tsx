@@ -15,9 +15,10 @@ import {
 import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { ModalName } from 'types/modals';
 import { AppointmentType } from 'types/patientProfile';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 const CardTable = ({
   appointmentsList,
@@ -77,7 +78,7 @@ const CardTable = ({
                 </Typography>
               </TableCell>
               <TableCell width="35%" sx={{ verticalAlign: 'middle' }}>
-                <Typography variant="h5">{timeAdjuster(new Date(date)).customizedDate}</Typography>
+                <Typography variant="h5">{DateUtil.formatDateOnly(date)}</Typography>
                 <Typography fontWeight="400" variant="h6" color={theme.palette.grey[700]}>
                   {time}
                 </Typography>

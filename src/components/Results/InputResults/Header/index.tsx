@@ -4,11 +4,11 @@ import { Divider, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { margins, paddings } from 'themes/themeConstants';
 
 import CircularLoading from '@ui-component/circular-loading';
 import Chip from '@ui-component/patient/Chip';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { InputTestResultsHeaderProps } from '../types';
 
@@ -26,9 +26,6 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
   const [t] = useTranslation();
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
   const { testResultStatusLabel, testResultStatusColor } = useTestResultStatusData(currentFormFieldName);
-
-  const { customizedDate: formattedOrderedDate } = timeAdjuster(dates?.ordered ?? '');
-  const { customizedDate: formattedCollectedDate } = timeAdjuster(dates?.collected ?? '');
 
   return (
     <Grid container p={paddings.leftRight32} flexDirection="column">
@@ -70,11 +67,11 @@ const InputResultsHeader: React.FC<InputTestResultsHeaderProps> = ({
               rows={[
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_DATES_DATE_COLLECTED),
-                  value: formattedCollectedDate
+                  value: dates?.collected ? DateUtil.formatDateOnly(dates?.collected) : ''
                 },
                 {
                   label: t(Translation.PAGE_INPUT_RESULTS_TEST_DATES_DATE_ORDERED),
-                  value: formattedOrderedDate
+                  value: dates?.ordered ? DateUtil.formatDateOnly(dates?.ordered) : ''
                 }
               ]}
             />

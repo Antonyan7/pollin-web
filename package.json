@@ -23,7 +23,7 @@
     "view:cov": "open ./coverage/lcov-report/index.html",
     "cypress:report-html": "yarn run cypress:open && yarn run view:cov",
     "coverage": "nyc yarn run cypress:run",
-    "generate:translations": "npx ts-node ./scripts/generateTranslationKeysEnum.ts",
+    "generate:translations": "npx ts-node ./scripts/orderTranslationKeys.ts && npx ts-node ./scripts/generateTranslationKeysEnum.ts",
     "generate:cypress-ids": "npx ts-node ./scripts/generateCypressIdsEnum.ts",
     "compile": "tsc --declaration --declarationDir typeCheck && rm -rf typeCheck tsconfig.tsbuildinfo"
   },
@@ -61,7 +61,6 @@
     "csstype": "^3.1.1",
     "date-fns": "^2.29.3",
     "date-fns-tz": "^1.3.8",
-    "dayjs": "^1.11.7",
     "firebase": "^9.17.2",
     "framer-motion": "^7.10.3",
     "html-react-parser": "^3.0.11",

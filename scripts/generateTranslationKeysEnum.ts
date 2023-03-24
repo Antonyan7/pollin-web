@@ -4,8 +4,10 @@
 const shell = require('shelljs');
 const fs = require('fs');
 
-const translationsFile = fs.readFileSync('./src/assets/localization/en.json');
+const jsonPath = './src/assets/localization/en.json';
+const translationsFile = fs.readFileSync(jsonPath);
 const translations = JSON.parse(translationsFile);
+
 const translationsFilePath = 'src/constants/translations.ts';
 
 const toUpperCase = (line: string): string => line.toUpperCase().replace(/\./g, '_');

@@ -4,13 +4,12 @@ import { statuses } from '@components/CheckIn/checkInStatuses';
 import { TableCell, TableRow, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
-import { format } from 'date-fns';
 import { ICheckInAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
 import Chip from '@ui-component/patient/Chip';
-import { convertToLocale, convertTZ, getClinicTimezone } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const CheckInRow = ({ row }: { row: ICheckInAppointment }) => {
   const theme = useTheme();
@@ -22,16 +21,6 @@ const CheckInRow = ({ row }: { row: ICheckInAppointment }) => {
   });
   const { onBlur, ref, name } = register('checkInAppointments');
 
-  const formatDate = () => {
-    const date = new Date(convertToLocale(row.date));
-    const currentClinicDateTime = convertTZ(new Date(), getClinicTimezone()) as Date;
-
-    if (date.getDate() === currentClinicDateTime.getDate()) {
-      return `Today ${format(date, 'HH:mm')}`;
-    }
-
-    return format(date, 'MMM dd, yyyy HH:mm');
-  };
   const onCheckBoxClick = (value: boolean) => {
     if (value) {
       setValue('checkInAppointments', field.value.length ? [...field.value, row.id] : [row.id]);
@@ -61,7 +50,7 @@ const CheckInRow = ({ row }: { row: ICheckInAppointment }) => {
         ) : null}
       </TableCell>
       <TableCell>{row.type}</TableCell>
-      <TableCell align="left">{formatDate()} [EST]</TableCell>
+      <TableCell align="left">{DateUtil.formatFullDate(row.date)}</TableCell>
       <TableCell align="center">
         <Chip
           sx={{

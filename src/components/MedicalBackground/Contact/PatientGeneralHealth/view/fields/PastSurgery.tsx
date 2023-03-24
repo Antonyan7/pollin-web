@@ -11,9 +11,10 @@ import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { paddings } from 'themes/themeConstants';
 import { v4 } from 'uuid';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const [t] = useTranslation();
@@ -29,7 +30,7 @@ const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
             <MedicalFormTitleYes />
             <Grid item container direction="column">
               {fieldValue?.items.map((fieldItem) => {
-                const dateOfSurgery = timeAdjuster(fieldItem.dateOfSurgery).customizedDate;
+                const dateOfSurgery = DateUtil.formatDateOnly(fieldItem.dateOfSurgery);
 
                 return (
                   <Grid key={v4()} py={paddings.leftRight8}>{`${fieldItem.typeOfSurgery}; ${dateOfSurgery}`}</Grid>

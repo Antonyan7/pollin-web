@@ -69,7 +69,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_DATE_START_TIME)}
-              body={details?.appointment.date ? DateUtil.formatFullDate(details?.appointment.date) : ''}
+              body={details?.appointment.date ? DateUtil.formatFullDate(details?.appointment.date) : '-'}
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}

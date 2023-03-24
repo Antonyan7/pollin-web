@@ -1,15 +1,16 @@
 /* eslint-disable simple-import-sort/imports */
+
 import React, { useEffect, useMemo, useRef } from 'react';
-import FullCalendar from '@fullcalendar/react';
-import { IAppointment } from 'types/reduxTypes/bookingStateTypes';
+
 import { CypressIds } from 'constants/cypressIds';
 import { EventClickArg } from '@fullcalendar/common';
-import { CreateSlot } from './Slot';
-import { StyledDisabledLayer } from './StyledDisabledLayer';
+import FullCalendar from '@fullcalendar/react';
+import { IAppointment } from 'types/reduxTypes/bookingStateTypes';
 import FullCalendarContainer from './FullCalendarContainer';
 import FullCalendarWrapper from './FullCalendarWrapper';
 import { CalendarLoading } from './CalendarLoading';
-import { calculateSlotEndDate } from './util/calendarUtils';
+import { CreateSlot, calculateSlotEndDate } from './Slot';
+import { StyledDisabledLayer } from './StyledDisabledLayer';
 
 interface CalendarProps {
   calendarDate: Date;
@@ -34,7 +35,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate, onEventClick, disable
       appointments.list?.map((item: IAppointment) =>
         CreateSlot(
           item.type,
-          item.startTime,
+          new Date(item.startTime),
           calculateSlotEndDate(item.startTime, item.timeUnits),
           item.title,
           item.id,

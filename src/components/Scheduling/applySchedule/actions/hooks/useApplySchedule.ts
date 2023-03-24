@@ -8,45 +8,42 @@ import { Translation } from 'constants/translations';
 import { calculateWeekByNumber } from 'helpers/scheduling';
 import { IApplyScheduleData } from 'types/create-schedule';
 
-import { calculateTimeInUTC } from '@utils/dateUtils';
-
 import { ApplyScheduleFields } from '../../types';
 
 const useHandleApplySchedule = () => {
   const [t] = useTranslation();
 
   const { control } = useFormContext();
-  const [resource, scheduleTemplate, repeatWeeksCount, selectedWeekdaysToApply, startScheduleDate, endScheduleDate] =
-    useWatch({
-      name: [
-        ApplyScheduleFields.RESOURCE,
-        ApplyScheduleFields.SCHEDULE_TEMPLATE,
-        ApplyScheduleFields.WEEKS_REPEAT_COUNT,
-        ApplyScheduleFields.SELECTED_WEEKDAYS_TO_APPLY,
-        ApplyScheduleFields.START_SCHEDULE_DATE,
-        ApplyScheduleFields.END_SCHEDULE_DATE
-      ],
-      control
-    });
+  const [resourceId, scheduleTemplate, repeatWeeksCount, selectedWeekdaysToApply, startDate, endDate] = useWatch({
+    name: [
+      ApplyScheduleFields.RESOURCE,
+      ApplyScheduleFields.SCHEDULE_TEMPLATE,
+      ApplyScheduleFields.WEEKS_REPEAT_COUNT,
+      ApplyScheduleFields.SELECTED_WEEKDAYS_TO_APPLY,
+      ApplyScheduleFields.START_SCHEDULE_DATE,
+      ApplyScheduleFields.END_SCHEDULE_DATE
+    ],
+    control
+  });
 
   const isAllowedToApplySchedule =
-    resource !== '' &&
+    resourceId !== '' &&
     scheduleTemplate.id !== '' &&
     !!repeatWeeksCount &&
     selectedWeekdaysToApply.length > 0 &&
-    !!startScheduleDate &&
-    !!endScheduleDate;
+    !!startDate &&
+    !!endDate;
 
   const handleApplySchedule = () => {
     if (isAllowedToApplySchedule) {
       const applyScheduleTemplateData: IApplyScheduleData = {
-        resourceId: resource,
+        resourceId,
         templateId: scheduleTemplate.id,
-        // Convert to number repeatWeeksCount which comes from autocomplete as a string
+        // Convert to number repeatWeeksCount which comes from autocomplete as a date
         repeatWeeksCount: +repeatWeeksCount,
         applyDays: selectedWeekdaysToApply.map((item: number) => calculateWeekByNumber(item)),
-        startDate: calculateTimeInUTC(startScheduleDate),
-        endDate: calculateTimeInUTC(endScheduleDate)
+        startDate,
+        endDate
       };
 
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));

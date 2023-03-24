@@ -13,8 +13,6 @@ import BaseModal from '@ui-component/Modal/BaseModal';
 
 import EditAppointmentsModalForm from './form';
 
-// TODO Will be changed After backend ticket was done about iso formatting
-
 export interface EditAppointmentModalProps {
   appointmentId: string;
 }

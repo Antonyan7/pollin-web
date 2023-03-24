@@ -7,8 +7,7 @@ import parse from 'html-react-parser';
 import { SimpleEditorMode } from 'types/patient';
 
 import ParserTypographyWrapper from '@ui-component/common/Typography';
-
-import { encountersCustomizedDate } from '../helpers/encountersDate';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface EditAddendumHeaderProps {
   mode: SimpleEditorMode;
@@ -19,8 +18,12 @@ const EditAddendumHeader = ({ mode, encounterData }: EditAddendumHeaderProps) =>
   const [t] = useTranslation();
   const isEncounterNoteUpdated =
     new Date(encounterData?.createdOn as Date).getTime() !== new Date(encounterData?.updatedOn as Date).getTime();
-  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
-  const encounterNoteCreatedTime = encountersCustomizedDate(new Date(encounterData?.createdOn as Date));
+  const encounterNoteCreatedTime = encounterData?.createdOn
+    ? DateUtil.formatFullDate(encounterData?.createdOn)
+    : encounterData?.createdOn;
+  const encounterNoteUpdatedTime = encounterData?.updatedOn
+    ? DateUtil.formatFullDate(encounterData?.updatedOn)
+    : encounterData?.updatedOn;
 
   return mode === SimpleEditorMode.Edit_Addendum ? (
     <>

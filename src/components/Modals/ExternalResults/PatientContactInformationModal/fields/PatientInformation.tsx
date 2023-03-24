@@ -4,16 +4,17 @@ import { useSelector } from 'react-redux';
 import { Box, Grid, Typography } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { isValid } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 import { ContactInformationResultsPossibleResponses } from 'types/results';
-import { formatDate } from 'utils/dateUtils';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 const PatientInformation = () => {
   const patientContactInformation = useSelector(patientsSelector.patientContactInformation);
   const [t] = useTranslation();
 
-  const patientDateOfBirth = isValid(patientContactInformation.dateOfBirth)
-    ? formatDate(patientContactInformation.dateOfBirth, 'MMM dd, yyy')
+  const patientDateOfBirth = isValid(parseISO(patientContactInformation.dateOfBirth))
+    ? DateUtil.formatDateOnly(patientContactInformation.dateOfBirth)
     : patientContactInformation.dateOfBirth;
 
   return (

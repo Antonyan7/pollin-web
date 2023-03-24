@@ -8,7 +8,7 @@ import { DateTimePickerWrapperProps } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import { DatePickerActionBar } from '@ui-component/appointments/DatePickerActionBar';
-import { dateTimeDisplayFormat } from '@utils/date/DateUtil';
+import { DateAcceptableType, DateUtil } from '@utils/date/DateUtil';
 
 const dateTimeViewOptions: CalendarOrClockPickerView[] = ['day', 'hours', 'minutes'];
 
@@ -30,7 +30,7 @@ const DateTimePickerWrapper = ({
     <MobileDateTimePicker
       views={dateTimeViewOptions}
       value={value}
-      onChange={(date) => (isLimitedByWorkingHours ? onChange(fitSelectedTimeToConfig(date) as Date) : onChange(date))}
+      onChange={(date) => onChange(isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date) as Date) : date)}
       components={{ ActionBar: DatePickerActionBar }}
       ampm={false}
       label={label}
@@ -38,7 +38,6 @@ const DateTimePickerWrapper = ({
       minTime={MIN_SELECTABLE_DATE_TIME}
       maxTime={MAX_SELECTABLE_DATE_TIME}
       maxDate={futureDate180DaysLimit}
-      inputFormat={dateTimeDisplayFormat}
       DialogProps={{
         ...otherProps.DialogProps,
         sx: {
@@ -57,7 +56,7 @@ const DateTimePickerWrapper = ({
           }
         }
       }}
-      renderInput={(params: TextFieldProps) => (
+      renderInput={({ ...params }: TextFieldProps) => (
         <TextField
           {...params}
           sx={{
@@ -66,6 +65,12 @@ const DateTimePickerWrapper = ({
           InputProps={{
             ...params.InputProps,
             endAdornment: <EventIcon />
+          }}
+          // eslint-disable-next-line react/jsx-no-duplicate-props
+          inputProps={{
+            value: params.inputProps?.value
+              ? DateUtil.formatFullDate(params.inputProps?.value as DateAcceptableType)
+              : params.inputProps?.value
           }}
           fullWidth
           {...renderInputProps}

@@ -8,7 +8,7 @@ import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { ITestResultStatus, TestResultsDetails } from 'types/reduxTypes/resultsStateTypes';
 
-import { dateInputValue } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface IReportSectionProps {
   testResultsDetails: TestResultsDetails;
@@ -37,13 +37,13 @@ const ReportSection: React.FC<IReportSectionProps> = ({ testResultsDetails }) =>
   };
 
   const reportReviewText = testResultsDetails?.report?.reviewDate
-    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON)}: ${dateInputValue(
+    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_REVIEWED_ON)}: ${DateUtil.formatFullDate(
         testResultsDetails.report.reviewDate
       )}`
     : t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_REVIEWED);
 
   const reportReleaseText = testResultsDetails?.report?.releaseDate
-    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON)}: ${dateInputValue(
+    ? `${t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RELEASED_ON)}: ${DateUtil.formatFullDate(
         testResultsDetails.report.releaseDate
       )}`
     : t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_NOT_YET_RELEASED);

@@ -7,8 +7,7 @@ import parse from 'html-react-parser';
 import { margins } from 'themes/themeConstants';
 
 import ParserTypographyWrapper from '@ui-component/common/Typography';
-
-import { encountersCustomizedDate } from '../helpers/encountersDate';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface CurrentAddendumProps {
   currentAddendum: AddendumsProps | null;
@@ -34,9 +33,7 @@ const CurrentAddendum = ({ currentAddendum }: CurrentAddendumProps) => {
         </Grid>
         <Grid item container direction="column" mb={margins.bottom16}>
           <Typography variant="h4">{currentAddendum.author}</Typography>
-          <Typography variant="body1">
-            {`${isEditedTitle} ${encountersCustomizedDate(new Date(currentAddendum.date as Date))}`}
-          </Typography>
+          <Typography variant="body1">{`${isEditedTitle} ${DateUtil.formatFullDate(currentAddendum.date)}`}</Typography>
         </Grid>
       </Grid>
     )

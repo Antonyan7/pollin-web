@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { TextField, TextFieldProps as MuiTextFieldPropsType } from '@mui/material';
-import { useTheme } from '@mui/system';
-import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { MAX_SELECTABLE_DATE_TIME, MIN_SELECTABLE_DATE_TIME } from 'constants/time';
 import { Translation } from 'constants/translations';
 import { ITemplateGroup } from 'types/create-schedule';
+import { PollinDatePickerType } from 'types/datePicker';
 
-import { convertToLocale, toLocalIsoString } from '@utils/dateUtils';
+import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 
 interface ITimeFieldProps {
   index: number;
@@ -20,11 +16,9 @@ interface ITimeFieldProps {
 
 const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) => {
   const [t] = useTranslation();
-  const [openTimePicker, setOpenTimePicker] = useState<boolean>(false);
   const { control, clearErrors, setError, formState } = useFormContext<ITemplateGroup>();
   const { field } = useController({ name: `timePeriods.${index}.${fieldName}`, control });
   const { onChange, ...fieldProps } = field;
-  const theme = useTheme();
 
   const { errors } = formState;
 
@@ -41,8 +35,8 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
   const startTimeFieldValue = fieldName === 'startTime' ? field.value : watchedTimeFieldValue;
   const endTimeFieldValue = fieldName === 'endTime' ? field.value : watchedTimeFieldValue;
 
-  const getStartTimeValue = convertToLocale(startTimeFieldValue ?? '');
-  const getEndTimeValue = convertToLocale(endTimeFieldValue ?? '');
+  const getStartTimeValue = startTimeFieldValue ?? '';
+  const getEndTimeValue = endTimeFieldValue ?? '';
   const isStartTimeAfterEndTime = getStartTimeValue && getEndTimeValue && getStartTimeValue >= getEndTimeValue;
 
   useEffect(() => {
@@ -66,65 +60,32 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isStartTimeAfterEndTime, watchedTimeFieldValue]);
 
-  const onTimeFieldChange = (newTime: Date | null) => {
-    onChange(toLocalIsoString(newTime));
-  };
+  const initialValue = field.value ?? null;
 
-  const initialValue = convertToLocale(field.value ?? '');
+  const formattedParams = {
+    inputProps: {
+      'data-cy': dataCy
+    }
+  };
 
   return (
     <div className="schedule-inputs">
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <TimePicker
-          inputRef={field.ref}
-          open={openTimePicker}
-          onOpen={() => setOpenTimePicker(true)}
-          onClose={() => setOpenTimePicker(false)}
-          minutesStep={10}
-          ampm={false}
-          rifmFormatter={(date) => (date ? `${date} [EST]` : '')}
-          PopperProps={{
-            sx: {
-              '& > div > div > div > div > div + div > div': {
-                '& .MuiClockNumber-root': {
-                  color: theme.palette.primary[800]
-                },
-                '& .Mui-disabled': {
-                  color: theme.palette.primary[200]
-                },
-                '& .Mui-selected': {
-                  color: theme.palette.secondary.light
-                }
-              }
-            }
-          }}
-          label={fieldLabel}
-          minTime={MIN_SELECTABLE_DATE_TIME}
-          maxTime={MAX_SELECTABLE_DATE_TIME}
-          DialogProps={{
-            sx: {
-              '& .MuiPickersToolbar-penIconButton': { display: 'none' }
-            }
-          }}
-          value={initialValue}
-          onChange={onTimeFieldChange}
-          renderInput={(params: MuiTextFieldPropsType) => (
-            <TextField
-              data-cy={dataCy}
-              {...params}
-              fullWidth
-              sx={{
-                svg: { color: theme.palette.primary.main }
-              }}
-              {...fieldProps}
-              helperText={errors?.timePeriods?.[index]?.[fieldName]?.message}
-              error={Boolean(errors?.timePeriods?.[index]?.[fieldName]?.message)}
-              onKeyDown={(e) => e.preventDefault()}
-              onClick={() => setOpenTimePicker(true)}
-            />
-          )}
-        />
-      </LocalizationProvider>
+      <PollinDatePicker
+        type={PollinDatePickerType.Time}
+        pickerConfigs={{
+          inputRef: field.ref,
+          label: fieldLabel,
+          onChange,
+          value: initialValue,
+          renderInputProps: {
+            ...fieldProps
+          },
+          ...formattedParams,
+          isLimitedByWorkingHours: true,
+          errorMessage: errors?.timePeriods?.[index]?.[fieldName]?.message,
+          isError: !!errors?.timePeriods?.[index]?.[fieldName]?.message
+        }}
+      />
     </div>
   );
 };

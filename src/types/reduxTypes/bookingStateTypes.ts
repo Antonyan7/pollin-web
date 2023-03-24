@@ -167,8 +167,8 @@ export interface ICalendarSlot {
   display?: string;
   textColor: string;
   color: string;
-  end: string;
-  start: string;
+  end: Date;
+  start: Date;
 }
 
 export interface ISpecimenAppointmentsFilter {

@@ -7,7 +7,6 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -17,6 +16,7 @@ import { IEncountersFormBody, IEncountersFormDefaultProps, SimpleEditorMode, Sim
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
 import CircularLoading from '@ui-component/circular-loading';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { getEditEncounterInitialValues } from '../helpers/initialValues';
 
@@ -55,7 +55,7 @@ const EditEncounterAddendumTitle = ({ handleClose, mode, updatedOn }: EditEncoun
         </Grid>
       </Grid>
       <Grid container item xs={2} justifyContent="flex-end" pr={2}>
-        <Typography variant="h4">{timeAdjuster(new Date(updatedOn as string)).customizedDate}</Typography>
+        <Typography variant="h4">{updatedOn ? DateUtil.formatDateOnly(updatedOn) : updatedOn}</Typography>
       </Grid>
     </Grid>
   );

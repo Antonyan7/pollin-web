@@ -24,7 +24,9 @@ export interface DateTimePickerWrapperProps
   renderInputProps?: TextFieldProps;
 }
 
-export interface DatePickerWrapperProps extends Omit<DatePickerProps<Date, Date>, 'renderInput'> {}
+export interface DatePickerWrapperProps
+  extends Omit<DatePickerProps<Date, Date>, 'renderInput'>,
+    CustomTimePickerProps {}
 
 export interface IPollinDatePickerProps {
   type: PollinDatePickerType;

@@ -17,11 +17,8 @@ import CircularLoading from '@ui-component/circular-loading';
 import { ButtonWithIcon } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 import EncountersWrapper from '@ui-component/encounters/components/EncountersWrapper';
-import {
-  encountersCustomizedDate,
-  encountersCustomizedDateWithoutTime
-} from '@ui-component/encounters/helpers/encountersDate';
 import encountersRedirect, { EncountersPageTypes } from '@ui-component/encounters/helpers/encountersRedirect';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface EncounterDetailsPageTitleProps {
   encounterData: IEncounterDetailsProps;
@@ -115,8 +112,12 @@ const EncounterDetailsPage = () => {
   const isEncountersDetailsLoading = useAppSelector(patientsSelector.isEncountersDetailsLoading);
   const theme = useTheme();
   const router = useRouter();
-  const encounterNoteCreatedTime = encountersCustomizedDateWithoutTime(new Date(encounterData?.createdOn as Date));
-  const encounterNoteUpdatedTime = encountersCustomizedDate(new Date(encounterData?.updatedOn as Date));
+  const encounterNoteCreatedTime = encounterData?.createdOn
+    ? DateUtil.formatDateOnly(encounterData?.createdOn)
+    : encounterData?.createdOn;
+  const encounterNoteUpdatedTime = encounterData?.updatedOn
+    ? DateUtil.formatFullDate(encounterData?.updatedOn)
+    : encounterData?.updatedOn;
   const goToEditEncounterPage = () => encountersRedirect(router, EncountersPageTypes.EDIT_ENCOUNTER);
   const goToEditAddendumPage = (addendumId: string) =>
     encountersRedirect(router, EncountersPageTypes.EDIT_ADDENDUM, addendumId);
@@ -156,7 +157,7 @@ const EncounterDetailsPage = () => {
             <EncounterDetailsPageTitle
               encounterData={encounterData}
               handleBack={handleBack}
-              encounterNoteCreatedTime={encounterNoteCreatedTime}
+              encounterNoteCreatedTime={encounterNoteCreatedTime as string}
             />
           }
         >
@@ -219,7 +220,7 @@ const EncounterDetailsPage = () => {
                     <Grid item container direction="column" sx={{ pt: paddings.top16 }}>
                       <Typography variant="h4">{addendum.author}</Typography>
                       <Typography variant="body1">
-                        {`${isEditedTitle} ${encountersCustomizedDate(addendum.date as Date)}`}
+                        {`${isEditedTitle} ${DateUtil.formatFullDate(addendum.date)}`}
                       </Typography>
                     </Grid>
                   </Fragment>

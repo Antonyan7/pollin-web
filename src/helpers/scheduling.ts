@@ -2,8 +2,6 @@
 import chunk from 'lodash.chunk';
 import { ISingleTemplate } from 'types/create-schedule';
 
-import { MAX_SELECTABLE_TIME } from '../constants/time';
-
 export const calculateWeekByNumber = (day: number) => {
   if (day === 6) {
     return 0;
@@ -14,16 +12,16 @@ export const calculateWeekByNumber = (day: number) => {
 
 export const calculateWeekDays = (weekDays: number[]) => weekDays.map((day) => calculateWeekByNumber(day));
 
-export const sumIntervals = (intervals: string[][]) => {
+export const sumIntervals = (intervals: Date[][]) => {
   const sortedIntervals = intervals.sort(
-    (interval1: string[], interval2: string[]) => new Date(interval1[0]).getTime() - new Date(interval2[0]).getTime()
+    (interval1: Date[], interval2: Date[]) => interval1[0].getTime() - interval2[0].getTime()
   );
   let maxTime = -Number.MAX_VALUE;
   let sumOfIntervalTime = 0;
 
   sortedIntervals.forEach((sortedInterval) => {
-    const firstSortedIntervalTimeValue = new Date(sortedInterval[0]).getTime();
-    const secondSortedIntervalTimeValue = new Date(sortedInterval[1]).getTime();
+    const firstSortedIntervalTimeValue = sortedInterval[0].getTime();
+    const secondSortedIntervalTimeValue = sortedInterval[1].getTime();
 
     maxTime = Math.max(maxTime, firstSortedIntervalTimeValue);
     sumOfIntervalTime += Math.max(0, secondSortedIntervalTimeValue - maxTime);
@@ -33,8 +31,8 @@ export const sumIntervals = (intervals: string[][]) => {
   return sumOfIntervalTime;
 };
 
-export const isAllDaysFilled = (timePeriods: ISingleTemplate[]) => {
-  const isFilledByDay: string[][] = [];
+export const areAllDaysFilled = (timePeriods: ISingleTemplate[], totalHours: number) => {
+  const isFilledByDay: Date[][] = [];
   let result = 0;
   const allSelectedDays = timePeriods.reduce((previousWeekDays: number[], currentTimePeriod: ISingleTemplate) => {
     const oldWeekDays = Array.from(previousWeekDays, Number);
@@ -64,5 +62,5 @@ export const isAllDaysFilled = (timePeriods: ISingleTemplate[]) => {
       .reduce((previous, current) => previous + current, 0);
   }
 
-  return result === MAX_SELECTABLE_TIME;
+  return result === totalHours;
 };

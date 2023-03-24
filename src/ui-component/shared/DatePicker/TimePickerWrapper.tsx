@@ -8,7 +8,14 @@ import { TimePickerWrapperProps } from 'types/datePicker';
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import { timeOnlyDisplayFormat } from '@utils/date/DateUtil';
 
-const TimePickerWrapper = ({ value, onChange, label, ...otherProps }: TimePickerWrapperProps) => {
+const TimePickerWrapper = ({
+  value,
+  onChange,
+  label,
+  errorMessage,
+  isError,
+  ...otherProps
+}: TimePickerWrapperProps) => {
   const theme = useTheme();
   const { MIN_SELECTABLE_DATE_TIME, MAX_SELECTABLE_DATE_TIME, fitSelectedTimeToConfig } = useClinicConfig();
   const { isLimitedByWorkingHours } = otherProps;
@@ -55,7 +62,9 @@ const TimePickerWrapper = ({ value, onChange, label, ...otherProps }: TimePicker
         }
       }}
       value={value}
-      onChange={(date) => (isLimitedByWorkingHours ? onChange(fitSelectedTimeToConfig(date) as Date) : onChange(date))}
+      onChange={(date) =>
+        onChange(isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date as Date) as Date) : date)
+      }
       renderInput={(params: MuiTextFieldPropsType) => (
         <TextField
           {...params}
@@ -66,6 +75,8 @@ const TimePickerWrapper = ({ value, onChange, label, ...otherProps }: TimePicker
           onKeyDown={(e) => e.preventDefault()}
           onClick={() => setIsOpen(true)}
           data-cy={CypressIds.COMMON_TIME_PICKER}
+          error={isError}
+          helperText={errorMessage ?? ''}
         />
       )}
       {...otherProps}

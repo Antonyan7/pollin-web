@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
-import { styled, TextField } from '@mui/material';
+import { styled,TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { CypressIds } from 'constants/cypressIds';
 import { DatePickerWrapperProps } from 'types/datePicker';
@@ -12,7 +12,14 @@ const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
   color: theme.palette.primary.main
 }));
 
-const DatePickerWrapper = ({ value, onChange, label, ...otherProps }: DatePickerWrapperProps) => {
+const DatePickerWrapper = ({
+  value,
+  onChange,
+  label,
+  errorMessage,
+  isError,
+  ...otherProps
+}: DatePickerWrapperProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { futureDate180DaysLimit } = useClinicConfig();
 
@@ -48,6 +55,8 @@ const DatePickerWrapper = ({ value, onChange, label, ...otherProps }: DatePicker
             event.preventDefault();
           }}
           data-cy={CypressIds.COMMON_DATE_PICKER}
+          error={isError}
+          helperText={errorMessage ?? ''}
         />
       )}
       {...otherProps}

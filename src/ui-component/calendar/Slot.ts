@@ -3,7 +3,7 @@ import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
 
 const shortAppointmentClassName = 'short-appointment';
 
-const appointmentDuration = (start: string, end: string): number => {
+const appointmentDuration = (start: Date, end: Date): number => {
   const startTime = new Date(start).getTime();
   const endTime = new Date(end).getTime();
   const duration = endTime - startTime;
@@ -13,8 +13,8 @@ const appointmentDuration = (start: string, end: string): number => {
 
 export const CreateSlot = (
   type: SlotTypes,
-  start: string,
-  end: string,
+  start: Date,
+  end: Date,
   title: string,
   slotId?: string,
   color?: string,
@@ -68,4 +68,13 @@ export const CreateSlot = (
     start,
     end
   };
+};
+
+export const calculateSlotEndDate = (startTime: string, timeUnits: number): Date => {
+  const startMomentLocal = new Date(startTime);
+  const endMomentLocal = new Date(startTime);
+
+  endMomentLocal.setMinutes(startMomentLocal.getMinutes() + timeUnits * 10);
+
+  return endMomentLocal;
 };

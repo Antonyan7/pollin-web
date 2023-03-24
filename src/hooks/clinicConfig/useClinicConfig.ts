@@ -3,7 +3,7 @@ import { useAppSelector } from '@redux/hooks';
 import { coreSelector } from '@redux/slices/core';
 import { IWorkingHoursConfig } from 'types/reduxTypes/coreStateTypes';
 
-import { DateAndStartTimeType } from '@ui-component/common/DefaultMobileDateTimePicker';
+import { DateAcceptableType, DateUtil } from '@utils/date/DateUtil';
 
 const fitTimeToConfig = (workingHours: IWorkingHoursConfig, value: string | Date | null) => {
   if (!value) {
@@ -43,14 +43,20 @@ const getWorkingHours = (workingHours: IWorkingHoursConfig) => {
   return { MIN_SELECTABLE_DATE_TIME, MAX_SELECTABLE_DATE_TIME, WORKING_DAY_DURATION, WORKING_WEEK_DURATION };
 };
 
-const getFutureDate180DaysLimit = (currentDate: string) =>
-  new Date(new Date().setDate(new Date(currentDate).getDate() + 180));
+export const getFutureDate = (daysAmount: number): Date => {
+  const currentClinicDate = DateUtil.representInClinicDate();
+  const dateValue = currentClinicDate.getDate();
+
+  currentClinicDate.setDate(dateValue + daysAmount);
+
+  return currentClinicDate;
+};
 
 const useClinicConfig = () => {
   const { workingHours, timeZone, currentDate } = useAppSelector(coreSelector.clinicConfigs);
   const workingHoursConfig = getWorkingHours(workingHours);
-  const futureDate180DaysLimit = getFutureDate180DaysLimit(currentDate);
-  const fitSelectedTimeToConfig = (value: DateAndStartTimeType) => fitTimeToConfig(workingHours, value);
+  const futureDate180DaysLimit = getFutureDate(180);
+  const fitSelectedTimeToConfig = (value: DateAcceptableType) => fitTimeToConfig(workingHours, value);
 
   return {
     timeZone,

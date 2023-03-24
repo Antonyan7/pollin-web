@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import { findStatusByID } from 'helpers/tasks';
 import { margins, paddings } from 'themes/themeConstants';
 
-import { convertToLocale } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const Body = () => {
   const [t] = useTranslation();
@@ -63,7 +63,7 @@ const Body = () => {
       </Grid>
       <Grid item xs={4} alignItems="end">
         <Typography variant="caption" ml={margins.left4}>
-          {`${format(new Date(convertToLocale(taskDetails.createdBy.date)), 'MMM dd, yyyy HH:mm')} [EST]`}
+          {DateUtil.formatFullDate(taskDetails.createdBy.date)}
         </Typography>
       </Grid>
       <Grid item xs={4}>
@@ -97,9 +97,7 @@ const Body = () => {
                 </Typography>
               </Grid>
               <Grid item xs={4} alignItems="end">
-                <Typography variant="caption">
-                  {`${format(new Date(convertToLocale(history.date)), 'MMM dd, yyyy HH:mm')} [EST]`}
-                </Typography>
+                <Typography variant="caption">{DateUtil.formatFullDate(history.date)}</Typography>
               </Grid>
               <Grid item xs={4}>
                 <Typography variant="subtitle1" fontWeight={500}>

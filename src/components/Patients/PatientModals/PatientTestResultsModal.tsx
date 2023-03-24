@@ -28,7 +28,7 @@ import { ModalName } from 'types/modals';
 
 import ViewModal from '@ui-component/Modal/ViewModal';
 import Chip from '@ui-component/patient/Chip';
-import { formatDate } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const PatientTestResultsModal = () => {
   const theme = useTheme();
@@ -121,7 +121,7 @@ const PatientTestResultsModal = () => {
                     return (
                       // eslint-disable-next-line react/no-array-index-key
                       <TableRow hover key={index}>
-                        <TableCell>{formatDate(dateCompleted, 'MMM dd, yyy')}</TableCell>
+                        <TableCell>{DateUtil.formatDateOnly(dateCompleted)}</TableCell>
                         <TableCell>{title}</TableCell>
                         <TableCell>{unit}</TableCell>
                         <TableCell>

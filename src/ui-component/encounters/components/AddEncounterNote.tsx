@@ -6,7 +6,6 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import sanitize from 'helpers/sanitize';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -15,6 +14,7 @@ import { IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/
 
 import usePreviousState from '@hooks/usePreviousState';
 import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCancelChangesConfirmationModal';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import encountersRedirect, { EncountersPageTypes } from '../helpers/encountersRedirect';
 import { getAddEncounterInitialValues } from '../helpers/initialValues';
@@ -55,7 +55,7 @@ const AddEncounterNoteTitle = ({ handleClose, encounterNoteEditedTime }: AddEnco
 const AddEncounterNote = () => {
   const isCreateEncounterNoteLoading = useAppSelector(patientsSelector.isCreateEncounterNoteLoading);
   const [editorValue, setEditorValue] = useState<string>('');
-  const encounterNoteEditedTime = timeAdjuster(new Date()).customizedDate;
+  const encounterNoteEditedTime = DateUtil.formatDateOnly(new Date());
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const router = useRouter();
   const methods = useForm<IEncountersFormBody>({

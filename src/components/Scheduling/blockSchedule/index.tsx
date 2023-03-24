@@ -17,43 +17,14 @@ import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { calculateTimeInUTC } from '@utils/dateUtils';
 
 import { SeveritiesType } from '../types';
 
-import AutoCompleteTextField from './fields/AutoCompleteTextField';
 import DateField from './fields/DateField';
+import ResourceField from './fields/ResourceField';
 import TextInputField from './fields/TextInputField';
 import BlockScheduleFormRow from './form/BlockScheduleFormRow';
-import { IFieldRowProps } from './form/IFieldRowProps';
 import { IBlockScheduleForm, initialValues } from './form/initialValues';
-
-const fieldRows: (IFieldRowProps & { Component: React.ComponentType<IFieldRowProps> })[] = [
-  {
-    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_RESOURCE,
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_RESOURCE,
-    fieldName: 'resourceId',
-    Component: AutoCompleteTextField
-  },
-  {
-    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_DATE_START,
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_START,
-    fieldName: 'startDate',
-    Component: DateField
-  },
-  {
-    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_DATE_END,
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_DATE_END,
-    fieldName: 'endDate',
-    Component: DateField
-  },
-  {
-    dataCyId: CypressIds.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
-    fieldLabel: Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER,
-    fieldName: 'placeholderLabel',
-    Component: TextInputField
-  }
-];
 
 const BlockTemplates = () => {
   const [t] = useTranslation();
@@ -70,11 +41,16 @@ const BlockTemplates = () => {
   const { reset, handleSubmit } = methods;
   const applyButtonCyId = CypressIds.PAGE_SCHEDULING_BLOCK_BUTTON_APPLY;
 
+  const resourceLabel = t(Translation.PAGE_SCHEDULING_BLOCK_RESOURCE);
+  const startDateLabel = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START);
+  const endDateLabel = t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END);
+  const placeholderLabel = t(Translation.PAGE_SCHEDULING_BLOCK_PLACEHOLDER);
+
   const onSubmit = (values: IBlockScheduleForm) => {
     const sendingBlockValues = {
       resourceId: values.resourceId,
-      startDate: calculateTimeInUTC(values.startDate),
-      endDate: calculateTimeInUTC(values.endDate),
+      startDate: values.startDate,
+      endDate: values.endDate,
       placeholderLabel: values.placeholderLabel
     };
 
@@ -121,11 +97,34 @@ const BlockTemplates = () => {
         <ScheduleBoxWrapper>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={3}>
-              {fieldRows.map(({ Component, fieldLabel, fieldName, dataCyId }) => (
-                <BlockScheduleFormRow dataCyId={dataCyId} title={t(fieldLabel)} key={fieldName}>
-                  <Component dataCyId={dataCyId} fieldLabel={t(fieldLabel)} fieldName={fieldName} />
-                </BlockScheduleFormRow>
-              ))}
+              <BlockScheduleFormRow title={resourceLabel} key="resourceId">
+                <ResourceField
+                  fieldName="resourceId"
+                  dataCyId={CypressIds.PAGE_SCHEDULING_BLOCK_RESOURCE}
+                  fieldLabel={resourceLabel}
+                />
+              </BlockScheduleFormRow>
+              <BlockScheduleFormRow title={startDateLabel} key="startDate">
+                <DateField
+                  fieldName="startDate"
+                  dataCyId={CypressIds.PAGE_SCHEDULING_BLOCK_DATE_START}
+                  fieldLabel={startDateLabel}
+                />
+              </BlockScheduleFormRow>
+              <BlockScheduleFormRow title={endDateLabel} key="endDate">
+                <DateField
+                  fieldName="endDate"
+                  dataCyId={CypressIds.PAGE_SCHEDULING_BLOCK_DATE_END}
+                  fieldLabel={endDateLabel}
+                />
+              </BlockScheduleFormRow>
+              <BlockScheduleFormRow title={placeholderLabel} key="placeholderLabel">
+                <TextInputField
+                  fieldName="placeholderLabel"
+                  dataCyId={CypressIds.PAGE_SCHEDULING_BLOCK_PLACEHOLDER}
+                  fieldLabel={placeholderLabel}
+                />
+              </BlockScheduleFormRow>
               <Grid item xs={12} display="flex">
                 <ButtonWithLoading
                   data-cy={applyButtonCyId}

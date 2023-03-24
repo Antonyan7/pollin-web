@@ -1,26 +1,26 @@
-import 'react-quill/dist/quill.snow.css';
-
-import { Divider, Grid, GridProps, MenuItem, Typography, styled, useTheme } from '@mui/material';
-import { EncountersFormField, IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 import React, { useEffect } from 'react';
-import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { useController, useFormContext } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import ReactQuill from 'react-quill';
+import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { StyledButton } from '@components/common/MaterialComponents';
+import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
+import { Translation } from 'constants/translations';
+import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
-import { useController, useFormContext } from 'react-hook-form';
+import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { EncountersFormField, IEncountersFormBody, SimpleEditorMode, SimpleEditorProps } from 'types/patient';
 
-import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
-import { ButtonWithLoading } from '@ui-component/common/buttons';
-import CurrentAddendum from '@ui-component/encounters/components/CurrentAddendum';
-import { CypressIds } from 'constants/cypressIds';
-import ParserTypographyWrapper from '@ui-component/common/Typography';
-import ReactQuill from 'react-quill';
-import { StyledButton } from '@components/common/MaterialComponents';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
-import { Translation } from 'constants/translations';
-import { encountersCustomizedDate } from '@ui-component/encounters/helpers/encountersDate';
-import parse from 'html-react-parser';
-import { useTranslation } from 'react-i18next';
+import { ButtonWithLoading } from '@ui-component/common/buttons';
+import ParserTypographyWrapper from '@ui-component/common/Typography';
+import CurrentAddendum from '@ui-component/encounters/components/CurrentAddendum';
+import { DateUtil } from '@utils/date/DateUtil';
+
+import 'react-quill/dist/quill.snow.css';
 
 const EditorWrapper = styled(Grid)<GridProps>(({ theme }) => ({
   width: '100%',
@@ -71,9 +71,7 @@ const EditEncounterNoteAddendums = () => {
             </Grid>
             <Grid item container direction="column" mb={margins.bottom16}>
               <Typography variant="h4">{addendum.author}</Typography>
-              <Typography variant="body1">
-                {`${isEditedTitle} ${encountersCustomizedDate(new Date(addendum.date as Date))}`}
-              </Typography>
+              <Typography variant="body1">{`${isEditedTitle} ${DateUtil.formatFullDate(addendum.date)}`}</Typography>
             </Grid>
             {!isLatestAddendum ? <Divider /> : null}
           </>

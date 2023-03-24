@@ -3,14 +3,13 @@ import { TableCell, TableRow } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { viewsMiddleware } from '@redux/slices/views';
-import { format } from 'date-fns';
 import { ModalName } from 'types/modals';
 import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
 import useTaskDashboardActions from '@hooks/contextMenu/useTaskDashboardActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
-import { convertToLocale } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { findPriorityById, findStatusByID } from '../../helpers/tasks';
 
@@ -34,7 +33,7 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
     <TableRow tabIndex={-1} key={row.uuid} onClick={handleRowClick}>
       <TableCell sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{row.name}</TableCell>
       <TableCell>{row.patient?.name}</TableCell>
-      <TableCell align="left">{format(new Date(convertToLocale(row.dueDate)), 'MMM dd, yyyy HH:mm')}</TableCell>
+      <TableCell align="left">{DateUtil.formatDateOnly(row.dueDate)}</TableCell>
       <TableCell align="left">{priority?.title}</TableCell>
       <TableCell align="center">{row.assignee?.name}</TableCell>
       <TableCell align="center">

@@ -1,5 +1,7 @@
+import { Translation } from 'constants/translations';
 import { isDate } from 'date-fns';
 import { format, formatInTimeZone } from 'date-fns-tz';
+import i18next from 'i18next';
 
 export type DateAcceptableType = Date | string;
 
@@ -12,6 +14,7 @@ const timeOnlyValueFormat = 'HH:mm:ss';
 export const dateTimeDisplayFormat = `MMM dd, yyyy HH:mm ['${label}']`;
 export const dateOnlyDisplayFormat = 'MMM dd, yyyy';
 export const timeOnlyDisplayFormat = `HH:mm ['${label}']`;
+export const weekDayOnlyFormat = 'EEEE';
 
 const timeZoneOffsetFormat = 'XXX';
 
@@ -106,7 +109,11 @@ export class DateUtil {
     const clinicDate: string = this.convertFromLocalToClinic(dateInstance);
     const convertedDate: Date = new Date(clinicDate); // this will change the values depending to local time zone
 
-    return formatInTimeZone(convertedDate, this.clinicTimeZone, dateTimeDisplayFormat); // this will change back to clinic time zone
+    const isToday = this.isSameDate(date);
+
+    return isToday
+      ? i18next.t(Translation.COMMON_DATES_TIME_TODAY, { time: this.formatTimeOnlyFromDate(dateInstance) })
+      : formatInTimeZone(convertedDate, this.clinicTimeZone, dateTimeDisplayFormat); // this will change back to clinic time zone
   }
 
   // expects date in local time zone
@@ -128,6 +135,13 @@ export class DateUtil {
     return timeString ? `${timeString} [${label}]` : '';
   }
 
+  public static formatWeekDayOnly(dateString: DateAcceptableType): string {
+    const dateInstance: Date = this.getLocalDateInstance(dateString);
+
+    return format(dateInstance, weekDayOnlyFormat);
+  }
+
+  // without second argument compares with clinic current date at the moment
   public static isSameDate(
     firstDate: DateAcceptableType,
     secondDate: DateAcceptableType = DateUtil.representInClinicDate()

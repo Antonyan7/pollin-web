@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import API from '@axios/API';
-import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
+import patientEmrHelpers from '@axios/patientEmr/patientEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';

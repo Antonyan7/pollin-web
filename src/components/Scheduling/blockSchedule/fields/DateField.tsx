@@ -3,9 +3,10 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { toRoundupTime } from 'helpers/time';
+import { PollinDatePickerType } from 'types/datePicker';
 
-import DefaultMobileDateTimePicker from '@ui-component/common/DefaultMobileDateTimePicker';
+import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
+import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
@@ -17,6 +18,7 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
   const [t] = useTranslation();
+  const { fitSelectedTimeToConfig } = useClinicConfig();
   const { field } = useController<IBlockScheduleForm>({
     name: fieldName,
     control
@@ -71,23 +73,20 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clearErrors, endTime, startTime, errors.startDate, errors.endDate, fieldName, t, errors, getValues]);
 
-  const initialValue: DateAndStartTimeType = toRoundupTime(value);
+  const initialValue: DateAndStartTimeType = value
+    ? (fitSelectedTimeToConfig(value) as Date)
+    : (value as DateAndStartTimeType);
 
   return (
     <Grid item xs={12}>
-      <DefaultMobileDateTimePicker
-        toolbarFormat="yyyy, MMM dd"
-        label={
-          fieldName === 'startDate'
-            ? t(Translation.PAGE_SCHEDULING_BLOCK_DATE_START)
-            : t(Translation.PAGE_SCHEDULING_BLOCK_DATE_END)
-        }
-        value={initialValue}
-        onChange={onChange}
-        renderInputProps={{
-          ...fieldProps,
-          helperText: errors[fieldName]?.message && errorMessage,
-          error: Boolean(errors[fieldName]?.message) && showErrorMessage
+      <PollinDatePicker
+        type={PollinDatePickerType.DateTime}
+        pickerConfigs={{
+          value: initialValue,
+          onChange,
+          isError: showErrorMessage,
+          errorMessage: errorMessage ?? '',
+          ...fieldProps
         }}
       />
     </Grid>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Stack, TableCell, TableRow } from '@mui/material';
-import { format } from 'date-fns-tz';
 import { useRouter } from 'next/router';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { FinalResultChipColor, OrderResultAction } from 'types/results';
@@ -8,7 +7,7 @@ import { FinalResultChipColor, OrderResultAction } from 'types/results';
 import useOrderResultsActions from '@hooks/contextMenu/useOrderResultsActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
-import { convertToLocale } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { margins } from '../../themes/themeConstants';
 
@@ -27,7 +26,7 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
   const actionBindings = useOrderResultsActions(row, actions);
 
   // TODO: Will be updated after new timezone configuration
-  const dateCompleted = format(new Date(convertToLocale(row.dateCompleted)), 'MMM dd, yyyy');
+  const dateCompleted = DateUtil.formatDateOnly(row.dateCompleted);
 
   return (
     <TableRow role="checkbox" hover key={row.id} onClick={handleOrderResultRowClick} sx={{ cursor: 'pointer' }}>

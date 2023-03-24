@@ -2,20 +2,20 @@ import React, { useMemo } from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { ordersSelector } from '@redux/slices/orders';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { IOrdersListItem } from 'types/reduxTypes/ordersStateTypes';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 import useOrderActions from '@hooks/contextMenu/useOrderActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface PatientOrdersListRowProps {
   row: IOrdersListItem;
 }
 
 const PatientOrdersListRow = ({ row }: PatientOrdersListRowProps) => {
-  const dateCreated = timeAdjuster(row.createdAt).customizedDate;
+  const dateCreated = DateUtil.formatDateOnly(row.createdAt);
   const orderStatuses = useAppSelector(ordersSelector.orderStatuses);
   const currentOrderStatus = useMemo(
     () => orderStatuses.find((orderStatus) => orderStatus.status === row.status),

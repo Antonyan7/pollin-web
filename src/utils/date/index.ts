@@ -1,7 +1,7 @@
 import { format, isDate } from 'date-fns';
 import { longWeekDays } from 'helpers/constants';
 
-import { DateUtil } from './DateUtil';
+import { DateAcceptableType, DateUtil } from './DateUtil';
 
 export const getWeekDayIndex = (date: Date | string) => {
   let weekName;
@@ -13,15 +13,6 @@ export const getWeekDayIndex = (date: Date | string) => {
   }
 
   return longWeekDays.indexOf(weekName);
-};
-
-export const calculateSlotEndDate = (startTime: string, timeUnits: number) => {
-  const startMomentLocal = new Date(startTime);
-  const endMomentLocal = new Date(startTime);
-
-  endMomentLocal.setMinutes(startMomentLocal.getMinutes() + timeUnits * 10);
-
-  return DateUtil.getLocalIsoString(endMomentLocal);
 };
 
 export const compareStartAndEndTime = (startDate: Date | string | null, endDate: Date | string | null) => {
@@ -41,4 +32,16 @@ export const compareStartAndEndTime = (startDate: Date | string | null, endDate:
   end.setDate(today.getDate());
 
   return start.valueOf() > end.valueOf();
+};
+
+export const setTimeToDate = (dateString: DateAcceptableType, targetDate: Date = DateUtil.representInClinicDate()) => {
+  const timeString = DateUtil.convertToTimeOnly(dateString);
+  const [hours, minutes, seconds] = timeString.split(':').map((value) => +value);
+  const dateInstance = new Date(targetDate);
+
+  dateInstance.setHours(hours);
+  dateInstance.setMinutes(minutes);
+  dateInstance.setSeconds(seconds ?? 0);
+
+  return dateInstance;
 };

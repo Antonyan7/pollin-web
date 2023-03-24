@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import useIsScheduleButtonActive from '@components/Scheduling/scheduleTemplateForm/hooks/useIsSaveButtonActive';
 import useScheduleFormContext from '@components/Scheduling/scheduleTemplateForm/hooks/useScheduleFormContext';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { coreSelector } from '@redux/slices/core';
 import { schedulingMiddleware, schedulingSelector } from '@redux/slices/scheduling';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
@@ -12,12 +11,11 @@ import { paddings } from 'themes/themeConstants';
 import { ISingleTemplate, ITemplateGroup, PeriodType } from 'types/create-schedule';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { calculateTimeInUTC, changeDateSameTimeString, convertToLocale } from '@utils/dateUtils';
+import { setTimeToDate } from '@utils/date';
 
 const SaveButton = () => {
   const [t] = useTranslation();
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
-  const { currentDate } = useAppSelector(coreSelector.clinicConfigs);
   const { scheduleId } = useScheduleFormContext();
   const saveButtonCyId = scheduleId
     ? CypressIds.PAGE_SCHEDULING_EDIT_TEMPLATES_BUTTON_SAVE
@@ -42,16 +40,8 @@ const SaveButton = () => {
         }
 
         if (rest.startTime && rest.endTime) {
-          if (!scheduleId) {
-            reqBody.startTime = changeDateSameTimeString(calculateTimeInUTC(rest.startTime), currentDate);
-            reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(rest.endTime), currentDate);
-          } else {
-            reqBody.startTime = changeDateSameTimeString(
-              calculateTimeInUTC(convertToLocale(rest.startTime)),
-              currentDate
-            );
-            reqBody.endTime = changeDateSameTimeString(calculateTimeInUTC(convertToLocale(rest.endTime)), currentDate);
-          }
+          reqBody.startTime = setTimeToDate(reqBody.startTime as Date);
+          reqBody.endTime = setTimeToDate(reqBody.endTime as Date);
         }
 
         return reqBody;

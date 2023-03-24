@@ -9,15 +9,16 @@ import { PollinDatePickerType } from 'types/datePicker';
 
 import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
+import { DateAcceptableType } from '@utils/date/DateUtil';
 
-type DateAndStartTimeType = Date | null;
+type DateAndStartTimeType = DateAcceptableType | null;
 
 const DateAndStartTime: React.FC = () => {
   const { control, formState, getValues } = useFormContext<ICreateAppointmentBody>();
   const { errors } = formState;
   const [t] = useTranslation();
-  const actualDate = getValues('date');
   const { fitSelectedTimeToConfig } = useClinicConfig();
+  const actualDate = getValues('date');
   const fixedValue: DateAndStartTimeType = actualDate ? (fitSelectedTimeToConfig(actualDate as Date) as Date) : null;
   const dateAndStartTimeLabel = t(Translation.MODAL_APPOINTMENTS_ADD_TIME_PICKER);
   const dateAndStartTimeCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DATE_AND_START_TIME;

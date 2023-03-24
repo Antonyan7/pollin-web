@@ -1,23 +1,23 @@
 /* eslint-disable simple-import-sort/imports */
-import FullCalendar from '@fullcalendar/react';
 
+import { ISingleTemplate, PeriodType } from 'types/create-schedule';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { dispatch, useAppSelector } from 'redux/hooks';
+import { getWeekDayIndex, setTimeToDate } from '@utils/date';
+import { isValid, setHours, subDays } from 'date-fns';
+import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
+
+import { CreateSlot } from '@ui-component/calendar/Slot';
+import { CypressIds } from 'constants/cypressIds';
+import FullCalendar from '@fullcalendar/react';
+import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
+import { SlotTypes } from 'types/calendar';
+import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { dispatch, useAppSelector } from 'redux/hooks';
-import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
 import timelinePlugin from '@fullcalendar/timeline';
-import dayGridPlugin from '@fullcalendar/daygrid';
 import { useRouter } from 'next/router';
-import { CreateSlot } from '@ui-component/calendar/Slot';
-import { changeDateSameTime, excludeDates, getDateInUtc, getWeekDay } from '@utils/dateUtils';
-import { SlotTypes } from 'types/calendar';
-import { ISingleTemplate, PeriodType } from 'types/create-schedule';
-import { ICalendarSlot } from 'types/reduxTypes/bookingStateTypes';
-import { isValid, setHours } from 'date-fns';
-import { coreSelector } from '@redux/slices/core';
-import { CypressIds } from 'constants/cypressIds';
 import Toolbar from './ToolBar';
 import FullCalendarWrapper from '../calendar/FullCalendarWrapper';
 
@@ -26,9 +26,9 @@ const Calendar = () => {
   const calendarRef = useRef<FullCalendar>(null);
   const [date, setDate] = useState(new Date());
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
-  const { timeZone } = useAppSelector(coreSelector.clinicConfigs);
+
   const initialDate: Date = useMemo(() => {
-    const todaysDay = getWeekDay(new Date());
+    const todaysDay = getWeekDayIndex(new Date());
     let selectedWeekDays: number[] = [];
     let nearestDayOfWeek: number;
 
@@ -48,7 +48,7 @@ const Calendar = () => {
       }
     }
 
-    const nearestDate = setHours(excludeDates(new Date(), todaysDay - nearestDayOfWeek), 15);
+    const nearestDate = setHours(subDays(new Date(), todaysDay - nearestDayOfWeek), 15);
 
     setDate(nearestDate);
 
@@ -71,11 +71,9 @@ const Calendar = () => {
 
       calendarApi.prev();
 
-      const viewTitle = getDateInUtc(new Date(calendarApi.getDate()));
+      const currentDate = calendarApi.getDate();
 
-      const getCurrentDate = new Date(viewTitle);
-
-      setDate(getCurrentDate);
+      setDate(currentDate);
     }
   }, []);
 
@@ -87,11 +85,9 @@ const Calendar = () => {
 
       calendarApi.next();
 
-      const viewTitle = getDateInUtc(new Date(calendarApi.getDate()));
+      const currentDate = calendarApi.getDate();
 
-      const getCurrentDate = new Date(viewTitle);
-
-      setDate(getCurrentDate);
+      setDate(currentDate);
     }
   }, []);
 
@@ -103,7 +99,7 @@ const Calendar = () => {
         return;
       }
 
-      const isDaysContainingWeekDay = item.days.includes(getWeekDay(date));
+      const isDaysContainingWeekDay = item.days.includes(getWeekDayIndex(date));
 
       if (!isDaysContainingWeekDay || !initialDate) {
         return;
@@ -112,8 +108,8 @@ const Calendar = () => {
       calendarEvents.push(
         CreateSlot(
           item.periodType === PeriodType.ServiceType ? SlotTypes.schedule : SlotTypes.block,
-          changeDateSameTime(item.startTime as string, date),
-          changeDateSameTime(item.endTime as string, date),
+          setTimeToDate(item.startTime as Date, date),
+          setTimeToDate(item.endTime as Date, date),
           item.placeholderName,
           item.periodType
         )
@@ -151,7 +147,6 @@ const Calendar = () => {
               height="auto"
               initialDate={initialDate}
               initialView="timeGridDay"
-              timeZone={timeZone}
               displayEventTime={false}
               slotLabelFormat={[{ hour: 'numeric', minute: '2-digit', omitZeroMinute: false, hour12: false }]}
               eventTimeFormat={{ hour: 'numeric', minute: '2-digit', hour12: false }}

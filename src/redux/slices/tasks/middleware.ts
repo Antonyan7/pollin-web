@@ -15,8 +15,6 @@ import * as Sentry from '@sentry/nextjs';
 import { ModalName } from 'types/modals';
 import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
-import { calculateTimeInUTC, convertToLocale } from '@utils/dateUtils';
-
 const {
   setError,
   setTaskDetails,
@@ -118,7 +116,7 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
         name: taskData.taskName,
         assigneeId: taskData.assign,
         ...(taskData.patient ? { patientId: taskData.patient } : {}),
-        dueDate: calculateTimeInUTC(taskData.dueDate),
+        dueDate: taskData.dueDate,
         priorityId: taskData.priority,
         ...(taskData.description ? { description: taskData.description } : {})
       }
@@ -151,7 +149,7 @@ const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
 
     const response = await API.tasks.getTaskDetails(taskId);
 
-    const data = { ...response.data.data.task, dueDate: convertToLocale(response.data.data.task.dueDate) };
+    const data = response.data.data.task;
 
     dispatch(setTaskDetails(data));
   } catch (error) {

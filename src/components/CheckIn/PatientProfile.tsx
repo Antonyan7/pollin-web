@@ -1,24 +1,22 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import API from '@axios/API';
-import patientEmrHelpers from '@axios/patientEmr/patinerEmrHelpers';
+import patientEmrHelpers from '@axios/patientEmr/patientEmrHelpers';
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import { Avatar, Box, Button, ButtonProps, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
-import { format } from 'date-fns';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
 import CircularLoading from '@ui-component/circular-loading';
-import { convertTZ } from '@utils/dateUtils';
+import { DateUtil } from '@utils/date/DateUtil';
 import { isDashValue } from '@utils/stringUtils';
 
 import { Translation } from '../../constants/translations';
-import { UTC_TIMEZONE } from '../../helpers/constants';
 
 const PatientProfile = () => {
   const theme = useTheme();
@@ -53,12 +51,12 @@ const PatientProfile = () => {
     const isDateValid = !Number.isNaN(Date.parse(date));
 
     if (patientProfile.isIntakeComplete && isDateValid) {
-      const dateOfBirth = convertTZ(date, UTC_TIMEZONE) as Date;
-      const patientAge = new Date().getFullYear() - dateOfBirth.getFullYear();
+      const dateOfBirth = new Date(date);
+      const patientAge = DateUtil.representInClinicDate().getFullYear() - dateOfBirth.getFullYear();
 
       return `${t(Translation.PAGE_PATIENT_CHECK_IN_PATIENT_PROFILE_DOB_PREFIX)} - ${patientAge} ${t(
         Translation.PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS
-      )} (${format(dateOfBirth, 'MMM dd, yyyy')})`;
+      )} (${DateUtil.formatDateOnly(dateOfBirth)})`;
     }
 
     return patientProfile.subTitle;

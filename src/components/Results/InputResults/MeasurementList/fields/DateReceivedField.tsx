@@ -8,7 +8,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Translation } from 'constants/translations';
 
 import CalendarIcon from '@assets/images/calendar/icons/CalendarIcon';
-import { futureDate180DaysAfter } from '@utils/dateUtils';
+import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 
 import { IMeasurementListField } from '../../types';
 
@@ -19,6 +19,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
   });
 
   const [t] = useTranslation();
+  const { futureDate180DaysLimit } = useClinicConfig();
   const [isDatePickerFocused, setIsDatePickerFocused] = useState(false);
   const [openDatePicker, setOpenDatePicker] = useState(false);
   const { value, ...otherFieldProps } = field;
@@ -39,7 +40,7 @@ const DateReceivedField = ({ name, control }: IMeasurementListField) => {
       <Stack spacing={3}>
         <DesktopDatePicker
           disableMaskedInput
-          maxDate={futureDate180DaysAfter} // Don't allow to select days for future more than 180 days
+          maxDate={futureDate180DaysLimit} // Don't allow to select days for future more than 180 days
           open={openDatePicker}
           onClose={onDatePickerClose}
           label={t(Translation.PAGE_INPUT_RESULTS_TEST_MEASUREMENT_LIST_FIELD_NAME_DATE_RECEIVED)}

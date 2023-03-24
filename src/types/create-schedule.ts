@@ -12,8 +12,8 @@ export interface OptionsReturnPropsPatient<T extends IUniqueItemPatient> {
 export interface ISingleTemplate {
   id?: string;
   days: number[];
-  startTime: string | null;
-  endTime: string | null;
+  startTime: Date | null;
+  endTime: Date | null;
   periodType: PeriodType;
   serviceTypes?: string[]; // exists only when periodType is ServiceType
   placeholderName: string;

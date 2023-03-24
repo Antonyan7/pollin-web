@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
-import { timeAdjuster } from 'helpers/timeAdjuster';
 import { useRouter } from 'next/router';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { CypressIds } from '../../../../constants/cypressIds';
 
@@ -62,7 +63,7 @@ const ScheduleTemplatesRow = ({ isItemSelected, row, onClick, labelId, index }: 
         </Typography>
       </TableCell>
       <TableCell>{row.duration}</TableCell>
-      <TableCell align="right">{timeAdjuster(new Date(row.lastSavedDay)).customizedDate}</TableCell>
+      <TableCell align="right">{DateUtil.formatDateOnly(row.lastSavedDay)}</TableCell>
       <TableCell align="center">{row.status}</TableCell>
       <TableCell align="center" sx={{ pr: 3 }}>
         <IconButton onClick={() => onViewClick(row.id)} sx={{ color: theme.palette.primary.main }} size="large">
