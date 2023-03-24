@@ -121,10 +121,11 @@ const AppointmentsListTable = () => {
         </Table>
       </TableContainer>
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)}: ${pageSize}`}
         component="div"
         count={totalItems}
         rowsPerPage={pageSize}
-        page={Math.max(0, currentPage - 1)}
+        page={currentPage - 1}
         onPageChange={onTablePageChange}
       />
     </>
