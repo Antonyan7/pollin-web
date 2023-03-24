@@ -8,6 +8,8 @@ import { Translation } from 'constants/translations';
 import { calculateWeekByNumber } from 'helpers/scheduling';
 import { IApplyScheduleData } from 'types/create-schedule';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import { ApplyScheduleFields } from '../../types';
 
 const useHandleApplySchedule = () => {
@@ -42,8 +44,8 @@ const useHandleApplySchedule = () => {
         // Convert to number repeatWeeksCount which comes from autocomplete as a date
         repeatWeeksCount: +repeatWeeksCount,
         applyDays: selectedWeekdaysToApply.map((item: number) => calculateWeekByNumber(item)),
-        startDate,
-        endDate
+        startDate: DateUtil.convertToDateOnly(startDate),
+        endDate: DateUtil.convertToDateOnly(endDate)
       };
 
       dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
