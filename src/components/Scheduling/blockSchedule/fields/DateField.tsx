@@ -14,7 +14,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 type DateAndStartTimeType = Date | null;
 type ErrorMessageType = string | null;
 
-const DateField = ({ fieldName }: IFieldRowProps) => {
+const DateField = ({ fieldName, fieldLabel }: IFieldRowProps) => {
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
   const [t] = useTranslation();
@@ -83,7 +83,9 @@ const DateField = ({ fieldName }: IFieldRowProps) => {
         type={PollinDatePickerType.DateTime}
         pickerConfigs={{
           value: initialValue,
+          label: fieldLabel,
           onChange,
+          isLimitedByWorkingHours: true,
           isError: showErrorMessage,
           errorMessage: errorMessage ?? '',
           ...fieldProps
