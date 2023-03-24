@@ -30,6 +30,11 @@ const TimePickerWrapper = ({
     setIsOpen(false);
   }, []);
 
+  const handleLimitationConfig = useCallback(
+    (date: Date | null) => (isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date) as Date) : date),
+    [isLimitedByWorkingHours, fitSelectedTimeToConfig]
+  );
+
   return (
     <TimePicker
       open={isOpen}
@@ -61,10 +66,8 @@ const TimePickerWrapper = ({
           '& .MuiPickersToolbar-penIconButton': { display: 'none' }
         }
       }}
-      value={value}
-      onChange={(date) =>
-        onChange(isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date as Date) as Date) : date)
-      }
+      value={handleLimitationConfig(value)}
+      onChange={(date) => onChange(handleLimitationConfig(date))}
       renderInput={(params: MuiTextFieldPropsType) => (
         <TextField
           {...params}

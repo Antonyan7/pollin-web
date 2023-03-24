@@ -1,12 +1,12 @@
+import { useCallback } from 'react';
+import { EventClickArg } from '@fullcalendar/common';
 import { dispatch, useAppSelector } from 'redux/hooks';
+import { bookingSelector } from 'redux/slices/booking';
+import { viewsMiddleware } from 'redux/slices/views';
+import { SlotTypes } from 'types/calendar';
+import { ModalName } from 'types/modals';
 
 import { DateUtil } from '@utils/date/DateUtil';
-import { EventClickArg } from '@fullcalendar/common';
-import { ModalName } from 'types/modals';
-import { SlotTypes } from 'types/calendar';
-import { bookingSelector } from 'redux/slices/booking';
-import { useCallback } from 'react';
-import { viewsMiddleware } from 'redux/slices/views';
 
 const useOnCalendarEventClick = () => {
   const appointments = useAppSelector(bookingSelector.appointmentsList);
@@ -27,6 +27,7 @@ const useOnCalendarEventClick = () => {
         const isAppointmentCanceledOrPast =
           targetAppointment?.type === SlotTypes.canceled ||
           new Date(initialEventObject.event.startStr).getTime() < DateUtil.representInClinicDate().getTime();
+
         if (isAppointmentCanceledOrPast) {
           dispatch(
             viewsMiddleware.openModal({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })

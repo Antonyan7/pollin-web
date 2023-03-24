@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import EventIcon from '@mui/icons-material/Event';
 import { TextField, TextFieldProps, useTheme } from '@mui/material';
 import { MobileDateTimePicker } from '@mui/x-date-pickers';
@@ -26,11 +26,16 @@ const DateTimePickerWrapper = ({
   const { MIN_SELECTABLE_DATE_TIME, MAX_SELECTABLE_DATE_TIME, futureDate180DaysLimit, fitSelectedTimeToConfig } =
     useClinicConfig();
 
+  const handleLimitationConfig = useCallback(
+    (date: Date | null) => (isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date) as Date) : date),
+    [isLimitedByWorkingHours, fitSelectedTimeToConfig]
+  );
+
   return (
     <MobileDateTimePicker
       views={dateTimeViewOptions}
-      value={value}
-      onChange={(date) => onChange(isLimitedByWorkingHours && date ? (fitSelectedTimeToConfig(date) as Date) : date)}
+      value={handleLimitationConfig(value)}
+      onChange={(date) => onChange(handleLimitationConfig(date))}
       components={{ ActionBar: DatePickerActionBar }}
       ampm={false}
       label={label}

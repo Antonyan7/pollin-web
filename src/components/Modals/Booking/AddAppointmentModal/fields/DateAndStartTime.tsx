@@ -55,6 +55,7 @@ const DateAndStartTime: React.FC = () => {
           ...formattedParams,
           label: dateAndStartTimeLabel,
           value: fixedValue,
+          isLimitedByWorkingHours: true,
           onChange,
           disablePast: true,
           errorMessage: errors?.date?.message,

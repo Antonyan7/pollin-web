@@ -396,7 +396,10 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
         }
       })
     );
-    dispatch(getBookingAppointments(providerId, calendarDate));
+
+    if (DateUtil.isSameDate(appointmentValues.date as Date, calendarDate)) {
+      dispatch(getBookingAppointments(providerId, calendarDate));
+    }
   } catch (error) {
     Sentry.captureException(error);
 
