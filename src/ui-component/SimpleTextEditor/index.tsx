@@ -102,13 +102,14 @@ const SimpleTextEditor = ({
   const onSubmit = handleSubmit((values) => handleSave?.(values));
 
   useEffect(() => {
-    if (recentAppointments === null && !isRecentAppointmentsLoading && currentPatientId) {
-      dispatch(patientsMiddleware.getPatientRecentAppointments(currentPatientId));
-    }
-  }, [currentPatientId, isRecentAppointmentsLoading, recentAppointments]);
-
-  useEffect(() => {
     dispatch(patientsMiddleware.getEncountersTypes());
+    dispatch(patientsMiddleware.getPatientRecentAppointments(currentPatientId));
+
+    return () => {
+      dispatch(patientsMiddleware.emptyPatientRecentAppointments());
+    };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const encountersTypeFieldName = EncountersFormField.EncountersTypeField;

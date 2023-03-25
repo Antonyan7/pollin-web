@@ -338,6 +338,10 @@ const getPatientRecentAppointments = (patientId: string) => async (dispatch: App
   }
 };
 
+const emptyPatientRecentAppointments = () => (dispatch: AppDispatch) => {
+  dispatch(setRecentAppointments([]));
+};
+
 const emptyPatientProfile = () => (dispatch: AppDispatch) => {
   dispatch(setPatientProfile(null));
 };
@@ -887,6 +891,7 @@ export default {
   deletePatientAlert,
   getEncounterList,
   getPatientRecentAppointments,
+  emptyPatientRecentAppointments,
   setEncounterSearch,
   setSelectedEncounterFilters,
   getEncounterFilters,
