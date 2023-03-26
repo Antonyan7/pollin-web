@@ -40,8 +40,8 @@ const DateTimePickerWrapper = ({
       ampm={false}
       label={label}
       minutesStep={10}
-      minTime={MIN_SELECTABLE_DATE_TIME}
-      maxTime={MAX_SELECTABLE_DATE_TIME}
+      minTime={isLimitedByWorkingHours ? MIN_SELECTABLE_DATE_TIME : undefined}
+      maxTime={isLimitedByWorkingHours ? MAX_SELECTABLE_DATE_TIME : undefined}
       maxDate={futureDate180DaysLimit}
       DialogProps={{
         ...otherProps.DialogProps,
