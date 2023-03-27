@@ -10,7 +10,7 @@ export const BaseModalStyled = styled(Dialog)(({ theme }) => ({
     height: '200px'
   },
   [`.${paperClasses.root}`]: {
-    maxHeight: '80%'
+    maxHeight: '70%'
   },
   [`.${dialogClasses.container}`]: {
     marginTop: 40
