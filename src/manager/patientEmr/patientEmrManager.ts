@@ -13,6 +13,7 @@ import {
   IFemalePatientGynaecologicalHistory,
   IFemalePatientMenstrualCycleHistory,
   IFemalePregnancyInformation,
+  IFemalePregnancyInformationProps,
   IFertilityHistory,
   IGeneralHealth,
   IGetPatientsRequestBody,
@@ -253,7 +254,7 @@ const patientEmrManager = {
       `${baseURL}/v1/medical-background/${patientId}/gtpaetals`
     );
   },
-  updateFemalePregnancyInformation(patientId: string, data: IFemalePregnancyInformation) {
+  updateFemalePregnancyInformation(patientId: string, data: IFemalePregnancyInformationProps) {
     return axiosInstance.put<IFemalePregnancyInformation, IAxiosResponse<IFemalePregnancyInformation>>(
       `${baseURL}/v1/medical-background/${patientId}/gtpaetals`,
       {

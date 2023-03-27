@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFertilityHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import DropdownField from '@components/MedicalBackground/components/common/Dropdown/index';
+import DropdownField from '@components/MedicalBackground/components/common/Dropdown/DropdownField';
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
 import MedicalComponentWithRadio from '@components/MedicalBackground/components/common/MedWithRadio';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
-import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
+import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
 import mappingPattern from '@components/MedicalBackground/mapper/fertilityHistory';
@@ -67,7 +67,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
             if (!mappedItem?.isEditable) {
               return (
-                <MedicalComponentWithRadioView iconTitle={title}>
+                <MedicalComponentWithRadioView iconTitle={title} key={title}>
                   <Typography>{mappedItem.viewValue}</Typography>
                 </MedicalComponentWithRadioView>
               );
@@ -85,12 +85,20 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
             }
 
             if (mappedItem?.componentData?.type === MedicalBackgroundItemType.Section) {
+              const rows = mappedItem?.componentData?.rows as IMedicalBackgroundItem[][];
+              const initialFields = rows.flat().reduce((previousValues, currentValue) => {
+                previousValues[(currentValue as IMedicalBackgroundItem).fieldName] = '';
+
+                return previousValues;
+              }, {} as Record<string, string>);
+
               return (
                 <MedicalBackgroundSection
                   fieldName={fieldName}
                   title={title}
                   tableTitle={mappedItem?.componentData?.tableTitle}
-                  rows={mappedItem?.componentData?.rows}
+                  rows={rows}
+                  initialFields={initialFields}
                   controlFieldName={mappedItem?.componentData?.controlFieldName}
                   itemsFieldName={mappedItem?.componentData?.itemsFieldName}
                   addNewItemButtonLabel={mappedItem?.componentData?.addNewItemButtonLabel}

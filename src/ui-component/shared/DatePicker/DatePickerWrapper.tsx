@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { CalendarTodayTwoTone } from '@mui/icons-material';
-import { styled,TextField } from '@mui/material';
+import { styled, TextField } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { CypressIds } from 'constants/cypressIds';
 import { DatePickerWrapperProps } from 'types/datePicker';

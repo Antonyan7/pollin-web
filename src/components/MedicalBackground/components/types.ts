@@ -5,11 +5,15 @@ import { GridProps } from '@mui/material';
 export interface MedicalBackgroundTableProps extends PropsWithChildren, GridProps {
   title: string;
   onDelete?: (index: number) => void;
-  rows?: IMedicalBackgroundItem[][];
+  rows?: MedicalBackgroundTableRow[];
   fieldName?: string;
   index?: number;
   parentFieldName?: string;
 }
+
+export type MedicalBackgroundTableRow =
+  | IMedicalBackgroundItem[]
+  | ((index: number, parentFieldName: string) => JSX.Element[] | null);
 
 export enum MedicalBackgroundItemType {
   Section = 'Section',

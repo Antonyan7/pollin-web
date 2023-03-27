@@ -1,21 +1,52 @@
 import React, { FC } from 'react';
-import { Grid } from '@mui/material';
-import { paddings } from 'themes/themeConstants';
+import { useController, useFormContext } from 'react-hook-form';
+import { IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
+import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
+import { KeyboardArrowDown } from '@mui/icons-material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
-import { ConsultationTitleWithIcon } from '..';
+import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-import Dropdown from './Dropdown';
 import { DropdownProps } from './types';
 
-const DropdownField: FC<DropdownProps> = ({ label, ...otherProps }) => (
-  <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
-    <Grid item container xs={5} direction="row" alignItems="center" flexWrap="nowrap" gap={2}>
-      <ConsultationTitleWithIcon description={label ?? ''} />
-    </Grid>
-    <Grid item xs={7}>
-      <Dropdown label={label} {...otherProps} />
-    </Grid>
-  </Grid>
-);
+const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType }) => {
+  const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
+  const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
+  const { control } = useFormContext();
+  const { field, fieldState } = useController({
+    name: fieldName,
+    control
+  });
+  const { onChange, onBlur, ...fieldProps } = field;
+  const options = getDropdownByType(dropdownOptions, dropdownType)?.options;
 
-export default DropdownField;
+  const selectedOption = getDropdownOption(dropdownOptions, dropdownType, fieldProps.value);
+
+  const errorHelperText = generateErrorMessage(fieldName);
+
+  return (
+    <BaseDropdownWithLoading
+      isLoading={isDropdownsLoading}
+      value={selectedOption}
+      options={options as IDropdownOption[]}
+      popupIcon={<KeyboardArrowDown />}
+      onChange={(_, value) => {
+        if (value && typeof value === 'object' && 'id' in value) {
+          onChange(value.id);
+        }
+      }}
+      getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
+      isOptionEqualToValue={(option, value) => option.id === value?.id}
+      renderInputProps={{
+        helperText: fieldState?.error && errorHelperText,
+        error: Boolean(fieldState?.error),
+        ...fieldProps,
+        label
+      }}
+    />
+  );
+};
+
+export default Dropdown;

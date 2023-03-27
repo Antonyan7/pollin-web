@@ -44,7 +44,9 @@ export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper
     ? Object.entries(target).map((item) => {
         const itemId = item[0];
         const itemData = item[1];
-        const { title, customAccessor, componentData } = mappingPattern[itemId];
+
+        const { title, customAccessor, componentData } = mappingPattern[itemId] ?? {};
+
         const currentItemLabeledValue = getLabelByBoolean(itemData?.value);
         const currentItemValue =
           typeof itemData?.value === 'boolean' || itemData?.value === null ? currentItemLabeledValue : itemData.value;

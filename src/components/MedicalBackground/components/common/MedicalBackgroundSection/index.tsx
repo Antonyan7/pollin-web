@@ -1,7 +1,7 @@
-import React, { FC, useEffect, useMemo } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
-import { IMedicalBackgroundItem } from '../../types';
+import { MedicalBackgroundTableRow } from '../../types';
 import MedicalBackgroundTable from '../MedicalBackgroundTable';
 import MedicalFormAddDiagram from '../MedicalFormAddDiagram';
 import MedicalComponentWithRadio from '../MedWithRadio';
@@ -12,8 +12,9 @@ interface MedicalBackgroundSectionProps {
   itemsFieldName: string;
   title: string;
   tableTitle: string;
-  rows: IMedicalBackgroundItem[][];
+  rows: MedicalBackgroundTableRow[];
   addNewItemButtonLabel?: string;
+  initialFields: Record<string, string>;
 }
 
 const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
@@ -23,6 +24,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   tableTitle,
   itemsFieldName,
   addNewItemButtonLabel,
+  initialFields,
   rows
 }) => {
   const parentFieldName = `${fieldName}.${itemsFieldName}`;
@@ -35,17 +37,6 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   const isExists = useWatch({
     name: `${fieldName}.${controlFieldName}`
   });
-
-  const initialFields = useMemo(
-    () =>
-      rows.flat().reduce((previousValues, currentValue) => {
-        previousValues[currentValue.fieldName] = '';
-
-        return previousValues;
-      }, {} as Record<string, string>),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  );
 
   const handleAddNewItem = () => {
     append(initialFields);

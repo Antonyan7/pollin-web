@@ -2,105 +2,155 @@ import { DropdownOptionType, TypeOfPregnancy, TypeOfPregnancyLabel } from '@axio
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
+import { MedicalBackgroundItemType } from '../components/types';
+
 const mappingPattern = {
   [TypeOfPregnancy.FullTerm]: {
     year: {
-      dropdownType: DropdownOptionType.YearOfBirth,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.YearOfBirth
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_YEAR_OF_BIRTH
       )
     },
     type: {
-      dropdownType: DropdownOptionType.VOrCs,
-      label: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.VOrCs
+      },
+      title: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
     },
     birthOutcome: {
-      dropdownType: DropdownOptionType.BirthOutcome,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.BirthOutcome
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_BIRTH_OUTCOME
       )
     },
     monthsToConceive: {
-      dropdownType: DropdownOptionType.MonthsToConceive,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.MonthsToConceive
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_MONTHS_TO_CONCEIVE
       )
     }
   },
   [TypeOfPregnancy.Preterm]: {
     year: {
-      dropdownType: DropdownOptionType.YearOfBirth,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.YearOfBirth
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_YEAR_OF_BIRTH
       )
     },
     type: {
-      dropdownType: DropdownOptionType.VOrCs,
-      label: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.VOrCs
+      },
+      title: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
     },
     birthOutcome: {
-      dropdownType: DropdownOptionType.BirthOutcome,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.BirthOutcome
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_BIRTH_OUTCOME
       )
     },
     monthsToConceive: {
-      dropdownType: DropdownOptionType.MonthsToConceive,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.MonthsToConceive
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_MONTHS_TO_CONCEIVE
       )
     }
   },
   [TypeOfPregnancy.EctopicTubal]: {
     year: {
-      dropdownType: DropdownOptionType.YearOfBirth,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.YearOfBirth
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_YEAR_OF_BIRTH
       )
     },
     type: {
-      dropdownType: DropdownOptionType.EctopicPregnancyTreatment,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.EctopicPregnancyTreatment
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_TREATMENTS
       )
     },
     location: {
-      dropdownType: DropdownOptionType.PregnancySide,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.PregnancySide
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_L_R_SIDE
       )
     },
     monthsToConceive: {
-      dropdownType: DropdownOptionType.MonthsToConceive,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.MonthsToConceive
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_MONTHS_TO_CONCEIVE
       )
     }
   },
   [TypeOfPregnancy.Miscarriage]: {
     year: {
-      dropdownType: DropdownOptionType.YearOfBirth,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.YearOfBirth
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_YEAR_OF_BIRTH
       )
     },
     type: {
-      dropdownType: DropdownOptionType.EctopicPregnancyTreatment,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.EctopicPregnancyTreatment
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_TREATMENTS
       )
     },
     monthsToConceive: {
-      dropdownType: DropdownOptionType.MonthsToConceive,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.MonthsToConceive
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_MONTHS_TO_CONCEIVE
       )
     }
   },
   [TypeOfPregnancy.ElectiveTermination]: {
     year: {
-      dropdownType: DropdownOptionType.YearOfBirth,
-      label: t(
+      componentData: {
+        type: MedicalBackgroundItemType.Dropdown,
+        dropdownType: DropdownOptionType.YearOfBirth
+      },
+      title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_YEAR_OF_BIRTH
       )
     }
@@ -110,8 +160,11 @@ const mappingPattern = {
   Record<
     string,
     {
-      dropdownType: DropdownOptionType;
-      label: string;
+      title: string;
+      componentData?: {
+        type: MedicalBackgroundItemType;
+        dropdownType?: DropdownOptionType;
+      };
     }
   >
 >;

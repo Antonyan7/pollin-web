@@ -451,6 +451,7 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MANUALLY_MODAL_UNIT_NUMBER = 'page.patient.profile.medical.background.manually.modal.unit.number',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MANUALLY_POSTAL_CODE = 'page.patient.profile.medical.background.manually.postal.code',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY = 'page.patient.profile.medical.background.medical.history',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_ADD_PREGNANCY_BTN = 'page.patient.profile.medical.background.medical.history.female.pregnancy.information.add.pregnancy.btn',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_BIRTH_OUTCOME = 'page.patient.profile.medical.background.medical.history.female.pregnancy.information.birth.outcome',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_L_R_SIDE = 'page.patient.profile.medical.background.medical.history.female.pregnancy.information.l.r.side',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_MONTHS_TO_CONCEIVE = 'page.patient.profile.medical.background.medical.history.female.pregnancy.information.months.to.conceive',

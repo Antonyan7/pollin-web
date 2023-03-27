@@ -30,13 +30,13 @@ const PreviousPregnancies = ({ previousPregnancies }: { previousPregnancies: IPr
         const renderedValues = Object.entries(pregnancy.details).map((item) => {
           const [key, value] = item;
 
-          const { label, dropdownType } = mappingPattern[pregnancy.type][key];
+          const { title, componentData } = mappingPattern[pregnancy.type][key];
 
           return (
             <Item
               key={v4()}
-              title={label}
-              value={getDropdownOption(dropdownOptions, dropdownType, value)?.title as string}
+              title={title}
+              value={getDropdownOption(dropdownOptions, componentData?.dropdownType ?? '', value)?.title as string}
             />
           );
         });
@@ -46,12 +46,9 @@ const PreviousPregnancies = ({ previousPregnancies }: { previousPregnancies: IPr
             <Item
               key={v4()}
               mt={margins.top24}
-              title={t(
-                Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREGNANCY,
-                {
-                  count: index + 1
-                }
-              )}
+              title={`${t(
+                Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREGNANCY
+              )} ${index + 1}`}
               index={0}
               isHeader
             />

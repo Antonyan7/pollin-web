@@ -449,6 +449,7 @@
   "page.patient.profile.medical.background.manually.modal.unit.number": "Unit Number (Optional)",
   "page.patient.profile.medical.background.manually.postal.code": "Postal Code",
   "page.patient.profile.medical.background.medical.history": "Medical History",
+  "page.patient.profile.medical.background.medical.history.female.pregnancy.information.add.pregnancy.btn": "Add Pregnancy",
   "page.patient.profile.medical.background.medical.history.female.pregnancy.information.birth.outcome": "Birth Outcome",
   "page.patient.profile.medical.background.medical.history.female.pregnancy.information.l.r.side": "L/R Side",
   "page.patient.profile.medical.background.medical.history.female.pregnancy.information.months.to.conceive": "Months to Conceive",

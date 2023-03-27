@@ -458,11 +458,11 @@ export interface IPregnancyDetails {
 export interface IPreviousPregnancies extends MedicalBackgroundFieldValues {
   value: boolean;
   id: string;
-  pregnancies?: IPregnancy[];
+  pregnancies: IPregnancy[];
 }
 
 export interface IFemalePregnancyInformationProps {
-  previousPregnancies: IPreviousPregnancies;
+  previousPregnancies?: IPreviousPregnancies;
   numberOfPregnancies: number;
 }
 

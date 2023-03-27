@@ -5,7 +5,7 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 import { MedicalBackgroundItemType, MedicalBackgroundTableProps } from '../../types';
-import Dropdown from '../Dropdown/Dropdown';
+import Dropdown from '../Dropdown';
 import FormInput from '../FormInput';
 
 const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, onDelete, index, parentFieldName }) => (
@@ -26,11 +26,17 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
       </IconButton>
     </Grid>
     <Grid container>
-      {rows?.map((row) =>
-        row.map((item) => {
+      {rows?.map((row) => {
+        // Dynamic row
+        if (!Array.isArray(row)) {
+          return row(index as number, parentFieldName as string);
+        }
+
+        return row.map((item) => {
           const rowColumnsCount = 12;
           const itemSize = Math.round(rowColumnsCount / row.length);
           const finalFieldName = parentFieldName ? `${parentFieldName}.${index}.${item.fieldName}` : item.fieldName;
+
           let renderedItem;
 
           if (item.type === MedicalBackgroundItemType.Input) {
@@ -52,8 +58,8 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
               {renderedItem ?? null}
             </Grid>
           );
-        })
-      )}
+        });
+      })}
     </Grid>
   </Grid>
 );
