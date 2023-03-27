@@ -42,7 +42,7 @@ describe('Edit appointments', () => {
             cy.contains(StatusesEnum.Booked).click({ force: true });
             cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
 
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION))
+            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION))
               .should('be.visible')
               .clear()
               .type('Edited');

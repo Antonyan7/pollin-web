@@ -25,8 +25,8 @@ describe('new template', () => {
       // Monday checkbox
       cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-0"]`).click();
 
-      cy.ChooseStartTime(10, 10);
-      cy.ChooseEndTime(10, 30);
+      cy.ChooseStartTime(8, 10);
+      cy.ChooseEndTime(10, 10);
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)).click();
       cy.get(`ul li`).contains(data.service_type_2).click();
@@ -44,12 +44,11 @@ describe('new template', () => {
   it(`should verify create new block template`, () => {
     cy.fixture('test-data').then((data) => {
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_NAME)).type(data.templateName2);
-      // Monday and tuesday checkboxes
-      cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-0"]`).click();
+      // tuesday checkboxes
       cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-1"]`).click();
 
-      cy.ChooseStartTime(12, 10);
-      cy.ChooseEndTime(12, 30);
+      cy.ChooseStartTime(14, 50);
+      cy.ChooseEndTime(17, 50);
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK)).click();
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)).type(data.comment);
@@ -63,4 +62,5 @@ describe('new template', () => {
     });
   });
 });
+
 export {};

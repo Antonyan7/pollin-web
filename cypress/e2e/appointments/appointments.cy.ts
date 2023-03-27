@@ -3,7 +3,7 @@ import { addDays, format } from 'date-fns';
 import { CypressIds } from '../../../src/constants/cypressIds';
 import { CyUtils } from '../../helpers/cypressIdsUtils';
 
-const futureDate = Number(format(addDays(new Date(), 3), 'd'));
+const futureDate = Number(format(addDays(new Date(), 1), 'd'));
 
 describe('Appointments', () => {
   before(() => {
@@ -58,7 +58,7 @@ describe('Appointments', () => {
 
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION)).should('exist');
 
-        cy.ChooseDateAndTime(futureDate, 10);
+        cy.ChooseDateAndTime(futureDate, 13);
 
         cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_BUTTON_SAVE)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();

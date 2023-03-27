@@ -27,7 +27,7 @@ describe('Cancel Appointments', () => {
 
         cy.ChoosePatient(data.e2e_patient);
 
-        cy.ChooseDateAndTime(futureDate, 8);
+        cy.ChooseDateAndTime(futureDate, 15);
         cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_BUTTON_SAVE)).should('be.enabled').click();
 
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();
