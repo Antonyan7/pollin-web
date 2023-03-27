@@ -1,6 +1,8 @@
-// @ts-ignore
 import chunk from 'lodash.chunk';
 import { ISingleTemplate } from 'types/create-schedule';
+
+import { setTimeToDate } from '@utils/date';
+import { DateUtil } from '@utils/date/DateUtil';
 
 export const calculateWeekByNumber = (day: number) => {
   if (day === 6) {
@@ -9,8 +11,6 @@ export const calculateWeekByNumber = (day: number) => {
 
   return day + 1;
 };
-
-export const calculateWeekDays = (weekDays: number[]) => weekDays.map((day) => calculateWeekByNumber(day));
 
 export const sumIntervals = (intervals: Date[][]) => {
   const sortedIntervals = intervals.sort(
@@ -43,15 +43,20 @@ export const areAllDaysFilled = (timePeriods: ISingleTemplate[], totalHours: num
 
   if (allSelectedDays.length === 7) {
     for (let i = 0; i < 7; i += 1) {
+      const currentDay = DateUtil.representInClinicDate();
+
       timePeriods.forEach((item: ISingleTemplate) => {
         if (item.startTime && item.endTime && Array.from(item.days, Number).includes(i)) {
           const { startTime, endTime } = item;
 
+          const startTimeDate = setTimeToDate(startTime, currentDay);
+          const endTimeDate = setTimeToDate(endTime, currentDay);
+
           if (!isFilledByDay[i]) {
-            isFilledByDay[i] = [startTime, endTime];
-          } else {
-            isFilledByDay[i].push(startTime, endTime);
+            isFilledByDay[i] = [];
           }
+
+          isFilledByDay[i].push(startTimeDate, endTimeDate);
         }
       });
     }
