@@ -184,7 +184,7 @@
   "page.create.order.button.edit": "Edit",
   "page.create.order.button.next": "Next",
   "page.create.order.header.text": "Back to %s",
-  "page.create.order.success.message": "Order Created Successfully",
+  "page.create.order.success.message": "Order Successfully Created",
   "page.create.order.title": "Create Order",
   "page.encounters.add.addendum": "Add Addendum",
   "page.encounters.addendum.note": "Encounter Note",

@@ -28,7 +28,6 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
   const [submissionProcessed, setSubmissionProcessed] = useState(false);
   const router = useRouter();
   const { id: patientId, orderId } = router.query;
-
   const needValidation = useMemo(
     () => window.btoa(JSON.stringify(editableOrderDetails)) !== window.btoa(JSON.stringify(orderDetails?.orderTypes)),
     [editableOrderDetails, orderDetails.orderTypes]
@@ -152,7 +151,9 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
       {orderCreationState.step === 0 ? (
         <Button
           data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_NEXT}
-          color="primary"
+          sx={{
+            '&.Mui-disabled': { background: (theme) => theme.palette.primary.light }
+          }}
           onClick={onNextButtonClick}
           disabled={!atLeastOneSelectedItemExists}
           variant="contained"

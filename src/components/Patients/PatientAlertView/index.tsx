@@ -123,7 +123,7 @@ const PatientAlertView = () => {
         </>
       ) : null}
 
-      {patientCustomAlerts.length < 10 ? (
+      {patientCustomAlerts.length < 9 ? (
         <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
           <Button
             sx={{
