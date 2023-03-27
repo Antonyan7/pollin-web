@@ -70,7 +70,11 @@ const PatientAlert = ({ alert }: { alert: AlertStatus }) => {
         </Grid>
         <Grid item xs={3} justifyContent="flex-end" display="flex">
           {alert !== AlertStatus.PhotoMissing ? (
-            <Button onClick={alert === AlertStatus.Verification ? openVerifyModal : refresh} color="warning">
+            <Button
+              sx={{ color: theme.palette.warning['800'] }}
+              onClick={alert === AlertStatus.Verification ? openVerifyModal : refresh}
+              color="warning"
+            >
               <Typography fontWeight="bold">{buttonLabel}</Typography>
             </Button>
           ) : null}
