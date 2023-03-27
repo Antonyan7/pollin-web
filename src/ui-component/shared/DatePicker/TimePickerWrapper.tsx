@@ -43,29 +43,9 @@ const TimePickerWrapper = ({
       minutesStep={10}
       ampm={false}
       inputFormat={timeOnlyDisplayFormat}
-      PopperProps={{
-        sx: {
-          '& > div > div > div > div > div + div > div': {
-            '& .MuiClockNumber-root': {
-              color: theme.palette.primary[800]
-            },
-            '& .Mui-disabled': {
-              color: theme.palette.primary[200]
-            },
-            '& .Mui-selected': {
-              color: theme.palette.secondary.light
-            }
-          }
-        }
-      }}
       label={label}
       minTime={MIN_SELECTABLE_DATE_TIME}
       maxTime={MAX_SELECTABLE_DATE_TIME}
-      DialogProps={{
-        sx: {
-          '& .MuiPickersToolbar-penIconButton': { display: 'none' }
-        }
-      }}
       value={handleLimitationConfig(value)}
       onChange={(date) => onChange(handleLimitationConfig(date))}
       renderInput={(params: MuiTextFieldPropsType) => (
@@ -73,7 +53,11 @@ const TimePickerWrapper = ({
           {...params}
           fullWidth
           sx={{
-            svg: { color: theme.palette.primary.main }
+            svg: { color: theme.palette.primary.main },
+            'caret-color': 'transparent'
+          }}
+          inputProps={{
+            placeholder: '--:--'
           }}
           onKeyDown={(e) => e.preventDefault()}
           onClick={() => setIsOpen(true)}

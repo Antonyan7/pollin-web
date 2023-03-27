@@ -44,22 +44,7 @@ const DateTimePickerWrapper = ({
       maxTime={isLimitedByWorkingHours ? MAX_SELECTABLE_DATE_TIME : undefined}
       maxDate={futureDate180DaysLimit}
       DialogProps={{
-        ...otherProps.DialogProps,
-        sx: {
-          '& .MuiPickersToolbar-penIconButton': { display: 'none' },
-          '& .MuiTypography-overline': { textTransform: 'capitalize' },
-          '& .MuiClock-clock': {
-            '& .MuiClockNumber-root': {
-              color: theme.palette.primary[800]
-            },
-            '& .Mui-disabled': {
-              color: theme.palette.primary[200]
-            },
-            '& .Mui-selected': {
-              color: theme.palette.secondary.light
-            }
-          }
-        }
+        ...otherProps.DialogProps
       }}
       renderInput={({ ...params }: TextFieldProps) => (
         <TextField

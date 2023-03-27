@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import OrderConfirmation from '@components/Orders/CreateEditOrder/OrderConfirmation';
 import OrderEditOrCreate from '@components/Orders/CreateEditOrder/OrderEditOrCreate';
 import OrderLoading from '@components/Orders/CreateEditOrder/OrderLoading';
-import OrderDetailsInformation from '@components/Orders/OrderDetails/OrderDetailsInformation';
 import { Stack } from '@mui/material';
 import { ordersSelector } from '@redux/slices/orders';
 import { useOrderCreationContext } from 'context/OrderCreationContext';
@@ -24,14 +23,21 @@ const OrderBody = ({ isEdit }: { isEdit: boolean }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isEdit, orderDetails.orderTypes]);
 
+  const renderOrderBody = () => {
+    switch (step) {
+      case 0:
+        return <OrderEditOrCreate />;
+      case 1:
+        return <OrderConfirmation isEdit={isEdit} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <Stack>
       {!isEdit ? <CreateOrderStepper /> : null}
-      {isValidationLoading && <OrderLoading />}
-      {/* TODO: use Switch statement with memo to get components for current step */}
-      {!isValidationLoading && step === 0 ? <OrderEditOrCreate /> : null}
-      {!isValidationLoading && step === 1 ? <OrderConfirmation isEdit={isEdit} /> : null}
-      {!isValidationLoading && step === 1 ? <OrderDetailsInformation isEdit={isEdit} /> : null}
+      {isValidationLoading ? <OrderLoading /> : renderOrderBody()}
     </Stack>
   );
 };

@@ -345,6 +345,8 @@ export const MuiTooltip = (color: string, background: string) => ({
 export const MuiPickersToolbar = () => ({
   styleOverrides: {
     root: {
+      '& .MuiPickersToolbar-penIconButton': { display: 'none' },
+      '& .MuiTypography-overline': { textTransform: 'capitalize' },
       '& > span': {
         display: 'block',
         width: '100%',
@@ -382,6 +384,14 @@ export const MuiPickersToolbar = () => ({
 export const MuiClockPicker = (lightColor: string, mainColor: string, secondary200: string, secondaryMain: string) => ({
   styleOverrides: {
     root: {
+      '& .MuiClockNumber-root': {
+        color: mainColor,
+        fontWeight: 500
+      },
+      '& .MuiClockNumber-root.Mui-disabled': {
+        color: lightColor,
+        fontWeight: 300
+      },
       '& > div > div': {
         backgroundColor: secondary200,
         marginBottom: margins.bottom32

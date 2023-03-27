@@ -76,7 +76,7 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
     MuiTabs: MuiTabs(theme.palette.grey[200]),
     MuiTableCell: MuiTableCell(theme.palette.grey[200], theme.palette.grey[900]),
     MuiTooltip: MuiTooltip(paperColor, textColor),
-    MuiClockPicker: MuiClockPicker(lightColor, buttonBorderColor, secondary200, secondaryMain),
+    MuiClockPicker: MuiClockPicker(theme.palette.primary[200], theme.palette.primary[800], secondary200, secondaryMain),
     MuiPickersToolbar: MuiPickersToolbar(),
     MuiTablePagination
   };
