@@ -7,7 +7,6 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
-  Divider,
   Grid,
   IconButton,
   styled,
@@ -66,7 +65,6 @@ const EncountersCancelChangesModal = () => {
             </Grid>
           </Grid>
         </DialogTitle>
-        <Divider />
         <DialogContent sx={{ p: 4 }}>
           <Grid container direction="column" spacing={3}>
             <Grid item>
@@ -74,7 +72,6 @@ const EncountersCancelChangesModal = () => {
             </Grid>
           </Grid>
         </DialogContent>
-        <Divider />
         <DialogActions sx={{ p: 4 }}>
           <Grid container justifyContent="flex-end">
             <Grid>

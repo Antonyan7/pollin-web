@@ -7,7 +7,6 @@ import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
-import { format } from 'util';
 
 const OrderHeader = () => {
   const [t] = useTranslation();
@@ -35,7 +34,7 @@ const OrderHeader = () => {
         <ChevronLeftIcon />
       </IconButton>
       <Typography display="flex" alignItems="center" variant="h4">
-        {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), patientProfile?.fullName)}
+        {t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT)} {patientProfile?.fullName}
       </Typography>
     </Grid>
   );
