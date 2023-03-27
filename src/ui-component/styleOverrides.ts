@@ -192,15 +192,16 @@ export const MuiSlider = (textColor: string, disabledColor: string, bgColor: str
 });
 
 export const MuiAutocomplete = (
-  secondaryColor: string,
-  darkColor: string,
+  primary100: string,
+  primaryDarkGreen: string,
   iconColor: string,
   borderRadius: number
 ) => ({
   styleOverrides: {
     root: {
       '& .MuiAutocomplete-tag': {
-        background: secondaryColor,
+        background: primary100,
+        color: primaryDarkGreen,
         borderRadius: 4,
         '.MuiChip-deleteIcon': {
           color: iconColor

@@ -44,6 +44,7 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
   const textColorPrimaryDark = theme.palette.primary.dark;
   const buttonBorderColor = theme.palette.primary.main;
   const secondaryMain = theme.palette.secondary.main;
+  const primary100 = theme.palette.primary[100];
 
   return {
     MuiButton: MuiButton(buttonBorderColor),
@@ -58,7 +59,7 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
     MuiInputBase: MuiInputBase(textColorDark, textColorSecondary),
     MuiOutlinedInput: MuiOutlinedInput(outlinedFilled, bgColor, 12, lightColor, lightColor),
     MuiSlider: MuiSlider(lightColor, theme.palette.grey[300], paperColor),
-    MuiAutocomplete: MuiAutocomplete(menuSelectedBack, textColorDark, theme.palette.secondary[200], borderRadius),
+    MuiAutocomplete: MuiAutocomplete(primary100, textColorPrimaryDark, theme.palette.secondary[200], borderRadius),
     MuiDivider: MuiDivider(theme.palette.divider),
     MuiSelect,
     MuiAvatar: MuiAvatar(textColorPrimaryDark, theme.palette.primary[200]),

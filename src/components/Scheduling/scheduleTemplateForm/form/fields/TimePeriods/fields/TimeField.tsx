@@ -64,7 +64,8 @@ const TimeField = ({ index, fieldLabel, fieldName, dataCy }: ITimeFieldProps) =>
 
   const formattedParams = {
     inputProps: {
-      'data-cy': dataCy
+      'data-cy': dataCy,
+      placeholder: '--:--'
     }
   };
 

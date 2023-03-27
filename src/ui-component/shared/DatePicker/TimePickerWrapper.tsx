@@ -50,18 +50,15 @@ const TimePickerWrapper = ({
       onChange={(date) => onChange(handleLimitationConfig(date))}
       renderInput={(params: MuiTextFieldPropsType) => (
         <TextField
-          {...params}
           fullWidth
           sx={{
             svg: { color: theme.palette.primary.main },
             'caret-color': 'transparent'
           }}
-          inputProps={{
-            placeholder: '--:--'
-          }}
           onKeyDown={(e) => e.preventDefault()}
           onClick={() => setIsOpen(true)}
           data-cy={CypressIds.COMMON_TIME_PICKER}
+          {...params}
           error={isError}
           helperText={errorMessage ?? ''}
         />
