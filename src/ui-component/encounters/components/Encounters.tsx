@@ -65,7 +65,7 @@ const Encounters = () => {
                   />
                 ))}
                 <TablePagination
-                  labelRowsPerPage={t(Translation.COMMON_PAGINATION_ROWS_COUNT)}
+                  labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
                   rowsPerPageOptions={[5, 25, 40, 100]}
                   component="div"
                   count={encountersList.totalItems}

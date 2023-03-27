@@ -92,7 +92,7 @@ const PatientList = () => {
         )}
       </TableContainer>
       <TablePagination
-        labelRowsPerPage={<>{t(Translation.COMMON_PAGINATION_ROWS_COUNT)}</>}
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={patientsList.totalItems}
         rowsPerPage={patientsList.pageSize}
