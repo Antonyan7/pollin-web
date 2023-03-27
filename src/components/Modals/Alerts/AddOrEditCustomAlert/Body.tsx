@@ -13,7 +13,7 @@ const Body = () => {
   const { ...descriptionFieldProps } = descriptionField;
 
   return (
-    <Grid container spacing={2} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'scroll' }}>
+    <Grid container spacing={2} sx={{ maxHeight: '400px', minWidth: '500px', overflowY: 'auto' }}>
       <Grid item xs={12}>
         <TextField
           {...titleFieldProps}
