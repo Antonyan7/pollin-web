@@ -14,6 +14,22 @@ import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
+import CircularLoading from '@ui-component/circular-loading';
+
+const MuiTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(() => {
+  const theme = useTheme();
+
+  return {
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: theme.palette.primary.main,
+      fontSize: theme.typography.pxToRem(12),
+      padding: paddings.all12
+    }
+  };
+});
+
 const PatientAlertView = () => {
   const router = useRouter();
   const rowId = router.query.id as string;
@@ -27,17 +43,11 @@ const PatientAlertView = () => {
     if (rowId) {
       dispatch(patientsMiddleware.getPatientAlertDetails(rowId));
     }
-  }, [rowId]);
 
-  const MuiTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(() => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: theme.palette.primary.main,
-      fontSize: theme.typography.pxToRem(12),
-      padding: paddings.all12
-    }
-  }));
+    return () => {
+      dispatch(patientsMiddleware.resetPatientAlerts());
+    };
+  }, [rowId]);
 
   return (
     <Stack
@@ -47,105 +57,124 @@ const PatientAlertView = () => {
       px={paddings.leftRight24}
       py={paddings.topBottom12}
       borderRadius={borderRadius.radius16}
+      sx={{
+        ...(!isPatientAlertViewOpen && patientCustomAlerts.length >= 10
+          ? {
+              display: 'none'
+            }
+          : null)
+      }}
     >
-      {patientAlertDetails?.length && isPatientAlertViewOpen ? (
+      {patientAlertDetails.length ? (
         <>
-          {patientAlertDetails.map((titleContent: AlertDetailsProps, index) => (
-            <Grid container>
-              <Grid item container alignItems="center" justifyContent="center">
-                <Grid item xs={0.5}>
-                  <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
-                </Grid>
-                <Grid item xs={10.5}>
-                  <MuiTooltip
-                    followCursor
-                    title={
-                      titleContent.id ? (
-                        <>
-                          {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
-                        </>
-                      ) : null
-                    }
-                  >
-                    <Box sx={{ width: 'fit-content' }}>
-                      <Typography fontWeight={500} variant="subtitle1">
-                        {titleContent.title}
-                      </Typography>
-                      {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
-                        <Typography
-                          variant="subtitle2"
-                          color={theme.palette.common.black}
-                          marginBottom={margins.bottom8}
+          {isPatientAlertViewOpen ? (
+            <>
+              {patientAlertDetails.map((titleContent: AlertDetailsProps, index) => (
+                <Grid container>
+                  <Grid item container alignItems="center" justifyContent="center">
+                    <Grid item xs={0.5}>
+                      <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
+                    </Grid>
+                    <Grid item xs={10.5}>
+                      <MuiTooltip
+                        followCursor
+                        title={
+                          titleContent.id ? (
+                            <>
+                              {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
+                            </>
+                          ) : null
+                        }
+                      >
+                        <Box sx={{ width: 'fit-content' }}>
+                          <Typography fontWeight={500} variant="subtitle1">
+                            {titleContent.title}
+                          </Typography>
+                          {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
+                            <Typography
+                              variant="subtitle2"
+                              color={theme.palette.common.black}
+                              marginBottom={margins.bottom8}
+                            >
+                              {message.title}
+                            </Typography>
+                          ))}
+                        </Box>
+                      </MuiTooltip>
+                    </Grid>
+                    <Grid item xs={0.5} container alignItems="center" justifyContent="center">
+                      {patientAlertDetails[index].isEditable && patientCustomAlerts.length < 10 ? (
+                        <Button
+                          sx={{ color: theme.palette.warning.dark, mr: margins.right32 }}
+                          variant="text"
+                          onClick={() => {
+                            dispatch(
+                              viewsMiddleware.openModal({
+                                name: ModalName.AddOrEditCustomAlertModal,
+                                props: {
+                                  alertId: titleContent.id,
+                                  title: titleContent.title,
+                                  description: titleContent.messages[0].title
+                                }
+                              })
+                            );
+                          }}
                         >
-                          {message.title}
-                        </Typography>
-                      ))}
-                    </Box>
-                  </MuiTooltip>
+                          <Typography variant="subtitle2" color={theme.palette.warning.dark}>
+                            {t(Translation.COMMON_BUTTON_EDIT_LABEL)}
+                          </Typography>
+                        </Button>
+                      ) : null}
+                    </Grid>
+                    <Grid item xs={0.5} container alignItems="center" justifyContent="center">
+                      {index === 0 ? (
+                        <Button
+                          sx={{ color: theme.palette.warning.dark }}
+                          onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen(false))}
+                        >
+                          <CloseIcon sx={{ fontSize: theme.typography.pxToRem(20) }} />
+                        </Button>
+                      ) : null}
+                    </Grid>
+                  </Grid>
                 </Grid>
-                <Grid item xs={0.5} container alignItems="center" justifyContent="center">
-                  {patientAlertDetails[index].isEditable ? (
-                    <Button
-                      sx={{ color: theme.palette.warning.dark, mr: margins.right32 }}
-                      variant="text"
-                      onClick={() => {
-                        dispatch(
-                          viewsMiddleware.openModal({
-                            name: ModalName.AddOrEditCustomAlertModal,
-                            props: {
-                              alertId: titleContent.id,
-                              title: titleContent.title,
-                              description: titleContent.messages[0].title
-                            }
-                          })
-                        );
-                      }}
-                    >
-                      <Typography variant="subtitle2" color={theme.palette.warning.dark}>
-                        {t(Translation.COMMON_BUTTON_EDIT_LABEL)}
-                      </Typography>
-                    </Button>
-                  ) : null}
-                </Grid>
-                <Grid item xs={0.5} container alignItems="center" justifyContent="center">
-                  {index === 0 ? (
-                    <Button
-                      sx={{ color: theme.palette.warning.dark }}
-                      onClick={() => dispatch(patientsMiddleware.isPatientAlertViewOpen(false))}
-                    >
-                      <CloseIcon sx={{ fontSize: theme.typography.pxToRem(20) }} />
-                    </Button>
-                  ) : null}
-                </Grid>
-              </Grid>
-            </Grid>
-          ))}
-        </>
-      ) : null}
+              ))}
+            </>
+          ) : null}
 
-      {patientCustomAlerts.length < 9 ? (
-        <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
-          <Button
-            sx={{
-              color: theme.palette.warning.dark
-            }}
-            size="small"
-            onClick={() => {
-              dispatch(
-                viewsMiddleware.openModal({
-                  name: ModalName.AddOrEditCustomAlertModal,
-                  props: {}
-                })
-              );
-            }}
-          >
-            <Stack flexBasis={24}>
-              <AddIcon />
+          {patientCustomAlerts.length < 10 ? (
+            <Stack
+              direction="row"
+              alignItems="center"
+              justifyContent="center"
+              color={theme.palette.warning.dark}
+              gap={1}
+            >
+              <Button
+                sx={{
+                  color: theme.palette.warning.dark
+                }}
+                size="small"
+                onClick={() => {
+                  dispatch(
+                    viewsMiddleware.openModal({
+                      name: ModalName.AddOrEditCustomAlertModal,
+                      props: {}
+                    })
+                  );
+                }}
+              >
+                <Stack flexBasis={24}>
+                  <AddIcon />
+                </Stack>
+                <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
+              </Button>
             </Stack>
-            <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
-          </Button>
-        </Stack>
-      ) : null}
+          ) : null}
+        </>
+      ) : (
+        <CircularLoading />
+      )}
     </Stack>
   );
 };
