@@ -9,8 +9,8 @@ const modified = danger.git.modified_files;
 const noTicketNumber = pr.title.match(/^(NO_TICKET:)\s\w+/);
 const dependabotRequest = pr.title.match(/(.*)(bump)/);
 
-const ticketIDPattern = /(PPM-\d+|PCP-\d+)/; // valid: "PPM-123", "PCP-123"
-const prTitlePattern = /(((PPM-\d+|PCP-\d+)(\(\d+\))?),?)+:\s\w+/; // valid: "PPM-108: Setup Danger" or "PPM-108(2),PCM-109: Setup Danger & Run it on CI"
+const ticketIDPattern = /(TEAMA-\d+|TEAMB-\d+)/; // valid: "TEAMA-123", "TEAMB-123"
+const prTitlePattern = /(((TEAMA-\d+|TEAMB-\d+)(\(\d+\))?),?)+:\s\w+/; // valid: "TEAMA-108: Setup Danger" or "TEAMA-108(2),PCM-109: Setup Danger & Run it on CI"
 const jiraLink = 'https://fhhealth.atlassian.net/browse/';
 
 let errorCount = 0;
@@ -26,7 +26,7 @@ const bigPRThreshold = 500;
 if (!noTicketNumber && !dependabotRequest) {
   if (!prTitlePattern.test(pr.title)) {
     fail(
-      'PR title is incorrect.Follow pattern: `PPM-{number}[({number})][,PCP-{number}[({number})]]: {short description}`, where`[({number})]` is optional repeated PR for the same ticket, `[,PPM-{number}[({number})]]` is optional additional resolved ticket in current PR.Examples: `PPM-108: Setup Danger`, `PCP-108(2): Setup Danger`, `PPM-108,PCP-109: Setup Danger & Run it on CI`.'
+      'PR title is incorrect.Follow pattern: `TEAMA-{number}[({number})][,TEAMB-{number}[({number})]]: {short description}`, where`[({number})]` is optional repeated PR for the same ticket, `[,TEAMA-{number}[({number})]]` is optional additional resolved ticket in current PR.Examples: `TEAMA-108: Setup Danger`, `TEAMB-108(2): Setup Danger`, `TEAMA-108,TEAMB-109: Setup Danger & Run it on CI`.'
     );
   }
 
