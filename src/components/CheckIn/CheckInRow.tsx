@@ -4,7 +4,8 @@ import { statuses } from '@components/CheckIn/checkInStatuses';
 import { TableCell, TableRow, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
-import { ICheckInAppointment } from 'types/reduxTypes/bookingStateTypes';
+import { paddings } from 'themes/themeConstants';
+import { AppointmentStatus, ICheckInAppointment } from 'types/reduxTypes/bookingStateTypes';
 
 import { CheckedIcon } from '@assets/icons/CheckedIcon';
 import CustomCheckbox from '@ui-component/orders/OrderGroupCheckbox';
@@ -55,9 +56,11 @@ const CheckInRow = ({ row }: { row: ICheckInAppointment }) => {
         <Chip
           sx={{
             background: status?.backgroundColor,
-            color: status?.textColor
+            color: status?.textColor,
+            pr: paddings.right2,
+            pl: paddings.left2
           }}
-          label={row.status}
+          label={AppointmentStatus[row.status]}
           size="small"
           chipColor="notActive"
         />
