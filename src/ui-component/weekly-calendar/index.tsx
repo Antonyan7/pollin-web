@@ -28,7 +28,7 @@ const Calendar = () => {
   const scheduleSingleTemplate = useAppSelector(schedulingSelector.scheduleSingleTemplate);
 
   const initialDate: Date = useMemo(() => {
-    const todaysDay = getWeekDayIndex(new Date());
+    const todayWeekDay = getWeekDayIndex(new Date());
     let selectedWeekDays: number[] = [];
     let nearestDayOfWeek: number;
 
@@ -36,10 +36,10 @@ const Calendar = () => {
       selectedWeekDays = [...selectedWeekDays, ...item.days];
     });
 
-    if (selectedWeekDays.includes(todaysDay)) {
-      nearestDayOfWeek = todaysDay;
+    if (selectedWeekDays.includes(todayWeekDay)) {
+      nearestDayOfWeek = todayWeekDay;
     } else {
-      const greaterDays = selectedWeekDays.filter((item: number) => item > todaysDay);
+      const greaterDays = selectedWeekDays.filter((item: number) => item > todayWeekDay);
 
       if (greaterDays.length) {
         nearestDayOfWeek = Math.min(...greaterDays);
@@ -48,7 +48,7 @@ const Calendar = () => {
       }
     }
 
-    const nearestDate = setHours(subDays(new Date(), todaysDay - nearestDayOfWeek), 15);
+    const nearestDate = setHours(subDays(new Date(), todayWeekDay - nearestDayOfWeek), 15);
 
     setDate(nearestDate);
 

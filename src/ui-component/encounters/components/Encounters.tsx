@@ -7,6 +7,7 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { IEncounterList } from 'types/reduxTypes/patient-emrStateTypes';
 
 import CircularLoading from '@ui-component/circular-loading';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import EncounterNotesHeader from './EncounterNotesHeader';
 import EncounterNoteThumbnail from './EncounterNoteThumbnail';
@@ -60,11 +61,7 @@ const Encounters = () => {
                     title={encounter.title}
                     index={index}
                     contentPreview={encounter.contentPreview}
-                    createdOn={new Date(encounter.createdOn).toLocaleDateString('en-us', {
-                      day: 'numeric',
-                      year: 'numeric',
-                      month: 'short'
-                    })}
+                    createdOn={encounter.createdOn ? DateUtil.formatDateOnly(encounter.createdOn) : ''}
                   />
                 ))}
                 <TablePagination

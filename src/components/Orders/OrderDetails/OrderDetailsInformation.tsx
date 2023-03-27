@@ -9,6 +9,7 @@ import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 const OrderDetailsInformation = ({ isEdit }: { isEdit: boolean }) => {
   const [t] = useTranslation();
@@ -55,7 +56,7 @@ const OrderDetailsInformation = ({ isEdit }: { isEdit: boolean }) => {
             <Grid item xs={6}>
               <Stack color={theme.palette.common.black}>{cancellation.reason}</Stack>
               <Stack mt={3} color={theme.palette.common.black}>
-                {!!cancellation.date && cancellation.date !== '-'
+                {!!cancellation.date && !isDashValue(cancellation.date)
                   ? DateUtil.formatFullDate(cancellation.date)
                   : cancellation.date ?? ''}
               </Stack>

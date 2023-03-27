@@ -4,11 +4,11 @@ import { Chip, Divider, Grid, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { findStatusByID } from 'helpers/tasks';
 import { margins, paddings } from 'themes/themeConstants';
 
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 const Body = () => {
   const [t] = useTranslation();
@@ -34,7 +34,9 @@ const Body = () => {
       </Grid>
       <Grid item xs={6}>
         <Typography variant="subtitle1" color={(theme) => (isOverdue ? theme.palette.error.main : '')}>
-          {`${format(new Date(taskDetails.dueDate), 'MMM dd, yyyy HH:mm')} [EST]`}
+          {taskDetails.dueDate && !isDashValue(taskDetails.dueDate)
+            ? DateUtil.formatFullDate(taskDetails.dueDate)
+            : '-'}
         </Typography>
       </Grid>
       <Grid item xs={4}>

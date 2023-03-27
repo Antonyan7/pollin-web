@@ -16,8 +16,9 @@ import {
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { SortOrder } from 'types/patient';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface HeadCell {
   id: keyof IPatientAppointment;
@@ -106,7 +107,7 @@ const AppointmentsListTable = () => {
                 return (
                   <TableRow key={id}>
                     <TableCell sx={{ textDecoration: appointmentTypeStyle }}>{type}</TableCell>
-                    <TableCell>{format(new Date(date), 'MMM dd, yyyy')}</TableCell>
+                    <TableCell>{date ? DateUtil.formatDateOnly(date) : ''}</TableCell>
                     <TableCell>{time}</TableCell>
                     <TableCell>{status}</TableCell>
                   </TableRow>

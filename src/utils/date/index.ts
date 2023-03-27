@@ -15,25 +15,6 @@ export const getWeekDayIndex = (date: Date | string) => {
   return longWeekDays.indexOf(weekName);
 };
 
-export const compareStartAndEndTime = (startDate: Date | string | null, endDate: Date | string | null) => {
-  if (!startDate || !endDate) {
-    return false;
-  }
-
-  const today = new Date();
-  const start = new Date(startDate);
-  const end = new Date(endDate);
-
-  start.setFullYear(today.getFullYear());
-  start.setMonth(today.getMonth());
-  start.setDate(today.getDate());
-  end.setFullYear(today.getFullYear());
-  end.setMonth(today.getMonth());
-  end.setDate(today.getDate());
-
-  return start.valueOf() > end.valueOf();
-};
-
 export const setTimeToDate = (dateString: DateAcceptableType, targetDate: Date = DateUtil.representInClinicDate()) => {
   const timeString = DateUtil.convertToTimeOnly(dateString);
   const [hours, minutes, seconds] = timeString.split(':').map((value) => +value);

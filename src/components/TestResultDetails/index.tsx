@@ -4,7 +4,6 @@ import { Box, Button, CircularProgress, Divider, Grid, Link, Stack, Typography, 
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
-import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { FinalResultChipColor } from 'types/results';
@@ -13,8 +12,6 @@ import Chip from '@ui-component/patient/Chip';
 import { DateUtil } from '@utils/date/DateUtil';
 
 import ReportSection from './ReportSection';
-
-const dateFormatter = (date: string) => format(new Date(date), 'MMM dd, yyyy');
 
 const DetailCellRenderer = ({ title, value }: { title: string; value: string }) => {
   const theme = useTheme();
@@ -96,11 +93,11 @@ const TestResultDetails: React.FC = () => {
             </Typography>
             <DetailCellRenderer
               title={`${t(Translation.PAGE_INPUT_RESULTS_TEST_DATES_DATE_COLLECTED)}:`}
-              value={dateFormatter(testResultsDetails.dates?.collected)}
+              value={DateUtil.formatDateOnly(testResultsDetails.dates?.collected)}
             />
             <DetailCellRenderer
               title={`${t(Translation.PAGE_INPUT_RESULTS_TEST_DATES_DATE_ORDERED)}:`}
-              value={dateFormatter(testResultsDetails.dates?.ordered)}
+              value={DateUtil.formatDateOnly(testResultsDetails.dates?.ordered)}
             />
           </Grid>
           <Grid item xs={12} sm={4} display="flex">

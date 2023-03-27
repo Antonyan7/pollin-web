@@ -12,6 +12,7 @@ import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
 import AvatarIcon from '@assets/icons/AvatarIcon';
 import Chip from '@ui-component/patient/Chip';
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 interface IPatientTableRow {
   row: IPatientListData;
@@ -29,7 +30,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
   };
 
   const formattedDateOfBirth =
-    row.dateOfBirth && row.dateOfBirth !== '-' ? DateUtil.formatDateOnly(row.dateOfBirth) : '-';
+    row.dateOfBirth && !isDashValue(row.dateOfBirth) ? DateUtil.formatDateOnly(row.dateOfBirth) : '-';
 
   return (
     <TableRow

@@ -5,7 +5,8 @@ import { styled, TextField, TextFieldProps, useTheme } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { format } from 'date-fns';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
   color: theme.palette.primary.main
@@ -24,7 +25,7 @@ const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDat
   };
   const onDateUpdate = (date: Date | null) => {
     if (date) {
-      onChange(format(new Date(date), 'yyyy-MM-dd'));
+      onChange(DateUtil.formatDateOnly(date));
     }
   };
 
