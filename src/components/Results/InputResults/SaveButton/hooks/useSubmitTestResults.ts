@@ -69,6 +69,8 @@ const useSubmitTestResults = () => {
               });
             } catch (e) {
               dispatch(resultsMiddleware.setIsTestResultsSubmitLoading(false));
+
+              return null;
             }
           } else {
             allAttachments.push({
@@ -108,6 +110,8 @@ const useSubmitTestResults = () => {
       });
 
       await dispatch(resultsMiddleware.submitTestResults(testResults));
+
+      return null;
     },
     [defaultTestResults, isTestResultsSubmitLoading]
   );
