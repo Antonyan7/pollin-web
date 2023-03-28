@@ -87,7 +87,6 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
 
     router.push(`/patient-emr/details/${patientId}/orders`);
   };
-
   const atLeastOneSelectedItemExists = useMemo(
     () =>
       editableOrderDetails.some((orderGroup) =>
@@ -95,14 +94,11 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
       ),
     [editableOrderDetails]
   );
-
   const openedModals = useAppSelector(viewsSelector.modals);
   const isCancelModalOpened = openedModals.find((modal) => modal.name === ModalName.CancelOrderCreationModal);
-
   const openCancellationModal = () => {
     dispatch(viewsMiddleware.openModal({ name: ModalName.CancelOrderCreationModal, props: null }));
   };
-
   const isRouteChangeNotAllowed =
     (needValidation && atLeastOneSelectedItemExists) || isValidationHappened || isDirtyComment;
 
@@ -152,7 +148,10 @@ const OrderActions = ({ isEdit }: { isEdit: boolean }) => {
         <Button
           data-cy={CypressIds.PAGE_CREATE_ORDER_BUTTON_NEXT}
           sx={{
-            '&.Mui-disabled': { background: (theme) => theme.palette.primary.light }
+            '&.Mui-disabled': {
+              background: (theme) => theme.palette.primary.light,
+              color: (theme) => theme.palette.common.white
+            }
           }}
           onClick={onNextButtonClick}
           disabled={!atLeastOneSelectedItemExists}
