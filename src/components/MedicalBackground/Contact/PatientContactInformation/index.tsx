@@ -18,7 +18,7 @@ const PatientContactInformation = () => {
     if (typeof router.query.id === 'string') {
       dispatch(patientsMiddleware.getMedicalContactInformation(router.query.id));
     }
-  }, [router.query.id]);
+  }, [router.query.id, isContactInformationButtonClicked]);
 
   const onEditButtonClick = () => {
     dispatch(patientsMiddleware.changeContactInformationEditButtonState());

@@ -1,9 +1,16 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { AddManuallyAddressModalProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import {
+  AddManuallyAddressModalProps,
+  DropdownOptionType,
+  IDropdownOption
+} from '@axios/patientEmr/managerPatientEmrTypes';
+import { getDropdownByType } from '@components/MedicalBackground/helpers';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid, useTheme } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { borderRadius, borders } from 'themes/themeConstants';
 
@@ -13,6 +20,7 @@ const Province = () => {
   const { control } = useFormContext<AddManuallyAddressModalProps>();
   const [t] = useTranslation();
   const provinceFieldName = 'province';
+  const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const provinceFieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MANUALLY_MODAL_PROVINCE);
   const { field, fieldState } = useController({
     name: provinceFieldName,
@@ -23,6 +31,7 @@ const Province = () => {
   const provinceHelperText = error?.message;
   const provinceErrorText = !!error?.message;
   const theme = useTheme();
+  const provinceOptions = getDropdownByType(dropdownOptions, DropdownOptionType.Province)?.options;
 
   return (
     <Grid item xs={12}>
@@ -39,7 +48,7 @@ const Province = () => {
         onChange={(_, value) => value && typeof value === 'object' && 'id' in value && onChange(value.title)}
         onBlur={onBlur}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        options={[{ id: '123', title: 'ON' }]} // till endpoint will be ready
+        options={provinceOptions as IDropdownOption[]}
         getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
         clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
         renderInputProps={{

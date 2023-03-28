@@ -870,6 +870,7 @@ const updatePatientContactInformation =
       const response = await API.patients.updatePatientContactInformation(patientId, contactData);
 
       if (response) {
+        dispatch(patientsMiddleware.changeContactInformationEditButtonState());
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,

@@ -93,6 +93,10 @@ const isContactInformationLoading = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.isContactInformationLoading
 );
+const isContactInformationDataUpdating = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.isContactInformationDataUpdating
+);
 const generalHealth = createSelector([selector], (state) => state.medicalBackground.contact.generalHealth);
 const contactInformation = createSelector(
   [selector],
@@ -197,6 +201,7 @@ export default {
   currentPatientId,
   patientProfile,
   isPatientHighlightsDetailsLoading: isPatientHighlightsLoading,
+  isContactInformationDataUpdating,
   patientHighlightHeader,
   patientHighlights,
   encounterDetails,

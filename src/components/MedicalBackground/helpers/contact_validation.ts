@@ -77,7 +77,7 @@ export const patientContactInformationValidationSchema = object({
   [ContactInformationFormFields.PatientName]: object({
     firstName: string().required(),
     lastName: string().required(),
-    middleName: string().notRequired()
+    middleName: string().notRequired().nullable()
   }),
   [ContactInformationFormFields.PreferredName]: object({
     value: string().required()
@@ -87,23 +87,23 @@ export const patientContactInformationValidationSchema = object({
   }),
   [ContactInformationFormFields.PrimaryAddress]: object({
     streetAddress: string().required(),
-    unitNumber: string().notRequired()
+    unitNumber: string().notRequired().nullable()
   }),
   [ContactInformationFormFields.MailingAddress]: object({
     streetAddress: string().required(),
-    unitNumber: string().notRequired()
+    unitNumber: string().notRequired().nullable()
   }),
   [ContactInformationFormFields.OHIP]: object({
     exists: boolean(),
     number: string().when('exists', {
       is: true,
       then: string().required(),
-      otherwise: string().notRequired()
+      otherwise: string().notRequired().nullable()
     }),
     versionCode: string().when('exists', {
       is: true,
       then: string().required(),
-      otherwise: string().notRequired()
+      otherwise: string().notRequired().nullable()
     })
   })
 });
