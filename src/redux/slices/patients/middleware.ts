@@ -4,6 +4,7 @@ import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/bookin
 import {
   AddManuallyAddressModalProps,
   ICreateEncounterAddendumRequest,
+  IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
   IFertilityHistory,
   IGeneralHealthProps,
@@ -106,7 +107,8 @@ const {
   setManuallyAddressForPrimary,
   setIsContactInformationUpdateLoading,
   setIsFertilityHistoryDataUpdating,
-  setIsFemalePregnancyInformationDataUpdating
+  setIsFemalePregnancyInformationDataUpdating,
+  setIsFemalePatientMenstrualCycleHistoryDataUpdating
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -693,6 +695,27 @@ const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(false));
 };
 
+const updateFemalePatientMenstrualCycleHistory =
+  (patientId: string, data: IFemalePatientMenstrualCycleHistoryProps, onSave: (isSuccessfullySaved: boolean) => void) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(true));
+
+    try {
+      const response = await API.patients.updateFemalePatientMenstrualCycleHistory(patientId, data);
+
+      if (response) {
+        dispatch(getFemalePatientMenstrualCycleHistory(patientId));
+        onSave(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+      onSave(false);
+    }
+
+    dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(false));
+  };
+
 const getFemalePatientGynaecologicalHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(true));
 
@@ -955,5 +978,6 @@ export default {
   getFemalePatientMenstrualCycleHistory,
   getFemalePatientGynaecologicalHistory,
   updateFertilityHistory,
-  updateFemalePregnancyInformation
+  updateFemalePregnancyInformation,
+  updateFemalePatientMenstrualCycleHistory
 };

@@ -3,8 +3,8 @@ import { useTranslation } from 'react-i18next';
 import MedicalBackgroundCard from '@components/MedicalBackground/layout';
 import { Translation } from 'constants/translations';
 
-import EditModeContent from './editModeContent';
-import ViewModeContent from './viewModeContent';
+import EditModeContent from './edit';
+import ViewModeContent from './view';
 
 const FertilityHistory = () => {
   const [t] = useTranslation();

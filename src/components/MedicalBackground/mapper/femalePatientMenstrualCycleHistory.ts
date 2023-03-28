@@ -1,6 +1,8 @@
+import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
+import { MedicalBackgroundItemType } from '../components/types';
 import { createObjectWithTitle, CustomAccessorItem } from '../helpers/mapper';
 
 const mappingPattern = {
@@ -11,22 +13,48 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CYCLE_LENGTH)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.number ?? ''
+    customAccessor: (item: CustomAccessorItem) => item.number ?? '',
+    componentData: {
+      type: MedicalBackgroundItemType.Input
+    }
   },
-  firstDayOfLastPeriod: createObjectWithTitle(
-    t(
-      Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_FIRST_DAY_OF_LAST_PERIOD
-    )
-  ),
-  flow: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_FLOW)
-  ),
-  daysOfBleeding: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_DAYS_OF_BLEEDING)
-  ),
-  pain: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_PAIN)
-  ),
+  firstDayOfLastPeriod: {
+    ...createObjectWithTitle(
+      t(
+        Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_FIRST_DAY_OF_LAST_PERIOD
+      )
+    ),
+    componentData: {
+      type: MedicalBackgroundItemType.Date
+    }
+  },
+  flow: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_FLOW)
+    ),
+    componentData: {
+      type: MedicalBackgroundItemType.Dropdown,
+      dropdownType: DropdownOptionType.MenstrualFlow
+    }
+  },
+  daysOfBleeding: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_DAYS_OF_BLEEDING)
+    ),
+    componentData: {
+      type: MedicalBackgroundItemType.Dropdown,
+      dropdownType: DropdownOptionType.DaysOfBleeding
+    }
+  },
+  pain: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_PAIN)
+    ),
+    componentData: {
+      type: MedicalBackgroundItemType.Dropdown,
+      dropdownType: DropdownOptionType.MenstrualPain
+    }
+  },
   clots: createObjectWithTitle(
     t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CLOTS)
   ),
