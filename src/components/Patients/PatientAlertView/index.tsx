@@ -36,6 +36,7 @@ const PatientAlertView = () => {
   const theme = useTheme();
   const patientAlertDetails = useAppSelector(patientsSelector.patientAlertDetails);
   const isPatientAlertViewOpen = useAppSelector(patientsSelector.isPatientAlertViewOpen);
+  const isPatientAlertDetailsLoading = useAppSelector(patientsSelector.isPatientAlertDetailsLoading);
   const [t] = useTranslation();
   const patientCustomAlerts = patientAlertDetails.filter((alert) => alert.id);
 
@@ -65,7 +66,7 @@ const PatientAlertView = () => {
           : null)
       }}
     >
-      {patientAlertDetails.length ? (
+      {!isPatientAlertDetailsLoading ? (
         <>
           {isPatientAlertViewOpen ? (
             <>
