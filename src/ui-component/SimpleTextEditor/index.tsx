@@ -158,7 +158,7 @@ const SimpleTextEditor = ({
                 >
                   {recentAppointments?.map(({ id, type, date }) => (
                     <MenuItem value={id} key={id}>
-                      {type} | {date}
+                      {type} | {DateUtil.formatFullDate(date)}
                     </MenuItem>
                   ))}
                 </BaseSelectWithLoading>
