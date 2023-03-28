@@ -11,6 +11,7 @@ import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 const FormActions = ({ isSaveDisabled }: { isSaveDisabled: boolean }) => {
   const [t] = useTranslation();
@@ -30,9 +31,11 @@ const FormActions = ({ isSaveDisabled }: { isSaveDisabled: boolean }) => {
     <DialogActions sx={{ padding: `${paddings.top32} ${paddings.right8} ${paddings.bottom24} ${paddings.left8}` }}>
       <Grid container justifyContent="space-between">
         <Grid item>
-          <StyledButton data-cy={cancelButtonLabelCyId} variant="outlined" onClick={onCancelAppointmentClick}>
-            {cancelButtonLabel}
-          </StyledButton>
+          {details?.appointment.status !== AppointmentStatus.Done ? (
+            <StyledButton data-cy={cancelButtonLabelCyId} variant="outlined" onClick={onCancelAppointmentClick}>
+              {cancelButtonLabel}
+            </StyledButton>
+          ) : null}
         </Grid>
         <Grid item>
           <ButtonWithLoading
