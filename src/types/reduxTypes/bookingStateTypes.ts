@@ -195,3 +195,5 @@ export enum AppointmentStatus {
   Done = 'Done',
   RunningLate = 'Running Late'
 }
+
+export type AppointmentStatusEnumKey = keyof typeof AppointmentStatus;

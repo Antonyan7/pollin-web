@@ -12,7 +12,7 @@ import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { AppointmentStatus, ICancelStatusItem } from 'types/reduxTypes/bookingStateTypes';
+import { AppointmentStatus, AppointmentStatusEnumKey, ICancelStatusItem } from 'types/reduxTypes/bookingStateTypes';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
 
@@ -48,8 +48,8 @@ const StatusAppointmentLabel = () => {
             {...fieldProps}
             {...register('status')}
           >
-            <MenuItem disabled value={AppointmentStatus.Booked} sx={{ display: 'none' }}>
-              {AppointmentStatus.Booked}
+            <MenuItem disabled value={(field.value as string) ?? ''} sx={{ display: 'none' }}>
+              {AppointmentStatus[field.value as AppointmentStatusEnumKey]}
             </MenuItem>
             {appointmentStatusData?.map((statusItem: ICancelStatusItem) => (
               <MenuItem value={statusItem.id} key={statusItem.id}>

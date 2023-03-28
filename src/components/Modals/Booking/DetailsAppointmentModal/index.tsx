@@ -12,6 +12,7 @@ import { viewsMiddleware } from 'redux/slices/views';
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 import BaseModal from '@ui-component/Modal/BaseModal';
 import { DateUtil } from '@utils/date/DateUtil';
+import { AppointmentStatus, AppointmentStatusEnumKey } from 'types/reduxTypes/bookingStateTypes';
 
 export interface DetailsAppointmentModalProps {
   appointmentId: string;
@@ -73,7 +74,7 @@ const DetailsAppointmentModal = ({ appointmentId }: DetailsAppointmentModalProps
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_STATUS)}
-              body={details?.appointment.status}
+              body={AppointmentStatus[details?.appointment.status as AppointmentStatusEnumKey]}
             />
             <DialogContentRow
               subtitle={t(Translation.MODAL_APPOINTMENTS_DETAILS_REASON)}
