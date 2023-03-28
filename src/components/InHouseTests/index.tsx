@@ -171,6 +171,7 @@ const InHouseSpecimensList = () => {
         </TableContainer>
         {isResultsNotFound && <NoResultsFound label={inHouseEmptyStateLabel} />}
         <TablePagination
+          labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
           component="div"
           count={specimensList.totalItems}
           rowsPerPage={specimensList.pageSize}

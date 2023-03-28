@@ -139,6 +139,7 @@ const OrderResults = () => {
         </>
       ) : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={orderResultsByPatientList.totalItems}
         rowsPerPage={orderResultsByPatientList.pageSize}

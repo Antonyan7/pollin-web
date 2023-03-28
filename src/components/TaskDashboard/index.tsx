@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ITasksListReqBody, TasksListSortFields } from '@axios/tasks/tasksManagerTypes';
 import NoResultsFound from '@components/NoResultsFound';
 import { PatientListStyled } from '@components/Patients/PatientListStyled';
@@ -8,6 +9,8 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { tasksMiddleware, tasksSelector } from '@redux/slices/tasks';
 import { margins } from 'themes/themeConstants';
 import { SortOrder } from 'types/patient';
+
+import { Translation } from '../../constants/translations';
 
 import Table from './TaskDashboardTable';
 
@@ -21,6 +24,7 @@ const TasksList = () => {
   const isTaskStatusUpdated = useAppSelector(tasksSelector.isTaskStatusUpdated);
   const isTaskReassigned = useAppSelector(tasksSelector.isTaskReassigned);
   const isTasksLoading = useAppSelector(tasksSelector.isTasksLoading);
+  const [t] = useTranslation();
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
@@ -57,6 +61,7 @@ const TasksList = () => {
         </Box>
       ) : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={totalItems}
         rowsPerPage={pageSize}

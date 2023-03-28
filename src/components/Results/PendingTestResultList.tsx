@@ -73,6 +73,7 @@ const PendingTestResultList = () => {
         </Box>
       ) : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={resultsList.totalItems}
         rowsPerPage={resultsList.pageSize}

@@ -33,6 +33,8 @@ import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
 import CircularLoading from '@ui-component/circular-loading';
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
+import { Translation } from '../../../constants/translations';
+
 import { headCellsData } from './headCellsData';
 import { SpecimensInTransportListRow } from './SpecimensInTransportListRow';
 
@@ -169,6 +171,7 @@ const SpecimensInTransportList = () => {
         />
       )}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={specimensList.totalItems}
         rowsPerPage={specimensList.pageSize}

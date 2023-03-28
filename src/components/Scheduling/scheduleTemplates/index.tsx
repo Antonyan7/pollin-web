@@ -64,11 +64,11 @@ const ScheduleTemplates = () => {
           <ScheduleTemplatesTable isScheduleTemplatesLoading={isScheduleTemplatesLoading} rows={rows} />
         </ScheduleTemplatesContext>
         <TablePagination
+          labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
           component="div"
           count={scheduleTemplates.totalItems}
           rowsPerPage={scheduleTemplates.pageSize}
           page={page}
-          labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
           onPageChange={handleChangePage}
         />
       </ScheduleBoxWrapper>

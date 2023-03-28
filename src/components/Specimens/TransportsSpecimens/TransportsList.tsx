@@ -126,6 +126,7 @@ const TransportsList = () => {
         </>
       ) : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={transportList.totalItems}
         rowsPerPage={transportList.pageSize}

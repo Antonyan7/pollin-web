@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   OrderListDataFilter,
   OrderListSortFields,
@@ -14,6 +15,7 @@ import { ISortOrder, SortOrder } from 'types/patient';
 
 import { capitalizeFirst } from '@utils/stringUtils';
 
+import { Translation } from '../../constants/translations';
 import EmrOrdersAndResultsTabs from '../../layout/PatientOrdersAndResultsLayout';
 
 import CreateNewOrderButton from './PatientCreateNewOrderButton';
@@ -28,6 +30,7 @@ const PatientOrdersList = () => {
   const [page, setPage] = useState<number>(0);
   const isOrdersListLoading = useAppSelector(ordersSelector.isOrdersListLoading);
   const router = useRouter();
+  const [t] = useTranslation();
   const { id: currentPatientId } = router.query;
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
@@ -85,6 +88,7 @@ const PatientOrdersList = () => {
         </Box>
       ) : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={ordersList.totalItems}
         rowsPerPage={ordersList.pageSize}

@@ -227,6 +227,7 @@ const AllTestsList = () => {
       ) : null}
       {showEmptyState ? <NoResultsFound label={inHouseSpecimensListEmptyMessage} /> : null}
       <TablePagination
+        labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
         component="div"
         count={specimensList.totalItems}
         rowsPerPage={specimensList.pageSize}
