@@ -25,10 +25,11 @@ import {
   StressLevel,
   VitaminSupplements
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form/fields';
-import { dispatch } from '@redux/hooks';
-import { patientsMiddleware } from '@redux/slices/patients';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 
 const PatientGeneralHealthEditForm = () => {
+  const isGeneralHealthDataUpdating = useAppSelector(patientsSelector.isGeneralHealthDataUpdating);
   const onCancelClick = () => {
     dispatch(patientsMiddleware.changeEditButtonClickState());
   };
@@ -58,7 +59,7 @@ const PatientGeneralHealthEditForm = () => {
       <Diet />
       <ActiveConsults />
       <AdditionalInformation />
-      <FormSubmit onClick={onCancelClick} />
+      <FormSubmit onClick={onCancelClick} isLoading={isGeneralHealthDataUpdating} />
     </>
   );
 };

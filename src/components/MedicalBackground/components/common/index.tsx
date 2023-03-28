@@ -53,4 +53,4 @@ export const RenderSingleValueAndNote = ({ value, note }: { value?: string | num
   </Grid>
 );
 
-export const RenderMappedNote = ({ note }: { note: string }) => (note ? <Grid mt={margins.top16}>{note}</Grid> : null);
+export const RenderMappedNote = ({ note }: { note?: string }) => (note ? <Grid mt={margins.top16}>{note}</Grid> : null);

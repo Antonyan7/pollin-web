@@ -2,10 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RenderMappedNote } from '@components/MedicalBackground/components/common';
 import FieldWrapper from '@components/MedicalBackground/components/common/FieldWrapper';
-import {
-  MedicalFormTitleNo,
-  MedicalFormTitleYes
-} from '@components/MedicalBackground/components/common/MedWithItemsView';
+import { MedicalFormTitleYes } from '@components/MedicalBackground/components/common/MedWithItemsView';
 import { GeneralHealthComponentsProps } from '@components/MedicalBackground/helpers';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -15,6 +12,8 @@ import { paddings } from 'themes/themeConstants';
 import { v4 } from 'uuid';
 
 import { DateUtil } from '@utils/date/DateUtil';
+
+import { NoTitleView } from './NoTitleView';
 
 const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const [t] = useTranslation();
@@ -40,7 +39,7 @@ const PastSurgery = ({ componentIndex }: GeneralHealthComponentsProps) => {
             </Grid>
           </>
         ) : (
-          <MedicalFormTitleNo />
+          <NoTitleView note={fieldValue?.note} />
         )}
       </Grid>
     </FieldWrapper>

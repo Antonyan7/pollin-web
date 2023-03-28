@@ -90,13 +90,13 @@ const PastSurgeriesDetails = () => {
                   ))}
                 </Grid>
                 <AddSurgery />
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={GeneralHealthFormFields.PastSurgeries}
-                />
               </>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.PastSurgeries}
+            />
           </>
         ) : (
           <PastSurgeriesViewMode />

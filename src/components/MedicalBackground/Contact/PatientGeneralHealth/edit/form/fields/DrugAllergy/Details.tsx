@@ -90,13 +90,13 @@ const DrugAllergiesDetails = () => {
                   ))}
                 </Grid>
                 <AddDrugAllergy />
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={GeneralHealthFormFields.DrugAllergies}
-                />
               </>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.DrugAllergies}
+            />
           </>
         ) : (
           <DrugAllergyViewMode />

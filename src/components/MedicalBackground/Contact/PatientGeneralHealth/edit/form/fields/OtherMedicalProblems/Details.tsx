@@ -90,13 +90,13 @@ const OtherMedicalProblemsDetails = () => {
                   ))}
                 </Grid>
                 <AddMedicalProblem />
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={GeneralHealthFormFields.MedicalProblems}
-                />
               </>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.MedicalProblems}
+            />
           </>
         ) : (
           <MedicalProblemsViewMode />

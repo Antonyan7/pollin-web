@@ -3,7 +3,6 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { IGeneralHealthProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import PatientGeneralHealthEditForm from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form';
 import { getGeneralHealthEditFormState } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/helpers';
-import { mergeObjects, RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { patientGeneralHealthValidationSchema } from '@components/MedicalBackground/helpers/contact_validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -23,13 +22,8 @@ const PatientGeneralHealthEdit = () => {
   const { handleSubmit } = methods;
 
   const onGeneralHealthSubmit = (values: IGeneralHealthProps) => {
-    const oldHealthData = { ...generalHelth } as RecordedHealthType;
-    const newHealthData = { ...values } as RecordedHealthType;
-    const data = mergeObjects(oldHealthData, newHealthData);
-
     if (typeof currentPatiendId === 'string') {
-      dispatch(patientsMiddleware.updateGeneralHealthData(currentPatiendId, data));
-      dispatch(patientsMiddleware.changeEditButtonClickState());
+      dispatch(patientsMiddleware.updateGeneralHealthData(currentPatiendId, values));
     }
   };
 

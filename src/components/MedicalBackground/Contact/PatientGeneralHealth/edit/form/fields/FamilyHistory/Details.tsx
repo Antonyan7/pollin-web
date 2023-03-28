@@ -90,13 +90,13 @@ const FamilyHistoryDetails = () => {
                   ))}
                 </Grid>
                 <AddFamilyHistory />
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={GeneralHealthFormFields.FamilyHistory}
-                />
               </>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.FamilyHistory}
+            />
           </>
         ) : (
           <FamilyHistoryViewMode />

@@ -18,7 +18,7 @@ const PatientGeneralHealth = () => {
     if (typeof router.query.id === 'string') {
       dispatch(patientsMiddleware.getGeneralHealth(router.query.id));
     }
-  }, [router.query.id]);
+  }, [router.query.id, isGeneralHealthEditButtonClicked]);
 
   const onEditButtonClick = () => {
     dispatch(patientsMiddleware.changeEditButtonClickState());

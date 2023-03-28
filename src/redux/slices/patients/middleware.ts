@@ -6,11 +6,11 @@ import {
   ICreateEncounterAddendumRequest,
   IFemalePregnancyInformationProps,
   IFertilityHistory,
+  IGeneralHealthProps,
   IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
   TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
-import { RecordedHealthType } from '@components/MedicalBackground/helpers';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { patientsMiddleware } from '@redux/slices/patients/index';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -812,13 +812,14 @@ const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState:
 };
 
 const updateGeneralHealthData =
-  (patientId: string, healthData: RecordedHealthType) => async (dispatch: AppDispatch) => {
+  (patientId: string, healthData: IGeneralHealthProps) => async (dispatch: AppDispatch) => {
     dispatch(setIsGeneralHealthDataUpdating(true));
 
     try {
       const response = await API.patients.updateGeneralHealth(patientId, healthData);
 
       if (response) {
+        dispatch(patientsMiddleware.changeEditButtonClickState());
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
             open: true,

@@ -91,13 +91,13 @@ const VitaminSupplementDetails = () => {
                   ))}
                 </Grid>
                 <AddVitamin />
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={GeneralHealthFormFields.VitaminSupplements}
-                />
               </>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={GeneralHealthFormFields.VitaminSupplements}
+            />
           </>
         ) : (
           <VitaminSupplementsViewMode />
