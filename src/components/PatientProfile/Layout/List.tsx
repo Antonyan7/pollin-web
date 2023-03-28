@@ -2,6 +2,8 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
+import { isDashValue } from '@utils/stringUtils';
+
 import TestHistoryHint from '../TestHistoryHint';
 import { ListLayoutProps } from '../types';
 
@@ -55,7 +57,7 @@ const ListLayout = ({ items, title, renderAsList, componentProps, listItemsHeadi
                       subItem.id ? (
                         <TestHistoryHint testResultId={subItem.id} key={subItem.id}>
                           <Typography
-                            sx={{ textDecoration: 'underline' }}
+                            sx={{ textDecoration: isDashValue(subItem.title) ? 'none' : 'underline' }}
                             color={(theme) => theme.palette.grey[700]}
                             {...(subItemIndex > 0 && { pt: paddings.top16 })}
                           >
