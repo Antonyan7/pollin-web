@@ -29,7 +29,7 @@ const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDat
   };
   const onDateUpdate = (date: Date | null) => {
     if (date) {
-      onChange(DateUtil.formatDateOnly(date));
+      onChange(DateUtil.convertToDateOnly(date));
     }
   };
 

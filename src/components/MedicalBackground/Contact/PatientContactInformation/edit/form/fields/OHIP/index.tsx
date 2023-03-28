@@ -71,24 +71,22 @@ const FieldOHIP = () => {
               <MedicalFormRadio fieldName={fieldName} onChangeState={onOHIPChange} />
             </Grid>
             {isOHIPExists ? (
-              <>
-                <Grid>
-                  <Diagram
-                    titleComponent={<OHIPTitle />}
-                    titleContent={{
-                      id: v4()
-                    }}
-                  >
-                    <OHIPContent />
-                  </Diagram>
-                </Grid>
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={ContactInformationFormFields.OHIP}
-                />
-              </>
+              <Grid>
+                <Diagram
+                  titleComponent={<OHIPTitle />}
+                  titleContent={{
+                    id: v4()
+                  }}
+                >
+                  <OHIPContent />
+                </Diagram>
+              </Grid>
             ) : null}
+            <MedicalBackgroundNote
+              onClick={onNoteClick}
+              visible={showAdditionalNote}
+              fieldName={ContactInformationFormFields.OHIP}
+            />
           </>
         ) : (
           <OHIPViewMode />
