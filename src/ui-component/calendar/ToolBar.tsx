@@ -10,8 +10,9 @@ import {
   IconListNumbers,
   IconTemplate
 } from '@tabler/icons';
+
 // third-party
-import { format } from 'date-fns';
+import { DateUtil } from '@utils/date/DateUtil';
 
 import { DateValues } from '../../types/calendar';
 
@@ -72,7 +73,7 @@ const Toolbar = ({ date, view, onDateChange, onChangeView, sx, ...others }: Tool
           <IconChevronLeft />
         </IconButton>
         <Typography variant="h3" color="textPrimary">
-          {format(date, 'MMMM yyyy')}
+          {DateUtil.formatDateOnly(date as Date)}
         </Typography>
         <IconButton
           onClick={() => {

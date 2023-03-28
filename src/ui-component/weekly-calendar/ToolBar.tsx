@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, GridProps, IconButton, Stack, Typography } from '@mui/material';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons';
-import { format } from 'date-fns';
+
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface ToolbarProps {
   date: number | Date;
@@ -18,7 +19,7 @@ const Toolbar = ({ date, onClickNext, onClickPrev, sx, ...others }: ToolbarProps
           <IconChevronLeft />
         </IconButton>
         <Typography variant="h3" color="textPrimary">
-          {format(date, 'EEEE')}
+          {DateUtil.formatWeekDayOnly(date as Date)}
         </Typography>
         <IconButton onClick={onClickNext} size="large">
           <IconChevronRight />

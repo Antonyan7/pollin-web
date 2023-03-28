@@ -1,4 +1,4 @@
-import { format, isDate } from 'date-fns';
+import { isDate } from 'date-fns';
 import { longWeekDays } from 'helpers/constants';
 
 import { DateAcceptableType, DateUtil } from './DateUtil';
@@ -7,9 +7,9 @@ export const getWeekDayIndex = (date: Date | string) => {
   let weekName;
 
   if (isDate(date)) {
-    weekName = format(date as Date, 'EEEE');
+    weekName = DateUtil.formatWeekDayOnly(date);
   } else {
-    weekName = format(new Date(date), 'EEEE');
+    weekName = DateUtil.formatWeekDayOnly(new Date(date));
   }
 
   return longWeekDays.indexOf(weekName);

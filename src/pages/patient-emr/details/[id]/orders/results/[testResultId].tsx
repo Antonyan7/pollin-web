@@ -9,7 +9,6 @@ import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
-import { format } from 'util';
 
 const TestResultDetailsPage = () => {
   const router = useRouter();
@@ -58,7 +57,7 @@ const TestResultDetailsPage = () => {
                   <ArrowBackIos fontSize="small" />
                 </IconButton>
                 <Typography variant="h4" fontWeight={500}>
-                  {format(t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT), `${patientProfile?.fullName}`)}
+                  {t(Translation.PAGE_CREATE_ORDER_HEADER_TEXT)} {patientProfile?.fullName}
                 </Typography>
               </Stack>
             )
