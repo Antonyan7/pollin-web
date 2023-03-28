@@ -92,7 +92,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
                   />
                 );
               case MedicalBackgroundItemType.Input:
-                return <FormInputField label={title} name={`${fieldName}.number`} />;
+                return <FormInputField label={title} name={`${fieldName}.value`} />;
               case MedicalBackgroundItemType.Date:
                 return <DatePickerField label={title} name={`${fieldName}.value`} />;
               default:

@@ -1,6 +1,5 @@
 import {
   IFemalePatientGynaecologicalHistoryProps,
-  IFemalePatientMenstrualCycleHistoryCycleLength,
   IFemalePatientMenstrualCycleHistoryProps,
   IFertilityHistoryProps,
   IPreviousPregnancies,
@@ -10,10 +9,7 @@ import {
 import { MedicalBackgroundItemType } from '../components/types';
 import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
 
-export interface CustomAccessorItem
-  extends PreviousTreatmentFieldProps,
-    IFemalePatientMenstrualCycleHistoryCycleLength,
-    IFemalePatientGynaecologicalHistoryProps {}
+export interface CustomAccessorItem extends PreviousTreatmentFieldProps, IFemalePatientGynaecologicalHistoryProps {}
 
 type Mapper = Record<string, MapperProps>;
 

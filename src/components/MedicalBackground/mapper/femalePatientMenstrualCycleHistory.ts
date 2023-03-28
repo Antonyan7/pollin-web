@@ -3,7 +3,7 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { MedicalBackgroundItemType } from '../components/types';
-import { createObjectWithTitle, CustomAccessorItem } from '../helpers/mapper';
+import { createObjectWithTitle } from '../helpers/mapper';
 
 const mappingPattern = {
   hasPeriod: createObjectWithTitle(
@@ -13,7 +13,6 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CYCLE_LENGTH)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.number ?? '',
     componentData: {
       type: MedicalBackgroundItemType.Input
     }

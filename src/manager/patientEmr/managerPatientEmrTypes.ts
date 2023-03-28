@@ -514,13 +514,9 @@ export interface IFemalePatientGynaecologicalHistory {
   gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
 }
 
-export interface IFemalePatientMenstrualCycleHistoryCycleLength extends MedicalBackgroundFieldValues {
-  number?: string;
-}
-
 export interface IFemalePatientMenstrualCycleHistoryProps {
   hasPeriod: IMedicalBackgroundFieldValuesWithValue;
-  cycleLength: IFemalePatientMenstrualCycleHistoryCycleLength;
+  cycleLength: IMedicalBackgroundFieldValuesWithValue;
   firstDayOfLastPeriod: IMedicalBackgroundFieldValuesWithValue;
   flow: IMedicalBackgroundFieldValuesWithValue;
   daysOfBleeding: IMedicalBackgroundFieldValuesWithValue;
