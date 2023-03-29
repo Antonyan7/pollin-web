@@ -14,6 +14,8 @@ const Body = () => {
   const [t] = useTranslation();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const imgSrc = patientProfile?.avatar?.imageURL;
+  const dateOfBirth = patientProfile?.dateOfBirth ? new Date(patientProfile?.dateOfBirth).getFullYear() : 0;
+  const patientAge = DateUtil.representInClinicDate().getFullYear() - dateOfBirth;
 
   return (
     <Grid container spacing={1}>
@@ -48,7 +50,7 @@ const Body = () => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              {patientProfile?.fullName} {patientProfile?.pronoun} - {patientProfile?.identifier}
+              {patientProfile?.fullName} {patientProfile?.pronoun}
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h5" fontWeight={500}>
@@ -66,7 +68,8 @@ const Body = () => {
             <Grid item xs={6}>
               {patientProfile?.dateOfBirth
                 ? DateUtil.formatDateOnly(patientProfile?.dateOfBirth)
-                : patientProfile?.dateOfBirth}
+                : patientProfile?.dateOfBirth}{' '}
+              [{patientAge} {t(Translation.PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS)}]
             </Grid>
           </Grid>
         </Grid>
