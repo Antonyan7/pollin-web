@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Avatar, Grid, Typography } from '@mui/material';
+import { Avatar, Divider,Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
@@ -50,7 +50,7 @@ const Body = () => {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              {patientProfile?.fullName} {patientProfile?.pronoun}
+              {patientProfile?.fullName}
             </Grid>
             <Grid item xs={6}>
               <Typography variant="h5" fontWeight={500}>
@@ -72,6 +72,9 @@ const Body = () => {
               [{patientAge} {t(Translation.PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS)}]
             </Grid>
           </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Divider />
         </Grid>
       </Grid>
     </Grid>
