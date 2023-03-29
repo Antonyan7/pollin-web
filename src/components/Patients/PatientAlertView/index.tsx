@@ -15,6 +15,14 @@ import { ModalName } from 'types/modals';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
 
 import CircularLoading from '@ui-component/circular-loading';
+import { DateUtil } from '@utils/date/DateUtil';
+
+const isAlertBlockHidden = (open: boolean, isLengthAcceptable: boolean) =>
+  !open && isLengthAcceptable
+    ? {
+        display: 'none'
+      }
+    : null;
 
 const MuiTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -58,13 +66,7 @@ const PatientAlertView = () => {
       px={paddings.leftRight24}
       py={paddings.topBottom12}
       borderRadius={borderRadius.radius16}
-      sx={{
-        ...(!isPatientAlertViewOpen && patientCustomAlerts.length >= 10
-          ? {
-              display: 'none'
-            }
-          : null)
-      }}
+      sx={isAlertBlockHidden(!isPatientAlertViewOpen, patientCustomAlerts.length >= 10)}
     >
       {!isPatientAlertDetailsLoading ? (
         <>
@@ -82,7 +84,10 @@ const PatientAlertView = () => {
                         title={
                           titleContent.id ? (
                             <>
-                              {titleContent?.createdBy?.name} - {titleContent?.createdBy?.date}
+                              {titleContent?.createdBy?.name}
+                              {titleContent?.createdBy?.date
+                                ? DateUtil.formatFullDate(titleContent?.createdBy?.date)
+                                : 'N/A'}
                             </>
                           ) : null
                         }
@@ -142,7 +147,6 @@ const PatientAlertView = () => {
               ))}
             </>
           ) : null}
-
           {patientCustomAlerts.length < 10 ? (
             <Stack
               direction="row"
