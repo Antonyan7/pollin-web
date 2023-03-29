@@ -11,7 +11,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { DropdownProps } from './types';
 
-const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType }) => {
+const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType, multiple }) => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const { control } = useFormContext();
@@ -22,14 +22,13 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType 
   const { onChange, onBlur, ...fieldProps } = field;
   const options = getDropdownByType(dropdownOptions, dropdownType)?.options;
 
-  const selectedOption = getDropdownOption(dropdownOptions, dropdownType, fieldProps.value);
+  const selected = getDropdownOption(dropdownOptions, dropdownType, fieldProps.value);
 
   const errorHelperText = generateErrorMessage(fieldName);
 
   return (
     <BaseDropdownWithLoading
       isLoading={isDropdownsLoading}
-      value={selectedOption}
       options={options as IDropdownOption[]}
       popupIcon={<KeyboardArrowDown />}
       onChange={(_, value) => {
@@ -37,6 +36,8 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType 
           onChange(value.id);
         }
       }}
+      value={selected}
+      multiple={multiple}
       getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
       isOptionEqualToValue={(option, value) => option.id === value?.id}
       renderInputProps={{
@@ -50,3 +51,46 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType 
 };
 
 export default Dropdown;
+
+export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType }) => {
+  const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
+  const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
+  const { control } = useFormContext();
+  const { field, fieldState } = useController({
+    name: fieldName,
+    control
+  });
+  const { onChange, onBlur, ...fieldProps } = field;
+  const options = getDropdownByType(dropdownOptions, dropdownType)?.options;
+
+  const selected = fieldProps.value.map((item: IDropdownOption) =>
+    getDropdownOption(dropdownOptions, dropdownType, item?.id)
+  );
+
+  const errorHelperText = generateErrorMessage(fieldName);
+
+  return (
+    <BaseDropdownWithLoading
+      isLoading={isDropdownsLoading}
+      options={options as IDropdownOption[]}
+      popupIcon={<KeyboardArrowDown />}
+      onChange={(_, value) => {
+        if (value && typeof value === 'object' && 'id' in value) {
+          onChange(value.id);
+        } else if (value && Array.isArray(value)) {
+          onChange(value.map((item) => ({ id: item?.id })));
+        }
+      }}
+      value={selected}
+      multiple
+      getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
+      isOptionEqualToValue={(option, value) => option.id === value?.id}
+      renderInputProps={{
+        helperText: fieldState?.error && errorHelperText,
+        error: Boolean(fieldState?.error),
+        ...fieldProps,
+        label
+      }}
+    />
+  );
+};

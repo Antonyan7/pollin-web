@@ -4,6 +4,7 @@ import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/bookin
 import {
   AddManuallyAddressModalProps,
   ICreateEncounterAddendumRequest,
+  IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
   IFertilityHistory,
@@ -108,7 +109,8 @@ const {
   setIsContactInformationUpdateLoading,
   setIsFertilityHistoryDataUpdating,
   setIsFemalePregnancyInformationDataUpdating,
-  setIsFemalePatientMenstrualCycleHistoryDataUpdating
+  setIsFemalePatientMenstrualCycleHistoryDataUpdating,
+  setIsFemalePatientGynaecologicalHistoryDataUpdating
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -731,6 +733,27 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
+const updateFemalePatientGynaecologicalHistory =
+  (patientId: string, data: IFemalePatientGynaecologicalHistoryProps, onSave: (isSuccessfullySaved: boolean) => void) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(true));
+
+    try {
+      const response = await API.patients.updateFemalePatientGynaecologicalHistory(patientId, data);
+
+      if (response) {
+        dispatch(getFemalePatientGynaecologicalHistory(patientId));
+        onSave(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+      dispatch(setError(error));
+      onSave(false);
+    }
+
+    dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(false));
+  };
+
 const changeContactInformationEditButtonState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
   const editButtonState = getState().patients.medicalBackground.contact.isContactInformationEditButtonClicked;
 
@@ -769,8 +792,12 @@ const updateFemalePregnancyInformation =
     dispatch(setIsFemalePregnancyInformationDataUpdating(true));
 
     try {
-      await API.patients.updateFemalePregnancyInformation(patientId, data);
-      onSave(true);
+      const response = await API.patients.updateFemalePregnancyInformation(patientId, data);
+
+      if (response) {
+        dispatch(getFemalePregnancyInformation(patientId));
+        onSave(true);
+      }
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setError(error));
@@ -979,5 +1006,6 @@ export default {
   getFemalePatientGynaecologicalHistory,
   updateFertilityHistory,
   updateFemalePregnancyInformation,
-  updateFemalePatientMenstrualCycleHistory
+  updateFemalePatientMenstrualCycleHistory,
+  updateFemalePatientGynaecologicalHistory
 };

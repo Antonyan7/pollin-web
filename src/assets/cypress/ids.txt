@@ -128,6 +128,7 @@
   page.patient.encounters.item
   page.patient.list.search.input
   page.patient.list.filter
+  page.patient.list.table
   page.patient.edit.encounter.back.btn
   page.patient.edit.encounter.btn
   page.patient.create.encounter.back.btn

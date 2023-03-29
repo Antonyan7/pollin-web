@@ -7,6 +7,7 @@ import { PatientListStyled } from '@components/Patients/PatientListStyled';
 import PatientTableRow from '@components/Patients/PatientTableRow';
 import { HeadCell } from '@components/Table/HeadCell';
 import { Table, TableBody, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -56,7 +57,7 @@ const PatientList = () => {
   return (
     <PatientListStyled>
       <PatientFilters setSearchValue={setSearchValue} setFiltersChange={setFilters} />
-      <TableContainer>
+      <TableContainer data-cy={CypressIds.PAGE_PATIENT_LIST_TABLE}>
         <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
           <TableHead>
             <TableRow>

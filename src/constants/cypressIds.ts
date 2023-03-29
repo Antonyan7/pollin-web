@@ -131,6 +131,7 @@ export enum CypressIds {
   PAGE_PATIENT_ENCOUNTERS_ITEM = 'page.patient.encounters.item',
   PAGE_PATIENT_LIST_SEARCH_INPUT = 'page.patient.list.search.input',
   PAGE_PATIENT_LIST_FILTER = 'page.patient.list.filter',
+  PAGE_PATIENT_LIST_TABLE = 'page.patient.list.table',
   PAGE_PATIENT_EDIT_ENCOUNTER_BACK_BTN = 'page.patient.edit.encounter.back.btn',
   PAGE_PATIENT_EDIT_ENCOUNTER_BTN = 'page.patient.edit.encounter.btn',
   PAGE_PATIENT_CREATE_ENCOUNTER_BACK_BTN = 'page.patient.create.encounter.back.btn',

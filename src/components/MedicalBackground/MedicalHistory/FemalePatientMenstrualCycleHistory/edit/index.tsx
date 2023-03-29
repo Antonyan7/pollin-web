@@ -9,8 +9,10 @@ import MedicalComponentWithRadio from '@components/MedicalBackground/components/
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
 import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
+import { menstrualCycleHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientMenstrualCycleHistory';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -46,7 +48,8 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   }, {});
 
   const methods = useForm({
-    defaultValues
+    defaultValues,
+    resolver: yupResolver(menstrualCycleHistoryValidationSchema)
   });
 
   const {

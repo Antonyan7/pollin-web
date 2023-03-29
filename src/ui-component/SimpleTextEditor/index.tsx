@@ -172,7 +172,7 @@ const SimpleTextEditor = ({
               setEditorValue(event);
             }}
             {...fieldProps}
-            data-cy={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}
+            id={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}
           />
           <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
             <StyledButton

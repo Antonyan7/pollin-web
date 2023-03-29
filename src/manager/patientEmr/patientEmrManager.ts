@@ -10,6 +10,7 @@ import {
   IEncounterResponse,
   IEncounterTypesResponse,
   IFemalePatientGynaecologicalHistory,
+  IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistory,
   IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformation,
@@ -288,7 +289,7 @@ const patientEmrManager = {
       `${baseURL}/v1/medical-background/${patientId}/gynaecological-history`
     );
   },
-  updateFemalePatientGynaecologicalHistory(patientId: string, data: IFemalePatientGynaecologicalHistory) {
+  updateFemalePatientGynaecologicalHistory(patientId: string, data: IFemalePatientGynaecologicalHistoryProps) {
     return axiosInstance.put<IFemalePatientGynaecologicalHistory, IAxiosResponse<IFemalePatientGynaecologicalHistory>>(
       `${baseURL}/v1/medical-background/${patientId}/gynaecological-history`,
       {
