@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
 const Feet = () => {
   const [t] = useTranslation();
+  const feetRef = useRef<HTMLInputElement>(null);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_FEET);
   const { control } = useFormContext();
   const { field, fieldState } = useController({
@@ -15,6 +17,8 @@ const Feet = () => {
     control
   });
   const errorHelperText = generateErrorMessage(label);
+
+  useScrollIntoView(feetRef, fieldState);
 
   return (
     <Grid item xs={6}>
@@ -25,8 +29,8 @@ const Feet = () => {
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
         {...field}
+        inputRef={feetRef}
         value={field.value}
-        ref={field.ref}
       />
     </Grid>
   );

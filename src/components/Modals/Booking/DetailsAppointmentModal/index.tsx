@@ -8,11 +8,11 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
+import { AppointmentStatus, AppointmentStatusEnumKey } from 'types/reduxTypes/bookingStateTypes';
 
 import DialogContentRow from '@ui-component/common/DialogContentRow';
 import BaseModal from '@ui-component/Modal/BaseModal';
 import { DateUtil } from '@utils/date/DateUtil';
-import { AppointmentStatus, AppointmentStatusEnumKey } from 'types/reduxTypes/bookingStateTypes';
 
 export interface DetailsAppointmentModalProps {
   appointmentId: string;

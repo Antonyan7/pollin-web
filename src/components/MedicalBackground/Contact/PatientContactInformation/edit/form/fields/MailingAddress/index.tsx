@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
+import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import AddAddressManually from '@components/MedicalBackground/Contact/PatientContactInformation/edit/form/actions/AddAddressManually';
+import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import { getFullAddress } from '@components/MedicalBackground/helpers';
 import { ManuallyAddressModalMode } from '@components/Modals/MedicalBackground/AddAddressManually/helpers';
 import { Grid, Typography } from '@mui/material';
@@ -19,6 +21,10 @@ const FieldMailingAddress = () => {
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const mailingAddress = contactInformation?.mailingAddress;
   const fullAddress = getFullAddress(mailingAddress);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const onNoteClick = () => {
+    setShowAdditionalNote(!showAdditionalNote);
+  };
 
   return (
     <Grid px={paddings.leftRight24} py={paddings.topBottom12} xs={12} gap={4} container item direction="column">
@@ -36,6 +42,7 @@ const FieldMailingAddress = () => {
           gap={2}
         >
           <ConsultationTitleWithIcon
+            onClick={onNoteClick}
             description={t(
               Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_MAILING_ADDRESS
             )}
@@ -52,6 +59,11 @@ const FieldMailingAddress = () => {
           ) : (
             <Typography>{fullAddress}</Typography>
           )}
+          <MedicalBackgroundNote
+            onClick={onNoteClick}
+            visible={showAdditionalNote}
+            fieldName={ContactInformationFormFields.MailingAddress}
+          />
         </Grid>
       </Grid>
     </Grid>

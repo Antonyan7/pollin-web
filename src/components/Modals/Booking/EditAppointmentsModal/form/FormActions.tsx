@@ -9,9 +9,9 @@ import { bookingSelector } from 'redux/slices/booking';
 import { viewsMiddleware } from 'redux/slices/views';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 const FormActions = ({ isSaveDisabled }: { isSaveDisabled: boolean }) => {
   const [t] = useTranslation();
