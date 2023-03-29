@@ -66,7 +66,7 @@ const PatientAlertView = () => {
       px={paddings.leftRight24}
       py={paddings.topBottom12}
       borderRadius={borderRadius.radius16}
-      sx={isAlertBlockHidden(!isPatientAlertViewOpen, patientCustomAlerts.length >= 10)}
+      sx={isAlertBlockHidden(isPatientAlertViewOpen, patientCustomAlerts.length >= 10)}
     >
       {!isPatientAlertDetailsLoading ? (
         <>
@@ -85,6 +85,7 @@ const PatientAlertView = () => {
                           titleContent.id ? (
                             <>
                               {titleContent?.createdBy?.name}
+                              {' - '}
                               {titleContent?.createdBy?.date
                                 ? DateUtil.formatFullDate(titleContent?.createdBy?.date)
                                 : 'N/A'}
