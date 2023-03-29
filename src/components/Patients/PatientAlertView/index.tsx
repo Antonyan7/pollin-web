@@ -110,7 +110,7 @@ const PatientAlertView = () => {
                       </MuiTooltip>
                     </Grid>
                     <Grid item xs={0.5} container alignItems="center" justifyContent="center">
-                      {patientAlertDetails[index].isEditable && patientCustomAlerts.length < 10 ? (
+                      {patientAlertDetails[index].isEditable ? (
                         <Button
                           sx={{ color: theme.palette.warning.dark, mr: margins.right32 }}
                           variant="text"
