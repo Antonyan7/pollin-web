@@ -9,6 +9,7 @@ import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { borderRadius, borders, margins, paddings } from 'themes/themeConstants';
+import { ProfilePhotoStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
@@ -81,7 +82,11 @@ const PatientProfile = () => {
               <Grid item>
                 <Avatar
                   alt={patientProfile.fullName}
-                  src={patientProfile?.avatar?.imageURL}
+                  src={
+                    patientProfile?.avatar?.status === ProfilePhotoStatus.Verified
+                      ? patientProfile?.avatar?.imageURL
+                      : ''
+                  }
                   sx={{ width: 60, height: 60, m: margins.all24 }}
                 />
               </Grid>
@@ -104,13 +109,7 @@ const PatientProfile = () => {
                   <Stack gap={2} direction="row" justifyContent="center" alignItems="center" flexWrap="wrap">
                     <Stack flexShrink={0}>
                       <Button
-                        startIcon={
-                          <CallOutlinedIcon
-                            sx={{
-                              color: iconCommonColor
-                            }}
-                          />
-                        }
+                        startIcon={<CallOutlinedIcon sx={{ color: iconCommonColor }} />}
                         data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_CONTACT_INFO}
                         disabled={!patientHighlightHeader.contact.uiid}
                         onClick={onButtonClick(patientHighlightHeader.contact.uiid)}
@@ -122,13 +121,7 @@ const PatientProfile = () => {
                     </Stack>
                     <Stack flexShrink={0}>
                       <Button
-                        startIcon={
-                          <AssignmentIcon
-                            sx={{
-                              color: iconCommonColor
-                            }}
-                          />
-                        }
+                        startIcon={<AssignmentIcon sx={{ color: iconCommonColor }} />}
                         disabled={!patientHighlightHeader.ohip.uiid}
                         onClick={onButtonClick(patientHighlightHeader.ohip.uiid)}
                         data-cy={CypressIds.PAGE_PATIENT_DETAILS_PROFILE_OHIP_INFO}
