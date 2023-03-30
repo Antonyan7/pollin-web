@@ -1,7 +1,7 @@
 import {CypressIds} from '../../../src/constants/cypressIds';
 import {CyUtils} from '../../helpers/cypressIdsUtils';
 
-describe('edit template', () => {
+describe('edit and delete templates', () => {
     before(() => {
         cy.clearCookies();
 
@@ -12,7 +12,6 @@ describe('edit template', () => {
 
         cy.visit('/scheduling/schedule-templates');
         cy.url().should('include', '/scheduling/schedule-templates')
-
         cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE))
             .should("exist")
             .then((table) => {
@@ -89,9 +88,30 @@ describe('edit template', () => {
                 cy.ChooseStartTime(13, 30);
                 cy.ChooseEndTime(15, 10);
 
-                cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK)).click();
-                cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_EDIT_TEMPLATES_BUTTON_SAVE)).should('be.enabled').click();
-            });
+                });
+        });
+    });
+    it(`should delete template`, () => {
+        cy.visit('/scheduling/schedule-templates');
+        cy.url().should('include', '/scheduling/schedule-templates')
+        cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should("not.exist")
+        cy.fixture('test-data').then((data) => {
+
+            cy.get(`table > tbody > tr`)
+                .each((elem, index) => {
+                    if (elem.text().includes(data.templateName3)) {
+                        cy.wrap(elem).realClick()
+                        cy.wrap(elem).get(`[data-cy="${CypressIds.PAGE_SCHEDULING_TEMPLATES_CHECKBOX_SELECT}-${index}"]`).realClick()
+                    }
+
+                    cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_BUTTON_DELETE)).should("exist").click()
+                    // eslint-disable-next-line cypress/no-unnecessary-waiting
+                    cy.wait(2000)
+                    cy.get(CyUtils.getSelector(CypressIds.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)).should("exist").realClick()
+                    cy.url().should('include', '/scheduling/schedule-templates')
+                    cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should("not.exist")
+                    cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should("not.have.text", data.templateName3)
+                });
         });
     });
 });

@@ -1,10 +1,10 @@
-import { addDays, format } from 'date-fns';
+import { addDays } from 'date-fns';
 
 import { CypressIds } from '../../../src/constants/cypressIds';
 import { CyUtils } from '../../helpers/cypressIdsUtils';
 import { StatusesEnum } from '../../helpers/helpers';
 
-const futureDate = Number(format(addDays(new Date(), 2), 'd'));
+const futureDate = addDays(new Date(), 2);
 
 describe('Edit appointments', () => {
   before(() => {
@@ -33,16 +33,14 @@ describe('Edit appointments', () => {
 
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)).should('exist');
-        cy.get(CyUtils.getSelector(CypressIds.COMMON_DATE_PICKER)).should('exist').click();
-        cy.get(`.MuiCalendarOrClockPicker-root`)
-          .contains(RegExp(`^${futureDate}$`))
-          .click()
+
+        cy.SelectDate(futureDate)
           .then(() => {
             cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
             cy.contains(StatusesEnum.Booked).click({ force: true });
             cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
 
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION))
+            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION))
               .should('be.visible')
               .clear()
               .type('Edited');
