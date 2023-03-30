@@ -1,10 +1,15 @@
 import React from 'react';
+import MedicationsTabs from '@components/Medications';
+import { Box } from '@mui/material';
+import PatientEmrLayout from 'pages/patient-emr/details/[id]/index';
 
-import Consents from './consents';
-import PatientEmrLayout from './index';
+const Medications = () => (
+    <Box>
+      {' '}
+      <MedicationsTabs />{' '}
+    </Box>
+  );
 
-const Medications = () => <div>Medications</div>;
-
-Consents.PageLayout = PatientEmrLayout;
+Medications.PageLayout = PatientEmrLayout;
 
 export default Medications;

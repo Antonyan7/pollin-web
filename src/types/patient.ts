@@ -37,7 +37,8 @@ export enum AvailablePages {
   Encounters = 'Encounters',
   Profile = 'Patient Profile',
   Orders = 'Orders & Results',
-  MedicalBackground = 'Medical Background'
+  MedicalBackground = 'Medical Background',
+  Medications = 'Medications'
 }
 
 export enum PatientListField {
