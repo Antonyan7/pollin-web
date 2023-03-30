@@ -3,7 +3,6 @@ on:
   pull_request:
     branches:
       - master
-      - 'release/*'
 
   workflow_dispatch:
   schedule:
@@ -15,11 +14,11 @@ concurrency:
 jobs:
   build:
     timeout-minutes: 100
-    runs-on: self-hosted-FE
+    runs-on: self-hosted-fe-v2
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Get Week
         id: get-week
@@ -33,13 +32,6 @@ jobs:
           path: |
             node_modules
           key: ${{ runner.os }}-${{ steps.get-week.outputs.week }}-${{ hashFiles('yarn.lock') }}
-
-      - name: setup-nodejs
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.13.0
-          registry-url: https://npm.pkg.github.com/
-          scope: '@OWNER'
 
       - uses: ./.github/actions/ci-validation
         name: Validate Build

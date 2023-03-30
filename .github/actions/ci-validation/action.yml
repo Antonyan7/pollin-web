@@ -1,12 +1,9 @@
-name: 'e2e tests processing'
+name: 'FE Validation'
 inputs:
   node_version:
     description: 'Node version'
     required: false
     default: v16.17.0
-  pat_to_read_package:
-    description: 'Pat to read Packages'
-    required: true
 
 description: 'e2e test action'
 runs:
@@ -14,38 +11,38 @@ runs:
   steps:
     - name: Install Modules
       run: |
-        echo "::group::Activate NodeJs version manager and install version"
-        export NVM_DIR=~/.nvm
+        echo "::group::Activate NVM and install NodeJS version"
         source ~/.nvm/nvm.sh
         nvm install ${{ inputs.node_version }}
         nvm use ${{ inputs.node_version }}
+        PATH="$HOME/.yarn/bin:$PATH"
+        
+        yarnVersion=$(yarn --version)
+        echo "Yarn Version Before Berry Switch: $yarnVersion"
         echo "::endgroup::"
+
 
         echo "::group::Install yarn modules"
         yarn set version berry
         rm -rf node_modules
+
+        nodeVersion=$(node --version)
+        echo "Node Version: $nodeVersion"
+        
+        yarnVersion=$(yarn --version)
+        echo "Yarn Version After Berry Switch: $yarnVersion"
+
         yarn install --no-immutable
         yarn add cypress
         echo "::endgroup::"
-      shell: bash
+        
 
-    - name: Static code analysis and build
-      run: |
         echo "::group::Run Eslint"
         yarn run lint
         echo "::endgroup::"
 
-        echo "::group::Build"
-        yarn build
-        echo "::endgroup::"
-      shell: bash
 
-    - name: Define Deployment Variables
-      run: |
-        echo "::group::Define Deployment Variables"
-        echo "Use DEV service account"
-        echo "PROJECT_ID=${{ env.dev_project_id }}" > $GITHUB_ENV
-        echo "ENV_SERVICE_ACCOUNT=dev_service_account" >> $GITHUB_ENV
-        echo "PROMOTEFLAG=--promote" >> $GITHUB_ENV
+        echo "::group::Build"
+        yarn run build
         echo "::endgroup::"
       shell: bash

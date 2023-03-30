@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     timeout-minutes: 60
-    runs-on: self-hosted-FE
+    runs-on: self-hosted-fe-v2
     steps:
       - name: setup-nodejs
         uses: actions/setup-node@v1
