@@ -42,16 +42,12 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
     append(initialFields);
   };
 
-  const areThereAnyFields = fields.length > 0;
-
   useEffect(() => {
-    if (!isExists) {
-      remove();
-    } else if (!areThereAnyFields) {
+    if (isExists && fields.length === 0) {
       handleAddNewItem();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isExists, areThereAnyFields]);
+  }, [fields.length, isExists]);
 
   const handleRemove = (index: number) => {
     if (fields.length > 1) {
@@ -67,16 +63,17 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
 
   return (
     <MedicalHistoryRadio controlFieldName={controlFieldName} fieldName={fieldName} iconTitle={title}>
-      {fields?.map((field, index) => (
-        <MedicalBackgroundTable
-          key={field.id}
-          onDelete={handleRemove}
-          title={`${tableTitle} ${index + 1}`}
-          rows={rows}
-          parentFieldName={parentFieldName}
-          index={index}
-        />
-      ))}
+      {isExists &&
+        fields?.map((field, index) => (
+          <MedicalBackgroundTable
+            key={field.id}
+            onDelete={handleRemove}
+            title={`${tableTitle} ${index + 1}`}
+            rows={rows}
+            parentFieldName={parentFieldName}
+            index={index}
+          />
+        ))}
       {shouldShowAddNewItemButton && (
         <MedicalFormAddDiagram subTitle={addNewItemButtonLabel} onClick={handleAddNewItem} />
       )}

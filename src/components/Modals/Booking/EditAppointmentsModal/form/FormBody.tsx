@@ -18,7 +18,7 @@ const FormBody = () => {
       <Grid container spacing={3}>
         <ServiceType />
         <DisabledPatientId patient={details?.patient ?? {}} />
-        <AppointmentDescription />
+        <AppointmentDescription edit />
         <DateAndStartTime />
         <StatusAppointmentLabel />
         <Divider sx={{ margin: `${margins.topBottom0} ${margins.leftRight24}` }} />

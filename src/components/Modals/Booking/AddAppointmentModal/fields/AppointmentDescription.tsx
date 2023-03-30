@@ -7,13 +7,17 @@ import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { maxLength } from 'helpers/constants';
 
-const AppointmentDescription = () => {
+const AppointmentDescription = ({ edit }: { edit?: boolean }) => {
   const [t] = useTranslation();
   const { control } = useFormContext<ICreateAppointmentBody>();
 
   const descriptionFieldName = 'description';
-  const addDescriptionLabel = t(Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION);
-  const addDescriptionCyId = CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION;
+  const descriptionLabel = t(
+    edit ? Translation.MODAL_APPOINTMENTS_EDIT_DESCRIPTION : Translation.MODAL_APPOINTMENTS_ADD_DESCRIPTION
+  );
+  const descriptionCyId = edit
+    ? CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION
+    : CypressIds.MODAL_APPOINTMENTS_ADD_DESCRIPTION;
 
   const { field, fieldState } = useController({ control, name: descriptionFieldName });
   const { error } = fieldState;
@@ -22,13 +26,13 @@ const AppointmentDescription = () => {
     <Grid item xs={12}>
       <TextField
         {...field}
-        data-cy={addDescriptionCyId}
+        data-cy={descriptionCyId}
         fullWidth
         id={descriptionFieldName}
-        label={addDescriptionLabel}
+        label={descriptionLabel}
         name={descriptionFieldName}
         rows={4}
-        placeholder={addDescriptionLabel}
+        placeholder={descriptionLabel}
         multiline
         inputProps={{ maxLength }}
         error={!!error?.message}

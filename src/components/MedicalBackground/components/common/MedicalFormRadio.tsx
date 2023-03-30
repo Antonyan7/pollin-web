@@ -24,7 +24,7 @@ const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) =
 
   useEffect(
     () => {
-      if (!field.value) {
+      if (field.value === null) {
         onChange(false);
         onChangeState?.(false);
       }

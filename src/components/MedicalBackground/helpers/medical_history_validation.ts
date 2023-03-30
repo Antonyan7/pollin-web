@@ -30,16 +30,15 @@ export const fertilityHistoryValidationSchema = object({
       )
       .when('exists', {
         is: true,
-        then: object({
-          type: string().required(),
-          cycles: string().required()
-        }).required(),
-        otherwise: object({
-          type: string().required(),
-          cycles: string().required()
-        })
-          .notRequired()
-          .nullable()
+        then: array()
+          .of(
+            object().shape({
+              type: string().required(),
+              cycles: string().required()
+            })
+          )
+          .required(),
+        otherwise: array().notRequired().nullable()
       })
   })
 });
