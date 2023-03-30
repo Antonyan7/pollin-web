@@ -4,7 +4,7 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { MedicalBackgroundTableRow } from '../../types';
 import MedicalBackgroundTable from '../MedicalBackgroundTable';
 import MedicalFormAddDiagram from '../MedicalFormAddDiagram';
-import MedicalComponentWithRadio from '../MedWithRadio';
+import MedicalHistoryRadio from '../MedicalHistoryRadioComponent';
 
 interface MedicalBackgroundSectionProps {
   fieldName: string;
@@ -66,7 +66,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   const shouldShowAddNewItemButton = isExists && addNewItemButtonLabel;
 
   return (
-    <MedicalComponentWithRadio fieldName={`${fieldName}.${controlFieldName}`} iconTitle={title}>
+    <MedicalHistoryRadio controlFieldName={controlFieldName} fieldName={fieldName} iconTitle={title}>
       {fields?.map((field, index) => (
         <MedicalBackgroundTable
           key={field.id}
@@ -80,7 +80,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
       {shouldShowAddNewItemButton && (
         <MedicalFormAddDiagram subTitle={addNewItemButtonLabel} onClick={handleAddNewItem} />
       )}
-    </MedicalComponentWithRadio>
+    </MedicalHistoryRadio>
   );
 };
 

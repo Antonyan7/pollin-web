@@ -4,7 +4,7 @@ import { IFertilityHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import DropdownField from '@components/MedicalBackground/components/common/Dropdown/DropdownField';
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
-import MedicalComponentWithRadio from '@components/MedicalBackground/components/common/MedWithRadio';
+import MedicalHistoryRadio from '@components/MedicalBackground/components/common/MedicalHistoryRadioComponent';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
 import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
@@ -109,7 +109,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               );
             }
 
-            return <MedicalComponentWithRadio iconTitle={title} fieldName={`${fieldName}.value`} key={v4()} />;
+            return <MedicalHistoryRadio iconTitle={title} fieldName={fieldName} key={v4()} />;
           })}
         </Grid>
         <FormSubmit onClick={onClose} isDisabled={!isFormChanged} isLoading={isUpdatingFertilityHistoryData} />

@@ -5,7 +5,7 @@ import DropdownField from '@components/MedicalBackground/components/common/Dropd
 import { FormInputField } from '@components/MedicalBackground/components/common/FormInput';
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import { DatePickerField } from '@components/MedicalBackground/components/common/MedicalDatePicker';
-import MedicalComponentWithRadio from '@components/MedicalBackground/components/common/MedWithRadio';
+import MedicalHistoryRadio from '@components/MedicalBackground/components/common/MedicalHistoryRadioComponent';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
 import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
@@ -99,7 +99,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               case MedicalBackgroundItemType.Date:
                 return <DatePickerField label={title} name={`${fieldName}.value`} />;
               default:
-                return <MedicalComponentWithRadio iconTitle={title} fieldName={`${fieldName}.value`} key={v4()} />;
+                return <MedicalHistoryRadio iconTitle={title} fieldName={fieldName} key={v4()} />;
             }
           })}
         </Grid>
