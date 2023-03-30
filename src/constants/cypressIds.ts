@@ -50,6 +50,7 @@ export enum CypressIds {
   COMMON_TIME_PICKER_MODAL_DIALOG = 'common.time.picker.modal.dialog',
   COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT = 'common.time.picker.modal.dialog.component',
   COMMON_LOADING_INDICATOR = 'common.loading.indicator',
+  COMMON_TOAST_ERROR_MESSAGE = 'common.toast.error.message',
   SCHEDULE_TEMPLATES_DELETE_ICON = 'schedule.templates.delete.icon',
   PAGE_SCHEDULING_TEMPLATES_CHECKBOX_SELECT_ALL = 'page.scheduling.templates.checkbox.select.all',
   PAGE_SCHEDULING_TEMPLATES_CHECKBOX_SELECT = 'page.scheduling.templates.checkbox.select',

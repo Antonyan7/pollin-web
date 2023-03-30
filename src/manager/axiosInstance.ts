@@ -1,5 +1,3 @@
-import { dispatch } from '@redux/hooks';
-import { viewsMiddleware } from '@redux/slices/views';
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { CookieKey } from 'constants/cookieKey';
 import { devToolsDefaultConfig } from 'constants/defaultConfigs';
@@ -9,7 +7,7 @@ import { getFromCookie } from '@utils/cookies';
 import { getEnvironmentVariables } from '@utils/getEnvironmentVariables';
 import { errorLog } from '@utils/logger';
 
-import { convertRequest, convertResponse, logError, logRequest, logResponse } from './axiosUtils';
+import { convertRequest, convertResponse, handleErrorActions, logError, logRequest, logResponse } from './axiosUtils';
 import { FirebaseManager } from './firebase';
 
 const generateRequestId = () => guid();
@@ -96,15 +94,7 @@ class RequestManager {
           logError(error);
         }
 
-        if (error.response.status === 403) {
-          dispatch(
-            viewsMiddleware.setRedirectionState({
-              path: '/access-denied',
-              params: '',
-              apply: true
-            })
-          );
-        }
+        handleErrorActions(error);
 
         return Promise.reject(error);
       }

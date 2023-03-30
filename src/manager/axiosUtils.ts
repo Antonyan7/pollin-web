@@ -1,9 +1,15 @@
+import { SeveritiesType } from '@components/Scheduling/types';
+import { dispatch } from '@redux/hooks';
+import { viewsMiddleware } from '@redux/slices/views';
 import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { isDate } from 'date-fns';
 
 import { DateAcceptableType, DateUtil } from '@utils/date/DateUtil';
 import collectionDeepDateConvert from '@utils/deepConvertDate';
 import { errorLog, greenLog, greyLog } from '@utils/logger';
+
+import { CypressIds } from '../constants/cypressIds';
+import { ModalName } from '../types/modals';
 
 const requestTypeChecker = (value: DateAcceptableType): boolean => isDate(value) || typeof value === 'string';
 
@@ -88,4 +94,32 @@ export const logError = (error: AxiosError): void => {
   }
 
   errorLog(...args);
+};
+
+export const handleErrorActions = (error: { response: AxiosResponse }): void => {
+  switch (error?.response?.status) {
+    case 403:
+      dispatch(
+        viewsMiddleware.setRedirectionState({
+          path: '/access-denied',
+          params: '',
+          apply: true
+        })
+      );
+      break;
+    case 400:
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: error?.response?.data?.status?.message,
+            dataCy: CypressIds.COMMON_TOAST_ERROR_MESSAGE
+          }
+        })
+      );
+      break;
+    default:
+      dispatch(viewsMiddleware.openModal({ name: ModalName.ErrorModal, props: null }));
+  }
 };

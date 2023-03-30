@@ -47,6 +47,7 @@
   common.time.picker.modal.dialog
   common.time.picker.modal.dialog.component
   common.loading.indicator
+  common.toast.error.message
   schedule.templates.delete.icon
   page.scheduling.templates.checkbox.select.all
   page.scheduling.templates.checkbox.select
