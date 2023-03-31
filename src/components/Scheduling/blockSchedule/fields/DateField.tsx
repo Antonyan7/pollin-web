@@ -14,7 +14,7 @@ import { IBlockScheduleForm } from '../form/initialValues';
 type DateAndStartTimeType = Date | null;
 type ErrorMessageType = string | null;
 
-const DateField = ({ fieldName, fieldLabel }: IFieldRowProps) => {
+const DateField = ({ fieldName, fieldLabel, dataCyId }: IFieldRowProps) => {
   const { control, formState, getValues, clearErrors } = useFormContext<IBlockScheduleForm>();
   const { errors } = formState;
   const [t] = useTranslation();
@@ -85,6 +85,7 @@ const DateField = ({ fieldName, fieldLabel }: IFieldRowProps) => {
           value: initialValue,
           label: fieldLabel,
           onChange,
+          dataCyId,
           isLimitedByWorkingHours: true,
           isError: showErrorMessage,
           errorMessage: errorMessage ?? '',

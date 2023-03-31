@@ -1,6 +1,7 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 
 import { IFieldRowProps } from '../form/IFieldRowProps';
 import { IBlockScheduleForm } from '../form/initialValues';
@@ -21,6 +22,7 @@ const TextInputField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       helperText={errors[fieldName]?.message ?? ''}
       error={Boolean(errors[fieldName]?.message)}
       label={fieldLabel}
+      data-cy={CypressIds.PAGE_SCHEDULING_BLOCK_PLACEHOLDER}
       {...field}
     />
   );

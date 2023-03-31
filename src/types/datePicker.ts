@@ -12,6 +12,7 @@ interface CustomTimePickerProps {
   isLimitedByWorkingHours?: boolean;
   isError?: boolean;
   errorMessage?: string;
+  dataCyId?: string;
 }
 
 export interface TimePickerWrapperProps

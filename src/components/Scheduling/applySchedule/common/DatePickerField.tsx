@@ -7,7 +7,7 @@ import { DatePickerFieldProps } from '../types';
 
 import ApplyScheduleFormRow from './ApplyScheduleFormRow';
 
-const DatePickerField = ({ label, value, onChange, errorMessage, ...otherProps }: DatePickerFieldProps) => (
+const DatePickerField = ({ label, value, onChange, errorMessage, dataCy, ...otherProps }: DatePickerFieldProps) => (
   <ApplyScheduleFormRow title={label}>
     <PollinDatePicker
       type={PollinDatePickerType.Date}
@@ -16,6 +16,7 @@ const DatePickerField = ({ label, value, onChange, errorMessage, ...otherProps }
         label,
         onChange,
         value,
+        dataCyId: dataCy,
         isError: !!errorMessage,
         errorMessage,
         ...otherProps

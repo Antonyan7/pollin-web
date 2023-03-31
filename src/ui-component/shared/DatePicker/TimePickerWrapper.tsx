@@ -14,6 +14,7 @@ const TimePickerWrapper = ({
   label,
   errorMessage,
   isError,
+  dataCyId,
   ...otherProps
 }: TimePickerWrapperProps) => {
   const theme = useTheme();
@@ -57,7 +58,7 @@ const TimePickerWrapper = ({
           }}
           onKeyDown={(e) => e.preventDefault()}
           onClick={() => setIsOpen(true)}
-          data-cy={CypressIds.COMMON_TIME_PICKER}
+          data-cy={dataCyId ?? CypressIds.COMMON_TIME_PICKER}
           {...params}
           error={isError}
           helperText={errorMessage ?? ''}

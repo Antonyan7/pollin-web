@@ -5,6 +5,7 @@ import { defaultResource } from '@components/Scheduling/applySchedule/constants/
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useTheme } from '@mui/system';
+import { CypressIds } from 'constants/cypressIds';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware, bookingSelector } from 'redux/slices/booking';
 import { borderRadius, borders } from 'themes/themeConstants';
@@ -87,6 +88,7 @@ const ResourceField = ({ fieldLabel, fieldName }: IFieldRowProps) => {
       getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}
       groupBy={(resourceOption) => resourceOption.type}
       clearIcon={<CloseIcon onClick={() => onSelectResourceUpdate(null)} fontSize="small" />}
+      dataCy={CypressIds.PAGE_SCHEDULING_BLOCK_RESOURCE}
       renderInputProps={{
         label: fieldLabel,
         helperText: error?.message ?? '',

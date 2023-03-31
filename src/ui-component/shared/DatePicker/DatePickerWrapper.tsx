@@ -18,6 +18,7 @@ const DatePickerWrapper = ({
   label,
   errorMessage,
   isError,
+  dataCyId,
   ...otherProps
 }: DatePickerWrapperProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -54,7 +55,7 @@ const DatePickerWrapper = ({
           onKeyDown={(event) => {
             event.preventDefault();
           }}
-          data-cy={CypressIds.COMMON_DATE_PICKER}
+          data-cy={dataCyId ?? CypressIds.COMMON_DATE_PICKER}
           error={isError}
           helperText={errorMessage ?? ''}
         />

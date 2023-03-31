@@ -20,6 +20,7 @@ const DateTimePickerWrapper = ({
   isLimitedByWorkingHours,
   errorMessage,
   isError,
+  dataCyId,
   ...otherProps
 }: DateTimePickerWrapperProps) => {
   const theme = useTheme();
@@ -66,7 +67,7 @@ const DateTimePickerWrapper = ({
           {...renderInputProps}
           error={isError}
           helperText={errorMessage ?? ''}
-          data-cy={CypressIds.COMMON_DATE_TIME_PICKER}
+          data-cy={dataCyId ?? CypressIds.COMMON_DATE_TIME_PICKER}
         />
       )}
       {...otherProps}
