@@ -57,8 +57,11 @@ const mappingPattern = {
     customAccessor: (item: CustomAccessorItem) => {
       const values = item.treatments.map((treatment) => {
         const separator = treatment.type ? ';' : '';
+        const cycles = `${treatment.cycles} ${t(
+          Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_CYCLES
+        ).toLowerCase()}`;
 
-        return `${treatment.type} ${separator} ${treatment.cycles}`;
+        return `${treatment.type}${separator} ${cycles}`;
       });
       const finalValues = [getLabelByBoolean(item.exist), ...values];
 

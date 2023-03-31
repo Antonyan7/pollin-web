@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo } from 'react';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
+import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
+import { getDropdownOption } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientMenstrualCycleHistory';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -12,6 +14,7 @@ import CircularLoading from '@ui-component/circular-loading';
 
 const ViewModeContent = () => {
   const router = useRouter();
+  const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const femalePatientMenstrualCycleHistory = useAppSelector(patientsSelector.femalePatientMenstrualCycleHistory);
   const isFemalePatientMenstrualCycleHistoryLoading = useAppSelector(
     patientsSelector.isFemalePatientMenstrualCycleHistoryLoading
@@ -30,15 +33,22 @@ const ViewModeContent = () => {
 
   return !isFemalePatientMenstrualCycleHistoryLoading ? (
     <CardContentWrapper>
-      {mappedItems.map((mappedItem, index) => (
-        <Item
-          key={v4()}
-          title={mappedItem?.title as string}
-          index={index}
-          value={mappedItem?.viewValue}
-          note={mappedItem?.note}
-        />
-      ))}
+      {mappedItems.map((mappedItem, index) => {
+        const finalValue =
+          mappedItem?.componentData?.type === MedicalBackgroundItemType.Dropdown
+            ? getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
+            : mappedItem?.viewValue;
+
+        return (
+          <Item
+            key={v4()}
+            title={mappedItem?.title as string}
+            index={index}
+            value={finalValue}
+            note={mappedItem?.note}
+          />
+        );
+      })}
     </CardContentWrapper>
   ) : (
     <CircularLoading />
