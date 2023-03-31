@@ -24,7 +24,7 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType,
 
   const selected = getDropdownOption(dropdownOptions, dropdownType, fieldProps.value);
 
-  const errorHelperText = generateErrorMessage(fieldName);
+  const errorHelperText = generateErrorMessage(label);
 
   return (
     <BaseDropdownWithLoading

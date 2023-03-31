@@ -5,7 +5,9 @@ import { DropdownOptionType, IFemalePregnancyInformationProps } from '@axios/pat
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
 import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
+import { femalePregnancyInformationValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -37,7 +39,8 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
             isEditable: false,
             value: false
           }
-        }
+        },
+    resolver: yupResolver(femalePregnancyInformationValidationSchema)
   });
 
   const {

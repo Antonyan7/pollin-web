@@ -24,11 +24,11 @@ export const fertilityHistoryValidationSchema = object({
     treatments: array()
       .of(
         object().shape({
-          type: string().required(),
-          cycles: string().required()
+          type: string(),
+          cycles: string()
         })
       )
-      .when('exists', {
+      .when('exist', {
         is: true,
         then: array()
           .of(
@@ -38,7 +38,48 @@ export const fertilityHistoryValidationSchema = object({
             })
           )
           .required(),
-        otherwise: array().notRequired().nullable()
+        otherwise: array().transform(() => [])
+      })
+  })
+});
+
+export const femalePregnancyInformationValidationSchema = object({
+  previousPregnancies: object({
+    value: boolean(),
+    pregnancies: array()
+      .of(
+        object().shape({
+          id: string(),
+          type: string(),
+          details: array().of(
+            object().shape({
+              year: string().nullable(),
+              location: string().nullable(),
+              type: string().nullable(),
+              monthsToConceive: string().nullable(),
+              birthOutcome: string().nullable()
+            })
+          )
+        })
+      )
+      .when('value', {
+        is: true,
+        then: array().of(
+          object().shape({
+            id: string(),
+            type: string(),
+            details: array().of(
+              object().shape({
+                year: string().nullable(),
+                location: string().nullable(),
+                type: string().nullable(),
+                monthsToConceive: string().nullable(),
+                birthOutcome: string().nullable()
+              })
+            )
+          })
+        ),
+        otherwise: array().transform(() => [])
       })
   })
 });
