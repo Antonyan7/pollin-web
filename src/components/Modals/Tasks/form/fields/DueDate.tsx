@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-import useClinicConfig from '@hooks/clinicConfig/useClinicConfig';
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 
 import { PollinDatePickerType } from '../../../../../types/datePicker';
@@ -14,14 +13,13 @@ type DateAndStartTimeType = Date | null;
 const DueDateField = ({ disabled }: { disabled?: boolean }) => {
   const fieldName = 'dueDate';
   const { control, register } = useFormContext();
-  const { fitSelectedTimeToConfig } = useClinicConfig();
   const [t] = useTranslation();
   const { field } = useController({
     name: fieldName,
     control
   });
   const { onChange, value } = field;
-  const initialValue: DateAndStartTimeType = value ? fitSelectedTimeToConfig(value) : value;
+  const initialValue: DateAndStartTimeType = value;
 
   return (
     <Grid item xs={12}>
