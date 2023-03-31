@@ -104,7 +104,7 @@ const useSubmitTestResults = () => {
       testResults.forEach((testResult) => {
         testResult.items.forEach((item) => {
           item.dateReceived = isDate(item.dateReceived)
-            ? DateUtil.formatDateOnly(item.dateReceived)
+            ? DateUtil.convertToDateOnly(item.dateReceived)
             : item.dateReceived;
         });
       });
