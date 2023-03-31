@@ -26,10 +26,8 @@ const EditAppointmentsModalForm = () => {
   const { handleSubmit, formState, reset, watch } = methods;
   const { isSubmitSuccessful } = formState;
 
-  const [closeModal, setCloseModal] = useState<boolean>(false);
   const [isSaveDisabled, setIsSaveDisabled] = useState<boolean>(true);
   const details = useAppSelector(bookingSelector.appointmentDetails);
-  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const appointmentId = details?.appointment.id ?? '';
   const defaultFormValues = useMemo(
     () => ({
@@ -60,11 +58,11 @@ const EditAppointmentsModalForm = () => {
   };
 
   useEffect(() => {
-    if (isSubmitSuccessful && closeModal) {
+    if (isSubmitSuccessful) {
       onClose();
       reset();
     }
-  }, [isSubmitSuccessful, reset, closeModal, onClose]);
+  }, [isSubmitSuccessful, reset, onClose]);
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -90,12 +88,6 @@ const EditAppointmentsModalForm = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details]);
-
-  useEffect(() => {
-    if (appointmentStatus.edit.success) {
-      setCloseModal(true);
-    }
-  }, [appointmentStatus.edit.success, onClose]);
 
   const editAppointmentDialogFormCypressId = CypressIds.MODAL_APPOINTMENTS_EDIT_DIALOG_FORM;
 

@@ -22,22 +22,6 @@ export interface AppointmentDetailsProps {
   provider: IUniqueItem;
 }
 
-export interface AppointmentStatusProps {
-  fail: boolean;
-  success: boolean;
-}
-
-export interface AppointmentStatusState {
-  create: AppointmentStatusProps;
-  edit: AppointmentStatusProps;
-  cancel: AppointmentStatusProps;
-}
-
-export interface IAppointmentErrorState {
-  message: string;
-  code: string;
-}
-
 export interface BookingProps {
   appointments: IAppointment[];
   date: Date;
@@ -57,7 +41,6 @@ export interface BookingProps {
   isBookingCalendarLoading: boolean;
   isCollectionCalendarLoading: boolean;
   currentAppointmentId: string;
-  error: string | null;
   patientList: IPatientList;
   isCheckInAppointmentsLoading: boolean;
   checkInAppointmentsList: ICheckInAppointment[];
@@ -65,10 +48,6 @@ export interface BookingProps {
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
   isAppointmentLoading: boolean;
-  appointmentStatus: AppointmentStatusState;
-  createAppointmentError: IAppointmentErrorState;
-  editAppointmentErrorState: IAppointmentErrorState;
-  cancelAppointmentErrorState: IAppointmentErrorState;
   specimenAppointments: ISpecimenAppointmentsState;
 }
 

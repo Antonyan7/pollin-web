@@ -5,15 +5,12 @@ import Overview from '@components/PatientProfile/Overview';
 import PartnerProfileOverview from '@components/PatientProfile/PartnerProfileOverview';
 import TestResults from '@components/PatientProfile/TestResults';
 import { Box, Grid, Stack } from '@mui/material';
-import { useAppSelector } from '@redux/hooks';
-import { bookingSelector } from '@redux/slices/booking';
 import { usePatientProfileNavigatorContext } from 'context/PatientProfileNavigatorContext';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
 import { SortOrder } from 'types/patient';
 import { AppointmentType } from 'types/patientProfile';
 
-import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import LatestTestResults from '@ui-component/profile/LatestTestResult';
 
 import AppointmentsCard from './appointmentCard';
@@ -23,15 +20,13 @@ const PatientProfile = () => {
   const patientId = router.query.id as string;
   const { profilePageName, page } = usePatientProfileNavigatorContext();
   const [patientAppointments, setPatientAppointments] = useState<IGetPatientAppointments | null>(null);
-  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
 
+  // TODO: I have Created Ticket For Sandro's magic code to refactor and move all of this to redux with patientAppointments state (https://fhhealth.atlassian.net/browse/TEAMB-8032)
   useEffect(() => {
     bookingManager.getPatientAppointments(patientId).then(({ data }) => {
       setPatientAppointments(data);
     });
-  }, [appointmentStatus, patientId]);
-
-  useAppointmentStatusState();
+  }, [patientId]);
 
   return (
     <Box width="100%" overflow="hidden">

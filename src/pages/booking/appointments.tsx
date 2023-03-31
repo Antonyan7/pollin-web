@@ -18,7 +18,6 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-import useAppointmentStatusState from '@hooks/useAppointmentStatusState';
 import AppointmentsHeader from '@ui-component/appointments/AppointmentsHeader';
 import useOnCalendarEventClick from '@ui-component/calendar/hooks/useOnCalenderEventClick';
 import ResourceDropdown from '@ui-component/dropdown/ResourceDropdown';
@@ -74,8 +73,6 @@ const Appointments = () => {
       dispatch(bookingMiddleware.setDateValue(date));
     }
   }, []);
-
-  useAppointmentStatusState();
 
   const onServiceProviderChange = useCallback((providerOption?: GroupedServiceProvidersOption) => {
     dispatch(bookingMiddleware.updateBookingResourceId(providerOption?.id ?? ''));

@@ -9,18 +9,19 @@ import {
 } from '@axios/booking/managerBookingTypes';
 import { IGetPatientsRequestBody } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
+import { bookingMiddleware } from '@redux/slices/booking/index';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
-import axios from 'axios';
+import { t } from 'i18next';
 import store, { AppDispatch } from 'redux/store';
-import {
-  IAppointmentErrorState,
-  IGroupedServiceProviders,
-  IServiceProviders
-} from 'types/reduxTypes/bookingStateTypes';
+import { IGroupedServiceProviders, IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
+
+import { CypressIds } from '../../../constants/cypressIds';
+import { Translation } from '../../../constants/translations';
+import { ModalName } from '../../../types/modals';
 
 import slice from './slice';
 
@@ -33,7 +34,6 @@ const {
   setServiceProviders,
   setGroupedServiceProviders,
   setSpecimenGroupedServiceProviders,
-  setError,
   setDate,
   setBookingAppointments,
   setCurrentServiceProviderId,
@@ -55,10 +55,6 @@ const {
   setIsCheckInLoading,
   setIsCheckInSuccess,
   setCollectionCalendarDate,
-  setAppointmentStatus,
-  setCreateAppointmentErrorState,
-  setEditAppointmentErrorState,
-  setCancelAppointmentErrorState,
   setSpecimenAppointmentsFilters,
   setSpecimenAppointmentsFiltersArrayLoading,
   setSpecimenAppointments,
@@ -92,7 +88,6 @@ const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
     dispatch(setServiceProviders(data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   } finally {
     dispatch(setIsServiceProvidersLoading(false));
   }
@@ -123,7 +118,6 @@ const getGroupedServiceProviders =
       dispatch(isSpecimenCollection ? setSpecimenGroupedServiceProviders(data) : setGroupedServiceProviders(data));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error as string));
     } finally {
       dispatch(setIsGroupedServiceProvidersLoading(false));
       dispatch(setIsSpecimenGroupedServiceProvidersLoading(false));
@@ -145,7 +139,6 @@ const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) =
     dispatch(updateServiceProviders(data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   } finally {
     dispatch(setIsServiceProvidersLoading(false));
   }
@@ -177,7 +170,6 @@ const getNewGroupedServiceProviders =
       );
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error as string));
     } finally {
       dispatch(setIsGroupedServiceProvidersLoading(false));
       dispatch(setIsSpecimenGroupedServiceProvidersLoading(false));
@@ -196,7 +188,6 @@ const getBookingAppointments = (resourceId: string, date: Date) => async (dispat
     dispatch(setBookingAppointments([]));
     dispatch(setBookingCalendarLoadingState(false));
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   }
 };
 
@@ -247,7 +238,6 @@ const getPatients = (patientsListData: IGetPatientsRequestBody | null) => async 
     Sentry.captureException(error);
     resetPatientData(dispatch);
     dispatch(setPatientListLoading(false));
-    dispatch(setError(error as string));
   }
 };
 
@@ -276,7 +266,6 @@ const getNewPatients = (patientsListData: IGetPatientsRequestBody | null) => asy
     Sentry.captureException(error);
     resetPatientData(dispatch);
     dispatch(setPatientListLoading(false));
-    dispatch(setError(error as string));
   }
 };
 const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: AppDispatch) => {
@@ -290,7 +279,6 @@ const getServiceTypes = (params?: IServiceTypesReqParams) => async (dispatch: Ap
     dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   } finally {
     dispatch(setIsServiceTypesLoading(false));
   }
@@ -309,7 +297,6 @@ const getCheckInAppointments = (patientId: string) => async (dispatch: AppDispat
     dispatch(setCheckInAppointments(response.data.data.appointments));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   } finally {
     dispatch(setIsCheckInAppointmentsLoading(false));
   }
@@ -320,23 +307,7 @@ const refreshCheckInAppointments = (isRefresh: boolean) => async (dispatch: AppD
     dispatch(setIsRefreshCheckInAppointments(isRefresh));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   }
-};
-
-const resetAppointmentStatus = () => async (dispatch: AppDispatch) => {
-  const resetOption = {
-    success: false,
-    fail: false
-  };
-
-  dispatch(
-    setAppointmentStatus({
-      create: resetOption,
-      edit: resetOption,
-      cancel: resetOption
-    })
-  );
 };
 
 const checkInAppointment = (checkInValues: ICheckInReqBody, message: string) => async (dispatch: AppDispatch) => {
@@ -358,24 +329,12 @@ const checkInAppointment = (checkInValues: ICheckInReqBody, message: string) => 
   } catch (error) {
     Sentry.captureException(error);
     dispatch(setIsCheckInSuccess(false));
-    dispatch(setError(error as string));
   } finally {
     dispatch(setIsCheckInLoading(false));
   }
 };
 
-const clearCreateAppointmentErrorState = () => async (dispatch: AppDispatch) => {
-  dispatch(
-    setCreateAppointmentErrorState({
-      message: '',
-      code: ''
-    })
-  );
-};
-
 const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (dispatch: AppDispatch) => {
-  const { appointmentStatus } = store.getState().booking;
-
   try {
     const providerId = appointmentValues.providerId
       ? appointmentValues.providerId
@@ -387,34 +346,26 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
 
     appointmentValues.providerId = providerId;
     await API.booking.createAppointment(appointmentValues);
+
     dispatch(
-      setAppointmentStatus({
-        ...appointmentStatus,
-        create: {
-          fail: false,
-          success: true
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS),
+          dataCy: CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS
         }
       })
     );
+
+    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
+    dispatch(bookingMiddleware.getPatientAlerts(''));
 
     if (DateUtil.isSameDate(appointmentValues.date as Date, calendarDate)) {
       dispatch(getBookingAppointments(providerId, calendarDate));
     }
   } catch (error) {
     Sentry.captureException(error);
-
-    if (axios.isAxiosError(error)) {
-      dispatch(setCreateAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
-      dispatch(
-        setAppointmentStatus({
-          ...appointmentStatus,
-          create: {
-            fail: true,
-            success: false
-          }
-        })
-      );
-    }
   } finally {
     dispatch(setAppointmentLoading(false));
   }
@@ -431,7 +382,6 @@ const getAppointmentDetails = (appointmentId?: string) => async (dispatch: AppDi
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   }
 };
 
@@ -441,8 +391,6 @@ const clearAppointmentDetails = () => (dispatch: AppDispatch) => {
 
 const editAppointment =
   (appointmentId: string, appointmentValues: IEditAppointmentBody) => async (dispatch: AppDispatch) => {
-    const { appointmentStatus } = store.getState().booking;
-
     try {
       dispatch(setIsAppointmentEditLoading(true));
 
@@ -452,33 +400,22 @@ const editAppointment =
       await API.booking.editAppointment(appointmentId, appointmentValues);
       dispatch(setIsAppointmentEditLoading(false));
       dispatch(
-        setAppointmentStatus({
-          ...appointmentStatus,
-          edit: {
-            fail: false,
-            success: true
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS),
+            dataCy: CypressIds.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS
           }
         })
       );
+      dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
+      dispatch(bookingMiddleware.clearAppointmentDetails());
       dispatch(getBookingAppointments(providerId, calendarDate));
     } catch (error) {
-      dispatch(setIsAppointmentEditLoading(false));
       Sentry.captureException(error);
-      dispatch(setError(error as string));
-
-      if (axios.isAxiosError(error)) {
-        dispatch(setEditAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
-
-        dispatch(
-          setAppointmentStatus({
-            ...appointmentStatus,
-            edit: {
-              fail: true,
-              success: false
-            }
-          })
-        );
-      }
+    } finally {
+      dispatch(setIsAppointmentEditLoading(false));
     }
   };
 
@@ -497,45 +434,34 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
 };
 
 const cancelAppointment = (appointmentId: string, cancellationReason: string) => async (dispatch: AppDispatch) => {
-  const { appointmentStatus } = store.getState().booking;
+  dispatch(setAppointmentLoading(true));
 
   try {
     const providerId = store.getState().booking.currentServiceProviderId;
     const calendarDate = store.getState().booking.date;
 
-    dispatch(setAppointmentLoading(true));
     await API.booking.cancelAppointment(appointmentId, {
       appointment: {
         cancellationReason
       }
     });
-    dispatch(setAppointmentLoading(false));
     dispatch(
-      setAppointmentStatus({
-        ...appointmentStatus,
-        cancel: {
-          fail: false,
-          success: true
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS),
+          dataCy: CypressIds.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS
         }
       })
     );
+    dispatch(viewsMiddleware.closeModal(ModalName.CancelAppointmentModal));
+    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
     dispatch(getBookingAppointments(providerId, calendarDate));
   } catch (error) {
     Sentry.captureException(error);
-
-    if (axios.isAxiosError(error)) {
-      dispatch(setCancelAppointmentErrorState(error?.response?.data.status as IAppointmentErrorState));
-
-      dispatch(
-        setAppointmentStatus({
-          ...appointmentStatus,
-          cancel: {
-            fail: true,
-            success: false
-          }
-        })
-      );
-    }
+  } finally {
+    dispatch(setAppointmentLoading(false));
   }
 };
 
@@ -547,7 +473,7 @@ const getSpecimenAppointmentsFilters = () => async (dispatch: AppDispatch) => {
 
     dispatch(setSpecimenAppointmentsFilters(data.filters));
   } catch (error) {
-    dispatch(setError(error as string));
+    Sentry.captureException(error);
   } finally {
     dispatch(setSpecimenAppointmentsFiltersArrayLoading(false));
   }
@@ -570,7 +496,6 @@ const getSpecimenAppointments =
       Sentry.captureException(error);
       dispatch(setCollectionCalendarLoadingState(false));
       dispatch(setSpecimenAppointments([]));
-      dispatch(setError(error as string));
     } finally {
       dispatch(setCollectionCalendarLoadingState(false));
     }
@@ -604,9 +529,7 @@ export default {
   editAppointment,
   clearAppointmentDetails,
   getPatientAlerts,
-  resetAppointmentStatus,
   getCheckInAppointments,
-  clearCreateAppointmentErrorState,
   getSpecimenAppointmentsFilters,
   getSpecimenAppointments,
   clearSpecimenAppointments

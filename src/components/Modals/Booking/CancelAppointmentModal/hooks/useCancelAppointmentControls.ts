@@ -1,13 +1,12 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material';
-import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { dispatch } from '@redux/hooks';
+import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
 import { cancellationReasons } from 'helpers/constants';
 import { ModalName } from 'types/modals';
 
 const useCancelAppointmentControls = (appointmentId: string) => {
-  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
   const [openOtherReasonField, setOpenOtherReasonField] = useState<boolean>(false);
   const [cancellationReason, setCancellationReason] = useState<string>('');
 
@@ -22,13 +21,6 @@ const useCancelAppointmentControls = (appointmentId: string) => {
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.CancelAppointmentModal));
   }, []);
-
-  useEffect(() => {
-    if (appointmentStatus.cancel.success) {
-      dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-      onClose();
-    }
-  }, [appointmentStatus.cancel.success, onClose]);
 
   const onConfirm = useCallback(() => {
     setOpenOtherReasonField(false);

@@ -6,10 +6,8 @@ import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import {
   AppointmentDetailsProps,
-  AppointmentStatusState,
   BookingProps,
   IAppointment,
-  IAppointmentErrorState,
   ICheckInAppointment,
   IGroupedServiceProviders,
   IPatientList,
@@ -87,9 +85,6 @@ const reducers = createReducer({
   setCollectionCalendarLoadingState(state, action: IAction<boolean>) {
     state.isCollectionCalendarLoading = action.payload;
   },
-  setError(state, action: IAction<string>) {
-    state.error = action.payload;
-  },
   setPatientsList(state, action: IAction<IPatientList>) {
     state.patientList = action.payload;
   },
@@ -121,23 +116,11 @@ const reducers = createReducer({
   setIsAppointmentEditLoading(state, action: IAction<boolean>) {
     state.isAppointmentEditLoading = action.payload;
   },
-  setAppointmentStatus(state, action: IAction<AppointmentStatusState>) {
-    state.appointmentStatus = action.payload;
-  },
   setIsCheckInLoading(state, action: IAction<boolean>) {
     state.isCheckInLoading = action.payload;
   },
   setIsCheckInSuccess(state, action: IAction<boolean>) {
     state.isCheckInSuccess = action.payload;
-  },
-  setCreateAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
-    state.createAppointmentError = action.payload;
-  },
-  setEditAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
-    state.editAppointmentErrorState = action.payload;
-  },
-  setCancelAppointmentErrorState(state, action: IAction<IAppointmentErrorState>) {
-    state.cancelAppointmentErrorState = action.payload;
   },
   setSpecimenAppointmentsFilters(state, action: IAction<ISpecimenAppointmentsFilter[]>) {
     state.specimenAppointments.filters = action.payload;

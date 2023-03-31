@@ -22,7 +22,6 @@ export const getInitialState = (): BookingProps => ({
   currentServiceProviderId: '',
   currentSpecimenServiceProviderId: '',
   currentAppointmentId: '',
-  error: null,
   patientList: {
     patients: [],
     isLoading: false,
@@ -35,23 +34,6 @@ export const getInitialState = (): BookingProps => ({
   appointmentDetails: null,
   patientAlerts: [],
   isAppointmentLoading: false,
-  appointmentStatus: {
-    create: { fail: false, success: false },
-    edit: { fail: false, success: false },
-    cancel: { fail: false, success: false }
-  },
-  createAppointmentError: {
-    code: '',
-    message: ''
-  },
-  editAppointmentErrorState: {
-    code: '',
-    message: ''
-  },
-  cancelAppointmentErrorState: {
-    code: '',
-    message: ''
-  },
   specimenAppointments: {
     date: DateUtil.representInClinicDate(),
     list: [],

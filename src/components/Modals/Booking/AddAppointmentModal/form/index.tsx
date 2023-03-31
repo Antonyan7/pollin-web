@@ -14,7 +14,6 @@ import FormHeader from './FormHeader';
 const AddAppointmentsModalForm = () => {
   const { control, handleSubmit } = useFormContext<ICreateAppointmentBody>();
   const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
-  const appointmentStatus = useAppSelector(bookingSelector.appointmentStatus);
 
   const isDuplicatePatientName = useMemo(() => {
     if (!patientAlerts?.length) {
@@ -28,11 +27,6 @@ const AddAppointmentsModalForm = () => {
 
   const patientId = useWatch({ name: 'patientId', control });
   const providerId = useWatch({ name: 'providerId', control });
-
-  const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
-    dispatch(bookingMiddleware.getPatientAlerts(''));
-  }, []);
 
   useEffect(() => {
     if (isDuplicatePatientName) {
@@ -58,12 +52,6 @@ const AddAppointmentsModalForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [providerId]
   );
-
-  useEffect(() => {
-    if (appointmentStatus.create.success) {
-      onClose();
-    }
-  }, [appointmentStatus.create.success, onClose]);
 
   const addAppointmentDialogFormCypressId = CypressIds.MODAL_APPOINTMENTS_ADD_DIALOG_FORM;
 
