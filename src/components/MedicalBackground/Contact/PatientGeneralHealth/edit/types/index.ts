@@ -44,3 +44,5 @@ export enum GeneralHealthFormFields {
   AdditionalInformation = 'additionalInformation',
   CurrentPrescribedMedications = 'currentPrescribedMedications'
 }
+
+export const familyMemberTypes = ['Mother', 'Father', 'Sibling', 'MaternalGrandparent', 'PaternalGrandparent'];

@@ -5,6 +5,7 @@ import FormSubmit from '@components/MedicalBackground/components/common/FormSubm
 import { SamePrimaryAddressProvider } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/context/SamePrimaryAddressContext';
 import { getContactInformationEmptyState } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { patientContactInformationValidationSchema } from '@components/MedicalBackground/helpers/contact_validation';
+import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -25,7 +26,10 @@ const PatientContactInformationEdit = () => {
     resolver: yupResolver(patientContactInformationValidationSchema),
     mode: 'onSubmit'
   });
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { dirtyFields }
+  } = methods;
 
   const onContactInformationSubmit = (values: IPatientContactInformationProps) => {
     if (typeof currentPatiendId === 'string') {
@@ -33,9 +37,12 @@ const PatientContactInformationEdit = () => {
     }
   };
 
-  const onCancelClick = () => {
+  const handleClose = () => {
     dispatch(patientsMiddleware.changeContactInformationEditButtonState());
   };
+
+  const isFormChanged = Object.values(dirtyFields).length > 0;
+  const onClose = useCloseMedicalBackgroundFormWithChangesModal(isFormChanged, handleClose);
 
   return (
     <FormProvider {...methods}>
@@ -43,7 +50,7 @@ const PatientContactInformationEdit = () => {
         <Grid sx={{ py: paddings.topBottom32 }}>
           <SamePrimaryAddressProvider>
             <PatientContactInformationEditForm />
-            <FormSubmit onClick={onCancelClick} isLoading={isContactInformationDataUpdating} />
+            <FormSubmit onClick={onClose} isLoading={isContactInformationDataUpdating} isDisabled={!isFormChanged} />
           </SamePrimaryAddressProvider>
         </Grid>
       </form>
