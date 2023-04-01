@@ -53,16 +53,9 @@ import CancerPatient from '../Contact/PatientBackgroundInformation/view/fields/C
 import Gender from '../Contact/PatientBackgroundInformation/view/fields/Gender';
 import RelationshipStatus from '../Contact/PatientBackgroundInformation/view/fields/RelationshipStatus';
 
-export const defineSingleFieldValue = (fieldType?: boolean) => {
-  switch (fieldType) {
-    case fieldType:
-      return t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES);
-    case !fieldType:
-      return t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO);
-    default:
-      return '-';
-  }
-};
+export const defineSingleFieldValue = (fieldType?: boolean) => fieldType
+    ? t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES)
+    : t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO);
 
 export interface GeneralHealthComponentsProps {
   componentIndex?: number;
