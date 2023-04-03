@@ -30,11 +30,9 @@ const ScheduleTemplateForm = () => {
   const { reset } = methods;
 
   useEffect(() => {
-    dispatch(schedulingMiddleware.cleanError());
     dispatch(schedulingMiddleware.getServiceTypes());
 
     return () => {
-      dispatch(schedulingMiddleware.cleanError());
       dispatch(schedulingMiddleware.clearSingleSchedule());
     };
   }, []);

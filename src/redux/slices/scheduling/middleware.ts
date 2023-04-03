@@ -1,6 +1,9 @@
 import API from '@axios/API';
+import { applyScheduleFormInitialValues } from '@components/Scheduling/applySchedule/constants/defaultValues';
+import { SeveritiesType } from '@components/Scheduling/types';
 import * as Sentry from '@sentry/nextjs';
 import { AxiosError } from 'axios';
+import { t } from 'i18next';
 import { AppDispatch } from 'redux/store';
 import {
   IApplyScheduleData,
@@ -8,7 +11,6 @@ import {
   ITemplateOverlap,
   ScheduleTemplateErrorMessages
 } from 'types/create-schedule';
-import { ModalName } from 'types/modals';
 import {
   BlockSchedulingProps,
   DeleteScheduleTemplateProps,
@@ -17,6 +19,8 @@ import {
 
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
 
+import { CypressIds } from '../../../constants/cypressIds';
+import { Translation } from '../../../constants/translations';
 import { viewsMiddleware } from '../views';
 
 import { defaultScheduleTemplateDetails } from './initialState';
@@ -24,14 +28,11 @@ import slice from './slice';
 
 const {
   setScheduleTemplates,
-  setError,
   setScheduleBlock,
   setScheduleOverrides,
   setSchedulingListLoadingStatus,
   setServiceTypes,
   setSingleScheduleTemplate,
-  setApplyScheduleState,
-  setBlockScheduleState,
   setCalendarLoadingState,
   setScheduleLoading,
   setIsServiceTypesLoading,
@@ -50,7 +51,6 @@ const getServiceTypes = () => async (dispatch: AppDispatch) => {
     dispatch(setServiceTypes(serviceTypes));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsServiceTypesLoading(false));
   }
@@ -72,7 +72,6 @@ const getSchedulingTemplates = (pageSize: number, complete?: boolean) => async (
     dispatch(setSchedulingListLoadingStatus(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
     dispatch(setSchedulingListLoadingStatus(false));
   }
 };
@@ -94,90 +93,71 @@ const getNewSchedulingTemplates = (pageSize: number) => async (dispatch: AppDisp
     dispatch(setSchedulingListLoadingStatus(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setSchedulingListLoadingStatus(false));
   }
 };
 
-export const applyScheduleTemplate = (data: IApplyScheduleData) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsApplyingSchedule(true));
+export const applyScheduleTemplate =
+  (data: IApplyScheduleData, reset: (value: typeof applyScheduleFormInitialValues) => void) =>
+  async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsApplyingSchedule(true));
 
-    await API.scheduling.applyScheduleTemplate(data);
-    dispatch(
-      setApplyScheduleState({
-        success: true,
-        fail: false
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(setError(error));
-    dispatch(
-      setApplyScheduleState({
-        success: false,
-        fail: true
-      })
-    );
-  } finally {
-    dispatch(setIsApplyingSchedule(false));
-  }
-};
+      await API.scheduling.applyScheduleTemplate(data);
 
-export const resetApplyStatusState = () => async (dispatch: AppDispatch) => {
-  dispatch(
-    setApplyScheduleState({
-      success: false,
-      fail: false
-    })
-  );
-};
-
-export const resetBlockStatusState = () => async (dispatch: AppDispatch) => {
-  dispatch(
-    setBlockScheduleState({
-      success: false,
-      fail: false
-    })
-  );
-};
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS),
+            dataCy: CypressIds.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS
+          }
+        })
+      );
+      reset(applyScheduleFormInitialValues);
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsApplyingSchedule(false));
+    }
+  };
 
 const resetOverrides = () => async (dispatch: AppDispatch) => {
   dispatch(setScheduleOverrides([]));
 };
 
-const applyScheduleBlock = (applyBlockScheduleData: BlockSchedulingProps) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setScheduleLoading(true));
+const applyScheduleBlock =
+  (applyBlockScheduleData: BlockSchedulingProps, reset: () => void) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setScheduleLoading(true));
 
-    const response = await API.scheduling.applyScheduleBlock({
-      resourceId: applyBlockScheduleData.resourceId,
-      startDate: applyBlockScheduleData.startDate,
-      endDate: applyBlockScheduleData.endDate,
-      placeholderLabel: applyBlockScheduleData.placeholderLabel
-    });
+      const response = await API.scheduling.applyScheduleBlock({
+        resourceId: applyBlockScheduleData.resourceId,
+        startDate: applyBlockScheduleData.startDate,
+        endDate: applyBlockScheduleData.endDate,
+        placeholderLabel: applyBlockScheduleData.placeholderLabel
+      });
 
-    dispatch(
-      setBlockScheduleState({
-        success: true,
-        fail: false
-      })
-    );
-    dispatch(setScheduleBlock(response.data.data));
-  } catch (error) {
-    Sentry.captureException(error);
-    dispatch(
-      setBlockScheduleState({
-        success: false,
-        fail: true
-      })
-    );
-    dispatch(setError(error));
-  } finally {
-    dispatch(setScheduleLoading(false));
-  }
-};
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS),
+            dataCy: CypressIds.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS
+          }
+        })
+      );
+      reset();
+      dispatch(setScheduleBlock(response.data.data));
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setScheduleLoading(false));
+    }
+  };
 
 const clearSingleSchedule = () => (dispatch: AppDispatch) => {
   dispatch(setSingleScheduleTemplate(defaultScheduleTemplateDetails));
@@ -190,10 +170,9 @@ const getSingleSchedule = (templateId: string) => async (dispatch: AppDispatch) 
     const response = await API.scheduling.getSingleTemplate(templateId);
 
     dispatch(setSingleScheduleTemplate(response.data.data));
-    dispatch(setCalendarLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
     dispatch(setCalendarLoadingState(false));
   }
 };
@@ -203,33 +182,33 @@ const updateSingleSchedule = (templateId: string, data: ITemplateGroup) => async
     dispatch(setCalendarLoadingState(true));
     dispatch(setScheduleLoading(true));
 
-    const response = await API.scheduling.updateSingleTemplate(templateId, data);
+    await API.scheduling.updateSingleTemplate(templateId, data);
 
-    if (response.data.status.code === 'succeed') {
-      dispatch(
-        viewsMiddleware.setRedirectionState({
-          path: '/scheduling/schedule-templates',
-          params: '',
-          apply: true
-        })
-      );
-      dispatch(setError(null));
-    }
+    dispatch(
+      viewsMiddleware.setRedirectionState({
+        path: '/scheduling/schedule-templates',
+        params: '',
+        apply: true
+      })
+    );
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_SCHEDULING_EDIT_TEMPLATE_SUCCESSFULLY_UPDATED_MESSAGE),
+          dataCy: CypressIds.PAGE_SCHEDULING_EDIT_TEMPLATE_SUCCESSFULLY_UPDATED_MESSAGE
+        }
+      })
+    );
   } catch (originalError) {
     const error = originalError as AxiosError<ITemplateOverlap>;
 
     if (error?.response?.data?.data?.title === ScheduleTemplateErrorMessages.EditTemplateOverlapMessage) {
       dispatch(setScheduleOverrides(error.response.data.data.data));
-      dispatch(
-        viewsMiddleware.openModal({
-          name: ModalName.ScheduleTemplatesErrorModal,
-          props: { title: error.response.data.data.title, message: error.response.data.data.message }
-        })
-      );
     }
 
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setCalendarLoadingState(false));
     dispatch(setScheduleLoading(false));
@@ -240,10 +219,19 @@ const deleteTemplate = (templateId: DeleteScheduleTemplateProps) => async (dispa
   try {
     dispatch(setScheduleLoading(true));
     await API.scheduling.deleteTemplate(templateId);
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_DELETED_MESSAGE),
+          dataCy: CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_DELETED_MESSAGE
+        }
+      })
+    );
     dispatch(getSchedulingTemplates(1));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setScheduleLoading(false));
   }
@@ -253,40 +241,36 @@ const createScheduleTemplate = (createScheduleTemplateData: ITemplateGroup) => a
   try {
     dispatch(setScheduleLoading(true));
 
-    const response = await API.scheduling.createTemplate(createScheduleTemplateData);
+    await API.scheduling.createTemplate(createScheduleTemplateData);
 
-    if (response.data.status.code === 'succeed') {
-      dispatch(
-        viewsMiddleware.setRedirectionState({
-          path: '/scheduling/schedule-templates',
-          params: '',
-          apply: true
-        })
-      );
-      dispatch(setError(null));
-    }
+    dispatch(
+      viewsMiddleware.setRedirectionState({
+        path: '/scheduling/schedule-templates',
+        params: '',
+        apply: true
+      })
+    );
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_CREATED_MESSAGE),
+          dataCy: CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_CREATED_MESSAGE
+        }
+      })
+    );
   } catch (originalError) {
     const error = originalError as AxiosError<ITemplateOverlap>;
 
     if (error?.response?.data?.data?.title === ScheduleTemplateErrorMessages.CreateTemplateOverlapMessage) {
       dispatch(setScheduleOverrides(error.response.data.data.data));
-      dispatch(
-        viewsMiddleware.openModal({
-          name: ModalName.ScheduleTemplatesErrorModal,
-          props: { title: error.response.data.data.title, message: error.response.data.data.message }
-        })
-      );
     }
 
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setScheduleLoading(false));
   }
-};
-
-const cleanError = () => async (dispatch: AppDispatch) => {
-  dispatch(setError(null));
 };
 
 export default {
@@ -298,10 +282,7 @@ export default {
   getSingleSchedule,
   updateSingleSchedule,
   clearSingleSchedule,
-  resetApplyStatusState,
   resetOverrides,
-  resetBlockStatusState,
   deleteTemplate,
-  getNewSchedulingTemplates,
-  cleanError
+  getNewSchedulingTemplates
 };

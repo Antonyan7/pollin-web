@@ -1,5 +1,4 @@
 import { IPagination } from '@axios/axiosTypes';
-import { AxiosError } from 'axios';
 
 import { ISingleTemplate } from '../create-schedule';
 
@@ -57,14 +56,11 @@ export interface SchedulingProps {
   schedulingListLoadingStatus: boolean;
   scheduleTemplates: IScheduleTemplatesList;
   isApplyingSchedule: boolean;
-  error: AxiosError<{ status: ISchedulingErrorResponseStatus }> | null;
   overrides: number[];
   scheduleBlock: BlockSchedulingProps;
   scheduleCalendarLoading: boolean;
   scheduleResources: IServiceProvider[];
   serviceTypes: IServiceType[];
-  applyScheduleStateStatus: SchedulingStateStatusProps;
-  blockScheduleStateStatus: SchedulingStateStatusProps;
   scheduleLoading: boolean;
 }
 

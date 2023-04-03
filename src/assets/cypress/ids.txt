@@ -83,6 +83,7 @@
   page.scheduling.edit.templates.name
   page.scheduling.edit.templates.button.save
   page.scheduling.edit.templates.button.cancel
+  page.scheduling.edit.template.successfully.updated.message
   page.scheduling.templates.edit.icon
   page.scheduling.create.templates.placeholder
   page.scheduling.create.templates.service.type
@@ -94,6 +95,8 @@
   page.scheduling.create.templates.end
   page.scheduling.templates.button.create
   page.scheduling.templates.button.delete
+  page.scheduling.templates.successfully.deleted.message
+  page.scheduling.templates.successfully.created.message
   page.specimen.collection.title
   page.specimen.collection.desktop.date.picker
   page.specimen.collection.select.resource

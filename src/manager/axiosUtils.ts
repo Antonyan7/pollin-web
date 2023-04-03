@@ -113,7 +113,7 @@ export const handleErrorActions = (error: { response: AxiosResponse }): void => 
           open: true,
           props: {
             severityType: SeveritiesType.error,
-            description: error?.response?.data?.status?.message,
+            description: error?.response?.data?.status?.message ?? error.response.data.data.message,
             dataCy: CypressIds.COMMON_TOAST_ERROR_MESSAGE
           }
         })

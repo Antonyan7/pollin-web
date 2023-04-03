@@ -27,6 +27,11 @@ const StyledTypography = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black
 }));
 
+export interface IEncountersCancelChangesModalProps {
+  title: string;
+  message: string;
+}
+
 const EncountersCancelChangesModal = () => {
   const theme = useTheme();
   const [t] = useTranslation();

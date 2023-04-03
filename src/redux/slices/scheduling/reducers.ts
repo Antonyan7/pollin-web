@@ -5,7 +5,6 @@ import {
   BlockSchedulingProps,
   IScheduleTemplatesList,
   SchedulingProps,
-  SchedulingStateStatusProps,
   SchedulingTemplateProps,
   SingleSchedulingProps
 } from 'types/reduxTypes/schedulingStateTypes';
@@ -13,9 +12,6 @@ import {
 const createReducer = <T extends SliceCaseReducers<SchedulingProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setError(state, action) {
-    state.error = action.payload;
-  },
   setServiceTypes(state, action: IAction<IServiceType[]>) {
     // state.serviceTypes = action.payload;
     // TODO: remove this once we can get service types based on usage area
@@ -44,12 +40,6 @@ const reducers = createReducer({
   },
   setSchedulingListLoadingStatus(state, action: IAction<boolean>) {
     state.schedulingListLoadingStatus = action.payload;
-  },
-  setApplyScheduleState(state, action: IAction<SchedulingStateStatusProps>) {
-    state.applyScheduleStateStatus = action.payload;
-  },
-  setBlockScheduleState(state, action: IAction<SchedulingStateStatusProps>) {
-    state.blockScheduleStateStatus = action.payload;
   },
   setScheduleOverrides(state, action: IAction<number[]>) {
     state.overrides = action.payload;

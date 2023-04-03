@@ -11,14 +11,11 @@ import { Translation } from 'constants/translations';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { bookingMiddleware } from 'redux/slices/booking';
 import { schedulingMiddleware, schedulingSelector } from 'redux/slices/scheduling';
-import { viewsMiddleware } from 'redux/slices/views';
 import { margins } from 'themes/themeConstants';
 import { BlockSchedulingProps } from 'types/reduxTypes/schedulingStateTypes';
 import { blockScheduleValidationSchema } from 'validation/scheduling/block_schedule_apply';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
-
-import { SeveritiesType } from '../types';
 
 import DateField from './fields/DateField';
 import ResourceField from './fields/ResourceField';
@@ -28,7 +25,6 @@ import { IBlockScheduleForm, initialValues } from './form/initialValues';
 
 const BlockTemplates = () => {
   const [t] = useTranslation();
-  const scheduleBlockStatus = useAppSelector(schedulingSelector.scheduleBlockStatus);
   const isScheduleLoading = useAppSelector(schedulingSelector.scheduleLoading);
 
   const methods = useForm({
@@ -54,42 +50,12 @@ const BlockTemplates = () => {
       placeholderLabel: values.placeholderLabel
     };
 
-    dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps));
+    dispatch(schedulingMiddleware.applyScheduleBlock(sendingBlockValues as BlockSchedulingProps, reset));
   };
 
   useEffect(() => {
     dispatch(bookingMiddleware.getGroupedServiceProviders({ page: 1 }));
   }, []);
-
-  useEffect(() => {
-    if (scheduleBlockStatus.success) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS),
-            dataCy: CypressIds.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_SUCCESS
-          }
-        })
-      );
-      reset();
-
-      dispatch(schedulingMiddleware.resetBlockStatusState());
-    } else if (scheduleBlockStatus.fail) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL)
-          }
-        })
-      );
-      dispatch(schedulingMiddleware.resetBlockStatusState());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scheduleBlockStatus.success, scheduleBlockStatus.fail]);
 
   return (
     <FormProvider {...methods}>

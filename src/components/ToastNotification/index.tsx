@@ -50,7 +50,7 @@ export const ToastNotification = React.forwardRef(() => {
         >
           {notificationDescription && (
             <Typography sx={{ fontWeight: 500, color: (theme) => theme.palette.common.white }}>
-              {notificationDescription}
+              <div dangerouslySetInnerHTML={{ __html: notificationDescription }} />
             </Typography>
           )}
           {notificationRenderList && (

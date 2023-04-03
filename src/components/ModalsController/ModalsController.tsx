@@ -30,11 +30,10 @@ import OrderValidationErrorModal, {
 } from '@components/Modals/Order/OrderValidationError';
 import TestResultReleaseConfirmationModal from '@components/Modals/Order/TestResultReleaseConfirmation';
 import TestResultReviewConfirmationModal from '@components/Modals/Order/TestResultReviewConfirmation';
-import EncountersCancelChangesModal from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
+import EncountersCancelChangesModal, {
+  IEncountersCancelChangesModalProps
+} from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import PatientPartnerModal, { PatientPartnerModalProps } from '@components/Modals/PatientPartner';
-import ScheduleTemplatesErrorModal, {
-  ScheduleTemplatesErrorModalProps
-} from '@components/Modals/Scheduling/ScheduleTemplatesErrorModal';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import SpecimenCollectionModal from '@components/Modals/Specimen/Collection';
 import { SpecimenCollectionModalProps } from '@components/Modals/Specimen/Collection/types';
@@ -96,14 +95,9 @@ const getCancelAppointmentModal = (modal: IOpenedModal<CancelAppointmentModalPro
   <CancelAppointmentModal key={modal.name} {...modal.props} />
 );
 
-// <SCHEDULING>
-const getScheduleTemplatesErrorModal = (modal: IOpenedModal<ScheduleTemplatesErrorModalProps>) => (
-  <ScheduleTemplatesErrorModal key={modal.name} {...modal.props} />
-);
-
 // <PATIENT EMR>
 // encounters
-const getEncountersCancelChangesModal = (modal: IOpenedModal<ScheduleTemplatesErrorModalProps>) => (
+const getEncountersCancelChangesModal = (modal: IOpenedModal<IEncountersCancelChangesModalProps>) => (
   <EncountersCancelChangesModal key={modal.name} />
 );
 const getAddAddressManuallyModal = (modal: IOpenedModal<AddAddressManuallyProps>) => (
@@ -230,9 +224,6 @@ export const ModalsController = () => {
             return getCancelAppointmentModal(modal);
           case ModalName.AddAppointmentDuplicatePatientModal:
             return getAddAppointmentDuplicatePatientModal(modal);
-          // <SCHEDULING>
-          case ModalName.ScheduleTemplatesErrorModal:
-            return getScheduleTemplatesErrorModal(modal);
           // <PATIENT EMR>
           case ModalName.EncountersCancelChangesModal:
             return getEncountersCancelChangesModal(modal);

@@ -6,14 +6,12 @@ import { AddAppointmentDuplicatePatientModalProps } from './Booking/AddAppointme
 import { AddAppointmentModalProps } from './Booking/AddAppointmentModal/types';
 import { CancelAppointmentModalProps } from './Booking/CancelAppointmentModal/types';
 import { EditAppointmentModalProps } from './Booking/EditAppointmentsModal';
-import { ScheduleTemplatesErrorModalProps } from './Scheduling/ScheduleTemplatesErrorModal';
 
 export type ModalPropType =
   | AddAppointmentModalProps
   | EditAppointmentModalProps
   | AddAppointmentDuplicatePatientModalProps
   | CancelAppointmentModalProps
-  | ScheduleTemplatesErrorModalProps
   | PatientLineItemsModalProps
   | PatientMedicationsModalProps
   | PatientPartnersModalProps;

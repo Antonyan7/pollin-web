@@ -7,9 +7,6 @@ const serviceTypes = createSelector([selector], (state) => state.serviceTypes);
 const scheduleTemplates = createSelector([selector], (state) => state.scheduleTemplates);
 const scheduleSingleTemplate = createSelector([selector], (state) => state.scheduleSingleTemplate);
 const scheduleListLoadingStatus = createSelector([selector], (state) => state.schedulingListLoadingStatus);
-const scheduleError = createSelector([selector], (state) => state.error);
-const scheduleApplyStatus = createSelector([selector], (state) => state.applyScheduleStateStatus);
-const scheduleBlockStatus = createSelector([selector], (state) => state.blockScheduleStateStatus);
 const scheduleCalendarLoading = createSelector([selector], (state) => state.scheduleCalendarLoading);
 const scheduleBlocks = createSelector([selector], (state) => state.scheduleBlock);
 const scheduleResources = createSelector([selector], (state) => state.scheduleResources);
@@ -19,7 +16,6 @@ const isServiceTypesLoading = createSelector([selector], (state) => state.isServ
 const isApplyingSchedule = createSelector([selector], (state) => state.isApplyingSchedule);
 
 export default {
-  scheduleError,
   serviceTypes,
   scheduleTemplates,
   scheduleSingleTemplate,
@@ -27,8 +23,6 @@ export default {
   scheduleBlocks,
   scheduleOverrides,
   scheduleResources,
-  scheduleApplyStatus,
-  scheduleBlockStatus,
   scheduleCalendarLoading,
   scheduleLoading,
   isServiceTypesLoading,

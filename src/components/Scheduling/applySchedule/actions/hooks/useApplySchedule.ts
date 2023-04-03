@@ -15,7 +15,7 @@ import { ApplyScheduleFields } from '../../types';
 const useHandleApplySchedule = () => {
   const [t] = useTranslation();
 
-  const { control } = useFormContext();
+  const { control, reset } = useFormContext();
   const [resourceId, scheduleTemplate, repeatWeeksCount, selectedWeekdaysToApply, startDate, endDate] = useWatch({
     name: [
       ApplyScheduleFields.RESOURCE,
@@ -48,7 +48,7 @@ const useHandleApplySchedule = () => {
         endDate: DateUtil.convertToDateOnly(endDate)
       };
 
-      dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData));
+      dispatch(schedulingMiddleware.applyScheduleTemplate(applyScheduleTemplateData, reset));
     } else {
       dispatch(
         viewsMiddleware.setToastNotificationPopUpState({
@@ -59,7 +59,6 @@ const useHandleApplySchedule = () => {
           }
         })
       );
-      dispatch(schedulingMiddleware.resetApplyStatusState());
     }
   };
 
