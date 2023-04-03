@@ -13,6 +13,7 @@ import FirstStepContent from './FirstStepContent';
 import SpecimenDataCollectionProgressBar from './ProgressBar';
 import SecondStepContent from './SecondStepContent';
 import { SpecimenCollectionModalSteps } from './types';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentStep }) => {
   const [t] = useTranslation();
@@ -44,7 +45,7 @@ const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentSt
             />
             <SpecimenDataItem
               label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_DATE_OF_BIRTH)}
-              value={patientContactInformation.dateOfBirth}
+              value={DateUtil.formatDateOnly(patientContactInformation.dateOfBirth)}
             />
           </Stack>
           <Grid>

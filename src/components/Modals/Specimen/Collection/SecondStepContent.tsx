@@ -48,7 +48,7 @@ const SecondStepContent = () => {
           label={collectedOnTimeLabel}
           value={
             specimensForAppointment?.collectionDate
-              ? DateUtil.formatTimeOnly(specimensForAppointment?.collectionDate)
+              ? DateUtil.formatTimeOnlyFromDate(specimensForAppointment?.collectionDate)
               : specimensForAppointment?.collectionDate
           }
         />
