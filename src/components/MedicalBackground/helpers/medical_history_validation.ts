@@ -1,4 +1,5 @@
-import { array, boolean, object, string } from 'yup';
+import { TypeOfPregnancy } from '@axios/patientEmr/managerPatientEmrTypes';
+import { array, boolean, mixed, object, string } from 'yup';
 
 export const fertilityHistoryValidationSchema = object({
   isTryingForPregnancy: object({
@@ -46,41 +47,54 @@ export const fertilityHistoryValidationSchema = object({
 export const femalePregnancyInformationValidationSchema = object({
   previousPregnancies: object({
     value: boolean(),
-    pregnancies: array()
-      .of(
+    pregnancies: mixed().when('value', {
+      is: true,
+      then: array().of(
         object().shape({
-          id: string(),
-          type: string(),
-          details: array().of(
-            object().shape({
-              year: string().nullable(),
-              location: string().nullable(),
-              type: string().nullable(),
-              monthsToConceive: string().nullable(),
-              birthOutcome: string().nullable()
-            })
-          )
-        })
-      )
-      .when('value', {
-        is: true,
-        then: array().of(
-          object().shape({
-            id: string(),
-            type: string(),
-            details: array().of(
-              object().shape({
-                year: string().nullable(),
-                location: string().nullable(),
-                type: string().nullable(),
-                monthsToConceive: string().nullable(),
-                birthOutcome: string().nullable()
-              })
-            )
+          id: string().nullable(),
+          type: string().required(),
+          details: array().when('type', ([type]) => {
+            switch (type) {
+              case TypeOfPregnancy.FullTerm:
+                return object().shape({
+                  year: string().required(),
+                  type: string().required(),
+                  monthsToConceive: string().required(),
+                  birthOutcome: string().required()
+                });
+              case TypeOfPregnancy.Preterm:
+                return object().shape({
+                  year: string().required(),
+                  type: string().required(),
+                  monthsToConceive: string().required(),
+                  birthOutcome: string().required()
+                });
+              case TypeOfPregnancy.EctopicTubal:
+                return object().shape({
+                  year: string().required(),
+                  type: string().required(),
+                  location: string().required(),
+                  monthsToConceive: string().required()
+                });
+              case TypeOfPregnancy.Miscarriage:
+                return object().shape({
+                  year: string().required(),
+                  type: string().required(),
+                  monthsToConceive: string().required()
+                });
+              case TypeOfPregnancy.ElectiveTermination:
+                return object().shape({
+                  year: string().required()
+                });
+
+              default:
+                return object().notRequired();
+            }
           })
-        ),
-        otherwise: array().transform(() => [])
-      })
+        })
+      ),
+      otherwise: array().transform(() => [])
+    })
   })
 });
 

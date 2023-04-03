@@ -411,3 +411,11 @@ export const MuiDialogTitle = {
     }
   }
 };
+
+export const MuiModal = {
+  styleOverrides: {
+    root: {
+      zIndex: 1308
+    }
+  }
+};

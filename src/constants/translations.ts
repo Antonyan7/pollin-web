@@ -485,6 +485,7 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_DATE_OF_LAST_PAP_TEST = 'page.patient.profile.medical.background.medical.history.gynaecological.history.date.of.last.pap.test',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_GYNAECOLOGICAL_CONDITIONS = 'page.patient.profile.medical.background.medical.history.gynaecological.history.gynaecological.conditions',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_HYPERPROLACTINEMIA = 'page.patient.profile.medical.background.medical.history.gynaecological.history.hyperprolactinemia',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INDICATE_PROCEDURES = 'page.patient.profile.medical.background.medical.history.gynaecological.history.indicate.procedures',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INTERCOURSE_PAIN = 'page.patient.profile.medical.background.medical.history.gynaecological.history.intercourse.pain',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_OVULATION = 'page.patient.profile.medical.background.medical.history.gynaecological.history.ovulation',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_PROCEDURES_DUE_TO_ABNORMAL_PAP = 'page.patient.profile.medical.background.medical.history.gynaecological.history.procedures.due.to.abnormal.pap',

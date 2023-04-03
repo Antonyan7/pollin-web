@@ -28,11 +28,14 @@ const mappingPattern = {
   abnormalPap: createObjectWithTitle(
     t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_ABNORMAL_PAP)
   ),
+  hasAbnormalPapProcedures: createObjectWithTitle(
+    t(
+      Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_PROCEDURES_DUE_TO_ABNORMAL_PAP
+    )
+  ),
   abnormalPapProcedures: {
     ...createObjectWithTitle(
-      t(
-        Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_PROCEDURES_DUE_TO_ABNORMAL_PAP
-      )
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INDICATE_PROCEDURES)
     ),
     customAccessor: (item: CustomAccessorItem) => item.abnormalPapProcedures?.items.map(({ id }) => id),
     componentData: {

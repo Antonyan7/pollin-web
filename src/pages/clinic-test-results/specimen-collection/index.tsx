@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { IProvidersCollectionCalendarAppointment } from '@axios/booking/managerBookingTypes';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import useOnSpecimenCollectionEventClick from '@components/SpecimenCollection/hooks/useOnSpecimenCollectionEventClick';
 import SpecimenCollectionHeader from '@components/SpecimenCollection/SpecimenCollectionHeader';
@@ -12,6 +13,7 @@ import { Translation } from 'constants/translations';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
 
@@ -73,6 +75,13 @@ const SpecimenCollection = () => {
     }
   }, [serviceProviderId, calendarDate, selectedSpecimenAppointmentsFilters]);
 
+  const slotStyleCallback = ({ isEditable, status }: IProvidersCollectionCalendarAppointment) => {
+    const classNames =
+      !isEditable || status === AppointmentStatus.Done ? ['specimen-slot', 'fc-non-clickable'] : ['specimen-slot'];
+
+    return classNames;
+  };
+
   return (
     <Stack gap={margins.all16}>
       <MainBreadcrumb
@@ -97,7 +106,7 @@ const SpecimenCollection = () => {
             calendarDate={calendarDate}
             onEventClick={onCalendarEventClick}
             disable={{ title: calendarDisabledStateTitle, state: !serviceProviderId }}
-            appointments={{ list, isLoading }}
+            appointments={{ list, isLoading, slotStyleCallback }}
           />
         </Stack>
       </Paper>
