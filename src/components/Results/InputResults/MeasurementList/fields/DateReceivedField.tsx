@@ -2,10 +2,10 @@ import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Translation } from 'constants/translations';
+import { PollinDatePickerType } from 'types/datePicker';
 
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 
-import { PollinDatePickerType } from '../../../../../types/datePicker';
 import { IMeasurementListField } from '../../types';
 
 const DateReceivedField = ({ name }: IMeasurementListField) => {

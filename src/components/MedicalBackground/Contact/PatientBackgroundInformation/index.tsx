@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import PatientMedicalBackgroundSection from '@components/MedicalBackground/components/PatientMedicalBackgroundSection';
+import PatientBackgroundInformationEdit from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit';
 import PatientBackgroundInformationView from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view';
-import PatientContactInformationEdit from '@components/MedicalBackground/Contact/PatientContactInformation/edit';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
@@ -31,7 +31,11 @@ const PatientBackgroundInformation = () => {
       title={t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_PATIENT_CONTACT_BACKGROUND_INFORMATION)}
       isLoading={isPatientBackgroundInformationLoading}
     >
-      {isPatientBackgroundEditButtonClicked ? <PatientContactInformationEdit /> : <PatientBackgroundInformationView />}
+      {isPatientBackgroundEditButtonClicked ? (
+        <PatientBackgroundInformationEdit />
+      ) : (
+        <PatientBackgroundInformationView />
+      )}
     </PatientMedicalBackgroundSection>
   );
 };

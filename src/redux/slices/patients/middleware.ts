@@ -9,6 +9,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistory,
   IGeneralHealthProps,
+  IPatientBackgroundPartners,
   IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
   TestResultItemType
@@ -997,6 +998,42 @@ const updatePatientContactInformation =
     dispatch(setIsContactInformationUpdateLoading(false));
   };
 
+const updatePatientBackgroundInformation =
+  (patientId: string, backgroundInfo: IPatientBackgroundPartners) => async (dispatch: AppDispatch) => {
+    dispatch(setIsPatientBackgroundInformationLoading(true));
+
+    try {
+      const response = await API.patients.updatePatientBackgroundInformation(patientId, backgroundInfo);
+
+      if (response) {
+        dispatch(patientsMiddleware.changePatientBackgroundEditButtonState());
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_TOAST_MESSAGE)
+            }
+          })
+        );
+      }
+    } catch (error) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.error,
+            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // TODO: change when error message will be ready.
+          }
+        })
+      );
+      Sentry.captureException(error);
+      dispatch(setError(error));
+    }
+
+    dispatch(setIsPatientBackgroundInformationLoading(false));
+  };
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1046,6 +1083,7 @@ export default {
   getPatientMedicalBackgroundDropdownOptions,
   changeContactInformationEditButtonState,
   getPatientBackgroundInformation,
+  updatePatientBackgroundInformation,
   getMedicalContactInformation,
   changePatientBackgroundEditButtonState,
   changeManuallyAddressForPrimary,

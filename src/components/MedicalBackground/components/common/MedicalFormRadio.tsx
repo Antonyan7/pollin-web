@@ -8,7 +8,7 @@ import { Translation } from 'constants/translations';
 
 const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) => {
   const [t] = useTranslation();
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
   const { field } = useController({ name: fieldName, control });
   const { onChange, ...fieldProps } = field;
 
@@ -22,6 +22,8 @@ const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) =
     }
   };
 
+  const RadioValue = watch(fieldName);
+
   useEffect(
     () => {
       if (field.value === null) {
@@ -34,7 +36,7 @@ const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) =
   );
 
   return (
-    <ConsultationFormRadioGroup {...fieldProps} value={!!field.value} onChange={onRadioFieldChange} ref={field.ref}>
+    <ConsultationFormRadioGroup {...fieldProps} value={!!RadioValue} onChange={onRadioFieldChange} ref={field.ref}>
       <FormControlLabel
         value
         control={<Radio />}

@@ -1,3 +1,4 @@
+import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { array, boolean, number, object, string } from 'yup';
 
 import { ContactInformationFormFields } from '../Contact/PatientContactInformation/edit/types/index';
@@ -71,6 +72,11 @@ export const patientGeneralHealthValidationSchema = object({
   [GeneralHealthFormFields.AdditionalInformation]: object({
     value: string().notRequired()
   })
+});
+
+export const patientBackgroundInformationValidationSchema = object({
+  [BackgroundInformationFormFields.CancerPatient]: object({ value: boolean().required() }),
+  [BackgroundInformationFormFields.CurrentOccupation]: object({ value: string().required() })
 });
 
 export const patientContactInformationValidationSchema = object({

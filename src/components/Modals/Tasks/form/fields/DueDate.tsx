@@ -3,10 +3,9 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
+import { PollinDatePickerType } from 'types/datePicker';
 
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
-
-import { PollinDatePickerType } from '../../../../../types/datePicker';
 
 type DateAndStartTimeType = Date | null;
 

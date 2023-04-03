@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { RenderSingleValueAndNote } from '@components/MedicalBackground/components/common';
 import FieldWrapper from '@components/MedicalBackground/components/common/FieldWrapper';
+import { getYesNo } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/helper';
 import { GeneralHealthComponentsProps } from '@components/MedicalBackground/helpers';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -17,7 +18,7 @@ const PhysicianName = ({ componentIndex }: GeneralHealthComponentsProps) => {
 
   return (
     <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
-      <RenderSingleValueAndNote value={fieldValue?.value} note={fieldValue?.note} />
+      <RenderSingleValueAndNote value={getYesNo(fieldValue?.value)} note={fieldValue?.note} />
     </FieldWrapper>
   );
 };

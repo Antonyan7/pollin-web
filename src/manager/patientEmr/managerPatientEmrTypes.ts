@@ -685,6 +685,7 @@ export interface IPatientBackgroundPartners {
   currentOccupation: ICurrentOccupation;
   referringDoctor: IReferringDoctor;
   familyDoctor: IFamilyDoctor;
+  pharmacy: IPharmacy;
 }
 
 export interface IPatientBackground {
@@ -696,7 +697,7 @@ export interface ISexAtBirth extends MedicalBackgroundFieldValues {
 }
 
 export interface ICancerPatient extends MedicalBackgroundFieldValues {
-  value: string;
+  value: boolean;
 }
 
 export interface IGender extends MedicalBackgroundFieldValues {
@@ -727,12 +728,28 @@ export interface ICurrentOccupation extends MedicalBackgroundFieldValues {
   value: string;
 }
 
+export interface IPharmacy extends MedicalBackgroundFieldValues {
+  exists: boolean;
+  name: string;
+  address: IPharmacyAddress;
+}
+
+export interface IPharmacyAddress {
+  street: string;
+  unit?: string;
+  city: string;
+  country: string;
+  postalCode: string;
+  faxNumber?: string;
+  phoneNumber?: string;
+}
+
 export interface IReferringDoctor extends MedicalBackgroundFieldValues {
-  value: string;
+  value: boolean;
   name: string;
 }
 
 export interface IFamilyDoctor extends MedicalBackgroundFieldValues {
-  value: string;
+  value: boolean;
   name: string;
 }
