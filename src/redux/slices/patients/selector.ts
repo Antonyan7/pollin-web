@@ -122,6 +122,21 @@ const manuallyAddressForMailing = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.manuallyAddressForMailing
 );
+/* Medications Prescriptions */
+const drugs = createSelector([selector], (state) => state.medicationsPrescriptions.medications.drugs);
+const isDrugLoading = createSelector([selector], (state) => state.medicationsPrescriptions.medications.isDrugLoading);
+const isDropdownOptionsLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isDropdownOptionsLoading
+);
+const dropdownOptions = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.dropdownOptions
+);
+const isMedicationCreatedLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isMedicationCreatedLoading
+);
 
 /* Medical History */
 const fertilityHistory = createSelector([selector], (state) => state.medicalBackground.medicalHistory.fertilityHistory);
@@ -228,6 +243,11 @@ export default {
   isPatientHighlightIntakeComplete,
   isPatientHighlightIntakeReminderActive,
   isPatientAlertDetailsLoading,
+  drugs,
+  isDropdownOptionsLoading,
+  isMedicationCreatedLoading,
+  dropdownOptions,
+  isDrugLoading,
   isGeneralHealthLoading,
   generalHealth,
   isGeneralHealthEditButtonClicked,

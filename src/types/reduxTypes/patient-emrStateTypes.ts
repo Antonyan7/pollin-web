@@ -8,6 +8,7 @@ import {
 import {
   AddManuallyAddressModalProps,
   IDropdown,
+  IDrugsProps,
   IEncounterDetailsProps,
   IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
@@ -74,8 +75,36 @@ export interface MedicalBackgroundProps {
   };
 }
 
+export interface MedicationsPrescriptionsProps {
+  medications: {
+    drugs: IDrugsProps[] | null;
+    isDrugLoading: boolean;
+    dropdownOptions: IDropdown[] | null;
+    isDropdownOptionsLoading: boolean;
+    isMedicationCreatedLoading: boolean;
+  };
+  prescriptions: {};
+}
+
+export interface ICreateMedication {
+  patientId: string;
+  medication: {
+    drugId: string;
+    dosage: string;
+    route: string;
+    frequency: string;
+    time?: string;
+    duration: {
+      start: string;
+      end: string;
+    };
+    prescriber?: string;
+  };
+}
+
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
+  medicationsPrescriptions: MedicationsPrescriptionsProps;
   encountersSearchValue: string;
   selectedEncountersFilters: IEncountersFilterOption[];
   encounters: IEncountersProps;

@@ -27,6 +27,7 @@ import {
   AppointmentResponseStatus,
   GroupedFiltersOption,
   ICreateEncounterNoteProps,
+  ICreateMedication,
   IEncounterList,
   IPatientList,
   IUpdateEncounterNoteProps
@@ -110,7 +111,12 @@ const {
   setIsFertilityHistoryDataUpdating,
   setIsFemalePregnancyInformationDataUpdating,
   setIsFemalePatientMenstrualCycleHistoryDataUpdating,
-  setIsFemalePatientGynaecologicalHistoryDataUpdating
+  setIsFemalePatientGynaecologicalHistoryDataUpdating,
+  setDrugs,
+  setIsDrugLoading,
+  setIsDropdownOptionsLoading,
+  setDropdownOptions,
+  setIsMedicationCreatedLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -733,6 +739,49 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
+const getDrugs = (searchString: string, page: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsDrugLoading(true));
+
+    const response = await API.patients.getDrugs(searchString, page);
+
+    dispatch(setDrugs(response.data.data.medications));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsDrugLoading(false));
+  }
+};
+
+const getMedicationDropdownOptions = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsDropdownOptionsLoading(true));
+
+    const response = await API.patients.getMedicationDropdownOptions();
+
+    dispatch(setDropdownOptions(response.data.data.dropdowns));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  } finally {
+    dispatch(setIsDropdownOptionsLoading(false));
+  }
+};
+
+const createPatientMedication = (data: ICreateMedication) => async (dispatch: AppDispatch) => {
+  dispatch(setIsMedicationCreatedLoading(true));
+
+  try {
+    await API.patients.createPatientMedication(data);
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setError(error));
+  }
+
+  dispatch(setIsMedicationCreatedLoading(false));
+};
+
 const updateFemalePatientGynaecologicalHistory =
   (patientId: string, data: IFemalePatientGynaecologicalHistoryProps, onSave: (isSuccessfullySaved: boolean) => void) =>
   async (dispatch: AppDispatch) => {
@@ -1005,6 +1054,9 @@ export default {
   getFemalePatientMenstrualCycleHistory,
   getFemalePatientGynaecologicalHistory,
   updateFertilityHistory,
+  getDrugs,
+  getMedicationDropdownOptions,
+  createPatientMedication,
   updateFemalePregnancyInformation,
   updateFemalePatientMenstrualCycleHistory,
   updateFemalePatientGynaecologicalHistory

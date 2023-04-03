@@ -2,6 +2,7 @@ import { IPatientRecentAppointment } from '@axios/booking/managerBookingTypes';
 import {
   AddManuallyAddressModalProps,
   IDropdown,
+  IDrugsProps,
   IEncounterDetailsProps,
   IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
@@ -292,6 +293,21 @@ const reducers = createReducer({
   },
   setIsContactInformationUpdateLoading(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isContactInformationDataUpdating = action.payload;
+  },
+  setDrugs(state, action: IAction<IDrugsProps[]>) {
+    state.medicationsPrescriptions.medications.drugs = action.payload;
+  },
+  setIsDrugLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isDrugLoading = action.payload;
+  },
+  setIsDropdownOptionsLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isDropdownOptionsLoading = action.payload;
+  },
+  setDropdownOptions(state, action: IAction<IDropdown[]>) {
+    state.medicationsPrescriptions.medications.dropdownOptions = action.payload;
+  },
+  setIsMedicationCreatedLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isMedicationCreatedLoading = action.payload;
   }
 });
 

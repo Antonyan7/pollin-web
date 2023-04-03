@@ -3,6 +3,7 @@ import { SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
   MedicalBackgroundProps,
+  MedicationsPrescriptionsProps,
   PatientEmrProps
 } from 'types/reduxTypes/patient-emrStateTypes';
 
@@ -42,6 +43,17 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
     dropdowns: [],
     isDropdownsLoading: false
   }
+});
+
+const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProps => ({
+  medications: {
+    drugs: null,
+    isDrugLoading: false,
+    dropdownOptions: null,
+    isDropdownOptionsLoading: false,
+    isMedicationCreatedLoading: false
+  },
+  prescriptions: {}
 });
 
 export const getInitialState = (): PatientEmrProps => ({
@@ -133,5 +145,6 @@ export const getInitialState = (): PatientEmrProps => ({
     ohipNumber: '',
     ohipVersionCode: ''
   },
-  medicalBackground: getMedicalBackgroundInitialState()
+  medicalBackground: getMedicalBackgroundInitialState(),
+  medicationsPrescriptions: getMedicationsPrescriptionsInitialState()
 });

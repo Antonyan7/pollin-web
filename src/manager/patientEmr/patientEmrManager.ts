@@ -6,6 +6,7 @@ import {
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
   IDropdownsResponse,
+  IDrugsResponse,
   IEncounterFilterResponse,
   IEncounterResponse,
   IEncounterTypesResponse,
@@ -39,7 +40,11 @@ import {
   IUpdateEncounterNoteRequest
 } from 'manager/patientEmr/managerPatientEmrTypes';
 import { CustomAlerts, IEncountersReqBody, IPatientsReqBody } from 'types/patient';
-import { IEncounterDetailsResponse, ILatestTestResult } from 'types/reduxTypes/patient-emrStateTypes';
+import {
+  ICreateMedication,
+  IEncounterDetailsResponse,
+  ILatestTestResult
+} from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
 const baseURLTestsResults = '/clinic-test-results';
@@ -295,6 +300,28 @@ const patientEmrManager = {
       {
         gynaecologicalHistory: data
       }
+    );
+  },
+  getDrugs(searchString: string, page: number) {
+    return axiosInstance.get<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
+      `${baseURL}/v1/prescriptions/medications/search`,
+      {
+        params: {
+          searchString,
+          page
+        }
+      }
+    );
+  },
+  getMedicationDropdownOptions() {
+    return axiosInstance.get<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
+      `${baseURL}/v1/prescriptions/dropdown-options`
+    );
+  },
+  createPatientMedication(data: ICreateMedication) {
+    return axiosInstance.post<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
+      `${baseURL}/v1/prescriptions/medications`,
+      data
     );
   }
 };

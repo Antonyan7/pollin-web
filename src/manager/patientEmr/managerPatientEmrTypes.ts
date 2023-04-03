@@ -514,6 +514,15 @@ export interface IFemalePatientGynaecologicalHistory {
   gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
 }
 
+export interface IDrugsResponse {
+  medications: IDrugsProps[];
+}
+
+export interface IDrugsProps {
+  id: string;
+  title: string;
+  commonName?: string;
+}
 export interface IFemalePatientMenstrualCycleHistoryProps {
   hasPeriod: IMedicalBackgroundFieldValuesWithValue;
   cycleLength: IMedicalBackgroundFieldValuesWithValue;
@@ -561,7 +570,9 @@ export enum DropdownOptionType {
   StressLevel = 'StressLevel',
   FamilyMember = 'FamilyMember',
   DiagnosedConditions = 'DiagnosedConditions',
-  PrimaryPatientContribution = 'PrimaryPatientContribution'
+  PrimaryPatientContribution = 'PrimaryPatientContribution',
+  Route = 'Route',
+  Refill = 'Refill'
 }
 
 export interface IDropdownOption {

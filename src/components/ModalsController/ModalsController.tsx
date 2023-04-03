@@ -23,6 +23,7 @@ import AddAddressManually, { AddAddressManuallyProps } from '@components/Modals/
 import MedicalBackgroundUnsavedChanges, {
   MedicalBackgroundUnsavedChangesProps
 } from '@components/Modals/MedicalBackground/UnsavedChanges';
+import AddPatientMedicationModal from '@components/Modals/Medications/AddPatientMedicationModal';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import OrderValidationErrorModal, {
@@ -200,6 +201,9 @@ const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBack
   <MedicalBackgroundUnsavedChanges key={modal.name} confirmChanges={modal.props.confirmChanges} />
 );
 
+// Medications
+const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={v4()} />;
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -292,6 +296,9 @@ export const ModalsController = () => {
           // Medical Background
           case ModalName.MedicalBackgroundUnsavedChanges:
             return getMedicalBackgroundUnsavedChangesModal(modal);
+          // Medications
+          case ModalName.AddPatientMedicationModal:
+            return getAddPatientMedicationModalModal();
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();
