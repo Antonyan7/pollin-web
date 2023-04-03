@@ -17,9 +17,7 @@ const FormHeader = () => {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'spaceBetween', marginTop: margins.top8, marginLeft: margins.left8 }}>
-        <DialogTitle sx={{ fontWeight: 500 }}>
-          {t(Translation.MODAL_ADD_PATIENT_MEDICATION_TITLE)}
-        </DialogTitle>
+        <DialogTitle sx={{ fontWeight: 500 }}>{t(Translation.MODAL_ADD_PATIENT_MEDICATION_TITLE)}</DialogTitle>
         <IconButton
           aria-label="close"
           onClick={onClose}

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { Button,Grid, Stack, useTheme } from '@mui/material';
+import { Button, Grid, Stack, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
-import { borderRadius,paddings } from 'themes/themeConstants';
+import { borderRadius, paddings } from 'themes/themeConstants';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 

@@ -15,7 +15,6 @@ import {
 import { IOrderResultsStatus, OrderResultStatusEnum } from 'types/results';
 
 export interface IOrdersState {
-  error: Error | null;
   orderTypeOptions: IOrderTypeOption[];
   selectedOrderType: string;
   orderTypes: IOrderTypesCollection[];

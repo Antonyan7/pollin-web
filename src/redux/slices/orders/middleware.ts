@@ -34,7 +34,6 @@ import { Translation } from '../../../constants/translations';
 import { viewsMiddleware } from '../views';
 
 const {
-  setError,
   setSelectedOrderType,
   setOrderTypes,
   setIsOrderTypesLoading,
@@ -112,7 +111,6 @@ const getOrderTypes = () => async (dispatch: AppDispatch) => {
     dispatch(prepareEditableOrderDetails(response.data.data.orderTypes, store.getState().orders.orderDetails));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsOrderTypesLoading(false));
   }
@@ -165,7 +163,6 @@ const getOrderDetails = (orderId: string) => async (dispatch: AppDispatch) => {
     dispatch(mergeEditableOrderDetailsWithOrderDetails(orderTypes, data.order));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsOrderDetailsLoading(false));
   }
@@ -203,7 +200,6 @@ const createOrder =
       );
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     }
   };
 
@@ -240,7 +236,6 @@ const updateOrder =
       );
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     }
   };
 
@@ -253,7 +248,6 @@ const getCancellationReasons = () => async (dispatch: AppDispatch) => {
     dispatch(setCancellationReasons(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsCancellationReasonsLoading(false));
   }
@@ -261,14 +255,14 @@ const getCancellationReasons = () => async (dispatch: AppDispatch) => {
 
 const makeTestResultReviewed =
   (testResultId: string, patientId: string, reviewerComment?: string) => async (dispatch: AppDispatch) => {
-    dispatch(setIsTestResultReviewed(true));
-
     const testResultsReqBody: IOrderResultsListReqBody = {
       patientId,
       page: 1
     };
 
     try {
+      dispatch(setIsTestResultReviewed(true));
+
       const response = await API.results.makeTestResultReviewed(testResultId, reviewerComment);
 
       dispatch(setTestResultReviewedDate(response.data.data.reviewDate));
@@ -277,21 +271,20 @@ const makeTestResultReviewed =
       dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
+    } finally {
+      dispatch(setIsTestResultReviewed(false));
     }
-
-    dispatch(setIsTestResultReviewed(false));
   };
 
 const makeTestResultReleased = (testResultId: string, patientId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsTestResultReleased(true));
-
   const testResultsReqBody: IOrderResultsListReqBody = {
     patientId,
     page: 1
   };
 
   try {
+    dispatch(setIsTestResultReleased(true));
+
     const response = await API.results.makeTestResultReleased(testResultId);
 
     dispatch(setTestResultReleasedDate(response.data.data.releaseDate));
@@ -300,10 +293,9 @@ const makeTestResultReleased = (testResultId: string, patientId: string) => asyn
     dispatch(viewsMiddleware.closeModal(ModalName.TestResultReviewConfirmation));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsTestResultReleased(false));
   }
-
-  dispatch(setIsTestResultReleased(false));
 };
 
 const getOrderResultsListForPatient = (data: IOrderResultsListReqBody) => async (dispatch: AppDispatch) => {
@@ -330,42 +322,39 @@ const getOrderResultsListForPatient = (data: IOrderResultsListReqBody) => async 
     dispatch(setOrderResultsByPatientList(results));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsOrderResultsByPatientListLoading(false));
   }
 };
 
 const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsRequisitionDownloaded(true));
-
   try {
+    dispatch(setIsRequisitionDownloaded(true));
+
     const response = await API.results.downloadRequisition(orderId);
 
     return response.data.data;
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsRequisitionDownloaded(false));
   }
-
-  dispatch(setIsRequisitionDownloaded(false));
 
   return null;
 };
 
 const getOrdersFilters = () => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrdersFiltersLoadingState(true));
-
   try {
+    dispatch(setIsOrdersFiltersLoadingState(true));
+
     const response = await API.results.getOrdersFilters();
 
     dispatch(setOrdersFilters(response.data.data.filters));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrdersFiltersLoadingState(false));
   }
-
-  dispatch(setIsOrdersFiltersLoadingState(false));
 };
 
 const getOrderStatuses = () => async (dispatch: AppDispatch) => {
@@ -375,7 +364,6 @@ const getOrderStatuses = () => async (dispatch: AppDispatch) => {
     dispatch(setOrdersStatuses(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -388,7 +376,6 @@ const getOrderResultsFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setOrderResultsFilters(response.data.data.filters));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setOrderResultsFiltersLoadingState(false));
   }
@@ -401,14 +388,14 @@ const getOrderResultsStatuses = () => async (dispatch: AppDispatch) => {
     dispatch(setOrderResultsStatuses(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrdersListLoading(true));
-
   try {
+    dispatch(setIsOrdersListLoading(true));
+
     const response = await API.results.getOrdersList(ordersListData);
+
     const {
       totalItems,
       currentPage,
@@ -425,20 +412,19 @@ const getOrdersList = (ordersListData: OrdersListDataProps) => async (dispatch: 
     dispatch(setOrdersList(listData));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrdersListLoading(false));
   }
-
-  dispatch(setIsOrdersListLoading(false));
 };
 
 const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => async (dispatch: AppDispatch) => {
-  dispatch(setIsOrdersListLoading(true));
-
   const { editableOrderDetails } = store.getState().orders;
   const { orderDetails } = store.getState().orders;
   const { orderTypes: defaultOrderTypes } = store.getState().orders;
 
   try {
+    dispatch(setIsOrdersListLoading(true));
+
     const { data } = await API.results.validateOrderCreation(orderTypes);
 
     if (data?.message) {
@@ -470,10 +456,9 @@ const validateOrderCreation = (orderTypes: IValidateOrderCreationReqBody) => asy
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsOrdersListLoading(false));
   }
-
-  dispatch(setIsOrdersListLoading(false));
 };
 
 const updateDetailsComment = (comment: string) => async (dispatch: AppDispatch) => {
@@ -483,11 +468,11 @@ const updateDetailsComment = (comment: string) => async (dispatch: AppDispatch) 
 };
 
 const cancelOrder = (cancellationProps: ICancelOrderProps) => async (dispatch: AppDispatch) => {
-  dispatch(setIsCancelOrderLoading(true));
-
   const { orderId, patientId, reasonId, cancellationReason } = cancellationProps;
 
   try {
+    dispatch(setIsCancelOrderLoading(true));
+
     const response = await API.results.cancelOrder(orderId, reasonId, cancellationReason);
 
     const capitalizedSortOrder = capitalizeFirst<ISortOrder>(SortOrder.Desc);
@@ -514,10 +499,9 @@ const cancelOrder = (cancellationProps: ICancelOrderProps) => async (dispatch: A
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setIsCancelOrderLoading(false));
   }
-
-  dispatch(setIsCancelOrderLoading(false));
 };
 
 export default {

@@ -38,7 +38,6 @@ import slice from './slice';
 
 const {
   setPatientsList,
-  setError,
   setPatientSearchFilters,
   setPatientAlertDetails,
   setCurrentPatientId,
@@ -164,7 +163,6 @@ const getPatientsList = (patientsListData: IPatientsReqBody) => async (dispatch:
   } catch (error) {
     Sentry.captureException(error);
     dispatch(cleanPatientList());
-    dispatch(setError(error));
   } finally {
     dispatch(setPatientsLoadingState(false));
   }
@@ -180,7 +178,6 @@ const getPatientSearchFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setPatientsFiltersLoadingState(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
     dispatch(setPatientsFiltersLoadingState(false));
   }
 };
@@ -194,7 +191,6 @@ const getPatientAlertDetails = (patientId: string, abortSignal?: AbortSignal) =>
     dispatch(setPatientAlertDetails(response.data.data.alerts ?? []));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setPatientAlertDetailsLoading(false));
   }
@@ -269,7 +265,6 @@ export const createEncounterNote = (encounterNoteData: ICreateEncounterNoteProps
     await API.patients.createEncounterNote(encounterNoteData);
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setCreateEncounterNoteLoadingState(false));
   }
@@ -285,7 +280,6 @@ export const updateEncounterNote =
       dispatch(setEncounterDetailsInfo(response.data.data.encounter));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setUpdateEncounterNoteLoadingState(false));
     }
@@ -300,7 +294,6 @@ export const getEncounterFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setEncounterFilters(response.data.data.filters));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setEncountersFiltersLoadingState(false));
@@ -321,7 +314,6 @@ const getEncounterList = (encounterListData: IEncountersReqBody) => async (dispa
   } catch (error) {
     Sentry.captureException(error);
     dispatch(cleanPatientList());
-    dispatch(setError(error));
   }
 };
 
@@ -332,7 +324,6 @@ const getEncountersTypes = () => async (dispatch: AppDispatch) => {
     dispatch(setEncountersType(response.data.data.encountersTypes));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -345,7 +336,6 @@ const getPatientRecentAppointments = (patientId: string) => async (dispatch: App
     dispatch(setRecentAppointments(response.data.appointments));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsRecentAppointmentsLoading(false));
   }
@@ -374,7 +364,6 @@ const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) =
   } catch (error) {
     dispatch(setPatientProfile(null));
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsPatientProfileLoading(false));
   }
@@ -396,40 +385,28 @@ const getPatientHighlight = (patientId: string) => async (dispatch: AppDispatch)
     dispatch(setPatientHighlights(response.data.data.highlights));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setPatientHighlightsLoadingState(false));
   }
 };
 
-const sendPatientIntakeReminder =
-  (patientId: string, successMessage: string, failMessage: string) => async (dispatch: AppDispatch) => {
-    try {
-      await API.patients.sendIntakeReminder(patientId);
-      dispatch(setIsPatientHighlightIntakeReminderActive(false));
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            description: successMessage
-          }
-        })
-      );
-    } catch (error) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: failMessage
-          }
-        })
-      );
-      Sentry.captureException(error);
-      dispatch(setError(error));
-    }
-  };
+const sendPatientIntakeReminder = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    await API.patients.sendIntakeReminder(patientId);
+    dispatch(setIsPatientHighlightIntakeReminderActive(false));
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_SUCCESS)
+        }
+      })
+    );
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+};
 
 const getEncounterDetailsInformation = (encounterId?: string) => async (dispatch: AppDispatch) => {
   try {
@@ -444,7 +421,6 @@ const getEncounterDetailsInformation = (encounterId?: string) => async (dispatch
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setEncountersDetailsLoadingState(false));
@@ -456,7 +432,6 @@ const createEncounterAddendum = (addendumData: ICreateEncounterAddendumRequest) 
     await API.patients.createEncounterAddendum(addendumData);
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setCreateEncounterAddendumLoadingState(false));
   }
@@ -471,7 +446,6 @@ const updateEncounterAddendum = (newAddendumData: IUpdateEncounterAddendumReques
     dispatch(setEncounterDetailsInfo(response.data.data.encounter));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setUpdateEncounterAddendumLoadingState(false));
   }
@@ -486,7 +460,6 @@ const getPatientProfileOverview = (patientId: string) => async (dispatch: AppDis
     dispatch(setPatientProfileOverview(response.data.data.overview));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsPatientProfileOverviewLoading(false));
   }
@@ -499,7 +472,6 @@ const getProfileTestResultLatest = (patientId: string) => async (dispatch: AppDi
     dispatch(setLatestTestResults(response.data.data.testResults));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -516,7 +488,6 @@ const getProfileTestResultsHistory = (patientId: string, testTypeId: string) => 
     dispatch(setTestResultsHistory(response.data.data.testResultsHistory));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
     dispatch(setTestResultsHistory(null));
   } finally {
     dispatch(setIsTestResultsHistoryLoading(false));
@@ -532,7 +503,6 @@ const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatc
     dispatch(setProfileTestResults(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsProfileTestResultsLoading(false));
   }
@@ -548,7 +518,6 @@ const getProfileTestResultDetails =
       dispatch(setProfileTestResultDetails(response.data.data.testResults));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsProfileTestResultsLoading(false));
     }
@@ -563,7 +532,6 @@ const getPatientContactInformation = (patientId: string) => async (dispatch: App
     dispatch(setPatientContactInformation(response.data.data.information));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setPatientContactInformationLoadingState(false));
   }
@@ -606,7 +574,6 @@ const getPatientAppointments =
     } catch (error) {
       Sentry.captureException(error);
       dispatch(setPatientAppointmentsRequestStatus(AppointmentResponseStatus.FAIL));
-      dispatch(setError(error));
     }
   };
 
@@ -634,7 +601,6 @@ const resetAppointmentsList = () => async (dispatch: AppDispatch, getState: () =
     );
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -647,7 +613,6 @@ const getGeneralHealth = (patientId: string) => async (dispatch: AppDispatch) =>
     dispatch(setGeneralHealth(response.data.data.generalHealth));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsGeneralHealthLoading(false));
@@ -662,7 +627,6 @@ const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch)
     dispatch(setFertilityHistory(response.data.data.fertilityHistory));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsFertilityHistoryLoading(false));
@@ -682,7 +646,6 @@ const updateFertilityHistory =
       }
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
       onSave(false);
     }
 
@@ -698,7 +661,6 @@ const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (disp
     dispatch(setFemalePatientMenstrualCycleHistory(response.data.data.menstrualHistory));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(false));
@@ -718,7 +680,6 @@ const updateFemalePatientMenstrualCycleHistory =
       }
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
       onSave(false);
     }
 
@@ -734,7 +695,6 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
     dispatch(setFemalePatientGynaecologicalHistory(response.data.data.gynaecologicalHistory));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
@@ -749,7 +709,6 @@ const getDrugs = (searchString: string, page: number) => async (dispatch: AppDis
     dispatch(setDrugs(response.data.data.medications));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsDrugLoading(false));
   }
@@ -764,7 +723,6 @@ const getMedicationDropdownOptions = () => async (dispatch: AppDispatch) => {
     dispatch(setDropdownOptions(response.data.data.dropdowns));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsDropdownOptionsLoading(false));
   }
@@ -777,7 +735,6 @@ const createPatientMedication = (data: ICreateMedication) => async (dispatch: Ap
     await API.patients.createPatientMedication(data);
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsMedicationCreatedLoading(false));
@@ -797,7 +754,6 @@ const updateFemalePatientGynaecologicalHistory =
       }
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
       onSave(false);
     }
 
@@ -830,7 +786,6 @@ const getFemalePregnancyInformation = (patientId: string) => async (dispatch: Ap
     dispatch(setFemalePregnancyInformation(response.data.data.GTPAETALS));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsFemalePregnancyInformationLoading(false));
@@ -850,7 +805,6 @@ const updateFemalePregnancyInformation =
       }
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
       onSave(false);
     }
 
@@ -866,7 +820,6 @@ const getPatientMedicalBackgroundDropdownOptions = () => async (dispatch: AppDis
     dispatch(setDropdowns(response.data.data.dropdowns));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsDropdownsLoading(false));
@@ -884,7 +837,6 @@ const getMedicalContactInformation = (patientId: string) => async (dispatch: App
     dispatch(setMedicalPatientContactInformation(response.data.data.contactInformation));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsMedicalPatientContactInformationLoading(false));
@@ -899,7 +851,6 @@ const getPatientBackgroundInformation = (patientId: string) => async (dispatch: 
     dispatch(setBackgroundInformation(response.data.data.partners));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsPatientBackgroundInformationLoading(false));
   }
@@ -913,9 +864,9 @@ const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState:
 
 const updateGeneralHealthData =
   (patientId: string, healthData: IGeneralHealthProps) => async (dispatch: AppDispatch) => {
-    dispatch(setIsGeneralHealthDataUpdating(true));
-
     try {
+      dispatch(setIsGeneralHealthDataUpdating(true));
+
       const response = await API.patients.updateGeneralHealth(patientId, healthData);
 
       if (response) {
@@ -931,20 +882,10 @@ const updateGeneralHealthData =
         );
       }
     } catch (error) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // change when error message will be ready.
-          }
-        })
-      );
       Sentry.captureException(error);
-      dispatch(setError(error));
+    } finally {
+      dispatch(setIsGeneralHealthDataUpdating(false));
     }
-
-    dispatch(setIsGeneralHealthDataUpdating(false));
   };
 
 const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => async (dispatch: AppDispatch) => {
@@ -956,7 +897,6 @@ const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => asyn
     dispatch(viewsMiddleware.closeModal(ModalName.VerifyPatientPhotoModal));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsVerifyPatientProfilePhotoLoading(false));
   }
@@ -964,9 +904,9 @@ const verifyPatientProfilePhoto = (patientId: string, accepted: boolean) => asyn
 
 const updatePatientContactInformation =
   (patientId: string, contactData: IPatientContactInformationProps) => async (dispatch: AppDispatch) => {
-    dispatch(setIsContactInformationUpdateLoading(true));
-
     try {
+      dispatch(setIsContactInformationUpdateLoading(true));
+
       const response = await API.patients.updatePatientContactInformation(patientId, contactData);
 
       if (response) {
@@ -982,20 +922,10 @@ const updatePatientContactInformation =
         );
       }
     } catch (error) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // change when error message will be ready.
-          }
-        })
-      );
       Sentry.captureException(error);
-      dispatch(setError(error));
+    } finally {
+      dispatch(setIsContactInformationUpdateLoading(false));
     }
-
-    dispatch(setIsContactInformationUpdateLoading(false));
   };
 
 const updatePatientBackgroundInformation =
@@ -1028,7 +958,6 @@ const updatePatientBackgroundInformation =
         })
       );
       Sentry.captureException(error);
-      dispatch(setError(error));
     }
 
     dispatch(setIsPatientBackgroundInformationLoading(false));

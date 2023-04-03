@@ -8,12 +8,13 @@ import { resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import SpecimenDataItem from './SpecimenTestData/SpecimenDataItem';
 import FirstStepContent from './FirstStepContent';
 import SpecimenDataCollectionProgressBar from './ProgressBar';
 import SecondStepContent from './SecondStepContent';
 import { SpecimenCollectionModalSteps } from './types';
-import { DateUtil } from '@utils/date/DateUtil';
 
 const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentStep }) => {
   const [t] = useTranslation();

@@ -17,9 +17,6 @@ import { IOrderResultsStatus } from 'types/results';
 const createReducer = <T extends SliceCaseReducers<IOrdersState>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setError(state, action) {
-    state.error = action.payload;
-  },
   setOrderTypeOptions(state, action: IAction<IOrderTypeOption[]>) {
     state.orderTypeOptions = action.payload;
   },

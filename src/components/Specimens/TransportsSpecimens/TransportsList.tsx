@@ -24,7 +24,6 @@ import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
 import CircularLoading from '@ui-component/circular-loading';
 
-import useTestResultPopupMessage from './hooks/useTransportsToast';
 import { headCellsData } from './headCellsData';
 import Header from './Header';
 import { TransportsListRow } from './TransportsListRow';
@@ -42,8 +41,6 @@ const TransportsList = () => {
   const actionVariations = useAppSelector(resultsSelector.transportActions);
 
   const headCells = headCellsData(t) as IHeadCell[];
-
-  useTestResultPopupMessage();
 
   useEffect(() => {
     const data: ITransportListReqBody = {

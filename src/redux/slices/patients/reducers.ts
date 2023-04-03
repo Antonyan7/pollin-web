@@ -39,9 +39,6 @@ import {
 const createReducer = <T extends SliceCaseReducers<PatientEmrProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setError(state, action) {
-    state.error = action.payload;
-  },
   setPatientsList(state, action: IAction<IPatientList>) {
     state.patientsList.list = action.payload;
   },

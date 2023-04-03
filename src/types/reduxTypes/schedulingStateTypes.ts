@@ -40,15 +40,6 @@ export interface DeleteScheduleTemplateProps {
   templateIds: string[];
 }
 
-export interface SchedulingStateStatusProps {
-  success: boolean;
-  fail: boolean;
-}
-export interface ISchedulingErrorResponseStatus {
-  code: string;
-  message: string;
-}
-
 export interface SchedulingProps {
   isServiceTypesLoading: boolean;
   scheduleApplyTemplates: IScheduleApplyTemplate[];

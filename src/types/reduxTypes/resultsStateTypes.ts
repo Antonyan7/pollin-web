@@ -10,8 +10,6 @@ import {
   TransportFolderStatus
 } from 'types/results';
 
-import { SchedulingStateStatusProps } from './schedulingStateTypes';
-
 export enum ITestResultStatus {
   Pending = 'Pending',
   NotReceived = 'NotReceived',
@@ -30,7 +28,6 @@ export interface ITestResultsCommonProps {
   testResultsDetails: TestResultsDetails[];
   isTestResultsDetailsLoading: boolean;
   isTestResultsSubmitLoading: boolean;
-  error: Error | null;
   isTestResultsSubmitWentSuccessful: boolean | null;
   specimenActions: SpecimenActions[];
   allTestsSpecimensList: IAllTestsSpecimensList;
@@ -73,7 +70,6 @@ export interface ITestResultsTracking {
   transportFolders: ITransportFolder[];
   lastCreatedTransportFolder: LastCreatedTransportFolder | null;
   isTransportFoldersLoading: boolean;
-  testResultStateStatus: SchedulingStateStatusProps;
 }
 
 export interface ITestResultsCollection {

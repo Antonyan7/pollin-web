@@ -41,10 +41,6 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
   isLabMachinesLoading: false,
   isLabsLoading: false,
   isTransportListLoading: false,
-  testResultStateStatus: {
-    success: false,
-    fail: false
-  },
   transportActions: [],
   labs: [],
   isTransportFolderDownloaded: false,
@@ -90,7 +86,6 @@ const getInHouseInitialState = (): IInHouseTestResultsProps => ({
 
 const getCommonTestResultsInitialState = (): ITestResultsCommonProps => ({
   testResultsDetails: [],
-  error: null,
   allTestsSpecimensList: {
     specimens: [],
     currentPage: 1,

@@ -50,7 +50,6 @@ import { bookingMiddleware } from '../booking';
 const {
   setAllTestsSpecimensList,
   setAppointmentSpecimens,
-  setError,
   setIsAllTestsSpecimensListLoading,
   setIsAppointmentSpecimensLoading,
   setIsCreatingTransportFolderLoading,
@@ -88,7 +87,6 @@ const {
   setSpecimensList,
   setSpecimenStorageLocations,
   setTestResultsDetails,
-  setTestResultsState,
   setTransportActions,
   setTransportFolders,
   setTransportList,
@@ -118,7 +116,6 @@ const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: Ap
     dispatch(setResultsList(results));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setResultsLoadingState(false));
   }
@@ -133,7 +130,6 @@ const getResultsFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setResultsSearchFilters(response.data.data.filters));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setResultsFiltersLoadingState(false));
   }
@@ -148,18 +144,16 @@ const getPendingTestStats = () => async (dispatch: AppDispatch) => {
     dispatch(setPendingTestStats(response.data.data.testResultStats));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setPendingTestStatsLoadingState(false));
   }
-
-  dispatch(setPendingTestStatsLoadingState(false));
 };
 
-const removeTestResultsAttachment = (attachmentId: string) => async (dispatch: AppDispatch) => {
+const removeTestResultsAttachment = (attachmentId: string) => async () => {
   try {
     await API.results.removeTestResultsAttachment(attachmentId);
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -172,7 +166,6 @@ const getTestResultsDetails = (testResultsParams: ITestResultsParams) => async (
     dispatch(setTestResultsDetails(response.data.data.testResults));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsTestResultsDetailsLoading(false));
   }
@@ -185,7 +178,6 @@ const getSpecimenActions = () => async (dispatch: AppDispatch) => {
     dispatch(setSpecimenActions(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -196,7 +188,6 @@ const getTransportActions = () => async (dispatch: AppDispatch) => {
     dispatch(setTransportActions(response.data.data.variations));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -212,7 +203,6 @@ const getLabMachines = (actionType: string) => async (dispatch: AppDispatch) => 
     dispatch(setLabMachines(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsLabMachinesLoading(false));
   }
@@ -226,7 +216,6 @@ const submitTestResults = (data: ITestResultsData[]) => async (dispatch: AppDisp
     dispatch(setIsTestResultsSubmitWentSuccessful(true));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
     dispatch(setIsTestResultsSubmitWentSuccessful(false));
   } finally {
     dispatch(setIsTestResultsSubmitLoading(false));
@@ -242,10 +231,9 @@ const getPendingSpecimenStats = () => async (dispatch: AppDispatch) => {
     dispatch(setPendingSpecimenStats(response.data.data.stats));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
+  } finally {
+    dispatch(setPendingSpecimenStatsLoadingState(false));
   }
-
-  dispatch(setPendingSpecimenStatsLoadingState(false));
 };
 
 const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (dispatch: AppDispatch) => {
@@ -275,7 +263,6 @@ const getSpecimensList = (specimensListData: ISpecimensListReqBody) => async (di
     dispatch(setSpecimensList(results));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsSpecimensListLoading(false));
   }
@@ -296,17 +283,7 @@ const addMachineForSpecimen = (specimens: ISpecimensReqBody[], machineId: string
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
-};
-
-export const resetTestResultsState = () => async (dispatch: AppDispatch) => {
-  dispatch(
-    setTestResultsState({
-      success: false,
-      fail: false
-    })
-  );
 };
 
 const applyRetestAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
@@ -321,7 +298,6 @@ const applyRetestAction = (specimens: string[], reasonId: string) => async (disp
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 const applyRecollectAction = (specimens: string[], reasonId: string) => async (dispatch: AppDispatch) => {
@@ -336,7 +312,6 @@ const applyRecollectAction = (specimens: string[], reasonId: string) => async (d
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 const applyMoveToAllTests = (specimens: string[]) => async (dispatch: AppDispatch) => {
@@ -351,7 +326,6 @@ const applyMoveToAllTests = (specimens: string[]) => async (dispatch: AppDispatc
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -388,7 +362,6 @@ const getAllTestsSpecimensList =
       dispatch(setAllTestsSpecimensList(results));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsAllTestsSpecimensListLoading(false));
     }
@@ -418,7 +391,6 @@ const applyMoveToInHouse = (specimens: string[], identifiers: string[]) => async
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -431,7 +403,6 @@ const getSpecimensFilters = () => async (dispatch: AppDispatch) => {
     dispatch(setSpecimensFilters(response.data.data.filters));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setSpecimensFiltersLoadingState(false));
   }
@@ -477,7 +448,6 @@ const getTransportList =
       dispatch(setTransportList(results));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsTransportListLoading(false));
     }
@@ -492,7 +462,6 @@ const getSpecimensForAppointment = (appointmentId: string) => async (dispatch: A
     dispatch(setAppointmentSpecimens(response.data.data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsAppointmentSpecimensLoading(false));
   }
@@ -506,7 +475,6 @@ const getLabs = () => async (dispatch: AppDispatch) => {
     dispatch(setLabs(response.data.data.labs));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setLabsLoadingState(false));
   }
@@ -521,7 +489,6 @@ const getSpecimenStorageLocations = () => async (dispatch: AppDispatch) => {
     dispatch(setSpecimenStorageLocations(response.data.data.locations));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
     dispatch(setSpecimenStorageLocations([]));
   } finally {
     dispatch(setIsSpecimenStorageLocationsLoading(false));
@@ -545,7 +512,6 @@ const updateSpecimenCollectionAppointmentStatus =
       );
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsUpdatingSpecimenCollectionAppointmentStatus(false));
     }
@@ -581,7 +547,6 @@ const submitSpecimenCollections =
       );
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsSendingSpecimenCollectionData(false));
     }
@@ -611,7 +576,6 @@ const createTransportFolder = (data: ICreateTransportFolderReqBody) => async (di
     dispatch(resultsMiddleware.getTransportList(transportListRequestBody));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsCreatingTransportFolderLoading(false));
   }
@@ -640,26 +604,6 @@ const markInTransitAction =
       dispatch(resultsMiddleware.getTransportList());
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
-
-      if (axios.isAxiosError(error)) {
-        dispatch(
-          viewsMiddleware.setToastNotificationPopUpState({
-            open: true,
-            props: {
-              severityType: SeveritiesType.error,
-              description: error?.response?.data.status.message
-            }
-          })
-        );
-      } else {
-        dispatch(
-          setTestResultsState({
-            success: false,
-            fail: true
-          })
-        );
-      }
     }
   };
 
@@ -692,7 +636,6 @@ const getSpecimensInTransportList =
       dispatch(setSpecimensInTransportList(results));
     } catch (error) {
       Sentry.captureException(error);
-      dispatch(setError(error));
     } finally {
       dispatch(setIsSpecimensInTransportListLoading(false));
     }
@@ -707,7 +650,6 @@ const getTransportFolders = (data: IGetTransportFoldersReqBody) => async (dispat
     dispatch(setTransportFolders(response.data.data.folders));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsTransportFoldersLoading(false));
   }
@@ -779,7 +721,6 @@ const downloadTransportFolderManifest = (transportFolderId: string) => async (di
     }
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 
   dispatch(setIsTransportFolderDownloaded(false));
@@ -787,14 +728,13 @@ const downloadTransportFolderManifest = (transportFolderId: string) => async (di
   return null;
 };
 
-const downloadTestResultAttachment = (attachmentId: string) => async (dispatch: AppDispatch) => {
+const downloadTestResultAttachment = (attachmentId: string) => async () => {
   try {
     const response = await API.results.downloadTestResultAttachment(attachmentId);
 
     return response.data;
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error as string));
   }
 
   return null;
@@ -832,7 +772,6 @@ export default {
   onSpecimenConfirmButtonClicked,
   removeTestResultsAttachment,
   resetLastCreatedTransportFolderId,
-  resetTestResultsState,
   updateSpecimenCollectionAppointmentStatus,
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,

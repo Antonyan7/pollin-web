@@ -29,7 +29,6 @@ const isSpecimenAddedToFolder = createSelector([selector], (state) => state.trac
 const isLabsLoading = createSelector([selector], (state) => state.tracking.isLabsLoading);
 const testResultLabs = createSelector([selector], (state) => state.tracking.labs);
 const transportActions = createSelector([selector], (state) => state.tracking.transportActions);
-const testResultStateStatus = createSelector([selector], (state) => state.tracking.testResultStateStatus);
 const isAllTestsSpecimensListLoading = createSelector(
   [selector],
   (state) => state.common.isAllTestsSpecimensListLoading
@@ -125,7 +124,6 @@ export default {
   specimenStorageLocations,
   testResultLabs,
   testResultsDetails,
-  testResultStateStatus,
   transportActions,
   transportFolders,
   transportList,

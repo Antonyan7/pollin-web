@@ -17,15 +17,11 @@ import {
   SpecimenActions,
   TestResultsDetails
 } from 'types/reduxTypes/resultsStateTypes';
-import { SchedulingStateStatusProps } from 'types/reduxTypes/schedulingStateTypes';
 import { ITransportFolder } from 'types/results';
 
 const createReducer = <T extends SliceCaseReducers<ITestResultProps>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setError(state, action) {
-    state.common.error = action.payload;
-  },
   setResultsList(state, action: IAction<IResultsList>) {
     state.external.resultsList = action.payload;
   },
@@ -119,9 +115,6 @@ const reducers = createReducer({
   },
   setIsCreatingTransportFolderLoading(state, action: IAction<boolean>) {
     state.tracking.isCreatingTransportFolder = action.payload;
-  },
-  setTestResultsState(state, action: IAction<SchedulingStateStatusProps>) {
-    state.tracking.testResultStateStatus = action.payload;
   },
   setTransportListDate(state, action: IAction<Date>) {
     state.tracking.transportListDate = action.payload;

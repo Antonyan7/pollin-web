@@ -129,7 +129,6 @@ export interface PatientEmrProps {
   isPatientAlertViewOpen: boolean;
   isProfileTestResultDetailsLoading: boolean;
   profileTestResultDetails: ProfileTestResultDetailsItem[];
-  error: Error | null;
   patientProfile: PatientProfile | null;
   medicalBackground: MedicalBackgroundProps;
   isPatientHighlightsLoading: boolean;

@@ -90,7 +90,6 @@ export const getInitialState = (): PatientEmrProps => ({
   },
   recentAppointments: null,
   isRecentAppointmentsLoading: false,
-  error: null,
   patientProfile: null,
   isPatientHighlightsLoading: false,
   isPatientHighlightIntakeComplete: false,

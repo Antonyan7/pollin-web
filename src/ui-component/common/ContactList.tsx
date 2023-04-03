@@ -62,13 +62,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
     };
 
   const onSendIntakeButtonClick = () => {
-    dispatch(
-      patientsMiddleware.sendPatientIntakeReminder(
-        patientId,
-        t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_SUCCESS),
-        t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_SENT_REMINDER_MESSAGE_FAIL)
-      )
-    );
+    dispatch(patientsMiddleware.sendPatientIntakeReminder(patientId));
   };
 
   const navigateToMedicalBackground = () => {
