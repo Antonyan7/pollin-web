@@ -1,32 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { MedicalDatePickerFieldProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
-import { CalendarTodayTwoTone } from '@mui/icons-material';
-import { Grid, styled, TextField, TextFieldProps, useTheme } from '@mui/material';
-import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { Grid } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
+import { PollinDatePickerType } from 'types/datePicker';
 
+import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 import { DateUtil } from '@utils/date/DateUtil';
 
 import { ConsultationTitleWithIcon } from '.';
 
-const CalendarPopupIcon = styled(CalendarTodayTwoTone)(({ theme }) => ({
-  color: theme.palette.primary.main
-}));
-
 const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDatePickerFieldProps) => {
-  const [datePickerOpen, setDatePickerOpen] = useState<boolean>(false);
-  const theme = useTheme();
-
-  const onDateDatePickerOpen = () => {
-    setDatePickerOpen(true);
-  };
-
-  const onDateDatePickerClose = () => {
-    setDatePickerOpen(false);
-  };
   const onDateUpdate = (date: Date | null) => {
     if (date) {
       onChange(DateUtil.convertToDateOnly(date));
@@ -34,36 +18,17 @@ const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDat
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DesktopDatePicker
-        open={datePickerOpen}
-        onOpen={onDateDatePickerOpen}
-        onClose={onDateDatePickerClose}
-        disableMaskedInput
-        label={label}
-        inputFormat="MMM dd, yyyy"
-        value={value}
-        disableFuture
-        components={{
-          OpenPickerIcon: CalendarPopupIcon
-        }}
-        renderInput={(params: TextFieldProps) => (
-          <TextField
-            {...params}
-            fullWidth
-            sx={{
-              svg: { color: theme.palette.primary.main }
-            }}
-            onClick={() => setDatePickerOpen(true)}
-            onKeyDown={(event) => {
-              event.preventDefault();
-            }}
-          />
-        )}
-        onChange={(date: Date | null) => onDateUpdate(date)}
-        {...otherProps}
-      />
-    </LocalizationProvider>
+    <PollinDatePicker
+      type={PollinDatePickerType.Date}
+      pickerConfigs={{
+        ...otherProps,
+        label,
+        onChange: onDateUpdate,
+        value,
+        isLimitedByWorkingHours: false,
+        maxDate: DateUtil.representInClinicDate(new Date())
+      }}
+    />
   );
 };
 

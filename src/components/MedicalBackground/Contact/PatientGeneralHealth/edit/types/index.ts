@@ -14,7 +14,7 @@ export interface DiagramTitleProps {
 
 export interface MedicalDatePickerFieldProps {
   label: string;
-  value: string | Date | null;
+  value: Date | null;
   onChange: (value: React.SetStateAction<string | Date | null>) => void;
 }
 

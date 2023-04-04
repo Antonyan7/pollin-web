@@ -3,27 +3,27 @@ import { IPatientBackgroundPartners } from '@axios/patientEmr/managerPatientEmrT
 import { BackgroundInformationFormFields } from '../types';
 
 export const getBackgroundInformationEmptyState = (backgroundInformation: IPatientBackgroundPartners) => ({
-  [BackgroundInformationFormFields.SexAtBirth]: backgroundInformation.sexAtBirth,
-  [BackgroundInformationFormFields.CancerPatient]: backgroundInformation.cancerPatient,
-  [BackgroundInformationFormFields.Gender]: backgroundInformation.gender,
-  [BackgroundInformationFormFields.SexualOrientation]: backgroundInformation.sexualOrientation,
-  [BackgroundInformationFormFields.PreferredPronouns]: backgroundInformation.preferredPronouns,
-  [BackgroundInformationFormFields.Relationship]: backgroundInformation.relationship,
-  [BackgroundInformationFormFields.DateOfBirth]: backgroundInformation.dateOfBirth,
-  [BackgroundInformationFormFields.Age]: backgroundInformation.age,
-  [BackgroundInformationFormFields.CurrentOccupation]: backgroundInformation.currentOccupation,
+  [BackgroundInformationFormFields.SexAtBirth]: backgroundInformation?.sexAtBirth,
+  [BackgroundInformationFormFields.CancerPatient]: backgroundInformation?.cancerPatient,
+  [BackgroundInformationFormFields.Gender]: backgroundInformation?.gender,
+  [BackgroundInformationFormFields.SexualOrientation]: backgroundInformation?.sexualOrientation,
+  [BackgroundInformationFormFields.PreferredPronouns]: backgroundInformation?.preferredPronouns,
+  [BackgroundInformationFormFields.Relationship]: backgroundInformation?.relationship,
+  [BackgroundInformationFormFields.DateOfBirth]: backgroundInformation?.dateOfBirth,
+  [BackgroundInformationFormFields.Age]: backgroundInformation?.age,
+  [BackgroundInformationFormFields.CurrentOccupation]: backgroundInformation?.currentOccupation,
   [BackgroundInformationFormFields.ReferringDoctor]: {
-    ...backgroundInformation.referringDoctor,
+    ...backgroundInformation?.referringDoctor,
     value: backgroundInformation?.referringDoctor?.value ?? false,
     name: backgroundInformation?.referringDoctor?.name ?? ''
   },
   [BackgroundInformationFormFields.FamilyDoctor]: {
-    ...backgroundInformation.familyDoctor,
+    ...backgroundInformation?.familyDoctor,
     value: backgroundInformation?.familyDoctor?.value ?? false,
     name: backgroundInformation?.familyDoctor?.name ?? ''
   },
   [BackgroundInformationFormFields.Pharmacy]: {
-    ...backgroundInformation.pharmacy,
+    ...backgroundInformation?.pharmacy,
     value: backgroundInformation?.pharmacy?.exists ?? false,
     name: backgroundInformation?.pharmacy?.name ?? '',
     address: {
