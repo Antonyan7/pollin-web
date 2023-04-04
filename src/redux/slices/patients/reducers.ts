@@ -12,6 +12,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
+  IPatientMedications,
   IProfileTestResults,
   ITestResultHistory,
   ProfileTestResultDetailsItem
@@ -287,6 +288,21 @@ const reducers = createReducer({
   },
   setManuallyAddressForMailing(state, action: IAction<AddManuallyAddressModalProps>) {
     state.medicalBackground.contact.manuallyAddressForMailing = action.payload;
+  },
+  setPatientCurrentMedications(state, action: IAction<IPatientMedications>) {
+    state.medicationsPrescriptions.medications.patientCurrentMedications = action.payload;
+  },
+  setPatientPastMedications(state, action: IAction<IPatientMedications>) {
+    state.medicationsPrescriptions.medications.patientPastMedications = action.payload;
+  },
+  setPatientMissingMedications(state, action: IAction<IPatientMedications>) {
+    state.medicationsPrescriptions.medications.patientMissingMedications = action.payload;
+  },
+  setIsPatientPastMedicationLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isPatientPastMedicationLoading = action.payload;
+  },
+  setIsPatientCurrentMedicationLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isPatientCurrentMedicationLoading = action.payload;
   },
   setIsContactInformationUpdateLoading(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isContactInformationDataUpdating = action.payload;

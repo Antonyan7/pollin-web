@@ -12,6 +12,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
+  Recency,
   TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -111,6 +112,12 @@ const {
   setIsFertilityHistoryDataUpdating,
   setIsFemalePregnancyInformationDataUpdating,
   setIsFemalePatientMenstrualCycleHistoryDataUpdating,
+  setPatientCurrentMedications,
+  setPatientPastMedications,
+  setPatientMissingMedications,
+  setIsPatientCurrentMedicationLoading,
+  setIsPatientPastMedicationLoading,
+
   setIsFemalePatientGynaecologicalHistoryDataUpdating,
   setDrugs,
   setIsDrugLoading,
@@ -686,6 +693,51 @@ const updateFemalePatientMenstrualCycleHistory =
     dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(false));
   };
 
+const getPatientMedications = (patientId: string, recency: Recency, page: number) => async (dispatch: AppDispatch) => {
+  try {
+    switch (recency) {
+      case Recency.Current:
+        dispatch(setIsPatientCurrentMedicationLoading(true));
+        break;
+      case Recency.Past:
+        dispatch(setIsPatientPastMedicationLoading(true));
+        break;
+      default:
+        dispatch(setIsPatientCurrentMedicationLoading(false));
+        dispatch(setIsPatientPastMedicationLoading(false));
+    }
+
+    const response = await API.patients.getPatientMedications(patientId, recency, page);
+    const medicationData = {
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize,
+      medications: response.data.data.medications
+    };
+
+    switch (recency) {
+      case Recency.Current:
+        dispatch(setPatientCurrentMedications(medicationData));
+        break;
+      case Recency.Past:
+        dispatch(setPatientPastMedications(medicationData));
+        break;
+      case Recency.Missing:
+        dispatch(setPatientMissingMedications(medicationData));
+        break;
+      default:
+        dispatch(setPatientCurrentMedications({ medications: [], pageSize: 5, currentPage: 0, totalItems: 0 }));
+        dispatch(setPatientPastMedications({ medications: [], pageSize: 5, currentPage: 0, totalItems: 0 }));
+        dispatch(setPatientMissingMedications({ medications: [], pageSize: 5, currentPage: 0, totalItems: 0 }));
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsPatientCurrentMedicationLoading(false));
+    dispatch(setIsPatientPastMedicationLoading(false));
+  }
+};
+
 const getFemalePatientGynaecologicalHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(true));
 
@@ -1020,6 +1072,7 @@ export default {
   updatePatientContactInformation,
   getFemalePatientMenstrualCycleHistory,
   getFemalePatientGynaecologicalHistory,
+  getPatientMedications,
   updateFertilityHistory,
   getDrugs,
   getMedicationDropdownOptions,

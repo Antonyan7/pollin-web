@@ -29,6 +29,7 @@ import {
   IPatientEncountersListResponse,
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
+  IPatientMedications,
   IPatientProfileOverviewResponse,
   IPatientProfileResponse,
   IPatientsFiltersResponse,
@@ -38,7 +39,8 @@ import {
   IProfileTestResults,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
-  IUpdateEncounterNoteRequest
+  IUpdateEncounterNoteRequest,
+  Recency
 } from 'manager/patientEmr/managerPatientEmrTypes';
 import { CustomAlerts, IEncountersReqBody, IPatientsReqBody } from 'types/patient';
 import {
@@ -317,6 +319,18 @@ const patientEmrManager = {
       {
         params: {
           searchString,
+          page
+        }
+      }
+    );
+  },
+  getPatientMedications(patientId: string, recency: Recency, page: number) {
+    return axiosInstance.get<IPatientMedications, IAxiosResponsePaginated<IPatientMedications>>(
+      `${baseURL}/v1/prescriptions/medications`,
+      {
+        params: {
+          patientId,
+          recency,
           page
         }
       }

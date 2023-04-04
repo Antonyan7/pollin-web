@@ -1,3 +1,4 @@
+import { IPagination } from '@axios/axiosTypes';
 import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 import {
@@ -511,6 +512,24 @@ export interface IFemalePatientGynaecologicalHistoryProps {
   intercoursePain: IMedicalBackgroundFieldValuesWithValue;
 }
 
+export interface IPatientMedications extends IPagination {
+  medications: MedicationsProps[];
+}
+
+export interface MedicationsProps {
+  id: string;
+  title: string;
+  commonName?: string;
+  dosage: string;
+  route: string;
+  frequency: string;
+  time?: string;
+  duration: {
+    start: string;
+    end: string;
+  };
+  prescriber?: string;
+}
 export interface IFemalePatientGynaecologicalHistory {
   gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
 }
@@ -589,6 +608,11 @@ export interface IDropdownsResponse {
   dropdowns: IDropdown[];
 }
 
+export enum Recency {
+  Current = 'Current',
+  Past = 'Past',
+  Missing = 'Missing'
+}
 export enum TypeOfPregnancy {
   FullTerm = 'FullTerm',
   Preterm = 'Preterm',

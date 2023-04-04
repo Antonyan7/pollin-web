@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import TabPanel from '@components/MedicalBackground/components/MedicalBackgroundTabPanel';
+import TabPanel from '@components/Medications/layout/Medications/MedicationsTabPanel';
 import { Box, Tab, Tabs } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
 import useReplaceCurrentURLMedications from '@hooks/useReplaceCurrentURLMedications';
+
+import Medications from './layout/Medications';
 
 const MedicationsTabs = () => {
   const [t] = useTranslation();
@@ -14,8 +16,8 @@ const MedicationsTabs = () => {
   useReplaceCurrentURLMedications(activePageValue);
 
   const showActivePage = (index: number) => ({
-    id: `medical-background-tab-${index}`,
-    'aria-controls': `medical-background-tabpanel-${index}`
+    id: `medications-tab-${index}`,
+    'aria-controls': `medications-tabpanel-${index}`
   });
   const handleActivePageChange = (_event: React.SyntheticEvent, newValue: number) => {
     setActivePageValue(newValue);
@@ -38,7 +40,7 @@ const MedicationsTabs = () => {
         {/* TODO Prescriptions */}
       </TabPanel>
       <TabPanel value={activePageValue} index={1}>
-        {/* TODO Medications  */}
+        <Medications />
       </TabPanel>
     </Box>
   );

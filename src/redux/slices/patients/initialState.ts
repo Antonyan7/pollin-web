@@ -51,7 +51,12 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
     isDrugLoading: false,
     dropdownOptions: null,
     isDropdownOptionsLoading: false,
-    isMedicationCreatedLoading: false
+    isMedicationCreatedLoading: false,
+    patientCurrentMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
+    patientPastMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
+    patientMissingMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
+    isPatientCurrentMedicationLoading: false,
+    isPatientPastMedicationLoading: false
   },
   prescriptions: {}
 });

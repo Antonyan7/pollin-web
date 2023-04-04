@@ -18,6 +18,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
+  IPatientMedications,
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
@@ -82,6 +83,11 @@ export interface MedicationsPrescriptionsProps {
     dropdownOptions: IDropdown[] | null;
     isDropdownOptionsLoading: boolean;
     isMedicationCreatedLoading: boolean;
+    patientCurrentMedications: IPatientMedications;
+    patientPastMedications: IPatientMedications;
+    patientMissingMedications: IPatientMedications;
+    isPatientPastMedicationLoading: boolean;
+    isPatientCurrentMedicationLoading: boolean;
   };
   prescriptions: {};
 }
