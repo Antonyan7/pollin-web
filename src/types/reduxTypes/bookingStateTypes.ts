@@ -1,6 +1,7 @@
 import { IPagination } from '@axios/axiosTypes';
 import {
   IAppointmentDetails,
+  IPatientProfileAppointmentsGroups,
   IProvidersCollectionCalendarAppointment,
   SpecimenCollectionFilterOption
 } from '@axios/booking/managerBookingTypes';
@@ -47,6 +48,7 @@ export interface BookingProps {
   serviceTypes: IServiceType[];
   appointmentDetails: AppointmentDetailsProps | null;
   patientAlerts: AlertDetailsProps[];
+  profilePatientAppointmentsGroups: IPatientProfileAppointmentsGroups;
   isAppointmentLoading: boolean;
   specimenAppointments: ISpecimenAppointmentsState;
 }

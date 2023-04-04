@@ -1000,15 +1000,6 @@ const updatePatientBackgroundInformation =
         );
       }
     } catch (error) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.error,
-            description: t(Translation.PAGE_SCHEDULING_BLOCK_ALERT_MESSAGE_FAIL) // TODO: change when error message will be ready.
-          }
-        })
-      );
       Sentry.captureException(error);
     }
 

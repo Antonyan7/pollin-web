@@ -21,16 +21,6 @@ const useSaveMedicalBackgroundDataWithToast = (onClose: () => void) => {
           })
         );
         onClose();
-      } else {
-        dispatch(
-          viewsMiddleware.setToastNotificationPopUpState({
-            open: true,
-            props: {
-              severityType: SeveritiesType.error,
-              description: t(Translation.TOAST_PATIENT_PROFILE_MEDICAL_BACKGROUND_FAIL_MESSAGE)
-            }
-          })
-        );
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

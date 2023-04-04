@@ -1,4 +1,5 @@
 import {
+  IPatientProfileAppointmentsGroups,
   IProvidersCollectionCalendarAppointment,
   SpecimenCollectionFilterOption
 } from '@axios/booking/managerBookingTypes';
@@ -139,6 +140,9 @@ const reducers = createReducer({
   },
   setCheckInAppointments(state, action: IAction<ICheckInAppointment[]>) {
     state.checkInAppointmentsList = action.payload;
+  },
+  setProfileAppointmentsGroup(state, action: IAction<IPatientProfileAppointmentsGroups>) {
+    state.profilePatientAppointmentsGroups = action.payload;
   }
 });
 

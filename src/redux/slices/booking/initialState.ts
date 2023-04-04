@@ -1,6 +1,9 @@
+import { PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes';
 import { BookingProps } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
+
+import { SortOrder } from '../../../types/patient';
 
 export const getInitialState = (): BookingProps => ({
   appointments: [],
@@ -33,6 +36,20 @@ export const getInitialState = (): BookingProps => ({
   isAppointmentEditLoading: false,
   appointmentDetails: null,
   patientAlerts: [],
+  profilePatientAppointmentsGroups: {
+    upcoming: {
+      filter: '',
+      appointments: [],
+      sortOrder: SortOrder.Asc,
+      sortByField: PatientAppointmentsSortField.Date
+    },
+    past: {
+      filter: '',
+      appointments: [],
+      sortOrder: SortOrder.Asc,
+      sortByField: PatientAppointmentsSortField.Date
+    }
+  },
   isAppointmentLoading: false,
   specimenAppointments: {
     date: DateUtil.representInClinicDate(),

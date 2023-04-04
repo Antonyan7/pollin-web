@@ -31,6 +31,7 @@ const {
   updateSpecimenGroupedServiceProviders,
   setIsServiceProvidersLoading,
   setIsGroupedServiceProvidersLoading,
+  setProfileAppointmentsGroup,
   setServiceProviders,
   setGroupedServiceProviders,
   setSpecimenGroupedServiceProviders,
@@ -340,6 +341,8 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
       ? appointmentValues.providerId
       : store.getState().booking.currentServiceProviderId;
 
+    const patientId = store.getState().patients.patientsList.currentPatientId;
+
     const calendarDate = store.getState().booking.date;
 
     dispatch(setAppointmentLoading(true));
@@ -363,6 +366,10 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
 
     if (DateUtil.isSameDate(appointmentValues.date as Date, calendarDate)) {
       dispatch(getBookingAppointments(providerId, calendarDate));
+    }
+
+    if (patientId) {
+      dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
     }
   } catch (error) {
     Sentry.captureException(error);
@@ -396,6 +403,7 @@ const editAppointment =
 
       const providerId = store.getState().booking.currentServiceProviderId;
       const calendarDate = store.getState().booking.date;
+      const patientId = store.getState().patients.patientsList.currentPatientId;
 
       await API.booking.editAppointment(appointmentId, appointmentValues);
       dispatch(setIsAppointmentEditLoading(false));
@@ -412,6 +420,10 @@ const editAppointment =
       dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
       dispatch(bookingMiddleware.clearAppointmentDetails());
       dispatch(getBookingAppointments(providerId, calendarDate));
+
+      if (patientId) {
+        dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
+      }
     } catch (error) {
       Sentry.captureException(error);
     } finally {
@@ -429,7 +441,18 @@ const getPatientAlerts = (patientId?: string) => async (dispatch: AppDispatch) =
       dispatch(setPatientAlerts([]));
     }
   } catch (error) {
+    Sentry.captureException(error);
     dispatch(setPatientAlerts([]));
+  }
+};
+
+const getPatientAppointmentsGroup = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.booking.getPatientAppointments(patientId);
+
+    dispatch(setProfileAppointmentsGroup(response.data));
+  } catch (error) {
+    Sentry.captureException(error);
   }
 };
 
@@ -529,6 +552,7 @@ export default {
   editAppointment,
   clearAppointmentDetails,
   getPatientAlerts,
+  getPatientAppointmentsGroup,
   getCheckInAppointments,
   getSpecimenAppointmentsFilters,
   getSpecimenAppointments,

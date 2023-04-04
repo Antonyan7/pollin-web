@@ -11,7 +11,6 @@ import {
   IEditAppointmentBody,
   IGetCheckInAppointmentResponse,
   IGetCollectionCalendarAppointmentFilters,
-  IGetPatientAppointments,
   IGetPatientAppointmentsListFiltersResponse,
   IGetPatientAppointmentsListReqBody,
   IGetPatientAppointmentsListResponse,
@@ -20,6 +19,7 @@ import {
   IGetProvidersCollectionCalendarAppointmentsReqBody,
   IGroupedServiceProvidersListResponse,
   IGroupedServiceProvidersParams,
+  IPatientProfileAppointmentsGroups,
   IServiceProvidersListResponse,
   IServiceProvidersReqParams,
   IServiceTypesReqParams,
@@ -114,7 +114,7 @@ const bookingManager = {
   },
   getPatientAppointments(patientId: string) {
     return axiosInstance
-      .get<IGetPatientAppointments, IAxiosResponse<IGetPatientAppointments>>(
+      .get<IPatientProfileAppointmentsGroups, IAxiosResponse<IPatientProfileAppointmentsGroups>>(
         `${baseURL}/v1/profile-appointment/${patientId}`
       )
       .then(({ data }) => data);

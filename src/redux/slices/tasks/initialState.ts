@@ -16,7 +16,6 @@ export const getInitialState = (): ITasksManager => ({
   priorities: [],
   isTasksListLoading: false,
   statuses: [],
-  error: null,
   isTaskUpdated: false,
   taskDetails: {
     name: '',

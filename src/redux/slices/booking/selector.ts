@@ -49,6 +49,10 @@ export const isSpecimenAppointmentsFiltersArrayLoading = createSelector(
 );
 
 export const specimenAppointmentsList = createSelector([specimenAppointments], (state) => state.list);
+export const patientProfileAppointmentsGroup = createSelector(
+  [selector],
+  (state) => state.profilePatientAppointmentsGroups
+);
 
 export default {
   isServiceTypesLoading,
@@ -80,5 +84,6 @@ export default {
   checkInAppointmentsList,
   isCheckInAppointmentsLoading,
   isSpecimenAppointmentsFiltersArrayLoading,
-  specimenAppointmentsList
+  specimenAppointmentsList,
+  patientProfileAppointmentsGroup
 };

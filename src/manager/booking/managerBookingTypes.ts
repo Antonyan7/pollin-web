@@ -158,7 +158,7 @@ export enum PatientAppointmentsFields {
   Status = 'Status'
 }
 
-export interface IGetPatientAppointments {
+export interface IPatientProfileAppointmentsGroups {
   upcoming: {
     filter: string;
     sortOrder: SortOrder;

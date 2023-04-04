@@ -16,7 +16,6 @@ import { ModalName } from 'types/modals';
 import { ITasksProps } from 'types/reduxTypes/tasksStateTypes';
 
 const {
-  setError,
   setTaskDetails,
   setIsTaskDetailsLoading,
   setCreatedTaskId,
@@ -45,7 +44,6 @@ const getTasksStatuses = () => async (dispatch: AppDispatch) => {
     dispatch(setTaskStatuses(dataWithReassignOption));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setTasksLoadingState(false));
   }
@@ -68,7 +66,6 @@ const updateTaskStatus = (rowId: string, statusId: string, message: string) => a
     dispatch(setIsTaskStatusUpdated(true));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsTaskUpdated(false));
   }
@@ -79,7 +76,6 @@ const setTaskStatusUpdate = (value: boolean) => async (dispatch: AppDispatch) =>
     dispatch(setIsTaskStatusUpdated(value));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -92,7 +88,6 @@ const getTaskPriorities = () => async (dispatch: AppDispatch) => {
     dispatch(setTaskPriorities(response.data.data.priorities));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setTasksLoadingState(false));
   }
@@ -103,7 +98,6 @@ const clearCreatedTaskState = () => async (dispatch: AppDispatch) => {
     dispatch(setCreatedTaskId(''));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -137,7 +131,6 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
     dispatch(viewsMiddleware.closeModal(ModalName.CreateTaskModal));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setTaskCreateLoadingState(false));
   }
@@ -154,7 +147,6 @@ const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
     dispatch(setTaskDetails(data));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsTaskDetailsLoading(false));
   }
@@ -165,7 +157,6 @@ const clearTaskReassignState = () => async (dispatch: AppDispatch) => {
     dispatch(setIsTaskReassigned(false));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   }
 };
 
@@ -186,7 +177,6 @@ const reassignTask = (reassignData: ITaskReassignReqBody, message: string) => as
     );
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setIsTaskReassignLoading(false));
   }
@@ -215,7 +205,6 @@ const getTasksList = (tasksListData: ITasksListReqBody) => async (dispatch: AppD
     dispatch(setTasksList(results));
   } catch (error) {
     Sentry.captureException(error);
-    dispatch(setError(error));
   } finally {
     dispatch(setTasksLoadingState(false));
   }

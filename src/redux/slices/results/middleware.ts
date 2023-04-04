@@ -21,7 +21,6 @@ import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
 import store, { AppDispatch, RootState } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
-import axios from 'axios';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
@@ -39,8 +38,7 @@ import {
 import {
   ICreateTransportFolderReqBody,
   IGetSpecimensInTransportListParams,
-  IGetTransportFoldersReqBody,
-  ResultsErrorMessages
+  IGetTransportFoldersReqBody
 } from 'types/results';
 
 import { DateUtil } from '@utils/date/DateUtil';
@@ -686,22 +684,6 @@ const addSpecimenToTransportFolder =
       dispatch(setShouldRefetchInTransportList(true));
     } catch (error) {
       Sentry.captureException(error);
-
-      if (axios.isAxiosError(error)) {
-        if (error?.response?.data.status.message === ResultsErrorMessages.Specimen_not_found) {
-          dispatch(
-            viewsMiddleware.setToastNotificationPopUpState({
-              open: true,
-              props: {
-                severityType: SeveritiesType.error,
-                description: t(
-                  Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_EXISTING_TRANSPORT_ERROR_MESSAGE
-                )
-              }
-            })
-          );
-        }
-      }
     }
 
     dispatch(setIsSpecimenAddedToFolder(false));

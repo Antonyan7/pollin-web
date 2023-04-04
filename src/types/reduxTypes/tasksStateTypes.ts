@@ -4,7 +4,6 @@ import { ITaskPriorityOption, ITaskStatusOption } from '@axios/tasks/tasksManage
 export interface ITasksManager {
   tasks: ITasksProps;
   isTasksListLoading: boolean;
-  error: Error | null;
   statuses: ITaskStatusOption[];
   isTaskUpdated: boolean;
   isTaskReassigned: boolean;

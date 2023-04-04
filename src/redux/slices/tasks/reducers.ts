@@ -6,9 +6,6 @@ import { ITaskDetails, ITasksManager, ITasksProps } from 'types/reduxTypes/tasks
 const createReducer = <T extends SliceCaseReducers<ITasksManager>>(reducer: T) => ({ ...reducer });
 
 const reducers = createReducer({
-  setError(state, action) {
-    state.error = action.payload;
-  },
   setTaskDetails(state, action: IAction<ITaskDetails>) {
     state.taskDetails = action.payload;
   },
