@@ -27,5 +27,22 @@ export const getContactInformationEmptyState = (contactInformation: IPatientCont
     number: contactInformation.OHIP.number,
     versionCode: contactInformation.OHIP.versionCode
   },
-  [ContactInformationFormFields.ResponsiblePhysician]: contactInformation.responsiblePhysician
+  [ContactInformationFormFields.ResponsiblePhysician]: contactInformation.responsiblePhysician,
+  [ContactInformationFormFields.IsSameAddressChecked]: contactInformation.primaryAddress.streetAddress === contactInformation.mailingAddress.streetAddress,
 });
+
+export const replaceOhipNumberFormat = (ohipNumber: string) => {
+  let ohipCode = ohipNumber;
+
+  ohipCode = ohipCode.replace(/-/g, "");
+
+  if (ohipCode.length >= 4 && ohipCode.length <= 8) {
+    ohipCode = `${ohipCode.slice(0, 4)}-${ohipCode.slice(4)}`;
+  } else if (ohipNumber.length >= 9) {
+    ohipCode = `${ohipCode.slice(0, 4)}-${ohipCode.slice(4, 7)}-${ohipCode.slice(7)}`;
+  }
+
+  return ohipCode;
+}
+
+export const allowedChars = "4578-";

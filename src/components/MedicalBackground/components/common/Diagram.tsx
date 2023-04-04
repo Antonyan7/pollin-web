@@ -7,7 +7,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 interface DiagramProps {
   children: React.ReactNode;
   titleComponent: React.ReactNode;
-  titleContent: Record<'id', string>;
+  titleContent?: Record<'id', string>;
 }
 
 const Diagram = ({ children, ...other }: DiagramProps) => {
@@ -15,7 +15,7 @@ const Diagram = ({ children, ...other }: DiagramProps) => {
 
   return (
     <SubCardStyled
-      key={other.titleContent.id}
+      key={other.titleContent?.id}
       title={other.titleComponent}
       sx={{
         backgroundColor: theme.palette.primary.light,

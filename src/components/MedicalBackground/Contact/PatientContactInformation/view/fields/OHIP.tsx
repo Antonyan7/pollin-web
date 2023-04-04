@@ -3,9 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { RenderMappedNote } from '@components/MedicalBackground/components/common';
 import FieldWrapper from '@components/MedicalBackground/components/common/FieldWrapper';
 import {
-  MedicalFormTitleNo,
   MedicalFormTitleYes
 } from '@components/MedicalBackground/components/common/MedWithItemsView';
+import { NoTitleView } from '@components/MedicalBackground/Contact/PatientGeneralHealth/view/fields/NoTitleView';
 import { GeneralHealthComponentsProps } from '@components/MedicalBackground/helpers';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -29,7 +29,7 @@ const OHIP = ({ componentIndex }: GeneralHealthComponentsProps) => {
             <RenderMappedNote note={fieldValue.note} />
           </>
         ) : (
-          <MedicalFormTitleNo />
+          <NoTitleView note={fieldValue?.note} />
         )}
       </Grid>
     </FieldWrapper>

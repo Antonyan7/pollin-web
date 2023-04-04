@@ -8,5 +8,6 @@ export enum ContactInformationFormFields {
   EmailAddress = 'emailAddress',
   PhoneNumber = 'phoneNumber',
   OHIP = 'OHIP',
-  ResponsiblePhysician = 'responsiblePhysician'
+  ResponsiblePhysician = 'responsiblePhysician',
+  IsSameAddressChecked = 'isSameAddressChecked'
 }

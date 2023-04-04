@@ -5,6 +5,7 @@ import GoogleAutocomplete from '@components/GoogleAutocomplete';
 import { useSamePrimaryContext } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/hooks/useSamePrimaryContext';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import { getFullAddress } from '@components/MedicalBackground/helpers';
+import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 
@@ -57,7 +58,13 @@ const StreetAddress = () => {
     }
   }, [isSameAddressChecked, mailingAddress, primaryAddressField.value, setValue, primaryAddress]);
 
-  return <GoogleAutocomplete field={field} fieldState={fieldState} />;
+  return (
+    <Grid sx={{
+      display: isSameAddressChecked ? 'none' : 'block'
+    }}>
+      <GoogleAutocomplete field={field} fieldState={fieldState} />
+    </Grid>
+  );
 };
 
 export default StreetAddress;

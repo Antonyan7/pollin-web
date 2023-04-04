@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useFormContext } from 'react-hook-form';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import Diagram from '@components/MedicalBackground/components/common/Diagram';
@@ -11,7 +10,6 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
-import { v4 } from 'uuid';
 
 import OHIPContent from './Content';
 import OHIPTitle from './Title';
@@ -21,32 +19,14 @@ const FieldOHIP = () => {
   const [t] = useTranslation();
   const ohipLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_OHIP);
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
-  const { getValues, setValue } = useFormContext();
   const fieldName = `${ContactInformationFormFields.OHIP}.exists`;
-  const OHIPField = getValues(ContactInformationFormFields.OHIP);
   const ohip = contactInformation?.OHIP;
-  const OHIPFieldInitialValue = getValues(fieldName);
-  const [isOHIPExists, setIsOHIPExists] = useState<boolean>(OHIPFieldInitialValue);
+  const [isOHIPExists, setIsOHIPExists] = useState<boolean>(ohip?.exists as boolean);
   const onOHIPChange = (state: boolean) => setIsOHIPExists(state);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!isOHIPExists) {
-        setValue(ContactInformationFormFields.OHIP, {
-          ...OHIPField,
-          exists: isOHIPExists,
-          versionCode: '',
-          number: ''
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isOHIPExists, setValue]
-  );
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
@@ -74,9 +54,6 @@ const FieldOHIP = () => {
               <Grid>
                 <Diagram
                   titleComponent={<OHIPTitle />}
-                  titleContent={{
-                    id: v4()
-                  }}
                 >
                   <OHIPContent />
                 </Diagram>

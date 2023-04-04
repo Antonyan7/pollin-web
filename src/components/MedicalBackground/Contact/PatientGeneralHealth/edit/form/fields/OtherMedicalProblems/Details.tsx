@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
@@ -20,12 +20,11 @@ import MedicalProblemsViewMode from './ViewMode';
 
 const OtherMedicalProblemsDetails = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
+  const { getValues } = useFormContext();
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const medicalProblem = generalHealth?.medicalProblems;
   const fieldName = `${GeneralHealthFormFields.MedicalProblems}.exists`;
-  const medicalProblemField = getValues(GeneralHealthFormFields.MedicalProblems);
-  const { fields: medicalProblems, remove } = useMedicalProblemContext();
+  const { fields: medicalProblems } = useMedicalProblemContext();
   const medicalProblemsInitialValue = getValues(fieldName);
   const [isMedicalProblemExists, setIsMedicalProblemExists] = useState<boolean>(medicalProblemsInitialValue);
   const onMedicalProblemChange = (state: boolean) => setIsMedicalProblemExists(state);
@@ -33,23 +32,6 @@ const OtherMedicalProblemsDetails = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!isMedicalProblemExists) {
-        const indexes = medicalProblems.map((item) => medicalProblems.indexOf(item));
-
-        remove(indexes);
-        setValue(GeneralHealthFormFields.MedicalProblems, {
-          ...medicalProblemField,
-          exists: isMedicalProblemExists,
-          items: []
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setValue, isMedicalProblemExists]
-  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

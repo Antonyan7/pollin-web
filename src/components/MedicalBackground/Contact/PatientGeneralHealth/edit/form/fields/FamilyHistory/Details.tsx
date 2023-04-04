@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
@@ -20,12 +20,11 @@ import FamilyHistoryViewMode from './ViewMode';
 
 const FamilyHistoryDetails = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
+  const { getValues } = useFormContext();
   const fieldName = `${GeneralHealthFormFields.FamilyHistory}.exists`;
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const familyHistories = generalHealth?.familyHistory;
-  const familyHistoryField = getValues(GeneralHealthFormFields.FamilyHistory);
-  const { fields: familyHistory, remove } = useFamilyHistoryContext();
+  const { fields: familyHistory } = useFamilyHistoryContext();
   const familyHistoryInitialValue = getValues(fieldName);
   const [isFamilyHistoryExists, setIsfamilyHistoryExists] = useState<boolean>(familyHistoryInitialValue);
   const onFamilyHistoryChange = (state: boolean) => setIsfamilyHistoryExists(state);
@@ -33,23 +32,6 @@ const FamilyHistoryDetails = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!isFamilyHistoryExists) {
-        const indexes = familyHistory.map((item) => familyHistory.indexOf(item));
-
-        remove(indexes);
-        setValue(GeneralHealthFormFields.FamilyHistory, {
-          ...familyHistoryField,
-          exists: isFamilyHistoryExists,
-          items: []
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isFamilyHistoryExists, setValue]
-  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

@@ -32,8 +32,18 @@ const PatientContactInformationEdit = () => {
   } = methods;
 
   const onContactInformationSubmit = (values: IPatientContactInformationProps) => {
+    const { OHIP, isSameAddressChecked, ...contactInformationValues } = values;
+    const contactData = {
+      ...contactInformationValues,
+      OHIP: {
+        ...OHIP,
+        versionCode: OHIP.exists ? OHIP.versionCode : '',
+        number: OHIP.exists ? OHIP.number : '',
+      }
+    }
+
     if (typeof currentPatiendId === 'string') {
-      dispatch(patientsMiddleware.updatePatientContactInformation(currentPatiendId, values));
+      dispatch(patientsMiddleware.updatePatientContactInformation(currentPatiendId, contactData));
     }
   };
 

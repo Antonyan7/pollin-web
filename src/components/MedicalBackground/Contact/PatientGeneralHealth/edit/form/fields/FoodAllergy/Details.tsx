@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
@@ -20,12 +20,11 @@ import FoodAllergyViewMode from './ViewMode';
 
 const FoodAllergiesDetails = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
+  const { getValues } = useFormContext();
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const foodAllergy = generalHealth?.foodAllergies;
   const fieldName = `${GeneralHealthFormFields.FoodAllergies}.exists`;
-  const { fields: foodAllergies, remove } = useFoodAllergyContext();
-  const foodAllergyField = getValues(GeneralHealthFormFields.FoodAllergies);
+  const { fields: foodAllergies } = useFoodAllergyContext();
   const foodAllergyInitialValue = getValues(fieldName);
   const [isFoodAllergyExists, setIsFoodAllergyExists] = useState<boolean>(foodAllergyInitialValue);
   const onFoodAllergyChange = (state: boolean) => setIsFoodAllergyExists(state);
@@ -33,23 +32,6 @@ const FoodAllergiesDetails = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!isFoodAllergyExists) {
-        const indexes = foodAllergies.map((item) => foodAllergies.indexOf(item));
-
-        remove(indexes);
-        setValue(GeneralHealthFormFields.FoodAllergies, {
-          ...foodAllergyField,
-          exists: isFoodAllergyExists,
-          items: []
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isFoodAllergyExists, setValue]
-  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

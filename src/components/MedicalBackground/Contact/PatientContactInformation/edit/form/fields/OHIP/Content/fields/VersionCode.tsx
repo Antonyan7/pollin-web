@@ -16,6 +16,7 @@ const VersionCode = () => {
     name: `${ContactInformationFormFields.OHIP}.versionCode`,
     control
   });
+  const { onChange, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(label);
 
   useScrollIntoView(versionCodeRef, fieldState);
@@ -28,8 +29,13 @@ const VersionCode = () => {
         label={label}
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
-        {...field}
-        value={field.value}
+        onChange={(event) => {
+          if (event.target.value.length <= 2) {
+            onChange(event.target.value)
+          }
+        }}
+        {...fieldProps}
+        value={fieldProps.value}
         inputRef={versionCodeRef}
       />
     </Grid>

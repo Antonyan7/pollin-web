@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { allowedChars, replaceOhipNumberFormat } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
@@ -17,6 +18,7 @@ const OhipNumber = () => {
     control
   });
   const errorHelperText = generateErrorMessage(label);
+  const { onChange, onBlur, ...fieldProps } = field;
 
   useScrollIntoView(ohipRef, fieldState);
 
@@ -28,8 +30,21 @@ const OhipNumber = () => {
         label={label}
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
-        {...field}
-        value={field.value}
+        {...fieldProps}
+        onKeyPress={(e) => {
+          if (!allowedChars.includes(e.key)) {
+            e.preventDefault();
+          }
+        }}
+        onChange={(e) => {
+          if (e.target.value.length < 13) {
+            const ohipNumber = replaceOhipNumberFormat(e.target.value);
+
+            onChange(ohipNumber)
+          }
+        }
+        }
+        value={fieldProps.value}
         inputRef={ohipRef}
       />
     </Grid>

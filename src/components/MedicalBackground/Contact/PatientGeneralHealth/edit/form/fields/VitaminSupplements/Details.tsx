@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
@@ -20,12 +20,11 @@ import VitaminSupplementsViewMode from './ViewMode';
 
 const VitaminSupplementDetails = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
+  const { getValues } = useFormContext();
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const vitaminSupplement = generalHealth?.vitaminSupplements;
   const fieldName = `${GeneralHealthFormFields.VitaminSupplements}.exists`;
-  const vitaminSupplementField = getValues(GeneralHealthFormFields.VitaminSupplements);
-  const { fields: vitaminSupplements, remove } = useVitaminSupplementsContext();
+  const { fields: vitaminSupplements } = useVitaminSupplementsContext();
   const vitaminSupplementsInitialValue = getValues(fieldName);
   const [areVitaminSupplementsExists, setAreVitaminSupplementsExists] =
     useState<boolean>(vitaminSupplementsInitialValue);
@@ -34,23 +33,6 @@ const VitaminSupplementDetails = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!areVitaminSupplementsExists) {
-        const indexes = vitaminSupplements.map((item) => vitaminSupplements.indexOf(item));
-
-        remove(indexes);
-        setValue(GeneralHealthFormFields.VitaminSupplements, {
-          ...vitaminSupplementField,
-          exists: areVitaminSupplementsExists,
-          items: []
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [areVitaminSupplementsExists, setValue]
-  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

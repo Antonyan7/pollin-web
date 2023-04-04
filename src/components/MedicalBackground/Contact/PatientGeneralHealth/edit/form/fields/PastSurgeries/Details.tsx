@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
@@ -20,12 +20,11 @@ import PastSurgeriesViewMode from './ViewMode';
 
 const PastSurgeriesDetails = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
+  const { getValues } = useFormContext();
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const pastSurgery = generalHealth?.pastSurgeries;
   const fieldName = `${GeneralHealthFormFields.PastSurgeries}.exists`;
-  const pastSurgeryField = getValues(GeneralHealthFormFields.PastSurgeries);
-  const { fields: pastSurgeries, remove } = usePastSurgeryContext();
+  const { fields: pastSurgeries } = usePastSurgeryContext();
   const pastSurgeriesInitialValue = getValues(fieldName);
   const [arePastSurgeriesExists, setArePastSurgeriesExists] = useState<boolean>(pastSurgeriesInitialValue);
   const onPastSurgeryChange = (state: boolean) => setArePastSurgeriesExists(state);
@@ -33,23 +32,6 @@ const PastSurgeriesDetails = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useEffect(
-    () => {
-      if (!arePastSurgeriesExists) {
-        const indexes = pastSurgeries.map((item) => pastSurgeries.indexOf(item));
-
-        remove(indexes);
-        setValue(GeneralHealthFormFields.PastSurgeries, {
-          ...pastSurgeryField,
-          exists: arePastSurgeriesExists,
-          items: []
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [arePastSurgeriesExists, setValue]
-  );
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

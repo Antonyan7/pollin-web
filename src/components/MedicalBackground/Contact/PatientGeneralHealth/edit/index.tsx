@@ -27,9 +27,38 @@ const PatientGeneralHealthEdit = () => {
     formState: { dirtyFields }
   } = methods;
 
-  const onGeneralHealthSubmit = (values: IGeneralHealthProps) => {
+  const onGeneralHealthSubmit = (healthData: IGeneralHealthProps) => {
+    const { medicalProblems, pastSurgeries, vitaminSupplements, drugAllergies, foodAllergies, familyHistory, ...otherGeneralInfo } = healthData;
+    const generalHealthData = {
+      ...otherGeneralInfo,
+      medicalProblems: {
+        ...medicalProblems,
+        items: medicalProblems.exists ? medicalProblems.items : [],
+      },
+      pastSurgeries: {
+        ...pastSurgeries,
+        items: pastSurgeries.exists ? pastSurgeries.items : [],
+      },
+      vitaminSupplements: {
+        ...vitaminSupplements,
+        items: vitaminSupplements.exists ? vitaminSupplements.items : [],
+      },
+      drugAllergies: {
+        ...drugAllergies,
+        items: drugAllergies.exists ? drugAllergies.items : [],
+      },
+      foodAllergies: {
+        ...foodAllergies,
+        items: foodAllergies.exists ? foodAllergies.items : [],
+      },
+      familyHistory: {
+        ...familyHistory,
+        items: familyHistory.exists ? familyHistory.items : [],
+      }
+    }
+
     if (typeof currentPatiendId === 'string') {
-      dispatch(patientsMiddleware.updateGeneralHealthData(currentPatiendId, values));
+      dispatch(patientsMiddleware.updateGeneralHealthData(currentPatiendId, generalHealthData));
     }
   };
 
