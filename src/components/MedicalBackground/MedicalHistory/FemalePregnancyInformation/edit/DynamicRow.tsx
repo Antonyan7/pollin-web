@@ -43,7 +43,7 @@ const DynamicRow = (index: number, parentFieldName: string) => {
     const finalFieldName = parentFieldName ? `${parentFieldName}.${index}.${fieldName}` : fieldName;
 
     return (
-      <Grid item xs={itemSize} px={paddings.leftRight4} py={paddings.topBottom4}>
+      <Grid item xs={itemSize} px={paddings.leftRight4} py={paddings.topBottom4} key={finalFieldName}>
         <Dropdown
           label={title}
           fieldName={finalFieldName}

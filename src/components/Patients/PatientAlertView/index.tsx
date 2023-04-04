@@ -6,6 +6,7 @@ import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { Box, Button, Grid, Stack, Tooltip, tooltipClasses, TooltipProps, Typography, useTheme } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { viewsMiddleware } from '@redux/slices/views';
+import { LIMIT_OF_PATIENT_ALERTS } from 'constants/common';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
@@ -148,14 +149,8 @@ const PatientAlertView = () => {
               ))}
             </>
           ) : null}
-          {patientCustomAlerts.length < 10 ? (
-            <Stack
-              direction="row"
-              alignItems="center"
-              justifyContent="center"
-              color={theme.palette.warning.dark}
-              gap={1}
-            >
+          <Stack direction="row" alignItems="center" justifyContent="center" color={theme.palette.warning.dark} gap={1}>
+            {patientCustomAlerts.length < LIMIT_OF_PATIENT_ALERTS && (
               <Button
                 sx={{
                   color: theme.palette.warning.dark
@@ -175,8 +170,8 @@ const PatientAlertView = () => {
                 </Stack>
                 <Typography color={theme.palette.warning.dark}>{t(Translation.PAGE_PATIENT_ALERT_ADD)}</Typography>
               </Button>
-            </Stack>
-          ) : null}
+            )}
+          </Stack>
         </>
       ) : (
         <CircularLoading />

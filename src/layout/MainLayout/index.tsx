@@ -93,7 +93,7 @@ const PortalContent = ({ children }: PropsWithChildren) => {
         elevation={0}
         sx={{
           transition: drawerOpen ? theme.transitions.create('width') : 'none',
-          zIndex: 1306
+          zIndex: 1300
         }}
       >
         <PortalHeader />

@@ -53,7 +53,8 @@ import CancerPatient from '../Contact/PatientBackgroundInformation/view/fields/C
 import Gender from '../Contact/PatientBackgroundInformation/view/fields/Gender';
 import RelationshipStatus from '../Contact/PatientBackgroundInformation/view/fields/RelationshipStatus';
 
-export const defineSingleFieldValue = (fieldType?: boolean) => fieldType
+export const defineSingleFieldValue = (fieldType?: boolean) =>
+  fieldType
     ? t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES)
     : t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO);
 
@@ -94,7 +95,7 @@ export const getDropdownOption = (dropdowns: IDropdown[], dropdownType: string, 
   const dropdown = getDropdownByType(dropdowns, dropdownType) as IDropdown;
   const { options = [] } = dropdown ?? {};
 
-  return options.find((option: IDropdownOption) => option.id === optionId);
+  return options.find((option: IDropdownOption) => `${option.id}` === `${optionId}`);
 };
 
 export const getFullAddress = (address?: AddressProps) => {

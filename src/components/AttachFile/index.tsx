@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FC, useCallback, useRef } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT } from '@constants';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Grid, Input, Typography } from '@mui/material';
+import { MAXIMUM_ALLOWED_ATTACHED_FILES_COUNT } from 'constants/common';
 import { Translation } from 'constants/translations';
 import { borderRadius, paddings } from 'themes/themeConstants';
 import { ITestResultAttachment } from 'types/reduxTypes/resultsStateTypes';

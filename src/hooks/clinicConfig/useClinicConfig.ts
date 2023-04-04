@@ -1,6 +1,6 @@
-import { roundUpTo } from '@constants';
 import { useAppSelector } from '@redux/hooks';
 import { coreSelector } from '@redux/slices/core';
+import { roundUpTo } from 'constants/common';
 import { IWorkingHoursConfig } from 'types/reduxTypes/coreStateTypes';
 
 import { DateAcceptableType, DateUtil } from '@utils/date/DateUtil';

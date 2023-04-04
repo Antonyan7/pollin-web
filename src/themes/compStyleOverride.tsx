@@ -17,7 +17,6 @@ import {
   MuiListItemButton,
   MuiListItemIcon,
   MuiListItemText,
-  MuiModal,
   MuiOutlinedInput,
   MuiPaper,
   MuiPickersToolbar,
@@ -67,7 +66,6 @@ export default function componentStyleOverrides(theme: Theme, borderRadius: numb
     MuiChip,
     MuiTimelineContent: MuiTimelineContent(textColorDark),
     MuiTreeItem,
-    MuiModal,
     MuiTimelineDot,
     MuiInternalDateTimePickerTabs: MuiInternalDateTimePickerTabs(
       lightColor,

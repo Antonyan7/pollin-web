@@ -31,9 +31,8 @@ const ViewModeContent = () => {
   const isDataAvailable = !isFemalePregnancyInformationLoading && !isDropdownsLoading;
 
   return isDataAvailable ? (
-    <CardContentWrapper>
+    <CardContentWrapper key={v4()}>
       <Item
-        key={v4()}
         title={t(
           Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREVIOUS_PREGNANCY
         )}
@@ -42,7 +41,6 @@ const ViewModeContent = () => {
       />
       <PreviousPregnancies previousPregnancies={previousPregnancies as IPreviousPregnancies} />
       <Item
-        key={v4()}
         title={t(
           Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_TOTAL_NUMBER_OF_PREGNANCIES
         )}
