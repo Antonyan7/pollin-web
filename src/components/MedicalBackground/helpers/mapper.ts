@@ -53,9 +53,8 @@ export const mapObjectByPattern = (target: MappingTarget, mappingPattern: Mapper
 
         const { title, customAccessor, componentData, shouldShowDash } = mappingPattern[itemId] ?? {};
 
-        const currentItemLabeledValue = getLabelBySelectedValue(itemData?.value, shouldShowDash);
         const isBoolean = typeof itemData?.value === 'boolean' || itemData?.value === null;
-        const currentItemValue = isBoolean ? currentItemLabeledValue : itemData.value;
+        const currentItemValue = isBoolean ? getLabelBySelectedValue(itemData?.value, shouldShowDash) : itemData.value;
 
         const finalValue = typeof customAccessor === 'function' ? customAccessor(itemData) : currentItemValue;
 

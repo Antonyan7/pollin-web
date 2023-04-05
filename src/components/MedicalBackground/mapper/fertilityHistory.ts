@@ -2,20 +2,13 @@ import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '../components/types';
+import { IComponentData, MedicalBackgroundItemType } from '../components/types';
 import { createObjectWithTitle, CustomAccessorItem, getLabelBySelectedValue } from '../helpers/mapper';
 
 interface IMappingPattern {
   [key: string]: {
     title: string;
-    componentData?: {
-      type?: MedicalBackgroundItemType;
-      dropdownType?: DropdownOptionType;
-      tableTitle?: string;
-      controlFieldName?: string;
-      itemsFieldName?: string;
-      rows?: IMedicalBackgroundItem[][];
-    };
+    componentData?: IComponentData;
   };
 }
 

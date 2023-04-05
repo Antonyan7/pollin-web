@@ -19,10 +19,17 @@ export enum MedicalBackgroundItemType {
   Section = 'Section',
   Dropdown = 'Dropdown',
   Input = 'Input',
-  RadioOptions = 'RadioOptions',
-  Table = 'Table',
   Date = 'Date',
   MultipleSelect = 'MultipleSelect'
+}
+
+export interface IComponentData {
+  type?: MedicalBackgroundItemType;
+  dropdownType?: DropdownOptionType;
+  tableTitle?: string;
+  controlFieldName?: string;
+  itemsFieldName?: string;
+  rows?: IMedicalBackgroundItem[][];
 }
 
 export interface IMedicalBackgroundItem {

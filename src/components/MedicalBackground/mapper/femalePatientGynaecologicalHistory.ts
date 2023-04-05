@@ -23,7 +23,8 @@ const mappingPattern = {
     ),
     componentData: {
       type: MedicalBackgroundItemType.Date
-    }
+    },
+    shouldShowDash: true
   },
   abnormalPap: createObjectWithTitle(
     t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_ABNORMAL_PAP)

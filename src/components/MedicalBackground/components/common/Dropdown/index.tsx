@@ -11,7 +11,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { DropdownProps } from './types';
 
-const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType, multiple }) => {
+export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '' }) => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const { control } = useFormContext();
@@ -37,7 +37,6 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType,
         }
       }}
       value={selected}
-      multiple={multiple}
       disableClearable
       getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
       isOptionEqualToValue={(option, value) => option.id === value?.id}
@@ -51,9 +50,7 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType,
   );
 };
 
-export default Dropdown;
-
-export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType }) => {
+export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '' }) => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const { control } = useFormContext();

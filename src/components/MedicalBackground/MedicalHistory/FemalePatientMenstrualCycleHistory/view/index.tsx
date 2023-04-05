@@ -12,6 +12,7 @@ import { v4 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 const ViewModeContent = () => {
   const router = useRouter();
@@ -44,7 +45,9 @@ const ViewModeContent = () => {
             } ${mappedItem?.componentData?.additionalLabel ?? ''}`;
             break;
           case MedicalBackgroundItemType.Date:
-            finalValue = DateUtil.formatDateOnly(mappedItem?.viewValue);
+            finalValue = isDashValue(mappedItem?.viewValue)
+              ? mappedItem?.viewValue
+              : DateUtil.formatDateOnly(mappedItem?.viewValue);
             break;
           default:
             finalValue = mappedItem?.viewValue;

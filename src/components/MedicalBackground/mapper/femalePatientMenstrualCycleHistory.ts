@@ -25,7 +25,8 @@ const mappingPattern = {
     ),
     componentData: {
       type: MedicalBackgroundItemType.Date
-    }
+    },
+    shouldShowDash: true
   },
   flow: {
     ...createObjectWithTitle(

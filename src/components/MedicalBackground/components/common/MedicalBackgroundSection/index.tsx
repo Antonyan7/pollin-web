@@ -1,9 +1,10 @@
 import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import FieldWithNote from '@components/common/FieldWithNote';
 
 import { MedicalBackgroundTableRow } from '../../types';
 import MedicalBackgroundTable from '../MedicalBackgroundTable';
-import MedicalHistoryRadio from '../MedicalHistoryRadioComponent';
+import MedicalFormRadio from '../MedicalFormRadio';
 import MedicalHistorySectionAddButton from '../MedicalHistorySectionAddButton';
 
 interface MedicalBackgroundSectionProps {
@@ -62,7 +63,11 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   const shouldShowAddNewItemButton = isExists && addNewItemButtonLabel;
 
   return (
-    <MedicalHistoryRadio controlFieldName={controlFieldName} fieldName={fieldName} iconTitle={title}>
+    <FieldWithNote
+      fieldName={fieldName}
+      fieldLabel={title}
+      fieldComponent={<MedicalFormRadio fieldName={`${fieldName}.${controlFieldName}`} />}
+    >
       {isExists &&
         fields?.map((field, index) => (
           <MedicalBackgroundTable
@@ -82,7 +87,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
           lastFieldIndex={fields.length - 1}
         />
       )}
-    </MedicalHistoryRadio>
+    </FieldWithNote>
   );
 };
 

@@ -11,6 +11,7 @@ import { v4 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 const ViewModeContent = () => {
   const router = useRouter();
@@ -34,7 +35,7 @@ const ViewModeContent = () => {
     <CardContentWrapper>
       {mappedItems.map((mappedItem, index) => {
         const finalValue =
-          mappedItem?.componentData?.type === MedicalBackgroundItemType.Date
+          mappedItem?.componentData?.type === MedicalBackgroundItemType.Date && !isDashValue(mappedItem?.viewValue)
             ? DateUtil.formatDateOnly(mappedItem?.viewValue)
             : mappedItem?.viewValue;
 

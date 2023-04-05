@@ -5,8 +5,8 @@ import { Grid, IconButton, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 import { MedicalBackgroundItemType, MedicalBackgroundTableProps } from '../../types';
-import Dropdown from '../Dropdown';
-import FormInput from '../FormInput';
+import { Dropdown } from '../Dropdown';
+import { FormInput } from '../FormInput';
 
 const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, onDelete, index, parentFieldName }) => (
   <Grid
@@ -40,7 +40,7 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
           let renderedItem;
 
           if (item.type === MedicalBackgroundItemType.Input) {
-            renderedItem = <FormInput label={item.label} name={finalFieldName} key={item.fieldName} />;
+            renderedItem = <FormInput label={item.label} fieldName={finalFieldName} key={item.fieldName} />;
           }
 
           if (item.type === MedicalBackgroundItemType.Dropdown) {

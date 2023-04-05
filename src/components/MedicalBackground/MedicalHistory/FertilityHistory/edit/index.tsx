@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFertilityHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import DropdownField from '@components/MedicalBackground/components/common/Dropdown/DropdownField';
+import FieldWithNote from '@components/common/FieldWithNote';
+import { Dropdown } from '@components/MedicalBackground/components/common/Dropdown';
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
-import MedicalHistoryRadio from '@components/MedicalBackground/components/common/MedicalHistoryRadioComponent';
+import MedicalFormRadio from '@components/MedicalBackground/components/common/MedicalFormRadio';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
 import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
@@ -81,11 +82,17 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
             if (mappedItem?.componentData?.type === MedicalBackgroundItemType.Dropdown) {
               return (
-                <DropdownField
-                  label={title}
-                  placeholder={title}
+                <FieldWithNote
+                  fieldLabel={title}
                   fieldName={`${fieldName}.value`}
-                  dropdownType={mappedItem?.componentData?.dropdownType}
+                  fieldComponent={
+                    <Dropdown
+                      fieldName={`${fieldName}.value`}
+                      placeholder={title}
+                      dropdownType={mappedItem?.componentData?.dropdownType}
+                      label={title}
+                    />
+                  }
                   key={fieldName}
                 />
               );
@@ -114,7 +121,13 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               );
             }
 
-            return <MedicalHistoryRadio iconTitle={title} fieldName={fieldName} key={fieldName} />;
+            return (
+              <FieldWithNote
+                fieldLabel={title}
+                fieldName={fieldName}
+                fieldComponent={<MedicalFormRadio fieldName={`${fieldName}.value`} />}
+              />
+            );
           })}
         </Grid>
         <FormSubmit onClick={onClose} isDisabled={!isFormChanged} isLoading={isUpdatingFertilityHistoryData} />
