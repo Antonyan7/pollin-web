@@ -71,9 +71,20 @@ const EncountersCancelChangesModal = () => {
           </Grid>
         </DialogTitle>
         <DialogContent sx={{ p: 4 }}>
-          <Grid container direction="column" spacing={3}>
-            <Grid item>
-              <StyledTypography theme={theme}>{t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE)}</StyledTypography>
+          <Grid container gap={2}>
+            <Grid container direction="column" spacing={3}>
+              <Grid item>
+                <StyledTypography theme={theme}>
+                  {t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE_FIRST)}
+                </StyledTypography>
+              </Grid>
+            </Grid>
+            <Grid container direction="column" spacing={3}>
+              <Grid item>
+                <StyledTypography theme={theme}>
+                  {t(Translation.PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE_SECOND)}
+                </StyledTypography>
+              </Grid>
             </Grid>
           </Grid>
         </DialogContent>
