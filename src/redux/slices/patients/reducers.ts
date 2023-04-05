@@ -9,6 +9,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
+  IGenitourinaryHistory,
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
@@ -258,6 +259,12 @@ const reducers = createReducer({
   },
   setIsFemalePatientGynaecologicalHistoryDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryDataUpdating = action.payload;
+  },
+  setisMalePatientGenitourinaryHistoryLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isMalePatientGenitourinaryHistoryLoading = action.payload;
+  },
+  setMalePatientGynaecologicalHistory(state, action: IAction<IGenitourinaryHistory | null>) {
+    state.medicalBackground.medicalHistory.malePatientGenitourinaryHistory = action.payload;
   },
   setDropdowns(state, action: IAction<IDropdown[]>) {
     state.medicalBackground.common.dropdowns = action.payload;

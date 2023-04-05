@@ -37,7 +37,10 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
     isFemalePatientGynaecologicalHistoryDataUpdating: false,
     femalePatientMenstrualCycleHistory: null,
     isFemalePatientMenstrualCycleHistoryLoading: false,
-    isFemalePatientMenstrualCycleHistoryDataUpdating: false
+    isFemalePatientMenstrualCycleHistoryDataUpdating: false,
+    isMalePatientGenitourinaryHistoryLoading: false,
+    isMalePatientGenitourinaryEditButtonClicked: false,
+    malePatientGenitourinaryHistory: null
   },
   common: {
     dropdowns: [],

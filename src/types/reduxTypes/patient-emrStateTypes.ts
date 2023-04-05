@@ -15,6 +15,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistoryProps,
   IGeneralHealthProps,
+  IGenitourinaryHistory,
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
@@ -69,6 +70,9 @@ export interface MedicalBackgroundProps {
     femalePatientMenstrualCycleHistory: IFemalePatientMenstrualCycleHistoryProps | null;
     isFemalePatientMenstrualCycleHistoryLoading: boolean;
     isFemalePatientMenstrualCycleHistoryDataUpdating: boolean;
+    isMalePatientGenitourinaryHistoryLoading: boolean;
+    malePatientGenitourinaryHistory: IGenitourinaryHistory | null;
+    isMalePatientGenitourinaryEditButtonClicked: boolean;
   };
   common: {
     dropdowns: IDropdown[];

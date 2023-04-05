@@ -193,7 +193,7 @@ export interface IUpdateEncounterNoteRequest {
   content: string;
 }
 
-export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest { }
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];
@@ -484,17 +484,17 @@ export interface IMedicalBackgroundFieldValuesWithItems extends MedicalBackgroun
   items: IFemalePatientGynaecologicalHistoryFieldItem[];
 }
 
-export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue { }
+export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems { }
+export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems {}
 
 export interface IFemalePatientGynaecologicalHistoryProps {
   takingBirthControl: ITakingBirthControl;
@@ -712,6 +712,85 @@ export interface IPatientBackgroundPartners {
   referringDoctor: IReferringDoctor;
   familyDoctor: IFamilyDoctor;
   pharmacy: IPharmacy;
+}
+
+export interface IPreviousConception extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+export interface IHaveBiologicalChildren extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IBiologicalChildrenWithPartner extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IHadSemenAnalysis extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface ISemenAnalysisIsNormal extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IDiagnosedConditions extends MedicalBackgroundFieldValues {
+  items: IDiagnosedConditionsItem[];
+}
+
+export interface IDiagnosedConditionsItem extends MedicalBackgroundFieldValues {
+  id: string;
+}
+
+export interface IVasectomy extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IVasectomyReversal extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IErectionDifficulties extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IUndescendedTesticles extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+export interface ITesticularIssues extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IToxins extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IInfections extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IGenitalSurgery extends MedicalBackgroundFieldValues {
+  value: boolean;
+}
+
+export interface IGenitourinaryHistoryRes extends MedicalBackgroundFieldValues {
+  genitourinaryHistory: IGenitourinaryHistory;
+}
+
+export interface IGenitourinaryHistory {
+  previousConception: IPreviousConception;
+  haveBiologicalChildren: IHaveBiologicalChildren;
+  biologicalChildrenWithPartner: IBiologicalChildrenWithPartner;
+  hadSemenAnalysis: IHadSemenAnalysis;
+  semenAnalysisIsNormal: ISemenAnalysisIsNormal;
+  diagnosedConditions: IDiagnosedConditions;
+  vasectomy: IVasectomy;
+  vasectomyReversal: IVasectomyReversal;
+  erectionDifficulties: IErectionDifficulties;
+  undescendedTesticles: IUndescendedTesticles;
+  testicularIssues: ITesticularIssues;
+  toxins: IToxins;
+  infections: IInfections;
+  genitalSurgery: IGenitalSurgery;
 }
 
 export interface IPatientBackground {

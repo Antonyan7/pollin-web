@@ -55,6 +55,7 @@ const {
   setEncounterDetailsInfo,
   setRecentAppointments,
   setIsVerifyPatientProfilePhotoLoading,
+  setisMalePatientGenitourinaryHistoryLoading,
   setIsRecentAppointmentsLoading,
   setPatientProfile,
   setIsPatientProfileLoading,
@@ -104,6 +105,7 @@ const {
   setIsDropdownsLoading,
   setMedicalPatientContactInformation,
   setIsMedicalPatientContactInformationLoading,
+  setMalePatientGynaecologicalHistory,
   setIsPatientBackgroundEditButtonClicked,
   setIsContactInformationEditButtonClicked,
   setManuallyAddressForMailing,
@@ -908,6 +910,20 @@ const getPatientBackgroundInformation = (patientId: string) => async (dispatch: 
   }
 };
 
+const getMaleGenitourinaryHistory = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setisMalePatientGenitourinaryHistoryLoading(true));
+
+    const response = await API.patients.getMaleGenitourinaryHistory(patientId);
+
+    dispatch(setMalePatientGynaecologicalHistory(response.data.data.genitourinaryHistory));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setisMalePatientGenitourinaryHistoryLoading(false));
+  }
+};
+
 const changeEditButtonClickState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
   const editButtonState = getState().patients.medicalBackground.contact.isGeneralHealthEditButtonClicked;
 
@@ -1067,6 +1083,7 @@ export default {
   updateFertilityHistory,
   getDrugs,
   getMedicationDropdownOptions,
+  getMaleGenitourinaryHistory,
   createPatientMedication,
   updateFemalePregnancyInformation,
   updateFemalePatientMenstrualCycleHistory,

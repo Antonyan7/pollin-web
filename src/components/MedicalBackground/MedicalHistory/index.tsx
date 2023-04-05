@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import MaleGenitourinaryHistory from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory';
 import { Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -39,7 +40,7 @@ const MedicalHistory = () => {
           <FemaleGynaecologicalHistory />
         </>
       ) : (
-        <div>Male component work in progress!!!</div>
+        <MaleGenitourinaryHistory />
       )}
     </Stack>
   );

@@ -8,12 +8,12 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 
-const CancerPatient = ({ componentIndex }: GeneralHealthComponentsProps) => {
+const Toxins = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const [t] = useTranslation();
-  const contactInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
-  const fieldValue = contactInformation?.cancerPatient;
+  const medicalInfo = useAppSelector(patientsSelector.malePatientGenitourinaryHistory);
+  const fieldValue = medicalInfo?.toxins;
   const fieldName = t(
-    Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_CANCER_PATIENT
+    Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GENITOURINARY_HISTORY_FIELD_TOXINS
   );
 
   return (
@@ -23,4 +23,4 @@ const CancerPatient = ({ componentIndex }: GeneralHealthComponentsProps) => {
   );
 };
 
-export default CancerPatient;
+export default Toxins;

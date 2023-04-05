@@ -44,6 +44,19 @@ import {
   VitaminSupplements,
   Weight
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/view/fields';
+import BiologicalChildren from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/BiologicalChildren';
+import BiologicalChildrenWithCurrentPartner from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/BiologicalChildrenWithCurrentPartner';
+import DiagnosedConditions from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/DiagnosedConditions';
+import ErectionDifficulties from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/DifficultyWithErections';
+import GenitalSurgery from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/GenitalSurgery';
+import Infections from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/Infections';
+import PastSemenAnalysis from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/PastSemenAnalysis';
+import PreviousConception from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/PreviousConception';
+import TesticularIssues from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/TesticularIssues';
+import Toxins from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/Toxins';
+import UndescendedTesticals from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/UndescendedTesticals';
+import Vasectomy from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/Vasectomy';
+import VasectomyReversal from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/view/fields/VasectomyReversal';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
@@ -137,4 +150,20 @@ export const backgroundInformationRows = [
   { Component: CurrentOccupation },
   { Component: PhysicianName },
   { Component: FamilyPhysician }
+];
+
+export const genitourinaryRows = [
+  { Component: PreviousConception },
+  { Component: BiologicalChildren },
+  { Component: BiologicalChildrenWithCurrentPartner },
+  { Component: PastSemenAnalysis },
+  { Component: DiagnosedConditions },
+  { Component: Vasectomy },
+  { Component: VasectomyReversal },
+  { Component: ErectionDifficulties },
+  { Component: UndescendedTesticals },
+  { Component: TesticularIssues },
+  { Component: Toxins },
+  { Component: Infections },
+  { Component: GenitalSurgery }
 ];

@@ -19,6 +19,7 @@ import {
   IFertilityHistory,
   IGeneralHealth,
   IGeneralHealthProps,
+  IGenitourinaryHistoryRes,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
   IMedicalContactInformation,
@@ -251,6 +252,11 @@ const patientEmrManager = {
   getPatientBackgroundInformation(patientId: string) {
     return axiosInstance.get<IPatientBackground, IAxiosResponse<IPatientBackground>>(
       `${baseURL}/v1/medical-background/${patientId}/background-information`
+    );
+  },
+  getMaleGenitourinaryHistory(patientId: string) {
+    return axiosInstance.get<IGenitourinaryHistoryRes, IAxiosResponse<IGenitourinaryHistoryRes>>(
+      `${baseURL}/v1/medical-background/${patientId}/genitourinary-history`
     );
   },
   updatePatientContactInformation(patientId: string, data: IPatientContactInformationProps) {

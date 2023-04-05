@@ -194,6 +194,19 @@ const isFemalePatientGynaecologicalHistoryLoading = createSelector(
   (state) => state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryLoading
 );
 
+const isMalePatientGenitourinaryHistoryLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isMalePatientGenitourinaryHistoryLoading
+);
+
+const malePatientGenitourinaryHistory = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.malePatientGenitourinaryHistory
+);
+const isMalePatientGenitourinaryEditButtonClicked = createSelector(
+  [selector],
+  (state) => state.medicalBackground.medicalHistory.isMalePatientGenitourinaryEditButtonClicked
+);
 const femalePatientMenstrualCycleHistory = createSelector(
   [selector],
   (state) => state.medicalBackground.medicalHistory.femalePatientMenstrualCycleHistory
@@ -265,6 +278,8 @@ export default {
   drugs,
   isDropdownOptionsLoading,
   patientCurrentMedications,
+  isMalePatientGenitourinaryHistoryLoading,
+  malePatientGenitourinaryHistory,
   patientPastMedications,
   patientMissingMedications,
   isPatientCurrentMedicationLoading,
@@ -296,6 +311,7 @@ export default {
   patientBackgroundInformation,
   isPatientBackgroundInformationLoading,
   isPatientBackgroundEditButtonClicked,
+  isMalePatientGenitourinaryEditButtonClicked,
   contactInformation,
   manuallyAddressForMailing,
   manuallyAddressForPrimary
