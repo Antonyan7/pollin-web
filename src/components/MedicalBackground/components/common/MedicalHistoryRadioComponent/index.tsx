@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React, { PropsWithChildren, useCallback, useState } from 'react';
 import { Grid } from '@mui/material';
 import { margins, paddings } from 'themes/themeConstants';
 
@@ -14,9 +14,9 @@ interface MedicalHistoryRadioProps extends PropsWithChildren {
 
 const MedicalHistoryRadio = ({ iconTitle, fieldName, children, controlFieldName }: MedicalHistoryRadioProps) => {
   const [shouldShowNote, setShouldShowNote] = useState(false);
-  const onNoteClick = () => {
+  const onNoteClick = useCallback(() => {
     setShouldShowNote((isShown) => !isShown);
-  };
+  }, []);
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>

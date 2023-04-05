@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Grid, RadioGroup, styled, Typography } from '@mui/material';
+import { Divider, Grid, IconButton, RadioGroup, styled, Typography } from '@mui/material';
 import { borders, margins } from 'themes/themeConstants';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
@@ -26,18 +26,35 @@ export const ConsultationFormRadioGroup = styled(RadioGroup)(() => ({
   gap: 3
 }));
 
-export const ConsultationTitleWithIcon = ({ description, onClick }: { description: string; onClick?: () => void }) => (
+export const ConsultationTitleWithIcon = ({
+  description,
+  onClick,
+  isShown
+}: {
+  description: string;
+  onClick?: () => void;
+  isShown?: boolean;
+}) => (
   <Grid item container direction="row" alignItems="center" xs={12}>
     <Grid item container direction="row" alignItems="center" gap={2} xs={10}>
       <ConsultationFormSubTitle>{description}</ConsultationFormSubTitle>
-      <MedicalBackgroundNoteIcon
-        onClick={onClick}
-        sx={{
-          '&:hover': {
-            cursor: onClick ? 'pointer' : 'initial'
-          }
-        }}
-      />
+      <IconButton
+        {...(isShown
+          ? {
+              sx: {
+                '& svg': {
+                  opacity: '40%'
+                }
+              }
+            }
+          : {
+              onClick
+            })}
+        disableRipple
+        disableTouchRipple
+      >
+        <MedicalBackgroundNoteIcon />
+      </IconButton>
     </Grid>
     <Grid item xs={2}>
       <Typography>:</Typography>

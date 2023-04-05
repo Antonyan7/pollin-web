@@ -16,7 +16,6 @@ import { Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
-import { v4 } from 'uuid';
 
 import useCloseMedicalBackgroundFormWithChangesModal from '../../../hooks/useCloseMedicalBackgroundFormWithChangesModal';
 
@@ -27,19 +26,23 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
     query: { id }
   } = useRouter();
   const isUpdatingFertilityHistoryData = useAppSelector(patientsSelector.isFertilityHistoryDataUpdating);
-  const defaultValues = mappedItems.reduce((previousValues, mappedItem) => {
-    const { fieldName, viewValue, title, componentData, ...mappedItemProps } = mappedItem;
+  const defaultValues = useMemo(
+    () =>
+      mappedItems.reduce((previousValues, mappedItem) => {
+        const { fieldName, viewValue, title, componentData, ...mappedItemProps } = mappedItem;
 
-    const fieldDefaultValue = {
-      [`${mappedItem.fieldName}`]: {
-        ...mappedItemProps
-      }
-    };
+        const fieldDefaultValue = {
+          [`${mappedItem.fieldName}`]: {
+            ...mappedItemProps
+          }
+        };
 
-    previousValues = { ...fieldDefaultValue, ...previousValues };
+        previousValues = { ...fieldDefaultValue, ...previousValues };
 
-    return previousValues;
-  }, {});
+        return previousValues;
+      }, {}),
+    [mappedItems]
+  );
 
   const methods = useForm({
     defaultValues,
@@ -83,6 +86,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
                   placeholder={title}
                   fieldName={`${fieldName}.value`}
                   dropdownType={mappedItem?.componentData?.dropdownType}
+                  key={fieldName}
                 />
               );
             }
@@ -105,11 +109,12 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
                   controlFieldName={mappedItem?.componentData?.controlFieldName}
                   itemsFieldName={mappedItem?.componentData?.itemsFieldName}
                   addNewItemButtonLabel={mappedItem?.componentData?.addNewItemButtonLabel}
+                  key={fieldName}
                 />
               );
             }
 
-            return <MedicalHistoryRadio iconTitle={title} fieldName={fieldName} key={v4()} />;
+            return <MedicalHistoryRadio iconTitle={title} fieldName={fieldName} key={fieldName} />;
           })}
         </Grid>
         <FormSubmit onClick={onClose} isDisabled={!isFormChanged} isLoading={isUpdatingFertilityHistoryData} />

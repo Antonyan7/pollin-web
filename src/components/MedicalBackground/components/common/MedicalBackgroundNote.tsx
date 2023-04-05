@@ -15,6 +15,7 @@ const MedicalBackgroundNote = ({ fieldName, visible, onClick }: MedicalBackgroun
   const [t] = useTranslation();
   const { control, setValue } = useFormContext();
   const { field } = useController({ name: `${fieldName}.note`, control });
+
   const onDeleteIconClick = () => {
     onClick();
     setValue(`${fieldName}.note`, '');
