@@ -3,8 +3,8 @@ import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 
 import { MedicalBackgroundTableRow } from '../../types';
 import MedicalBackgroundTable from '../MedicalBackgroundTable';
-import MedicalFormAddDiagram from '../MedicalFormAddDiagram';
 import MedicalHistoryRadio from '../MedicalHistoryRadioComponent';
+import MedicalHistorySectionAddButton from '../MedicalHistorySectionAddButton';
 
 interface MedicalBackgroundSectionProps {
   fieldName: string;
@@ -75,7 +75,12 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
           />
         ))}
       {shouldShowAddNewItemButton && (
-        <MedicalFormAddDiagram subTitle={addNewItemButtonLabel} onClick={handleAddNewItem} />
+        <MedicalHistorySectionAddButton
+          fieldName={parentFieldName}
+          subTitle={addNewItemButtonLabel}
+          onClick={handleAddNewItem}
+          lastFieldIndex={fields.length - 1}
+        />
       )}
     </MedicalHistoryRadio>
   );

@@ -40,7 +40,7 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
           let renderedItem;
 
           if (item.type === MedicalBackgroundItemType.Input) {
-            renderedItem = <FormInput label={item.label} name={finalFieldName} />;
+            renderedItem = <FormInput label={item.label} name={finalFieldName} key={item.fieldName} />;
           }
 
           if (item.type === MedicalBackgroundItemType.Dropdown) {
@@ -49,6 +49,7 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
                 label={item.label}
                 fieldName={finalFieldName}
                 dropdownType={item.dropdownType as DropdownOptionType}
+                key={item.fieldName}
               />
             );
           }

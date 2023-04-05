@@ -9,6 +9,7 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 import SpecimenDataItem from './SpecimenTestData/SpecimenDataItem';
 import FirstStepContent from './FirstStepContent';
@@ -46,7 +47,11 @@ const Body: React.FC<SpecimenCollectionModalSteps> = ({ collectionModalCurrentSt
             />
             <SpecimenDataItem
               label={t(Translation.MODAL_EXTERNAL_RESULTS_PATIENT_DATE_OF_BIRTH)}
-              value={DateUtil.formatDateOnly(patientContactInformation.dateOfBirth)}
+              value={
+                isDashValue(patientContactInformation.dateOfBirth)
+                  ? patientContactInformation.dateOfBirth
+                  : DateUtil.formatDateOnly(patientContactInformation.dateOfBirth)
+              }
             />
           </Stack>
           <Grid>

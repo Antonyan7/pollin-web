@@ -38,6 +38,7 @@ const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType,
       }}
       value={selected}
       multiple={multiple}
+      disableClearable
       getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
       isOptionEqualToValue={(option, value) => option.id === value?.id}
       renderInputProps={{

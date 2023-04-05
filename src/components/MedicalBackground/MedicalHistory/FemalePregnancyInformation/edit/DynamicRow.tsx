@@ -48,6 +48,7 @@ const DynamicRow = (index: number, parentFieldName: string) => {
           label={title}
           fieldName={finalFieldName}
           dropdownType={componentData?.dropdownType as DropdownOptionType}
+          key={finalFieldName}
         />
       </Grid>
     );
