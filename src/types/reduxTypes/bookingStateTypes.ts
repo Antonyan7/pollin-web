@@ -26,10 +26,8 @@ export interface AppointmentDetailsProps {
 export interface BookingProps {
   appointments: IAppointment[];
   date: Date;
-  serviceProviders: IServiceProviders;
   groupedServiceProviders: IGroupedServiceProviders;
   specimenGroupedServiceProviders: IGroupedServiceProviders;
-  isServiceProvidersLoading: boolean;
   isGroupedServiceProvidersLoading: boolean;
   isSpecimenGroupedServiceProvidersLoading: boolean;
   isServiceTypesLoading: boolean;
@@ -65,10 +63,9 @@ export interface IUniqueItemPatient {
   name: string;
 }
 
-export interface IServiceProviders extends IPagination {
-  providers: IServiceProvider[];
+export interface IServiceProvider extends IUniqueItem {
+  type: string;
 }
-export interface IServiceProvider extends IUniqueItem {}
 
 export enum CheckInStatuses {
   Booked = 'Booked',

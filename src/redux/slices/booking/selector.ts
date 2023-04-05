@@ -4,7 +4,6 @@ import { RootState } from 'redux/store';
 const selector = (state: RootState) => state.booking;
 
 export const appointmentsList = createSelector([selector], (state) => state.appointments);
-export const serviceProvidersList = createSelector([selector], (state) => state.serviceProviders);
 export const groupedServiceProvidersList = createSelector([selector], (state) => state.groupedServiceProviders);
 export const specimenGroupedServiceProvidersList = createSelector(
   [selector],
@@ -20,7 +19,6 @@ export const patientList = createSelector([selector], (state) => state.patientLi
 export const serviceTypes = createSelector([selector], (state) => state.serviceTypes);
 export const appointmentDetails = createSelector([selector], (state) => state.appointmentDetails);
 export const patientAlerts = createSelector([selector], (state) => state.patientAlerts);
-export const isServiceProvidersLoading = createSelector([selector], (state) => state.isServiceProvidersLoading);
 export const isGroupedServiceProvidersLoading = createSelector(
   [selector],
   (state) => state.isGroupedServiceProvidersLoading
@@ -56,11 +54,9 @@ export const patientProfileAppointmentsGroup = createSelector(
 
 export default {
   isServiceTypesLoading,
-  isServiceProvidersLoading,
   isGroupedServiceProvidersLoading,
   isSpecimenGroupedServiceProvidersLoading,
   appointmentsList,
-  serviceProvidersList,
   groupedServiceProvidersList,
   specimenGroupedServiceProvidersList,
   calendarDate,

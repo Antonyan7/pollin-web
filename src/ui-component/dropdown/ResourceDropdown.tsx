@@ -79,7 +79,7 @@ const ResourceDropdown = ({
   const onBottomReach = useCallback(
     (currentPage: number) => {
       dispatch(
-        bookingMiddleware.getNewGroupedServiceProviders(
+        bookingMiddleware.getGroupedServiceProviders(
           {
             page: currentPage,
             ...(groupedServiceProvidersList.searchString

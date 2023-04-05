@@ -12,7 +12,6 @@ import {
   ICheckInAppointment,
   IGroupedServiceProviders,
   IPatientList,
-  IServiceProviders,
   IServiceType,
   ISpecimenAppointmentsFilter
 } from 'types/reduxTypes/bookingStateTypes';
@@ -29,9 +28,6 @@ const reducers = createReducer({
   },
   setCollectionCalendarDate(state, action: IAction<Date>) {
     state.specimenAppointments.date = action.payload;
-  },
-  updateServiceProviders(state, action: IAction<IServiceProviders>) {
-    state.serviceProviders.providers = [...state.serviceProviders.providers, ...action.payload.providers];
   },
   updateGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders.providers = [...state.groupedServiceProviders.providers, ...action.payload.providers];
@@ -50,9 +46,6 @@ const reducers = createReducer({
     state.specimenGroupedServiceProviders.pageSize = action.payload.pageSize;
     state.specimenGroupedServiceProviders.searchString = action.payload.searchString;
   },
-  setIsServiceProvidersLoading(state, action: IAction<boolean>) {
-    state.isServiceProvidersLoading = action.payload;
-  },
   setIsGroupedServiceProvidersLoading(state, action: IAction<boolean>) {
     state.isGroupedServiceProvidersLoading = action.payload;
   },
@@ -61,15 +54,6 @@ const reducers = createReducer({
   },
   setIsServiceTypesLoading(state, action: IAction<boolean>) {
     state.isServiceTypesLoading = action.payload;
-  },
-  setServiceProviders(state, action: IAction<IServiceProviders>) {
-    state.serviceProviders = action.payload;
-  },
-  setGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
-    state.groupedServiceProviders = action.payload;
-  },
-  setSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
-    state.specimenGroupedServiceProviders = action.payload;
   },
   setCurrentServiceProviderId(state, action: IAction<string>) {
     state.currentServiceProviderId = action.payload;

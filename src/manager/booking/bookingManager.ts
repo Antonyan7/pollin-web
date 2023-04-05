@@ -20,8 +20,6 @@ import {
   IGroupedServiceProvidersListResponse,
   IGroupedServiceProvidersParams,
   IPatientProfileAppointmentsGroups,
-  IServiceProvidersListResponse,
-  IServiceProvidersReqParams,
   IServiceTypesReqParams,
   IUpdatedAppointmentResponse
 } from '@axios/booking/managerBookingTypes';
@@ -37,14 +35,6 @@ const bookingManager = {
     return axiosInstance.get<IAppointmentListResponse, IAxiosResponse<IAppointmentListResponse>>(
       `${baseURL}/v1/calendar/slot`,
       { params }
-    );
-  },
-  getServiceProviders(params: IServiceProvidersReqParams) {
-    return axiosInstance.get<IServiceProvidersListResponse, IAxiosResponsePaginated<IServiceProvidersListResponse>>(
-      `${baseURL}/v1/provider`,
-      {
-        params
-      }
     );
   },
   getGroupedServiceProviders(serviceProvidersData: IGroupedServiceProvidersParams) {

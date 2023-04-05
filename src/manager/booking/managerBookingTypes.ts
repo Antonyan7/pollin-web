@@ -7,7 +7,6 @@ import {
   ICheckInAppointment,
   IGroupedServiceProvider,
   IPatientInfo,
-  IServiceProvider,
   IServiceType,
   IUniqueItem
 } from 'types/reduxTypes/bookingStateTypes';
@@ -19,9 +18,6 @@ export interface IAppointmentListReqParams {
 export interface IServiceTypesReqParams {
   resourceId?: string;
 }
-export interface IServiceProvidersReqParams {
-  page: number;
-}
 
 export interface IGroupedServiceProvidersParams {
   page: number;
@@ -31,10 +27,6 @@ export interface IGroupedServiceProvidersParams {
 
 export interface IAppointmentListResponse {
   slots: IAppointment[];
-}
-
-export interface IServiceProvidersListResponse {
-  providers: IServiceProvider[];
 }
 
 export interface IGroupedServiceProvidersListResponse {

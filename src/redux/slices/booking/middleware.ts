@@ -14,7 +14,7 @@ import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
 import { t } from 'i18next';
 import store, { AppDispatch } from 'redux/store';
-import { IGroupedServiceProviders, IServiceProviders } from 'types/reduxTypes/bookingStateTypes';
+import { IGroupedServiceProviders } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
 import { sortServiceTypesByAlphabeticOrder } from '@utils/sortUtils';
@@ -26,15 +26,10 @@ import { ModalName } from '../../../types/modals';
 import slice from './slice';
 
 const {
-  updateServiceProviders,
   updateGroupedServiceProviders,
   updateSpecimenGroupedServiceProviders,
-  setIsServiceProvidersLoading,
   setIsGroupedServiceProvidersLoading,
   setProfileAppointmentsGroup,
-  setServiceProviders,
-  setGroupedServiceProviders,
-  setSpecimenGroupedServiceProviders,
   setDate,
   setBookingAppointments,
   setCurrentServiceProviderId,
@@ -74,26 +69,6 @@ const resetPatientData = (dispatch: AppDispatch) => {
   );
 };
 
-const getServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsServiceProvidersLoading(true));
-
-    const response = await API.booking.getServiceProviders({ page });
-    const data: IServiceProviders = {
-      totalItems: response.data.totalItems,
-      currentPage: response.data.currentPage,
-      pageSize: response.data.pageSize,
-      providers: response.data.data.providers
-    };
-
-    dispatch(setServiceProviders(data));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsServiceProvidersLoading(false));
-  }
-};
-
 const getGroupedServiceProviders =
   (serviceProvidersData: IGroupedServiceProvidersParams, isSpecimenCollection = false) =>
   async (dispatch: AppDispatch) => {
@@ -108,56 +83,6 @@ const getGroupedServiceProviders =
 
       const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
 
-      const data: IGroupedServiceProviders = {
-        totalItems: response.data.totalItems,
-        currentPage: response.data.currentPage,
-        pageSize: response.data.pageSize,
-        providers: response.data.data.providers,
-        ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
-      };
-
-      dispatch(isSpecimenCollection ? setSpecimenGroupedServiceProviders(data) : setGroupedServiceProviders(data));
-    } catch (error) {
-      Sentry.captureException(error);
-    } finally {
-      dispatch(setIsGroupedServiceProvidersLoading(false));
-      dispatch(setIsSpecimenGroupedServiceProvidersLoading(false));
-    }
-  };
-
-const getNewServiceProviders = (page: number) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsServiceProvidersLoading(true));
-
-    const response = await API.booking.getServiceProviders({ page });
-    const data: IServiceProviders = {
-      totalItems: response.data.totalItems,
-      currentPage: response.data.currentPage,
-      pageSize: response.data.pageSize,
-      providers: response.data.data.providers
-    };
-
-    dispatch(updateServiceProviders(data));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsServiceProvidersLoading(false));
-  }
-};
-
-const getNewGroupedServiceProviders =
-  (serviceProvidersData: IGroupedServiceProvidersParams, isSpecimenCollection = false) =>
-  async (dispatch: AppDispatch) => {
-    try {
-      serviceProvidersData.specimenCollection = isSpecimenCollection;
-
-      dispatch(
-        isSpecimenCollection
-          ? setIsSpecimenGroupedServiceProvidersLoading(true)
-          : setIsGroupedServiceProvidersLoading(true)
-      );
-
-      const response = await API.booking.getGroupedServiceProviders(serviceProvidersData);
       const data: IGroupedServiceProviders = {
         totalItems: response.data.totalItems,
         currentPage: response.data.currentPage,
@@ -529,9 +454,6 @@ const clearSpecimenAppointments = () => (dispatch: AppDispatch) => {
 };
 
 export default {
-  getNewServiceProviders,
-  getNewGroupedServiceProviders,
-  getServiceProviders,
   getGroupedServiceProviders,
   setDateValue,
   updateCollectionCalendarDate,

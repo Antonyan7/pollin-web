@@ -5,7 +5,8 @@ import { ApplyScheduleFields } from '../types';
 
 export const defaultResource: IServiceProvider = {
   id: '',
-  title: ''
+  title: '',
+  type: ''
 };
 
 export const defaultScheduleTemplate: SchedulingTemplateProps = {
