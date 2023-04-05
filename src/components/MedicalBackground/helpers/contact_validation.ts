@@ -101,12 +101,12 @@ export const patientContactInformationValidationSchema = object({
   }),
   [ContactInformationFormFields.OHIP]: object({
     exists: boolean(),
-    number: string().when('exists', {
+    number: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 4 || ohipNumber?.length === 6 || ohipNumber?.length === 8 || ohipNumber?.length === 10).when('exists', {
       is: true,
       then: string().required(),
       otherwise: string().notRequired().nullable()
     }),
-    versionCode: string().when('exists', {
+    versionCode: string().test('len', 'Required', ohipVersionCode => ohipVersionCode?.length === 2).when('exists', {
       is: true,
       then: string().required(),
       otherwise: string().notRequired().nullable()

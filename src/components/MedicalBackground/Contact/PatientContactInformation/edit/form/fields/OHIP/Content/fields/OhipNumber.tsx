@@ -37,11 +37,9 @@ const OhipNumber = () => {
           }
         }}
         onChange={(e) => {
-          if (e.target.value.length < 13) {
-            const ohipNumber = replaceOhipNumberFormat(e.target.value);
+          const ohipNumber = replaceOhipNumberFormat(e.target.value);
 
-            onChange(ohipNumber)
-          }
+          onChange(ohipNumber)
         }
         }
         value={fieldProps.value}

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { lettersOnly } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
@@ -30,8 +31,12 @@ const VersionCode = () => {
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
         onChange={(event) => {
-          if (event.target.value.length <= 2) {
-            onChange(event.target.value)
+          const currentVersionCode = event.target.value;
+
+          if (currentVersionCode.length <= 2) {
+            if (lettersOnly.test(currentVersionCode) || currentVersionCode === '') {
+              onChange(currentVersionCode)
+            }
           }
         }}
         {...fieldProps}

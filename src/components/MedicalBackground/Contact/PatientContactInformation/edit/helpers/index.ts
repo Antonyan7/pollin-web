@@ -36,13 +36,14 @@ export const replaceOhipNumberFormat = (ohipNumber: string) => {
 
   ohipCode = ohipCode.replace(/-/g, "");
 
-  if (ohipCode.length >= 4 && ohipCode.length <= 8) {
+  if (ohipCode.length >= 5 && ohipCode.length <= 7) {
     ohipCode = `${ohipCode.slice(0, 4)}-${ohipCode.slice(4)}`;
-  } else if (ohipNumber.length >= 9) {
+  } else if (ohipNumber.length >= 8) {
     ohipCode = `${ohipCode.slice(0, 4)}-${ohipCode.slice(4, 7)}-${ohipCode.slice(7)}`;
   }
 
   return ohipCode;
 }
 
-export const allowedChars = "4578-";
+export const allowedChars = "0123456789-";
+export const lettersOnly = /^[a-zA-Z]+$/;
