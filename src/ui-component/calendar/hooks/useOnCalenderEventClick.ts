@@ -6,8 +6,6 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { SlotTypes } from 'types/calendar';
 import { ModalName } from 'types/modals';
 
-import { DateUtil } from '@utils/date/DateUtil';
-
 const useOnCalendarEventClick = () => {
   const appointments = useAppSelector(bookingSelector.appointmentsList);
 
@@ -24,20 +22,16 @@ const useOnCalendarEventClick = () => {
       }
 
       if (id) {
-        const isAppointmentCanceledOrPast =
-          targetAppointment?.type === SlotTypes.canceled ||
-          new Date(initialEventObject.event.startStr).getTime() < DateUtil.representInClinicDate().getTime();
-
-        if (isAppointmentCanceledOrPast) {
-          dispatch(
-            viewsMiddleware.openModal({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
-          );
-        } else if (targetAppointment?.isEditable) {
+        if (targetAppointment?.isEditable) {
           dispatch(
             viewsMiddleware.openModal({
               name: ModalName.EditAppointmentModal,
               props: { appointmentId: id }
             })
+          );
+        } else {
+          dispatch(
+            viewsMiddleware.openModal({ name: ModalName.DetailsAppointmentModal, props: { appointmentId: id } })
           );
         }
       }

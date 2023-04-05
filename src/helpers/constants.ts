@@ -1,14 +1,9 @@
 import { CypressIds } from 'constants/cypressIds';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 export const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 export const longWeekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-export const appointmentStatusData = ['Booked', 'Arrived', 'Fulfilled', 'NoShow', 'CheckedIn'];
-
-export const TIME_CONFIG = '[EST]';
-
-export const UTC_TIMEZONE = 'Europe/London';
 
 export const cancellationReasons = [
   'Personal Emergency',
@@ -18,11 +13,11 @@ export const cancellationReasons = [
   'Other: please provide details'
 ];
 
-export const UTCTimezone = '+00:00';
-
-export const standardDate = new Date(1970, 0, 1, 15, 0, 0, 0);
-
-export const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+export const nonEditableAppointmentStatuses = [
+  AppointmentStatus.NoShow,
+  AppointmentStatus.Cancelled,
+  AppointmentStatus.Done
+];
 
 export const patientListTabLinks = [
   { linkName: 'Patient Profile', href: 'profile', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_PATIENT_PROFILE },

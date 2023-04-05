@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import {
   Table,
   TableBody,
@@ -17,6 +17,7 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { SortOrder } from 'types/patient';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
 
@@ -102,7 +103,7 @@ const AppointmentsListTable = () => {
           <TableBody>
             {tableData &&
               tableData.map(({ id, type, date, time, status }) => {
-                const appointmentTypeStyle = status === PatientAppointmentStatuses.Cancelled ? 'line-through' : 'auto';
+                const appointmentTypeStyle = status === AppointmentStatus.Cancelled ? 'line-through' : 'auto';
 
                 return (
                   <TableRow key={id}>

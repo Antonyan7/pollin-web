@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { IPatientAppointment, PatientAppointmentStatuses } from '@axios/booking/managerBookingTypes';
+import { IPatientAppointment } from '@axios/booking/managerBookingTypes';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import {
   IconButton,
@@ -15,25 +15,19 @@ import {
 import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { viewsMiddleware } from '@redux/slices/views';
+import { nonEditableAppointmentStatuses } from 'helpers/constants';
 import { ModalName } from 'types/modals';
-import { AppointmentType } from 'types/patientProfile';
+import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
 import { DateUtil } from '@utils/date/DateUtil';
 
-const CardTable = ({
-  appointmentsList,
-  appointmentType
-}: {
-  appointmentsList: IPatientAppointment[] | null;
-  appointmentType: AppointmentType;
-}) => {
+const CardTable = ({ appointmentsList }: { appointmentsList: IPatientAppointment[] | null }) => {
   const theme = useTheme();
 
-  const onRowClick = (id: string, status: PatientAppointmentStatuses) => {
+  const onRowClick = (id: string, status: AppointmentStatus) => {
     dispatch(bookingMiddleware.getAppointmentDetails(id));
 
-    const shouldOpenDetailsModal =
-      status === PatientAppointmentStatuses.Cancelled || appointmentType === AppointmentType.Past;
+    const shouldOpenDetailsModal = nonEditableAppointmentStatuses.includes(status);
 
     if (shouldOpenDetailsModal) {
       dispatch(
@@ -42,11 +36,7 @@ const CardTable = ({
           props: { appointmentId: id }
         })
       );
-
-      return;
-    }
-
-    if (appointmentType === AppointmentType.Upcoming) {
+    } else {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.EditAppointmentModal,
@@ -68,7 +58,7 @@ const CardTable = ({
                 <Typography
                   variant="h5"
                   sx={{
-                    textDecoration: status === PatientAppointmentStatuses.Cancelled ? 'line-through' : 'auto'
+                    textDecoration: status === AppointmentStatus.Cancelled ? 'line-through' : 'auto'
                   }}
                 >
                   {type}

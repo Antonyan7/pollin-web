@@ -100,7 +100,7 @@ const AppointmentsCard = ({
     >
       {appointmentsList?.length ? (
         <>
-          <CardTable appointmentsList={appointmentsList} appointmentType={appointmentType} />
+          <CardTable appointmentsList={appointmentsList} />
           {appointmentsList && appointmentsList.length > 3 && (
             <CardActions>
               <Grid container justifyContent="right">
