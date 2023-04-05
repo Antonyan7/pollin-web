@@ -16,7 +16,7 @@ const DateOfBirth = () => {
   const fieldLabel = t(
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_RELATIONSHIP_DATE_OF_BIRTH
   );
-  const { control, getValues } = useFormContext();
+  const { control } = useFormContext();
   const { field } = useController({
     name: `${BackgroundInformationFormFields.DateOfBirth}.value`,
     control
@@ -37,7 +37,7 @@ const DateOfBirth = () => {
           type={PollinDatePickerType.Date}
           pickerConfigs={{
             label: t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DUE_DATE_PLACEHOLDER),
-            value: getValues(BackgroundInformationFormFields.DateOfBirth).value,
+            value: field.value,
             onChange,
             isLimitedByWorkingHours: false
           }}

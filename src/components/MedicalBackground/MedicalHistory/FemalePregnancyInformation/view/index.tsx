@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { IPreviousPregnancies } from '@axios/patientEmr/managerPatientEmrTypes';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
-import { getLabelByBoolean } from '@components/MedicalBackground/helpers/mapper';
+import { getLabelBySelectedValue } from '@components/MedicalBackground/helpers/mapper';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
@@ -36,7 +36,7 @@ const ViewModeContent = () => {
         title={t(
           Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREVIOUS_PREGNANCY
         )}
-        value={getLabelByBoolean(!!previousPregnancies?.value)}
+        value={getLabelBySelectedValue(!!previousPregnancies?.value)}
         note={previousPregnancies?.note ?? ''}
       />
       <PreviousPregnancies previousPregnancies={previousPregnancies as IPreviousPregnancies} />

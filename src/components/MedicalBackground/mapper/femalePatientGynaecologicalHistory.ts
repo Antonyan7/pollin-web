@@ -1,9 +1,9 @@
-import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
+import { DropdownOptionType, IMedicalBackgroundFieldValuesWithItems } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { MedicalBackgroundItemType } from '../components/types';
-import { createObjectWithTitle, CustomAccessorItem } from '../helpers/mapper';
+import { createObjectWithTitle } from '../helpers/mapper';
 
 const mappingPattern = {
   takingBirthControl: createObjectWithTitle(
@@ -37,7 +37,7 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INDICATE_PROCEDURES)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.abnormalPapProcedures?.items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
       type: MedicalBackgroundItemType.MultipleSelect,
       dropdownType: DropdownOptionType.ProceduresDueToAbnormalPap
@@ -49,7 +49,7 @@ const mappingPattern = {
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_GYNAECOLOGICAL_CONDITIONS
       )
     ),
-    customAccessor: (item: CustomAccessorItem) => item.gynaecologicalConditions?.items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
       type: MedicalBackgroundItemType.MultipleSelect,
       dropdownType: DropdownOptionType.GynaecologicalConditions
@@ -59,7 +59,7 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_SIGNS_OF_PCOS)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.signsOfPCOS?.items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
       type: MedicalBackgroundItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPCOS
@@ -69,7 +69,7 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_HYPERPROLACTINEMIA)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.hyperprolactinemia?.items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
       type: MedicalBackgroundItemType.MultipleSelect,
       dropdownType: DropdownOptionType.Hyperprolactinemia
@@ -79,7 +79,7 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_SIGNS_OF_POI)
     ),
-    customAccessor: (item: CustomAccessorItem) => item.signsOfPOI?.items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
       type: MedicalBackgroundItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPOI
@@ -88,12 +88,18 @@ const mappingPattern = {
   breastfeeding: createObjectWithTitle(
     t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_BREASTFEEDING)
   ),
-  cervixTreatment: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_CERVIX_TREATMENT)
-  ),
-  intercoursePain: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INTERCOURSE_PAIN)
-  )
+  cervixTreatment: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_CERVIX_TREATMENT)
+    ),
+    shouldShowDash: true
+  },
+  intercoursePain: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INTERCOURSE_PAIN)
+    ),
+    shouldShowDash: true
+  }
 };
 
 export default mappingPattern;

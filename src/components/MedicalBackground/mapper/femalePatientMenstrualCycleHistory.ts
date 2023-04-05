@@ -42,7 +42,10 @@ const mappingPattern = {
     ),
     componentData: {
       type: MedicalBackgroundItemType.Dropdown,
-      dropdownType: DropdownOptionType.DaysOfBleeding
+      dropdownType: DropdownOptionType.DaysOfBleeding,
+      additionalLabel: t(
+        Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_DAYS_LABEL
+      )
     }
   },
   pain: {
@@ -54,12 +57,18 @@ const mappingPattern = {
       dropdownType: DropdownOptionType.MenstrualPain
     }
   },
-  clots: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CLOTS)
-  ),
-  symptoms: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_SYMPTOMS)
-  )
+  clots: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CLOTS)
+    ),
+    shouldShowDash: true
+  },
+  symptoms: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_SYMPTOMS)
+    ),
+    shouldShowDash: true
+  }
 };
 
 export default mappingPattern;

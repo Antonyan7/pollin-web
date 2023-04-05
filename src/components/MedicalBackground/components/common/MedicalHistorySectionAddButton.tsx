@@ -21,7 +21,7 @@ const MedicalHistorySectionAddButton = ({
 }: MedicalHistorySectionAddButtonProps) => {
   const theme = useTheme();
 
-  const lastSectionItem = useWatch({ name: `${fieldName}.${lastFieldIndex}` });
+  const lastSectionItem = useWatch({ name: `${fieldName}.${lastFieldIndex}` }) ?? {};
   const isAllFieldsFilled = Object.values(lastSectionItem).every((value) => {
     if (typeof value === 'object') {
       return Object.values(value as Object).every(Boolean);

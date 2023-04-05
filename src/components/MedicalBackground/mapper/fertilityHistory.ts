@@ -3,7 +3,7 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '../components/types';
-import { createObjectWithTitle, CustomAccessorItem, getLabelByBoolean } from '../helpers/mapper';
+import { createObjectWithTitle, CustomAccessorItem, getLabelBySelectedValue } from '../helpers/mapper';
 
 interface IMappingPattern {
   [key: string]: {
@@ -63,7 +63,7 @@ const mappingPattern = {
 
         return `${treatment.type}${separator} ${cycles}`;
       });
-      const finalValues = [getLabelByBoolean(item.exist), ...values];
+      const finalValues = [getLabelBySelectedValue(item.exist), ...values];
 
       return finalValues;
     },

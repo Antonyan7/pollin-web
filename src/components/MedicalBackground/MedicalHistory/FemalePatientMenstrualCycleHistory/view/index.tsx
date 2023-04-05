@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import { v4 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const ViewModeContent = () => {
   const router = useRouter();
@@ -34,10 +35,21 @@ const ViewModeContent = () => {
   return !isFemalePatientMenstrualCycleHistoryLoading ? (
     <CardContentWrapper>
       {mappedItems.map((mappedItem, index) => {
-        const finalValue =
-          mappedItem?.componentData?.type === MedicalBackgroundItemType.Dropdown
-            ? getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
-            : mappedItem?.viewValue;
+        let finalValue;
+
+        switch (mappedItem?.componentData?.type) {
+          case MedicalBackgroundItemType.Dropdown:
+            finalValue = `${
+              getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
+            } ${mappedItem?.componentData?.additionalLabel ?? ''}`;
+            break;
+          case MedicalBackgroundItemType.Date:
+            finalValue = DateUtil.formatDateOnly(mappedItem?.viewValue);
+            break;
+          default:
+            finalValue = mappedItem?.viewValue;
+            break;
+        }
 
         return (
           <Item
