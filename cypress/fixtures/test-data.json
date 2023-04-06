@@ -1,5 +1,6 @@
 {
   "e2e_patient": "E2E Patient",
+  "e2e_patient_2": "Auto Patient",
   "service_type_1": "E2E - Test N2",
   "service_type_2": "E2E - Test Auto",
   "service_provider_1": "Test_Auto",
@@ -7,5 +8,12 @@
   "templateName1": "service type template",
   "templateName2": "block template",
   "templateName3": "edit template",
-  "comment": "comment"
+  "comment": "comment",
+  "encounter_type_1": "Test Encounter",
+  "encounter_type_2": "Auto Encounter",
+  "encounter_note": "Created Encounter",
+  "encounter_note_2": "Created Encounter for Addendum",
+  "edited_encounter_note": "Edited Encounter",
+  "addendum_note": "Created Addendum",
+  "edited_addendum_note": "Edited Addendum"
 }
