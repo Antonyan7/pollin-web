@@ -2,13 +2,16 @@ import React, { PropsWithChildren, useCallback, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DeleteTwoTone } from '@mui/icons-material';
-import { Grid, IconButton, TextField, Typography } from '@mui/material';
+import { Grid, IconButton, styled, TextField, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
 
-import { ConsultationFormSubTitle } from '../../MedicalBackground/components/common';
+const FieldSubtitle = styled(Typography)(({ theme }) => ({
+  color: theme.palette.secondary[800],
+  fontSize: theme.typography.pxToRem(16)
+}));
 
 interface NoteProps {
   fieldName: string;
@@ -70,7 +73,7 @@ export const FieldLabelWithNoteIcon = ({
   return (
     <Grid item container direction="row" alignItems="center" xs={12}>
       <Grid item container direction="row" alignItems="center" gap={2} xs={10}>
-        <ConsultationFormSubTitle>{description}</ConsultationFormSubTitle>
+        <FieldSubtitle>{description}</FieldSubtitle>
         <IconButton
           {...(isShown || field.value
             ? {

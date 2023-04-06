@@ -73,9 +73,7 @@ export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = ''
       options={options as IDropdownOption[]}
       popupIcon={<KeyboardArrowDown />}
       onChange={(_, value) => {
-        if (value && typeof value === 'object' && 'id' in value) {
-          onChange(value.id);
-        } else if (value && Array.isArray(value)) {
+        if (value && Array.isArray(value)) {
           onChange(value.map((item) => ({ id: item?.id })));
         }
       }}

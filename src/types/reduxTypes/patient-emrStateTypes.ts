@@ -205,7 +205,8 @@ export interface PatientProfile {
   isIntakeComplete: boolean;
   fullName: string;
   pronoun: string;
-  cycleStatus: string | boolean;
+  isICFormComplete: boolean;
+  cycleStatus?: string | boolean;
   id: string;
   avatar?: {
     imageURL: string;
@@ -214,6 +215,7 @@ export interface PatientProfile {
   identifier?: string;
   dateOfBirth?: string;
   sexAtBirth?: SexAtBirth;
+  GTPAETALS?: string;
 }
 export enum SexAtBirth {
   Female = 'Female',

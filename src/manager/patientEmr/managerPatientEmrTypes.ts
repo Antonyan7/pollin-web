@@ -11,7 +11,8 @@ import {
   PatientHighlight,
   PatientHighlightHeader,
   PatientProfileOverview,
-  ProfilePhotoStatus
+  ProfilePhotoStatus,
+  SexAtBirth
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 export interface IGetPatientsRequestBody {
@@ -107,13 +108,18 @@ export interface IEncounterDetailsProps {
 export interface IPatientProfileResponse {
   fullName: string;
   pronoun: string;
+  identifier: string;
+  subTitle: string;
   isIntakeComplete: boolean;
+  isICFormComplete: boolean;
+  cycleStatus?: string | boolean;
   avatar?: {
     imageURL: string;
     status: ProfilePhotoStatus;
   };
-  subTitle: string;
-  cycleStatus: string;
+  sexAtBirth: SexAtBirth;
+  dateOfBirth: string;
+  GTPAETALS?: string;
 }
 
 export interface IPatientHighlightResponse {
