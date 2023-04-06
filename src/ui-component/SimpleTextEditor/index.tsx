@@ -131,6 +131,15 @@ const SimpleTextEditor = ({
             <Grid item xs={12} container columnGap={margins.all24}>
               <Grid item xs={4} mb={2}>
                 <BaseSelectWithLoading
+                  MenuProps={{
+                    style: { maxHeight: 260 },
+                    PaperProps: {
+                      style: {
+                        border: `${borders.solid2px} ${theme.palette.primary.main}`,
+                        borderRadius: `${borderRadius.radius8}`,
+                      }
+                    }
+                  }}
                   labelId="encounter-label"
                   id="encounter-type"
                   label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
@@ -145,11 +154,20 @@ const SimpleTextEditor = ({
                   ))}
                 </BaseSelectWithLoading>
               </Grid>
-              <Grid item xs={4.5} mb={2}>
+              <Grid item xs={5.5} mb={2}>
                 <BaseSelectWithLoading
                   isLoading={isRecentAppointmentsLoading}
                   labelId="recent-appointments-label"
                   id="recent-appointments"
+                  MenuProps={{
+                    style: { maxHeight: 260 },
+                    PaperProps: {
+                      style: {
+                        border: `${borders.solid2px} ${theme.palette.primary.main}`,
+                        borderRadius: `${borderRadius.radius8}`,
+                      }
+                    }
+                  }}
                   label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_PAST_APPOINTMENT)}
                   value={recentAppointmentsField.value}
                   onChange={(event) => recentAppointmentsField.onChange(event.target.value)}
