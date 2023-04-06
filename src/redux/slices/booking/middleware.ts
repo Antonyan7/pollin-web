@@ -353,6 +353,7 @@ const editAppointment =
       Sentry.captureException(error);
     } finally {
       dispatch(setIsAppointmentEditLoading(false));
+      dispatch(viewsMiddleware.closeModal(ModalName.AppointmentStatusChangeConfirmationModal));
     }
   };
 

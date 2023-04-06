@@ -14,6 +14,8 @@ import DetailsAppointmentModal, {
   DetailsAppointmentModalProps
 } from '@components/Modals/Booking/DetailsAppointmentModal';
 import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Modals/Booking/EditAppointmentsModal';
+import AppointmentStatusChangeConfirmationModal from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation';
+import { IAppointmentStatusChangeConfirmationModalProps } from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation/types';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
@@ -83,6 +85,9 @@ const getDetailsAppointmentModal = (modal: IOpenedModal<DetailsAppointmentModalP
 const getAddAppointmentModal = (modal: IOpenedModal<AddAppointmentModalProps>) => (
   <AddAppointmentModal key={modal.name} {...modal.props} />
 );
+const getAppointmentStatusChangeConfirmationModal = (
+  modal: IOpenedModal<IAppointmentStatusChangeConfirmationModalProps>
+) => <AppointmentStatusChangeConfirmationModal key={modal.name} {...modal.props} />;
 const getSelectMachineModal = (modal: IOpenedModal<SelectMachineModalProps>) => (
   <SelectMachineModal key={modal.name} {...modal.props} />
 );
@@ -220,6 +225,8 @@ export const ModalsController = () => {
             return getDetailsAppointmentModal(modal);
           case ModalName.AddAppointmentModal:
             return getAddAppointmentModal(modal);
+          case ModalName.AppointmentStatusChangeConfirmationModal:
+            return getAppointmentStatusChangeConfirmationModal(modal);
           case ModalName.SelectMachineModal:
             return getSelectMachineModal(modal);
           case ModalName.EditAppointmentModal:

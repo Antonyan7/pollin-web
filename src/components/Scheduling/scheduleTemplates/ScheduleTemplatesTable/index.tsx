@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import EmptyScheduleState from '@components/Scheduling/EmptyStateSchedule';
 import { Box, CircularProgress, Table, TableBody, TableContainer } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { getComparator, stableSort } from 'helpers/tableSort';
@@ -9,8 +10,6 @@ import { useAppSelector } from 'redux/hooks';
 import { schedulingSelector } from 'redux/slices/scheduling';
 import { margins } from 'themes/themeConstants';
 import { ArrangementOrder } from 'types';
-
-import { CypressIds } from '../../../../constants/cypressIds';
 
 import ScheduleTemplatesHead from './ScheduleTemplatesHead';
 import ScheduleTemplatesRow from './ScheduleTemplatesRow';

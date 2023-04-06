@@ -2,11 +2,10 @@ import React, { useCallback } from 'react';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Checkbox, IconButton, TableCell, TableRow, Typography, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { useRouter } from 'next/router';
 
 import { DateUtil } from '@utils/date/DateUtil';
-
-import { CypressIds } from '../../../../constants/cypressIds';
 
 import { ITableRow } from './Table';
 

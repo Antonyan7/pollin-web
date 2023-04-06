@@ -2,14 +2,13 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Checkbox, TableCell, TableHead, TableRow, TableSortLabel, useTheme } from '@mui/material';
 import { visuallyHidden } from '@mui/utils';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useScheduleTemplatesContext } from 'context/ScheduleTemplatesContext';
 import { rowsPerPage } from 'helpers/constants';
 import { EnhancedTableHeadProps, HeadCell } from 'types';
 import { SortOrder } from 'types/patient';
 import EnhancedTableToolbar from 'ui-component/EnhancedTableToolbar';
-
-import { CypressIds } from '../../../../constants/cypressIds';
 
 // table header options
 const headCells: HeadCell[] = [

@@ -25,12 +25,11 @@ import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import PollinDatePickerWithTodayButton from 'ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import BaseModal from '@ui-component/Modal/BaseModal';
 import { DateUtil } from '@utils/date/DateUtil';
-
-import PollinDatePickerWithTodayButton from '../../../../ui-component/shared/DatePicker/PollinDatePickerWithTodayButton';
 
 const useStyles = makeStyles(() => ({
   menuPaper: {

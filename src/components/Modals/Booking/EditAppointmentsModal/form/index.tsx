@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { AppointmentStatusesThatRequireConfirmation } from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation/types';
+import { mergeAppointmentDetails } from '@components/Modals/Booking/EditAppointmentsModal/form/helpers/mergeAppointmentDetails';
 import {
   IEditAppointmentForm,
   initialValues
@@ -12,7 +14,6 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 import { editAppointmentsValidationSchema } from 'validation/appointments/edit_appointment';
 
-import { mergeAppointmentDetails } from './helpers/mergeAppointmentDetails';
 import FormActions from './FormActions';
 import FormBody from './FormBody';
 
@@ -23,8 +24,7 @@ const EditAppointmentsModalForm = () => {
     resolver: yupResolver(editAppointmentsValidationSchema)
   });
 
-  const { handleSubmit, formState, reset, watch } = methods;
-  const { isSubmitSuccessful } = formState;
+  const { handleSubmit, reset, watch } = methods;
 
   const [isSaveDisabled, setIsSaveDisabled] = useState<boolean>(true);
   const details = useAppSelector(bookingSelector.appointmentDetails);
@@ -48,21 +48,21 @@ const EditAppointmentsModalForm = () => {
     ]
   );
 
-  const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-    dispatch(bookingMiddleware.clearAppointmentDetails());
-  }, []);
-
   const onSubmit = (values: IEditAppointmentForm) => {
-    dispatch(bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(values)));
-  };
-
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      onClose();
-      reset();
+    if (
+      values.status === AppointmentStatusesThatRequireConfirmation.NoShow ||
+      values.status === AppointmentStatusesThatRequireConfirmation.Done
+    ) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.AppointmentStatusChangeConfirmationModal,
+          props: { type: values.status, appointmentId, values: mergeAppointmentDetails(values) }
+        })
+      );
+    } else {
+      dispatch(bookingMiddleware.editAppointment(appointmentId, mergeAppointmentDetails(values)));
     }
-  }, [isSubmitSuccessful, reset, onClose]);
+  };
 
   useEffect(() => {
     const subscription = watch((value) => {
