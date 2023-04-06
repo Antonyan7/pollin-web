@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { witoutZero } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/helpers';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
@@ -17,6 +18,7 @@ const Feet = () => {
     control
   });
   const errorHelperText = generateErrorMessage(label);
+  const { onChange, ...fieldProps } = field;
 
   useScrollIntoView(feetRef, fieldState);
 
@@ -28,9 +30,16 @@ const Feet = () => {
         label={label}
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
-        {...field}
+        {...fieldProps}
+        onChange={(event) => {
+          const currentFeetValue = event.target.value;
+
+          if (witoutZero.test(currentFeetValue) || currentFeetValue.length === 0) {
+            onChange(currentFeetValue)
+          }
+        }}
         inputRef={feetRef}
-        value={field.value}
+        value={fieldProps.value}
       />
     </Grid>
   );

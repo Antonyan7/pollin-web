@@ -114,3 +114,6 @@ export const getGeneralHealthEditFormState = (generalHealthData: IGeneralHealthP
   },
   [GeneralHealthFormFields.CurrentPrescribedMedications]: generalHealthData?.currentPrescribedMedications
 });
+
+
+export const witoutZero = /[^0].*/;

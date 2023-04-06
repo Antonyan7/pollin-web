@@ -21,7 +21,7 @@ const PastSurgeriesTitle = ({ titleIndex }: DiagramTitleProps) => {
         items: [
           {
             typeOfSurgery: '',
-            dateOfSurgery: new Date()
+            dateOfSurgery: null
           }
         ]
       });

@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
+import { witoutZero } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/helpers';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField, Typography } from '@mui/material';
@@ -23,6 +24,7 @@ const FieldWeight = () => {
     name: `${GeneralHealthFormFields.Weigth}.value`,
     control
   });
+  const { onChange, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(fieldLabel);
   const [showAdditionalNote, setShowAdditionalNote] = useState(false);
   const onNoteClick = () => {
@@ -56,8 +58,15 @@ const FieldWeight = () => {
               label={fieldLabel}
               helperText={fieldState?.error && errorHelperText}
               error={Boolean(fieldState?.error)}
-              {...field}
-              value={field.value}
+              {...fieldProps}
+              onChange={(event) => {
+                const currentWeightValue = event.target.value;
+
+                if (witoutZero.test(currentWeightValue) || currentWeightValue.length === 0) {
+                  onChange(currentWeightValue)
+                }
+              }}
+              value={fieldProps.value}
               inputRef={weightRef}
             />
           ) : (
