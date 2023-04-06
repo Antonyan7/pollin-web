@@ -67,7 +67,7 @@ export const patientGeneralHealthValidationSchema = object({
     )
   }),
   [GeneralHealthFormFields.Diet]: object({
-    value: string().required()
+    value: string().notRequired()
   }),
   [GeneralHealthFormFields.AdditionalInformation]: object({
     value: string().notRequired()

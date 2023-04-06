@@ -64,7 +64,8 @@ export const ConsultationTitleWithIcon = ({
 
 export const RenderSingleValueAndNote = ({ value, note }: { value?: string | number; note?: string }) => (
   <Grid item container xs={7} direction="column" justifyContent="space-between">
-    <Grid>{value}</Grid>
+    {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
+    <Grid>{value || '-'}</Grid>
     {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
     <Grid>{note || ''}</Grid>
   </Grid>
