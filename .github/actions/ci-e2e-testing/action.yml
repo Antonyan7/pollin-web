@@ -28,10 +28,10 @@ runs:
 
         nodeVersion=$(node --version)
         echo "Node Version: $nodeVersion"
-        
+
         yarnVersion=$(yarn --version)
         echo "Yarn Version After Berry Switch: $yarnVersion"
-        
+
         yarn install --no-immutable
         yarn add cypress
         echo "::endgroup::"
@@ -45,7 +45,7 @@ runs:
         gcloud auth activate-service-account --key-file=./service-account.json --project=${{ env.seeds_project_id }}
         rm ./service-account.json
         echo "::endgroup::"
- 
+
 
         echo "::group::Setup backend data seeds"
         # Clear BE code folder
@@ -58,11 +58,13 @@ runs:
         gcloud secrets versions access latest --secret=BACKEND_E2E_TESTING --project=${{ env.seeds_project_id }} > ./data-seeds/.env
         echo "::endgroup::"
 
+        echo "::group::Purging all Images, Containers, Volumes, and Networks"
+        sudo docker system prune -a -f
+        echo "::endgroup::"
 
         echo "::group::Run backend with data seeds"
         sudo docker compose -f ./data-seeds/docker-compose.yaml up --detach --force-recreate
         echo "::endgroup::"
-
 
         echo "::group::Writing Environment Variables For FE"
         echo "Writing Environment Variables to: .env.e2e"
@@ -82,7 +84,7 @@ runs:
         }
         export CYPRESS_RECORD_KEY=$(read_var cypressRecordKey .env)
         export CYPRESS_PROJECT_ID=$(read_var cypressProjectId .env)
-        
+
         yarn run build
         echo "::endgroup::"
 
