@@ -101,7 +101,7 @@ export const patientContactInformationValidationSchema = object({
   }),
   [ContactInformationFormFields.OHIP]: object({
     exists: boolean(),
-    number: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 4 || ohipNumber?.length === 6 || ohipNumber?.length === 8 || ohipNumber?.length === 10).when('exists', {
+    number: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 12).when('exists', {
       is: true,
       then: string().required(),
       otherwise: string().notRequired().nullable()
