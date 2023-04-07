@@ -224,6 +224,14 @@ const dropdowns = createSelector([selector], (state) => state.medicalBackground.
 
 const isDropdownsLoading = createSelector([selector], (state) => state.medicalBackground.common.isDropdownsLoading);
 
+// Patient Plans
+const statusVariations = createSelector([selector], (state) => state.plans.statusVariations);
+const isStatusVariationsLoading = createSelector([selector], (state) => state.plans.isStatusVariationsLoading);
+const plansList = createSelector([selector], (state) => state.plans.plansList);
+const isPlansListLoading = createSelector([selector], (state) => state.plans.isPlansListLoading);
+const categories = createSelector([selector], (state) => state.plans.categories);
+const isCategoriesLoading = createSelector([selector], (state) => state.plans.isCategoriesLoading);
+
 export default {
   isTestResultsHistoryLoading,
   isProfileTestResultsLoading,
@@ -314,5 +322,11 @@ export default {
   isMalePatientGenitourinaryEditButtonClicked,
   contactInformation,
   manuallyAddressForMailing,
-  manuallyAddressForPrimary
+  manuallyAddressForPrimary,
+  statusVariations,
+  isStatusVariationsLoading,
+  plansList,
+  isPlansListLoading,
+  categories,
+  isCategoriesLoading
 };

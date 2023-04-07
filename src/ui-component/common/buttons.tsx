@@ -51,7 +51,6 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
 }) => (
   <Button
     sx={{
-      border: '1px solid #BDBDBD',
       borderRadius: 1,
       py: 1.2,
       px: 4,

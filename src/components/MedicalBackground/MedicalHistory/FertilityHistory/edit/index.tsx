@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFertilityHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import FieldWithNote from '@components/common/FieldWithNote';
+import FieldWithNote from '@components/common/AdvancedField';
 import { Dropdown } from '@components/MedicalBackground/components/common/Dropdown';
 import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
 import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';

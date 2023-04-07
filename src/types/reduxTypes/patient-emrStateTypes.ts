@@ -20,6 +20,9 @@ import {
   IPatientContactInformation,
   IPatientContactInformationProps,
   IPatientMedications,
+  IPatientPlansCategories,
+  IPatientPlansListData,
+  IPatientPlansStatus,
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
@@ -96,6 +99,15 @@ export interface MedicationsPrescriptionsProps {
   prescriptions: {};
 }
 
+export interface IPatientPlansProps {
+  statusVariations: IPatientPlansStatus[];
+  isStatusVariationsLoading: boolean;
+  categories: IPatientPlansCategories[];
+  isCategoriesLoading: boolean;
+  plansList: IPatientPlansListData | null;
+  isPlansListLoading: boolean;
+}
+
 export interface ICreateMedication {
   patientId: string;
   medication: {
@@ -152,6 +164,7 @@ export interface PatientEmrProps {
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
   contactInformation: IPatientContactInformation;
+  plans: IPatientPlansProps;
 }
 
 export interface IItem {

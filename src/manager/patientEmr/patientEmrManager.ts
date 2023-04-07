@@ -31,6 +31,9 @@ import {
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
   IPatientMedications,
+  IPatientPlansCategoriesAndTypesResponse,
+  IPatientPlansListData,
+  IPatientPlansStatusResponse,
   IPatientProfileOverviewResponse,
   IPatientProfileResponse,
   IPatientsFiltersResponse,
@@ -319,13 +322,14 @@ const patientEmrManager = {
       }
     );
   },
-  getDrugs(searchString: string, page: number) {
+  getDrugs(searchString: string, page: number, categoryId?: string) {
     return axiosInstance.get<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
       `${baseURL}/v1/prescriptions/medications/search`,
       {
         params: {
           searchString,
-          page
+          page,
+          ...(categoryId && { categoryId })
         }
       }
     );
@@ -352,6 +356,32 @@ const patientEmrManager = {
       `${baseURL}/v1/prescriptions/medications`,
       data
     );
+  },
+
+  // Patient Plans
+  getPatientPlansList({ patientId, page }: { patientId: string; page?: number }) {
+    return axiosInstance.get<IPatientPlansListData, IAxiosResponsePaginated<IPatientPlansListData>>(
+      `${baseURL}/v1/plans`,
+      {
+        params: {
+          patientId,
+          ...(page && {
+            page
+          })
+        }
+      }
+    );
+  },
+  getPatientPlansStatuses() {
+    return axiosInstance.get<IPatientPlansStatusResponse, IAxiosResponse<IPatientPlansStatusResponse>>(
+      `${baseURL}/v1/plans/status`
+    );
+  },
+  getPlanCategoriesAndTypes() {
+    return axiosInstance.get<
+      IPatientPlansCategoriesAndTypesResponse,
+      IAxiosResponse<IPatientPlansCategoriesAndTypesResponse>
+    >(`${baseURL}/v1/plans/categories-plan-types`);
   }
 };
 

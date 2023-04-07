@@ -14,6 +14,9 @@ import {
   IPatientContactInformation,
   IPatientContactInformationProps,
   IPatientMedications,
+  IPatientPlansCategories,
+  IPatientPlansListData,
+  IPatientPlansStatus,
   IProfileTestResults,
   ITestResultHistory,
   ProfileTestResultDetailsItem
@@ -328,6 +331,24 @@ const reducers = createReducer({
   },
   setIsMedicationCreatedLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isMedicationCreatedLoading = action.payload;
+  },
+  setPlansList(state, action: IAction<IPatientPlansListData | null>) {
+    state.plans.plansList = action.payload;
+  },
+  setIsPlansListLoading(state, action: IAction<boolean>) {
+    state.plans.isPlansListLoading = action.payload;
+  },
+  setStatusVariations(state, action: IAction<IPatientPlansStatus[]>) {
+    state.plans.statusVariations = action.payload;
+  },
+  setIsStatusVariationsLoading(state, action: IAction<boolean>) {
+    state.plans.isStatusVariationsLoading = action.payload;
+  },
+  setCategories(state, action: IAction<IPatientPlansCategories[]>) {
+    state.plans.categories = action.payload;
+  },
+  setIsCategoriesLoading(state, action: IAction<boolean>) {
+    state.plans.isCategoriesLoading = action.payload;
   }
 });
 

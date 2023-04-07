@@ -119,13 +119,18 @@ const {
   setPatientMissingMedications,
   setIsPatientCurrentMedicationLoading,
   setIsPatientPastMedicationLoading,
-
   setIsFemalePatientGynaecologicalHistoryDataUpdating,
   setDrugs,
   setIsDrugLoading,
   setIsDropdownOptionsLoading,
   setDropdownOptions,
-  setIsMedicationCreatedLoading
+  setIsMedicationCreatedLoading,
+  setPlansList,
+  setIsPlansListLoading,
+  setStatusVariations,
+  setIsStatusVariationsLoading,
+  setCategories,
+  setIsCategoriesLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -754,11 +759,11 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
-const getDrugs = (searchString: string, page: number) => async (dispatch: AppDispatch) => {
+const getDrugs = (searchString: string, page: number, categoryId?: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsDrugLoading(true));
 
-    const response = await API.patients.getDrugs(searchString, page);
+    const response = await API.patients.getDrugs(searchString, page, categoryId);
 
     dispatch(setDrugs(response.data.data.medications));
   } catch (error) {
@@ -1022,6 +1027,54 @@ const updatePatientBackgroundInformation =
     dispatch(setIsPatientBackgroundInformationLoading(false));
   };
 
+const getPatientPlansList = (patientId: string, page?: number) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPlansListLoading(true));
+
+    const response = await API.patients.getPatientPlansList({ patientId, page });
+    const data = {
+      ...response.data.data,
+      totalItems: response.data.totalItems,
+      currentPage: response.data.currentPage,
+      pageSize: response.data.pageSize
+    };
+
+    dispatch(setPlansList(data));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsPlansListLoading(false));
+  }
+};
+
+const getPatientPlansStatuses = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsStatusVariationsLoading(true));
+
+    const response = await API.patients.getPatientPlansStatuses();
+
+    dispatch(setStatusVariations(response.data.data.variations));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsStatusVariationsLoading(false));
+  }
+};
+
+const getPlanCategoriesAndTypes = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCategoriesLoading(true));
+
+    const response = await API.patients.getPlanCategoriesAndTypes();
+
+    dispatch(setCategories(response.data.data.categories));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsCategoriesLoading(false));
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1087,5 +1140,8 @@ export default {
   createPatientMedication,
   updateFemalePregnancyInformation,
   updateFemalePatientMenstrualCycleHistory,
-  updateFemalePatientGynaecologicalHistory
+  updateFemalePatientGynaecologicalHistory,
+  getPatientPlansList,
+  getPatientPlansStatuses,
+  getPlanCategoriesAndTypes
 };

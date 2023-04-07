@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldWithNote from '@components/common/FieldWithNote';
+import FieldWithNote from '@components/common/AdvancedField';
 import { Typography } from '@mui/material';
 
 import { Dropdown, DropdownMultiple } from '../components/common/Dropdown';
@@ -40,6 +40,7 @@ const renderComponents = (mappedItem: {
               fieldName={`${fieldName}.value`}
               placeholder={title}
               dropdownType={mappedItem?.componentData?.dropdownType}
+              additionalLabel={mappedItem?.componentData?.additionalLabel}
               label={title}
             />
           }

@@ -1,6 +1,6 @@
 import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import FieldWithNote from '@components/common/FieldWithNote';
+import FieldWithNote from '@components/common/AdvancedField';
 
 import { MedicalBackgroundTableRow } from '../../types';
 import MedicalBackgroundTable from '../MedicalBackgroundTable';

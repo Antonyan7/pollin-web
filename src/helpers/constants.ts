@@ -21,12 +21,12 @@ export const nonEditableAppointmentStatuses = [
 
 export const patientListTabLinks = [
   { linkName: 'Patient Profile', href: 'profile', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_PATIENT_PROFILE },
-  { linkName: 'Plans', href: 'plans' },
+  { linkName: 'Plans', href: 'plans', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_PATIENT_PLANS },
   { linkName: 'Encounters', href: 'encounters', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_ENCOUNTERS },
   { linkName: 'Medications', href: 'medications' },
   { linkName: 'Orders & Results', href: 'orders', [`data-cy`]: CypressIds.PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS },
-  { linkName: 'Consents', href: 'consents' },
-  { linkName: 'Referrals', href: 'referrals' }
+  { linkName: 'Consents', href: '' },
+  { linkName: 'Referrals', href: '' }
 ];
 export const rowsPerPage = 10;
 

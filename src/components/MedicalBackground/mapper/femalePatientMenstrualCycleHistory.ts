@@ -15,7 +15,8 @@ const mappingPattern = {
     ),
     componentData: {
       type: MedicalBackgroundItemType.Input
-    }
+    },
+    shouldShowDash: true
   },
   firstDayOfLastPeriod: {
     ...createObjectWithTitle(

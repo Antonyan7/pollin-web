@@ -141,6 +141,7 @@ export const paddings = {
   topBottom8: '8px',
   topBottom12: '12px',
   topBottom16: '16px',
+  topBottom18: '18px',
   topBottom20: '20px',
   topBottom24: '24px',
   topBottom32: '32px',

@@ -33,14 +33,6 @@ export enum SortOrder {
   Desc = 'desc'
 }
 
-export enum AvailablePages {
-  Encounters = 'Encounters',
-  Profile = 'Patient Profile',
-  Orders = 'Orders & Results',
-  MedicalBackground = 'Medical Background',
-  Medications = 'Medications'
-}
-
 export enum PatientListField {
   NAME = 'Name',
   DOCTOR = 'Doctor',

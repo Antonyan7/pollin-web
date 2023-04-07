@@ -142,6 +142,7 @@
   page.patient.details.profile.ohip.info
   page.patient.details.profile.doctor.info
   page.patient.details.tab.patient.profile
+  page.patient.details.tab.patient.plans
   page.patient.details.tab.encounters
   page.patient.details.tab.orders.and.results
   modal.scheduling.deletion.component 

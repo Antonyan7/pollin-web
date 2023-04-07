@@ -128,7 +128,7 @@ const mappingPattern = {
     type: {
       componentData: {
         type: MedicalBackgroundItemType.Dropdown,
-        dropdownType: DropdownOptionType.EctopicPregnancyTreatment
+        dropdownType: DropdownOptionType.MissCarriagePregnancyTreatment
       },
       title: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_TREATMENTS

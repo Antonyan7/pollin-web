@@ -10,7 +10,6 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
-import { AvailablePages } from 'types/patient';
 
 const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
@@ -83,13 +82,11 @@ export default ({ children }: PropsWithChildren) => {
             }
           }}
         >
-          {patientListTabLinks.map((link, linkIndex) => {
-            const isLinkAvailable = Object.values(AvailablePages).includes(link.linkName as AvailablePages);
-
-            return (
+          {patientListTabLinks.map(
+            (link, linkIndex) =>
               currentPatientId && (
                 <TabWithLink
-                  disabled={!isLinkAvailable}
+                  disabled={!link.href}
                   key={link.linkName}
                   component={Link}
                   href={`/patient-emr/details/${currentPatientId}/${link.href}`}
@@ -100,8 +97,7 @@ export default ({ children }: PropsWithChildren) => {
                   })}
                 />
               )
-            );
-          })}
+          )}
         </Tabs>
         {children}
       </Main>

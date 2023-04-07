@@ -11,7 +11,7 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { DropdownProps } from './types';
 
-export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '' }) => {
+export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '', additionalLabel }) => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const { control } = useFormContext();
@@ -38,7 +38,7 @@ export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdo
       }}
       value={selected}
       disableClearable
-      getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
+      getOptionLabel={(option) => (typeof option === 'object' ? `${option.title} ${additionalLabel ?? ''}` : option)}
       isOptionEqualToValue={(option, value) => option.id === value?.id}
       renderInputProps={{
         helperText: fieldState?.error && errorHelperText,

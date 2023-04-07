@@ -145,6 +145,7 @@ export enum CypressIds {
   PAGE_PATIENT_DETAILS_PROFILE_OHIP_INFO = 'page.patient.details.profile.ohip.info',
   PAGE_PATIENT_DETAILS_PROFILE_DOCTOR_INFO = 'page.patient.details.profile.doctor.info',
   PAGE_PATIENT_DETAILS_TAB_PATIENT_PROFILE = 'page.patient.details.tab.patient.profile',
+  PAGE_PATIENT_DETAILS_TAB_PATIENT_PLANS = 'page.patient.details.tab.patient.plans',
   PAGE_PATIENT_DETAILS_TAB_ENCOUNTERS = 'page.patient.details.tab.encounters',
   PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS = 'page.patient.details.tab.orders.and.results',
   MODAL_SCHEDULING_DELETION_COMPONENT = 'modal.scheduling.deletion.component',

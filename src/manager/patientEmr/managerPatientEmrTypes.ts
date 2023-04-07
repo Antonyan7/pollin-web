@@ -864,3 +864,45 @@ export interface IFamilyDoctor extends MedicalBackgroundFieldValues {
   value: boolean;
   name: string;
 }
+
+export interface IPatientPlansStatus {
+  status: string;
+  title: string;
+  actions: {
+    id: string;
+    title: string;
+  }[];
+  label: {
+    textColor: string;
+    backgroundColor: string;
+  };
+}
+
+export interface IPatientPlansStatusResponse {
+  variations: IPatientPlansStatus[];
+}
+
+export interface IPatientPlansCategoriesAndTypesResponse {
+  categories: IPatientPlansCategories[];
+}
+
+export interface IPatientPlan {
+  id: string;
+  title: string;
+  date: string;
+  status: string;
+}
+
+export interface IPatientPlansListData extends IPagination {
+  isReadyToOrder: string;
+  patientPlans: IPatientPlan[];
+}
+
+export interface IPatientPlansCategories {
+  id: string;
+  title: string;
+  items: {
+    id: string;
+    title: string;
+  }[];
+}

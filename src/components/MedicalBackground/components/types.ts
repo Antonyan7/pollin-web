@@ -30,6 +30,7 @@ export interface IComponentData {
   controlFieldName?: string;
   itemsFieldName?: string;
   rows?: IMedicalBackgroundItem[][];
+  additionalLabel?: string;
 }
 
 export interface IMedicalBackgroundItem {
@@ -38,4 +39,5 @@ export interface IMedicalBackgroundItem {
   placeholder?: string;
   type?: MedicalBackgroundItemType;
   dropdownType?: DropdownOptionType;
+  additionalLabel?: string;
 }

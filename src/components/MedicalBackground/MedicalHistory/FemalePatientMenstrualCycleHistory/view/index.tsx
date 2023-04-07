@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import React, { useEffect, useMemo } from 'react';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
@@ -40,9 +41,16 @@ const ViewModeContent = () => {
 
         switch (mappedItem?.componentData?.type) {
           case MedicalBackgroundItemType.Dropdown:
-            finalValue = `${
-              getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
-            } ${mappedItem?.componentData?.additionalLabel ?? ''}`;
+            const dropdownOptionTitle = getDropdownOption(
+              dropdownOptions,
+              mappedItem?.componentData?.dropdownType,
+              mappedItem?.viewValue
+            )?.title;
+
+            const isNotApplicable = mappedItem?.viewValue === 'NotApplicable';
+            const additionalLabel = !isNotApplicable ? mappedItem?.componentData?.additionalLabel ?? '' : '';
+
+            finalValue = dropdownOptionTitle ? `${dropdownOptionTitle} ${additionalLabel}` : mappedItem?.viewValue;
             break;
           case MedicalBackgroundItemType.Date:
             finalValue = isDashValue(mappedItem?.viewValue)
