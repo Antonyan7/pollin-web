@@ -5,6 +5,8 @@ import {
   IAlertDetailsResponse,
   ICreateEncounterAddendumRequest,
   ICreateEncounterNoteRequest,
+  ICreatePatientPrescription,
+  ICreatePatientPrescriptionMedicationResponse,
   IDropdownsResponse,
   IDrugsResponse,
   IEncounterFilterResponse,
@@ -31,6 +33,7 @@ import {
   IPatientHighlightDetailsResponse,
   IPatientHighlightResponse,
   IPatientMedications,
+  IPatientMedicationsState,
   IPatientPlansCategoriesAndTypesResponse,
   IPatientPlansListData,
   IPatientPlansStatusResponse,
@@ -135,6 +138,7 @@ const patientEmrManager = {
       `${baseURL}/v1/encounters/filters`
     );
   },
+
   getEncounter(encounterId: string) {
     return axiosInstance.get<IEncounterResponse, IAxiosResponse<IEncounterResponse>>(
       `${baseURL}/v1/encounters/${encounterId}`
@@ -322,14 +326,21 @@ const patientEmrManager = {
       }
     );
   },
-  getDrugs(searchString: string, page: number, categoryId?: string) {
-    return axiosInstance.get<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
+  getDrugs(searchString: string, page: number) {
+    return axiosInstance.post<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
       `${baseURL}/v1/prescriptions/medications/search`,
       {
+        searchString,
+        page
+      }
+    );
+  },
+  getPatientMedicationsState(patientId: string) {
+    return axiosInstance.get<IPatientMedicationsState, IAxiosResponse<IPatientMedicationsState>>(
+      `${baseURL}/v1/prescriptions/medications-state`,
+      {
         params: {
-          searchString,
-          page,
-          ...(categoryId && { categoryId })
+          patientId
         }
       }
     );
@@ -352,10 +363,16 @@ const patientEmrManager = {
     );
   },
   createPatientMedication(data: ICreateMedication) {
-    return axiosInstance.post<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
-      `${baseURL}/v1/prescriptions/medications`,
-      data
-    );
+    return axiosInstance.post<
+      ICreatePatientPrescriptionMedicationResponse,
+      IAxiosResponse<ICreatePatientPrescriptionMedicationResponse>
+    >(`${baseURL}/v1/prescriptions/medications`, data);
+  },
+  createPatientPrescription(data: ICreatePatientPrescription) {
+    return axiosInstance.post<
+      ICreatePatientPrescriptionMedicationResponse,
+      IAxiosResponse<ICreatePatientPrescriptionMedicationResponse>
+    >(`${baseURL}/v1/prescriptions`, data);
   },
 
   // Patient Plans

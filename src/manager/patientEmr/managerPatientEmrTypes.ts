@@ -1,4 +1,5 @@
 import { IPagination } from '@axios/axiosTypes';
+import { PrescriptionTypeEnum } from '@components/Modals/Medications/AddPatientPrescriptionModal/form/initialValues';
 import { PatientListFilterType } from 'types/patient';
 import { IServiceProvider } from 'types/reduxTypes/bookingStateTypes';
 import {
@@ -539,9 +540,45 @@ export interface MedicationsProps {
 export interface IFemalePatientGynaecologicalHistory {
   gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
 }
-
+export interface PrescriptionMedicationsProps {
+  drugId: string;
+  dosage: string;
+  route: string;
+  frequency: string;
+  time?: string;
+  duration: {
+    start: string;
+    end: string;
+  };
+  quantity: string;
+  refill: string;
+  refillNotes: string;
+  doctorNotes: string;
+}
+export interface IAddPatientPrescriptionForm {
+  type: PrescriptionTypeEnum;
+  prescriberId: string;
+  medications: PrescriptionMedicationsProps[];
+}
+export interface ICreatePatientPrescription {
+  patientId: string;
+  prescription: IAddPatientPrescriptionForm;
+}
+export interface ICreatePatientPrescriptionMedicationResponse {
+  uuid: string;
+}
 export interface IDrugsResponse {
   medications: IDrugsProps[];
+}
+
+export interface IPatientMedicationsState {
+  currentMedications: string;
+  drugAllergies: string;
+}
+
+export interface PatientPrescriptionsDrugListProps {
+  id: number;
+  name: string;
 }
 
 export interface IDrugsProps {

@@ -148,7 +148,10 @@ const isPatientCurrentMedicationLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isPatientCurrentMedicationLoading
 );
-
+const patientMedicationState = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.patientMedicationState
+);
 const dropdownOptions = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.dropdownOptions
@@ -156,6 +159,18 @@ const dropdownOptions = createSelector(
 const isMedicationCreatedLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isMedicationCreatedLoading
+);
+const prescriptionsDrugList = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.prescriptionsDrugList
+);
+const currentPrescriptionUuid = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.currentPrescriptionUuid
+);
+const isPrescriptionCreationLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.isPrescriptionCreationLoading
 );
 
 /* Medical History */
@@ -293,6 +308,10 @@ export default {
   isPatientCurrentMedicationLoading,
   isPatientPastMedicationLoading,
   isMedicationCreatedLoading,
+  prescriptionsDrugList,
+  patientMedicationState,
+  currentPrescriptionUuid,
+  isPrescriptionCreationLoading,
   dropdownOptions,
   isDrugLoading,
   isGeneralHealthLoading,

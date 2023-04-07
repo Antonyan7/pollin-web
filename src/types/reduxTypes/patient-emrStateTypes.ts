@@ -20,6 +20,7 @@ import {
   IPatientContactInformation,
   IPatientContactInformationProps,
   IPatientMedications,
+  IPatientMedicationsState,
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
@@ -27,6 +28,7 @@ import {
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType,
+  PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IEncountersFilterOption, IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
@@ -95,8 +97,13 @@ export interface MedicationsPrescriptionsProps {
     patientMissingMedications: IPatientMedications;
     isPatientPastMedicationLoading: boolean;
     isPatientCurrentMedicationLoading: boolean;
+    patientMedicationState: IPatientMedicationsState | null;
   };
-  prescriptions: {};
+  prescriptions: {
+    prescriptionsDrugList: PatientPrescriptionsDrugListProps[] | null;
+    isPrescriptionCreationLoading: boolean;
+    currentPrescriptionUuid: string;
+  };
 }
 
 export interface IPatientPlansProps {

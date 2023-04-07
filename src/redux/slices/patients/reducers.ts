@@ -14,11 +14,13 @@ import {
   IPatientContactInformation,
   IPatientContactInformationProps,
   IPatientMedications,
+  IPatientMedicationsState,
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
   IProfileTestResults,
   ITestResultHistory,
+  PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
@@ -299,6 +301,9 @@ const reducers = createReducer({
   setManuallyAddressForMailing(state, action: IAction<AddManuallyAddressModalProps>) {
     state.medicalBackground.contact.manuallyAddressForMailing = action.payload;
   },
+  setPatientMedicationsState(state, action: IAction<IPatientMedicationsState>) {
+    state.medicationsPrescriptions.medications.patientMedicationState = action.payload;
+  },
   setPatientCurrentMedications(state, action: IAction<IPatientMedications>) {
     state.medicationsPrescriptions.medications.patientCurrentMedications = action.payload;
   },
@@ -329,8 +334,17 @@ const reducers = createReducer({
   setDropdownOptions(state, action: IAction<IDropdown[]>) {
     state.medicationsPrescriptions.medications.dropdownOptions = action.payload;
   },
+  setIsPrescriptionCreationLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.prescriptions.isPrescriptionCreationLoading = action.payload;
+  },
+  setCurrentPrescriptionUuid(state, action: IAction<string>) {
+    state.medicationsPrescriptions.prescriptions.currentPrescriptionUuid = action.payload;
+  },
   setIsMedicationCreatedLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isMedicationCreatedLoading = action.payload;
+  },
+  setPatientPrescriptionsListItems(state, action: IAction<PatientPrescriptionsDrugListProps[] | null>) {
+    state.medicationsPrescriptions.prescriptions.prescriptionsDrugList = action.payload;
   },
   setPlansList(state, action: IAction<IPatientPlansListData | null>) {
     state.plans.plansList = action.payload;

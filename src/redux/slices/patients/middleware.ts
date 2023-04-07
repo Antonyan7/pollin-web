@@ -4,6 +4,7 @@ import { IPatientAppointment, PatientAppointmentsSortField } from '@axios/bookin
 import {
   AddManuallyAddressModalProps,
   ICreateEncounterAddendumRequest,
+  ICreatePatientPrescription,
   IFemalePatientGynaecologicalHistoryProps,
   IFemalePatientMenstrualCycleHistoryProps,
   IFemalePregnancyInformationProps,
@@ -12,6 +13,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
   IUpdateEncounterAddendumRequest,
+  PatientPrescriptionsDrugListProps,
   Recency,
   TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -94,6 +96,8 @@ const {
   setIsProfileTestResultDetailsLoading,
   setProfileTestResultDetails,
   setFertilityHistory,
+  setIsPrescriptionCreationLoading,
+  setCurrentPrescriptionUuid,
   setIsFertilityHistoryLoading,
   setFemalePregnancyInformation,
   setIsFemalePregnancyInformationLoading,
@@ -119,8 +123,10 @@ const {
   setPatientMissingMedications,
   setIsPatientCurrentMedicationLoading,
   setIsPatientPastMedicationLoading,
+  setPatientMedicationsState,
   setIsFemalePatientGynaecologicalHistoryDataUpdating,
   setDrugs,
+  setPatientPrescriptionsListItems,
   setIsDrugLoading,
   setIsDropdownOptionsLoading,
   setDropdownOptions,
@@ -700,6 +706,27 @@ const updateFemalePatientMenstrualCycleHistory =
     dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(false));
   };
 
+const createPatientPrescription = (prescriptionData: ICreatePatientPrescription) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPrescriptionCreationLoading(true));
+
+    const response = await API.patients.createPatientPrescription(prescriptionData);
+
+    if (response.data.data.uuid) {
+      dispatch(setCurrentPrescriptionUuid(response.data.data.uuid));
+      dispatch(setPatientPrescriptionsListItems(null));
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsPrescriptionCreationLoading(false));
+  }
+};
+
+const resetCurrentPrescriptionUuid = () => (dispatch: AppDispatch) => {
+  dispatch(setCurrentPrescriptionUuid(''));
+};
+
 const getPatientMedications = (patientId: string, recency: Recency, page: number) => async (dispatch: AppDispatch) => {
   try {
     switch (recency) {
@@ -759,11 +786,11 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
-const getDrugs = (searchString: string, page: number, categoryId?: string) => async (dispatch: AppDispatch) => {
+const getDrugs = (searchString: string, page: number) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsDrugLoading(true));
 
-    const response = await API.patients.getDrugs(searchString, page, categoryId);
+    const response = await API.patients.getDrugs(searchString, page);
 
     dispatch(setDrugs(response.data.data.medications));
   } catch (error) {
@@ -797,6 +824,38 @@ const createPatientMedication = (data: ICreateMedication) => async (dispatch: Ap
   }
 
   dispatch(setIsMedicationCreatedLoading(false));
+};
+
+const setPatientPrescriptionsItems = (listItems?: PatientPrescriptionsDrugListProps[]) => (dispatch: AppDispatch) => {
+  if (listItems && listItems.length) {
+    dispatch(setPatientPrescriptionsListItems(listItems));
+  } else {
+    dispatch(setPatientPrescriptionsListItems(null));
+  }
+};
+
+const removePatientPrescriptionItem = (itemIndex: number) => (dispatch: AppDispatch, getState: () => RootState) => {
+  const prescriptionListItems = getState().patients.medicationsPrescriptions.prescriptions.prescriptionsDrugList;
+
+  if (prescriptionListItems?.length) {
+    const filteredPrescriptionListItems = prescriptionListItems.filter(
+      (prescriptionListItem) => prescriptionListItem.id !== itemIndex
+    );
+
+    dispatch(setPatientPrescriptionsListItems(filteredPrescriptionListItems));
+  } else {
+    dispatch(setPatientPrescriptionsListItems(null));
+  }
+};
+
+const getPatientMedicationsState = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    const response = await API.patients.getPatientMedicationsState(patientId);
+
+    dispatch(setPatientMedicationsState(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 };
 
 const updateFemalePatientGynaecologicalHistory =
@@ -1082,6 +1141,8 @@ export default {
   getPatientAlertDetails,
   resetPatientAlerts,
   getPatientProfileOverview,
+  setPatientPrescriptionsItems,
+  removePatientPrescriptionItem,
   setEncountersLoadingState,
   resetAppointmentsList,
   createPatientAlert,
@@ -1135,6 +1196,9 @@ export default {
   getPatientMedications,
   updateFertilityHistory,
   getDrugs,
+  resetCurrentPrescriptionUuid,
+  createPatientPrescription,
+  getPatientMedicationsState,
   getMedicationDropdownOptions,
   getMaleGenitourinaryHistory,
   createPatientMedication,

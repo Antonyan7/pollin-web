@@ -26,6 +26,7 @@ import MedicalBackgroundUnsavedChanges, {
   MedicalBackgroundUnsavedChangesProps
 } from '@components/Modals/MedicalBackground/UnsavedChanges';
 import AddPatientMedicationModal from '@components/Modals/Medications/AddPatientMedicationModal';
+import AddPatientPrescriptionsModal from '@components/Modals/Medications/AddPatientPrescriptionModal';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import OrderValidationErrorModal, {
@@ -74,6 +75,7 @@ import {
   IMakeTestResultReviewReq,
   IPatientContactInformationModalProps
 } from 'types/reduxTypes/resultsStateTypes';
+
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 import { v4 } from 'uuid';
 
@@ -208,6 +210,7 @@ const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBack
 
 // Medications
 const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={v4()} />;
+const getAddPatientPrescriptionsModal = () => <AddPatientPrescriptionsModal key={v4()} />;
 
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
@@ -306,6 +309,8 @@ export const ModalsController = () => {
           // Medications
           case ModalName.AddPatientMedicationModal:
             return getAddPatientMedicationModalModal();
+          case ModalName.AddPatientPrescriptionModal:
+            return getAddPatientPrescriptionsModal();
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

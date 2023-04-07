@@ -48,7 +48,6 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
     isDropdownsLoading: false
   }
 });
-
 const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProps => ({
   medications: {
     drugs: null,
@@ -59,10 +58,15 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
     patientCurrentMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
     patientPastMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
     patientMissingMedications: { medications: [], pageSize: 5, currentPage: 0, totalItems: 0 },
+    patientMedicationState: null,
     isPatientCurrentMedicationLoading: false,
     isPatientPastMedicationLoading: false
   },
-  prescriptions: {}
+  prescriptions: {
+    prescriptionsDrugList: null,
+    isPrescriptionCreationLoading: false,
+    currentPrescriptionUuid: ''
+  }
 });
 
 const getPatientPlansInitialState = (): IPatientPlansProps => ({

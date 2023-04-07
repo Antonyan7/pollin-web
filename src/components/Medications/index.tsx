@@ -8,6 +8,7 @@ import { margins } from 'themes/themeConstants';
 import useReplaceCurrentURLMedications from '@hooks/useReplaceCurrentURLMedications';
 
 import Medications from './layout/Medications';
+import Prescriptions from './layout/Prescriptions';
 
 const MedicationsTabs = () => {
   const [t] = useTranslation();
@@ -37,7 +38,7 @@ const MedicationsTabs = () => {
         </Tabs>
       </Box>
       <TabPanel value={activePageValue} index={0}>
-        {/* TODO Prescriptions */}
+        <Prescriptions />
       </TabPanel>
       <TabPanel value={activePageValue} index={1}>
         <Medications />
