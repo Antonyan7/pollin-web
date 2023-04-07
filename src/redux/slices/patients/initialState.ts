@@ -115,6 +115,7 @@ export const getInitialState = (): PatientEmrProps => ({
   patientProfile: null,
   isPatientHighlightsLoading: false,
   isPatientHighlightIntakeComplete: false,
+  isICFormComplete: false,
   isPatientHighlightIntakeReminderActive: false,
   isPatientAlertDetailsLoading: false,
   patientHighlightHeader: {

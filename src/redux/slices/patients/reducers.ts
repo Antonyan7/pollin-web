@@ -214,6 +214,9 @@ const reducers = createReducer({
   setIsPatientHighlightIntakeComplete(state, action: IAction<boolean>) {
     state.isPatientHighlightIntakeComplete = action.payload;
   },
+  setIsICFormComplete(state, action: IAction<boolean>) {
+    state.isICFormComplete = action.payload;
+  },
   setIsPatientHighlightIntakeReminderActive(state, action: IAction<boolean>) {
     state.isPatientHighlightIntakeReminderActive = action.payload;
   },

@@ -28,6 +28,7 @@ const isPatientHighlightsLoading = createSelector([selector], (state) => state.i
 const patientHighlightHeader = createSelector([selector], (state) => state.patientHighlightHeader);
 const patientHighlights = createSelector([selector], (state) => state.patientHighlights);
 const isPatientHighlightIntakeComplete = createSelector([selector], (state) => state.isPatientHighlightIntakeComplete);
+const isICFormComplete = createSelector([selector], (state) => state.isICFormComplete);
 const isPatientAlertViewOpen = createSelector([selector], (state) => state.isPatientAlertViewOpen);
 const isAlertDeleted = createSelector([selector], (state) => state.isAlertDeleted);
 const isPatientHighlightIntakeReminderActive = createSelector(
@@ -296,6 +297,7 @@ export default {
   patientContactInformation,
   isPatientContactInformationLoading,
   isPatientHighlightIntakeComplete,
+  isICFormComplete,
   isPatientHighlightIntakeReminderActive,
   isPatientAlertDetailsLoading,
   drugs,

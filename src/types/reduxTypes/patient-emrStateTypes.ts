@@ -162,6 +162,7 @@ export interface PatientEmrProps {
   medicalBackground: MedicalBackgroundProps;
   isPatientHighlightsLoading: boolean;
   isPatientHighlightIntakeComplete: boolean;
+  isICFormComplete: boolean;
   isPatientHighlightIntakeReminderActive: boolean;
   patientHighlightHeader: PatientHighlightHeader;
   patientHighlights: PatientHighlight[] | null;

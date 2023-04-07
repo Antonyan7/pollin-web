@@ -83,6 +83,7 @@ const {
   setPatientContactInformation,
   setPatientContactInformationLoadingState,
   setIsPatientHighlightIntakeComplete,
+  setIsICFormComplete,
   setIsPatientHighlightIntakeReminderActive,
   setPatientAppointmentsRequestStatus,
   setPatientAlertViewState,
@@ -375,6 +376,8 @@ const getPatientProfile = (patientId: string) => async (dispatch: AppDispatch) =
 
     const response = await API.patients.getPatientProfile(patientId);
 
+    dispatch(setIsICFormComplete(response.data.data.isICFormComplete));
+
     const patientProfile = {
       id: patientId,
       ...response.data.data
@@ -565,37 +568,37 @@ const getPatientAppointments =
     orderBy: Exclude<keyof IPatientAppointment, 'time'> | null,
     selectedFilters?: GroupedFiltersOption[]
   ) =>
-  async (dispatch: AppDispatch) => {
-    try {
-      const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
+    async (dispatch: AppDispatch) => {
+      try {
+        const excludeTitleFilters = selectedFilters?.map(({ id, type }) => ({ id, type }));
 
-      const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
-        patientId,
-        page,
-        order,
-        orderBy,
-        filters: excludeTitleFilters
-      });
-
-      dispatch(
-        setPatientAppointments({
-          list: {
-            appointments: data.appointments,
-            currentPage,
-            pageSize,
-            totalItems
-          },
+        const { data, pageSize, currentPage, totalItems } = await bookingHelpers.getAppointmentsListFromParams({
+          patientId,
+          page,
           order,
           orderBy,
-          selectedFilters,
-          status: AppointmentResponseStatus.SUCCESS
-        })
-      );
-    } catch (error) {
-      Sentry.captureException(error);
-      dispatch(setPatientAppointmentsRequestStatus(AppointmentResponseStatus.FAIL));
-    }
-  };
+          filters: excludeTitleFilters
+        });
+
+        dispatch(
+          setPatientAppointments({
+            list: {
+              appointments: data.appointments,
+              currentPage,
+              pageSize,
+              totalItems
+            },
+            order,
+            orderBy,
+            selectedFilters,
+            status: AppointmentResponseStatus.SUCCESS
+          })
+        );
+      } catch (error) {
+        Sentry.captureException(error);
+        dispatch(setPatientAppointmentsRequestStatus(AppointmentResponseStatus.FAIL));
+      }
+    };
 
 const setCurrentAppointmentType = (appointmentType: string) => async (dispatch: AppDispatch) => {
   dispatch(setCurrentAppointmentFilterType(appointmentType));
@@ -654,23 +657,23 @@ const getFertilityHistory = (patientId: string) => async (dispatch: AppDispatch)
 
 const updateFertilityHistory =
   (patientId: string, data: IFertilityHistory, onSave: (isSuccessfullySaved: boolean) => void) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(setIsFertilityHistoryDataUpdating(true));
+    async (dispatch: AppDispatch) => {
+      dispatch(setIsFertilityHistoryDataUpdating(true));
 
-    try {
-      const response = await API.patients.updateFertilityHistory(patientId, data);
+      try {
+        const response = await API.patients.updateFertilityHistory(patientId, data);
 
-      if (response) {
-        dispatch(getFertilityHistory(patientId));
-        onSave(true);
+        if (response) {
+          dispatch(getFertilityHistory(patientId));
+          onSave(true);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+        onSave(false);
       }
-    } catch (error) {
-      Sentry.captureException(error);
-      onSave(false);
-    }
 
-    dispatch(setIsFertilityHistoryDataUpdating(false));
-  };
+      dispatch(setIsFertilityHistoryDataUpdating(false));
+    };
 
 const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsFemalePatientMenstrualCycleHistoryLoading(true));
@@ -688,23 +691,23 @@ const getFemalePatientMenstrualCycleHistory = (patientId: string) => async (disp
 
 const updateFemalePatientMenstrualCycleHistory =
   (patientId: string, data: IFemalePatientMenstrualCycleHistoryProps, onSave: (isSuccessfullySaved: boolean) => void) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(true));
+    async (dispatch: AppDispatch) => {
+      dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(true));
 
-    try {
-      const response = await API.patients.updateFemalePatientMenstrualCycleHistory(patientId, data);
+      try {
+        const response = await API.patients.updateFemalePatientMenstrualCycleHistory(patientId, data);
 
-      if (response) {
-        dispatch(getFemalePatientMenstrualCycleHistory(patientId));
-        onSave(true);
+        if (response) {
+          dispatch(getFemalePatientMenstrualCycleHistory(patientId));
+          onSave(true);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+        onSave(false);
       }
-    } catch (error) {
-      Sentry.captureException(error);
-      onSave(false);
-    }
 
-    dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(false));
-  };
+      dispatch(setIsFemalePatientMenstrualCycleHistoryDataUpdating(false));
+    };
 
 const createPatientPrescription = (prescriptionData: ICreatePatientPrescription) => async (dispatch: AppDispatch) => {
   try {
@@ -860,23 +863,23 @@ const getPatientMedicationsState = (patientId: string) => async (dispatch: AppDi
 
 const updateFemalePatientGynaecologicalHistory =
   (patientId: string, data: IFemalePatientGynaecologicalHistoryProps, onSave: (isSuccessfullySaved: boolean) => void) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(true));
+    async (dispatch: AppDispatch) => {
+      dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(true));
 
-    try {
-      const response = await API.patients.updateFemalePatientGynaecologicalHistory(patientId, data);
+      try {
+        const response = await API.patients.updateFemalePatientGynaecologicalHistory(patientId, data);
 
-      if (response) {
-        dispatch(getFemalePatientGynaecologicalHistory(patientId));
-        onSave(true);
+        if (response) {
+          dispatch(getFemalePatientGynaecologicalHistory(patientId));
+          onSave(true);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+        onSave(false);
       }
-    } catch (error) {
-      Sentry.captureException(error);
-      onSave(false);
-    }
 
-    dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(false));
-  };
+      dispatch(setIsFemalePatientGynaecologicalHistoryDataUpdating(false));
+    };
 
 const changeContactInformationEditButtonState = () => async (dispatch: AppDispatch, getState: () => RootState) => {
   const editButtonState = getState().patients.medicalBackground.contact.isContactInformationEditButtonClicked;
@@ -911,23 +914,23 @@ const getFemalePregnancyInformation = (patientId: string) => async (dispatch: Ap
 
 const updateFemalePregnancyInformation =
   (patientId: string, data: IFemalePregnancyInformationProps, onSave: (isSuccessfullySaved: boolean) => void) =>
-  async (dispatch: AppDispatch) => {
-    dispatch(setIsFemalePregnancyInformationDataUpdating(true));
+    async (dispatch: AppDispatch) => {
+      dispatch(setIsFemalePregnancyInformationDataUpdating(true));
 
-    try {
-      const response = await API.patients.updateFemalePregnancyInformation(patientId, data);
+      try {
+        const response = await API.patients.updateFemalePregnancyInformation(patientId, data);
 
-      if (response) {
-        dispatch(getFemalePregnancyInformation(patientId));
-        onSave(true);
+        if (response) {
+          dispatch(getFemalePregnancyInformation(patientId));
+          onSave(true);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
+        onSave(false);
       }
-    } catch (error) {
-      Sentry.captureException(error);
-      onSave(false);
-    }
 
-    dispatch(setIsFemalePregnancyInformationDataUpdating(false));
-  };
+      dispatch(setIsFemalePregnancyInformationDataUpdating(false));
+    };
 
 const getPatientMedicalBackgroundDropdownOptions = () => async (dispatch: AppDispatch) => {
   dispatch(setIsDropdownsLoading(true));
