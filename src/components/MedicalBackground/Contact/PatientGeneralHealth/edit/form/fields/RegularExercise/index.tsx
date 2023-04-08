@@ -14,7 +14,7 @@ const RegularExercise = () => {
   const regularExercise = generalHealth?.regularExercise;
   const field = defineSingleFieldValue(regularExercise?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_REGULAR_EXERCISE);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!regularExercise?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

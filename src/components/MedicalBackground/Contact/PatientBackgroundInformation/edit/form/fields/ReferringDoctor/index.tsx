@@ -7,9 +7,10 @@ import MedicalBackgroundNote from '@components/MedicalBackground/components/comm
 import MedicalFormRadio from '@components/MedicalBackground/components/common/MedicalFormRadio';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { Grid } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
-import { v4 } from 'uuid';
 
 import ReferringDoctorContent from './Content';
 import Title from './Title';
@@ -20,6 +21,8 @@ const FieldOHIP = () => {
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_REFERRING_PHYSICIAN_NAME
   );
   const { control } = useFormContext();
+  const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
+  const referringDoctor = patientBackgroundInformation?.referringDoctor;
   const { field } = useController({
     name: BackgroundInformationFormFields.ReferringDoctor,
     control
@@ -32,7 +35,7 @@ const FieldOHIP = () => {
       value: state
     });
   };
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!referringDoctor?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
@@ -60,26 +63,21 @@ const FieldOHIP = () => {
               <MedicalFormRadio fieldName={`${fieldName}.value`} onChangeState={onReferringDoctorChange} />
             </Grid>
             {referringDoctorInfo.value ? (
-              <>
-                <Grid>
+              <Grid>
                   <Diagram
                     titleComponent={<Title />}
-                    titleContent={{
-                      id: v4()
-                    }}
                   >
                     <ReferringDoctorContent />
                   </Diagram>
                 </Grid>
-                <MedicalBackgroundNote
-                  onClick={onNoteClick}
-                  visible={showAdditionalNote}
-                  fieldName={BackgroundInformationFormFields.ReferringDoctor}
-                />
-              </>
             ) : null}
           </>
         ) : null}
+        <MedicalBackgroundNote
+          onClick={onNoteClick}
+          visible={showAdditionalNote}
+          fieldName={BackgroundInformationFormFields.ReferringDoctor}
+        />
       </Grid>
     </Grid>
   );

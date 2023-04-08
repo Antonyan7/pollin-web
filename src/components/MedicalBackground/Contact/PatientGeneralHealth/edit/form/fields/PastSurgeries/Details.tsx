@@ -28,7 +28,7 @@ const PastSurgeriesDetails = () => {
   const pastSurgeriesInitialValue = getValues(fieldName);
   const [arePastSurgeriesExists, setArePastSurgeriesExists] = useState<boolean>(pastSurgeriesInitialValue);
   const onPastSurgeryChange = (state: boolean) => setArePastSurgeriesExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!pastSurgery?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

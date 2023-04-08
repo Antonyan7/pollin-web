@@ -28,7 +28,7 @@ const FamilyHistoryDetails = () => {
   const familyHistoryInitialValue = getValues(fieldName);
   const [isFamilyHistoryExists, setIsfamilyHistoryExists] = useState<boolean>(familyHistoryInitialValue);
   const onFamilyHistoryChange = (state: boolean) => setIsfamilyHistoryExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!familyHistories?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

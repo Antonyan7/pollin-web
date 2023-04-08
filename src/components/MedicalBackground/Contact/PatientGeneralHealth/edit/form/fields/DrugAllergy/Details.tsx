@@ -28,7 +28,7 @@ const DrugAllergiesDetails = () => {
   const drugAllergyInitialValue = getValues(fieldName);
   const [isDrugAllergyExists, setIsDrugAllergyExists] = useState<boolean>(drugAllergyInitialValue);
   const onDrugAllergyChange = (state: boolean) => setIsDrugAllergyExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!drugAllergy?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

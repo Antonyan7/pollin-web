@@ -14,7 +14,7 @@ const CigarettesUse = () => {
   const smokeCigarettes = generalHealth?.smokeCigarettes;
   const field = defineSingleFieldValue(smokeCigarettes?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_USE_CIGARETTES);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!smokeCigarettes?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

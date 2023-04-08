@@ -125,6 +125,7 @@ const {
   setIsPatientCurrentMedicationLoading,
   setIsPatientPastMedicationLoading,
   setPatientMedicationsState,
+  setIsUpdatePatientBackgroundInformationLoading,
   setIsFemalePatientGynaecologicalHistoryDataUpdating,
   setDrugs,
   setPatientPrescriptionsListItems,
@@ -789,11 +790,11 @@ const getFemalePatientGynaecologicalHistory = (patientId: string) => async (disp
   dispatch(setIsFemalePatientGynaecologicalHistoryLoading(false));
 };
 
-const getDrugs = (searchString: string, page: number) => async (dispatch: AppDispatch) => {
+const getDrugs = (searchString: string, page: number, categoryId?: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsDrugLoading(true));
 
-    const response = await API.patients.getDrugs(searchString, page);
+    const response = await API.patients.getDrugs(searchString, page, categoryId);
 
     dispatch(setDrugs(response.data.data.medications));
   } catch (error) {
@@ -969,7 +970,7 @@ const getPatientBackgroundInformation = (patientId: string) => async (dispatch: 
 
     const response = await API.patients.getPatientBackgroundInformation(patientId);
 
-    dispatch(setBackgroundInformation(response.data.data.partners));
+    dispatch(setBackgroundInformation(response.data.data.patientBackgroundInformation));
   } catch (error) {
     Sentry.captureException(error);
   } finally {
@@ -1065,7 +1066,7 @@ const updatePatientContactInformation =
 
 const updatePatientBackgroundInformation =
   (patientId: string, backgroundInfo: IPatientBackgroundPartners) => async (dispatch: AppDispatch) => {
-    dispatch(setIsPatientBackgroundInformationLoading(true));
+    dispatch(setIsUpdatePatientBackgroundInformationLoading(true));
 
     try {
       const response = await API.patients.updatePatientBackgroundInformation(patientId, backgroundInfo);
@@ -1086,7 +1087,7 @@ const updatePatientBackgroundInformation =
       Sentry.captureException(error);
     }
 
-    dispatch(setIsPatientBackgroundInformationLoading(false));
+    dispatch(setIsUpdatePatientBackgroundInformationLoading(false));
   };
 
 const getPatientPlansList = (patientId: string, page?: number) => async (dispatch: AppDispatch) => {

@@ -6,6 +6,7 @@ import { ConsultationTitleWithIcon } from '@components/MedicalBackground/compone
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -20,9 +21,11 @@ const FieldPatientContribution = () => {
   const [t] = useTranslation();
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
+  const patientContactInformation = useAppSelector(patientsSelector.contactInformation);
+  const contributionInformation = patientContactInformation?.contribution;
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_PRIMARY_CONTRIBUTION);
   const { control } = useFormContext();
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!contributionInformation?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
@@ -59,6 +62,7 @@ const FieldPatientContribution = () => {
             }
           }}
           getOptionLabel={(contribution) => (typeof contribution === 'object' ? contribution.title : contribution)}
+          clearIcon={<CloseIcon onClick={() => onChange('')} fontSize="small" />}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInputProps={{

@@ -17,7 +17,7 @@ const FieldPatientName = () => {
   const [t] = useTranslation();
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const patientName = contactInformation?.patientName;
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!patientName?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

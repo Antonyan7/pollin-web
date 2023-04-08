@@ -18,7 +18,7 @@ const MedicalBackgroundNote = ({ fieldName, visible, onClick }: MedicalBackgroun
 
   const onDeleteIconClick = () => {
     onClick();
-    setValue(`${fieldName}.note`, '');
+    setValue(`${fieldName}.note`, '', { shouldDirty: true });
   };
 
   return visible ? (

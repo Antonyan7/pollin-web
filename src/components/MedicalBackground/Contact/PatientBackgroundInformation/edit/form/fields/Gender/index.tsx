@@ -20,6 +20,8 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 const Gender = () => {
   const [t] = useTranslation();
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
+  const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
+  const gender = patientBackgroundInformation?.gender;
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_GENDER);
   const [isOther, setIsOther] = useState<boolean>(false);
@@ -43,14 +45,14 @@ const Gender = () => {
       onChange(value.id);
     }
   };
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!gender?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
-      <Grid item container xs={5} direction="row" alignItems="center" flexWrap="nowrap" gap={2}>
+      <Grid item container xs={5} direction="row" alignItems="flex-start" flexWrap="nowrap" gap={2}>
         <ConsultationTitleWithIcon onClick={onNoteClick} description={label} />
       </Grid>
       <Grid direction="row" container gap={2} item xs={7}>

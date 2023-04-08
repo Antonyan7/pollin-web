@@ -65,7 +65,7 @@ export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = ''
     getDropdownOption(dropdownOptions, dropdownType, item?.id)
   );
 
-  const errorHelperText = generateErrorMessage(fieldName);
+  const errorHelperText = generateErrorMessage(label);
 
   return (
     <BaseDropdownWithLoading

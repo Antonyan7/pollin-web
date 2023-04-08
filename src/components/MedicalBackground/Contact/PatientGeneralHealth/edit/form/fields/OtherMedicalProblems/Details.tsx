@@ -28,7 +28,7 @@ const OtherMedicalProblemsDetails = () => {
   const medicalProblemsInitialValue = getValues(fieldName);
   const [isMedicalProblemExists, setIsMedicalProblemExists] = useState<boolean>(medicalProblemsInitialValue);
   const onMedicalProblemChange = (state: boolean) => setIsMedicalProblemExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!medicalProblem?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

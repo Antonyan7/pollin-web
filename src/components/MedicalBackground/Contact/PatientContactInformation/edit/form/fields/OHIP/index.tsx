@@ -23,7 +23,7 @@ const FieldOHIP = () => {
   const ohip = contactInformation?.OHIP;
   const [isOHIPExists, setIsOHIPExists] = useState<boolean>(ohip?.exists as boolean);
   const onOHIPChange = (state: boolean) => setIsOHIPExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!ohip?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

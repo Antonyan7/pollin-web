@@ -15,7 +15,7 @@ const FieldHeight = () => {
   const [t] = useTranslation();
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const height = generalHealth?.height;
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!height?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

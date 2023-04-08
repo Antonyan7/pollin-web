@@ -23,7 +23,7 @@ const FieldPreferredName = () => {
     name: `${ContactInformationFormFields.PreferredName}.value`,
     control
   });
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!preferredName?.note);
   const errorHelperText = generateErrorMessage(fieldLabel);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);

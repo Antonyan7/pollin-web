@@ -2,7 +2,7 @@ import React from 'react';
 import { ConsultationTitleWithIconProps } from '@components/Plans/types';
 import TextSnippetIcon from '@mui/icons-material/TextSnippet';
 import { Divider, RadioGroup, styled, Typography } from '@mui/material';
-import { borders } from 'themes/themeConstants';
+import { borders, margins } from 'themes/themeConstants';
 
 export const ConsultationFormSubTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.common.black,
@@ -24,6 +24,7 @@ export const ConsultationDivider = styled(Divider)(({ theme }) => ({
 export const ConsultationFormRadioGroup = styled(RadioGroup)(() => ({
   display: 'flex',
   flexDirection: 'row',
+  paddingTop: margins.top10,
   alignItems: 'flex-start',
   gap: 3
 }));

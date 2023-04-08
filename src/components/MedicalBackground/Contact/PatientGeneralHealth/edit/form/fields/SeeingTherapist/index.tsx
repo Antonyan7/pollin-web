@@ -14,7 +14,7 @@ const SeeingTherapist = () => {
   const seeingTherapist = generalHealth?.seeingTherapist;
   const field = defineSingleFieldValue(seeingTherapist?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_SEEING_THERAPIST);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!seeingTherapist?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

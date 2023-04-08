@@ -75,7 +75,6 @@ import {
   IMakeTestResultReviewReq,
   IPatientContactInformationModalProps
 } from 'types/reduxTypes/resultsStateTypes';
-
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 import { v4 } from 'uuid';
 

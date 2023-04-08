@@ -298,6 +298,9 @@ const reducers = createReducer({
   setIsPatientBackgroundInformationLoading(state, action: IAction<boolean>) {
     state.medicalBackground.contact.patientBackground.isPatientBackgroundInformationLoading = action.payload;
   },
+  setIsUpdatePatientBackgroundInformationLoading(state, action: IAction<boolean>) {
+    state.medicalBackground.contact.patientBackground.isUpdatePatientBackgroundInformationLoading = action.payload;
+  },
   setManuallyAddressForPrimary(state, action: IAction<AddManuallyAddressModalProps>) {
     state.medicalBackground.contact.manuallyAddressForPrimary = action.payload;
   },

@@ -1,12 +1,13 @@
 import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { MedicalDatePickerFieldProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { PollinDatePickerType } from 'types/datePicker';
 
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 import { DateUtil } from '@utils/date/DateUtil';
 
-const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDatePickerFieldProps) => {
+const MedicalDatePicker = ({ label, value, onChange, errorHelperText, isError, ...otherProps }: MedicalDatePickerFieldProps) => {
   const onDateUpdate = (date: Date | null) => {
     if (date) {
       onChange(DateUtil.convertToDateOnly(date));
@@ -22,7 +23,9 @@ const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDat
         onChange: onDateUpdate,
         value,
         isLimitedByWorkingHours: false,
-        maxDate: DateUtil.representInClinicDate(new Date())
+        maxDate: DateUtil.representInClinicDate(new Date()),
+        isError,
+        errorMessage: errorHelperText
       }}
     />
   );
@@ -31,12 +34,14 @@ const MedicalDatePicker = ({ label, value, onChange, ...otherProps }: MedicalDat
 export const ControlledDatePicker = ({ fieldName, label, ...otherProps }: { fieldName: string; label: string }) => {
   const { control } = useFormContext();
 
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: fieldName,
     control
   });
+  const errorMessage = generateErrorMessage(label);
+  const errorHelperText = fieldState?.error && errorMessage;
 
-  return <MedicalDatePicker label={label} {...field} {...otherProps} />;
+  return <MedicalDatePicker label={label} isError={Boolean(fieldState?.error)} errorHelperText={errorHelperText} {...field} {...otherProps} />;
 };
 
 export default MedicalDatePicker;

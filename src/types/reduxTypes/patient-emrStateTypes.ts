@@ -45,6 +45,7 @@ interface IProfileProps {
 interface IPatientBackgroundProps {
   patientBackgroundInformation: IPatientBackgroundPartners | null;
   isPatientBackgroundInformationLoading: boolean;
+  isUpdatePatientBackgroundInformationLoading: boolean;
   isPatientBackgroundEditButtonClicked: boolean;
 }
 

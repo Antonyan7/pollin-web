@@ -14,7 +14,7 @@ const StdHistory = () => {
   const stdHistory = generalHealth?.stdHistory;
   const field = defineSingleFieldValue(stdHistory?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_STD_HISTORY);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!stdHistory?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

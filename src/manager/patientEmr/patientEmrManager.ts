@@ -278,7 +278,7 @@ const patientEmrManager = {
     return axiosInstance.put<null, IAxiosResponse<null>>(
       `${baseURL}/v1/medical-background/${patientId}/background-information`,
       {
-        partners: data
+        patientBackgroundInformation: data
       }
     );
   },
@@ -326,12 +326,13 @@ const patientEmrManager = {
       }
     );
   },
-  getDrugs(searchString: string, page: number) {
+  getDrugs(searchString: string, page: number, categoryId?: string) {
     return axiosInstance.post<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
       `${baseURL}/v1/prescriptions/medications/search`,
       {
         searchString,
-        page
+        page,
+        ...(categoryId && { categoryId })
       }
     );
   },

@@ -5,6 +5,8 @@ import { ConsultationTitleWithIcon } from '@components/MedicalBackground/compone
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import { Grid, Typography } from '@mui/material';
+import { useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
@@ -12,7 +14,9 @@ const FieldEmailAddress = () => {
   const [t] = useTranslation();
   const fieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_EMAIL_ADDRESS);
   const { control } = useFormContext();
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const contactInformation = useAppSelector(patientsSelector.contactInformation);
+  const email = contactInformation?.emailAddress;
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!email?.note);
   const { field } = useController({
     name: `${ContactInformationFormFields.EmailAddress}.value`,
     control
@@ -26,7 +30,7 @@ const FieldEmailAddress = () => {
       <Grid item container xs={5} direction="row" alignItems="flex-start" flexWrap="nowrap" gap={1}>
         <ConsultationTitleWithIcon description={fieldLabel} onClick={onNoteClick} />
       </Grid>
-      <Grid item container direction="column" xs={7} gap={2}>
+      <Grid item container direction="column" xs={7} gap={2} paddingTop={paddings.top12}>
         <Typography>{field.value}</Typography>
         <MedicalBackgroundNote
           onClick={onNoteClick}

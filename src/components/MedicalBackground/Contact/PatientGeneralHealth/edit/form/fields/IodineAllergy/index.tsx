@@ -14,7 +14,7 @@ const IodineAllergy = () => {
   const iodineAllergy = generalHealth?.iodineAllergy;
   const field = defineSingleFieldValue(iodineAllergy?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_IODINE_ALLERGY);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!iodineAllergy?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

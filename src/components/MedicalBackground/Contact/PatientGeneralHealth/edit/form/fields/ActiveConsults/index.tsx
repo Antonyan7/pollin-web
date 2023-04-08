@@ -14,7 +14,7 @@ const ActiveConsults = () => {
   const activeConsults = generalHealth?.activeConsultsList;
   const field = defineSingleFieldValue(activeConsults?.value);
   const activeConsultsTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_ACTIVE_CONSULTS_LIST);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!activeConsults?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

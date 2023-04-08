@@ -28,7 +28,7 @@ const FoodAllergiesDetails = () => {
   const foodAllergyInitialValue = getValues(fieldName);
   const [isFoodAllergyExists, setIsFoodAllergyExists] = useState<boolean>(foodAllergyInitialValue);
   const onFoodAllergyChange = (state: boolean) => setIsFoodAllergyExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!foodAllergy?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

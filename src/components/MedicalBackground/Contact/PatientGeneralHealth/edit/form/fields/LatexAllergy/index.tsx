@@ -14,7 +14,7 @@ const LatexAllergy = () => {
   const latexAllergy = generalHealth?.latexAllergy;
   const field = defineSingleFieldValue(latexAllergy?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_LATEX_ALLERGY);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!latexAllergy?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

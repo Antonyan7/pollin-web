@@ -14,7 +14,7 @@ const ProblemWithAnesthetics = () => {
   const problemWithAnesthetics = generalHealth?.problemWithAnesthetics;
   const field = defineSingleFieldValue(problemWithAnesthetics?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_PROBLEM_WITH_ANESTHETICS);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!problemWithAnesthetics?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

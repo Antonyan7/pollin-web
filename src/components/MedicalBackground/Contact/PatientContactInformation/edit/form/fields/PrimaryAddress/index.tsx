@@ -20,7 +20,7 @@ const FieldPrimaryAddress = () => {
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const primaryAddress = contactInformation?.primaryAddress;
   const fullAddress = getFullAddress(primaryAddress);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!primaryAddress?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

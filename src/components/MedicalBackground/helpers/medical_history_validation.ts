@@ -53,7 +53,7 @@ export const femalePregnancyInformationValidationSchema = object({
         object().shape({
           id: string().nullable(),
           type: string().required(),
-          details: array().when('type', ([type]) => {
+          details: array().when('type', (type) => {
             switch (type) {
               case TypeOfPregnancy.FullTerm:
                 return object().shape({
@@ -102,11 +102,17 @@ export const menstrualCycleHistoryValidationSchema = object({
   hasPeriod: object({
     value: boolean().required()
   }),
-  cycleLength: object({
-    value: string().required()
+  cycleLength: object().when('hasPeriod.value', {
+    is: true,
+    then: object({
+      value: string().required(),
+    })
   }),
-  firstDayOfLastPeriod: object({
-    value: string().required()
+  firstDayOfLastPeriod: object().when('hasPeriod.value', {
+    is: true,
+    then: object({
+      value: string().required(),
+    })
   }),
   flow: object({
     value: string().required()
@@ -153,25 +159,13 @@ export const gynaecologicalHistoryValidationSchema = object({
     )
   }),
   signsOfPCOS: object({
-    items: array().of(
-      object().shape({
-        id: string().required()
-      })
-    )
+    items: array().min(1, 'isRequired').required()
   }),
   hyperprolactinemia: object({
-    items: array().of(
-      object().shape({
-        id: string().required()
-      })
-    )
+    items: array().min(1, 'isRequired').required()
   }),
   signsOfPOI: object({
-    items: array().of(
-      object().shape({
-        id: string().required()
-      })
-    )
+    items: array().min(1, 'isRequired').required()
   }),
   abnormalPap: object({
     value: boolean().required()

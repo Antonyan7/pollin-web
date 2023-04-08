@@ -200,7 +200,7 @@ export interface IUpdateEncounterNoteRequest {
   content: string;
 }
 
-export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest { }
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];
@@ -491,17 +491,17 @@ export interface IMedicalBackgroundFieldValuesWithItems extends MedicalBackgroun
   items: IFemalePatientGynaecologicalHistoryFieldItem[];
 }
 
-export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue {}
+export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue { }
 
-export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue {}
+export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue { }
 
-export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue {}
+export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue { }
 
-export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue {}
+export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue { }
 
-export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue {}
+export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue { }
 
-export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems {}
+export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems { }
 
 export interface IFemalePatientGynaecologicalHistoryProps {
   takingBirthControl: ITakingBirthControl;
@@ -837,7 +837,7 @@ export interface IGenitourinaryHistory {
 }
 
 export interface IPatientBackground {
-  partners: IPatientBackgroundPartners;
+  patientBackgroundInformation: IPatientBackgroundPartners;
 }
 
 export interface ISexAtBirth extends MedicalBackgroundFieldValues {

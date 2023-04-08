@@ -19,52 +19,76 @@ export const patientGeneralHealthValidationSchema = object({
       .required()
   }),
   [GeneralHealthFormFields.MedicalProblems]: object({
-    items: array().of(
-      object().shape({
-        id: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          id: string().required(),
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.PastSurgeries]: object({
-    items: array().of(
-      object().shape({
-        typeOfSurgery: string().required(),
-        dateOfSurgery: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          typeOfSurgery: string().required(),
+          dateOfSurgery: string().required()
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.VitaminSupplements]: object({
-    items: array().of(
-      object().shape({
-        title: string().required(),
-        dosage: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          title: string().required(),
+          dosage: string().required()
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.DrugAllergies]: object({
-    items: array().of(
-      object().shape({
-        title: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          title: string().required(),
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.FoodAllergies]: object({
-    items: array().of(
-      object().shape({
-        title: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          title: string().required(),
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.CurrentStressLevel]: object({
     value: string().required()
   }),
   [GeneralHealthFormFields.FamilyHistory]: object({
-    items: array().of(
-      object().shape({
-        title: string().required(),
-        familyMemberName: string().required()
-      })
-    )
+    exists: boolean(),
+    items: array().when('exists', {
+      is: true,
+      then: array().of(
+        object().shape({
+          title: string().required(),
+          familyMemberName: string().required(),
+        })
+      )
+    })
   }),
   [GeneralHealthFormFields.Diet]: object({
     value: string().notRequired()
@@ -101,14 +125,14 @@ export const patientContactInformationValidationSchema = object({
   }),
   [ContactInformationFormFields.OHIP]: object({
     exists: boolean(),
-    number: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 12).when('exists', {
+    number: string().when('exists', {
       is: true,
-      then: string().required(),
+      then: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 12).required(),
       otherwise: string().notRequired().nullable()
     }),
-    versionCode: string().test('len', 'Required', ohipVersionCode => ohipVersionCode?.length === 2).when('exists', {
+    versionCode: string().when('exists', {
       is: true,
-      then: string().required(),
+      then: string().test('len', 'Required', ohipVersionCode => ohipVersionCode?.length === 2).required(),
       otherwise: string().notRequired().nullable()
     })
   })

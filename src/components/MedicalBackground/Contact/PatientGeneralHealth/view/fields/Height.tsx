@@ -15,7 +15,7 @@ const Height = ({ componentIndex }: GeneralHealthComponentsProps) => {
 
   return (
     <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
-      <RenderSingleValueAndNote value={fieldValue?.inches} note={fieldValue?.note} />
+      <RenderSingleValueAndNote value={`${fieldValue?.feet}'${fieldValue?.inches}`} note={fieldValue?.note} />
     </FieldWrapper>
   );
 };

@@ -29,7 +29,7 @@ const VitaminSupplementDetails = () => {
   const [areVitaminSupplementsExists, setAreVitaminSupplementsExists] =
     useState<boolean>(vitaminSupplementsInitialValue);
   const onVitaminSupplementChange = (state: boolean) => setAreVitaminSupplementsExists(state);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!vitaminSupplement?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

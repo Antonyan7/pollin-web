@@ -14,7 +14,7 @@ const AlcoholUse = () => {
   const drinkAlcohol = generalHealth?.drinkAlcohol;
   const field = defineSingleFieldValue(drinkAlcohol?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_USE_ALCOHOL);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!drinkAlcohol?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

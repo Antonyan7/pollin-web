@@ -79,6 +79,10 @@ const isPatientBackgroundInformationLoading = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.patientBackground.isPatientBackgroundInformationLoading
 );
+const isUpdatePatientBackgroundInformationLoading = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientBackground.isUpdatePatientBackgroundInformationLoading
+);
 const isPatientBackgroundEditButtonClicked = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked
@@ -339,6 +343,7 @@ export default {
   isContactInformationLoading,
   patientBackgroundInformation,
   isPatientBackgroundInformationLoading,
+  isUpdatePatientBackgroundInformationLoading,
   isPatientBackgroundEditButtonClicked,
   isMalePatientGenitourinaryEditButtonClicked,
   contactInformation,

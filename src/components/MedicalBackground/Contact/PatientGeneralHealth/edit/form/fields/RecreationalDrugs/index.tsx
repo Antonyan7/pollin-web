@@ -14,7 +14,7 @@ const RecreationalDrugs = () => {
   const recreationalDrugs = generalHealth?.recreationalDrugs;
   const field = defineSingleFieldValue(recreationalDrugs?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_USE_RECREATIONAL_DRUGS);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!recreationalDrugs?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

@@ -21,7 +21,7 @@ const FieldMailingAddress = () => {
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const mailingAddress = contactInformation?.mailingAddress;
   const fullAddress = getFullAddress(mailingAddress);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!mailingAddress?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

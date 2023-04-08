@@ -14,7 +14,7 @@ const MarijuanaUse = () => {
   const useMarijuana = generalHealth?.useMarijuana;
   const field = defineSingleFieldValue(useMarijuana?.value);
   const fieldTitle = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_USE_MARIJUANA);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!useMarijuana?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

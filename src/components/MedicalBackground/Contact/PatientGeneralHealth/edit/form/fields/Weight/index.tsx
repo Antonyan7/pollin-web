@@ -26,7 +26,7 @@ const FieldWeight = () => {
   });
   const { onChange, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(fieldLabel);
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!weightInLbs?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };

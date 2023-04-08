@@ -16,6 +16,8 @@ export interface MedicalDatePickerFieldProps {
   label: string;
   value: Date | null;
   onChange: (value: React.SetStateAction<string | Date | null>) => void;
+  isError?: boolean;
+  errorHelperText?: string;
 }
 
 export enum GeneralHealthFormFields {

@@ -23,6 +23,8 @@ const RelationshipStatus = () => {
   );
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
+  const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
+  const relationshipStatus = patientBackgroundInformation?.relationship;
   const { control } = useFormContext();
   const { field, fieldState } = useController({
     name: `${BackgroundInformationFormFields.PreferredPronouns}.value`,
@@ -42,14 +44,14 @@ const RelationshipStatus = () => {
       onChange(value.id);
     }
   };
-  const [showAdditionalNote, setShowAdditionalNote] = useState(false);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!relationshipStatus?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
-      <Grid item container xs={5} direction="row" alignItems="center" flexWrap="nowrap" gap={2}>
+      <Grid item container xs={5} direction="row" alignItems="flex-start" flexWrap="nowrap" gap={2}>
         <ConsultationTitleWithIcon onClick={onNoteClick} description={fieldLabel} />
       </Grid>
       <Grid container direction="row" gap={2} item xs={7}>
