@@ -14,6 +14,7 @@ const Actions = () => {
 
   const onClickConfirm = () => {
     router.back();
+    router.reload();
     dispatch(viewsMiddleware.closeModal(ModalName.ErrorModal));
   };
 
