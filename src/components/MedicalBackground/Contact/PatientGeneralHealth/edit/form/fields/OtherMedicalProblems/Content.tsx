@@ -5,11 +5,11 @@ import {
   DiagramTitleProps,
   GeneralHealthFormFields
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 
 const MedicalPropblemContent = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
@@ -21,6 +21,7 @@ const MedicalPropblemContent = ({ titleIndex }: DiagramTitleProps) => {
     control
   });
   const errorHelperText = generateErrorMessage(`${label} ${titleIndex + 1}`);
+
   useScrollIntoView(problemRef, fieldState);
 
   return (
