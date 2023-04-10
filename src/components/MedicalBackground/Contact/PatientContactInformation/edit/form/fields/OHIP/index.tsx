@@ -52,9 +52,7 @@ const FieldOHIP = () => {
             </Grid>
             {isOHIPExists ? (
               <Grid>
-                <Diagram
-                  titleComponent={<OHIPTitle />}
-                >
+                <Diagram titleComponent={<OHIPTitle />}>
                   <OHIPContent />
                 </Diagram>
               </Grid>

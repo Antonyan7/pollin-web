@@ -16,19 +16,19 @@ import { Grid } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
 const PatientBackgroundInformationEditForm = () => (
-    <Grid sx={{ py: paddings.topBottom32 }}>
-      <FieldSexAtBirth />
-      <FieldCancerPatient />
-      <FieldGender />
-      <FieldSexualOrientation />
-      <FieldPronouns />
-      <RelationshipStatus />
-      <FieldDateOfBirth />
-      <FieldAge />
-      <FieldCurrentOccupation />
-      <FieldReferringDoctor />
-      <FieldFamilyDoctor />
-    </Grid>
-  );
+  <Grid sx={{ py: paddings.topBottom32 }}>
+    <FieldSexAtBirth />
+    <FieldCancerPatient />
+    <FieldGender />
+    <FieldSexualOrientation />
+    <FieldPronouns />
+    <RelationshipStatus />
+    <FieldDateOfBirth />
+    <FieldAge />
+    <FieldCurrentOccupation />
+    <FieldReferringDoctor />
+    <FieldFamilyDoctor />
+  </Grid>
+);
 
 export default PatientBackgroundInformationEditForm;

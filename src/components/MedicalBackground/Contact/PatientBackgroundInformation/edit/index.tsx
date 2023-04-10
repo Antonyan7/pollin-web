@@ -16,13 +16,18 @@ const PatientBackgroundInformationEdit = () => {
   const router = useRouter();
   const currentPatientId = router.query.id;
   const patientInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
-  const isUpdatePatientBackgroundInformationLoading = useAppSelector(patientsSelector.isUpdatePatientBackgroundInformationLoading);
+  const isUpdatePatientBackgroundInformationLoading = useAppSelector(
+    patientsSelector.isUpdatePatientBackgroundInformationLoading
+  );
   const methods = useForm<IPatientBackgroundPartners>({
     defaultValues: getBackgroundInformationEmptyState(patientInformation as IPatientBackgroundPartners),
     resolver: yupResolver(patientBackgroundInformationValidationSchema),
     mode: 'onSubmit'
   });
-  const { handleSubmit, formState: { dirtyFields } } = methods;
+  const {
+    handleSubmit,
+    formState: { dirtyFields }
+  } = methods;
 
   const onBackgroundInformationSubmit = (values: IPatientBackgroundPartners) => {
     if (typeof currentPatientId === 'string') {
@@ -40,7 +45,11 @@ const PatientBackgroundInformationEdit = () => {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onBackgroundInformationSubmit)}>
         <PatientBackgroundInformationEditForm />
-        <FormSubmit onClick={onClose} isDisabled={!isFormChanged} isLoading={isUpdatePatientBackgroundInformationLoading} />
+        <FormSubmit
+          onClick={onClose}
+          isDisabled={!isFormChanged}
+          isLoading={isUpdatePatientBackgroundInformationLoading}
+        />
       </form>
     </FormProvider>
   );

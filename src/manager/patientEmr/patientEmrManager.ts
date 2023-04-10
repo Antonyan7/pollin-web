@@ -37,10 +37,12 @@ import {
   IPatientPlansCategoriesAndTypesResponse,
   IPatientPlansListData,
   IPatientPlansStatusResponse,
+  IPatientPrescriptions,
   IPatientProfileOverviewResponse,
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
+  IPrescriptionStatuses,
   IProfileTestResultDetailsReqBody,
   IProfileTestResultDetailsResponse,
   IProfileTestResults,
@@ -346,6 +348,16 @@ const patientEmrManager = {
       }
     );
   },
+  archivePatientPrescription(prescriptionId: string) {
+    return axiosInstance.delete<null, IAxiosResponse<null>>(`${baseURL}/v1/prescriptions`, {
+      data: { prescriptionId }
+    });
+  },
+  markPatientPrescriptionDispensed(prescriptionId: string) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/prescriptions/mark-as-dispensed`, {
+      prescriptionId
+    });
+  },
   getPatientMedications(patientId: string, recency: Recency, page: number) {
     return axiosInstance.get<IPatientMedications, IAxiosResponsePaginated<IPatientMedications>>(
       `${baseURL}/v1/prescriptions/medications`,
@@ -358,9 +370,33 @@ const patientEmrManager = {
       }
     );
   },
+  getPatientPrescriptions(patientId: string, page: number) {
+    return axiosInstance.get<IPatientPrescriptions, IAxiosResponsePaginated<IPatientPrescriptions>>(
+      `${baseURL}/v1/prescriptions`,
+      {
+        params: {
+          patientId,
+          page
+        }
+      }
+    );
+  },
+  getPrescriptionStatuses() {
+    return axiosInstance.get<IPrescriptionStatuses, IAxiosResponse<IPrescriptionStatuses>>(
+      `${baseURL}/v1/prescriptions/status`
+    );
+  },
   getMedicationDropdownOptions() {
     return axiosInstance.get<IDropdownsResponse, IAxiosResponse<IDropdownsResponse>>(
       `${baseURL}/v1/prescriptions/dropdown-options`
+    );
+  },
+  downloadPatientPrescription(prescriptionId: string) {
+    return axiosInstance.get<void, IAxiosResponse<BlobPart>>(
+      `/clinic-downloads/v1/prescriptions/${prescriptionId}/download`,
+      {
+        responseType: 'blob'
+      }
     );
   },
   createPatientMedication(data: ICreateMedication) {

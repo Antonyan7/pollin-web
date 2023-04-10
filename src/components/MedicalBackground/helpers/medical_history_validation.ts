@@ -105,13 +105,13 @@ export const menstrualCycleHistoryValidationSchema = object({
   cycleLength: object().when('hasPeriod.value', {
     is: true,
     then: object({
-      value: string().required(),
+      value: string().required()
     })
   }),
   firstDayOfLastPeriod: object().when('hasPeriod.value', {
     is: true,
     then: object({
-      value: string().required(),
+      value: string().required()
     })
   }),
   flow: object({

@@ -34,9 +34,18 @@ const Diet = () => {
   return (
     <Grid px={paddings.leftRight32} py={paddings.topBottom12} xs={12} gap={4} container item direction="column">
       <Grid item container direction="row" alignItems="flex-start" xs={12}>
-        <Grid item container xs={5} direction="row" alignItems="flex-start" flexWrap="nowrap" gap={2} sx={{
-          marginTop: margins.top12
-        }}>
+        <Grid
+          item
+          container
+          xs={5}
+          direction="row"
+          alignItems="flex-start"
+          flexWrap="nowrap"
+          gap={2}
+          sx={{
+            marginTop: margins.top12
+          }}
+        >
           <ConsultationTitleWithIcon onClick={onNoteClick} description={fieldLabel} />
         </Grid>
         <Grid item container direction="row" gap={2} xs={7}>

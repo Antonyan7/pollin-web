@@ -27,6 +27,9 @@ import MedicalBackgroundUnsavedChanges, {
 } from '@components/Modals/MedicalBackground/UnsavedChanges';
 import AddPatientMedicationModal from '@components/Modals/Medications/AddPatientMedicationModal';
 import AddPatientPrescriptionsModal from '@components/Modals/Medications/AddPatientPrescriptionModal';
+import ConfirmPrescriptionArchiveModal, {
+  ConfirmPrescriptionArchiveModalProps
+} from '@components/Modals/Medications/ConfirmPrescriptionArchiveModal';
 import OrderCancellation, { OrderCancellationProps } from '@components/Modals/Order/OrderCancellation';
 import CancelOrderCreationModal from '@components/Modals/Order/OrderCreationCancel/CancelOrderCreation';
 import OrderValidationErrorModal, {
@@ -211,6 +214,10 @@ const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBack
 const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={v4()} />;
 const getAddPatientPrescriptionsModal = () => <AddPatientPrescriptionsModal key={v4()} />;
 
+const getConfirmPrescriptionArchiveModal = (modal: IOpenedModal<ConfirmPrescriptionArchiveModalProps>) => (
+  <ConfirmPrescriptionArchiveModal key={modal.name} {...modal.props} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -310,6 +317,8 @@ export const ModalsController = () => {
             return getAddPatientMedicationModalModal();
           case ModalName.AddPatientPrescriptionModal:
             return getAddPatientPrescriptionsModal();
+          case ModalName.PrescriptionsArchive:
+            return getConfirmPrescriptionArchiveModal(modal);
           // dev
           case ModalName.DevToolsModal:
             return getDevToolsModal();

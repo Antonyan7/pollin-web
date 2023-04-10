@@ -63,12 +63,10 @@ const FieldOHIP = () => {
             </Grid>
             {familyDoctorInfo.value ? (
               <Grid>
-                  <Diagram
-                    titleComponent={<Title />}
-                  >
-                    <FamilyDoctorContent />
-                  </Diagram>
-                </Grid>
+                <Diagram titleComponent={<Title />}>
+                  <FamilyDoctorContent />
+                </Diagram>
+              </Grid>
             ) : null}
           </>
         ) : (

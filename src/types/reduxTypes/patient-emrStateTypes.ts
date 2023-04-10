@@ -24,6 +24,8 @@ import {
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
+  IPatientPrescriptions,
+  IPrescriptionStatusesVariations,
   IProfileTestResults,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
@@ -104,6 +106,9 @@ export interface MedicationsPrescriptionsProps {
     prescriptionsDrugList: PatientPrescriptionsDrugListProps[] | null;
     isPrescriptionCreationLoading: boolean;
     currentPrescriptionUuid: string;
+    patientPrescriptions: IPatientPrescriptions;
+    prescriptionStatuses: IPrescriptionStatusesVariations[];
+    isPatientPrescriptionsLoading: boolean;
   };
 }
 

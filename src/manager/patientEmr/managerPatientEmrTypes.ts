@@ -15,6 +15,7 @@ import {
   ProfilePhotoStatus,
   SexAtBirth
 } from 'types/reduxTypes/patient-emrStateTypes';
+import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 export interface IGetPatientsRequestBody {
   name: string;
@@ -200,7 +201,7 @@ export interface IUpdateEncounterNoteRequest {
   content: string;
 }
 
-export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest { }
+export interface ICreateEncounterAddendumRequest extends IEncounterAddendumRequest {}
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];
@@ -491,17 +492,17 @@ export interface IMedicalBackgroundFieldValuesWithItems extends MedicalBackgroun
   items: IFemalePatientGynaecologicalHistoryFieldItem[];
 }
 
-export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue { }
+export interface ITakingBirthControl extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IIsOvulating extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IPreviousPapTest extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IPapTestLastDate extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue { }
+export interface IAbnormalPap extends IMedicalBackgroundFieldValuesWithValue {}
 
-export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems { }
+export interface IAbnormalPapProcedures extends IMedicalBackgroundFieldValuesWithItems {}
 
 export interface IFemalePatientGynaecologicalHistoryProps {
   takingBirthControl: ITakingBirthControl;
@@ -523,6 +524,61 @@ export interface IPatientMedications extends IPagination {
   medications: MedicationsProps[];
 }
 
+export interface IPatientPrescriptions extends IPagination {
+  prescriptions: PrescriptionsProps[];
+}
+export interface IPrescriptionStatuses {
+  variations: IPrescriptionStatusesVariations[];
+}
+export interface IPrescriptionStatusesVariations {
+  status: string;
+  title: string;
+  actions: ContextMenuAction[];
+}
+
+export enum IPrescriptionStatusesActions {
+  Download = 'Download',
+  MarkAsDispensed = 'Mark As Dispensed',
+  ArchivePrescription = 'Archive Prescription'
+}
+
+export interface PrescriptionsProps {
+  id: string;
+  pharmacyTitle?: string;
+  type: PrescriptionsType;
+  status: PrescriptionsStatus;
+  date: string;
+  medications: PrescriptionsMedicationsProps[];
+  prescriber: string;
+}
+export interface PrescriptionsMedicationsProps {
+  id: string;
+  title: string;
+  commonName?: string;
+  dosage: string;
+  route: string;
+  frequency: string;
+  time?: string;
+  duration: {
+    start: string;
+    end: string;
+  };
+  quantity: string;
+  refill: string;
+  refillNotes?: string;
+  doctorNotes?: string;
+}
+
+export enum PrescriptionsType {
+  InHouse = 'Pollin (In-House)',
+  External = 'External'
+}
+export enum PrescriptionsStatus {
+  Dispensed = 'Dispensed',
+  Paid = 'Paid',
+  Prescribed = 'Prescribed',
+  Archived = 'Archived'
+}
 export interface MedicationsProps {
   id: string;
   title: string;

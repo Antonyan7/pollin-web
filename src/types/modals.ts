@@ -50,6 +50,7 @@ export enum ModalName {
   AddOrEditCustomAlertModal = 'AddOrEditCustomAlertModal',
   ConfirmAlertDeleteModal = 'ConfirmAlertDeleteModal',
   AddAddressManually = 'AddAddressManually',
+  PrescriptionsArchive = 'PrescriptionsArchive',
   MedicalBackgroundUnsavedChanges = 'MedicalBackgroundUnsavedChanges',
   AddPatientMedicationModal = 'AddPatientMedicationModal',
   AddPatientPrescriptionModal = 'AddPatientPrescriptionModal'

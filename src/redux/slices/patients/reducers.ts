@@ -18,6 +18,8 @@ import {
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
+  IPatientPrescriptions,
+  IPrescriptionStatusesVariations,
   IProfileTestResults,
   ITestResultHistory,
   PatientPrescriptionsDrugListProps,
@@ -321,6 +323,15 @@ const reducers = createReducer({
   },
   setIsPatientPastMedicationLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isPatientPastMedicationLoading = action.payload;
+  },
+  setPatientPrescriptions(state, action: IAction<IPatientPrescriptions>) {
+    state.medicationsPrescriptions.prescriptions.patientPrescriptions = action.payload;
+  },
+  setPrescriptionStatuses(state, action: IAction<IPrescriptionStatusesVariations[]>) {
+    state.medicationsPrescriptions.prescriptions.prescriptionStatuses = action.payload;
+  },
+  setIsPatientPrescriptionsLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.prescriptions.isPatientPrescriptionsLoading = action.payload;
   },
   setIsPatientCurrentMedicationLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isPatientCurrentMedicationLoading = action.payload;

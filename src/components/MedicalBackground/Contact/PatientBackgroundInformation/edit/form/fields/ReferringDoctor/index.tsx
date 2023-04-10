@@ -64,12 +64,10 @@ const FieldOHIP = () => {
             </Grid>
             {referringDoctorInfo.value ? (
               <Grid>
-                  <Diagram
-                    titleComponent={<Title />}
-                  >
-                    <ReferringDoctorContent />
-                  </Diagram>
-                </Grid>
+                <Diagram titleComponent={<Title />}>
+                  <ReferringDoctorContent />
+                </Diagram>
+              </Grid>
             ) : null}
           </>
         ) : null}

@@ -10,8 +10,8 @@ import { dispatch, useAppSelector } from 'redux/hooks';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-import CurrentMedications from './CurrentMedications';
-import PastMedications from './PastMedications';
+import CurrentMedications from './MedicationList/CurrentMedications';
+import PastMedications from './MedicationList/PastMedications';
 
 const Medications = () => {
   const [t] = useTranslation();

@@ -161,6 +161,19 @@ const dropdownOptions = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.dropdownOptions
 );
+const patientPrescriptions = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.patientPrescriptions
+);
+const prescriptionStatuses = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.prescriptionStatuses
+);
+const isPatientPrescriptionsLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.isPatientPrescriptionsLoading
+);
+
 const isMedicationCreatedLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isMedicationCreatedLoading
@@ -313,6 +326,9 @@ export default {
   patientMissingMedications,
   isPatientCurrentMedicationLoading,
   isPatientPastMedicationLoading,
+  patientPrescriptions,
+  prescriptionStatuses,
+  isPatientPrescriptionsLoading,
   isMedicationCreatedLoading,
   prescriptionsDrugList,
   patientMedicationState,

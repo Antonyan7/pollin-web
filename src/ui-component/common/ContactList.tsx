@@ -41,7 +41,7 @@ const ICButton = ({ buttonLabel }: { buttonLabel: string }) => {
   const router = useRouter();
   const navigateToICForm = () => {
     router.push(`/patient-emr/details/${router.query.id}/ic-form`);
-  }
+  };
 
   return (
     <Button
@@ -55,8 +55,8 @@ const ICButton = ({ buttonLabel }: { buttonLabel: string }) => {
       }}
     >
       {buttonLabel}
-    </Button >
-  )
+    </Button>
+  );
 };
 
 const ICFormButton = () => {
@@ -70,18 +70,10 @@ const ICFormButton = () => {
 
   return (
     <>
-      {
-        disableOnlyMedicalBackgroundButton ? (
-          <ICButton buttonLabel={completeICFormLabel} />
-        ) : null
-      }
-      {
-        enableICAndMedicalBackgroundButtons ? (
-          <ICButton buttonLabel={viewICFormLabel} />
-        ) : null
-      }
+      {disableOnlyMedicalBackgroundButton ? <ICButton buttonLabel={completeICFormLabel} /> : null}
+      {enableICAndMedicalBackgroundButtons ? <ICButton buttonLabel={viewICFormLabel} /> : null}
     </>
-  )
+  );
 };
 
 // eslint-disable-next-line max-lines-per-function
@@ -94,23 +86,25 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useAppSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useAppSelector(patientsSelector.isPatientHighlightIntakeComplete);
-  // const isICFormComplete = useAppSelector(patientsSelector.isICFormComplete); 
-  const isICFormComplete = true; // TODO till data will come from backend side 
-  const isPatientHighlightIntakeReminderActive = useAppSelector(patientsSelector.isPatientHighlightIntakeReminderActive);
+  // const isICFormComplete = useAppSelector(patientsSelector.isICFormComplete);
+  const isICFormComplete = true; // TODO till data will come from backend side
+  const isPatientHighlightIntakeReminderActive = useAppSelector(
+    patientsSelector.isPatientHighlightIntakeReminderActive
+  );
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const disableOnlyMedicalBackgroundButton = isPatientHighlightIntakeComplete && !isICFormComplete;
 
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
-      async () => {
-        const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uuid);
+    async () => {
+      const patientHighlightDetails = await API.patients.getPatientHighlightDetails(patientId, uuid);
 
-        if (patientHighlightDetails) {
-          const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
+      if (patientHighlightDetails) {
+        const modalParams = patientEmrHelpers.getModalParamsFromPatientHighlightDetails(patientHighlightDetails);
 
-          dispatch(viewsMiddleware.openModal(modalParams));
-        }
-      };
+        dispatch(viewsMiddleware.openModal(modalParams));
+      }
+    };
 
   const onSendIntakeButtonClick = () => {
     dispatch(patientsMiddleware.sendPatientIntakeReminder(patientId));
@@ -239,26 +233,29 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
             }}
           >
             <Grid item>
-              {
-                !isPatientHighlightIntakeComplete ? (
-                  <StyledTooltip placement='bottom' title={t(Translation.PAGE_PATIENT_PROFILE_INITIAL_CONSULTATION_FORM_ACCESSED)}>
-                    <span>
-                      <Button
-                        variant="outlined"
-                        disabled
-                        sx={{
-                          width: 250,
-                          height: 32,
-                          margin: margins.all8,
-                          borderRadius: `${borders.solid2px} ${theme.palette.primary.main}`
-                        }}
-                      >
-                        {completeICFormLabel}
-                      </Button>
-                    </span>
-                  </StyledTooltip>
-                ) : <ICFormButton />
-              }
+              {!isPatientHighlightIntakeComplete ? (
+                <StyledTooltip
+                  placement="bottom"
+                  title={t(Translation.PAGE_PATIENT_PROFILE_INITIAL_CONSULTATION_FORM_ACCESSED)}
+                >
+                  <span>
+                    <Button
+                      variant="outlined"
+                      disabled
+                      sx={{
+                        width: 250,
+                        height: 32,
+                        margin: margins.all8,
+                        borderRadius: `${borders.solid2px} ${theme.palette.primary.main}`
+                      }}
+                    >
+                      {completeICFormLabel}
+                    </Button>
+                  </span>
+                </StyledTooltip>
+              ) : (
+                <ICFormButton />
+              )}
             </Grid>
             {isPatientHighlightIntakeComplete ? (
               <Grid item>
@@ -334,7 +331,7 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
           </Grid>
         </Grid>
       </Grid>
-    </Box >
+    </Box>
   );
 };
 

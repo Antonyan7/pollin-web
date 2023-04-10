@@ -66,7 +66,10 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
   prescriptions: {
     prescriptionsDrugList: null,
     isPrescriptionCreationLoading: false,
-    currentPrescriptionUuid: ''
+    currentPrescriptionUuid: '',
+    patientPrescriptions: { prescriptions: [], pageSize: 5, currentPage: 0, totalItems: 0 },
+    prescriptionStatuses: [],
+    isPatientPrescriptionsLoading: false
   }
 });
 

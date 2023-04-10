@@ -24,7 +24,7 @@ export const patientGeneralHealthValidationSchema = object({
       is: true,
       then: array().of(
         object().shape({
-          id: string().required(),
+          id: string().required()
         })
       )
     })
@@ -59,7 +59,7 @@ export const patientGeneralHealthValidationSchema = object({
       is: true,
       then: array().of(
         object().shape({
-          title: string().required(),
+          title: string().required()
         })
       )
     })
@@ -70,7 +70,7 @@ export const patientGeneralHealthValidationSchema = object({
       is: true,
       then: array().of(
         object().shape({
-          title: string().required(),
+          title: string().required()
         })
       )
     })
@@ -85,7 +85,7 @@ export const patientGeneralHealthValidationSchema = object({
       then: array().of(
         object().shape({
           title: string().required(),
-          familyMemberName: string().required(),
+          familyMemberName: string().required()
         })
       )
     })
@@ -127,12 +127,16 @@ export const patientContactInformationValidationSchema = object({
     exists: boolean(),
     number: string().when('exists', {
       is: true,
-      then: string().test('len', 'Required', ohipNumber => ohipNumber?.length === 12).required(),
+      then: string()
+        .test('len', 'Required', (ohipNumber) => ohipNumber?.length === 12)
+        .required(),
       otherwise: string().notRequired().nullable()
     }),
     versionCode: string().when('exists', {
       is: true,
-      then: string().test('len', 'Required', ohipVersionCode => ohipVersionCode?.length === 2).required(),
+      then: string()
+        .test('len', 'Required', (ohipVersionCode) => ohipVersionCode?.length === 2)
+        .required(),
       otherwise: string().notRequired().nullable()
     })
   })

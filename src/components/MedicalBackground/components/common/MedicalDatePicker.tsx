@@ -7,7 +7,14 @@ import { PollinDatePickerType } from 'types/datePicker';
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
 import { DateUtil } from '@utils/date/DateUtil';
 
-const MedicalDatePicker = ({ label, value, onChange, errorHelperText, isError, ...otherProps }: MedicalDatePickerFieldProps) => {
+const MedicalDatePicker = ({
+  label,
+  value,
+  onChange,
+  errorHelperText,
+  isError,
+  ...otherProps
+}: MedicalDatePickerFieldProps) => {
   const onDateUpdate = (date: Date | null) => {
     if (date) {
       onChange(DateUtil.convertToDateOnly(date));
@@ -41,7 +48,15 @@ export const ControlledDatePicker = ({ fieldName, label, ...otherProps }: { fiel
   const errorMessage = generateErrorMessage(label);
   const errorHelperText = fieldState?.error && errorMessage;
 
-  return <MedicalDatePicker label={label} isError={Boolean(fieldState?.error)} errorHelperText={errorHelperText} {...field} {...otherProps} />;
+  return (
+    <MedicalDatePicker
+      label={label}
+      isError={Boolean(fieldState?.error)}
+      errorHelperText={errorHelperText}
+      {...field}
+      {...otherProps}
+    />
+  );
 };
 
 export default MedicalDatePicker;

@@ -63,7 +63,7 @@ const FieldWeight = () => {
                 const currentWeightValue = event.target.value;
 
                 if (witoutZero.test(currentWeightValue) || currentWeightValue.length === 0) {
-                  onChange(currentWeightValue)
+                  onChange(currentWeightValue);
                 }
               }}
               value={fieldProps.value}

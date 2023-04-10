@@ -5,10 +5,10 @@ import { borders, margins, paddings } from 'themes/themeConstants';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
-import EditModeContent from '../CurrentMedicationList/edit';
-import ViewModeContent from '../CurrentMedicationList/view';
+import { CardItem, CardMode } from '../types';
 
-import { CardItem, CardMode } from './types';
+import EditModeContent from './MedicationList/edit';
+import ViewModeContent from './MedicationList/view';
 
 const Card: FC<CardItem> = ({ medication }) => {
   const [mode, setMode] = useState(CardMode.View);
