@@ -49,6 +49,7 @@ export enum Translation {
   MODAL_APPOINTMENTS_ADD_TITLE = 'modal.appointments.add.title',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM = 'modal.appointments.confirm.cancel.button.confirm',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION = 'modal.appointments.confirm.cancel.description',
+  MODAL_APPOINTMENTS_CONFIRM_CANCEL_NOTE = 'modal.appointments.confirm.cancel.note',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON = 'modal.appointments.confirm.cancel.select.reason',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_TEXT_REASON = 'modal.appointments.confirm.cancel.text.reason',
   MODAL_APPOINTMENTS_CONFIRM_CANCEL_TITLE = 'modal.appointments.confirm.cancel.title',

@@ -47,6 +47,7 @@
   "modal.appointments.add.title": " Add Appointment",
   "modal.appointments.confirm.cancel.button.confirm": "Confirm",
   "modal.appointments.confirm.cancel.description": "Please select a reason for cancellation.",
+  "modal.appointments.confirm.cancel.note": "Please note, when the status is changed to “Cancelled”, you will no longer be able to make any edits to the appointment. ",
   "modal.appointments.confirm.cancel.select.reason": "Reason for Cancellation",
   "modal.appointments.confirm.cancel.text.reason": "Reason for Cancellation",
   "modal.appointments.confirm.cancel.title": " Confirm Cancellation",

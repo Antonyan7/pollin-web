@@ -66,6 +66,7 @@ const CancelAppointmentModal = ({ appointmentId }: CancelAppointmentModalProps) 
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_DESCRIPTION)}</Typography>
+              <Typography mt={3}> {t(Translation.MODAL_APPOINTMENTS_CONFIRM_CANCEL_NOTE)}</Typography>
             </Grid>
             <Grid sx={{ marginTop: margins.top20 }} item xs={12}>
               <BaseSelectWithLoading
