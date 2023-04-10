@@ -23,6 +23,7 @@
   modal.appointments.edit.dialog.form
   modal.order.validation.error.button.ok
   page.appointments.button.new.calendar
+  page.appointments.button.send.booking.request
   page.appointments.button.new.appointment
   page.appointments.title
   page.appointments.desktop.date.picker
