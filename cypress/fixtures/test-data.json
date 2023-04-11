@@ -15,5 +15,6 @@
   "encounter_note_2": "Created Encounter for Addendum",
   "edited_encounter_note": "Edited Encounter",
   "addendum_note": "Created Addendum",
-  "edited_addendum_note": "Edited Addendum"
+  "edited_addendum_note": "Edited Addendum",
+  "block_schedule_comment": "blocked"
 }
