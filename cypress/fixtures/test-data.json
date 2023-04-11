@@ -10,6 +10,8 @@
   "templateName1": "service type template",
   "templateName2": "block template",
   "templateName3": "edit template",
+  "templateName4": "apply service template",
+  "templateName5": "apply block template",
   "comment": "comment",
   "encounter_type_1": "Test Encounter",
   "encounter_type_2": "Auto Encounter",
@@ -18,5 +20,7 @@
   "edited_encounter_note": "Edited Encounter",
   "addendum_note": "Created Addendum",
   "edited_addendum_note": "Edited Addendum",
-  "block_schedule_comment": "blocked"
+  "block_schedule_comment": "blocked",
+  "apply_schedule_comment_1": "applyServiceType",
+  "apply_schedule_comment_2": "applyBlock"
 }

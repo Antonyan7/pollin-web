@@ -1,5 +1,6 @@
 import { CypressIds } from '../../../src/constants/cypressIds';
 import { CyUtils } from '../../helpers/cypressIdsUtils';
+import {TemplateStatus} from "../../helpers/helpers";
 
 describe('new template', () => {
   before(() => {
@@ -25,19 +26,19 @@ describe('new template', () => {
       // Monday checkbox
       cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-0"]`).click();
 
-      cy.ChooseStartTime(8, 10);
-      cy.ChooseEndTime(10, 10);
+      cy.ChooseStartTime('8', '10');
+      cy.ChooseEndTime('10', '10');
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)).click();
       cy.get(`ul li`).contains(data.service_type_2).click();
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)).type(data.comment);
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)).should('be.enabled').click();
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_CREATED_MESSAGE)).should('exist');
 
       cy.url().should('include', '/scheduling/schedule-templates');
-      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should(
-        'contain',
-        data.templateName1
-      );
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE))
+          .should('contain', data.templateName1)
+          .should("contain", TemplateStatus.Draft)
     });
   });
 
@@ -47,18 +48,18 @@ describe('new template', () => {
       // tuesday checkboxes
       cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-1"]`).click();
 
-      cy.ChooseStartTime(14, 50);
-      cy.ChooseEndTime(17, 50);
+      cy.ChooseStartTime('14', '50');
+      cy.ChooseEndTime('17', '50');
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BLOCK)).click();
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_PLACEHOLDER)).type(data.comment);
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_BUTTON_SAVE)).should('be.enabled').click();
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_CREATED_MESSAGE)).should('exist');
 
       cy.url().should('include', '/scheduling/schedule-templates');
-      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should(
-        'contain',
-        data.templateName2
-      );
+      cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE))
+          .should('contain', data.templateName2)
+          .should("contain", TemplateStatus.Draft);
     });
   });
 });

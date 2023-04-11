@@ -28,7 +28,8 @@ describe('edit and delete templates', () => {
                             // eslint-disable-next-line cypress/no-unnecessary-waiting
                             cy.wait(2000)
                             cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_BUTTON_DELETE)).should("exist").click()
-                            cy.get(CyUtils.getSelector(CypressIds.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)).should("exist").realClick()
+                            cy.get(CyUtils.getSelector(CypressIds.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)).should("exist").realClick();
+                            cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_DELETED_MESSAGE)).should("exist");
 
                             cy.log(`List has items`)
                         } else {
@@ -48,8 +49,8 @@ describe('edit and delete templates', () => {
             // Wednesday checkbox
             cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-2"]`).click();
 
-            cy.ChooseStartTime(10, 30);
-            cy.ChooseEndTime(12, 30);
+            cy.ChooseStartTime('10', '30');
+            cy.ChooseEndTime('12', '30');
 
             cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_SERVICE_TYPES)).click();
             cy.get(`ul li`).contains(data.service_type_2).click();
@@ -85,8 +86,8 @@ describe('edit and delete templates', () => {
                 cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-3"]`).click();
                 cy.get(`[data-cy="${CypressIds.PAGE_SCHEDULING_CREATE_TEMPLATES_CHECKBOX_WEEKDAYS}-4"]`).click();
 
-                cy.ChooseStartTime(13, 30);
-                cy.ChooseEndTime(15, 10);
+                cy.ChooseStartTime('13', '30');
+                cy.ChooseEndTime('15', '10');
 
                 });
         });
@@ -108,6 +109,7 @@ describe('edit and delete templates', () => {
                     // eslint-disable-next-line cypress/no-unnecessary-waiting
                     cy.wait(2000)
                     cy.get(CyUtils.getSelector(CypressIds.MODAL_SCHEDULING_DELETION_BUTTON_CONFIRM)).should("exist").realClick()
+                    cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_SUCCESSFULLY_DELETED_MESSAGE)).should("exist")
                     cy.url().should('include', '/scheduling/schedule-templates')
                     cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should("not.exist")
                     cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE)).should("not.have.text", data.templateName3)

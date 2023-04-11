@@ -15,3 +15,7 @@ export const enum CancellationReasonEnum {
     NoLongerRequireThisAppointment = "No longer require this appointment",
     OtherPleaseProvideDetails = "Other: please provide details",
 }
+export const enum TemplateStatus {
+    Draft = "Draft",
+    Complete = "Complete",
+}
