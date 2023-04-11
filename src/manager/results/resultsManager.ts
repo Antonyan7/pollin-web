@@ -6,7 +6,6 @@ import {
   IMakeTestResultReviewed,
   IMarkInTransitActionReqBody,
   IOrderResultsListReqBody,
-  IOrdersFilters,
   IOrdersStatuses,
   IResultsReqBody,
   ISpecimenCollectionData,
@@ -301,9 +300,6 @@ const resultsManager = {
   },
   downloadRequisition(orderId: string) {
     return axiosInstance.get<void, IAxiosResponse<void>>(`${baseURL}/v1/order/${orderId}/download-requisition`);
-  },
-  getOrdersFilters() {
-    return axiosInstance.get<IOrdersFilters, IAxiosResponse<IOrdersFilters>>(`${baseURL}/v1/order/filters`);
   },
   getOrdersStatuses() {
     return axiosInstance.get<IOrdersStatuses, IAxiosResponse<IOrdersStatuses>>(`${baseURL}/v1/order/status`);

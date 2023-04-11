@@ -2,7 +2,6 @@ import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
 import {
   IOrderGroup,
-  IOrdersFilterItems,
   OrdersActions,
   OrdersListItemStatus
 } from 'types/reduxTypes/ordersStateTypes';
@@ -152,7 +151,7 @@ export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }
 
-export interface IAddMachineForSpecimen extends IEmptyResponse {}
+export interface IAddMachineForSpecimen extends IEmptyResponse { }
 
 export interface ISpecimenForAppointment {
   id: string;
@@ -190,7 +189,7 @@ export interface ISpecimenCollectionData {
   appointmentId: string;
   collections: ISpecimenCollection[];
 }
-export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
+export interface IAddSpecimenToTransportFolder extends IEmptyResponse { }
 
 export interface IOrdersAction {
   id: OrdersActions;
@@ -212,19 +211,8 @@ export enum OrdersFilterType {
   OrderNames = 'OrderNames'
 }
 
-export interface OrdersFilterOption {
-  id: string;
-  title: string;
-}
-
-export interface IOrdersFilters {
-  filters: IOrdersFilterItems[];
-}
 export interface IOrdersStatuses {
   variations: IOrdersStatusesItems[];
-}
-export interface OrderListDataFilter {
-  id: string;
 }
 
 export enum OrderListSortFields {
@@ -234,7 +222,6 @@ export enum OrderListSortFields {
 export interface OrdersListDataProps {
   page: number;
   patientId: string;
-  filters?: OrderListDataFilter[];
   sortOrder: ISortOrder;
   sortByField: OrderListSortFields;
 }

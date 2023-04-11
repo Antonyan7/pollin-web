@@ -2,8 +2,6 @@ import { IPagination } from '@axios/axiosTypes';
 import {
   IOrdersStatusesItems,
   IValidateOrderType,
-  OrdersFilterOption,
-  OrdersFilterType
 } from '@axios/results/resultsManagerTypes';
 import {
   CancellationReasons,
@@ -25,7 +23,6 @@ export interface IOrdersState {
   cancellationReasons: CancellationReasons;
   isCancelOrderLoading: boolean;
   isCancellationReasonsLoading: boolean;
-  ordersFilters: IOrdersFilterItems[];
   isOrdersFiltersLoading: boolean;
   orderStatuses: IOrdersStatusesItems[];
   orderResultsFilters: IOrderResultsFilterCategory[];
@@ -130,13 +127,6 @@ export interface IOrderResultsByPatientItem {
   dateCompleted: string;
   measurement: IMeasurement[];
 }
-
-export interface IOrdersFilterItems {
-  title: string;
-  type: OrdersFilterType;
-  options: OrdersFilterOption[];
-}
-
 export interface IOrdersListItem {
   id: string;
   createdAt: Date;
@@ -153,9 +143,9 @@ export interface IOrdersList extends IPagination {
   orders: IOrdersListItem[];
 }
 
-export interface IOrdersListResponse extends IOrdersList {}
+export interface IOrdersListResponse extends IOrdersList { }
 
-export interface IOrderResultsFilterCategory extends IResultsFilterCategory {}
+export interface IOrderResultsFilterCategory extends IResultsFilterCategory { }
 
 export interface ICancelOrderProps {
   patientId: string;

@@ -12,7 +12,6 @@ const orderDetails = createSelector([selector], (state) => state.orderDetails);
 const isOrderDetailsLoading = createSelector([selector], (state) => state.isOrderDetailsLoading);
 const isCancellationReasonsLoading = createSelector([selector], (state) => state.isCancellationReasonsLoading);
 const isOrdersFiltersLoading = createSelector([selector], (state) => state.isOrdersFiltersLoading);
-const ordersFilters = createSelector([selector], (state) => state.ordersFilters);
 const orderStatuses = createSelector([selector], (state) => state.orderStatuses);
 const orderResultsFilters = createSelector([selector], (state) => state.orderResultsFilters);
 const isOrderResultsFiltersLoading = createSelector([selector], (state) => state.isOrderResultsFiltersLoading);
@@ -43,7 +42,6 @@ export default {
   orderResultsByPatientList,
   orderResultsFilters,
   orderResultsStatuses,
-  ordersFilters,
   ordersList,
   orderStatuses,
   resultReleaseDate,

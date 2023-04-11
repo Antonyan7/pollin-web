@@ -43,7 +43,6 @@ const {
   setIsCancelOrderLoading,
   setCancellationReasons,
   setIsOrderResultsByPatientListLoading,
-  setIsOrdersFiltersLoadingState,
   setIsOrdersListLoading,
   setIsRequisitionDownloaded,
   setIsTestResultReleased,
@@ -52,7 +51,6 @@ const {
   setOrderResultsFilters,
   setOrderResultsFiltersLoadingState,
   setOrderResultsStatuses,
-  setOrdersFilters,
   setOrdersList,
   setOrdersStatuses,
   setOrderTypeOptions,
@@ -343,20 +341,6 @@ const downloadRequisition = (orderId: string) => async (dispatch: AppDispatch) =
   return null;
 };
 
-const getOrdersFilters = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsOrdersFiltersLoadingState(true));
-
-    const response = await API.results.getOrdersFilters();
-
-    dispatch(setOrdersFilters(response.data.data.filters));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsOrdersFiltersLoadingState(false));
-  }
-};
-
 const getOrderStatuses = () => async (dispatch: AppDispatch) => {
   try {
     const response = await API.results.getOrdersStatuses();
@@ -515,7 +499,6 @@ export default {
   getOrderResultsFilters,
   getOrderResultsListForPatient,
   getOrderResultsStatuses,
-  getOrdersFilters,
   getOrdersList,
   getOrderStatuses,
   getCancellationReasons,

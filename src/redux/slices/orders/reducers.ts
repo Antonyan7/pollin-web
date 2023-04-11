@@ -5,7 +5,6 @@ import {
   IOrderDetailsData,
   IOrderResultsByPatientList,
   IOrderResultsFilterCategory,
-  IOrdersFilterItems,
   IOrdersList,
   IOrdersState,
   IOrderTypeOption,
@@ -53,14 +52,8 @@ const reducers = createReducer({
   setIsOrderResultsByPatientListLoading(state, action: IAction<boolean>) {
     state.isOrderResultsByPatientListLoading = action.payload;
   },
-  setIsOrdersFiltersLoadingState(state, action: IAction<boolean>) {
-    state.isOrdersFiltersLoading = action.payload;
-  },
   setIsRequisitionDownloaded(state, action: IAction<boolean>) {
     state.isRequisitionDownloaded = action.payload;
-  },
-  setOrdersFilters(state, action: IAction<IOrdersFilterItems[]>) {
-    state.ordersFilters = action.payload;
   },
   setOrderResultsStatuses(state, action: IAction<IOrderResultsStatus[]>) {
     state.orderResultsStatuses = action.payload;

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  OrderListDataFilter,
   OrderListSortFields,
-  OrdersFilterOption,
   OrdersListDataProps
 } from '@axios/results/resultsManagerTypes';
 import { Box, CircularProgress, Grid, TableContainer, TablePagination } from '@mui/material';
@@ -19,14 +17,12 @@ import { Translation } from '../../constants/translations';
 import EmrOrdersAndResultsTabs from '../../layout/PatientOrdersAndResultsLayout';
 
 import CreateNewOrderButton from './PatientCreateNewOrderButton';
-import PatientOrdersFilters from './PatientOrdersFilters';
 import PatientOrdersTable from './PatientOrdersTable';
 
 const PatientOrdersList = () => {
   const ordersList = useAppSelector(ordersSelector.ordersList);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.Desc);
   const [sortField, setSortField] = useState<OrderListSortFields>(OrderListSortFields.DateCreated);
-  const [filters, setFilters] = useState<OrderListDataFilter[]>([]);
   const [page, setPage] = useState<number>(0);
   const isOrdersListLoading = useAppSelector(ordersSelector.isOrdersListLoading);
   const router = useRouter();
@@ -37,14 +33,6 @@ const PatientOrdersList = () => {
     setPage(newPage);
   };
 
-  const handleFiltersUpdate = (updatedFilters: OrdersFilterOption[]) => {
-    const filtersWithoutTitle = updatedFilters.map((filter: OrdersFilterOption) => ({
-      id: filter.id
-    }));
-
-    setFilters(filtersWithoutTitle);
-  };
-
   useEffect(() => {
     const capitalizedSortOrder = capitalizeFirst<ISortOrder>(sortOrder);
     const capitalizedSortField = capitalizeFirst<OrderListSortFields>(sortField);
@@ -52,12 +40,11 @@ const PatientOrdersList = () => {
       sortByField: capitalizedSortField,
       patientId: currentPatientId as string,
       sortOrder: capitalizedSortOrder,
-      ...(filters.length > 0 ? { filters } : {}),
       page: page + 1
     };
 
     dispatch(ordersMiddleware.getOrdersList(data));
-  }, [filters, page, sortField, sortOrder, currentPatientId]);
+  }, [page, sortField, sortOrder, currentPatientId]);
 
   useEffect(() => {
     dispatch(ordersMiddleware.getOrderStatuses());
@@ -66,10 +53,8 @@ const PatientOrdersList = () => {
   return (
     <Box>
       <EmrOrdersAndResultsTabs />
-      <Grid container xs={12}>
-        <Grid item xs={10} pr={3}>
-          <PatientOrdersFilters setFiltersChange={handleFiltersUpdate} />
-        </Grid>
+      <Grid container item xs={12}>
+        <Grid item xs={10} pr={3} />
         <Grid item xs={2}>
           <CreateNewOrderButton />
         </Grid>
