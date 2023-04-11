@@ -174,6 +174,7 @@ const EncounterDetailsPage = () => {
                 }}
                 onClick={goToEditEncounterPage}
                 data-cy={`${CypressIds.PAGE_PATIENT_EDIT_ENCOUNTER_BTN}`}
+                disabled={!encounterData.isEditable}
               >
                 <EditOutlined />
               </IconButton>
@@ -210,6 +211,7 @@ const EncounterDetailsPage = () => {
                         }}
                         onClick={() => goToEditAddendumPage(addendum.id)}
                         data-cy={`${CypressIds.PAGE_PATIENT_DETAILS_ADDENDUM_EDIT_ICON}-${index}`}
+                        disabled={!addendum.isEditable}
                       >
                         <EditOutlined />
                       </IconButton>

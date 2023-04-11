@@ -10,7 +10,6 @@ import {
   IDropdownsResponse,
   IDrugsResponse,
   IEncounterFilterResponse,
-  IEncounterResponse,
   IEncounterTypesResponse,
   IFemalePatientGynaecologicalHistory,
   IFemalePatientGynaecologicalHistoryProps,
@@ -138,12 +137,6 @@ const patientEmrManager = {
   getEncounterFilters() {
     return axiosInstance.get<IEncounterFilterResponse, IAxiosResponse<IEncounterFilterResponse>>(
       `${baseURL}/v1/encounters/filters`
-    );
-  },
-
-  getEncounter(encounterId: string) {
-    return axiosInstance.get<IEncounterResponse, IAxiosResponse<IEncounterResponse>>(
-      `${baseURL}/v1/encounters/${encounterId}`
     );
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {

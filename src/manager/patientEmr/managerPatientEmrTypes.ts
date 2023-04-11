@@ -94,6 +94,7 @@ export interface AddendumsProps {
   content: string;
   author: string;
   date: Date | string;
+  isEditable: boolean;
   isEdited: boolean;
 }
 
@@ -104,6 +105,7 @@ export interface IEncounterDetailsProps {
   createdOn: Date | string;
   updatedOn?: Date | string;
   content: string;
+  isEditable: boolean;
   addendums: AddendumsProps[];
 }
 
@@ -205,26 +207,6 @@ export interface ICreateEncounterAddendumRequest extends IEncounterAddendumReque
 
 export interface IEncounterFilterResponse {
   filters: IEncounterFilterProps[];
-}
-
-interface IAddendum {
-  id: string;
-  content: string;
-  author: string;
-  date: string;
-  isEdited: boolean;
-}
-
-export interface IEncounterResponse {
-  encounter: {
-    id: string;
-    content: string;
-    updatedOn?: string;
-    createdOn: string;
-    title: string;
-    author: string;
-    addendums?: IAddendum[];
-  };
 }
 export interface IUpdateEncounterAddendumRequest {
   id: string;
