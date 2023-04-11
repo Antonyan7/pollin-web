@@ -488,6 +488,8 @@ export enum Translation {
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_PRIMARY_CONTRIBUTION = 'page.patient.profile.medical.background.contact.information.patient.primary.contribution',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_IODINE_ALLERGY = 'page.patient.profile.medical.background.contact.iodine.allergy',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_LATEX_ALLERGY = 'page.patient.profile.medical.background.contact.latex.allergy',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OHIP_NUMBER_INCORRECT = 'page.patient.profile.medical.background.contact.ohip.number.incorrect',
+  PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OHIP_VERSION_CODE_INCORRECT = 'page.patient.profile.medical.background.contact.ohip.version.code.incorrect',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OTHER_ADD_MEDICAL_PROBLEM = 'page.patient.profile.medical.background.contact.other.add.medical.problem',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OTHER_MEDICAL_PROBLEM = 'page.patient.profile.medical.background.contact.other.medical.problem',
   PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OTHER_MEDICAL_PROBLEMS = 'page.patient.profile.medical.background.contact.other.medical.problems',

@@ -10,6 +10,7 @@ import MedicalComponentWithRadioView from '@components/MedicalBackground/compone
 import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { fertilityHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
+import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
 import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
 import mappingPattern from '@components/MedicalBackground/mapper/fertilityHistory';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -17,8 +18,6 @@ import { Grid, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
-
-import useCloseMedicalBackgroundFormWithChangesModal from '../../../hooks/useCloseMedicalBackgroundFormWithChangesModal';
 
 const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   const fertilityHistory = useAppSelector(patientsSelector.fertilityHistory);
@@ -84,7 +83,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               return (
                 <FieldWithNote
                   fieldLabel={title}
-                  fieldName={`${fieldName}.value`}
+                  fieldName={`${fieldName}`}
                   fieldComponent={
                     <Dropdown
                       fieldName={`${fieldName}.value`}

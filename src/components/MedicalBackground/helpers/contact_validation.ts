@@ -128,6 +128,7 @@ export const patientContactInformationValidationSchema = object({
     number: string().when('exists', {
       is: true,
       then: string()
+        .test('empty', 'Required', (ohipNumber) => ohipNumber?.length !== 0)
         .test('len', 'Required', (ohipNumber) => ohipNumber?.length === 12)
         .required(),
       otherwise: string().notRequired().nullable()
@@ -135,6 +136,7 @@ export const patientContactInformationValidationSchema = object({
     versionCode: string().when('exists', {
       is: true,
       then: string()
+        .test('empty', 'Required', (ohipVersionCode) => ohipVersionCode?.length !== 0)
         .test('len', 'Required', (ohipVersionCode) => ohipVersionCode?.length === 2)
         .required(),
       otherwise: string().notRequired().nullable()

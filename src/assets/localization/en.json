@@ -486,6 +486,8 @@
   "page.patient.profile.medical.background.contact.information.patient.primary.contribution": "Primary Patient Contribution",
   "page.patient.profile.medical.background.contact.iodine.allergy": "Iodine Allergy",
   "page.patient.profile.medical.background.contact.latex.allergy": "Latex Allergy",
+  "page.patient.profile.medical.background.contact.ohip.number.incorrect": "OHIP format incorrect",
+  "page.patient.profile.medical.background.contact.ohip.version.code.incorrect": "Version Code format incorrect",
   "page.patient.profile.medical.background.contact.other.add.medical.problem": "Add Medical Problem",
   "page.patient.profile.medical.background.contact.other.medical.problem": "Medical Problem",
   "page.patient.profile.medical.background.contact.other.medical.problems": "Other Medical Problems",

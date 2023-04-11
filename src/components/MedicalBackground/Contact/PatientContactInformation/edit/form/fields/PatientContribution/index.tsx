@@ -59,6 +59,8 @@ const FieldPatientContribution = () => {
           onChange={(_, value) => {
             if (value && typeof value === 'object' && 'id' in value) {
               onChange(value.id);
+            } else {
+              onChange('');
             }
           }}
           getOptionLabel={(contribution) => (typeof contribution === 'object' ? contribution.title : contribution)}

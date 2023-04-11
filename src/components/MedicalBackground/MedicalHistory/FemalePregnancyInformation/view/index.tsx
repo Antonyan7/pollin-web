@@ -37,7 +37,6 @@ const ViewModeContent = () => {
           Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREVIOUS_PREGNANCY
         )}
         value={getLabelBySelectedValue(!!previousPregnancies?.value)}
-        note={previousPregnancies?.note ?? ''}
       />
       <PreviousPregnancies previousPregnancies={previousPregnancies as IPreviousPregnancies} />
       <Item
@@ -45,6 +44,7 @@ const ViewModeContent = () => {
           Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_TOTAL_NUMBER_OF_PREGNANCIES
         )}
         value={femalePregnancyInformation?.numberOfPregnancies ?? 0}
+        note={previousPregnancies?.note ?? ''}
       />
     </CardContentWrapper>
   ) : (

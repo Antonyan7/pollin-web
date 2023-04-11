@@ -1,7 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { allowedChars, replaceOhipNumberFormat } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
+import {
+  allowedChars,
+  replaceOhipNumberFormat
+} from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
 import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
@@ -19,8 +22,22 @@ const OhipNumber = () => {
   });
   const errorHelperText = generateErrorMessage(label);
   const { onChange, onBlur, ...fieldProps } = field;
+  const [errorMessage, setErrorMessage] = useState(errorHelperText);
+  const incorrectFormatLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OHIP_NUMBER_INCORRECT);
 
   useScrollIntoView(ohipRef, fieldState);
+
+  useEffect(
+    () => {
+      if (fieldState.error?.type === 'empty') {
+        setErrorMessage(errorHelperText);
+      } else {
+        setErrorMessage(incorrectFormatLabel);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [fieldState.error?.type]
+  );
 
   return (
     <Grid item xs={6}>
@@ -28,7 +45,7 @@ const OhipNumber = () => {
         color="primary"
         fullWidth
         label={label}
-        helperText={fieldState?.error && errorHelperText}
+        helperText={fieldState?.error && errorMessage}
         error={Boolean(fieldState?.error)}
         {...fieldProps}
         onKeyPress={(e) => {
@@ -37,11 +54,12 @@ const OhipNumber = () => {
           }
         }}
         onChange={(e) => {
-          const ohipNumber = replaceOhipNumberFormat(e.target.value);
+          if (e.target.value.length <= 12) {
+            const ohipNumber = replaceOhipNumberFormat(e.target.value);
 
-          onChange(ohipNumber)
-        }
-        }
+            onChange(ohipNumber);
+          }
+        }}
         value={fieldProps.value}
         inputRef={ohipRef}
       />
