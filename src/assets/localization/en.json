@@ -342,6 +342,7 @@
   "page.patient.encounters.modal.subtitle.first": "Any changes made will be lost",
   "page.patient.encounters.modal.subtitle.second": "Please note that this action is permanent and cannot be undone.\n",
   "page.patient.encounters.modal.title": "Are you sure you want to leave?",
+  "page.patient.encounters.text.editor.content": "Content",
   "page.patient.latest.test.result.table.header.date.collected": "Date Collected",
   "page.patient.latest.test.result.table.header.result": "Result",
   "page.patient.latest.test.result.table.header.test": "Test",

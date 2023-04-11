@@ -1,5 +1,6 @@
 import { ICreateEncounterAddendumRequest, ICreateEncounterNoteRequest } from '@axios/patientEmr/managerPatientEmrTypes';
 import { IEncountersFormDefaultProps } from 'types/patient';
+import { object, string } from 'yup';
 
 export const maxEncountersSearchLength = 100;
 
@@ -18,4 +19,9 @@ export const getAddAddendumInitialValues = (): ICreateEncounterAddendumRequest =
 export const getAddEncounterInitialValues = (): Omit<ICreateEncounterNoteRequest, 'patientId'> => ({
   encountersTypeId: '',
   content: ''
+});
+
+export const addEncounterValidationSchema = object({
+  encountersTypeId: string().required(),
+  content: string().required()
 });

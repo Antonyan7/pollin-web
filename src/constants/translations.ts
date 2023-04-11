@@ -344,6 +344,7 @@ export enum Translation {
   PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE_FIRST = 'page.patient.encounters.modal.subtitle.first',
   PAGE_PATIENT_ENCOUNTERS_MODAL_SUBTITLE_SECOND = 'page.patient.encounters.modal.subtitle.second',
   PAGE_PATIENT_ENCOUNTERS_MODAL_TITLE = 'page.patient.encounters.modal.title',
+  PAGE_PATIENT_ENCOUNTERS_TEXT_EDITOR_CONTENT = 'page.patient.encounters.text.editor.content',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_DATE_COLLECTED = 'page.patient.latest.test.result.table.header.date.collected',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_RESULT = 'page.patient.latest.test.result.table.header.result',
   PAGE_PATIENT_LATEST_TEST_RESULT_TABLE_HEADER_TEST = 'page.patient.latest.test.result.table.header.test',

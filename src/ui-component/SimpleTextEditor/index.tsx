@@ -4,9 +4,20 @@ import { useTranslation } from 'react-i18next';
 import ReactQuill from 'react-quill';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { StyledButton } from '@components/common/MaterialComponents';
-import { Divider, Grid, GridProps, MenuItem, styled, Typography, useTheme } from '@mui/material';
+import {
+  Divider,
+  FormControl,
+  FormHelperText,
+  Grid,
+  GridProps,
+  MenuItem,
+  styled,
+  Typography,
+  useTheme
+} from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import parse from 'html-react-parser';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
@@ -81,6 +92,7 @@ const EditEncounterNoteAddendums = () => {
   ) : null;
 };
 
+// eslint-disable-next-line max-lines-per-function
 const SimpleTextEditor = ({
   setEditorValue,
   mode,
@@ -116,10 +128,16 @@ const SimpleTextEditor = ({
   const editorFieldName = EncountersFormField.EditorContentField;
   const recentAppointmentsFieldName = EncountersFormField.AppointmentsField;
 
-  const { field: typeField } = useController({ control, name: encountersTypeFieldName });
+  const { field: typeField, fieldState: typeFieldState } = useController({ control, name: encountersTypeFieldName });
   const { field: recentAppointmentsField } = useController({ control, name: recentAppointmentsFieldName });
-  const { field: editorField } = useController({ control, name: editorFieldName });
+  const { field: editorField, fieldState: editorFieldState } = useController({ control, name: editorFieldName });
   const { onChange: onEditorFieldChange, ...fieldProps } = editorField;
+  const errorHelperTextTypeId = generateErrorMessage(t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE));
+  const errorHelperTextEditor = generateErrorMessage(t(Translation.PAGE_PATIENT_ENCOUNTERS_TEXT_EDITOR_CONTENT));
+  const isErrorExistsTypeId = Boolean(typeFieldState?.error);
+  const isErrorExistsEditor = Boolean(editorFieldState?.error);
+  const shouldBeHighlited = typeField.value === '' && isErrorExistsTypeId;
+  const isErrorEditor = editorField.value === '' && isErrorExistsEditor;
 
   return (
     <>
@@ -130,29 +148,41 @@ const SimpleTextEditor = ({
           {mode === SimpleEditorMode.Add_Note && (
             <Grid item xs={12} container columnGap={margins.all24}>
               <Grid item xs={4} mb={2}>
-                <BaseSelectWithLoading
-                  MenuProps={{
-                    style: { maxHeight: 260 },
-                    PaperProps: {
-                      style: {
-                        border: `${borders.solid2px} ${theme.palette.primary.main}`,
-                        borderRadius: `${borderRadius.radius8}`,
+                <FormControl fullWidth error={shouldBeHighlited}>
+                  <BaseSelectWithLoading
+                    MenuProps={{
+                      style: { maxHeight: 260 },
+                      PaperProps: {
+                        style: {
+                          border: `${borders.solid2px} ${theme.palette.primary.main}`,
+                          borderRadius: `${borderRadius.radius8}`
+                        }
                       }
-                    }
-                  }}
-                  labelId="encounter-label"
-                  id="encounter-type"
-                  label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
-                  data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_TYPE_SELECT}
-                  value={typeField.value}
-                  onChange={(event) => typeField.onChange(event.target.value)}
-                >
-                  {encounterTypes?.map((encounterType) => (
-                    <MenuItem value={encounterType.id} key={encounterType.id}>
-                      {encounterType.title}
-                    </MenuItem>
-                  ))}
-                </BaseSelectWithLoading>
+                    }}
+                    labelId="encounter-label"
+                    id="encounter-type"
+                    label={t(Translation.PAGE_ENCOUNTERS_ENCOUNTER_TYPE)}
+                    data-cy={CypressIds.PAGE_PATIENT_CREATE_ENCOUNTER_TYPE_SELECT}
+                    value={typeField.value}
+                    onChange={(event) => typeField.onChange(event.target.value)}
+                    error={isErrorExistsTypeId}
+                  >
+                    {encounterTypes?.map((encounterType) => (
+                      <MenuItem value={encounterType.id} key={encounterType.id}>
+                        {encounterType.title}
+                      </MenuItem>
+                    ))}
+                  </BaseSelectWithLoading>
+                  {shouldBeHighlited ? (
+                    <FormHelperText
+                      sx={{
+                        color: theme.palette.error.main
+                      }}
+                    >
+                      {errorHelperTextTypeId}
+                    </FormHelperText>
+                  ) : null}
+                </FormControl>
               </Grid>
               <Grid item xs={5.5} mb={2}>
                 <BaseSelectWithLoading
@@ -164,7 +194,7 @@ const SimpleTextEditor = ({
                     PaperProps: {
                       style: {
                         border: `${borders.solid2px} ${theme.palette.primary.main}`,
-                        borderRadius: `${borderRadius.radius8}`,
+                        borderRadius: `${borderRadius.radius8}`
                       }
                     }
                   }}
@@ -183,15 +213,26 @@ const SimpleTextEditor = ({
               </Grid>
             </Grid>
           )}
-          <ReactQuill
-            style={{ backgroundColor: theme.palette.common.white }}
-            onChange={(event) => {
-              onEditorFieldChange(event);
-              setEditorValue(event);
-            }}
-            {...fieldProps}
-            id={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}
-          />
+          <FormControl fullWidth error={isErrorEditor}>
+            <ReactQuill
+              style={{ backgroundColor: theme.palette.common.white }}
+              onChange={(event) => {
+                onEditorFieldChange(event);
+                setEditorValue(event);
+              }}
+              {...fieldProps}
+              id={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}
+            />
+            {isErrorEditor ? (
+              <FormHelperText
+                sx={{
+                  color: theme.palette.error.main
+                }}
+              >
+                {errorHelperTextEditor}
+              </FormHelperText>
+            ) : null}
+          </FormControl>
           <Grid container xs={12} justifyContent="flex-end" gap={3} mt={3}>
             <StyledButton
               type="button"

@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
@@ -17,7 +18,7 @@ import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCan
 import { DateUtil } from '@utils/date/DateUtil';
 
 import encountersRedirect, { EncountersPageTypes } from '../helpers/encountersRedirect';
-import { getAddEncounterInitialValues } from '../helpers/initialValues';
+import { addEncounterValidationSchema, getAddEncounterInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -59,7 +60,8 @@ const AddEncounterNote = () => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const router = useRouter();
   const methods = useForm<IEncountersFormBody>({
-    defaultValues: getAddEncounterInitialValues()
+    defaultValues: getAddEncounterInitialValues(),
+    resolver: yupResolver(addEncounterValidationSchema)
   });
 
   const sanitizedValue = sanitize(editorValue);
