@@ -150,7 +150,8 @@ export enum CypressIds {
   PAGE_PATIENT_DETAILS_TAB_ENCOUNTERS = 'page.patient.details.tab.encounters',
   PAGE_PATIENT_DETAILS_TAB_ORDERS_AND_RESULTS = 'page.patient.details.tab.orders.and.results',
   MODAL_SCHEDULING_DELETION_COMPONENT = 'modal.scheduling.deletion.component',
-  NAVIGATION_TAB_PATIENT_LIST = 'navigation.tab.patient.list'
+  NAVIGATION_TAB_PATIENT_LIST = 'navigation.tab.patient.list',
+  PAGE_APPOINTMENTS_SEND_BOOKING_REQUEST_SUCCESS_MESSAGE = 'page.appointments.send.booking.request.success.message'
 }
 
 /* AUTO GENERATED FILE. DO NOT MODIFY !!! */

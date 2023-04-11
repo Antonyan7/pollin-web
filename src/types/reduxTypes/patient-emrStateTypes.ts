@@ -139,6 +139,7 @@ export interface ICreateMedication {
 
 export interface PatientEmrProps {
   patientsList: IPatientsProps;
+  isBookingRequestToPatientLoading: boolean;
   medicationsPrescriptions: MedicationsPrescriptionsProps;
   encountersSearchValue: string;
   selectedEncountersFilters: IEncountersFilterOption[];

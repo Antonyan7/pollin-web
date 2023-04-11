@@ -17,10 +17,12 @@ import {
   Recency,
   TestResultItemType
 } from '@axios/patientEmr/managerPatientEmrTypes';
+import { ISendBookingRequestToPatientRequest } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { patientsMiddleware } from '@redux/slices/patients/index';
 import { viewsMiddleware } from '@redux/slices/views';
 import * as Sentry from '@sentry/nextjs';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { sortOrderTransformer } from 'redux/data-transformers/sortOrderTransformer';
@@ -141,7 +143,8 @@ const {
   setStatusVariations,
   setIsStatusVariationsLoading,
   setCategories,
-  setIsCategoriesLoading
+  setIsCategoriesLoading,
+  setIsBookingRequestToPatientLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1200,6 +1203,30 @@ const getPlanCategoriesAndTypes = () => async (dispatch: AppDispatch) => {
   }
 };
 
+const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsBookingRequestToPatientLoading(true));
+
+    await API.patients.sendBookingRequestToPatient(data);
+
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_APPOINTMENTS_SEND_BOOKING_REQUEST_SUCCESS_MESSAGE),
+          dataCy: CypressIds.PAGE_APPOINTMENTS_SEND_BOOKING_REQUEST_SUCCESS_MESSAGE
+        }
+      })
+    );
+    dispatch(viewsMiddleware.closeModal(ModalName.SendBookingRequestToPatientModal));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsBookingRequestToPatientLoading(false));
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1278,5 +1305,6 @@ export default {
   updateFemalePatientGynaecologicalHistory,
   getPatientPlansList,
   getPatientPlansStatuses,
-  getPlanCategoriesAndTypes
+  getPlanCategoriesAndTypes,
+  sendBookingRequestToPatient
 };

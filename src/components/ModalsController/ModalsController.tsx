@@ -16,6 +16,8 @@ import DetailsAppointmentModal, {
 import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Modals/Booking/EditAppointmentsModal';
 import AppointmentStatusChangeConfirmationModal from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation';
 import { IAppointmentStatusChangeConfirmationModalProps } from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation/types';
+import SendBookingRequestToPatientModal from '@components/Modals/Booking/SendBookingRequestToPatientModal';
+import { SendBookingRequestToPatientModalProps } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
@@ -103,6 +105,10 @@ const getEditAppointmentModal = (modal: IOpenedModal<EditAppointmentModalProps>)
 );
 const getCancelAppointmentModal = (modal: IOpenedModal<CancelAppointmentModalProps>) => (
   <CancelAppointmentModal key={modal.name} {...modal.props} />
+);
+
+const getSendBookingRequestToPatientModal = (modal: IOpenedModal<SendBookingRequestToPatientModalProps>) => (
+  <SendBookingRequestToPatientModal key={modal.name} {...modal.props} />
 );
 
 // <PATIENT EMR>
@@ -244,6 +250,11 @@ export const ModalsController = () => {
             return getCancelAppointmentModal(modal);
           case ModalName.AddAppointmentDuplicatePatientModal:
             return getAddAppointmentDuplicatePatientModal(modal);
+
+          case ModalName.SendBookingRequestToPatientModal: {
+            return getSendBookingRequestToPatientModal(modal);
+          }
+
           // <PATIENT EMR>
           case ModalName.EncountersCancelChangesModal:
             return getEncountersCancelChangesModal(modal);

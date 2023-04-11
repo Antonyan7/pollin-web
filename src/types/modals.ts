@@ -19,6 +19,7 @@ export enum ModalName {
   DetailsAppointmentModal = 'DetailsAppointmentModal',
   AddAppointmentDuplicatePatientModal = 'AddAppointmentDuplicatePatientModal',
   AppointmentStatusChangeConfirmationModal = 'AppointmentStatusChangeConfirmationModal',
+  SendBookingRequestToPatientModal = 'SendBookingRequestToPatientModal',
   EncountersCancelChangesModal = 'EncountersCancelChangesModal',
   DevToolsModal = 'DevToolsModal',
   CreateTemplateModal = 'CreateTemplateModal',

@@ -28,7 +28,12 @@ const usePatientProfileUpcomingAppointmentsActions = (
   }, [patientProfile]);
 
   const handleSendBookingRequestToPatientAction = useCallback(() => {
-    // TODO: To be handled after TEAMA-5192
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.SendBookingRequestToPatientModal,
+        props: {}
+      })
+    );
   }, []);
 
   const actionBindings = [

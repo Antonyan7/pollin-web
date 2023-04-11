@@ -148,3 +148,4 @@
   page.patient.details.tab.orders.and.results
   modal.scheduling.deletion.component 
   navigation.tab.patient.list
+  page.appointments.send.booking.request.success.message

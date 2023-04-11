@@ -1,3 +1,4 @@
+import { ISendBookingRequestToPatientRequest } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import * as Sentry from '@sentry/nextjs';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
@@ -429,6 +430,9 @@ const patientEmrManager = {
       IPatientPlansCategoriesAndTypesResponse,
       IAxiosResponse<IPatientPlansCategoriesAndTypesResponse>
     >(`${baseURL}/v1/plans/categories-plan-types`);
+  },
+  sendBookingRequestToPatient(data: ISendBookingRequestToPatientRequest) {
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/patient-milestone`, data);
   }
 };
 

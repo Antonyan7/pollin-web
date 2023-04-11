@@ -13,8 +13,9 @@ import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-const ServiceType = () => {
+const ServiceType = (props: { isProviderRequired?: boolean }) => {
   const { control } = useFormContext<ICreateAppointmentBody>();
+  const { isProviderRequired } = props;
   const serviceTypes = useAppSelector(bookingSelector.serviceTypes);
   const isServiceTypesLoading = useAppSelector(bookingSelector.isServiceTypesLoading);
   const serviceTypeOptions = createOptionsGroup(serviceTypes);
@@ -49,7 +50,7 @@ const ServiceType = () => {
             border: `${borders.solid2px} ${theme.palette.primary.main}`
           }
         }}
-        disabled={!providerId}
+        disabled={isProviderRequired && !providerId}
         id={serviceTypeIdFieldName}
         onChange={(_, value) => value && typeof value === 'object' && 'item' in value && onChange(value.item.id)}
         onBlur={onBlur}

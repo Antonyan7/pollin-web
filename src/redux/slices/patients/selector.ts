@@ -16,6 +16,7 @@ const encountersTypes = createSelector([selector], (state) => state.encounters.t
 const recentAppointments = createSelector([selector], (state) => state.recentAppointments);
 const isRecentAppointmentsLoading = createSelector([selector], (state) => state.isRecentAppointmentsLoading);
 const isEncountersFiltersLoading = createSelector([selector], (state) => state.isEncountersFiltersLoading);
+const isBookingRequestToPatientLoading = createSelector([selector], (state) => state.isBookingRequestToPatientLoading);
 const encounterFilters = createSelector([selector], (state) => state.encounters.filters);
 const currentPatientId = createSelector([selector], (state) => state.patientsList.currentPatientId);
 const currentEncounterId = createSelector([selector], (state) => state.patientsList.currentEncounterId);
@@ -370,5 +371,6 @@ export default {
   plansList,
   isPlansListLoading,
   categories,
-  isCategoriesLoading
+  isCategoriesLoading,
+  isBookingRequestToPatientLoading
 };

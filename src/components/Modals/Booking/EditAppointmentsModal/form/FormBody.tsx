@@ -16,7 +16,7 @@ const FormBody = () => {
   return (
     <DialogContent sx={{ padding: `${paddings.top24} ${paddings.right8} ${paddings.bottom8} ${paddings.left8}` }}>
       <Grid container spacing={3}>
-        <ServiceType />
+        <ServiceType isProviderRequired />
         <DisabledPatientId patient={details?.patient ?? {}} />
         <AppointmentDescription edit />
         <DateAndStartTime />
