@@ -29,6 +29,7 @@ describe('create and edit addendum', () => {
 
                     cy.CreateEncounter(data.encounter_type_2, data.encounter_note_2)
                     cy.CreateAddendum(data.encounter_type_2, data.addendum_note)
+                    cy.EditAddendum(data.encounter_type_2, data.edited_addendum_note)
                 });
         });
     });

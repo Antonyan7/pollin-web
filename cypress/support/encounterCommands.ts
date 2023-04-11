@@ -8,6 +8,7 @@ declare global {
             CreateEncounter(type: string, note: string): Chainable<void>;
             EditEncounter(type: string, editedNote: string): Chainable<void>;
             CreateAddendum(type: string, addendumNote: string): Chainable<void>;
+            EditAddendum(type: string, editedNote: string): Chainable<void>;
         }
     }
 }
@@ -65,7 +66,22 @@ Cypress.Commands.add('CreateAddendum', (type, addendumNote) => {
             cy.get(CyUtils.getSelector(CypressIds.COMMON_LOADING_INDICATOR)).should('not.exist')
 
             cy.get('.MuiPaper-root').should('contain', addendumNote)
+        });
+});
 
+Cypress.Commands.add('EditAddendum', (type, editedNote) => {
+    cy.get('.MuiPaper-root')
+        .contains(type)
+        .each((encounter, index) => {
+            cy.wrap(encounter).get(`[data-cy="${CypressIds.PAGE_PATIENT_DETAILS_ADDENDUM_EDIT_ICON}-${index}"]`).realClick()
+            cy.url().should('contain', '/edit-addendum')
+            cy.get(CyUtils.getSelector(CypressIds.COMMON_LOADING_INDICATOR)).should('not.exist')
+
+            cy.get(`[id="common.text.editor.text.field"] .ql-editor`).focus().clear().type(editedNote)
+
+            cy.get(CyUtils.getSelector(CypressIds.COMMON_TEXT_EDITOR_SAVE_BTN)).should('exist').click()
+            cy.url().should('contain', '/encounters/encounter/')
+            cy.get(CyUtils.getSelector(CypressIds.COMMON_LOADING_INDICATOR)).should('not.exist')
         });
 });
 export {};

@@ -1,8 +1,10 @@
 {
   "e2e_patient": "E2E Patient",
+  "e2e_patient_short": "E2E",
   "e2e_patient_2": "Auto Patient",
   "service_type_1": "E2E - Test N2",
   "service_type_2": "E2E - Test Auto",
+  "service_type_3": "E2E - Service Type",
   "service_provider_1": "Test_Auto",
   "service_provider_2": "Test_Service_Provider",
   "templateName1": "service type template",

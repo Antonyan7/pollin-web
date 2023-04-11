@@ -52,6 +52,8 @@ Cypress.Commands.add('ChooseDateAndTime', (futureDate, time) => {
 
     cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT)).contains(dateToSelect).click();
     cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT)).contains(time).realClick();
+
+    cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_BUTTON_SAVE)).should('be.enabled').click();
 });
 Cypress.Commands.add('SelectDate', (futureDate) => {
     const futureDayString = format(futureDate, 'd');

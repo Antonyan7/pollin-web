@@ -28,7 +28,6 @@ describe('Cancel Appointments', () => {
         cy.ChoosePatient(data.e2e_patient);
 
         cy.ChooseDateAndTime(futureDate, 15);
-        cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_BUTTON_SAVE)).should('be.enabled').click();
 
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)).should('exist');
@@ -56,7 +55,7 @@ describe('Cancel Appointments', () => {
             cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS)).should('exist').click();
             cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
               'contain',
-              StatusesEnum.Cancelled
+              `${data.e2e_patient} | ${data.e2e_patient_short} | ${StatusesEnum.Cancelled}`
             );
           });
       });
