@@ -10,7 +10,7 @@ const AddSurgery = () => {
   const { append, fields } = usePastSurgeryContext();
 
   const onAddSurgeryClick = () => {
-    append({ typeOfSurgery: '', dateOfSurgery: new Date() });
+    append({ typeOfSurgery: '', dateOfSurgery: null });
   };
 
   return (
