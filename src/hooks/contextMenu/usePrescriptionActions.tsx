@@ -1,20 +1,38 @@
-import { useCallback } from 'react';
+import { RefObject, useCallback } from 'react';
 import { IPrescriptionStatusesActions } from '@axios/patientEmr/managerPatientEmrTypes';
 import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { filterActionBindings, getActionTitleById } from 'helpers/contextMenu';
+import { useRouter } from 'next/router';
 import { ModalName } from 'types/modals';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
-const usePrescriptionActions = (prescriptionId: string, actions: ContextMenuAction[] = []) => {
-  const handleDownLoadAction = useCallback(() => {
-    dispatch(patientsMiddleware.downloadPatientPrescription(prescriptionId));
-  }, [prescriptionId]);
+const usePrescriptionActions = (
+  downloadRef: RefObject<HTMLAnchorElement>,
+  prescriptionId: string,
+  actions: ContextMenuAction[] = []
+) => {
+  const router = useRouter();
+  const patientId = router.query.id as string;
+
+  const handleDownLoadAction = useCallback(async () => {
+    const blob = await dispatch(patientsMiddleware.downloadPatientPrescription(prescriptionId));
+
+    if (blob && downloadRef.current) {
+      const url = window.URL.createObjectURL(new Blob([blob], { type: 'application/pdf' }));
+
+      downloadRef.current.href = url;
+      downloadRef.current.download = `prescription.pdf`;
+      downloadRef.current.click();
+      window.URL.revokeObjectURL(url);
+    }
+  }, [prescriptionId, downloadRef]);
 
   const handleMarkAsDispensedAction = useCallback(() => {
     dispatch(patientsMiddleware.markPatientPrescriptionDispensed(prescriptionId));
-  }, [prescriptionId]);
+    dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
+  }, [prescriptionId, patientId]);
 
   const handleArchivePrescriptionAction = useCallback(() => {
     dispatch(

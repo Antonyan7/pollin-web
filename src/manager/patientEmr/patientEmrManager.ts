@@ -1,5 +1,6 @@
 import { ISendBookingRequestToPatientRequest } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import * as Sentry from '@sentry/nextjs';
+import { AxiosResponse } from 'axios';
 import { Axios } from 'manager/axiosInstance';
 import { IAxiosResponse, IAxiosResponsePaginated } from 'manager/axiosTypes';
 import {
@@ -386,7 +387,7 @@ const patientEmrManager = {
     );
   },
   downloadPatientPrescription(prescriptionId: string) {
-    return axiosInstance.get<void, IAxiosResponse<BlobPart>>(
+    return axiosInstance.get<void, AxiosResponse<BlobPart>>(
       `/clinic-downloads/v1/prescriptions/${prescriptionId}/download`,
       {
         responseType: 'blob'

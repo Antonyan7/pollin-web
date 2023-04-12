@@ -48,7 +48,7 @@ const PastMedications = () => {
           justifyContent="center"
           sx={{ fontSize: (theme) => theme.typography.pxToRem(15), margin: margins.all12 }}
         >
-          {t(Translation.PAGE_MEDICATIONS_EMPTY_LIST)}
+          {t(Translation.PAGE_MEDICATIONS_PAST_EMPTY_LIST)}
         </Grid>
       ) : null}
 

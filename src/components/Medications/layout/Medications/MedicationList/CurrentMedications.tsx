@@ -46,7 +46,7 @@ const CurrentMedications = () => {
       )}
       {!patientCurrentMedications?.medications?.length && !isPatientCurrentMedicationLoading ? (
         <Grid container justifyContent="center" sx={{ fontSize: '15px', margin: margins.all12 }}>
-          {t(Translation.PAGE_MEDICATIONS_EMPTY_LIST)}
+          {t(Translation.PAGE_MEDICATIONS_CURRENT_EMPTY_LIST)}
         </Grid>
       ) : null}
 

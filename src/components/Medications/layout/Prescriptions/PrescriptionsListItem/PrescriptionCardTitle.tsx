@@ -1,6 +1,7 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, Typography, useTheme } from '@mui/material';
+import { PrescriptionsStatus, PrescriptionsType } from '@axios/patientEmr/managerPatientEmrTypes';
+import { Badge, Grid, Link, Typography, useTheme } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { useAppSelector } from 'redux/hooks';
@@ -16,6 +17,7 @@ import { PrescriptionCardItem } from '../../types';
 const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
   const theme = useTheme();
   const [t] = useTranslation();
+  const downloadRef = useRef<HTMLAnchorElement>(null);
 
   const prescriptionStatuses = useAppSelector(patientsSelector.prescriptionStatuses);
   const actions = useMemo(() => {
@@ -28,7 +30,20 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
     return [];
   }, [prescriptionStatuses, prescription]);
 
-  const actionBindings = usePrescriptionActions(prescription.id, actions);
+  const actionBindings = usePrescriptionActions(downloadRef, prescription.id, actions);
+
+  const statusColor = useMemo(() => {
+    switch (prescription.status) {
+      case PrescriptionsStatus.Prescribed:
+        return { background: theme.palette.warning.light, color: theme.palette.warning.dark };
+      case PrescriptionsStatus.Dispensed:
+        return { background: theme.palette.success.light, color: theme.palette.success.dark };
+      case PrescriptionsStatus.Paid:
+        return { background: theme.palette.dark.light, color: theme.palette.dark.main };
+      default:
+        return { background: theme.palette.warning.light, color: theme.palette.warning.dark };
+    }
+  }, [theme, prescription.status]);
 
   return (
     <Grid
@@ -45,7 +60,10 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
       <Grid item xs={7}>
         <Chip
           sx={{
-            background: theme.palette.warning.main,
+            background:
+              prescription?.type === PrescriptionsType.InHouse
+                ? theme.palette.warning.main
+                : theme.palette.secondary[600],
             color: theme.palette.common.black,
             pr: paddings.right2,
             pl: paddings.left2,
@@ -55,14 +73,35 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
           size="small"
           chipColor="notActive"
         />
+        {prescription.type === PrescriptionsType.External && (
+          <>
+            <Badge
+              color="secondary"
+              overlap="circular"
+              variant="dot"
+              sx={{
+                margin: margins.all12,
+                '& .MuiBadge-dot': {
+                  height: 5,
+                  minWidth: 5
+                }
+              }}
+            />
+            <Typography variant="h5" display="inline">
+              {prescription?.pharmacy
+                ? `${prescription?.pharmacy.address.country}, ${prescription?.pharmacy.address.city},  ${prescription?.pharmacy.address.street}`
+                : ''}
+            </Typography>
+          </>
+        )}
       </Grid>
+
       <Grid item xs={2}>
         <Chip
           sx={{
-            background: theme.palette.success.light,
-            color: theme.palette.success.main,
             pr: paddings.right2,
-            pl: paddings.left2
+            pl: paddings.left2,
+            ...statusColor
           }}
           label={prescription?.status}
           size="small"
@@ -76,6 +115,7 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
       </Grid>
       <Grid item xs={0.5}>
         <ContextMenu actionBindings={actionBindings} />
+        <Link component="a" ref={downloadRef} hidden href="#download" />
       </Grid>
     </Grid>
   );

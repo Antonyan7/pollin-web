@@ -532,6 +532,19 @@ export interface PrescriptionsProps {
   date: string;
   medications: PrescriptionsMedicationsProps[];
   prescriber: string;
+  pharmacy?: PrescriptionsPharmacyProps;
+}
+export interface PrescriptionsPharmacyProps {
+  name?: string;
+  address: {
+    street: string;
+    unit?: string;
+    city: string;
+    postalCode: string;
+    country: string;
+  };
+  faxNumber?: string;
+  phoneNumber?: string;
 }
 export interface PrescriptionsMedicationsProps {
   id: string;

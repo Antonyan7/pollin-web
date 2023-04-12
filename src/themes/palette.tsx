@@ -41,6 +41,7 @@ const Palette = (navType: PaletteMode, presetColor: string) => {
         main: colors.secondaryMain,
         dark: colors.secondaryDark,
         200: colors.secondary200,
+        600: colors.secondary600,
         800: colors.secondary800
       },
       error: {

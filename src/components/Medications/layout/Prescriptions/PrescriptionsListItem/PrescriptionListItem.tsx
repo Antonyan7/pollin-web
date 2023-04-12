@@ -119,7 +119,7 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
       <Grid container item xs={12}>
         <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
-          {t(Translation.MODAL_PRESCRIPTIONS_REFILL_NOTES)}
+          {t(Translation.PAGE_PRESCRIPTIONS_LIST_REFILL_NOTES)}
         </Grid>
         <Grid item xs={0.5}>
           :
@@ -131,7 +131,7 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
       <Grid container item xs={12}>
         <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
-          {t(Translation.MODAL_PRESCRIPTIONS_OTHER_DOCTOR_NOTES)}
+          {t(Translation.PAGE_PRESCRIPTIONS_LIST_OTHER_DOCTOR_NOTES)}
         </Grid>
         <Grid item xs={0.5}>
           :

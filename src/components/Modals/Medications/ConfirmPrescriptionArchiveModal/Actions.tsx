@@ -5,6 +5,7 @@ import { dispatch } from '@redux/hooks';
 import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
+import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
@@ -17,9 +18,11 @@ interface ActionsProps {
 const Actions = ({ prescriptionId }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.MODAL_PRESCRIPTIONS_ARCHIVE);
+  const router = useRouter();
 
   const onClickConfirm = () => {
     dispatch(patientsMiddleware.archivePatientPrescription(prescriptionId));
+    dispatch(patientsMiddleware.getPatientPrescriptions(router.query.id as string, 1));
     dispatch(viewsMiddleware.closeModal(ModalName.PrescriptionsArchive));
   };
 
