@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
@@ -19,7 +20,7 @@ import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCan
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 import { DateUtil } from '@utils/date/DateUtil';
 
-import { getAddAddendumInitialValues } from '../helpers/initialValues';
+import { addAddendumValidationSchema, getAddAddendumInitialValues } from '../helpers/initialValues';
 
 import EncountersWrapper from './EncountersWrapper';
 
@@ -79,7 +80,8 @@ const AddAddendum = () => {
   useShouldOpenCancelChangesConfirmationModal(sanitizedValue, previousEditorValue);
 
   const methods = useForm({
-    defaultValues: getAddAddendumInitialValues()
+    defaultValues: getAddAddendumInitialValues(),
+    resolver: yupResolver(addAddendumValidationSchema)
   });
 
   const closeImmediately = (): void => {

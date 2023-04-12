@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { AddendumsProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { yupResolver } from '@hookform/resolvers/yup';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { CypressIds } from 'constants/cypressIds';
@@ -18,7 +19,7 @@ import useShouldOpenCancelChangesConfirmationModal from '@hooks/useShouldOpenCan
 import CircularLoading from '@ui-component/circular-loading';
 import { DateUtil } from '@utils/date/DateUtil';
 
-import { getEditEncounterInitialValues } from '../helpers/initialValues';
+import { editEncounterValidationSchema, getEditEncounterInitialValues } from '../helpers/initialValues';
 
 import CurrentAddendum from './CurrentAddendum';
 import EditAddendumHeader from './EditAddendumHeader';
@@ -92,7 +93,8 @@ const EditEncounterRecord = ({ mode }: EditEncounterRecordProps) => {
   const sanitizedValue = sanitize(editorValue);
   const previousEditorValue = usePreviousState(sanitizedValue, true);
   const methods = useForm<IEncountersFormBody>({
-    defaultValues: getEditEncounterInitialValues()
+    defaultValues: getEditEncounterInitialValues(),
+    resolver: yupResolver(editEncounterValidationSchema)
   });
   const { setValue } = methods;
 

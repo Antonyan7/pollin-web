@@ -29,6 +29,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 import ParserTypographyWrapper from '@ui-component/common/Typography';
 import CurrentAddendum from '@ui-component/encounters/components/CurrentAddendum';
+import { removeHtmlTags } from '@ui-component/encounters/helpers/initialValues';
 import { DateUtil } from '@utils/date/DateUtil';
 
 import 'react-quill/dist/quill.snow.css';
@@ -217,8 +218,13 @@ const SimpleTextEditor = ({
             <ReactQuill
               style={{ backgroundColor: theme.palette.common.white }}
               onChange={(event) => {
-                onEditorFieldChange(event);
-                setEditorValue(event);
+                if (event.replace(removeHtmlTags, '').trim().length === 0) {
+                  onEditorFieldChange('');
+                  setEditorValue('');
+                } else {
+                  onEditorFieldChange(event);
+                  setEditorValue(event);
+                }
               }}
               {...fieldProps}
               id={CypressIds.COMMON_TEXT_EDITOR_TEXT_FIELD}

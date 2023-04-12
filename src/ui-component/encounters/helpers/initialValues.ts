@@ -21,7 +21,17 @@ export const getAddEncounterInitialValues = (): Omit<ICreateEncounterNoteRequest
   content: ''
 });
 
+export const addAddendumValidationSchema = object({
+  content: string().required()
+});
+
 export const addEncounterValidationSchema = object({
   encountersTypeId: string().required(),
   content: string().required()
 });
+
+export const editEncounterValidationSchema = object({
+  content: string().required()
+});
+
+export const removeHtmlTags = /<(.|\n)*?>/g;
