@@ -43,10 +43,12 @@ import {
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
+  IPlanMutation,
   IPrescriptionStatuses,
   IProfileTestResultDetailsReqBody,
   IProfileTestResultDetailsResponse,
   IProfileTestResults,
+  IReadyToOrderPatientPlan,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest,
@@ -434,6 +436,25 @@ const patientEmrManager = {
   },
   sendBookingRequestToPatient(data: ISendBookingRequestToPatientRequest) {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/patient-milestone`, data);
+  },
+  markThePlanAsCancelled(data: IPlanMutation) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-cancelled`, data);
+  },
+  markThePlanAsActive(data: IPlanMutation) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-active`, data);
+  },
+  markThePlanAsCompleted(data: IPlanMutation) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-completed`, data);
+  },
+  getPatientPlansReadyToOrder(patientId: string) {
+    return axiosInstance.get<IReadyToOrderPatientPlan, IAxiosResponse<IReadyToOrderPatientPlan>>(
+      `${baseURL}/v1/plans/ready-to-order`,
+      {
+        params: {
+          patientId
+        }
+      }
+    );
   }
 };
 

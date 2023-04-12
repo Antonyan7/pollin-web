@@ -12,6 +12,7 @@ import {
   IGeneralHealthProps,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
+  IPlanMutation,
   IUpdateEncounterAddendumRequest,
   PatientPrescriptionsDrugListProps,
   Recency,
@@ -1228,6 +1229,28 @@ const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) 
   }
 };
 
+const markThePlanAsCancelled = (data: IPlanMutation) => async () => {
+  try {
+    await API.patients.markThePlanAsCancelled(data);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+};
+const markThePlanAsActive = (data: IPlanMutation) => async () => {
+  try {
+    await API.patients.markThePlanAsActive(data);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+};
+const markThePlanAsCompleted = (data: IPlanMutation) => async () => {
+  try {
+    await API.patients.markThePlanAsCompleted(data);
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1307,5 +1330,8 @@ export default {
   getPatientPlansList,
   getPatientPlansStatuses,
   getPlanCategoriesAndTypes,
-  sendBookingRequestToPatient
+  sendBookingRequestToPatient,
+  markThePlanAsCancelled,
+  markThePlanAsActive,
+  markThePlanAsCompleted
 };

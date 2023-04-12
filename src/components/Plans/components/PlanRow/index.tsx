@@ -2,12 +2,15 @@ import * as React from 'react';
 import { FC } from 'react';
 import { IPatientPlan, IPatientPlansStatus } from '@axios/patientEmr/managerPatientEmrTypes';
 import SeparatedLabels from '@components/SeparatedLabels';
-import { KeyboardArrowDown, MoreVertOutlined } from '@mui/icons-material';
+import { KeyboardArrowRight } from '@mui/icons-material';
 import { Chip, IconButton, Paper } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { paddings } from 'themes/themeConstants';
+
+import usePlansActions from '@hooks/contextMenu/usePlansActions';
+import { ContextMenu } from '@ui-component/contextMenu';
 
 const findStatus = (statuses: IPatientPlansStatus[], currentStatusId: string) =>
   statuses.find((status) => status.status === currentStatusId);
@@ -19,6 +22,8 @@ interface PlanRowProps {
 const PlanRow: FC<PlanRowProps> = ({ plan }) => {
   const statusVariations = useAppSelector(patientsSelector.statusVariations);
   const status = findStatus(statusVariations, plan.status);
+
+  const actionBindings = usePlansActions(plan.id, status?.actions);
 
   return (
     <Paper
@@ -45,12 +50,9 @@ const PlanRow: FC<PlanRowProps> = ({ plan }) => {
             }}
             label={status?.title}
           />
-          {/* TODO actions */}
-          <IconButton size="small" disabled>
-            <MoreVertOutlined />
-          </IconButton>
+          <ContextMenu actionBindings={actionBindings} />
           <IconButton size="small" color="primary">
-            <KeyboardArrowDown />
+            <KeyboardArrowRight />
           </IconButton>
         </Stack>
       </Stack>

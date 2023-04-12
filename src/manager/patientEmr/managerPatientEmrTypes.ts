@@ -956,10 +956,7 @@ export interface IFamilyDoctor extends MedicalBackgroundFieldValues {
 export interface IPatientPlansStatus {
   status: string;
   title: string;
-  actions: {
-    id: string;
-    title: string;
-  }[];
+  actions: IPatientPlanActionItem[];
   label: {
     textColor: string;
     backgroundColor: string;
@@ -968,6 +965,10 @@ export interface IPatientPlansStatus {
 
 export interface IPatientPlansStatusResponse {
   variations: IPatientPlansStatus[];
+}
+
+export interface IPlanMutation {
+  planId: string;
 }
 
 export interface IPatientPlansCategoriesAndTypesResponse {
@@ -986,11 +987,23 @@ export interface IPatientPlansListData extends IPagination {
   patientPlans: IPatientPlan[];
 }
 
+export enum PlanActions {
+  MarkAsActive = 'Mark as Active',
+  MarkAsCompleted = 'Mark as Completed',
+  MarkAsCancelled = 'Cancel Plan'
+}
+
+export interface IPatientPlanActionItem {
+  id: string;
+  title: string;
+}
+
+export interface IReadyToOrderPatientPlan {
+  patientPlans: IPatientPlanActionItem[];
+}
+
 export interface IPatientPlansCategories {
   id: string;
   title: string;
-  items: {
-    id: string;
-    title: string;
-  }[];
+  items: IPatientPlanActionItem[];
 }
