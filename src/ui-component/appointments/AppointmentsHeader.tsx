@@ -26,7 +26,10 @@ const AppointmentsHeader = () => {
     dispatch(
       viewsMiddleware.openModal({
         name: ModalName.SendBookingRequestToPatientModal,
-        props: {}
+        props: {
+          isPatientProfile: false,
+          patientId: ''
+        }
       })
     );
   }, []);

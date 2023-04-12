@@ -1219,6 +1219,7 @@ const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) 
         }
       })
     );
+    dispatch(viewsMiddleware.closeModal(ModalName.ConfirmBookingRequestToPatientModal));
     dispatch(viewsMiddleware.closeModal(ModalName.SendBookingRequestToPatientModal));
   } catch (error) {
     Sentry.captureException(error);

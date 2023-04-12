@@ -17,7 +17,11 @@ import EditAppointmentsModal, { EditAppointmentModalProps } from '@components/Mo
 import AppointmentStatusChangeConfirmationModal from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation';
 import { IAppointmentStatusChangeConfirmationModalProps } from '@components/Modals/Booking/EditAppointmentsModal/AppointmentStatusChangeConfirmation/types';
 import SendBookingRequestToPatientModal from '@components/Modals/Booking/SendBookingRequestToPatientModal';
-import { SendBookingRequestToPatientModalProps } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
+import ConfirmBookingRequestToPatientModal from '@components/Modals/Booking/SendBookingRequestToPatientModal/ConfirmBookingRequestToPatientModal';
+import {
+  IConfirmBookingRequestToPatientModalProps,
+  SendBookingRequestToPatientModalProps
+} from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import DevToolsModal from '@components/Modals/DevToolsModal/DevToolsModal';
 import ErrorModal from '@components/Modals/ErrorModal';
 import PatientContactInformationModal from '@components/Modals/ExternalResults/PatientContactInformationModal';
@@ -109,6 +113,10 @@ const getCancelAppointmentModal = (modal: IOpenedModal<CancelAppointmentModalPro
 
 const getSendBookingRequestToPatientModal = (modal: IOpenedModal<SendBookingRequestToPatientModalProps>) => (
   <SendBookingRequestToPatientModal key={modal.name} {...modal.props} />
+);
+
+const getConfirmBookingRequestToPatientModal = (modal: IOpenedModal<IConfirmBookingRequestToPatientModalProps>) => (
+  <ConfirmBookingRequestToPatientModal key={modal.name} {...modal.props} />
 );
 
 // <PATIENT EMR>
@@ -253,6 +261,10 @@ export const ModalsController = () => {
 
           case ModalName.SendBookingRequestToPatientModal: {
             return getSendBookingRequestToPatientModal(modal);
+          }
+
+          case ModalName.ConfirmBookingRequestToPatientModal: {
+            return getConfirmBookingRequestToPatientModal(modal);
           }
 
           // <PATIENT EMR>

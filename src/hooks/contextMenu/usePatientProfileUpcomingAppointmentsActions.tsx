@@ -31,10 +31,13 @@ const usePatientProfileUpcomingAppointmentsActions = (
     dispatch(
       viewsMiddleware.openModal({
         name: ModalName.SendBookingRequestToPatientModal,
-        props: {}
+        props: {
+          isPatientProfile: true,
+          patientId: patientProfile?.id
+        }
       })
     );
-  }, []);
+  }, [patientProfile]);
 
   const actionBindings = [
     {

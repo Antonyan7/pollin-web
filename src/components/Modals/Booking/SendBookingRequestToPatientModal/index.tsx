@@ -1,42 +1,62 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import PatientId from '@components/Modals/Booking/AddAppointmentModal/fields/PatientId';
 import ServiceType from '@components/Modals/Booking/AddAppointmentModal/fields/ServiceType';
-import { ISendBookingRequestFormValues } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
+import {
+  ISendBookingRequestFormValues,
+  SendBookingRequestToPatientModalProps
+} from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
+import DisabledPatientId from '@components/Modals/Medications/AddPatientPrescriptionModal/form/fields/DisabledPatient';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { CloseOutlined } from '@mui/icons-material';
 import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { bookingMiddleware } from '@redux/slices/booking';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { bookingMiddleware, bookingSelector } from '@redux/slices/booking';
+import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
-import { ModalName } from 'types/modals';
+import { ModalName, OpenModalReason } from 'types/modals';
 import { sendBookingRequestValidationSchema } from 'validation/appointments/send_booking_request';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const SendBookingRequestToPatientModal = () => {
+const SendBookingRequestToPatientModal = (props: SendBookingRequestToPatientModalProps) => {
+  const { patientId, isPatientProfile } = props;
   const [t] = useTranslation();
   const isBookingRequestToPatientLoading = useAppSelector(patientsSelector.isBookingRequestToPatientLoading);
+  const patientAlerts = useAppSelector(bookingSelector.patientAlerts);
 
   const methods = useForm({
     mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues: {
       serviceTypeId: '',
-      patientId: ''
+      patientId: isPatientProfile ? patientId : ''
     },
     resolver: yupResolver(sendBookingRequestValidationSchema)
   });
 
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isValid },
+    getValues
+  } = methods;
+
+  const isDuplicatePatientName = useMemo(() => {
+    if (!patientAlerts?.length) {
+      return false;
+    }
+
+    const duplicateAlert = patientAlerts.find((alertDetails) => alertDetails.title === OpenModalReason.DuplicateName);
+
+    return !!duplicateAlert;
+  }, [patientAlerts]);
 
   const onSubmit = useCallback((values: ISendBookingRequestFormValues) => {
-    dispatch(patientsMiddleware.sendBookingRequestToPatient(values));
+    dispatch(viewsMiddleware.openModal({ name: ModalName.ConfirmBookingRequestToPatientModal, props: values }));
   }, []);
 
   const onClose = useCallback(() => {
@@ -46,6 +66,18 @@ const SendBookingRequestToPatientModal = () => {
   useEffect(() => {
     dispatch(bookingMiddleware.getServiceTypes());
   }, []);
+
+  useEffect(() => {
+    if (isDuplicatePatientName) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.AddAppointmentDuplicatePatientModal,
+          props: { patientId: getValues('patientId') }
+        })
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDuplicatePatientName]);
 
   return (
     <Dialog open onClose={onClose} fullWidth maxWidth="sm">
@@ -68,7 +100,7 @@ const SendBookingRequestToPatientModal = () => {
             <DialogContent sx={{ margin: `${margins.top16} ${margins.right8} ${margins.bottom16} ${margins.left8}` }}>
               <Grid container direction="column" spacing={3}>
                 <ServiceType isProviderRequired={false} />
-                <PatientId />
+                {isPatientProfile ? <DisabledPatientId /> : <PatientId />}
               </Grid>
             </DialogContent>
 
@@ -86,6 +118,7 @@ const SendBookingRequestToPatientModal = () => {
                     color="primary"
                     variant="contained"
                     type="submit"
+                    disabled={!isValid}
                   >
                     {t(Translation.COMMON_BUTTON_SEND_LABEL)}
                   </ButtonWithLoading>
