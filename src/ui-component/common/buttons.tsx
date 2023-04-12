@@ -35,6 +35,7 @@ export const MinusIconButton = (props: { onClick: () => void }) => {
 
 interface ButtonWithIconProps extends ButtonProps {
   onClick?: () => void;
+  handleClick?: (event: React.MouseEvent<HTMLElement>) => void;
   icon?: ReactNode;
   label: string;
   sx?: SxProps;
@@ -43,6 +44,7 @@ interface ButtonWithIconProps extends ButtonProps {
 
 export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
   onClick,
+  handleClick,
   icon,
   label,
   labelSx,
@@ -57,7 +59,7 @@ export const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({
       display: 'flex',
       ...sx
     }}
-    onClick={onClick}
+    onClick={handleClick ?? onClick}
     {...buttonProps}
   >
     <Typography

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPatientPlan, IPatientPlansListData } from '@axios/patientEmr/managerPatientEmrTypes';
 import NoResultsFound from '@components/NoResultsFound';
+import SimpleMenu, { IMenuItem } from '@components/SimpleMenu';
 import { Add, SendTwoTone } from '@mui/icons-material';
 import { Grid, TablePagination, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
@@ -17,12 +18,26 @@ import { ButtonWithIcon } from '@ui-component/common/buttons';
 
 import PlanRow from './components/PlanRow';
 
+const CreatePlanButton = ({ handleClick }: { handleClick: (event: MouseEvent<HTMLElement>) => void }) => {
+  const [t] = useTranslation();
+
+  return (
+    <ButtonWithIcon
+      sx={{ px: paddings.leftRight16 }}
+      label={t(Translation.PAGE_PATIENT_PLANS_CREATE_A_PLAN_BTN)}
+      variant="contained"
+      icon={<Add />}
+      handleClick={handleClick}
+    />
+  );
+};
+
 const PatientPlansList = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const patientPlansList = useAppSelector(patientsSelector.plansList);
-
+  const categories = useAppSelector(patientsSelector.categories);
   const isPatientProfileLoading = useAppSelector(patientsSelector.isPatientProfileLoading);
   const isStatusVariationsLoading = useAppSelector(patientsSelector.isStatusVariationsLoading);
   const isCategoriesAndTypesLoading = useAppSelector(patientsSelector.isCategoriesLoading);
@@ -50,7 +65,7 @@ const PatientPlansList = () => {
   const notFoundLabel = t(Translation.PAGE_PATIENT_PLANS_LIST_EMPTY);
   const { isReadyToOrder = false, patientPlans = [] } = patientPlansList ?? ({} as IPatientPlansListData);
 
-  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, value: number) => {
+  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, value: number) => {
     setPage(value + 1);
   };
 
@@ -75,12 +90,7 @@ const PatientPlansList = () => {
               disabled={!isReadyToOrder}
               icon={<SendTwoTone />}
             />
-            <ButtonWithIcon
-              sx={{ px: paddings.leftRight16 }}
-              label={t(Translation.PAGE_PATIENT_PLANS_CREATE_A_PLAN_BTN)}
-              variant="contained"
-              icon={<Add />}
-            />
+            <SimpleMenu ActionButton={CreatePlanButton} items={categories as IMenuItem[]} />
           </Stack>
           <Stack spacing={3} pt={paddings.top24}>
             {patientPlans.length > 0 ? (

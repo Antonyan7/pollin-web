@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
 import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
+import NOT_APPLICABLE from '@components/MedicalBackground/constants';
 import { getDropdownOption } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientMenstrualCycleHistory';
@@ -47,7 +48,7 @@ const ViewModeContent = () => {
               mappedItem?.viewValue
             )?.title;
 
-            const isNotApplicable = mappedItem?.viewValue === 'NotApplicable';
+            const isNotApplicable = mappedItem?.viewValue === NOT_APPLICABLE;
             const additionalLabel = !isNotApplicable ? mappedItem?.componentData?.additionalLabel ?? '' : '';
 
             finalValue = dropdownOptionTitle ? `${dropdownOptionTitle} ${additionalLabel}` : mappedItem?.viewValue;

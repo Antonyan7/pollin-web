@@ -1,0 +1,138 @@
+import React, { MouseEvent, useState } from 'react';
+import ArrowForwardIos from '@mui/icons-material/ArrowForwardIos';
+import { Grid, Menu, MenuItem, Typography } from '@mui/material';
+import { margins, paddings } from 'themes/themeConstants';
+
+export enum MenuItemType {
+  List = 'List',
+  Item = 'Item'
+}
+
+export interface IMenuItem {
+  id: string;
+  title: string;
+  items: IMenuItem[];
+}
+
+const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <MenuItem onClick={handleClick}>
+        <Grid container display="flex" direction="row" alignItems="center">
+          <Grid item xs={11}>
+            <Typography>{item.title}</Typography>
+          </Grid>
+          <Grid item xs={1}>
+            <ArrowForwardIos
+              sx={{
+                fontSize: (theme) => theme.typography.pxToRem(16),
+                color: (theme) => theme.palette.primary.main
+              }}
+            />
+          </Grid>
+        </Grid>
+      </MenuItem>
+      <Menu
+        open={open}
+        anchorEl={anchorEl}
+        anchorOrigin={{
+          horizontal: 'left',
+          vertical: 'top'
+        }}
+        sx={(theme) => ({
+          '& .MuiPaper-root': {
+            borderRadius: 4,
+            border: `1px solid ${theme.palette.primary.main}`
+          },
+          '& ul': {
+            px: paddings.leftRight16
+          },
+          '& .MuiMenuItem-root': {
+            borderRadius: 4
+          },
+          '& .MuiMenuItem-root:hover': {
+            background: theme.palette.primary[100]
+          }
+        })}
+        onClose={handleClose}
+        slotProps={{
+          backdrop: {
+            onClick: handleClose
+          }
+        }}
+      >
+        {item?.items?.map((innerItem) => (
+          <MenuItem sx={{ p: paddings.all8 }}>
+            <Typography variant="body2">{innerItem.title}</Typography>
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
+};
+
+const SimpleMenu = ({
+  ActionButton,
+  items
+}: // TODO
+// onItemClick
+{
+  ActionButton: ({ handleClick }: { handleClick: (event: MouseEvent<HTMLElement>) => void }) => JSX.Element;
+  // onItemClick: () => void;
+  items: IMenuItem[];
+}) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <>
+      <ActionButton handleClick={handleClick} />
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        slotProps={{
+          backdrop: {
+            onClick: handleClose
+          }
+        }}
+        sx={(theme) => ({
+          '& .MuiPaper-root': {
+            borderRadius: 4,
+            border: `1px solid ${theme.palette.primary.main}`,
+            mt: margins.top20
+          },
+          '& ul': {
+            px: paddings.leftRight16
+          },
+          '& .MuiMenuItem-root': {
+            borderRadius: 4
+          },
+          '& .MuiMenuItem-root:hover': {
+            background: theme.palette.primary[100]
+          }
+        })}
+      >
+        {items.map((item) => (
+          <SimpleMenuItem item={item} />
+        ))}
+      </Menu>
+    </>
+  );
+};
+
+export default SimpleMenu;
