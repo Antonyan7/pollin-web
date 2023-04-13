@@ -270,7 +270,7 @@ const reducers = createReducer({
   setIsFemalePatientGynaecologicalHistoryDataUpdating(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isFemalePatientGynaecologicalHistoryDataUpdating = action.payload;
   },
-  setisMalePatientGenitourinaryHistoryLoading(state, action: IAction<boolean>) {
+  setIsMalePatientGenitourinaryHistoryLoading(state, action: IAction<boolean>) {
     state.medicalBackground.medicalHistory.isMalePatientGenitourinaryHistoryLoading = action.payload;
   },
   setMalePatientGynaecologicalHistory(state, action: IAction<IGenitourinaryHistory | null>) {
@@ -338,6 +338,9 @@ const reducers = createReducer({
   },
   setIsContactInformationUpdateLoading(state, action: IAction<boolean>) {
     state.medicalBackground.contact.isContactInformationDataUpdating = action.payload;
+  },
+  setIsEditMalePatientGenitourinaryState(state, action: IAction<boolean>) {
+    state.medicalBackground.medicalHistory.isMalePatientGenitourinaryEditButtonClicked = action.payload;
   },
   setDrugs(state, action: IAction<IDrugsProps[]>) {
     state.medicationsPrescriptions.medications.drugs = action.payload;

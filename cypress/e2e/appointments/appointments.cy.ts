@@ -43,14 +43,13 @@ describe('Appointments', () => {
 
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)).should('exist');
 
-        cy.SelectDate(futureDate)
-          .then(() => {
-            cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
-            cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
-              'contain',
-              `${data.e2e_patient} | ${data.e2e_patient_short} | ${StatusesEnum.Booked}`
-            );
-          });
+        cy.SelectDate(futureDate).then(() => {
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
+            'contain',
+            `${data.e2e_patient} | ${data.e2e_patient_short} | ${StatusesEnum.Booked}`
+          );
+        });
       });
     });
   });

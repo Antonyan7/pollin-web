@@ -10,6 +10,7 @@ import {
   IFemalePregnancyInformationProps,
   IFertilityHistory,
   IGeneralHealthProps,
+  IGenitourinaryHistory,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
   IPlanMutation,
@@ -61,7 +62,7 @@ const {
   setEncounterDetailsInfo,
   setRecentAppointments,
   setIsVerifyPatientProfilePhotoLoading,
-  setisMalePatientGenitourinaryHistoryLoading,
+  setIsMalePatientGenitourinaryHistoryLoading,
   setIsRecentAppointmentsLoading,
   setPatientProfile,
   setIsPatientProfileLoading,
@@ -91,6 +92,7 @@ const {
   setIsPatientHighlightIntakeReminderActive,
   setPatientAppointmentsRequestStatus,
   setPatientAlertViewState,
+  setIsEditMalePatientGenitourinaryState,
   setPatientAlertDetailsLoading,
   setIsPatientCustomAlertCreated,
   setIsAlertDeleted,
@@ -1088,9 +1090,13 @@ const getPatientBackgroundInformation = (patientId: string) => async (dispatch: 
   }
 };
 
+const setEditMalePatientGenitourinaryState = (isEdit: boolean) => async (dispatch: AppDispatch) => {
+  dispatch(setIsEditMalePatientGenitourinaryState(isEdit));
+};
+
 const getMaleGenitourinaryHistory = (patientId: string) => async (dispatch: AppDispatch) => {
   try {
-    dispatch(setisMalePatientGenitourinaryHistoryLoading(true));
+    dispatch(setIsMalePatientGenitourinaryHistoryLoading(true));
 
     const response = await API.patients.getMaleGenitourinaryHistory(patientId);
 
@@ -1098,7 +1104,7 @@ const getMaleGenitourinaryHistory = (patientId: string) => async (dispatch: AppD
   } catch (error) {
     Sentry.captureException(error);
   } finally {
-    dispatch(setisMalePatientGenitourinaryHistoryLoading(false));
+    dispatch(setIsMalePatientGenitourinaryHistoryLoading(false));
   }
 };
 
@@ -1295,6 +1301,33 @@ const markThePlanAsCompleted = (data: IPlanMutation) => async () => {
   }
 };
 
+const updatePatientGenitourinaryHistory =
+  (patientId: string, genitourinaryHistory: IGenitourinaryHistory) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsMalePatientGenitourinaryHistoryLoading(true));
+
+      const response = await API.patients.updatePatientGenitourinaryHistory(patientId, genitourinaryHistory);
+
+      if (response) {
+        dispatch(patientsMiddleware.setEditMalePatientGenitourinaryState(false));
+        dispatch(patientsMiddleware.getMaleGenitourinaryHistory(patientId));
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_SUCCESS_TOAST_MESSAGE)
+            }
+          })
+        );
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsMalePatientGenitourinaryHistoryLoading(false));
+    }
+  };
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1312,6 +1345,7 @@ export default {
   archivePatientPrescription,
   markPatientPrescriptionDispensed,
   getEncounterList,
+  updatePatientGenitourinaryHistory,
   getPatientRecentAppointments,
   emptyPatientRecentAppointments,
   setEncounterSearch,
@@ -1372,6 +1406,7 @@ export default {
   getPrescriptionStatuses,
   updateFemalePregnancyInformation,
   updateFemalePatientMenstrualCycleHistory,
+  setEditMalePatientGenitourinaryState,
   updateFemalePatientGynaecologicalHistory,
   getPatientPlansList,
   getPatientPlansStatuses,

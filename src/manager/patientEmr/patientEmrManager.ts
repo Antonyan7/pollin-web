@@ -22,6 +22,7 @@ import {
   IFertilityHistory,
   IGeneralHealth,
   IGeneralHealthProps,
+  IGenitourinaryHistory,
   IGenitourinaryHistoryRes,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
@@ -235,6 +236,14 @@ const patientEmrManager = {
       `${baseURL}/v1/medical-background/${patientId}/general-health`,
       {
         generalHealth: data
+      }
+    );
+  },
+  updatePatientGenitourinaryHistory(patientId: string, data: IGenitourinaryHistory) {
+    return axiosInstance.put<null, IAxiosResponse<null>>(
+      `${baseURL}/v1/medical-background/${patientId}/genitourinary-history`,
+      {
+        genitourinaryHistory: data
       }
     );
   },

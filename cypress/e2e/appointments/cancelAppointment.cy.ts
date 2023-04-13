@@ -32,32 +32,28 @@ describe('Cancel Appointments', () => {
         cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_ADD_BUTTON_ADD)).should('be.enabled').click();
         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CREATE_SUCCESS_STATUS)).should('exist');
 
-        cy.SelectDate(futureDate)
-          .then(() => {
-            cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
-            cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
-              'contain',
-              StatusesEnum.Booked
-            );
-            cy.contains(StatusesEnum.Booked).click({ force: true });
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL)).should('be.enabled').click();
+        cy.SelectDate(futureDate).then(() => {
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should('contain', StatusesEnum.Booked);
+          cy.contains(StatusesEnum.Booked).click({ force: true });
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL)).should('be.enabled').click();
 
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON))
-              .should('exist')
-              .click();
-            cy.get(`ul li`).contains(CancellationReasonEnum.PersonalEmergency).click();
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_SELECT_REASON))
+            .should('exist')
+            .click();
+          cy.get(`ul li`).contains(CancellationReasonEnum.PersonalEmergency).click();
 
-            cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM))
-              .should('be.enabled')
-              .click({ force: true });
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_CONFIRM_CANCEL_BUTTON_CONFIRM))
+            .should('be.enabled')
+            .click({ force: true });
 
-            cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS)).should('exist').click();
-            cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
-              'contain',
-              `${data.e2e_patient} | ${data.e2e_patient_short} | ${StatusesEnum.Cancelled}`
-            );
-          });
+          cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS)).should('exist').click();
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
+            'contain',
+            `${data.e2e_patient} | ${data.e2e_patient_short} | ${StatusesEnum.Cancelled}`
+          );
+        });
       });
     });
   });

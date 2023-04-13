@@ -41,22 +41,20 @@ describe('Edit appointments', () => {
         cy.fixture('test-data').then((data) => {
             cy.ChooseProvider(data.service_provider_1).then(() => {
 
-                cy.SelectDate(futureDate)
-                    .then(() => {
-                        cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
-                        cy.contains(StatusesEnum.Booked).click({force: true});
-                        cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
+        cy.SelectDate(futureDate).then(() => {
+          cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
+          cy.contains(StatusesEnum.Booked).click({ force: true });
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION)).should('be.visible');
+          // It is unsafe to chain further commands that rely on the subject after .clear().
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION)).clear();
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION)).type('Edited');
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS)).should('exist').click();
+          cy.get(`ul li`).contains(StatusesEnum.RunningLate).click();
 
-                        cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_DESCRIPTION))
-                            .should('be.visible')
-                            .clear()
-                            .type('Edited');
-                        cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_STATUS)).should('exist').click();
-                        cy.get(`ul li`).contains(StatusesEnum.RunningLate).click();
-
-                        cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE))
-                            .should('be.enabled')
-                            .click();
+          cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_SAVE))
+            .should('be.enabled')
+            .click();
 
                         cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS)).should('exist');
 
@@ -89,9 +87,9 @@ describe('Edit appointments', () => {
                             .should('be.enabled')
                             .click();
 
-                        cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS)).should('exist');
-                    });
-                cy.SelectDate(editedFutureDate)
+          cy.get(CyUtils.getSelector(CypressIds.PAGE_APPOINTMENTS_EDIT_SUCCESS_STATUS)).should('exist');
+        });
+      cy.SelectDate(editedFutureDate)
                     .then(() => {
                         cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
                         cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should(
