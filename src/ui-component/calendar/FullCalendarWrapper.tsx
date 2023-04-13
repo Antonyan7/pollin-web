@@ -82,6 +82,25 @@ const CalendarWrapper = styled('div')(({ theme }) => ({
     paddingLeft: paddings.left8
   },
 
+  '& .fc-timegrid-event': {
+    margin: '0 !important',
+    padding: '0 !important'
+  },
+
+  '& .fc-event-main-frame': {
+    padding: paddings.all8,
+    flexDirection: 'column',
+    color: theme.palette.primary[800]
+  },
+
+  '& .fc-event-time': {
+    fontSize: '12px'
+  },
+
+  '& .fc-event-title-container': {
+    fontSize: '16px'
+  },
+
   // popover when multiple events
   '& .fc .fc-more-popover': {
     border: 'none',

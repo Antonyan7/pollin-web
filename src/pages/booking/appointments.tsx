@@ -150,7 +150,7 @@ const Appointments = () => {
             disabled={!serviceProviderId}
             data-cy={CypressIds.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT}
             theme={theme}
-            variant="outlined"
+            variant="contained"
             endIcon={<AddIcon />}
             sx={{ marginTop: margins.top32 }}
             onClick={onOpenAppointmentsModalAdd}
@@ -159,10 +159,10 @@ const Appointments = () => {
               variant="subtitle1"
               sx={{
                 marginRight: margins.right12,
-                color: !serviceProviderId ? theme.palette.grey[300] : theme.palette.primary.main
+                color: theme.palette.common.white
               }}
             >
-              {t(Translation.PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT)}
+              {t(Translation.PAGE_APPOINTMENTS_BUTTON_BOOK_APPOINTMENT)}
             </Typography>
           </StyledButtonNew>
         </MainHeader>

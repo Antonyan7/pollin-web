@@ -218,7 +218,7 @@ export enum Translation {
   NAVIGATION_TAB_ITEM_SCHEDULING = 'navigation.tab.item.scheduling',
   NAVIGATION_TAB_ITEM_SPECIMENS = 'navigation.tab.item.specimens',
   NAVIGATION_TAB_ITEM_TESTS_AND_RESULTS = 'navigation.tab.item.tests.and.results',
-  PAGE_APPOINTMENTS_BUTTON_NEW_APPOINTMENT = 'page.appointments.button.new.appointment',
+  PAGE_APPOINTMENTS_BUTTON_BOOK_APPOINTMENT = 'page.appointments.button.book.appointment',
   PAGE_APPOINTMENTS_BUTTON_NEW_CALENDAR = 'page.appointments.button.new.calendar',
   PAGE_APPOINTMENTS_CALENDAR_TITLE_DISABLED = 'page.appointments.calendar.title.disabled',
   PAGE_APPOINTMENTS_CANCEL_SUCCESS_STATUS = 'page.appointments.cancel.success.status',
