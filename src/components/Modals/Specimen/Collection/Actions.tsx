@@ -10,6 +10,8 @@ import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
 
+import { getEnumKeyByEnumValue } from '@utils/enumUtils';
+
 import {
   ISpecimenCollectionFormLocationData,
   ISpecimenCollectionLocationsField,
@@ -93,7 +95,7 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
       dispatch(
         resultsMiddleware.updateSpecimenCollectionAppointmentStatus({
           id: appointmentId,
-          status: AppointmentStatus.InProgress
+          status: getEnumKeyByEnumValue(AppointmentStatus, AppointmentStatus.InProgress)
         })
       );
     }

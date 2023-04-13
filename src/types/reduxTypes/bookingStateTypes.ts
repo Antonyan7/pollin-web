@@ -120,7 +120,7 @@ export interface IAppointment {
 
 export interface ISpecimenCollectionAppointment {
   id: string;
-  status: AppointmentStatus.InProgress;
+  status: string;
 }
 
 export interface ICheckInSuccessResponse {
