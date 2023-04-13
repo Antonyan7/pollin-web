@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFemalePatientMenstrualCycleHistoryProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { menstrualCycleHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import renderComponents from '@components/MedicalBackground/helpers/renderComponentByType';

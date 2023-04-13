@@ -1,13 +1,13 @@
 import React from 'react';
-import FieldWithNote from '@components/common/AdvancedField';
+import FieldWithNote from '@components/common/Form/AdvancedField';
+import { Dropdown, DropdownMultiple } from '@components/common/Form/Dropdown';
+import FormInput from '@components/common/Form/FormInput';
+import { FlexibleItemType, IComponentData } from '@components/common/Form/types';
 import { Typography } from '@mui/material';
 
-import { Dropdown, DropdownMultiple } from '../components/common/Dropdown';
-import { FormInput } from '../components/common/FormInput';
 import { ControlledDatePicker } from '../components/common/MedicalDatePicker';
 import MedicalFormRadio from '../components/common/MedicalFormRadio';
 import MedicalComponentWithRadioView from '../components/common/MedWithRadioView';
-import { IComponentData, MedicalBackgroundItemType } from '../components/types';
 
 const renderComponents = (mappedItem: {
   isEditable?: boolean;
@@ -30,7 +30,7 @@ const renderComponents = (mappedItem: {
   const componentType = mappedItem?.componentData?.type;
 
   switch (componentType) {
-    case MedicalBackgroundItemType.Dropdown:
+    case FlexibleItemType.Dropdown:
       return (
         <FieldWithNote
           fieldLabel={title}
@@ -47,7 +47,7 @@ const renderComponents = (mappedItem: {
           key={fieldName}
         />
       );
-    case MedicalBackgroundItemType.Input:
+    case FlexibleItemType.Input:
       return (
         <FieldWithNote
           fieldLabel={title}
@@ -56,7 +56,7 @@ const renderComponents = (mappedItem: {
           key={fieldName}
         />
       );
-    case MedicalBackgroundItemType.Date:
+    case FlexibleItemType.Date:
       return (
         <FieldWithNote
           fieldLabel={title}
@@ -65,7 +65,7 @@ const renderComponents = (mappedItem: {
           key={fieldName}
         />
       );
-    case MedicalBackgroundItemType.MultipleSelect:
+    case FlexibleItemType.MultipleSelect:
       return (
         <FieldWithNote
           fieldLabel={title}

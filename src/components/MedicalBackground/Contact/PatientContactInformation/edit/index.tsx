@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IPatientContactInformationProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import { SamePrimaryAddressProvider } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/context/SamePrimaryAddressContext';
 import { getContactInformationEmptyState } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { patientContactInformationValidationSchema } from '@components/MedicalBackground/helpers/contact_validation';
@@ -38,9 +38,9 @@ const PatientContactInformationEdit = () => {
       OHIP: {
         ...OHIP,
         versionCode: OHIP.exists ? OHIP.versionCode : '',
-        number: OHIP.exists ? OHIP.number : '',
+        number: OHIP.exists ? OHIP.number : ''
       }
-    }
+    };
 
     if (typeof currentPatiendId === 'string') {
       dispatch(patientsMiddleware.updatePatientContactInformation(currentPatiendId, contactData));

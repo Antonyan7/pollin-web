@@ -1,4 +1,4 @@
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import AddDrugAllergy from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form/actions/Buttons/AddDrugAllergy';
 import AddFamilyHistory from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form/actions/Buttons/AddFamilyHistory';
 import AddFoodAllergy from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form/actions/Buttons/AddFoodAllergy';

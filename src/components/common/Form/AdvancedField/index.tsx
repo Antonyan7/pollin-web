@@ -99,13 +99,20 @@ export const FieldLabelWithNoteIcon = ({
   );
 };
 
-interface FieldWithNoteProps extends PropsWithChildren {
+interface AdvancedFieldProps extends PropsWithChildren {
   fieldLabel: string;
   fieldName: string;
   fieldComponent: React.ReactElement;
+  equalSeparated?: boolean;
 }
 
-const FieldWithNote = ({ fieldLabel, fieldName, children, fieldComponent }: FieldWithNoteProps) => {
+const AdvancedField = ({
+  fieldLabel,
+  fieldName,
+  children,
+  fieldComponent,
+  equalSeparated = false
+}: AdvancedFieldProps) => {
   const { control } = useFormContext();
   const { field } = useController({ name: `${fieldName}.note`, control });
   const [shouldShowNote, setShouldShowNote] = useState(!!field.value);
@@ -119,7 +126,7 @@ const FieldWithNote = ({ fieldLabel, fieldName, children, fieldComponent }: Fiel
         item
         container
         direction="row"
-        xs={5}
+        xs={equalSeparated ? 6 : 5}
         alignItems="flex-start"
         flexWrap="nowrap"
         gap={1}
@@ -134,7 +141,7 @@ const FieldWithNote = ({ fieldLabel, fieldName, children, fieldComponent }: Fiel
           fieldName={fieldName}
         />
       </Grid>
-      <Grid item container direction="column" xs={7} gap={2}>
+      <Grid item container direction="column" xs={equalSeparated ? 6 : 7} gap={2}>
         {fieldComponent}
         {children}
         <Note onClick={onNoteClick} visible={shouldShowNote ?? false} fieldName={fieldName} />
@@ -143,4 +150,4 @@ const FieldWithNote = ({ fieldLabel, fieldName, children, fieldComponent }: Fiel
   );
 };
 
-export default FieldWithNote;
+export default AdvancedField;

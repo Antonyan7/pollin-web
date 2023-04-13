@@ -2,13 +2,13 @@ import { DropdownOptionType, TypeOfPregnancy, TypeOfPregnancyLabel } from '@axio
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { MedicalBackgroundItemType } from '../components/types';
+import { FlexibleItemType } from '../../common/Form/types';
 
 const mappingPattern = {
   [TypeOfPregnancy.FullTerm]: {
     year: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.YearOfBirth
       },
       title: t(
@@ -17,14 +17,14 @@ const mappingPattern = {
     },
     type: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.VOrCs
       },
       title: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
     },
     birthOutcome: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.BirthOutcome
       },
       title: t(
@@ -33,7 +33,7 @@ const mappingPattern = {
     },
     monthsToConceive: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.MonthsToConceive
       },
       title: t(
@@ -44,7 +44,7 @@ const mappingPattern = {
   [TypeOfPregnancy.Preterm]: {
     year: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.YearOfBirth
       },
       title: t(
@@ -53,14 +53,14 @@ const mappingPattern = {
     },
     type: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.VOrCs
       },
       title: t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_V_CS)
     },
     birthOutcome: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.BirthOutcome
       },
       title: t(
@@ -69,7 +69,7 @@ const mappingPattern = {
     },
     monthsToConceive: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.MonthsToConceive
       },
       title: t(
@@ -80,7 +80,7 @@ const mappingPattern = {
   [TypeOfPregnancy.EctopicTubal]: {
     year: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.YearOfBirth
       },
       title: t(
@@ -89,7 +89,7 @@ const mappingPattern = {
     },
     type: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.EctopicPregnancyTreatment
       },
       title: t(
@@ -98,7 +98,7 @@ const mappingPattern = {
     },
     location: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.PregnancySide
       },
       title: t(
@@ -107,7 +107,7 @@ const mappingPattern = {
     },
     monthsToConceive: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.MonthsToConceive
       },
       title: t(
@@ -118,7 +118,7 @@ const mappingPattern = {
   [TypeOfPregnancy.Miscarriage]: {
     year: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.YearOfBirth
       },
       title: t(
@@ -127,7 +127,7 @@ const mappingPattern = {
     },
     type: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.MissCarriagePregnancyTreatment
       },
       title: t(
@@ -136,7 +136,7 @@ const mappingPattern = {
     },
     monthsToConceive: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.MonthsToConceive
       },
       title: t(
@@ -147,7 +147,7 @@ const mappingPattern = {
   [TypeOfPregnancy.ElectiveTermination]: {
     year: {
       componentData: {
-        type: MedicalBackgroundItemType.Dropdown,
+        type: FlexibleItemType.Dropdown,
         dropdownType: DropdownOptionType.YearOfBirth
       },
       title: t(
@@ -162,7 +162,7 @@ const mappingPattern = {
     {
       title: string;
       componentData?: {
-        type: MedicalBackgroundItemType;
+        type: FlexibleItemType;
         dropdownType?: DropdownOptionType;
       };
     }

@@ -55,7 +55,8 @@ export enum ModalName {
   PrescriptionsArchive = 'PrescriptionsArchive',
   MedicalBackgroundUnsavedChanges = 'MedicalBackgroundUnsavedChanges',
   AddPatientMedicationModal = 'AddPatientMedicationModal',
-  AddPatientPrescriptionModal = 'AddPatientPrescriptionModal'
+  AddPatientPrescriptionModal = 'AddPatientPrescriptionModal',
+  SendPlansToPatientModal = 'SendPlansToPatientModal'
 }
 
 export enum OpenModalReason {

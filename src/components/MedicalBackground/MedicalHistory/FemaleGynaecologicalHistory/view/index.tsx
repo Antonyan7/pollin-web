@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
+import { FlexibleItemType } from '@components/common/Form/types';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
-import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientGynaecologicalHistory';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -35,7 +35,7 @@ const ViewModeContent = () => {
     <CardContentWrapper>
       {mappedItems.map((mappedItem, index) => {
         const finalValue =
-          mappedItem?.componentData?.type === MedicalBackgroundItemType.Date && !isDashValue(mappedItem?.viewValue)
+          mappedItem?.componentData?.type === FlexibleItemType.Date && !isDashValue(mappedItem?.viewValue)
             ? DateUtil.formatDateOnly(mappedItem?.viewValue)
             : mappedItem?.viewValue;
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useFormContext, useWatch } from 'react-hook-form';
 import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
-import { Dropdown } from '@components/MedicalBackground/components/common/Dropdown';
+import { Dropdown } from '@components/common/Form/Dropdown';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePregnancyInformation';
 import { Grid } from '@mui/material';
 import { paddings } from 'themes/themeConstants';

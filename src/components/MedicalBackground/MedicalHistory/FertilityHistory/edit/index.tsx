@@ -1,13 +1,13 @@
 import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFertilityHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import FieldWithNote from '@components/common/AdvancedField';
-import { Dropdown } from '@components/MedicalBackground/components/common/Dropdown';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
-import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
+import FieldWithNote from '@components/common/Form/AdvancedField';
+import { Dropdown } from '@components/common/Form/Dropdown';
+import FlexibleSection from '@components/common/Form/FlexibleSection';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
+import { FlexibleItemType, IFlexibleItem } from '@components/common/Form/types';
 import MedicalFormRadio from '@components/MedicalBackground/components/common/MedicalFormRadio';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
-import { IMedicalBackgroundItem, MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { fertilityHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
@@ -79,7 +79,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               );
             }
 
-            if (mappedItem?.componentData?.type === MedicalBackgroundItemType.Dropdown) {
+            if (mappedItem?.componentData?.type === FlexibleItemType.Dropdown) {
               return (
                 <FieldWithNote
                   fieldLabel={title}
@@ -97,22 +97,22 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               );
             }
 
-            if (mappedItem?.componentData?.type === MedicalBackgroundItemType.Section) {
-              const rows = mappedItem?.componentData?.rows as IMedicalBackgroundItem[][];
+            if (mappedItem?.componentData?.type === FlexibleItemType.Section) {
+              const rows = mappedItem?.componentData?.rows as IFlexibleItem[][];
               const initialFields = rows.flat().reduce((previousValues, currentValue) => {
-                previousValues[(currentValue as IMedicalBackgroundItem).fieldName] = '';
+                previousValues[(currentValue as IFlexibleItem).fieldName] = '';
 
                 return previousValues;
               }, {} as Record<string, string>);
 
               return (
-                <MedicalBackgroundSection
+                <FlexibleSection
                   fieldName={fieldName}
                   title={title}
                   tableTitle={mappedItem?.componentData?.tableTitle}
                   rows={rows}
                   initialFields={initialFields}
-                  controlFieldName={mappedItem?.componentData?.controlFieldName}
+                  controlFieldName={`${fieldName}.${mappedItem?.componentData?.controlFieldName}`}
                   itemsFieldName={mappedItem?.componentData?.itemsFieldName}
                   addNewItemButtonLabel={mappedItem?.componentData?.addNewItemButtonLabel}
                   key={fieldName}

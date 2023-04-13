@@ -21,6 +21,7 @@ import {
   IPatientPrescriptions,
   IPrescriptionStatusesVariations,
   IProfileTestResults,
+  IReadyToOrderPatientPlan,
   ITestResultHistory,
   PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
@@ -392,6 +393,15 @@ const reducers = createReducer({
   },
   setIsBookingRequestToPatientLoading(state, action: IAction<boolean>) {
     state.isBookingRequestToPatientLoading = action.payload;
+  },
+  setReadyToOrderPatientPlans(state, action: IAction<IReadyToOrderPatientPlan[]>) {
+    state.plans.readyToOrderPatientPlans = action.payload;
+  },
+  setIsReadyToOrderPlansLoading(state, action: IAction<boolean>) {
+    state.plans.isReadyToOrderPlansLoading = action.payload;
+  },
+  setIsReadyToOrderPlansUpdating(state, action: IAction<boolean>) {
+    state.plans.isReadyToOrderPlansUpdating = action.payload;
   }
 });
 

@@ -1,8 +1,8 @@
 /* eslint-disable no-case-declarations */
 import React, { useEffect, useMemo } from 'react';
+import { FlexibleItemType } from '@components/common/Form/types';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
-import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import NOT_APPLICABLE from '@components/MedicalBackground/constants';
 import { getDropdownOption } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
@@ -41,7 +41,7 @@ const ViewModeContent = () => {
         let finalValue;
 
         switch (mappedItem?.componentData?.type) {
-          case MedicalBackgroundItemType.Dropdown:
+          case FlexibleItemType.Dropdown:
             const dropdownOptionTitle = getDropdownOption(
               dropdownOptions,
               mappedItem?.componentData?.dropdownType,
@@ -53,7 +53,7 @@ const ViewModeContent = () => {
 
             finalValue = dropdownOptionTitle ? `${dropdownOptionTitle} ${additionalLabel}` : mappedItem?.viewValue;
             break;
-          case MedicalBackgroundItemType.Date:
+          case FlexibleItemType.Date:
             finalValue = isDashValue(mappedItem?.viewValue)
               ? mappedItem?.viewValue
               : DateUtil.formatDateOnly(mappedItem?.viewValue);

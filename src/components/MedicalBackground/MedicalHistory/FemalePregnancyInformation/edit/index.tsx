@@ -2,9 +2,9 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IFemalePregnancyInformationProps } from '@axios/patientEmr/managerPatientEmrTypes';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
-import MedicalBackgroundSection from '@components/MedicalBackground/components/common/MedicalBackgroundSection';
-import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
+import FlexibleSection from '@components/common/Form/FlexibleSection';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
+import { FlexibleItemType } from '@components/common/Form/types';
 import { femalePregnancyInformationValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import useSaveMedicalBackgroundDataWithToast from '@components/MedicalBackground/hooks/useSaveMedicalBackgroundDataWithToast';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -61,7 +61,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleSave)}>
         <Grid>
-          <MedicalBackgroundSection
+          <FlexibleSection
             fieldName="previousPregnancies"
             title={t(
               Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FEMALE_PREGNANCY_INFORMATION_PREVIOUS_PREGNANCY
@@ -72,7 +72,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
             rows={[
               [
                 {
-                  type: MedicalBackgroundItemType.Dropdown,
+                  type: FlexibleItemType.Dropdown,
                   fieldName: 'type',
                   dropdownType: DropdownOptionType.TypeOfPregnancy,
                   label: t(
@@ -82,7 +82,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
               ],
               DynamicRow
             ]}
-            controlFieldName="value"
+            controlFieldName="previousPregnancies.value"
             itemsFieldName="pregnancies"
             addNewItemButtonLabel={
               t(

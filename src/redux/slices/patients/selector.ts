@@ -273,6 +273,9 @@ const plansList = createSelector([selector], (state) => state.plans.plansList);
 const isPlansListLoading = createSelector([selector], (state) => state.plans.isPlansListLoading);
 const categories = createSelector([selector], (state) => state.plans.categories);
 const isCategoriesLoading = createSelector([selector], (state) => state.plans.isCategoriesLoading);
+const readyToOrderPatientPlans = createSelector([selector], (state) => state.plans.readyToOrderPatientPlans);
+const isReadyToOrderPlansLoading = createSelector([selector], (state) => state.plans.isReadyToOrderPlansLoading);
+const isReadyToOrderPlansUpdating = createSelector([selector], (state) => state.plans.isReadyToOrderPlansUpdating);
 
 export default {
   isTestResultsHistoryLoading,
@@ -382,5 +385,8 @@ export default {
   isPlansListLoading,
   categories,
   isCategoriesLoading,
-  isBookingRequestToPatientLoading
+  isBookingRequestToPatientLoading,
+  readyToOrderPatientPlans,
+  isReadyToOrderPlansLoading,
+  isReadyToOrderPlansUpdating
 };

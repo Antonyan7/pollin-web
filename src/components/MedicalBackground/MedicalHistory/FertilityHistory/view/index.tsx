@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo } from 'react';
+import { FlexibleItemType } from '@components/common/Form/types';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
-import { MedicalBackgroundItemType } from '@components/MedicalBackground/components/types';
 import { getDropdownOption } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/fertilityHistory';
@@ -30,7 +30,7 @@ const ViewModeContent = () => {
     <CardContentWrapper>
       {mappedItems.map((mappedItem, index) => {
         const finalValue =
-          mappedItem?.componentData?.type === MedicalBackgroundItemType.Dropdown
+          mappedItem?.componentData?.type === FlexibleItemType.Dropdown
             ? getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
             : mappedItem?.viewValue;
 

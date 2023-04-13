@@ -2,7 +2,7 @@ import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { IComponentData, MedicalBackgroundItemType } from '../components/types';
+import { FlexibleItemType,IComponentData } from '../../common/Form/types';
 import { createObjectWithTitle, CustomAccessorItem, getLabelBySelectedValue } from '../helpers/mapper';
 
 interface IMappingPattern {
@@ -24,7 +24,7 @@ const mappingPattern = {
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_MONTHS_CONCEIVING)
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Dropdown,
+      type: FlexibleItemType.Dropdown,
       dropdownType: DropdownOptionType.MonthsConceiving
     }
   },
@@ -61,7 +61,7 @@ const mappingPattern = {
       return finalValues;
     },
     componentData: {
-      type: MedicalBackgroundItemType.Section,
+      type: FlexibleItemType.Section,
       rows: [
         [
           {
@@ -69,7 +69,7 @@ const mappingPattern = {
             label: t(
               Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_TYPE
             ),
-            type: MedicalBackgroundItemType.Input
+            type: FlexibleItemType.Input
           },
           {
             fieldName: 'cycles',
@@ -77,7 +77,7 @@ const mappingPattern = {
               Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_FERTILITY_HISTORY_FERTILITY_TREATMENT_CYCLES
             ),
             dropdownType: DropdownOptionType.FertilityTreatmentCycles,
-            type: MedicalBackgroundItemType.Dropdown
+            type: FlexibleItemType.Dropdown
           }
         ]
       ],

@@ -47,6 +47,7 @@ import EncountersCancelChangesModal, {
   IEncountersCancelChangesModalProps
 } from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import PatientPartnerModal, { PatientPartnerModalProps } from '@components/Modals/PatientPartner';
+import SendPlansToPatient from '@components/Modals/Plans/SendPlansToPatient';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import SpecimenCollectionModal from '@components/Modals/Specimen/Collection';
 import { SpecimenCollectionModalProps } from '@components/Modals/Specimen/Collection/types';
@@ -232,6 +233,9 @@ const getConfirmPrescriptionArchiveModal = (modal: IOpenedModal<ConfirmPrescript
   <ConfirmPrescriptionArchiveModal key={modal.name} {...modal.props} />
 );
 
+// Plans
+const getPatientPlansSentPlansToPatientModal = (name: string) => <SendPlansToPatient key={name} />;
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -272,6 +276,11 @@ export const ModalsController = () => {
             return getEncountersCancelChangesModal(modal);
           case ModalName.AddAddressManually:
             return getAddAddressManuallyModal(modal);
+
+          // <Plans>
+          case ModalName.SendPlansToPatientModal:
+            return getPatientPlansSentPlansToPatientModal(modal.name);
+
           // <EXTERNAL RESULTS>
           case ModalName.PatientContactInformation:
             return getExternalResultsPatientInformationModal(modal);

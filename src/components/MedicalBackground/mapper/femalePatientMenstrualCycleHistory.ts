@@ -2,7 +2,7 @@ import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { MedicalBackgroundItemType } from '../components/types';
+import { FlexibleItemType } from '../../common/Form/types';
 import { createObjectWithTitle } from '../helpers/mapper';
 
 const mappingPattern = {
@@ -14,7 +14,7 @@ const mappingPattern = {
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CYCLE_LENGTH)
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Input
+      type: FlexibleItemType.Input
     },
     shouldShowDash: true
   },
@@ -25,7 +25,7 @@ const mappingPattern = {
       )
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Date
+      type: FlexibleItemType.Date
     },
     shouldShowDash: true
   },
@@ -34,7 +34,7 @@ const mappingPattern = {
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_FLOW)
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Dropdown,
+      type: FlexibleItemType.Dropdown,
       dropdownType: DropdownOptionType.MenstrualFlow
     }
   },
@@ -43,7 +43,7 @@ const mappingPattern = {
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_DAYS_OF_BLEEDING)
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Dropdown,
+      type: FlexibleItemType.Dropdown,
       dropdownType: DropdownOptionType.DaysOfBleeding,
       additionalLabel: t(
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_DAYS_LABEL
@@ -55,7 +55,7 @@ const mappingPattern = {
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_PAIN)
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Dropdown,
+      type: FlexibleItemType.Dropdown,
       dropdownType: DropdownOptionType.MenstrualPain
     }
   },

@@ -999,8 +999,13 @@ export interface IPatientPlanActionItem {
   title: string;
 }
 
-export interface IReadyToOrderPatientPlan {
-  patientPlans: IPatientPlanActionItem[];
+export interface IReadyToOrderPatientPlan extends IPatientPlanActionItem {}
+
+export interface IReadyToOrderPatientPlanResponse {
+  patientPlans: IReadyToOrderPatientPlan[];
+}
+export interface IOrderPatientPlanRequestData {
+  patientPlans: { id: string }[];
 }
 
 export interface IPatientPlansCategories {

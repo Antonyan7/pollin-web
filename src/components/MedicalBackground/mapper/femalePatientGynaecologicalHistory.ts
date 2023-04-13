@@ -2,7 +2,7 @@ import { DropdownOptionType, IMedicalBackgroundFieldValuesWithItems } from '@axi
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { MedicalBackgroundItemType } from '../components/types';
+import { FlexibleItemType } from '../../common/Form/types';
 import { createObjectWithTitle } from '../helpers/mapper';
 
 const mappingPattern = {
@@ -22,7 +22,7 @@ const mappingPattern = {
       )
     ),
     componentData: {
-      type: MedicalBackgroundItemType.Date
+      type: FlexibleItemType.Date
     },
     shouldShowDash: true
   },
@@ -40,7 +40,7 @@ const mappingPattern = {
     ),
     customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
-      type: MedicalBackgroundItemType.MultipleSelect,
+      type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.ProceduresDueToAbnormalPap
     }
   },
@@ -52,7 +52,7 @@ const mappingPattern = {
     ),
     customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
-      type: MedicalBackgroundItemType.MultipleSelect,
+      type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.GynaecologicalConditions
     }
   },
@@ -62,7 +62,7 @@ const mappingPattern = {
     ),
     customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
-      type: MedicalBackgroundItemType.MultipleSelect,
+      type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPCOS
     }
   },
@@ -72,7 +72,7 @@ const mappingPattern = {
     ),
     customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
-      type: MedicalBackgroundItemType.MultipleSelect,
+      type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.Hyperprolactinemia
     }
   },
@@ -82,7 +82,7 @@ const mappingPattern = {
     ),
     customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
     componentData: {
-      type: MedicalBackgroundItemType.MultipleSelect,
+      type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPOI
     }
   },

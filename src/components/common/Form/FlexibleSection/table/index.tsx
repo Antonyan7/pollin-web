@@ -4,11 +4,11 @@ import { DeleteTwoTone } from '@mui/icons-material';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
 
-import { MedicalBackgroundItemType, MedicalBackgroundTableProps } from '../../types';
-import { Dropdown } from '../Dropdown';
-import { FormInput } from '../FormInput';
+import { Dropdown } from '../../Dropdown';
+import { FormInput } from '../../FormInput';
+import { FlexibleItemType, FlexibleSectionTableProps } from '../../types';
 
-const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, onDelete, index, parentFieldName }) => (
+const FlexibleSectionTable: FC<FlexibleSectionTableProps> = ({ title, rows, onDelete, index, parentFieldName }) => (
   <Grid
     sx={(theme) => ({
       background: theme.palette.primary.light,
@@ -39,11 +39,11 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
 
           let renderedItem;
 
-          if (item.type === MedicalBackgroundItemType.Input) {
+          if (item.type === FlexibleItemType.Input) {
             renderedItem = <FormInput label={item.label} fieldName={finalFieldName} key={item.fieldName} />;
           }
 
-          if (item.type === MedicalBackgroundItemType.Dropdown) {
+          if (item.type === FlexibleItemType.Dropdown) {
             renderedItem = (
               <Dropdown
                 label={item.label}
@@ -65,4 +65,4 @@ const MedicalBackgroundTable: FC<MedicalBackgroundTableProps> = ({ title, rows, 
   </Grid>
 );
 
-export default MedicalBackgroundTable;
+export default FlexibleSectionTable;

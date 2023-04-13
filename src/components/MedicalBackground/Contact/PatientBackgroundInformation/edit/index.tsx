@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IPatientBackgroundPartners } from '@axios/patientEmr/managerPatientEmrTypes';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import { getBackgroundInformationEmptyState } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/helpers';
 import { patientBackgroundInformationValidationSchema } from '@components/MedicalBackground/helpers/contact_validation';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';

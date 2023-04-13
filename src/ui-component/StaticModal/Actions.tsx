@@ -1,11 +1,12 @@
-import React, { useContext } from 'react';
+import React, { FC } from 'react';
 import { Button, DialogActions, Grid, Stack } from '@mui/material';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 
-import StaticDataContext from './context';
+import { ButtonWithLoading } from '@ui-component/common/buttons';
 
-const Actions = () => {
-  const { onClose, data, toConfirm } = useContext(StaticDataContext);
+import { StaticModalActionsProps } from './types';
+
+const Actions: FC<StaticModalActionsProps> = ({ onClose, data, toConfirm, isDisabled = false, isLoading = false }) => {
   const confirmButtonLabel = data.confirmLabel;
   const cancelButtonLabel = data.cancelLabel;
   const confirmCyKey = data?.confirmCy;
@@ -34,7 +35,7 @@ const Actions = () => {
               </Button>
             )}
 
-            <Button
+            <ButtonWithLoading
               sx={{
                 borderRadius: borderRadius.radius8,
                 py: paddings.top12,
@@ -44,9 +45,11 @@ const Actions = () => {
               variant="contained"
               onClick={handleConfirmation}
               data-cy={confirmCyKey}
+              disabled={isDisabled}
+              isLoading={isLoading}
             >
               {confirmButtonLabel}
-            </Button>
+            </ButtonWithLoading>
           </Stack>
         </Grid>
       </Grid>

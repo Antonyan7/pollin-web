@@ -27,6 +27,7 @@ import {
   IPatientPrescriptions,
   IPrescriptionStatusesVariations,
   IProfileTestResults,
+  IReadyToOrderPatientPlan,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType,
@@ -121,6 +122,9 @@ export interface IPatientPlansProps {
   isCategoriesLoading: boolean;
   plansList: IPatientPlansListData | null;
   isPlansListLoading: boolean;
+  isReadyToOrderPlansLoading: boolean;
+  isReadyToOrderPlansUpdating: boolean;
+  readyToOrderPatientPlans: IReadyToOrderPatientPlan[];
 }
 
 export interface ICreateMedication {

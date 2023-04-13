@@ -81,7 +81,10 @@ const getPatientPlansInitialState = (): IPatientPlansProps => ({
   plansList: null,
   isPlansListLoading: false,
   categories: [],
-  isCategoriesLoading: false
+  isCategoriesLoading: false,
+  isReadyToOrderPlansLoading: false,
+  isReadyToOrderPlansUpdating: false,
+  readyToOrderPatientPlans: []
 });
 
 export const getInitialState = (): PatientEmrProps => ({

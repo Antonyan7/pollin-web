@@ -27,6 +27,7 @@ import {
   IGetPatientsRequestBody,
   IGetPatientsResponse,
   IMedicalContactInformation,
+  IOrderPatientPlanRequestData,
   IPatientBackground,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
@@ -49,7 +50,7 @@ import {
   IProfileTestResultDetailsReqBody,
   IProfileTestResultDetailsResponse,
   IProfileTestResults,
-  IReadyToOrderPatientPlan,
+  IReadyToOrderPatientPlanResponse,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest,
@@ -456,8 +457,11 @@ const patientEmrManager = {
   markThePlanAsCompleted(data: IPlanMutation) {
     return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-completed`, data);
   },
+  orderPlansToPatient(data: IOrderPatientPlanRequestData) {
+    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/order`, data);
+  },
   getPatientPlansReadyToOrder(patientId: string) {
-    return axiosInstance.get<IReadyToOrderPatientPlan, IAxiosResponse<IReadyToOrderPatientPlan>>(
+    return axiosInstance.get<IReadyToOrderPatientPlanResponse, IAxiosResponse<IReadyToOrderPatientPlanResponse>>(
       `${baseURL}/v1/plans/ready-to-order`,
       {
         params: {

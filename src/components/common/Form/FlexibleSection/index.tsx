@@ -1,24 +1,25 @@
 import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import FieldWithNote from '@components/common/AdvancedField';
+import FieldWithNote from '@components/common/Form/AdvancedField';
 
-import { MedicalBackgroundTableRow } from '../../types';
-import MedicalBackgroundTable from '../MedicalBackgroundTable';
-import MedicalFormRadio from '../MedicalFormRadio';
-import MedicalHistorySectionAddButton from '../MedicalHistorySectionAddButton';
+import MedicalHistorySectionAddButton from '../../../MedicalBackground/components/common/MedicalHistorySectionAddButton';
+import FormRadio from '../Radio';
+import { FlexibleSectionTableRow } from '../types';
 
-interface MedicalBackgroundSectionProps {
+import FlexibleSectionTable from './table';
+
+interface FlexibleSectionProps {
   fieldName: string;
   controlFieldName: string;
   itemsFieldName: string;
   title: string;
   tableTitle: string;
-  rows: MedicalBackgroundTableRow[];
+  rows: FlexibleSectionTableRow[];
   addNewItemButtonLabel?: string;
   initialFields: Record<string, string>;
 }
 
-const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
+const FlexibleSection: FC<FlexibleSectionProps> = ({
   fieldName,
   controlFieldName,
   title,
@@ -36,7 +37,7 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   });
 
   const isExists = useWatch({
-    name: `${fieldName}.${controlFieldName}`
+    name: controlFieldName
   });
 
   const handleAddNewItem = () => {
@@ -63,14 +64,10 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   const shouldShowAddNewItemButton = isExists && addNewItemButtonLabel;
 
   return (
-    <FieldWithNote
-      fieldName={fieldName}
-      fieldLabel={title}
-      fieldComponent={<MedicalFormRadio fieldName={`${fieldName}.${controlFieldName}`} />}
-    >
+    <FieldWithNote fieldName={fieldName} fieldLabel={title} fieldComponent={<FormRadio fieldName={controlFieldName} />}>
       {isExists &&
         fields?.map((field, index) => (
-          <MedicalBackgroundTable
+          <FlexibleSectionTable
             key={field.id}
             onDelete={handleRemove}
             title={`${tableTitle} ${index + 1}`}
@@ -91,4 +88,4 @@ const MedicalBackgroundSection: FC<MedicalBackgroundSectionProps> = ({
   );
 };
 
-export default MedicalBackgroundSection;
+export default FlexibleSection;

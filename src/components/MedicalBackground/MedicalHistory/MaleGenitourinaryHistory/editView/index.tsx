@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IGenitourinaryHistory } from '@axios/patientEmr/managerPatientEmrTypes';
-import FormSubmit from '@components/MedicalBackground/components/common/FormSubmit';
+import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';

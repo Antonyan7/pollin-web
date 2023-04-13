@@ -11,6 +11,7 @@ import {
   IFertilityHistory,
   IGeneralHealthProps,
   IGenitourinaryHistory,
+  IOrderPatientPlanRequestData,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
   IPlanMutation,
@@ -150,7 +151,10 @@ const {
   setIsStatusVariationsLoading,
   setCategories,
   setIsCategoriesLoading,
-  setIsBookingRequestToPatientLoading
+  setIsBookingRequestToPatientLoading,
+  setReadyToOrderPatientPlans,
+  setIsReadyToOrderPlansLoading,
+  setIsReadyToOrderPlansUpdating
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1301,6 +1305,31 @@ const markThePlanAsCompleted = (data: IPlanMutation) => async () => {
   }
 };
 
+const getPatientPlansReadyToOrder = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsReadyToOrderPlansLoading(true));
+
+    const response = await API.patients.getPatientPlansReadyToOrder(patientId);
+
+    dispatch(setReadyToOrderPatientPlans(response.data.data.patientPlans));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsReadyToOrderPlansLoading(false));
+  }
+};
+
+const orderPlansToPatient = (data: IOrderPatientPlanRequestData) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsReadyToOrderPlansUpdating(true));
+
+    await API.patients.orderPlansToPatient(data);
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsReadyToOrderPlansUpdating(false));
+  }
+};
 const updatePatientGenitourinaryHistory =
   (patientId: string, genitourinaryHistory: IGenitourinaryHistory) => async (dispatch: AppDispatch) => {
     try {
@@ -1414,5 +1443,7 @@ export default {
   sendBookingRequestToPatient,
   markThePlanAsCancelled,
   markThePlanAsActive,
-  markThePlanAsCompleted
+  markThePlanAsCompleted,
+  orderPlansToPatient,
+  getPatientPlansReadyToOrder
 };

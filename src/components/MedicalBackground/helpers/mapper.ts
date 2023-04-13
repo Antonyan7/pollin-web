@@ -7,7 +7,7 @@ import {
   PreviousTreatmentFieldProps
 } from '@axios/patientEmr/managerPatientEmrTypes';
 
-import { MedicalBackgroundItemType } from '../components/types';
+import { FlexibleItemType } from '../../common/Form/types';
 import { MedicalFormRadioValues } from '../Contact/PatientGeneralHealth/edit/types';
 
 export interface CustomAccessorItem
@@ -21,7 +21,7 @@ export interface MapperProps {
   title: string;
   customAccessor?: (item: CustomAccessorItem) => string[] | string;
   componentData?: {
-    type?: MedicalBackgroundItemType;
+    type?: FlexibleItemType;
   };
   shouldShowDash?: boolean;
 }

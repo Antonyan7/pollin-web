@@ -9,7 +9,7 @@ import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-import { DropdownProps } from './types';
+import { DropdownProps } from '../types';
 
 export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '', additionalLabel }) => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);

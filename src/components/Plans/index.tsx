@@ -8,9 +8,11 @@ import { Grid, TablePagination, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { SexAtBirth } from 'types/reduxTypes/patient-emrStateTypes';
 
 import CircularLoading from '@ui-component/circular-loading';
@@ -45,7 +47,7 @@ const PatientPlansList = () => {
   const {
     query: { id: patientId }
   } = useRouter();
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const isLoading =
     isPatientProfileLoading || isStatusVariationsLoading || isPlansListLoading || isCategoriesAndTypesLoading;
 
@@ -66,8 +68,16 @@ const PatientPlansList = () => {
   const { isReadyToOrder = false, patientPlans = [] } = patientPlansList ?? ({} as IPatientPlansListData);
 
   const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, value: number) => {
-    setPage(value + 1);
+    setPage(value);
   };
+
+  const handleSendPlansToPatientClick = () =>
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.SendPlansToPatientModal,
+        props: {}
+      })
+    );
 
   return (
     <Grid>
@@ -88,6 +98,7 @@ const PatientPlansList = () => {
               label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
               variant="outlined"
               disabled={!isReadyToOrder}
+              onClick={handleSendPlansToPatientClick}
               icon={<SendTwoTone />}
             />
             <SimpleMenu ActionButton={CreatePlanButton} items={categories as IMenuItem[]} />
