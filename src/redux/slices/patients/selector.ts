@@ -179,6 +179,14 @@ const isMedicationCreatedLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isMedicationCreatedLoading
 );
+const isMedicationUpdatedLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isMedicationUpdatedLoading
+);
+const isCardInEditMode = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isCardInEditMode
+);
 const prescriptionsDrugList = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.prescriptions.prescriptionsDrugList
@@ -331,6 +339,8 @@ export default {
   prescriptionStatuses,
   isPatientPrescriptionsLoading,
   isMedicationCreatedLoading,
+  isMedicationUpdatedLoading,
+  isCardInEditMode,
   prescriptionsDrugList,
   patientMedicationState,
   currentPrescriptionUuid,

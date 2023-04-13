@@ -19,6 +19,10 @@ const CurrentMedications = () => {
   const router = useRouter();
   const patientId = router.query.id as string;
 
+  useEffect(() => {
+    dispatch(patientsMiddleware.getMedicationDropdownOptions());
+  }, []);
+
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);
   };
@@ -42,7 +46,9 @@ const CurrentMedications = () => {
           <CircularLoading />
         </Box>
       ) : (
-        patientCurrentMedications?.medications?.map((medication) => <CardItem key={v4()} medication={medication} />)
+        patientCurrentMedications?.medications?.map((medication, index) => (
+          <CardItem key={v4()} index={index} medication={medication} />
+        ))
       )}
       {!patientCurrentMedications?.medications?.length && !isPatientCurrentMedicationLoading ? (
         <Grid container justifyContent="center" sx={{ fontSize: '15px', margin: margins.all12 }}>

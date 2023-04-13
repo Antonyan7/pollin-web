@@ -100,6 +100,8 @@ export interface MedicationsPrescriptionsProps {
     patientMissingMedications: IPatientMedications;
     isPatientPastMedicationLoading: boolean;
     isPatientCurrentMedicationLoading: boolean;
+    isMedicationUpdatedLoading: boolean;
+    isCardInEditMode: boolean[];
     patientMedicationState: IPatientMedicationsState | null;
   };
   prescriptions: {
@@ -133,7 +135,22 @@ export interface ICreateMedication {
       start: string;
       end: string;
     };
-    prescriber?: string;
+    prescriber?: string | null;
+  };
+}
+
+export interface IUpdateMedication {
+  patientId: string;
+  medication: {
+    id: string;
+    dosage: string;
+    route: string;
+    frequency: string;
+    time?: string;
+    duration: {
+      start: string;
+      end: string;
+    };
   };
 }
 

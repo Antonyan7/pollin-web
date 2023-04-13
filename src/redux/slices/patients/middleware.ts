@@ -37,7 +37,8 @@ import {
   ICreateMedication,
   IEncounterList,
   IPatientList,
-  IUpdateEncounterNoteProps
+  IUpdateEncounterNoteProps,
+  IUpdateMedication
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 import slice from './slice';
@@ -139,6 +140,8 @@ const {
   setIsDropdownOptionsLoading,
   setDropdownOptions,
   setIsMedicationCreatedLoading,
+  setIsMedicationUpdatedLoading,
+  setCardToEditMode,
   setPlansList,
   setIsPlansListLoading,
   setStatusVariations,
@@ -884,16 +887,54 @@ const getMedicationDropdownOptions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const createPatientMedication = (data: ICreateMedication) => async (dispatch: AppDispatch) => {
+const createPatientMedication = (data: ICreateMedication, patientName: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsMedicationCreatedLoading(true));
 
   try {
-    await API.patients.createPatientMedication(data);
+    const response = await API.patients.createPatientMedication(data);
+
+    if (response.data.data.uuid) {
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: `${t(Translation.MODAL_CREATE_MEDICATION_TOAST)} ${patientName}`
+          }
+        })
+      );
+      dispatch(patientsMiddleware.getPatientMedications(data.patientId, Recency.Current, 1));
+      dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
+    }
   } catch (error) {
     Sentry.captureException(error);
   }
 
   dispatch(setIsMedicationCreatedLoading(false));
+};
+const updatePatientMedication = (data: IUpdateMedication, patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsMedicationUpdatedLoading(true));
+
+  try {
+    await API.patients.updatePatientMedication(data);
+    dispatch(patientsMiddleware.getPatientMedications(patientId, Recency.Current, 1));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+
+  dispatch(setIsMedicationUpdatedLoading(false));
+};
+
+const updateCardToEditMode = (index: number, prevState: boolean[]) => (dispatch: AppDispatch) => {
+  try {
+    const newState = [...prevState];
+
+    newState[index] = !newState[index];
+
+    dispatch(setCardToEditMode(newState));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
 };
 
 const setPatientPrescriptionsItems = (listItems?: PatientPrescriptionsDrugListProps[]) => (dispatch: AppDispatch) => {
@@ -1322,6 +1363,8 @@ export default {
   getMedicationDropdownOptions,
   getMaleGenitourinaryHistory,
   createPatientMedication,
+  updatePatientMedication,
+  updateCardToEditMode,
   getPatientPrescriptions,
   getPrescriptionStatuses,
   updateFemalePregnancyInformation,

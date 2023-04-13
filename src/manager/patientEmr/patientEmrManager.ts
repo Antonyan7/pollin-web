@@ -58,7 +58,8 @@ import { CustomAlerts, IEncountersReqBody, IPatientsReqBody } from 'types/patien
 import {
   ICreateMedication,
   IEncounterDetailsResponse,
-  ILatestTestResult
+  ILatestTestResult,
+  IUpdateMedication
 } from 'types/reduxTypes/patient-emrStateTypes';
 
 const baseURL = '/clinic-patient-emr';
@@ -326,14 +327,11 @@ const patientEmrManager = {
     );
   },
   getDrugs(searchString: string, page: number, categoryId?: string) {
-    return axiosInstance.post<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(
-      `${baseURL}/v1/prescriptions/medications/search`,
-      {
-        searchString,
-        page,
-        ...(categoryId && { categoryId })
-      }
-    );
+    return axiosInstance.post<IDrugsResponse, IAxiosResponse<IDrugsResponse>>(`${baseURL}/v1/medications/search`, {
+      searchString,
+      page,
+      ...(categoryId && { categoryId })
+    });
   },
   getPatientMedicationsState(patientId: string) {
     return axiosInstance.get<IPatientMedicationsState, IAxiosResponse<IPatientMedicationsState>>(
@@ -401,6 +399,9 @@ const patientEmrManager = {
       ICreatePatientPrescriptionMedicationResponse,
       IAxiosResponse<ICreatePatientPrescriptionMedicationResponse>
     >(`${baseURL}/v1/prescriptions/medications`, data);
+  },
+  updatePatientMedication(data: IUpdateMedication) {
+    return axiosInstance.put<null, IAxiosResponse<null>>(`${baseURL}/v1/prescriptions/medications`, data);
   },
   createPatientPrescription(data: ICreatePatientPrescription) {
     return axiosInstance.post<

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Recency } from '@axios/patientEmr/managerPatientEmrTypes';
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination, Theme, Typography } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -40,13 +40,15 @@ const PastMedications = () => {
           <CircularLoading />
         </Box>
       ) : (
-        patientPastMedications?.medications?.map((medication) => <CardItem key={v4()} medication={medication} />)
+        patientPastMedications?.medications?.map((medication) => (
+          <CardItem key={v4()} disableEdit medication={medication} />
+        ))
       )}
       {!patientPastMedications?.medications?.length && !isPatientPastMedicationLoading ? (
         <Grid
           container
           justifyContent="center"
-          sx={{ fontSize: (theme) => theme.typography.pxToRem(15), margin: margins.all12 }}
+          sx={{ fontSize: (theme: Theme) => theme.typography.pxToRem(15), margin: margins.all12 }}
         >
           {t(Translation.PAGE_MEDICATIONS_PAST_EMPTY_LIST)}
         </Grid>

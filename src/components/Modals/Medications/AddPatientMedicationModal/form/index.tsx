@@ -1,10 +1,8 @@
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { patientsMiddleware } from '@redux/slices/patients';
-import { viewsMiddleware } from '@redux/slices/views';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
-import { dispatch } from 'redux/hooks';
-import { ModalName } from 'types/modals';
+import { dispatch, useAppSelector } from 'redux/hooks';
 
 import FormBody from './FormBody';
 import FormHeader from './FormHeader';
@@ -17,7 +15,9 @@ const AddPatientMedicationForm = () => {
   });
   const router = useRouter();
   const patientId = router.query.id as string;
+  const patientProfile = useAppSelector(patientsSelector.patientProfile);
 
+  const patientName = patientProfile?.fullName;
   const { handleSubmit } = methods;
   const onSubmit = (values: IAddPatientMedicationForm) => {
     const { dragName, startDate, endDate, ...otherMedicationValues } = values;
@@ -30,8 +30,7 @@ const AddPatientMedicationForm = () => {
       }
     };
 
-    dispatch(patientsMiddleware.createPatientMedication(data));
-    dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
+    dispatch(patientsMiddleware.createPatientMedication(data, patientName as string));
   };
 
   return (

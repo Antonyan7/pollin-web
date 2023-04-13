@@ -360,6 +360,12 @@ const reducers = createReducer({
   setIsMedicationCreatedLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isMedicationCreatedLoading = action.payload;
   },
+  setIsMedicationUpdatedLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isMedicationUpdatedLoading = action.payload;
+  },
+  setCardToEditMode(state, action: IAction<boolean[]>) {
+    state.medicationsPrescriptions.medications.isCardInEditMode = action.payload;
+  },
   setPatientPrescriptionsListItems(state, action: IAction<PatientPrescriptionsDrugListProps[] | null>) {
     state.medicationsPrescriptions.prescriptions.prescriptionsDrugList = action.payload;
   },

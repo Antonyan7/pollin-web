@@ -6,6 +6,8 @@ export enum CardMode {
 }
 export interface CardItem {
   medication: MedicationsProps;
+  index?: number;
+  disableEdit?: boolean;
 }
 export interface PrescriptionCardItem {
   prescription: PrescriptionsProps;

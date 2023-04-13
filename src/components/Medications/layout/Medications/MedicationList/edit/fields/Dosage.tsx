@@ -6,7 +6,7 @@ import { Translation } from 'constants/translations';
 
 import { AddPatientMedicationFormField } from '../initialValues';
 
-const FrequencyField = () => {
+const DosageField = () => {
   const { register } = useFormContext();
   const [t] = useTranslation();
 
@@ -15,11 +15,11 @@ const FrequencyField = () => {
       <TextField
         fullWidth
         variant="outlined"
-        {...register(AddPatientMedicationFormField.Frequency)}
-        label={t(Translation.MODAL_ADD_PATIENT_MEDICATION_FREQUENCY)}
+        {...register(AddPatientMedicationFormField.Dosage)}
+        label={t(Translation.MODAL_ADD_PATIENT_MEDICATION_DOSAGE)}
       />
     </Grid>
   );
 };
 
-export default FrequencyField;
+export default DosageField;

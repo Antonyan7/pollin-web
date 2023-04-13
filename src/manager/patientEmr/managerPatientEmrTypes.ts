@@ -694,6 +694,7 @@ export interface IDropdownOption {
   title: string;
 }
 export interface IDropdown {
+  id: string;
   type: DropdownOptionType;
   options: IDropdownOption[];
 }

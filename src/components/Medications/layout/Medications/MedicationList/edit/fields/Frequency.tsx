@@ -6,7 +6,7 @@ import { Translation } from 'constants/translations';
 
 import { AddPatientMedicationFormField } from '../initialValues';
 
-const FrequencyField = () => {
+const FrequencyField = ({ disabled }: { disabled?: boolean }) => {
   const { register } = useFormContext();
   const [t] = useTranslation();
 
@@ -14,6 +14,7 @@ const FrequencyField = () => {
     <Grid item xs={12}>
       <TextField
         fullWidth
+        disabled={disabled}
         variant="outlined"
         {...register(AddPatientMedicationFormField.Frequency)}
         label={t(Translation.MODAL_ADD_PATIENT_MEDICATION_FREQUENCY)}
