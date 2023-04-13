@@ -33,7 +33,6 @@ const DrugNameField = ({ index }: { index: number }) => {
   const { onBlur, onChange, ...fieldProps } = field;
   const { error } = fieldState;
   const [inputValue, setInputValue] = useState('');
-  const [openDrugs, setOpenDrugs] = useState(false);
   const labelHelperText = error?.message;
   const labelErrorText = !!error?.message;
   const assignLabel = t(Translation.MODAL_PRESCRIPTIONS_DRUG_NAME);
@@ -41,7 +40,6 @@ const DrugNameField = ({ index }: { index: number }) => {
 
   const onInputChange = useCallback((_: React.SyntheticEvent, value: string) => {
     setInputValue(value);
-    setOpenDrugs(true);
   }, []);
 
   const getOptionLabel = useCallback((option: IPatientOption | string) => {
@@ -53,9 +51,7 @@ const DrugNameField = ({ index }: { index: number }) => {
   }, []);
 
   useEffect(() => {
-    if (inputValue) {
-      dispatch(patientsMiddleware.getDrugs(inputValue, INITIAL_PAGE));
-    }
+    dispatch(patientsMiddleware.getDrugs(inputValue, INITIAL_PAGE));
   }, [inputValue]);
 
   const onDrugNameChange = (drugNameItem: DrugNameFieldOptions) => {
@@ -86,8 +82,6 @@ const DrugNameField = ({ index }: { index: number }) => {
     <Grid item xs={12}>
       <BaseDropdownWithLoading
         inputValue={inputValue}
-        open={openDrugs}
-        onClose={() => setOpenDrugs(false)}
         isLoading={isDrugLoading}
         ListboxProps={{
           style: {

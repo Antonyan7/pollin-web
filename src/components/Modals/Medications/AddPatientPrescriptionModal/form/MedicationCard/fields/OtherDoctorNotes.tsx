@@ -2,6 +2,7 @@ import React from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Grid, TextField } from '@mui/material';
+import { MAX_ALLOWED_MEDICATION_NOTE_LENGTH } from 'constants/common';
 import { Translation } from 'constants/translations';
 
 const OtherDoctorNotesField = ({ index }: { index: number }) => {
@@ -17,6 +18,7 @@ const OtherDoctorNotesField = ({ index }: { index: number }) => {
         multiline
         minRows={2}
         {...register(fieldName)}
+        inputProps={{ maxLength: MAX_ALLOWED_MEDICATION_NOTE_LENGTH }}
         label={t(Translation.MODAL_PRESCRIPTIONS_OTHER_DOCTOR_NOTES)}
       />
     </Grid>

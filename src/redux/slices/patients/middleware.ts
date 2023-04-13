@@ -765,6 +765,7 @@ const createPatientPrescription = (prescriptionData: ICreatePatientPrescription)
     if (response.data.data.uuid) {
       dispatch(setCurrentPrescriptionUuid(response.data.data.uuid));
       dispatch(setPatientPrescriptionsListItems(null));
+      dispatch(patientsMiddleware.getPatientPrescriptions(prescriptionData.patientId, 1));
     }
   } catch (error) {
     Sentry.captureException(error);

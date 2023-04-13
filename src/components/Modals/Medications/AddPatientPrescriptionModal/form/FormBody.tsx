@@ -55,7 +55,7 @@ const FormBody = () => {
           </Grid>
         </Grid>
         <Grid item xs={0.5} />
-        <Grid item xs={3.5}>
+        <Grid item xs={3.5} sx={{ maxHeight: '600px', overflowY: 'scroll', pr: paddings.right16 }}>
           <CurrentMedicationsAndDrugAllergies />
         </Grid>
       </Grid>

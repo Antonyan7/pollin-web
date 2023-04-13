@@ -623,8 +623,8 @@ export interface IDrugsResponse {
 }
 
 export interface IPatientMedicationsState {
-  currentMedications: string;
-  drugAllergies: string;
+  currentMedications: [{ name: string }];
+  drugAllergies: [{ name: string }];
 }
 
 export interface PatientPrescriptionsDrugListProps {

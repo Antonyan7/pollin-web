@@ -14,7 +14,7 @@ const AddPatientPrescriptionModal = () => {
   }, []);
 
   return (
-    <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
+    <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0, minWidth: '700px' } }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <AddPatientMedicationForm />
       </LocalizationProvider>
