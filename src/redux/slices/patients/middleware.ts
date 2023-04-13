@@ -323,11 +323,11 @@ export const updateEncounterNote =
     }
   };
 
-export const getEncounterFilters = () => async (dispatch: AppDispatch) => {
+export const getEncounterFilters = (patientId: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setEncountersFiltersLoadingState(true));
 
-    const response = await API.patients.getEncounterFilters();
+    const response = await API.patients.getEncounterFilters(patientId);
 
     dispatch(setEncounterFilters(response.data.data.filters));
   } catch (error) {

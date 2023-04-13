@@ -62,8 +62,10 @@ const EncounterFilters = ({ page }: { page: number }) => {
   }, [page, patientId, selectedEncountersFilters, searchValue, throttleFn]);
 
   useEffect(() => {
-    dispatch(patientsMiddleware.getEncounterFilters());
-  }, []);
+    if (patientId) {
+      dispatch(patientsMiddleware.getEncounterFilters(patientId));
+    }
+  }, [patientId]);
 
   const handleSearchValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const encounterSearchValue = event.target.value;

@@ -141,9 +141,14 @@ const patientEmrManager = {
       `${baseURL}/v1/patients/search/filter`
     );
   },
-  getEncounterFilters() {
+  getEncounterFilters(patientId: string) {
     return axiosInstance.get<IEncounterFilterResponse, IAxiosResponse<IEncounterFilterResponse>>(
-      `${baseURL}/v1/encounters/filters`
+      `${baseURL}/v1/encounters/filters`,
+      {
+        params: {
+          patientId
+        }
+      }
     );
   },
   createEncounterNote(data: ICreateEncounterNoteRequest) {
