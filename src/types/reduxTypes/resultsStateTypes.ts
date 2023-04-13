@@ -58,6 +58,8 @@ export interface ITestResultsTracking {
   transportList: ITransportList;
   specimensInTransportList: ISpecimensInTransportList;
   shouldRefetchInTransportList: boolean;
+  shouldRefetchInAllSpecimensList: boolean;
+  shouldRefetchTransportsList: boolean;
   isTransportFolderDownloaded: boolean;
   transportActions: TransportActions[];
   labs: ILab[];

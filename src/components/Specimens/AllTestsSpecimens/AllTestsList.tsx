@@ -51,6 +51,7 @@ const AllTestsList = () => {
   const specimensList = useAppSelector(resultsSelector.allTestsSpecimensList);
   const isLoading = useAppSelector(resultsSelector.isAllTestsSpecimensListLoading);
   const actionVariations = useAppSelector(resultsSelector.specimenActions);
+  const shouldRefetchInAllSpecimensList = useAppSelector(resultsSelector.shouldRefetchInAllSpecimensList);
 
   const headCells = headCellsData(t) as IHeadCell[];
 
@@ -64,6 +65,16 @@ const AllTestsList = () => {
 
   const rowCount = specimensList?.specimens.length;
 
+  const listFetchParams: IAllTestsSpecimensReqBody = useMemo(
+    () => ({
+      ...(identifiers.length > 0 ? { specimens: identifiers.map((identifier) => ({ identifier })) } : {}),
+      ...(sortField ? { sortByField: sortField } : {}),
+      ...(sortOrder ? { sortOrder } : {}),
+      page: page + 1
+    }),
+    [page, identifiers, sortField, sortOrder]
+  );
+
   const searchByIdsHandler = useCallback((idArr: string[]) => {
     setPage(0);
     setIdentifiers(idArr);
@@ -74,15 +85,20 @@ const AllTestsList = () => {
   }, [specimensList]);
 
   useEffect(() => {
-    const data: IAllTestsSpecimensReqBody = {
-      ...(identifiers.length > 0 ? { specimens: identifiers.map((identifier) => ({ identifier })) } : {}),
-      ...(sortField ? { sortByField: sortField } : {}),
-      ...(sortOrder ? { sortOrder } : {}),
-      page: page + 1
-    };
+    dispatch(resultsMiddleware.getAllTestsSpecimensList(listFetchParams));
+  }, [listFetchParams]);
 
-    dispatch(resultsMiddleware.getAllTestsSpecimensList(data));
-  }, [page, identifiers, sortField, sortOrder]);
+  useEffect(() => {
+    if (shouldRefetchInAllSpecimensList) {
+      if (listFetchParams.page === 1) {
+        dispatch(resultsMiddleware.getAllTestsSpecimensList(listFetchParams));
+      } else {
+        setPage(0);
+      }
+
+      dispatch(resultsMiddleware.setShouldRefetchAllSpecimensList(false));
+    }
+  }, [listFetchParams, shouldRefetchInAllSpecimensList]);
 
   useEffect(() => {
     setToastHasBeenShown(false);

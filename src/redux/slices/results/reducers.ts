@@ -143,6 +143,12 @@ const reducers = createReducer({
   setShouldRefetchInTransportList(state, action: IAction<boolean>) {
     state.tracking.shouldRefetchInTransportList = action.payload;
   },
+  setShouldRefetchAllSpecimensList(state, action: IAction<boolean>) {
+    state.tracking.shouldRefetchInAllSpecimensList = action.payload;
+  },
+  setShouldRefetchTransportsList(state, action: IAction<boolean>) {
+    state.tracking.shouldRefetchTransportsList = action.payload;
+  },
   setSpecimenConfirmButtonClicked(state, action: IAction<boolean>) {
     state.inHouse.isSpecimensConfirmationButtonClicked = action.payload;
   },

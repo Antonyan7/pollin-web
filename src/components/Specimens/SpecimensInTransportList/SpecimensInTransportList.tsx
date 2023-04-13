@@ -23,7 +23,9 @@ import { paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import {
   ContextMenuAction,
+  ISpecimensInTransportList,
   ISpecimensInTransportListItem,
+  SpecimenActions,
   TableRowCheckboxProps
 } from 'types/reduxTypes/resultsStateTypes';
 import { IGetSpecimensInTransportListParams } from 'types/results';
@@ -37,6 +39,51 @@ import { Translation } from '../../../constants/translations';
 
 import { headCellsData } from './headCellsData';
 import { SpecimensInTransportListRow } from './SpecimensInTransportListRow';
+
+interface ListBodyProps {
+  isLoading: boolean;
+  specimensList: ISpecimensInTransportList;
+  actionVariations: SpecimenActions[];
+  selectedRows: TableRowCheckboxProps[];
+  setSelectedRows: React.Dispatch<React.SetStateAction<TableRowCheckboxProps[]>>;
+}
+
+const ListBody = ({
+  isLoading,
+  specimensList,
+  actionVariations,
+  selectedRows,
+  setSelectedRows
+}: ListBodyProps) => {
+  const selectedIds = selectedRows.map((row) => row.id);
+  const numSelected = selectedIds.length;
+  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
+
+  return (
+    <TableBody>
+      {!isLoading &&
+        specimensList?.specimens?.map((row: ISpecimensInTransportListItem, index: number) => {
+          const filteredSpecimenActions = findCurrentAction(actionVariations, row);
+          const isItemSelected = isSelected(row.id);
+          const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
+          const labelId = `enhanced-table-checkbox-${index}`;
+
+          return (
+            <SpecimensInTransportListRow
+              row={row}
+              key={row.id}
+              actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
+              isItemSelected={isItemSelected}
+              onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
+                onCheckboxClick(e, row, selectedRows, setSelectedRows)
+              }
+              labelId={labelId}
+            />
+          );
+        })}
+    </TableBody>
+  );
+};
 
 const SpecimensInTransportList = () => {
   const [t] = useTranslation();
@@ -57,22 +104,35 @@ const SpecimensInTransportList = () => {
 
   const [selectedRows, setSelectedRows] = useState<TableRowCheckboxProps[]>([]);
   const selectedIds = selectedRows.map((row) => row.id);
-  const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
   const numSelected = selectedIds.length;
   const rowsCount = specimensList?.specimens.length;
   const isAllSelected = rowsCount > rowsPerPage ? rowsPerPage : rowsCount;
   const isAllSpecimensSelected = rowsCount > 0 && !!numSelected && !!isAllSelected;
 
-  useEffect(() => {
-    const params: IGetSpecimensInTransportListParams = {
+  const listFetchParams: IGetSpecimensInTransportListParams = useMemo(
+    () => ({
       page: page + 1,
       sortByField: sortField,
       sortOrder
-    };
+    }),
+    [page, sortField, sortOrder]
+  );
 
-    dispatch(resultsMiddleware.getSpecimensInTransportList(params, transportId));
-    dispatch(resultsMiddleware.setShouldRefetchInTransportList(false));
-  }, [transportId, page, sortField, sortOrder, shouldRefetchInTransportList]);
+  useEffect(() => {
+    dispatch(resultsMiddleware.getSpecimensInTransportList(listFetchParams, transportId));
+  }, [transportId, listFetchParams]);
+
+  useEffect(() => {
+    if (shouldRefetchInTransportList) {
+      if (listFetchParams.page === 1) {
+        dispatch(resultsMiddleware.getSpecimensInTransportList(listFetchParams, transportId));
+      } else {
+        setPage(0);
+      }
+
+      dispatch(resultsMiddleware.setShouldRefetchInTransportList(false));
+    }
+  }, [transportId, listFetchParams, shouldRefetchInTransportList]);
 
   useEffect(() => {
     if (!actionVariations.length) {
@@ -139,28 +199,13 @@ const SpecimensInTransportList = () => {
               )}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {!isLoading &&
-              specimensList?.specimens?.map((row: ISpecimensInTransportListItem, index: number) => {
-                const filteredSpecimenActions = findCurrentAction(actionVariations, row);
-                const isItemSelected = isSelected(row.id);
-                const isContextMenuAvailable = filteredSpecimenActions && numSelected < 2;
-                const labelId = `enhanced-table-checkbox-${index}`;
-
-                return (
-                  <SpecimensInTransportListRow
-                    row={row}
-                    key={row.id}
-                    actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
-                    isItemSelected={isItemSelected}
-                    onClick={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      onCheckboxClick(e, row, selectedRows, setSelectedRows)
-                    }
-                    labelId={labelId}
-                  />
-                );
-              })}
-          </TableBody>
+          <ListBody
+            isLoading={isLoading}
+            specimensList={specimensList}
+            actionVariations={actionVariations}
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+          />
         </Table>
       </TableContainer>
       {isLoading && (

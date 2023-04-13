@@ -55,7 +55,9 @@ const getTrackingInitialState = (): ITestResultsTracking => ({
     pageSize: 10,
     totalItems: 0
   },
-  shouldRefetchInTransportList: false
+  shouldRefetchInTransportList: false,
+  shouldRefetchInAllSpecimensList: false,
+  shouldRefetchTransportsList: false
 });
 
 const getCollectionInitialState = (): ITestResultsCollection => ({

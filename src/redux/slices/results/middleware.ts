@@ -88,7 +88,9 @@ const {
   setTransportActions,
   setTransportFolders,
   setTransportList,
-  setShouldRefetchInTransportList
+  setShouldRefetchInTransportList,
+  setShouldRefetchAllSpecimensList,
+  setShouldRefetchTransportsList
 } = slice.actions;
 
 const getResultsList = (resultsListData: IResultsReqBody) => async (dispatch: AppDispatch) => {
@@ -385,7 +387,7 @@ const applyMoveToInHouse = (specimens: string[], identifiers: string[]) => async
         })
       );
       dispatch(setShouldRefetchInTransportList(true));
-      dispatch(getAllTestsSpecimensList());
+      dispatch(setShouldRefetchAllSpecimensList(true));
     }
   } catch (error) {
     Sentry.captureException(error);
@@ -599,7 +601,7 @@ const markInTransitAction =
           }
         })
       );
-      dispatch(resultsMiddleware.getTransportList());
+      dispatch(setShouldRefetchTransportsList(true));
     } catch (error) {
       Sentry.captureException(error);
     }
@@ -687,7 +689,7 @@ const addSpecimenToTransportFolder =
     }
 
     dispatch(setIsSpecimenAddedToFolder(false));
-    dispatch(getAllTestsSpecimensList());
+    dispatch(setShouldRefetchAllSpecimensList(true));
   };
 
 const downloadTransportFolderManifest = (transportFolderId: string) => async (dispatch: AppDispatch) => {
@@ -758,6 +760,8 @@ export default {
   setIsTestResultsSubmitLoading,
   setIsTestResultsSubmitWentSuccessful,
   setShouldRefetchInTransportList,
+  setShouldRefetchAllSpecimensList,
+  setShouldRefetchTransportsList,
   submitSpecimenCollections,
   submitTestResults
 };

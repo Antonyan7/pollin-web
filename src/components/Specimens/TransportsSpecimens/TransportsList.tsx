@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ITransportListReqBody, TransportsSortFields } from '@axios/results/resultsManagerTypes';
 import { HeadCell } from '@components/Table/HeadCell';
@@ -39,20 +39,36 @@ const TransportsList = () => {
   const transportList = useAppSelector(resultsSelector.transportList);
   const isLoading = useAppSelector(resultsSelector.isTransportListLoading);
   const actionVariations = useAppSelector(resultsSelector.transportActions);
+  const shouldRefetchTransportsList = useAppSelector(resultsSelector.shouldRefetchTransportsList);
 
   const headCells = headCellsData(t) as IHeadCell[];
 
-  useEffect(() => {
-    const data: ITransportListReqBody = {
+  const listFetchParams: ITransportListReqBody = useMemo(
+    () => ({
       date: calendarDate,
       page: page + 1,
       ...(searchedItems.length > 0 ? { specimens: searchedItems.map((identifier) => ({ identifier })) } : {}),
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {})
-    };
+    }),
+    [calendarDate, page, searchedItems, sortField, sortOrder]
+  );
 
-    dispatch(resultsMiddleware.getTransportList(data));
-  }, [calendarDate, page, searchedItems, sortField, sortOrder]);
+  useEffect(() => {
+    dispatch(resultsMiddleware.getTransportList(listFetchParams));
+  }, [listFetchParams]);
+
+  useEffect(() => {
+    if (shouldRefetchTransportsList) {
+      if (listFetchParams.page === 1) {
+        dispatch(resultsMiddleware.getTransportList(listFetchParams));
+      } else {
+        setPage(0);
+      }
+
+      dispatch(resultsMiddleware.setShouldRefetchTransportsList(false));
+    }
+  }, [listFetchParams, shouldRefetchTransportsList]);
 
   useEffect(() => {
     if (!actionVariations.length) {
