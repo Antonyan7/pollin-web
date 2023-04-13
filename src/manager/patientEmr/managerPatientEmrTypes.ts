@@ -520,8 +520,8 @@ export interface IPrescriptionStatusesVariations {
 
 export enum IPrescriptionStatusesActions {
   Download = 'Download',
-  MarkAsDispensed = 'Mark As Dispensed',
-  ArchivePrescription = 'Archive Prescription'
+  MarkAsDispensed = 'MarkAsDispensed',
+  ArchivePrescription = 'ArchivePrescription'
 }
 
 export interface PrescriptionsProps {

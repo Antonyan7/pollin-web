@@ -135,7 +135,7 @@ export interface ICreateMedication {
       start: string;
       end: string;
     };
-    prescriber?: string | null;
+    prescriber?: string;
   };
 }
 

@@ -771,9 +771,10 @@ const resetCurrentPrescriptionUuid = () => (dispatch: AppDispatch) => {
   dispatch(setCurrentPrescriptionUuid(''));
 };
 
-const archivePatientPrescription = (prescriptionId: string) => async () => {
+const archivePatientPrescription = (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch) => {
   try {
     await API.patients.archivePatientPrescription(prescriptionId);
+    dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
   } catch (error) {
     Sentry.captureException(error);
   }
@@ -793,13 +794,15 @@ const downloadPatientPrescription = (transportFolderId: string) => async () => {
   return null;
 };
 
-const markPatientPrescriptionDispensed = (prescriptionId: string) => async () => {
-  try {
-    await API.patients.markPatientPrescriptionDispensed(prescriptionId);
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
+const markPatientPrescriptionDispensed =
+  (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch) => {
+    try {
+      await API.patients.markPatientPrescriptionDispensed(prescriptionId);
+      dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  };
 const getPatientMedications = (patientId: string, recency: Recency, page: number) => async (dispatch: AppDispatch) => {
   try {
     switch (recency) {

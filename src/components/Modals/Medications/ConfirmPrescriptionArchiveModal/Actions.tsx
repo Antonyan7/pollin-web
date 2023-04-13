@@ -19,10 +19,10 @@ const Actions = ({ prescriptionId }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.MODAL_PRESCRIPTIONS_ARCHIVE);
   const router = useRouter();
+  const patientId = router.query.id as string;
 
   const onClickConfirm = () => {
-    dispatch(patientsMiddleware.archivePatientPrescription(prescriptionId));
-    dispatch(patientsMiddleware.getPatientPrescriptions(router.query.id as string, 1));
+    dispatch(patientsMiddleware.archivePatientPrescription(prescriptionId, patientId));
     dispatch(viewsMiddleware.closeModal(ModalName.PrescriptionsArchive));
   };
 

@@ -20,11 +20,13 @@ const AddPatientMedicationForm = () => {
   const patientName = patientProfile?.fullName;
   const { handleSubmit } = methods;
   const onSubmit = (values: IAddPatientMedicationForm) => {
-    const { dragName, startDate, endDate, ...otherMedicationValues } = values;
+    const { dragName, startDate, endDate, prescriber, ...otherMedicationValues } = values;
+
     const data = {
       patientId,
       medication: {
         ...otherMedicationValues,
+        ...(prescriber?.length ? { prescriber } : {}),
         drugId: dragName,
         duration: { start: startDate, end: endDate }
       }

@@ -30,8 +30,7 @@ const usePrescriptionActions = (
   }, [prescriptionId, downloadRef]);
 
   const handleMarkAsDispensedAction = useCallback(() => {
-    dispatch(patientsMiddleware.markPatientPrescriptionDispensed(prescriptionId));
-    dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
+    dispatch(patientsMiddleware.markPatientPrescriptionDispensed(prescriptionId, patientId));
   }, [prescriptionId, patientId]);
 
   const handleArchivePrescriptionAction = useCallback(() => {
