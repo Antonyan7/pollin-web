@@ -500,13 +500,13 @@ const updateSpecimenCollectionAppointmentStatus =
     try {
       dispatch(setIsUpdatingSpecimenCollectionAppointmentStatus(true));
 
-      const { currentSpecimenServiceProviderId, specimenAppointments, date } = store.getState().booking;
+      const { currentSpecimenServiceProviderId, specimenAppointments } = store.getState().booking;
 
       await API.booking.updateSpecimenCollectionAppointmentStatus(data);
       dispatch(
         bookingMiddleware.getSpecimenAppointments(
           currentSpecimenServiceProviderId,
-          date,
+          specimenAppointments.date,
           specimenAppointments.selectedFilters.map(({ id }) => ({ id }))
         )
       );
