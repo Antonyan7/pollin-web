@@ -566,7 +566,7 @@ export interface PrescriptionsMedicationsProps {
 
 export enum PrescriptionsType {
   InHouse = 'Pollin (In-House)',
-  External = 'External'
+  External = 'External pharmacy'
 }
 export enum PrescriptionsStatus {
   Dispensed = 'Dispensed',

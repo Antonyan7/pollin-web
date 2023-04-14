@@ -45,6 +45,9 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
     }
   }, [theme, prescription.status]);
 
+  const prescriptionType =
+    prescription.type === Object.keys(PrescriptionsType)[0] ? PrescriptionsType.InHouse : PrescriptionsType.External;
+
   return (
     <Grid
       container
@@ -61,7 +64,7 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
         <Chip
           sx={{
             background:
-              prescription?.type === PrescriptionsType.InHouse
+              prescriptionType === PrescriptionsType.InHouse
                 ? theme.palette.warning.main
                 : theme.palette.secondary[600],
             color: theme.palette.common.black,
@@ -69,11 +72,11 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
             pl: paddings.left2,
             ml: margins.left8
           }}
-          label={prescription.type}
+          label={prescriptionType}
           size="small"
           chipColor="notActive"
         />
-        {prescription.type === PrescriptionsType.External && (
+        {prescriptionType === PrescriptionsType.External && (
           <>
             <Badge
               color="secondary"

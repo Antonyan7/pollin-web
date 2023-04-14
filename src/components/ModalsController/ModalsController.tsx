@@ -33,6 +33,9 @@ import MedicalBackgroundUnsavedChanges, {
 } from '@components/Modals/MedicalBackground/UnsavedChanges';
 import AddPatientMedicationModal from '@components/Modals/Medications/AddPatientMedicationModal';
 import AddPatientPrescriptionsModal from '@components/Modals/Medications/AddPatientPrescriptionModal';
+import ConfirmCancellationModal, {
+  ConfirmCancellationModalProps
+} from '@components/Modals/Medications/ConfirmCancellationModal';
 import ConfirmPrescriptionArchiveModal, {
   ConfirmPrescriptionArchiveModalProps
 } from '@components/Modals/Medications/ConfirmPrescriptionArchiveModal';
@@ -226,8 +229,11 @@ const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBack
 );
 
 // Medications
-const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={v4()} />;
+const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={ModalName.AddPatientMedicationModal} />;
 const getAddPatientPrescriptionsModal = () => <AddPatientPrescriptionsModal key={v4()} />;
+const getConfirmCancellationModal = (modal: IOpenedModal<ConfirmCancellationModalProps>) => (
+  <ConfirmCancellationModal key={modal.name} {...modal.props} />
+);
 
 const getConfirmPrescriptionArchiveModal = (modal: IOpenedModal<ConfirmPrescriptionArchiveModalProps>) => (
   <ConfirmPrescriptionArchiveModal key={modal.name} {...modal.props} />
@@ -349,6 +355,8 @@ export const ModalsController = () => {
             return getAddPatientMedicationModalModal();
           case ModalName.AddPatientPrescriptionModal:
             return getAddPatientPrescriptionsModal();
+          case ModalName.ConfirmCancellationModal:
+            return getConfirmCancellationModal(modal);
           case ModalName.PrescriptionsArchive:
             return getConfirmPrescriptionArchiveModal(modal);
           // dev
