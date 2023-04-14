@@ -1,5 +1,6 @@
 import { HeightProps, IGeneralHealthProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { GeneralHealthFormFields } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { isDashString } from '@components/MedicalBackground/helpers';
 
 export const MedicalContextState = {
   move: () => {},
@@ -102,7 +103,7 @@ export const getGeneralHealthEditFormState = (generalHealthData: IGeneralHealthP
   },
   [GeneralHealthFormFields.Diet]: {
     ...generalHealthData?.diet,
-    value: generalHealthData?.diet.value
+    value: isDashString(generalHealthData?.diet.value) ? '' : generalHealthData?.diet.value
   },
   [GeneralHealthFormFields.ActiveConsultsList]: {
     ...generalHealthData?.activeConsultsList,
@@ -110,10 +111,11 @@ export const getGeneralHealthEditFormState = (generalHealthData: IGeneralHealthP
   },
   [GeneralHealthFormFields.AdditionalInformation]: {
     ...generalHealthData?.additionalInformation,
-    value: generalHealthData?.additionalInformation.value
+    value: isDashString(generalHealthData?.additionalInformation.value)
+      ? ''
+      : generalHealthData?.additionalInformation.value
   },
   [GeneralHealthFormFields.CurrentPrescribedMedications]: generalHealthData?.currentPrescribedMedications
 });
-
 
 export const witoutZero = /[^0].*/;

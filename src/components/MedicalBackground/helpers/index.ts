@@ -167,3 +167,5 @@ export const genitourinaryRows = [
   { Component: Infections },
   { Component: GenitalSurgery }
 ];
+
+export const isDashString = (value?: string) => value === '-';

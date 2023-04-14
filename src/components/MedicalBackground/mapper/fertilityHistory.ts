@@ -2,7 +2,7 @@ import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
-import { FlexibleItemType,IComponentData } from '../../common/Form/types';
+import { FlexibleItemType, IComponentData } from '../../common/Form/types';
 import { createObjectWithTitle, CustomAccessorItem, getLabelBySelectedValue } from '../helpers/mapper';
 
 interface IMappingPattern {

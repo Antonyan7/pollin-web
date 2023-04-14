@@ -3,7 +3,7 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { FlexibleItemType } from '../../common/Form/types';
-import { createObjectWithTitle } from '../helpers/mapper';
+import { createObjectWithTitle, getLabelBySelectedValue } from '../helpers/mapper';
 
 const mappingPattern = {
   takingBirthControl: createObjectWithTitle(
@@ -38,7 +38,11 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INDICATE_PROCEDURES)
     ),
-    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => {
+      const itemIds = items.map(({ id }) => id);
+
+      return [getLabelBySelectedValue(!!items.length), ...itemIds];
+    },
     componentData: {
       type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.ProceduresDueToAbnormalPap
@@ -50,7 +54,11 @@ const mappingPattern = {
         Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_GYNAECOLOGICAL_CONDITIONS
       )
     ),
-    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => {
+      const itemIds = items.map(({ id }) => id);
+
+      return [getLabelBySelectedValue(!!items.length), ...itemIds];
+    },
     componentData: {
       type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.GynaecologicalConditions
@@ -92,14 +100,12 @@ const mappingPattern = {
   cervixTreatment: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_CERVIX_TREATMENT)
-    ),
-    shouldShowDash: true
+    )
   },
   intercoursePain: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INTERCOURSE_PAIN)
-    ),
-    shouldShowDash: true
+    )
   }
 };
 
