@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { TableCell, TableRow } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import Link from 'next/link';
 import { ContextMenuAction, ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
 
@@ -13,9 +14,10 @@ import { getStatusTitle } from '@utils/mappings';
 interface AllTestsRowProps {
   row: ITransportListFolderProps;
   actions: ContextMenuAction[];
+  index: number;
 }
 
-export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
+export const TransportsListRow = ({ row, actions, index }: AllTestsRowProps) => {
   const calendarDate = useAppSelector(resultsSelector.transportListDate);
   const isCurrentDay = useMemo(() => DateUtil.isSameDate(calendarDate), [calendarDate]);
   const folderCreateDate = DateUtil.formatDateOnly(row.date);
@@ -34,7 +36,7 @@ export const TransportsListRow = ({ row, actions }: AllTestsRowProps) => {
         <TableCell>{row.driver.name}</TableCell>
         <TableCell>{statusTitle}</TableCell>
         <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-          <ContextMenu actionBindings={actionBindings} />
+          <ContextMenu actionBindings={actionBindings} dataCy={`${CypressIds.COMMON_CONTEXT_MENU}-${index}`} />
         </TableCell>
       </TableRow>
     </Link>

@@ -7,6 +7,7 @@ import { Button, Grid } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -97,10 +98,20 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
       />
       <Grid display="flex" justifyContent="space-between" my={margins.topBottom20}>
         <Grid item xs={3}>
-          <PollinDatePickerWithTodayButton calendarDate={calendarDate} onChange={onDateChange} />
+          <PollinDatePickerWithTodayButton
+            dateDataCy={CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_DATE_PICKER}
+            todayDataCy={CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_TODAY_BUTTON}
+            calendarDate={calendarDate}
+            onChange={onDateChange}
+          />
         </Grid>
         <Grid item xs={3} display="flex">
-          <Button variant="contained" endIcon={<Add />} onClick={onAddTransportNewFolderClick}>
+          <Button
+            variant="contained"
+            endIcon={<Add />}
+            onClick={onAddTransportNewFolderClick}
+            data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_TODAY_BUTTON}
+          >
             {addTransportNewFolderButtonLabel}
           </Button>
         </Grid>

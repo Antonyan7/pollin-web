@@ -16,6 +16,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { useRouter } from 'next/router';
@@ -99,7 +100,12 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
             {!isMoveToAnother && (
-              <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
+              <PollinDatePickerWithTodayButton
+                calendarDate={calendarDate as Date}
+                onChange={setCalendarDate}
+                todayDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_TODAY_BUTTON}
+                dateDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_DATE_PICKER}
+              />
             )}
             <Grid item xs={12}>
               <FormControl fullWidth>
@@ -117,6 +123,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                     disabled: true,
                     label: t(Translation.PAGE_SPECIMENS_TRACKING_NO_TRANSPORT_FOLDERS)
                   })}
+                  data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_DESTINATION_FIELD}
                 >
                   {onlyReadyForTransitFolders.map((transport: ITransportListFolderProps) => (
                     <MenuItem value={transport.id} key={transport.id}>
@@ -148,6 +155,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   isLoading={isSpecimenAddedToFolder}
                   variant="contained"
                   onClick={onConfirmAddToNewExistingTransport}
+                  dataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_CONFIRM_BUTTON}
                 >
                   {confirmButtonLabel}
                 </ButtonWithLoading>

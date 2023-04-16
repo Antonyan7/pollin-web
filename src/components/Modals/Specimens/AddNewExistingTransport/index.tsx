@@ -9,6 +9,7 @@ import { Box, DialogContent, Grid, styled, Tab, Tabs } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -46,6 +47,7 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
       isLoading={isPatientContactInformationLoading}
       title={addNewTransportFolderModalTitleLabel}
       onClose={onClose}
+      closeIconDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_CLOSE_BUTTON}
     >
       <Grid>
         <DialogContent sx={{ padding: 0 }}>
@@ -65,12 +67,14 @@ const AddNewExistingTransportModal = (props: IAddNewExistingTransportModalProps)
                     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_NEW_TRANSPORT_FOLDER_LABEL
                   )}
                   {...showActivePage(0)}
+                  data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_TAB_NEW}
                 />
                 <TransportModalTab
                   label={t(
                     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_EXISTING_TRANSPORT_FOLDER_MODAL_EXISTING_TRANSPORT_FOLDER_LABEL
                   )}
                   {...showActivePage(1)}
+                  data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_TAB_EXISTING}
                 />
               </Tabs>
             </Box>

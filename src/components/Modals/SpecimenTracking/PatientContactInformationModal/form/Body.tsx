@@ -5,6 +5,7 @@ import { Box, Grid, TextField, Typography } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { ModalName } from 'types/modals';
 import { ITransportListFolderProps } from 'types/reduxTypes/resultsStateTypes';
@@ -75,6 +76,9 @@ const Body = ({ row }: BodyProps) => {
                   onChange={onDriverNameChange}
                   placeholder={driverNameLabel}
                   multiline
+                  inputProps={{
+                    'data-cy': CypressIds.MODAL_SPECIMEN_TRACKING_HAND_OFF_NAME_FIELD
+                  }}
                 />
               </Grid>
 
@@ -86,13 +90,20 @@ const Body = ({ row }: BodyProps) => {
                   rows={4}
                   placeholder={commentsLabel}
                   multiline
+                  inputProps={{
+                    'data-cy': CypressIds.MODAL_SPECIMEN_TRACKING_HAND_OFF_COMMENTS_FIELD
+                  }}
                 />
               </Grid>
             </Grid>
           </Box>
         </Grid>
       </Grid>
-      <Actions onClick={onActionClick} disabled={!driverName} />
+      <Actions
+        dataCy={CypressIds.MODAL_SPECIMEN_TRACKING_HAND_OFF_CONFIRM_BUTTON}
+        onClick={onActionClick}
+        disabled={!driverName}
+      />
     </>
   );
 };

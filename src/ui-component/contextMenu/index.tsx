@@ -6,9 +6,10 @@ import { IContextActionBinding, useContextMenuAction } from '@hooks/useContextMe
 
 interface ContextMenuProps {
   actionBindings: IContextActionBinding[];
+  dataCy?: string;
 }
 
-export const ContextMenu = ({ actionBindings }: ContextMenuProps) => {
+export const ContextMenu = ({ actionBindings, dataCy }: ContextMenuProps) => {
   const [anchorElement, setAnchorElement] = useState<Element | ((element: Element) => Element) | null>(null);
 
   const handleClick = (event: React.MouseEvent) => {
@@ -22,7 +23,12 @@ export const ContextMenu = ({ actionBindings }: ContextMenuProps) => {
 
   return (
     <Grid item>
-      <IconButton size="small" onClick={handleClick} disabled={!actionBindings.length}>
+      <IconButton
+        {...(dataCy && { 'data-cy': dataCy })}
+        size="small"
+        onClick={handleClick}
+        disabled={!actionBindings.length}
+      >
         <MoreVertOutlinedIcon aria-controls="menu-friend-card" aria-haspopup="true" />
       </IconButton>
       <Menu
@@ -47,6 +53,9 @@ export const ContextMenu = ({ actionBindings }: ContextMenuProps) => {
               handleClose();
               actionCallback(actionItem.id);
             }}
+            {...(actionItem.dataCy && {
+              'data-cy': actionItem?.dataCy
+            })}
           >
             {actionItem.title}
           </MenuItem>

@@ -7,9 +7,10 @@ import { margins } from 'themes/themeConstants';
 interface ActionsProps {
   disabled: boolean;
   onClick: () => void;
+  dataCy?: string;
 }
 
-const Actions = ({ onClick, disabled }: ActionsProps) => {
+const Actions = ({ onClick, disabled, dataCy }: ActionsProps) => {
   const [t] = useTranslation();
   const confirmButtonLabel = t(Translation.MODAL_HANDOFF_CONFIRMATION_MARK_AS_INTRANSIT);
 
@@ -18,7 +19,7 @@ const Actions = ({ onClick, disabled }: ActionsProps) => {
       <Grid container justifyContent="flex-end" alignItems="center">
         <Grid item xs={12}>
           <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
-            <Button variant="contained" disabled={disabled} onClick={onClick}>
+            <Button variant="contained" disabled={disabled} onClick={onClick} data-cy={dataCy}>
               {confirmButtonLabel}
             </Button>
           </Stack>

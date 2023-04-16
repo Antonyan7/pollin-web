@@ -22,6 +22,7 @@ import { dispatch } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -82,7 +83,12 @@ const AddNewTransportFolderModal = () => {
             <Grid item xs={12}>
               <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={3}>
-                  <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
+                  <PollinDatePickerWithTodayButton
+                    calendarDate={calendarDate as Date}
+                    onChange={setCalendarDate}
+                    todayDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_TODAY_BUTTON}
+                    dateDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DATE_PICKER}
+                  />
                   <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs={6}>
                       <Typography variant="subtitle1" fontWeight={500}>
@@ -104,6 +110,9 @@ const AddNewTransportFolderModal = () => {
                           Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_NAME
                         ) as string
                       }
+                      inputProps={{
+                        'data-cy': CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_NAME_FIELD
+                      }}
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -121,6 +130,7 @@ const AddNewTransportFolderModal = () => {
                         label="Destination Lab"
                         MenuProps={{ classes: { paper: classes?.menuPaper } }}
                         onChange={handleDestinationLabChange}
+                        data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DESTINATION_FIELD}
                       >
                         {labList.map((lab) => (
                           <MenuItem value={lab.id} key={lab.id}>
@@ -152,6 +162,7 @@ const AddNewTransportFolderModal = () => {
                         isLoading={false}
                         variant="contained"
                         onClick={onConfirmCreateNewTransportFolder}
+                        dataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_CONFIRM_BUTTON}
                       >
                         {confirmButtonLabel}
                       </ButtonWithLoading>

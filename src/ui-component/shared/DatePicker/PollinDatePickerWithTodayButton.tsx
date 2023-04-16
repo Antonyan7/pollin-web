@@ -12,12 +12,19 @@ import { DateUtil } from '@utils/date/DateUtil';
 interface DatePickerWithTodayButtonProps {
   calendarDate: Date;
   onChange: (value: Date | null) => void;
+  todayDataCy?: string;
+  dateDataCy?: string;
 }
 
-const PollinDatePickerWithTodayButton = ({ calendarDate, onChange }: DatePickerWithTodayButtonProps) => {
+const PollinDatePickerWithTodayButton = ({
+  calendarDate,
+  onChange,
+  todayDataCy,
+  dateDataCy
+}: DatePickerWithTodayButtonProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
-  const cypressId = CypressIds.COMMON_BUTTON_TODAY;
+  const cypressId = todayDataCy ?? CypressIds.COMMON_BUTTON_TODAY;
 
   const isToday = useMemo(() => DateUtil.isSameDate(calendarDate), [calendarDate]);
 
@@ -35,7 +42,10 @@ const PollinDatePickerWithTodayButton = ({ calendarDate, onChange }: DatePickerW
         </StyledButtonNew>
       </Grid>
       <Grid item xs={8}>
-        <PollinDatePicker type={PollinDatePickerType.Date} pickerConfigs={{ value: calendarDate, onChange }} />
+        <PollinDatePicker
+          type={PollinDatePickerType.Date}
+          pickerConfigs={{ value: calendarDate, onChange, ...(dateDataCy && { dataCyId: dateDataCy }) }}
+        />
       </Grid>
     </Grid>
   );

@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { paddings } from 'themes/themeConstants';
@@ -88,7 +89,11 @@ const TransportsList = () => {
     <>
       <Header searchedItems={searchedItems} searchByIdsHandler={searchByIdsHandler} />
       <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <Table
+          sx={{ minWidth: 750 }}
+          aria-labelledby="tableTitle"
+          data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST}
+        >
           <TableHead>
             <TableRow>
               {headCells.map((headCell) => (
@@ -106,11 +111,16 @@ const TransportsList = () => {
 
           {!isLoading && (
             <TableBody>
-              {transportList?.folders?.map((row: ITransportListFolderProps) => {
+              {transportList?.folders?.map((row: ITransportListFolderProps, index) => {
                 const filteredActions = findCurrentAction(actionVariations, row);
 
                 return (
-                  <TransportsListRow row={row} key={row.id} actions={filteredActions ? filteredActions.actions : []} />
+                  <TransportsListRow
+                    row={row}
+                    key={row.id}
+                    index={index}
+                    actions={filteredActions ? filteredActions.actions : []}
+                  />
                 );
               })}
             </TableBody>

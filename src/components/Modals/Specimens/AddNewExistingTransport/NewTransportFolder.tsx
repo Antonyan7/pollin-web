@@ -19,6 +19,7 @@ import {
 import { makeStyles } from '@mui/styles';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import defineSpecimenId from 'helpers/defineSpecimenId';
 import { margins } from 'themes/themeConstants';
@@ -126,6 +127,9 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                     Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_MODAL_TRANSPORT_FOLDER_NAME
                   ) as string
                 }
+                inputProps={{
+                  'data-cy': CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_NAME_FIELD
+                }}
               />
             </Grid>
             <Grid item xs={12}>
@@ -140,6 +144,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   value={labId}
                   MenuProps={{ classes: { paper: classes?.menuPaper } }}
                   onChange={handleDestinationLabChange}
+                  data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DESTINATION_FIELD}
                 >
                   {labList.map((lab) => (
                     <MenuItem value={lab.id} key={lab.id}>
@@ -171,6 +176,7 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
                   isLoading={false}
                   variant="contained"
                   onClick={onConfirmCreateNewTransportFolder}
+                  data-cy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_CONFIRM_BUTTON}
                 >
                   {confirmButtonLabel}
                 </ButtonWithLoading>

@@ -48,6 +48,9 @@
   common.time.picker.modal.dialog
   common.time.picker.modal.dialog.component
   common.loading.indicator
+  common.table.checkbox
+  common.table.checkbox.all
+  common.context.menu
   common.toast.error.message
   schedule.templates.delete.icon
   page.scheduling.templates.checkbox.select.all
@@ -149,3 +152,31 @@
   modal.scheduling.deletion.component 
   navigation.tab.patient.list
   page.appointments.send.booking.request.success.message
+  page.specimen.tracking.move.to.success.message
+  page.specimen.tracking.mark.in.transit.success.message
+  page.specimen.tracking.transport.list
+  page.specimen.tracking.transport.list.today.button
+  page.specimen.tracking.transport.list.date.picker
+  page.specimen.tracking.transport.list.mark.in.transit.button
+  page.specimen.tracking.transport.list.tab.transports
+  page.specimen.tracking.transport.list.tab.all.test
+  page.specimen.tracking.all.test.list
+  page.specimen.tracking.all.test.list.search
+  page.specimen.tracking.all.test.new.transport.button
+  page.specimen.tracking.all.test.in.house.button
+  modal.specimen.tracking.add.new.transport.today.button
+  modal.specimen.tracking.add.new.transport.date.picker
+  modal.specimen.tracking.add.new.transport.name.field
+  modal.specimen.tracking.add.new.transport.destination.field
+  modal.specimen.tracking.add.new.transport.confirm.button
+  modal.specimen.tracking.add.new.or.existing.transport.close.button
+  modal.specimen.tracking.add.new.or.existing.transport.tab.new
+  modal.specimen.tracking.add.new.or.existing.transport.tab.existing
+  modal.specimen.tracking.add.new.or.existing.transport.today.button
+  modal.specimen.tracking.add.new.or.existing.transport.date.picker
+  modal.specimen.tracking.add.new.or.existing.transport.name.field
+  modal.specimen.tracking.add.new.or.existing.transport.destination.field
+  modal.specimen.tracking.add.new.or.existing.transport.confirm.button
+  modal.specimen.tracking.hand.off.name.field
+  modal.specimen.tracking.hand.off.comments.field
+  modal.specimen.tracking.hand.off.confirm.button

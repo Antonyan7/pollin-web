@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 export interface IContextActionBinding {
+  dataCy?: string;
   id: string;
   title?: string;
   actionCallback: () => void;

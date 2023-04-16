@@ -3,6 +3,7 @@ import { SpecimenActionType } from '@axios/results/resultsManagerTypes';
 import { dispatch } from '@redux/hooks';
 import { resultsMiddleware } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { filterActionBindings, getActionTitleById } from 'helpers/contextMenu';
 import { useRouter } from 'next/router';
 import { ModalName } from 'types/modals';
@@ -69,7 +70,8 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
       title: getActionTitleById(SpecimenActionType.MoveToTransport, actions),
       actionCallback: () => {
         handleMoveToTransport();
-      }
+      },
+      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON
     },
     {
       id: SpecimenActionType.MoveToAnotherTransport,
@@ -102,7 +104,8 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
     {
       id: SpecimenActionType.MoveInHouse,
       title: getActionTitleById(SpecimenActionType.MoveInHouse, actions),
-      actionCallback: handleMoveToInHouse
+      actionCallback: handleMoveToInHouse,
+      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_IN_HOUSE_BUTTON
     },
     {
       id: SpecimenActionType.MoveToAllTests,

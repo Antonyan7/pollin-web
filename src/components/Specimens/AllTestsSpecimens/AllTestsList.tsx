@@ -23,6 +23,7 @@ import {
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import findCurrentAction from 'helpers/findCurrentAction';
@@ -173,7 +174,11 @@ const AllTestsList = () => {
     <>
       <SearchBox onSearch={searchByIdsHandler} placeholder={inHouseSpecimensSearchPlaceholder} />
       <TableContainer>
-        <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <Table
+          sx={{ minWidth: 750 }}
+          aria-labelledby="tableTitle"
+          data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_LIST}
+        >
           <TableHead>
             <TableRow>
               <TableCell padding="checkbox">
@@ -216,6 +221,7 @@ const AllTestsList = () => {
                     <AllTestsRow
                       row={row}
                       key={row.id}
+                      index={index}
                       actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
                       isItemSelected={isItemSelected}
                       onClick={(e: React.ChangeEvent<HTMLInputElement>) =>

@@ -21,6 +21,7 @@ import slice from '@redux/slices/results/slice';
 import { viewsMiddleware } from '@redux/slices/views';
 import store, { AppDispatch, RootState } from '@redux/store';
 import * as Sentry from '@sentry/nextjs';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { ModalName } from 'types/modals';
@@ -381,7 +382,8 @@ const applyMoveToInHouse = (specimens: string[], identifiers: string[]) => async
             severityType: SeveritiesType.success,
             renderList: {
               header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_HOUSE_SUCCESS),
-              items: identifiers
+              items: identifiers,
+              dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_MOVE_TO_SUCCESS_MESSAGE
             }
           }
         })
@@ -596,7 +598,8 @@ const markInTransitAction =
             severityType: SeveritiesType.success,
             renderList: {
               header: t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_IN_TRANSIT_SUCCESS),
-              items: [rowTitle]
+              items: [rowTitle],
+              dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_MARK_IN_TRANSIT_SUCCESS_MESSAGE
             }
           }
         })

@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { TransportActionType } from '@axios/results/resultsManagerTypes';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { filterActionBindings } from 'helpers/contextMenu';
 import { ModalName } from 'types/modals';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
@@ -26,7 +27,8 @@ const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction
       title: actions.find((action) => action.id === TransportActionType.MarkInTransit)?.title ?? 'Could not find',
       actionCallback: () => {
         handleHandoffConfirmationAction();
-      }
+      },
+      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_MARK_IN_TRANSIT_BUTTON
     });
   }
 

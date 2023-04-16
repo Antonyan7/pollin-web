@@ -2,6 +2,7 @@ import React, { KeyboardEvent, useCallback, useEffect, useRef, useState } from '
 import { Close } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, OutlinedInput, outlinedInputClasses, Portal, useTheme } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { useRouter } from 'next/router';
 
 import { SearchBoxItems } from './SearchBoxItems';
@@ -88,6 +89,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch, placeholder, invalidSea
         onKeyDown={keyDownHandler}
         autoComplete="off"
         fullWidth
+        data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_LIST_SEARCH}
         ref={container}
         sx={{
           display: 'flex',
