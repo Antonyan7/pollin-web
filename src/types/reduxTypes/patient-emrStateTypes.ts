@@ -112,6 +112,7 @@ export interface MedicationsPrescriptionsProps {
     patientPrescriptions: IPatientPrescriptions;
     prescriptionStatuses: IPrescriptionStatusesVariations[];
     isPatientPrescriptionsLoading: boolean;
+    isDownloadPrescriptionLoading: boolean;
   };
 }
 

@@ -150,6 +150,10 @@ const isPatientPastMedicationLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isPatientPastMedicationLoading
 );
+const isDownloadPrescriptionLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.prescriptions.isDownloadPrescriptionLoading
+);
 const isPatientCurrentMedicationLoading = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isPatientCurrentMedicationLoading
@@ -331,6 +335,7 @@ export default {
   isPatientAlertDetailsLoading,
   drugs,
   isDropdownOptionsLoading,
+  isDownloadPrescriptionLoading,
   patientCurrentMedications,
   isMalePatientGenitourinaryHistoryLoading,
   malePatientGenitourinaryHistory,

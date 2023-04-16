@@ -1,22 +1,26 @@
 import React, { useState } from 'react';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
-import { Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import { CircularProgress, Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import { paddings } from 'themes/themeConstants';
 
 import { IContextActionBinding, useContextMenuAction } from '@hooks/useContextMenuAction';
 
 interface ContextMenuProps {
   actionBindings: IContextActionBinding[];
   dataCy?: string;
+  isLoading?: boolean;
 }
 
-export const ContextMenu = ({ actionBindings, dataCy }: ContextMenuProps) => {
+export const ContextMenu = ({ actionBindings, isLoading, dataCy }: ContextMenuProps) => {
   const [anchorElement, setAnchorElement] = useState<Element | ((element: Element) => Element) | null>(null);
 
   const handleClick = (event: React.MouseEvent) => {
     setAnchorElement(event.currentTarget);
   };
   const handleClose = () => {
-    setAnchorElement(null);
+    if (!isLoading) {
+      setAnchorElement(null);
+    }
   };
 
   const actionCallback = useContextMenuAction(actionBindings);
@@ -47,19 +51,25 @@ export const ContextMenu = ({ actionBindings, dataCy }: ContextMenuProps) => {
           horizontal: 'right'
         }}
       >
-        {actionBindings?.map((actionItem) => (
-          <MenuItem
-            onClick={() => {
-              handleClose();
-              actionCallback(actionItem.id);
-            }}
-            {...(actionItem.dataCy && {
-              'data-cy': actionItem?.dataCy
-            })}
-          >
-            {actionItem.title}
-          </MenuItem>
-        ))}
+        {isLoading ? (
+          <Grid xs={1} p={paddings.all12}>
+            <CircularProgress size={20} />
+          </Grid>
+        ) : (
+          actionBindings?.map((actionItem) => (
+            <MenuItem
+              onClick={() => {
+                handleClose();
+                actionCallback(actionItem.id);
+              }}
+              {...(actionItem.dataCy && {
+                'data-cy': actionItem?.dataCy
+              })}
+            >
+              {actionItem.title}
+            </MenuItem>
+          ))
+        )}
       </Menu>
     </Grid>
   );

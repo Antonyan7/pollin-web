@@ -143,6 +143,7 @@ const {
   setIsDropdownOptionsLoading,
   setDropdownOptions,
   setIsMedicationCreatedLoading,
+  setIsDownloadPrescriptionLoading,
   setIsMedicationUpdatedLoading,
   setCardToEditMode,
   setPlansList,
@@ -787,8 +788,10 @@ const archivePatientPrescription = (prescriptionId: string, patientId: string) =
   }
 };
 
-const downloadPatientPrescription = (transportFolderId: string) => async () => {
+const downloadPatientPrescription = (transportFolderId: string) => async (dispatch: AppDispatch) => {
   try {
+    dispatch(setIsDownloadPrescriptionLoading(true));
+
     const response = await API.patients.downloadPatientPrescription(transportFolderId);
 
     if (response) {
@@ -796,6 +799,8 @@ const downloadPatientPrescription = (transportFolderId: string) => async () => {
     }
   } catch (error) {
     Sentry.captureException(error);
+  } finally {
+    dispatch(setIsDownloadPrescriptionLoading(false));
   }
 
   return null;

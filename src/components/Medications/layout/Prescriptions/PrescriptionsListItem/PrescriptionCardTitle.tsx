@@ -20,6 +20,7 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
   const downloadRef = useRef<HTMLAnchorElement>(null);
 
   const prescriptionStatuses = useAppSelector(patientsSelector.prescriptionStatuses);
+  const isDownloadPrescriptionLoading = useAppSelector(patientsSelector.isDownloadPrescriptionLoading);
   const actions = useMemo(() => {
     if (prescriptionStatuses.length) {
       const currentStatusActions = prescriptionStatuses?.find((variation) => variation.status === prescription.status);
@@ -117,7 +118,7 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
         </Typography>
       </Grid>
       <Grid item xs={0.5}>
-        <ContextMenu actionBindings={actionBindings} />
+        <ContextMenu actionBindings={actionBindings} isLoading={isDownloadPrescriptionLoading} />
         <Link component="a" ref={downloadRef} hidden href="#download" />
       </Grid>
     </Grid>

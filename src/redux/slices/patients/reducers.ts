@@ -391,6 +391,9 @@ const reducers = createReducer({
   setIsCategoriesLoading(state, action: IAction<boolean>) {
     state.plans.isCategoriesLoading = action.payload;
   },
+  setIsDownloadPrescriptionLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.prescriptions.isDownloadPrescriptionLoading = action.payload;
+  },
   setIsBookingRequestToPatientLoading(state, action: IAction<boolean>) {
     state.isBookingRequestToPatientLoading = action.payload;
   },

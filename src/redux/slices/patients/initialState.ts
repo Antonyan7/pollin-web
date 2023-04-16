@@ -71,7 +71,8 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
     currentPrescriptionUuid: '',
     patientPrescriptions: { prescriptions: [], pageSize: 5, currentPage: 0, totalItems: 0 },
     prescriptionStatuses: [],
-    isPatientPrescriptionsLoading: false
+    isPatientPrescriptionsLoading: false,
+    isDownloadPrescriptionLoading: false
   }
 });
 
