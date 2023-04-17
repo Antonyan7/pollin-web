@@ -757,36 +757,42 @@ const getPrescriptionStatuses = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const createPatientPrescription = (prescriptionData: ICreatePatientPrescription) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsPrescriptionCreationLoading(true));
+const createPatientPrescription =
+  (prescriptionData: ICreatePatientPrescription) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      dispatch(setIsPrescriptionCreationLoading(true));
 
-    const response = await API.patients.createPatientPrescription(prescriptionData);
+      const response = await API.patients.createPatientPrescription(prescriptionData);
+      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
-    if (response.data.data.uuid) {
-      dispatch(setCurrentPrescriptionUuid(response.data.data.uuid));
-      dispatch(setPatientPrescriptionsListItems(null));
-      dispatch(patientsMiddleware.getPatientPrescriptions(prescriptionData.patientId, 1));
+      if (response.data.data.uuid) {
+        dispatch(setCurrentPrescriptionUuid(response.data.data.uuid));
+        dispatch(setPatientPrescriptionsListItems(null));
+        dispatch(patientsMiddleware.getPatientPrescriptions(prescriptionData.patientId, currentPage));
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsPrescriptionCreationLoading(false));
     }
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsPrescriptionCreationLoading(false));
-  }
-};
+  };
 
 const resetCurrentPrescriptionUuid = () => (dispatch: AppDispatch) => {
   dispatch(setCurrentPrescriptionUuid(''));
 };
 
-const archivePatientPrescription = (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch) => {
-  try {
-    await API.patients.archivePatientPrescription(prescriptionId);
-    dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
+const archivePatientPrescription =
+  (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    try {
+      await API.patients.archivePatientPrescription(prescriptionId);
+
+      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+
+      dispatch(patientsMiddleware.getPatientPrescriptions(patientId, currentPage));
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+  };
 
 const downloadPatientPrescription = (transportFolderId: string) => async (dispatch: AppDispatch) => {
   try {
@@ -807,10 +813,13 @@ const downloadPatientPrescription = (transportFolderId: string) => async (dispat
 };
 
 const markPatientPrescriptionDispensed =
-  (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch) => {
+  (prescriptionId: string, patientId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       await API.patients.markPatientPrescriptionDispensed(prescriptionId);
-      dispatch(patientsMiddleware.getPatientPrescriptions(patientId, 1));
+
+      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+
+      dispatch(patientsMiddleware.getPatientPrescriptions(patientId, currentPage));
     } catch (error) {
       Sentry.captureException(error);
     }
@@ -902,43 +911,49 @@ const getMedicationDropdownOptions = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const createPatientMedication = (data: ICreateMedication, patientName: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsMedicationCreatedLoading(true));
+const createPatientMedication =
+  (data: ICreateMedication, patientName: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(setIsMedicationCreatedLoading(true));
 
-  try {
-    const response = await API.patients.createPatientMedication(data);
+    const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
-    if (response.data.data.uuid) {
-      dispatch(
-        viewsMiddleware.setToastNotificationPopUpState({
-          open: true,
-          props: {
-            severityType: SeveritiesType.success,
-            description: `${t(Translation.MODAL_CREATE_MEDICATION_TOAST)} ${patientName}`
-          }
-        })
-      );
-      dispatch(patientsMiddleware.getPatientMedications(data.patientId, Recency.Current, 1));
-      dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
+    try {
+      const response = await API.patients.createPatientMedication(data);
+
+      if (response.data.data.uuid) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: `${t(Translation.MODAL_CREATE_MEDICATION_TOAST)} ${patientName}`
+            }
+          })
+        );
+        dispatch(patientsMiddleware.getPatientMedications(data.patientId, Recency.Current, currentPage));
+        dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
+      }
+    } catch (error) {
+      Sentry.captureException(error);
     }
-  } catch (error) {
-    Sentry.captureException(error);
-  }
 
-  dispatch(setIsMedicationCreatedLoading(false));
-};
-const updatePatientMedication = (data: IUpdateMedication, patientId: string) => async (dispatch: AppDispatch) => {
-  dispatch(setIsMedicationUpdatedLoading(true));
+    dispatch(setIsMedicationCreatedLoading(false));
+  };
+const updatePatientMedication =
+  (data: IUpdateMedication, patientId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
+    dispatch(setIsMedicationUpdatedLoading(true));
 
-  try {
-    await API.patients.updatePatientMedication(data);
-    dispatch(patientsMiddleware.getPatientMedications(patientId, Recency.Current, 1));
-  } catch (error) {
-    Sentry.captureException(error);
-  }
+    const {currentPage} = getState().patients.medicationsPrescriptions.medications.patientCurrentMedications;
 
-  dispatch(setIsMedicationUpdatedLoading(false));
-};
+    try {
+      await API.patients.updatePatientMedication(data);
+      dispatch(patientsMiddleware.getPatientMedications(patientId, Recency.Current, currentPage));
+    } catch (error) {
+      Sentry.captureException(error);
+    }
+
+    dispatch(setIsMedicationUpdatedLoading(false));
+  };
 
 const updateCardToEditMode = (index: number, prevState: boolean[]) => (dispatch: AppDispatch) => {
   try {

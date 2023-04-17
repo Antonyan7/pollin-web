@@ -92,9 +92,7 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
               }}
             />
             <Typography variant="h5" display="inline">
-              {prescription?.pharmacy
-                ? `${prescription?.pharmacy.address.country}, ${prescription?.pharmacy.address.city},  ${prescription?.pharmacy.address.street}`
-                : ''}
+              {prescription?.pharmacyTitle}
             </Typography>
           </>
         )}

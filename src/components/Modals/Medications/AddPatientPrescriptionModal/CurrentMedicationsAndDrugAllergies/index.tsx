@@ -34,6 +34,7 @@ const CurrentMedicationsAndDrugAllergies = () => {
     <Grid container spacing={3}>
       <Grid item>
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_CURRENT_MEDICATION)}</Typography>
+        {!patientMedicationState?.currentMedications.length && '--'}
         {patientMedicationState?.currentMedications.map((item, index) => {
           const currentMedicationName = ` ${index + 1}. ${item.name}`;
 
@@ -43,10 +44,11 @@ const CurrentMedicationsAndDrugAllergies = () => {
 
       <Grid item>
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_DRUG_ALLERGIES)}</Typography>
+        {!patientMedicationState?.drugAllergies.length && '--'}
         {patientMedicationState?.drugAllergies.map((item, index) => {
           const drugAllergiesName = ` ${index + 1}. ${item.name}`;
 
-          return <Typography>{drugAllergiesName}</Typography>;
+          return <Typography>{drugAllergiesName.length ? drugAllergiesName : '--'}</Typography>;
         })}
       </Grid>
 

@@ -3,6 +3,7 @@ import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
 import { getDropdownByType } from '@components/MedicalBackground/helpers';
+import { KeyboardArrowDown } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Grid } from '@mui/material';
 import { useTheme } from '@mui/system';
@@ -77,6 +78,7 @@ const RouteField = ({ fieldLabel }: { fieldLabel?: string }) => {
         onInputChange={(event: React.SyntheticEvent, value: string) => {
           onInputChange(event, value);
         }}
+        popupIcon={<KeyboardArrowDown />}
         renderInputProps={{
           ...fieldProps,
           label: assignLabel,
