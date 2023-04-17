@@ -65,6 +65,7 @@ const PatientPlansList = () => {
   }, [page, patientId, patientProfile?.sexAtBirth]);
 
   const notFoundLabel = t(Translation.PAGE_PATIENT_PLANS_LIST_EMPTY);
+  const malePatientLabel = t(Translation.PAGE_PATIENT_PLANS_FOR_MALE);
   const { isReadyToOrder = false, patientPlans = [] } = patientPlansList ?? ({} as IPatientPlansListData);
 
   const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, value: number) => {
@@ -79,51 +80,55 @@ const PatientPlansList = () => {
       })
     );
 
+  if (isLoading) {
+    return <CircularLoading />;
+  }
+
+  if (!isLoading && patientProfile?.sexAtBirth === SexAtBirth.Male) {
+    return <NoResultsFound label={malePatientLabel} />;
+  }
+
   return (
     <Grid>
-      {isLoading ? (
-        <CircularLoading />
-      ) : (
-        <>
-          <Stack pt={paddings.top24} spacing={3} direction="row" justifyContent="flex-end">
-            <ButtonWithIcon
-              sx={{
-                px: paddings.leftRight16,
-                [`&.Mui-disabled`]: {
-                  color: theme.palette.primary.main,
-                  borderColor: theme.palette.primary.main,
-                  opacity: 0.5
-                }
-              }}
-              label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
-              variant="outlined"
-              disabled={!isReadyToOrder}
-              onClick={handleSendPlansToPatientClick}
-              icon={<SendTwoTone />}
-            />
-            <SimpleMenu ActionButton={CreatePlanButton} items={categories as IMenuItem[]} />
-          </Stack>
-          <Stack spacing={3} pt={paddings.top24}>
-            {patientPlans.length > 0 ? (
-              <>
-                {patientPlans?.map((plan: IPatientPlan) => (
-                  <PlanRow plan={plan} key={plan.id} />
-                ))}
-                <TablePagination
-                  labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
-                  component="div"
-                  count={patientPlansList?.totalItems ?? 0}
-                  rowsPerPage={patientPlansList?.pageSize ?? 0}
-                  page={patientPlansList?.currentPage ? patientPlansList.currentPage - 1 : 0}
-                  onPageChange={handleChangePage}
-                />
-              </>
-            ) : (
-              <NoResultsFound label={notFoundLabel} />
-            )}
-          </Stack>
-        </>
-      )}
+      <>
+        <Stack pt={paddings.top24} spacing={3} direction="row" justifyContent="flex-end">
+          <ButtonWithIcon
+            sx={{
+              px: paddings.leftRight16,
+              [`&.Mui-disabled`]: {
+                color: theme.palette.primary.main,
+                borderColor: theme.palette.primary.main,
+                opacity: 0.5
+              }
+            }}
+            label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
+            variant="outlined"
+            disabled={!isReadyToOrder}
+            onClick={handleSendPlansToPatientClick}
+            icon={<SendTwoTone />}
+          />
+          <SimpleMenu ActionButton={CreatePlanButton} items={categories as IMenuItem[]} />
+        </Stack>
+        <Stack spacing={3} pt={paddings.top24}>
+          {patientPlans.length > 0 ? (
+            <>
+              {patientPlans?.map((plan: IPatientPlan) => (
+                <PlanRow plan={plan} key={plan.id} />
+              ))}
+              <TablePagination
+                labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
+                component="div"
+                count={patientPlansList?.totalItems ?? 0}
+                rowsPerPage={patientPlansList?.pageSize ?? 0}
+                page={patientPlansList?.currentPage ? patientPlansList.currentPage - 1 : 0}
+                onPageChange={handleChangePage}
+              />
+            </>
+          ) : (
+            <NoResultsFound label={notFoundLabel} />
+          )}
+        </Stack>
+      </>
     </Grid>
   );
 };

@@ -1304,23 +1304,52 @@ const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) 
   }
 };
 
-const markThePlanAsCancelled = (data: IPlanMutation) => async () => {
+const markThePlanAsCancelled = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.patients.markThePlanAsCancelled(data);
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
+        }
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
   }
 };
-const markThePlanAsActive = (data: IPlanMutation) => async () => {
+const markThePlanAsActive = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.patients.markThePlanAsActive(data);
+
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
+        }
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
   }
 };
-const markThePlanAsCompleted = (data: IPlanMutation) => async () => {
+const markThePlanAsCompleted = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.patients.markThePlanAsCompleted(data);
+
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
+        }
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
   }
@@ -1345,6 +1374,16 @@ const orderPlansToPatient = (data: IOrderPatientPlanRequestData) => async (dispa
     dispatch(setIsReadyToOrderPlansUpdating(true));
 
     await API.patients.orderPlansToPatient(data);
+
+    dispatch(
+      viewsMiddleware.setToastNotificationPopUpState({
+        open: true,
+        props: {
+          severityType: SeveritiesType.success,
+          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
+        }
+      })
+    );
   } catch (error) {
     Sentry.captureException(error);
   } finally {
