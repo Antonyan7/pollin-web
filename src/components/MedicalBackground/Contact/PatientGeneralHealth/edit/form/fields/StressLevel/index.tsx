@@ -24,7 +24,7 @@ const StressLevel = () => {
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_STRESS_LEVEL);
-  const { control } = useFormContext();
+  const { control, register } = useFormContext();
   const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.CurrentStressLevel}.value`,
     control
@@ -37,6 +37,8 @@ const StressLevel = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
+
+  const { name, ref } = register(`${GeneralHealthFormFields.CurrentStressLevel}.value`);
 
   return (
     <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
@@ -64,6 +66,8 @@ const StressLevel = () => {
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
             ...fieldProps,
+            name,
+            ref,
             label
           }}
         />

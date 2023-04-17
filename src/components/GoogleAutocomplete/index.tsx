@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { ControllerFieldState, ControllerRenderProps, FieldValues } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
@@ -10,18 +9,18 @@ import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-type GoogleAutocompleteField =
-  | ControllerRenderProps<FieldValues, 'primaryAddress.streetAddress'>
-  | ControllerRenderProps<FieldValues, 'mailingAddress.streetAddress'>;
 interface GoogleAutocompleteProps {
-  field: GoogleAutocompleteField;
-  fieldState: ControllerFieldState;
+  fieldName: string;
 }
 
-const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
+const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const googleRef = useRef<HTMLInputElement>(null);
+  const { control, register } = useFormContext();
+  const { field, fieldState } = useController({
+    name: fieldName,
+    control
+  });
   const googleLabel = t(Translation.GOOGLE_AUTOCOMPLETE_LABEL_TITLE);
   const { onChange, onBlur, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(googleLabel);
@@ -41,7 +40,6 @@ const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [fieldProps.value]
   );
-  useScrollIntoView(googleRef, fieldState);
 
   return (
     <PlacesAutocomplete value={address} onChange={(currentAddress) => onPlaceChange(currentAddress)}>
@@ -96,8 +94,8 @@ const GoogleAutocomplete = ({ field, fieldState }: GoogleAutocompleteProps) => {
               label: googleLabel,
               helperText: fieldState?.error && errorHelperText,
               error: Boolean(fieldState?.error),
-              inputRef: googleRef,
               ...fieldProps,
+              ...register(fieldName),
               ...getInputProps()
             }}
           />

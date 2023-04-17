@@ -142,7 +142,7 @@ export const gynaecologicalHistoryValidationSchema = object({
     value: boolean().required()
   }),
   papTestLastDate: object({
-    value: string().required()
+    value: string().required().nullable()
   }),
   abnormalPapProcedures: object({
     items: array().of(

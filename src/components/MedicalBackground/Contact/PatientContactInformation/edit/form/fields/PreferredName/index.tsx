@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField, Typography } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -14,11 +13,10 @@ import { paddings } from 'themes/themeConstants';
 
 const FieldPreferredName = () => {
   const [t] = useTranslation();
-  const preferredNameRef = useRef<HTMLInputElement>(null);
   const fieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_PREFERRED_NAME);
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const preferredName = contactInformation?.preferredName;
-  const { control } = useFormContext();
+  const { control, register } = useFormContext();
   const { field, fieldState } = useController({
     name: `${ContactInformationFormFields.PreferredName}.value`,
     control
@@ -28,8 +26,6 @@ const FieldPreferredName = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
-
-  useScrollIntoView(preferredNameRef, fieldState);
 
   return (
     <Grid px={paddings.leftRight24} py={paddings.topBottom12} xs={12} container item direction="row">
@@ -45,8 +41,8 @@ const FieldPreferredName = () => {
             error={Boolean(fieldState?.error)}
             label={fieldLabel}
             {...field}
+            {...register(`${ContactInformationFormFields.PreferredName}.value`)}
             value={field.value}
-            inputRef={preferredNameRef}
           />
         ) : (
           <Typography>{preferredName?.value}</Typography>

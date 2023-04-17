@@ -1,7 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -51,6 +52,7 @@ export const Dropdown: FC<DropdownProps> = ({ fieldName = '', label = '', dropdo
 };
 
 export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = '', dropdownType = '' }) => {
+  const dropdownRef = useRef<HTMLInputElement>(null);
   const dropdownOptions = useAppSelector(patientsSelector.dropdowns);
   const isDropdownsLoading = useAppSelector(patientsSelector.isDropdownsLoading);
   const { control } = useFormContext();
@@ -66,6 +68,8 @@ export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = ''
   );
 
   const errorHelperText = generateErrorMessage(label);
+
+  useScrollIntoView(dropdownRef, fieldState);
 
   return (
     <BaseDropdownWithLoading
@@ -85,6 +89,7 @@ export const DropdownMultiple: FC<DropdownProps> = ({ fieldName = '', label = ''
         helperText: fieldState?.error && errorHelperText,
         error: Boolean(fieldState?.error),
         ...fieldProps,
+        inputRef: dropdownRef,
         label
       }}
     />

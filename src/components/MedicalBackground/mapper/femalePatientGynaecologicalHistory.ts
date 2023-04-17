@@ -68,7 +68,11 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_SIGNS_OF_PCOS)
     ),
-    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => {
+      const itemIds = items.map(({ id }) => id);
+
+      return [getLabelBySelectedValue(!!items.length), ...itemIds];
+    },
     componentData: {
       type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPCOS
@@ -78,7 +82,11 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_HYPERPROLACTINEMIA)
     ),
-    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => {
+      const itemIds = items.map(({ id }) => id);
+
+      return [getLabelBySelectedValue(!!items.length), ...itemIds];
+    },
     componentData: {
       type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.Hyperprolactinemia
@@ -88,7 +96,11 @@ const mappingPattern = {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_SIGNS_OF_POI)
     ),
-    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => items.map(({ id }) => id),
+    customAccessor: ({ items }: IMedicalBackgroundFieldValuesWithItems) => {
+      const itemIds = items.map(({ id }) => id);
+
+      return [getLabelBySelectedValue(!!items.length), ...itemIds];
+    },
     componentData: {
       type: FlexibleItemType.MultipleSelect,
       dropdownType: DropdownOptionType.SignsOfPOI

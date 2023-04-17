@@ -1,43 +1,25 @@
-import React, { useRef } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import InputField from '@components/MedicalBackground/components/common/TextFieldInput';
 import {
   DiagramTitleProps,
   GeneralHealthFormFields
 } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
-import { Grid, TextField } from '@mui/material';
+import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
-import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 
 const MedicalPropblemContent = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
-  const { control } = useFormContext();
-  const problemRef = useRef<HTMLInputElement>(null);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OTHER_MEDICAL_PROBLEM);
-  const { field, fieldState } = useController({
-    name: `${GeneralHealthFormFields.MedicalProblems}.items.${titleIndex}.id`,
-    control
-  });
-  const errorHelperText = generateErrorMessage(`${label} ${titleIndex + 1}`);
-
-  useScrollIntoView(problemRef, fieldState);
 
   return (
     <Grid item container direction="column" gap={3} padding={paddings.all20}>
-      <Grid>
-        <TextField
-          color="primary"
-          fullWidth
-          label={label}
-          helperText={fieldState?.error && errorHelperText}
-          error={Boolean(fieldState?.error)}
-          {...field}
-          value={field.value}
-          inputRef={problemRef}
-        />
-      </Grid>
+      <InputField
+        label={label}
+        fieldName={`${GeneralHealthFormFields.MedicalProblems}.items.${titleIndex}.id`}
+        index={titleIndex}
+      />
     </Grid>
   );
 };

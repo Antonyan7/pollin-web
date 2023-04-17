@@ -1,29 +1,20 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import DiagramTitle from '@components/MedicalBackground/components/common/DiagramTitle';
 import useFoodAllergyContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useFoodAllergyContext';
-import {
-  DiagramTitleProps,
-  GeneralHealthFormFields
-} from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { DiagramTitleProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Translation } from 'constants/translations';
 
 const FoodAllergyTitle = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
-  const { fields: foodAllergies, remove } = useFoodAllergyContext();
-  const { getValues, setValue } = useFormContext();
-  const foodAllergyField = getValues(GeneralHealthFormFields.FoodAllergies);
+  const { fields: foodAllergies, remove, replace } = useFoodAllergyContext();
   const onMinusClick = (selectedIndex: number) => {
     if (foodAllergies.length === 1) {
-      setValue(GeneralHealthFormFields.FoodAllergies, {
-        ...foodAllergyField,
-        items: [
-          {
-            title: ''
-          }
-        ]
-      });
+      replace([
+        {
+          title: ''
+        }
+      ]);
     } else {
       remove(selectedIndex);
     }

@@ -19,7 +19,7 @@ const FieldWeight = () => {
   const fieldLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_WEIGHT);
   const generalHealth = useAppSelector(patientsSelector.generalHealth);
   const weightInLbs = generalHealth?.weightInLbs;
-  const { control } = useFormContext();
+  const { control, register } = useFormContext();
   const { field, fieldState } = useController({
     name: `${GeneralHealthFormFields.Weigth}.value`,
     control
@@ -59,6 +59,7 @@ const FieldWeight = () => {
               helperText={fieldState?.error && errorHelperText}
               error={Boolean(fieldState?.error)}
               {...fieldProps}
+              {...register(`${GeneralHealthFormFields.Weigth}.value`)}
               onChange={(event) => {
                 const currentWeightValue = event.target.value;
 

@@ -24,7 +24,9 @@ const PatientContactInformationEdit = () => {
   const methods = useForm<IPatientContactInformationProps>({
     defaultValues: getContactInformationEmptyState(contactInformation as IPatientContactInformationProps),
     resolver: yupResolver(patientContactInformationValidationSchema),
-    mode: 'onSubmit'
+    mode: 'onSubmit',
+    shouldFocusError: true,
+    criteriaMode: 'all'
   });
   const {
     handleSubmit,

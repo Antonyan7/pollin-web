@@ -20,7 +20,9 @@ const PatientGeneralHealthEdit = () => {
   const methods = useForm<IGeneralHealthProps>({
     defaultValues: getGeneralHealthEditFormState(generalHelth as IGeneralHealthProps),
     resolver: yupResolver(patientGeneralHealthValidationSchema),
-    mode: 'onSubmit'
+    mode: 'onSubmit',
+    shouldFocusError: true,
+    criteriaMode: 'all'
   });
   const {
     handleSubmit,
@@ -28,34 +30,42 @@ const PatientGeneralHealthEdit = () => {
   } = methods;
 
   const onGeneralHealthSubmit = (healthData: IGeneralHealthProps) => {
-    const { medicalProblems, pastSurgeries, vitaminSupplements, drugAllergies, foodAllergies, familyHistory, ...otherGeneralInfo } = healthData;
+    const {
+      medicalProblems,
+      pastSurgeries,
+      vitaminSupplements,
+      drugAllergies,
+      foodAllergies,
+      familyHistory,
+      ...otherGeneralInfo
+    } = healthData;
     const generalHealthData = {
       ...otherGeneralInfo,
       medicalProblems: {
         ...medicalProblems,
-        items: medicalProblems.exists ? medicalProblems.items : [],
+        items: medicalProblems.exists ? medicalProblems.items : []
       },
       pastSurgeries: {
         ...pastSurgeries,
-        items: pastSurgeries.exists ? pastSurgeries.items : [],
+        items: pastSurgeries.exists ? pastSurgeries.items : []
       },
       vitaminSupplements: {
         ...vitaminSupplements,
-        items: vitaminSupplements.exists ? vitaminSupplements.items : [],
+        items: vitaminSupplements.exists ? vitaminSupplements.items : []
       },
       drugAllergies: {
         ...drugAllergies,
-        items: drugAllergies.exists ? drugAllergies.items : [],
+        items: drugAllergies.exists ? drugAllergies.items : []
       },
       foodAllergies: {
         ...foodAllergies,
-        items: foodAllergies.exists ? foodAllergies.items : [],
+        items: foodAllergies.exists ? foodAllergies.items : []
       },
       familyHistory: {
         ...familyHistory,
-        items: familyHistory.exists ? familyHistory.items : [],
+        items: familyHistory.exists ? familyHistory.items : []
       }
-    }
+    };
 
     if (typeof currentPatiendId === 'string') {
       dispatch(patientsMiddleware.updateGeneralHealthData(currentPatiendId, generalHealthData));

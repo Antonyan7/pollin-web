@@ -14,10 +14,6 @@ const StreetAddress = () => {
   const { isSameAddressChecked } = useSamePrimaryContext();
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const mailingAddress = contactInformation?.mailingAddress;
-  const { field, fieldState } = useController({
-    name: `${ContactInformationFormFields.MailingAddress}.streetAddress`,
-    control
-  });
   const { field: primaryAddressField } = useController({
     name: `${ContactInformationFormFields.PrimaryAddress}.streetAddress`,
     control
@@ -59,10 +55,12 @@ const StreetAddress = () => {
   }, [isSameAddressChecked, mailingAddress, primaryAddressField.value, setValue, primaryAddress]);
 
   return (
-    <Grid sx={{
-      display: isSameAddressChecked ? 'none' : 'block'
-    }}>
-      <GoogleAutocomplete field={field} fieldState={fieldState} />
+    <Grid
+      sx={{
+        display: isSameAddressChecked ? 'none' : 'block'
+      }}
+    >
+      <GoogleAutocomplete fieldName={`${ContactInformationFormFields.MailingAddress}.streetAddress`} />
     </Grid>
   );
 };

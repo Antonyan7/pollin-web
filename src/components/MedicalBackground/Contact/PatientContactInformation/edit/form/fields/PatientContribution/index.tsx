@@ -24,7 +24,7 @@ const FieldPatientContribution = () => {
   const patientContactInformation = useAppSelector(patientsSelector.contactInformation);
   const contributionInformation = patientContactInformation?.contribution;
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_PRIMARY_CONTRIBUTION);
-  const { control } = useFormContext();
+  const { control, register } = useFormContext();
   const [showAdditionalNote, setShowAdditionalNote] = useState(!!contributionInformation?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
@@ -44,6 +44,8 @@ const FieldPatientContribution = () => {
     fieldProps.value
   );
   const errorHelperText = generateErrorMessage(label);
+
+  const { name, ref } = register(`${ContactInformationFormFields.Contribution}.value`);
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
@@ -71,6 +73,8 @@ const FieldPatientContribution = () => {
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
             ...fieldProps,
+            name,
+            ref,
             label
           }}
         />

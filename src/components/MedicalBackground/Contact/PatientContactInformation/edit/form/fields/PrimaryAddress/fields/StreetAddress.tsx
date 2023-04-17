@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { AddressProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import GoogleAutocomplete from '@components/GoogleAutocomplete';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
@@ -8,13 +8,10 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 
 const StreetAddress = () => {
-  const { control, setValue } = useFormContext();
+  const { setValue } = useFormContext();
   const contactInformation = useAppSelector(patientsSelector.contactInformation);
   const primaryAddress = contactInformation?.primaryAddress;
-  const { field, fieldState } = useController({
-    name: `${ContactInformationFormFields.PrimaryAddress}.streetAddress`,
-    control
-  });
+  const fieldName = `${ContactInformationFormFields.PrimaryAddress}.streetAddress`;
   const manuallyAddress = useAppSelector(patientsSelector.manuallyAddressForPrimary);
 
   useEffect(() => {
@@ -34,7 +31,7 @@ const StreetAddress = () => {
     }
   }, [manuallyAddress, primaryAddress, setValue]);
 
-  return <GoogleAutocomplete field={field} fieldState={fieldState} />;
+  return <GoogleAutocomplete fieldName={fieldName} />;
 };
 
 export default StreetAddress;

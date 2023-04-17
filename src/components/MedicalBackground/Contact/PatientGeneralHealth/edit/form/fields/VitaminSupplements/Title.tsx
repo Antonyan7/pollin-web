@@ -1,30 +1,21 @@
 import React from 'react';
-import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import DiagramTitle from '@components/MedicalBackground/components/common/DiagramTitle';
 import useVitaminSupplementsContext from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/hooks/useVitaminSupplementsContext';
-import {
-  DiagramTitleProps,
-  GeneralHealthFormFields
-} from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { DiagramTitleProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
 import { Translation } from 'constants/translations';
 
 const VitaminSupplementsTitle = ({ titleIndex }: DiagramTitleProps) => {
   const [t] = useTranslation();
-  const { fields: vitaminSupplements, remove } = useVitaminSupplementsContext();
-  const { getValues, setValue } = useFormContext();
-  const vitaminSupplementField = getValues(GeneralHealthFormFields.VitaminSupplements);
+  const { fields: vitaminSupplements, remove, replace } = useVitaminSupplementsContext();
   const onMinusClick = (selectedIndex: number) => {
     if (vitaminSupplements.length === 1) {
-      setValue(GeneralHealthFormFields.VitaminSupplements, {
-        ...vitaminSupplementField,
-        items: [
-          {
-            title: '',
-            dosage: ''
-          }
-        ]
-      });
+      replace([
+        {
+          title: '',
+          dosage: ''
+        }
+      ]);
     } else {
       remove(selectedIndex);
     }

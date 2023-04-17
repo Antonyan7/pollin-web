@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import {
@@ -6,14 +6,12 @@ import {
   replaceOhipNumberFormat
 } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/helpers';
 import { ContactInformationFormFields } from '@components/MedicalBackground/Contact/PatientContactInformation/edit/types';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 
 const OhipNumber = () => {
   const [t] = useTranslation();
-  const ohipRef = useRef<HTMLInputElement>(null);
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_INFORMATION_PATIENT_OHIP_NUMBER);
   const { control } = useFormContext();
   const { field, fieldState } = useController({
@@ -24,8 +22,6 @@ const OhipNumber = () => {
   const { onChange, onBlur, ...fieldProps } = field;
   const [errorMessage, setErrorMessage] = useState(errorHelperText);
   const incorrectFormatLabel = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_OHIP_NUMBER_INCORRECT);
-
-  useScrollIntoView(ohipRef, fieldState);
 
   useEffect(
     () => {
@@ -61,7 +57,6 @@ const OhipNumber = () => {
           }
         }}
         value={fieldProps.value}
-        inputRef={ohipRef}
       />
     </Grid>
   );
