@@ -25,7 +25,7 @@ const DateField = ({ fieldName, label }: DateFieldProps) => {
   return (
     <Grid item xs={5.5}>
       <PollinDatePicker
-        type={PollinDatePickerType.DateTime}
+        type={PollinDatePickerType.Date}
         pickerConfigs={{
           renderInputProps: {
             ...fieldProps
