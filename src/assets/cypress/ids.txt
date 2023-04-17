@@ -164,6 +164,7 @@
   page.specimen.tracking.all.test.list.search
   page.specimen.tracking.all.test.new.transport.button
   page.specimen.tracking.all.test.in.house.button
+  page.specimens.tracking.transports.add.new.transport.folder.button
   modal.specimen.tracking.add.new.transport.today.button
   modal.specimen.tracking.add.new.transport.date.picker
   modal.specimen.tracking.add.new.transport.name.field

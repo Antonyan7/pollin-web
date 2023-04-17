@@ -22,5 +22,6 @@
   "edited_addendum_note": "Edited Addendum",
   "block_schedule_comment": "blocked",
   "apply_schedule_comment_1": "applyServiceType",
-  "apply_schedule_comment_2": "applyBlock"
+  "apply_schedule_comment_2": "applyBlock",
+  "new_transport_name": "New Auto Transport"
 }

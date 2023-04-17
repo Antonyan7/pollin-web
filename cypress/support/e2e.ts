@@ -18,6 +18,7 @@ import './commands';
 import './appointmentCommands';
 import './schedulingCommands';
 import './encounterCommands';
+import './transportCommands';
 import 'cypress-real-events';
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

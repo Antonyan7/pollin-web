@@ -110,7 +110,7 @@ const Header: React.FC<HeaderProps> = ({ searchByIdsHandler, searchedItems }) =>
             variant="contained"
             endIcon={<Add />}
             onClick={onAddTransportNewFolderClick}
-            data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_TODAY_BUTTON}
+            data-cy={CypressIds.PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_BUTTON}
           >
             {addTransportNewFolderButtonLabel}
           </Button>

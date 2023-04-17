@@ -167,6 +167,7 @@ export enum CypressIds {
   PAGE_SPECIMEN_TRACKING_ALL_TEST_LIST_SEARCH = 'page.specimen.tracking.all.test.list.search',
   PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON = 'page.specimen.tracking.all.test.new.transport.button',
   PAGE_SPECIMEN_TRACKING_ALL_TEST_IN_HOUSE_BUTTON = 'page.specimen.tracking.all.test.in.house.button',
+  PAGE_SPECIMENS_TRACKING_TRANSPORTS_ADD_NEW_TRANSPORT_FOLDER_BUTTON = 'page.specimens.tracking.transports.add.new.transport.folder.button',
   MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_TODAY_BUTTON = 'modal.specimen.tracking.add.new.transport.today.button',
   MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DATE_PICKER = 'modal.specimen.tracking.add.new.transport.date.picker',
   MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_NAME_FIELD = 'modal.specimen.tracking.add.new.transport.name.field',

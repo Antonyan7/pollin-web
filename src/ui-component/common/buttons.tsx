@@ -88,10 +88,13 @@ interface ButtonWithLoadingProps extends ButtonProps {
   dataCy?: string;
 }
 
-export const ButtonWithLoading = ({ isLoading = false, ...otherProps }: ButtonWithLoadingProps) => (
+export const ButtonWithLoading = ({ isLoading = false, dataCy, ...otherProps }: ButtonWithLoadingProps) => (
   <LoadingButton
     variant="contained"
     {...otherProps}
+    {...(dataCy && {
+      'data-cy': dataCy
+    })}
     loading={isLoading}
     {...(isLoading && {
       endIcon: <CircularProgress size={16} color="inherit" />,
