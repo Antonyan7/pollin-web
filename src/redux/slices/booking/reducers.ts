@@ -29,12 +29,26 @@ const reducers = createReducer({
   setCollectionCalendarDate(state, action: IAction<Date>) {
     state.specimenAppointments.date = action.payload;
   },
+  setGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.groupedServiceProviders.providers = [...action.payload.providers];
+    state.groupedServiceProviders.currentPage = action.payload.currentPage;
+    state.groupedServiceProviders.totalItems = action.payload.totalItems;
+    state.groupedServiceProviders.pageSize = action.payload.pageSize;
+    state.groupedServiceProviders.searchString = action.payload.searchString;
+  },
   updateGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders.providers = [...state.groupedServiceProviders.providers, ...action.payload.providers];
     state.groupedServiceProviders.currentPage = action.payload.currentPage;
     state.groupedServiceProviders.totalItems = action.payload.totalItems;
     state.groupedServiceProviders.pageSize = action.payload.pageSize;
     state.groupedServiceProviders.searchString = action.payload.searchString;
+  },
+  setSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
+    state.specimenGroupedServiceProviders.providers = [...action.payload.providers];
+    state.specimenGroupedServiceProviders.currentPage = action.payload.currentPage;
+    state.specimenGroupedServiceProviders.totalItems = action.payload.totalItems;
+    state.specimenGroupedServiceProviders.pageSize = action.payload.pageSize;
+    state.specimenGroupedServiceProviders.searchString = action.payload.searchString;
   },
   updateSpecimenGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.specimenGroupedServiceProviders.providers = [

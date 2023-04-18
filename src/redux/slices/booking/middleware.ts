@@ -26,7 +26,9 @@ import { ModalName } from '../../../types/modals';
 import slice from './slice';
 
 const {
+  setGroupedServiceProviders,
   updateGroupedServiceProviders,
+  setSpecimenGroupedServiceProviders,
   updateSpecimenGroupedServiceProviders,
   setIsGroupedServiceProvidersLoading,
   setProfileAppointmentsGroup,
@@ -91,9 +93,13 @@ const getGroupedServiceProviders =
         ...(serviceProvidersData.searchString !== undefined ? { searchString: serviceProvidersData.searchString } : {})
       };
 
-      dispatch(
-        isSpecimenCollection ? updateSpecimenGroupedServiceProviders(data) : updateGroupedServiceProviders(data)
-      );
+      if (data.currentPage !== 1) {
+        dispatch(
+          isSpecimenCollection ? updateSpecimenGroupedServiceProviders(data) : updateGroupedServiceProviders(data)
+        );
+      } else {
+        dispatch(isSpecimenCollection ? setSpecimenGroupedServiceProviders(data) : setGroupedServiceProviders(data));
+      }
     } catch (error) {
       Sentry.captureException(error);
     } finally {
