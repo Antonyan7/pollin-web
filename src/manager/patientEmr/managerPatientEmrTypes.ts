@@ -940,8 +940,8 @@ export interface IPharmacyAddress {
   city: string;
   country: string;
   postalCode: string;
-  faxNumber?: string;
-  phoneNumber?: string;
+  faxNumber: string;
+  phoneNumber: string;
 }
 
 export interface IReferringDoctor extends MedicalBackgroundFieldValues {
