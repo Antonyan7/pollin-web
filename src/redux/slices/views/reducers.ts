@@ -16,7 +16,9 @@ const reducers = createReducer({
     state.menu.drawerOpen = action.payload;
   },
   addModalToList<P>(state: ViewsProps, action: IAction<IOpenedModal<P>>) {
-    state.modals.push(action.payload);
+    if (!state.modals.find((modal) => modal.name === action.payload.name)) {
+      state.modals.push(action.payload);
+    }
   },
   removeModalFromList(state: ViewsProps, action: IAction<ModalName>) {
     state.modals = state.modals.filter((modal) => modal.name !== action.payload);
