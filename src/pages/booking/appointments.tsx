@@ -5,6 +5,7 @@ import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import AppointmentsContent from '@components/common/AppointmentsContent';
 import { StyledButtonNew } from '@components/common/MaterialComponents';
 import { AddAppointmentSources } from '@components/Modals/Booking/AddAppointmentModal/types';
+import { DateSelectArg } from '@fullcalendar/common';
 import AddIcon from '@mui/icons-material/Add';
 import { Box, Divider, styled, Typography, useTheme } from '@mui/material';
 import { BoxProps } from '@mui/system';
@@ -41,6 +42,29 @@ const dateFormControlStyle = {
   marginTop: margins.top32,
   marginRight: margins.right12
 };
+
+const useOnRangeSelect = (serviceProviderId: string) =>
+  useCallback(
+    (arg: DateSelectArg) => {
+      const isRangeStartEarlierThanToday = new Date(arg.start).getTime() < new Date().setHours(0, 0, 0, 0);
+
+      if (isRangeStartEarlierThanToday) {
+        return;
+      }
+
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.AddAppointmentModal,
+          props: {
+            start: arg.startStr,
+            source: AddAppointmentSources.Booking,
+            providerId: serviceProviderId
+          }
+        })
+      );
+    },
+    [serviceProviderId]
+  );
 
 const Appointments = () => {
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
@@ -115,6 +139,8 @@ const Appointments = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarDate, serviceProviderId]);
 
+  const onRangeSelect = useOnRangeSelect(serviceProviderId);
+
   return (
     <Box>
       <MainBreadcrumb
@@ -169,6 +195,7 @@ const Appointments = () => {
         <DynamicCalendar
           calendarDate={calendarDate}
           onEventClick={onCalendarEventClick}
+          onRangeSelect={onRangeSelect}
           disable={{ title: calendarDisabledStateTitle, state: !serviceProviderId }}
           appointments={{ list: appointments, isLoading }}
         />

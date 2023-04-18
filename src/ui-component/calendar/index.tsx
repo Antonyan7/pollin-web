@@ -3,7 +3,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 
 import { CypressIds } from 'constants/cypressIds';
-import { EventClickArg } from '@fullcalendar/common';
+import { DateSelectArg, EventClickArg } from '@fullcalendar/common';
 import FullCalendar from '@fullcalendar/react';
 import { IAppointment } from 'types/reduxTypes/bookingStateTypes';
 import FullCalendarContainer from './FullCalendarContainer';
@@ -15,6 +15,7 @@ import { StyledDisabledLayer } from './StyledDisabledLayer';
 interface CalendarProps {
   calendarDate: Date;
   onEventClick: (initialEventObject: EventClickArg) => void;
+  onRangeSelect?: (arg: DateSelectArg) => void;
   disable: {
     state: boolean;
     title: string;
@@ -26,7 +27,7 @@ interface CalendarProps {
   };
 }
 
-const Calendar: React.FC<CalendarProps> = ({ calendarDate, onEventClick, disable, appointments }) => {
+const Calendar: React.FC<CalendarProps> = ({ calendarDate, onEventClick, disable, appointments, onRangeSelect }) => {
   const calendarRef = useRef<FullCalendar>(null);
   const fullCalendarComponentCypressId = CypressIds.COMMON_FULL_CALENDAR_COMPONENT;
 
@@ -68,6 +69,7 @@ const Calendar: React.FC<CalendarProps> = ({ calendarDate, onEventClick, disable
           calendarDate={calendarDate}
           calendarRef={calendarRef}
           onEventClick={onEventClick}
+          onRangeSelect={onRangeSelect}
         />
       </FullCalendarWrapper>
     </div>
