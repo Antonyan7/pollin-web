@@ -6,8 +6,11 @@ declare global {
   namespace Cypress {
     interface Chainable {
       CreateEncounter(type: string, note: string): Chainable<void>;
+
       EditEncounter(type: string, editedNote: string): Chainable<void>;
+
       CreateAddendum(type: string, addendumNote: string): Chainable<void>;
+
       EditAddendum(type: string, editedNote: string): Chainable<void>;
     }
   }

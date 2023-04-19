@@ -1,6 +1,6 @@
 import { CypressIds } from '../../../src/constants/cypressIds';
 import { CyUtils } from '../../helpers/cypressIdsUtils';
-import {TemplateStatus} from "../../helpers/helpers";
+import { TemplateStatus } from '../../helpers/helpers';
 
 describe('new template', () => {
   before(() => {
@@ -37,8 +37,8 @@ describe('new template', () => {
 
       cy.url().should('include', '/scheduling/schedule-templates');
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE))
-          .should('contain', data.templateName1)
-          .should("contain", TemplateStatus.Draft)
+        .should('contain', data.templateName1)
+        .should('contain', TemplateStatus.Draft);
     });
   });
 
@@ -58,8 +58,8 @@ describe('new template', () => {
 
       cy.url().should('include', '/scheduling/schedule-templates');
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_TEMPLATES_TABLE))
-          .should('contain', data.templateName2)
-          .should("contain", TemplateStatus.Draft);
+        .should('contain', data.templateName2)
+        .should('contain', TemplateStatus.Draft);
     });
   });
 });

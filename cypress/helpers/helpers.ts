@@ -29,3 +29,7 @@ export const enum TransportStatus {
   ReadyForTransport = 'Ready for transport',
   InTransit = 'In-Transit'
 }
+export const enum AddToTransport {
+  AddToNewExistingTransport = 'Add to New/Existing Transport',
+  ReceiveInHouse = 'Receive In-House'
+}

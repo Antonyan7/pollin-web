@@ -23,5 +23,8 @@
   "block_schedule_comment": "blocked",
   "apply_schedule_comment_1": "applyServiceType",
   "apply_schedule_comment_2": "applyBlock",
-  "new_transport_name": "New Auto Transport"
+  "new_transport_name": "New Auto Transport",
+  "move_to_transport": "Move To Transport",
+  "specimen_barcode_1": "S00000001",
+  "specimen_barcode_2": "S00000002"
 }
