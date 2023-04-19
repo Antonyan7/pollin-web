@@ -21,7 +21,8 @@ export interface IListSubItem {
 
 export interface IListLayoutItem {
   title: string;
-  subItems: IListSubItem[];
+  value?: string;
+  subItems?: IListSubItem[];
 }
 
 export interface ListLayoutProps {

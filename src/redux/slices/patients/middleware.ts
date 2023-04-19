@@ -158,7 +158,9 @@ const {
   setIsReadyToOrderPlansUpdating,
   setPatientPreliminaryBloodsResults,
   setIsPatientPreliminaryBloodsResultsLoading,
-  setIsCreatingPlan
+  setIsCreatingPlan,
+  setIsPatientPlanDetailsLoading,
+  setPatientPlanDetails
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1459,6 +1461,20 @@ const createPatientPlan = (data: INewPatientPlan, successCallback?: () => void) 
   }
 };
 
+const getPlanDetails = (planId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientPlanDetailsLoading(true));
+
+    const response = await API.patients.getPatientPlanDetails(planId);
+
+    dispatch(setPatientPlanDetails(response.data.data));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsPatientPlanDetailsLoading(false));
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1549,5 +1565,6 @@ export default {
   orderPlansToPatient,
   getPatientPlansReadyToOrder,
   getPatientPreliminaryBloods,
-  createPatientPlan
+  createPatientPlan,
+  getPlanDetails
 };

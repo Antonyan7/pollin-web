@@ -38,6 +38,8 @@ import {
   IPatientHighlightResponse,
   IPatientMedications,
   IPatientMedicationsState,
+  IPatientPlanDetails,
+  IPatientPlanDetailsReq,
   IPatientPlansCategoriesAndTypesResponse,
   IPatientPlansListData,
   IPatientPlansStatusResponse,
@@ -479,6 +481,13 @@ const patientEmrManager = {
   },
   createPatientPlan(data: INewPatientPlan) {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/plans`, data);
+  },
+  getPatientPlanDetails(planId: string) {
+    return axiosInstance.get<IPatientPlanDetailsReq, IAxiosResponse<IPatientPlanDetails>>(`${baseURL}/v1/plans`, {
+      params: {
+        planId
+      }
+    });
   }
 };
 

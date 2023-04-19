@@ -1,3 +1,4 @@
+import { IPatientPlansStatus } from '@axios/patientEmr/managerPatientEmrTypes';
 import { InitialConsultationFormFields } from '@components/Plans/types';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
@@ -56,3 +57,6 @@ export const genitourinaryHistoryValues = [
     description: t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_DIFFICULTY_ERECTIONS)
   }
 ];
+
+export const findStatus = (statuses: IPatientPlansStatus[], currentStatusId: string) =>
+  statuses.find((status) => status.status === currentStatusId);

@@ -1,9 +1,9 @@
-import React, { useCallback,useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { PrescriptionMedicationsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Button, Grid, Stack, useTheme } from '@mui/material';
-import { dispatch,useAppSelector } from '@redux/hooks';
+import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';

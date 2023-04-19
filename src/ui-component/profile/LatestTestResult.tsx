@@ -12,8 +12,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Theme,
-  Typography
+  Typography,
+  useTheme
 } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -29,6 +29,7 @@ const LatestTestResults = () => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const [t] = useTranslation();
   const router = useRouter();
+  const theme = useTheme();
   const latestTestResults = useAppSelector(patientsSelector.latestTestResults);
 
   useEffect(() => {
@@ -43,8 +44,8 @@ const LatestTestResults = () => {
       titleProps={{
         fontWeight: 500,
         pr: paddings.right12,
-        fontSize: '14px',
-        color: (theme: Theme) => theme.palette.secondary[800]
+        fontSize: theme.typography.pxToRem(14),
+        color: theme.palette.secondary[800]
       }}
       content={false}
     >

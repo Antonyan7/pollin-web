@@ -88,7 +88,11 @@ const getPatientPlansInitialState = (): IPatientPlansProps => ({
   readyToOrderPatientPlans: [],
   isCreatingPlan: false,
   isPatientPreliminaryBloodsResultsLoading: false,
-  patientPreliminaryBloodsResults: []
+  patientPreliminaryBloodsResults: [],
+  planDetails: {
+    isPlanDetailsLoading: false,
+    details: null
+  }
 });
 
 export const getInitialState = (): PatientEmrProps => ({

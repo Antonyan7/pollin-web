@@ -1,16 +1,19 @@
 import React from 'react';
-import { PrescriptionsMedicationsProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { MedicationsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Grid, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { paddings } from 'themes/themeConstants';
 
+import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
+
 interface ViewModeContentProps {
-  prescription: PrescriptionsMedicationsProps;
-  prescriber: string;
+  medicationData: MedicationsProps;
+  prescriber: string | null;
 }
 
-const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => {
+const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) => {
   const theme = useTheme();
   const fontStyle = { fontWeight: 500 };
 
@@ -24,11 +27,11 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
         backgroundColor: theme.palette.common.white,
         fontSize: theme.typography.pxToRem(15),
         pt: paddings.top16,
+        pl: paddings.left24,
         pb: paddings.bottom16
       }}
     >
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_DOSAGE)}
         </Grid>
@@ -36,12 +39,11 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescription.dosage}
+          {medicationData?.dosage}
         </Grid>
       </Grid>
 
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_ROUTE)}
         </Grid>
@@ -49,12 +51,11 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescription.route}
+          {medicationData?.route}
         </Grid>
       </Grid>
 
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_FREQUENCY)}
         </Grid>
@@ -62,12 +63,11 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescription.frequency}
+          {medicationData?.frequency}
         </Grid>
       </Grid>
 
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_TIME)}
         </Grid>
@@ -75,13 +75,11 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {prescription.time || '--'}
+          {medicationData?.time}
         </Grid>
       </Grid>
 
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_DURATION)}
         </Grid>
@@ -89,12 +87,17 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {`${prescription.duration.start} - ${prescription.duration.end}`}
+          {medicationData.duration?.start && !isDashValue(medicationData.duration.start)
+            ? DateUtil.formatDateOnly(medicationData.duration.start)
+            : '-'}
+          {' - '}
+          {medicationData.duration?.end && !isDashValue(medicationData.duration.end)
+            ? DateUtil.formatDateOnly(medicationData.duration.end)
+            : '-'}
         </Grid>
       </Grid>
 
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.MODAL_PRESCRIPTIONS_MEDICATION_QTY)}
         </Grid>
@@ -102,11 +105,10 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescription.quantity}
+          {medicationData?.quantity}
         </Grid>
       </Grid>
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.MODAL_PRESCRIPTIONS_REFILL)}
         </Grid>
@@ -114,11 +116,10 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescription.refill}
+          {medicationData?.refill}
         </Grid>
       </Grid>
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_PRESCRIPTIONS_LIST_REFILL_NOTES)}
         </Grid>
@@ -127,11 +128,10 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
         </Grid>
         <Grid item xs={6}>
           {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {prescription?.refillNotes || '--'}
+          {medicationData?.refillNotes || '--'}
         </Grid>
       </Grid>
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_PRESCRIPTIONS_LIST_OTHER_DOCTOR_NOTES)}
         </Grid>
@@ -140,12 +140,10 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
         </Grid>
         <Grid item xs={6}>
           {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {prescription.doctorNotes || '--'}
+          {medicationData?.doctorNotes || '--'}
         </Grid>
       </Grid>
-
       <Grid container item xs={12}>
-        <Grid item xs={0.5} />
         <Grid item xs={4} sx={fontStyle}>
           {t(Translation.PAGE_MEDICATIONS_CURRENT_LIST_PRESCRIBER)}
         </Grid>
@@ -153,7 +151,7 @@ const ViewModeContent = ({ prescription, prescriber }: ViewModeContentProps) => 
           :
         </Grid>
         <Grid item xs={6}>
-          {prescriber ?? '--'}
+          {prescriber ?? medicationData?.prescriber ?? '--'}
         </Grid>
       </Grid>
     </Grid>

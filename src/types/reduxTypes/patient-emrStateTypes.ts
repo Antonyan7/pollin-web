@@ -21,6 +21,7 @@ import {
   IPatientContactInformationProps,
   IPatientMedications,
   IPatientMedicationsState,
+  IPatientPlanDetails,
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
@@ -130,6 +131,10 @@ export interface IPatientPlansProps {
   patientPreliminaryBloodsResults: PatientPreliminaryBloodsResults[];
   isPatientPreliminaryBloodsResultsLoading: boolean;
   isCreatingPlan: boolean;
+  planDetails: {
+    isPlanDetailsLoading: boolean;
+    details: IPatientPlanDetails | null;
+  };
 }
 
 export interface ICreateMedication {

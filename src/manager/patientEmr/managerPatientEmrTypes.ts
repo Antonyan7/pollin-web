@@ -528,7 +528,7 @@ export enum IPrescriptionStatusesActions {
   ArchivePrescription = 'ArchivePrescription'
 }
 
-export interface PrescriptionsProps {
+export interface PrescriptionsProps extends IMedications {
   id: string;
   pharmacyTitle?: string;
   type: PrescriptionsType;
@@ -591,6 +591,10 @@ export interface MedicationsProps {
     end: string;
   };
   prescriber?: string;
+  quantity?: string;
+  refill?: string;
+  refillNotes?: string;
+  doctorNotes?: string;
 }
 export interface IFemalePatientGynaecologicalHistory {
   gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
@@ -987,6 +991,58 @@ export interface IPatientPlan {
   status: string;
 }
 
+interface IPlanTestResult {
+  title: string;
+  dateCompleted: string;
+  result: string;
+}
+
+interface IPlanSource {
+  source: {
+    value: string;
+    donorId: string;
+  };
+  type: {
+    value: string;
+  };
+}
+
+interface IPlanMonitoring {
+  monitoringLocation: {
+    value: string;
+  };
+  cycleNumber: {
+    value: string;
+  };
+  period: string;
+}
+
+export enum MedicationCardType {
+  Prescription = 'prescription',
+  Plan = 'plan'
+}
+
+export interface IMedications {
+  categoryId: string;
+  exists: boolean;
+  prescriber: string;
+  medications: MedicationsProps[];
+}
+
+export interface IPatientPlanDetails {
+  patientPlan: {
+    id: string;
+    title: string;
+    date: string;
+    status: string;
+    GTPAETALS: string;
+    testResults: IPlanTestResult[];
+    sperm: IPlanSource;
+    monitoring: IPlanMonitoring;
+    medicationsByCategories: IMedications[];
+  };
+}
+
 export interface IPatientPlansListData extends IPagination {
   isReadyToOrder: string;
   patientPlans: IPatientPlan[];
@@ -1008,6 +1064,10 @@ export interface IReadyToOrderPatientPlan extends IPatientPlanActionItem {}
 export interface IReadyToOrderPatientPlanResponse {
   patientPlans: IReadyToOrderPatientPlan[];
 }
+export interface IPatientPlanDetailsReq {
+  planId: string;
+}
+
 export interface IOrderPatientPlanRequestData {
   patientPlans: { id: string }[];
 }

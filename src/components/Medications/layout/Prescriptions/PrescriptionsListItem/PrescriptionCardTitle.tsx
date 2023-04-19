@@ -11,6 +11,7 @@ import usePrescriptionActions from '@hooks/contextMenu/usePrescriptionActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
 import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
 
 import { PrescriptionCardItem } from '../../types';
 
@@ -112,7 +113,8 @@ const PrescriptionCardTitle: FC<PrescriptionCardItem> = ({ prescription }) => {
       </Grid>
       <Grid item xs={2.3}>
         <Typography variant="h5">
-          {t(Translation.PAGE_PRESCRIPTIONS_LIST_CREATED)} {DateUtil.formatDateOnly(prescription?.date)}
+          {t(Translation.PAGE_PRESCRIPTIONS_LIST_CREATED)}{' '}
+          {prescription?.date && !isDashValue(prescription?.date) ? DateUtil.formatDateOnly(prescription?.date) : '-'}
         </Typography>
       </Grid>
       <Grid item xs={0.5}>

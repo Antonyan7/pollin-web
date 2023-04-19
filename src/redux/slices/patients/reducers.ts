@@ -15,6 +15,7 @@ import {
   IPatientContactInformationProps,
   IPatientMedications,
   IPatientMedicationsState,
+  IPatientPlanDetails,
   IPatientPlansCategories,
   IPatientPlansListData,
   IPatientPlansStatus,
@@ -415,6 +416,12 @@ const reducers = createReducer({
   },
   setIsCreatingPlan(state, action: IAction<boolean>) {
     state.plans.isCreatingPlan = action.payload;
+  },
+  setPatientPlanDetails(state, action: IAction<IPatientPlanDetails>) {
+    state.plans.planDetails.details = action.payload;
+  },
+  setIsPatientPlanDetailsLoading(state, action: IAction<boolean>) {
+    state.plans.planDetails.isPlanDetailsLoading = action.payload;
   }
 });
 

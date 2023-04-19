@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MedicationCardType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Box, Grid, TablePagination } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
@@ -9,8 +10,7 @@ import { margins, paddings } from 'themes/themeConstants';
 import { v4 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
-
-import PrescriptionCard from './PrescriptionsListItem/PrescriptionCard';
+import MedicationCard from '@ui-component/medications/MedicationCard';
 
 const PrescriptionsList = () => {
   const [t] = useTranslation();
@@ -47,7 +47,7 @@ const PrescriptionsList = () => {
         </Box>
       ) : (
         patientPrescriptions?.prescriptions?.map((prescription) => (
-          <PrescriptionCard key={v4()} prescription={prescription} />
+          <MedicationCard key={v4()} data={prescription} cardType={MedicationCardType.Prescription} />
         ))
       )}
       {!patientPrescriptions?.prescriptions?.length && !isPatientPrescriptionsLoading ? (

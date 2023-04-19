@@ -289,6 +289,8 @@ const isPatientPreliminaryBloodsResultsLoading = createSelector(
   (state) => state.plans.isPatientPreliminaryBloodsResultsLoading
 );
 const isCreatingPlan = createSelector([selector], (state) => state.plans.isCreatingPlan);
+const planDetails = createSelector([selector], (state) => state.plans.planDetails.details?.patientPlan);
+const isPlanDetailsLoading = createSelector([selector], (state) => state.plans.planDetails.isPlanDetailsLoading);
 
 export default {
   isTestResultsHistoryLoading,
@@ -405,5 +407,7 @@ export default {
   isReadyToOrderPlansUpdating,
   patientPreliminaryBloodsResults,
   isPatientPreliminaryBloodsResultsLoading,
-  isCreatingPlan
+  isCreatingPlan,
+  planDetails,
+  isPlanDetailsLoading
 };

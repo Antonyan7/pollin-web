@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Divider, Theme } from '@mui/material';
+import { Divider, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -14,6 +14,7 @@ import SecondaryLayout from './SecondaryLayout';
 const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading, listItemsHeading }: WidgetProps) => {
   const [t] = useTranslation();
   const listData = data ? transformDataForListLayout(data) : null;
+  const theme = useTheme();
 
   return (
     <SubCardStyled
@@ -23,8 +24,8 @@ const WidgetLayout = ({ data, secondary, sx, profile, emptyWidgetTitle, loading,
       title={data?.widgetTitle ?? emptyWidgetTitle}
       titleProps={{
         fontWeight: 500,
-        fontSize: '14px',
-        color: (theme: Theme) => theme.palette.secondary[800]
+        fontSize: theme.typography.pxToRem(14),
+        color: theme.palette.secondary[800]
       }}
       {...(secondary && { secondary })}
     >
