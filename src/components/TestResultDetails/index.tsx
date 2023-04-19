@@ -2,10 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Button, CircularProgress, Divider, Grid, Link, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
+import { ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 import { FinalResultChipColor } from 'types/results';
 
 import Chip from '@ui-component/patient/Chip';
@@ -32,9 +34,39 @@ const DetailCellRenderer = ({ title, value }: { title: string; value: string }) 
   );
 };
 
+interface TestResultDetailsItemsProps {
+  items: ITestResultItem[];
+}
+
+const TestResultDetailsItems = ({ items }: TestResultDetailsItemsProps) => (
+  <>
+    {items?.map((item) => (
+      <Typography component={Grid} container variant="body2" fontWeight={500} mt={margins.top16}>
+        <Grid item xs={12} sm={3}>
+          {item.type}
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          {item.unit}
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          {item.result}
+        </Grid>
+        <Grid item xs={12} sm={3}>
+          {item.dateReceived ? DateUtil.formatDateOnly(item.dateReceived) : '-'}
+        </Grid>
+        <Grid item xs={12} sm={2}>
+          {item.resultType}
+        </Grid>
+      </Typography>
+    ))}
+    <Divider sx={{ my: margins.topBottom24 }} />
+  </>
+);
+
 const TestResultDetails: React.FC = () => {
   const [testResultsDetails] = useAppSelector(resultsSelector.testResultsDetails);
   const isTestResultsDetailsLoading = useAppSelector(resultsSelector.isTestResultsDetailsLoading);
+  const shouldUpdateDetails = useAppSelector(ordersSelector.shouldUpdateOrderResultsList);
   const router = useRouter();
   const linkRef = useRef<HTMLAnchorElement | null>(null);
   const { t } = useTranslation();
@@ -58,6 +90,13 @@ const TestResultDetails: React.FC = () => {
       dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
     }
   }, [testResultId]);
+
+  useEffect(() => {
+    if (shouldUpdateDetails) {
+      dispatch(resultsMiddleware.getTestResultsDetails({ testResultId }));
+      dispatch(ordersMiddleware.setShouldUpdateOrderResultsList(false));
+    }
+  }, [shouldUpdateDetails, testResultId]);
 
   return isTestResultsDetailsLoading ? (
     <Box display="flex" justifyContent="center" alignItems="center" mt={margins.top16}>
@@ -129,26 +168,8 @@ const TestResultDetails: React.FC = () => {
             {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_RESULT_TYPE)}
           </Grid>
         </Typography>
-        {testResultsDetails.items?.map((item) => (
-          <Typography component={Grid} container variant="body2" fontWeight={500} mt={margins.top16}>
-            <Grid item xs={12} sm={3}>
-              {item.type}
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              {item.unit}
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              {item.result}
-            </Grid>
-            <Grid item xs={12} sm={3}>
-              {item.dateReceived ? DateUtil.formatDateOnly(item.dateReceived) : '-'}
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              {item.resultType}
-            </Grid>
-          </Typography>
-        ))}
-        <Divider sx={{ my: margins.topBottom24 }} />
+        <TestResultDetailsItems items={testResultsDetails.items} />
+
         <Typography variant="h5" fontWeight={500}>
           {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_COMMENTS)}
         </Typography>

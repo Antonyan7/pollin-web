@@ -21,12 +21,12 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
       let finalTestResultType = '';
 
       measurement?.items.forEach(({ resultType }: { resultType: UnitResultType }) => {
-        if (finalTestResultType === UnitResultType.TestNotComplete) {
+        if (finalTestResultType === UnitResultType.TestNotCompleted) {
           return;
         }
 
         if (resultType !== UnitResultType.Abnormal && resultType !== UnitResultType.Normal) {
-          finalTestResultType = UnitResultType.TestNotComplete;
+          finalTestResultType = UnitResultType.TestNotCompleted;
         } else if (resultType === UnitResultType.Abnormal || finalTestResultType === UnitResultType.Abnormal) {
           finalTestResultType = UnitResultType.Abnormal;
         } else {
@@ -34,7 +34,7 @@ const useTestResultStatusData = (currentFormFieldName: string) => {
         }
       });
 
-      if (finalTestResultType === UnitResultType.TestNotComplete) {
+      if (finalTestResultType === UnitResultType.TestNotCompleted) {
         return {
           testResultStatusLabel: initialResultValue,
           testResultStatusColor: FinalResultChipColor.TestNotComplete

@@ -245,7 +245,7 @@ export interface IObjectWithId {
 export enum FinalResultType {
   Normal = 'Normal',
   Abnormal = 'Abnormal',
-  TestNotComplete = 'Test not complete'
+  TestNotCompleted = 'Test Not Completed'
 }
 
 export enum UnitResultType {
@@ -253,7 +253,7 @@ export enum UnitResultType {
   Abnormal = 'Abnormal',
   Inconclusive = 'Inconclusive',
   Indeterminate = 'Indeterminate',
-  TestNotComplete = 'Test not complete'
+  TestNotCompleted = 'Test Not Completed'
 }
 
 // TODO: refactor this

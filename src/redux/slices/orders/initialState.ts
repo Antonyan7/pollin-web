@@ -33,6 +33,7 @@ export const getInitialState = (): IOrdersState => ({
     totalItems: 0
   },
   isOrderResultsByPatientListLoading: false,
+  shouldUpdateResultsList: false,
   isRequisitionDownloaded: false,
   isOrdersFiltersLoading: false,
   orderResultsStatuses: [],

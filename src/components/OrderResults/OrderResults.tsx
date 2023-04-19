@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IOrderResultsListReqBody, OrderResultsSortFields } from '@axios/results/resultsManagerTypes';
 import { HeadCell } from '@components/Table/HeadCell';
@@ -34,12 +34,15 @@ import { OrderResultsRow } from './OrderResultsRow';
 
 const OrderResults = () => {
   const theme = useTheme();
+  const router = useRouter();
+  const patientId = router.query.id as string;
   const [page, setPage] = useState<number>(0);
   const [sortField, setSortField] = useState<OrderResultsSortFields | null>(null);
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(SortOrder.Desc);
   const [selectedFilters, setSelectedFilters] = useState<IOrderResultsFilterOptions[]>([]);
   const orderResultsByPatientList = useAppSelector(ordersSelector.orderResultsByPatientList);
   const isOrderResultsByPatientListLoading = useAppSelector(ordersSelector.isOrderResultsByPatientListLoading);
+  const shouldUpdateOrderResultsList = useAppSelector(ordersSelector.shouldUpdateOrderResultsList);
   const filtersList = useAppSelector(ordersSelector.orderResultsFilters);
   const isFiltersLoading = useAppSelector(ordersSelector.isOrderResultsFiltersLoading);
 
@@ -48,11 +51,18 @@ const OrderResults = () => {
   const [t] = useTranslation();
   const headCells = headCellsData(t) as IHeadCell[];
 
-  const router = useRouter();
-
-  const patientId = router.query.id as string;
-
   const filterLabel = t(Translation.PAGE_PATIENT_ORDER_RESULTS_FILTER_LABEL);
+
+  const orderResultsListRequestBody: IOrderResultsListReqBody = useMemo(
+    () => ({
+      patientId,
+      ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
+      ...(sortField ? { sortByField: sortField } : {}),
+      ...(sortField && sortOrder ? { sortOrder } : {}),
+      page: page + 1
+    }),
+    [page, selectedFilters, sortField, sortOrder, patientId]
+  );
 
   useEffect(() => {
     dispatch(ordersMiddleware.getOrderResultsFilters());
@@ -60,16 +70,20 @@ const OrderResults = () => {
   }, []);
 
   useEffect(() => {
-    const data: IOrderResultsListReqBody = {
-      patientId,
-      ...(selectedFilters.length > 0 ? { filters: selectedFilters.map(({ type, id }) => ({ type, id })) } : {}),
-      ...(sortField ? { sortByField: sortField } : {}),
-      ...(sortField && sortOrder ? { sortOrder } : {}),
-      page: page + 1
-    };
+    dispatch(ordersMiddleware.getOrderResultsListForPatient(orderResultsListRequestBody));
+  }, [orderResultsListRequestBody]);
 
-    dispatch(ordersMiddleware.getOrderResultsListForPatient(data));
-  }, [page, selectedFilters, sortField, sortOrder, patientId]);
+  useEffect(() => {
+    if (shouldUpdateOrderResultsList) {
+      if (orderResultsListRequestBody.page === 1) {
+        dispatch(ordersMiddleware.getOrderResultsListForPatient(orderResultsListRequestBody));
+      } else {
+        setPage(0);
+      }
+
+      dispatch(ordersMiddleware.setShouldUpdateOrderResultsList(false));
+    }
+  }, [shouldUpdateOrderResultsList, orderResultsListRequestBody]);
 
   const handleChangePage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
     setPage(newPage);

@@ -49,6 +49,9 @@ const reducers = createReducer({
   setOrderResultsByPatientList(state, action: IAction<IOrderResultsByPatientList>) {
     state.orderResultsByPatientList = action.payload;
   },
+  setShouldUpdateOrderResultsList(state, action: IAction<boolean>) {
+    state.shouldUpdateResultsList = action.payload;
+  },
   setIsOrderResultsByPatientListLoading(state, action: IAction<boolean>) {
     state.isOrderResultsByPatientListLoading = action.payload;
   },

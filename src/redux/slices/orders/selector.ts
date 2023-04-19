@@ -16,6 +16,7 @@ const orderStatuses = createSelector([selector], (state) => state.orderStatuses)
 const orderResultsFilters = createSelector([selector], (state) => state.orderResultsFilters);
 const isOrderResultsFiltersLoading = createSelector([selector], (state) => state.isOrderResultsFiltersLoading);
 const orderResultsByPatientList = createSelector([selector], (state) => state.orderResultsByPatientList);
+const shouldUpdateOrderResultsList = createSelector([selector], (state) => state.shouldUpdateResultsList);
 const isOrderResultsByPatientListLoading = createSelector(
   [selector],
   (state) => state.isOrderResultsByPatientListLoading
@@ -51,6 +52,7 @@ export default {
   cancellationReasons,
   isCancellationReasonsLoading,
   isCancelOrderLoading,
+  shouldUpdateOrderResultsList,
   isOrderResultsByPatientListLoading,
   isOrderResultsFiltersLoading,
   isOrdersFiltersLoading,
