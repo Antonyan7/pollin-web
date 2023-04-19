@@ -11,6 +11,8 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 const PatientGeneralHealthEdit = () => {
   const router = useRouter();
   const currentPatiendId = router.query.id;
@@ -47,7 +49,16 @@ const PatientGeneralHealthEdit = () => {
       },
       pastSurgeries: {
         ...pastSurgeries,
-        items: pastSurgeries.exists ? pastSurgeries.items : []
+        items: pastSurgeries.exists
+          ? pastSurgeries.items.map((item) => {
+              const { dateOfSurgery, ...rest } = item;
+
+              return {
+                ...rest,
+                dateOfSurgery: DateUtil.convertToDateOnly(dateOfSurgery)
+              };
+            })
+          : []
       },
       vitaminSupplements: {
         ...vitaminSupplements,

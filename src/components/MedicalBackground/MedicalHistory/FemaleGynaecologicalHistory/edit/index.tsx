@@ -13,6 +13,8 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import useCloseMedicalBackgroundFormWithChangesModal from '../../../hooks/useCloseMedicalBackgroundFormWithChangesModal';
 
 const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
@@ -61,7 +63,19 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   const { handleSubmit } = methods;
 
   const handleSave = (data: IFemalePatientGynaecologicalHistoryProps) => {
-    dispatch(patientsMiddleware.updateFemalePatientGynaecologicalHistory(id as string, data, onSave));
+    const { papTestLastDate } = data;
+    const femalePatientGynaecologicalHistoryData = {
+      ...data,
+      papTestLastDate: { ...papTestLastDate, value: DateUtil.convertToDateOnly(papTestLastDate.value as string) }
+    };
+
+    dispatch(
+      patientsMiddleware.updateFemalePatientGynaecologicalHistory(
+        id as string,
+        femalePatientGynaecologicalHistoryData,
+        onSave
+      )
+    );
   };
 
   return (

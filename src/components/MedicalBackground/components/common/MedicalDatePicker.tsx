@@ -14,29 +14,21 @@ const MedicalDatePicker = ({
   errorHelperText,
   isError,
   ...otherProps
-}: MedicalDatePickerFieldProps) => {
-  const onDateUpdate = (date: Date | null) => {
-    if (date) {
-      onChange(DateUtil.convertToDateOnly(date));
-    }
-  };
-
-  return (
-    <PollinDatePicker
-      type={PollinDatePickerType.Date}
-      pickerConfigs={{
-        ...otherProps,
-        label,
-        onChange: onDateUpdate,
-        value,
-        isLimitedByWorkingHours: false,
-        maxDate: DateUtil.representInClinicDate(new Date()),
-        isError,
-        errorMessage: errorHelperText
-      }}
-    />
-  );
-};
+}: MedicalDatePickerFieldProps) => (
+  <PollinDatePicker
+    type={PollinDatePickerType.Date}
+    pickerConfigs={{
+      ...otherProps,
+      label,
+      onChange,
+      value,
+      isLimitedByWorkingHours: false,
+      maxDate: DateUtil.representInClinicDate(new Date()),
+      isError,
+      errorMessage: errorHelperText
+    }}
+  />
+);
 
 export const ControlledDatePicker = ({ fieldName, label, ...otherProps }: { fieldName: string; label: string }) => {
   const { control } = useFormContext();
