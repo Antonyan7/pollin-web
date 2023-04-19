@@ -25,6 +25,7 @@ export interface AppointmentDetailsProps {
 
 export interface BookingProps {
   appointments: IAppointment[];
+  shouldUpdateBookingCalendarAppointments: boolean;
   date: Date;
   groupedServiceProviders: IGroupedServiceProviders;
   specimenGroupedServiceProviders: IGroupedServiceProviders;

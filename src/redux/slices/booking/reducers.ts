@@ -29,6 +29,9 @@ const reducers = createReducer({
   setCollectionCalendarDate(state, action: IAction<Date>) {
     state.specimenAppointments.date = action.payload;
   },
+  setShouldUpdateBookingCalendarAppointments(state, action: IAction<boolean>) {
+    state.shouldUpdateBookingCalendarAppointments = action.payload;
+  },
   setGroupedServiceProviders(state, action: IAction<IGroupedServiceProviders>) {
     state.groupedServiceProviders.providers = [...action.payload.providers];
     state.groupedServiceProviders.currentPage = action.payload.currentPage;

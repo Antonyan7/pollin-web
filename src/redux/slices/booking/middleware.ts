@@ -26,6 +26,7 @@ import { ModalName } from '../../../types/modals';
 import slice from './slice';
 
 const {
+  setShouldUpdateBookingCalendarAppointments,
   setGroupedServiceProviders,
   updateGroupedServiceProviders,
   setSpecimenGroupedServiceProviders,
@@ -268,17 +269,12 @@ const checkInAppointment = (checkInValues: ICheckInReqBody, message: string) => 
 
 const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (dispatch: AppDispatch) => {
   try {
-    const providerId = appointmentValues.providerId
-      ? appointmentValues.providerId
-      : store.getState().booking.currentServiceProviderId;
+    appointmentValues.providerId = appointmentValues.providerId ?? store.getState().booking.currentServiceProviderId;
 
     const patientId = store.getState().patients.patientsList.currentPatientId;
 
-    const calendarDate = store.getState().booking.date;
-
     dispatch(setAppointmentLoading(true));
 
-    appointmentValues.providerId = providerId;
     await API.booking.createAppointment(appointmentValues);
 
     dispatch(
@@ -294,10 +290,7 @@ const createAppointment = (appointmentValues: ICreateAppointmentBody) => async (
 
     dispatch(viewsMiddleware.closeModal(ModalName.AddAppointmentModal));
     dispatch(bookingMiddleware.getPatientAlerts(''));
-
-    if (DateUtil.isSameDate(appointmentValues.date as Date, calendarDate)) {
-      dispatch(getBookingAppointments(providerId, calendarDate));
-    }
+    dispatch(setShouldUpdateBookingCalendarAppointments(true));
 
     if (patientId) {
       dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
@@ -332,8 +325,6 @@ const editAppointment =
     try {
       dispatch(setIsAppointmentEditLoading(true));
 
-      const providerId = store.getState().booking.currentServiceProviderId;
-      const calendarDate = store.getState().booking.date;
       const patientId = store.getState().patients.patientsList.currentPatientId;
 
       await API.booking.editAppointment(appointmentId, appointmentValues);
@@ -350,7 +341,7 @@ const editAppointment =
       );
       dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
       dispatch(bookingMiddleware.clearAppointmentDetails());
-      dispatch(getBookingAppointments(providerId, calendarDate));
+      dispatch(setShouldUpdateBookingCalendarAppointments(true));
 
       if (patientId) {
         dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
@@ -392,9 +383,6 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
   dispatch(setAppointmentLoading(true));
 
   try {
-    const providerId = store.getState().booking.currentServiceProviderId;
-    const calendarDate = store.getState().booking.date;
-
     await API.booking.cancelAppointment(appointmentId, {
       appointment: {
         cancellationReason
@@ -412,7 +400,7 @@ const cancelAppointment = (appointmentId: string, cancellationReason: string) =>
     );
     dispatch(viewsMiddleware.closeModal(ModalName.CancelAppointmentModal));
     dispatch(viewsMiddleware.closeModal(ModalName.EditAppointmentModal));
-    dispatch(getBookingAppointments(providerId, calendarDate));
+    dispatch(setShouldUpdateBookingCalendarAppointments(true));
   } catch (error) {
     Sentry.captureException(error);
   } finally {
@@ -461,6 +449,7 @@ const clearSpecimenAppointments = () => (dispatch: AppDispatch) => {
 };
 
 export default {
+  setShouldUpdateBookingCalendarAppointments,
   getGroupedServiceProviders,
   setDateValue,
   updateCollectionCalendarDate,

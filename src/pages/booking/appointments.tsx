@@ -67,6 +67,7 @@ const useOnRangeSelect = (serviceProviderId: string) =>
   );
 
 const Appointments = () => {
+  const shouldUpdateAppointments = useAppSelector(bookingSelector.shouldUpdateBookingCalendarAppointments);
   const calendarDate = useAppSelector(bookingSelector.calendarDate);
   const isLoading = useAppSelector(bookingSelector.isBookingCalendarLoading);
   const groupedServiceProvidersList = useAppSelector(bookingSelector.groupedServiceProvidersList);
@@ -138,6 +139,18 @@ const Appointments = () => {
     // We are disabling this since linter is asking for router include in deps, but it shouldn't
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [calendarDate, serviceProviderId]);
+
+  useEffect(() => {
+    if (shouldUpdateAppointments) {
+      if (serviceProviderId) {
+        dispatch(bookingMiddleware.getBookingAppointments(serviceProviderId, calendarDate));
+      } else {
+        dispatch(bookingMiddleware.clearBookingCalendarAppointments());
+      }
+
+      dispatch(bookingMiddleware.setShouldUpdateBookingCalendarAppointments(false));
+    }
+  }, [shouldUpdateAppointments, calendarDate, serviceProviderId]);
 
   const onRangeSelect = useOnRangeSelect(serviceProviderId);
 

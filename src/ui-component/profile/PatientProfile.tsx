@@ -22,10 +22,18 @@ const PatientProfile = () => {
   const { profilePageName, page } = usePatientProfileNavigatorContext();
 
   const patientAppointments = useAppSelector(bookingSelector.patientProfileAppointmentsGroup);
+  const shouldUpdateAppointments = useAppSelector(bookingSelector.shouldUpdateBookingCalendarAppointments);
 
   useEffect(() => {
     dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
   }, [patientId]);
+
+  useEffect(() => {
+    if (shouldUpdateAppointments) {
+      dispatch(bookingMiddleware.getPatientAppointmentsGroup(patientId));
+      dispatch(bookingMiddleware.setShouldUpdateBookingCalendarAppointments(false));
+    }
+  }, [shouldUpdateAppointments, patientId]);
 
   return (
     <Box width="100%" overflow="hidden">

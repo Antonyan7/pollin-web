@@ -4,6 +4,10 @@ import { RootState } from 'redux/store';
 const selector = (state: RootState) => state.booking;
 
 export const appointmentsList = createSelector([selector], (state) => state.appointments);
+export const shouldUpdateBookingCalendarAppointments = createSelector(
+  [selector],
+  (state) => state.shouldUpdateBookingCalendarAppointments
+);
 export const groupedServiceProvidersList = createSelector([selector], (state) => state.groupedServiceProviders);
 export const specimenGroupedServiceProvidersList = createSelector(
   [selector],
@@ -57,6 +61,7 @@ export default {
   isGroupedServiceProvidersLoading,
   isSpecimenGroupedServiceProvidersLoading,
   appointmentsList,
+  shouldUpdateBookingCalendarAppointments,
   groupedServiceProvidersList,
   specimenGroupedServiceProvidersList,
   calendarDate,

@@ -7,6 +7,7 @@ import { SortOrder } from '../../../types/patient';
 
 export const getInitialState = (): BookingProps => ({
   appointments: [],
+  shouldUpdateBookingCalendarAppointments: false,
   date: DateUtil.representInClinicDate(),
   groupedServiceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
   specimenGroupedServiceProviders: { providers: [], pageSize: 25, currentPage: 0, totalItems: 0 },
