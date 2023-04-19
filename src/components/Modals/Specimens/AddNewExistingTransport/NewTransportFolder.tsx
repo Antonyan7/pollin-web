@@ -115,7 +115,11 @@ const NewTransportFolder = (props: IAddNewExistingTransportModalProps) => {
       <Grid item xs={12}>
         <Box sx={{ flexGrow: 1 }}>
           <Grid container spacing={3}>
-            <PollinDatePickerWithTodayButton calendarDate={calendarDate as Date} onChange={setCalendarDate} />
+            <PollinDatePickerWithTodayButton
+              calendarDate={calendarDate as Date}
+              onChange={setCalendarDate}
+              disablePast
+            />
             <Grid item xs={12}>
               <TextField
                 onChange={(event) => onTransportFolderNameChange(event.target.value)}

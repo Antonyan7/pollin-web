@@ -14,13 +14,15 @@ interface DatePickerWithTodayButtonProps {
   onChange: (value: Date | null) => void;
   todayDataCy?: string;
   dateDataCy?: string;
+  disablePast?: boolean;
 }
 
 const PollinDatePickerWithTodayButton = ({
   calendarDate,
   onChange,
   todayDataCy,
-  dateDataCy
+  dateDataCy,
+  disablePast
 }: DatePickerWithTodayButtonProps) => {
   const theme = useTheme();
   const [t] = useTranslation();
@@ -44,7 +46,7 @@ const PollinDatePickerWithTodayButton = ({
       <Grid item xs={8}>
         <PollinDatePicker
           type={PollinDatePickerType.Date}
-          pickerConfigs={{ value: calendarDate, onChange, ...(dateDataCy && { dataCyId: dateDataCy }) }}
+          pickerConfigs={{ value: calendarDate, disablePast, onChange, ...(dateDataCy && { dataCyId: dateDataCy }) }}
         />
       </Grid>
     </Grid>

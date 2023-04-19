@@ -88,6 +88,7 @@ const AddNewTransportFolderModal = () => {
                     onChange={setCalendarDate}
                     todayDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_TODAY_BUTTON}
                     dateDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DATE_PICKER}
+                    disablePast
                   />
                   <Grid container item xs={12} justifyContent="space-between">
                     <Grid item xs={6}>

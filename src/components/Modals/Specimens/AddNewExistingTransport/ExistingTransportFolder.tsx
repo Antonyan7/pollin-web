@@ -101,6 +101,7 @@ const ExistingTransportFolder = (props: IAddNewExistingTransportModalProps) => {
           <Grid container spacing={3}>
             {!isMoveToAnother && (
               <PollinDatePickerWithTodayButton
+                disablePast
                 calendarDate={calendarDate as Date}
                 onChange={setCalendarDate}
                 todayDataCy={CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_OR_EXISTING_TRANSPORT_TODAY_BUTTON}
