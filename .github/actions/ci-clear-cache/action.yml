@@ -1,15 +1,15 @@
-name: 'ci clear cache'
+name: 'CI clear VM cache'
 inputs:
   node_version:
     description: 'Node version'
     required: false
     default: v16.17.0
 
-description: 'ci clear cache'
+description: 'Clears VMs caches'
 runs:
   using: 'composite'
   steps:
-    - name: Install Modules
+    - name: Cleanup yarn, npm, cypress
       run: |
         echo "::group::Activate NVM and install NodeJS version"
         source ~/.nvm/nvm.sh
@@ -29,3 +29,4 @@ runs:
         echo "::group::Clear cypress"
         yarn run cypress:clear
         echo "::endgroup::"
+      shell: bash
