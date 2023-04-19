@@ -758,17 +758,27 @@ const getPrescriptionStatuses = () => async (dispatch: AppDispatch) => {
 };
 
 const createPatientPrescription =
-  (prescriptionData: ICreatePatientPrescription) => async (dispatch: AppDispatch, getState: () => RootState) => {
+  (prescriptionData: ICreatePatientPrescription, patientName?: string) =>
+  async (dispatch: AppDispatch, getState: () => RootState) => {
     try {
       dispatch(setIsPrescriptionCreationLoading(true));
 
       const response = await API.patients.createPatientPrescription(prescriptionData);
-      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+      const { currentPage } = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
       if (response.data.data.uuid) {
         dispatch(setCurrentPrescriptionUuid(response.data.data.uuid));
         dispatch(setPatientPrescriptionsListItems(null));
         dispatch(patientsMiddleware.getPatientPrescriptions(prescriptionData.patientId, currentPage));
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: `${t(Translation.MODAL_CREATE_PRESCRIPTION_TOAST)} ${patientName}`
+            }
+          })
+        );
       }
     } catch (error) {
       Sentry.captureException(error);
@@ -786,7 +796,7 @@ const archivePatientPrescription =
     try {
       await API.patients.archivePatientPrescription(prescriptionId);
 
-      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+      const { currentPage } = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
       dispatch(patientsMiddleware.getPatientPrescriptions(patientId, currentPage));
     } catch (error) {
@@ -817,7 +827,7 @@ const markPatientPrescriptionDispensed =
     try {
       await API.patients.markPatientPrescriptionDispensed(prescriptionId);
 
-      const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+      const { currentPage } = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
       dispatch(patientsMiddleware.getPatientPrescriptions(patientId, currentPage));
     } catch (error) {
@@ -915,7 +925,7 @@ const createPatientMedication =
   (data: ICreateMedication, patientName: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(setIsMedicationCreatedLoading(true));
 
-    const {currentPage} = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
+    const { currentPage } = getState().patients.medicationsPrescriptions.prescriptions.patientPrescriptions;
 
     try {
       const response = await API.patients.createPatientMedication(data);
@@ -943,7 +953,7 @@ const updatePatientMedication =
   (data: IUpdateMedication, patientId: string) => async (dispatch: AppDispatch, getState: () => RootState) => {
     dispatch(setIsMedicationUpdatedLoading(true));
 
-    const {currentPage} = getState().patients.medicationsPrescriptions.medications.patientCurrentMedications;
+    const { currentPage } = getState().patients.medicationsPrescriptions.medications.patientCurrentMedications;
 
     try {
       await API.patients.updatePatientMedication(data);

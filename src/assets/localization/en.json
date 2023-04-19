@@ -97,6 +97,7 @@
   "modal.confirm.reason.for.retest": "Confirm Reason for Retest",
   "modal.confirm.reason.for.retest.required": "Please select reason the retest required",
   "modal.create.medication.toast": "Medication added for",
+  "modal.create.prescription.toast": "Prescription created for",
   "modal.delete.alert.message": "Please note that this action is permanent and cannot be undone.",
   "modal.delete.alert.title": "Are you sure you want to delete this?",
   "modal.error.go.back": "Go Back",

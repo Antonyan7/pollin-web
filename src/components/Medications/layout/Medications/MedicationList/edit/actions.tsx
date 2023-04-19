@@ -1,25 +1,51 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Button, Grid, Stack, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { dispatch } from 'redux/hooks';
 import { borderRadius, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
+import useStopRouteChange from '@hooks/useStopRouteChange';
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
 const ConfirmButton = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
-  const { watch } = useFormContext();
+  const {
+    watch,
+    formState: { dirtyFields }
+  } = useFormContext();
   const isMedicationUpdatedLoading = useAppSelector(patientsSelector.isMedicationUpdatedLoading);
 
-  const onClickCancell = () => {
-    dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
-  };
+  const showCancelConfirmModal = Object.values(dirtyFields).length > 0;
+
+  const onClickCancell = useCallback(() => {
+    if (showCancelConfirmModal) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ConfirmCancellationModal,
+          props: { action: () => dispatch(patientsMiddleware.updateCardToEditMode(-1, [])) }
+        })
+      );
+    } else {
+      dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
+    }
+  }, [showCancelConfirmModal]);
+
+  useStopRouteChange(showCancelConfirmModal, false, () =>
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.ConfirmCancellationModal,
+        props: { action: () => dispatch(patientsMiddleware.updateCardToEditMode(-1, [])) }
+      })
+    )
+  );
 
   useEffect(() => {
     const subscription = watch((value) => {

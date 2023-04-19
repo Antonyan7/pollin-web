@@ -8,7 +8,7 @@ import FormBody from './FormBody';
 import FormHeader from './FormHeader';
 import { IAddPatientMedicationForm, initialValues } from './initialValues';
 
-const AddPatientMedicationForm = () => {
+const AddPatientMedicationForm = ({ setIsDirty }: { setIsDirty: (val: boolean) => void }) => {
   const methods = useForm({
     mode: 'onSubmit',
     defaultValues: initialValues
@@ -39,7 +39,7 @@ const AddPatientMedicationForm = () => {
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormHeader />
-        <FormBody />
+        <FormBody setIsDirty={setIsDirty} />
       </form>
     </FormProvider>
   );

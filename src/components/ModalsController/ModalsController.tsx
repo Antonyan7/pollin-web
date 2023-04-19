@@ -230,7 +230,9 @@ const getMedicalBackgroundUnsavedChangesModal = (modal: IOpenedModal<MedicalBack
 
 // Medications
 const getAddPatientMedicationModalModal = () => <AddPatientMedicationModal key={ModalName.AddPatientMedicationModal} />;
-const getAddPatientPrescriptionsModal = () => <AddPatientPrescriptionsModal key={v4()} />;
+const getAddPatientPrescriptionsModal = () => (
+  <AddPatientPrescriptionsModal key={ModalName.AddPatientPrescriptionModal} />
+);
 const getConfirmCancellationModal = (modal: IOpenedModal<ConfirmCancellationModalProps>) => (
   <ConfirmCancellationModal key={modal.name} {...modal.props} />
 );

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback,useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { PrescriptionMedicationsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Button, Grid, Stack, useTheme } from '@mui/material';
-import { useAppSelector } from '@redux/hooks';
+import { dispatch,useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { borderRadius, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
@@ -14,8 +16,13 @@ const ConfirmButton = () => {
   const [t] = useTranslation();
   const theme = useTheme();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
-  const { watch } = useFormContext();
+  const {
+    watch,
+    formState: { dirtyFields }
+  } = useFormContext();
   const isPrescriptionCreationLoading = useAppSelector(patientsSelector.isPrescriptionCreationLoading);
+
+  const isFormChanged = Object.values(dirtyFields).length > 0;
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -37,6 +44,19 @@ const ConfirmButton = () => {
     return () => subscription.unsubscribe();
   }, [watch]);
 
+  const onClose = useCallback(() => {
+    if (isFormChanged) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ConfirmCancellationModal,
+          props: { action: () => dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal)) }
+        })
+      );
+    } else {
+      dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
+    }
+  }, [isFormChanged]);
+
   return (
     <Grid item xs={12}>
       <Stack direction="row" spacing={2} alignItems="center" justifyContent="flex-end">
@@ -47,6 +67,7 @@ const ConfirmButton = () => {
             px: paddings.leftRight24,
             py: paddings.topBottom12
           }}
+          onClick={onClose}
           variant="outlined"
         >
           {t(Translation.COMMON_BUTTON_CANCEL_LABEL)}

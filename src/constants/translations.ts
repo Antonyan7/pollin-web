@@ -99,6 +99,7 @@ export enum Translation {
   MODAL_CONFIRM_REASON_FOR_RETEST = 'modal.confirm.reason.for.retest',
   MODAL_CONFIRM_REASON_FOR_RETEST_REQUIRED = 'modal.confirm.reason.for.retest.required',
   MODAL_CREATE_MEDICATION_TOAST = 'modal.create.medication.toast',
+  MODAL_CREATE_PRESCRIPTION_TOAST = 'modal.create.prescription.toast',
   MODAL_DELETE_ALERT_MESSAGE = 'modal.delete.alert.message',
   MODAL_DELETE_ALERT_TITLE = 'modal.delete.alert.title',
   MODAL_ERROR_GO_BACK = 'modal.error.go.back',

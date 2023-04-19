@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import ConfirmButton from '@components/Modals/Medications/AddPatientMedicationModal/form/actions';
 import DateField from '@components/Modals/Medications/AddPatientMedicationModal/form/fields/DateField';
@@ -14,8 +15,15 @@ import { margins, paddings } from 'themes/themeConstants';
 
 import { AddPatientMedicationFormField } from './initialValues';
 
-const FormBody = () => {
+const FormBody = ({ setIsDirty }: { setIsDirty: (val: boolean) => void }) => {
   const [t] = useTranslation();
+  const {
+    formState: { dirtyFields }
+  } = useFormContext();
+
+  useEffect(() => {
+    setIsDirty(Object.values(dirtyFields).length > 0);
+  }, [dirtyFields, setIsDirty]);
 
   return (
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>

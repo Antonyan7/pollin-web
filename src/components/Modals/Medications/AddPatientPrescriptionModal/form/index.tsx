@@ -10,25 +10,25 @@ import { ModalName } from 'types/modals';
 import { FormContent } from './FormContent';
 import { initialValues } from './initialValues';
 
-const AddPatientPrescriptionForm = () => {
+const AddPatientPrescriptionForm = ({ setIsDirty }: { setIsDirty: (val: boolean) => void }) => {
   const methods = useForm({
     mode: 'onSubmit',
     defaultValues: initialValues
   });
   const router = useRouter();
-  const patientId = router.query.id;
+  const patientId = router.query.id as string;
   const currentPrescriptionUuid = useAppSelector(patientsSelector.currentPrescriptionUuid);
+  const patientProfile = useAppSelector(patientsSelector.patientProfile);
 
+  const patientName = patientProfile?.fullName;
   const { handleSubmit } = methods;
   const onSubmit = (values: IAddPatientPrescriptionForm) => {
-    if (typeof patientId === 'string') {
-      const prescriptionData = {
-        patientId,
-        prescription: values
-      };
+    const prescriptionData = {
+      patientId,
+      prescription: values
+    };
 
-      dispatch(patientsMiddleware.createPatientPrescription(prescriptionData));
-    }
+    dispatch(patientsMiddleware.createPatientPrescription(prescriptionData, patientName));
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const AddPatientPrescriptionForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormContent />
+        <FormContent setIsDirty={setIsDirty} />
       </form>
     </FormProvider>
   );

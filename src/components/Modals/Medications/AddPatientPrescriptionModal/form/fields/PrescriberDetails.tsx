@@ -124,7 +124,7 @@ const PrescriberDetails = () => {
           fullWidth
           disabled
           variant="outlined"
-          defaultValue="prescriber name"
+          defaultValue={t(Translation.MODAL_PRESCRIPTIONS_PRESCRIBER_CPSO_REGISTRATION)}
           label={t(Translation.MODAL_PRESCRIPTIONS_PRESCRIBER_CPSO_REGISTRATION)}
         />
       </Grid>
