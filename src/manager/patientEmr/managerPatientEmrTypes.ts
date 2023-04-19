@@ -283,6 +283,10 @@ export interface ProfileTestResultDetailsItem {
 export interface IProfileTestResultDetailsResponse {
   testResults: ProfileTestResultDetailsItem[];
 }
+export interface ProfileTestResultDetailsRequest {
+  patientId: string;
+}
+
 export interface MedicalBackgroundFieldValues {
   isEditable: boolean;
   note: string;

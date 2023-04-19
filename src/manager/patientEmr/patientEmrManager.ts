@@ -47,13 +47,13 @@ import {
   IPatientsListResponse,
   IPlanMutation,
   IPrescriptionStatuses,
-  IProfileTestResultDetailsReqBody,
   IProfileTestResultDetailsResponse,
   IProfileTestResults,
   IReadyToOrderPatientPlanResponse,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest,
+  ProfileTestResultDetailsRequest,
   Recency
 } from 'manager/patientEmr/managerPatientEmrTypes';
 import { CustomAlerts, IEncountersReqBody, IPatientsReqBody } from 'types/patient';
@@ -203,11 +203,12 @@ const patientEmrManager = {
       `${baseURLTestsResults}/v1/profile-test-result/${patientId}`
     );
   },
-  getProfileTestResultDetails(patientId: string, params: IProfileTestResultDetailsReqBody) {
-    return axiosInstance.get<IProfileTestResultDetailsResponse, IAxiosResponse<IProfileTestResultDetailsResponse>>(
-      `${baseURLTestsResults}/v1/profile-test-result/${patientId}/details`,
+  getProfileTestResultDetails(patientId: string) {
+    return axiosInstance.post<ProfileTestResultDetailsRequest, IAxiosResponse<IProfileTestResultDetailsResponse>>(
+      `${baseURLTestsResults}/v1/test-result`,
       {
-        params
+        patientId,
+        page: 1
       }
     );
   },

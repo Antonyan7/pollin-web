@@ -17,8 +17,7 @@ import {
   IPlanMutation,
   IUpdateEncounterAddendumRequest,
   PatientPrescriptionsDrugListProps,
-  Recency,
-  TestResultItemType
+  Recency
 } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ISendBookingRequestToPatientRequest } from '@components/Modals/Booking/SendBookingRequestToPatientModal/types';
 import { SeveritiesType } from '@components/Scheduling/types';
@@ -549,20 +548,19 @@ const getProfileTestResults = (patientId: string) => async (dispatch: AppDispatc
   }
 };
 
-const getProfileTestResultDetails =
-  (id: string, type: TestResultItemType, patientId: string) => async (dispatch: AppDispatch) => {
-    try {
-      dispatch(setIsProfileTestResultDetailsLoading(true));
+const getProfileTestResultDetails = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsProfileTestResultDetailsLoading(true));
 
-      const response = await API.patients.getProfileTestResultDetails(patientId, { id, type });
+    const response = await API.patients.getProfileTestResultDetails(patientId);
 
-      dispatch(setProfileTestResultDetails(response.data.data.testResults));
-    } catch (error) {
-      Sentry.captureException(error);
-    } finally {
-      dispatch(setIsProfileTestResultsLoading(false));
-    }
-  };
+    dispatch(setProfileTestResultDetails(response.data.data.testResults));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsProfileTestResultsLoading(false));
+  }
+};
 
 const getPatientContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setPatientContactInformationLoadingState(true));
