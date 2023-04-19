@@ -24,6 +24,7 @@ const CurrentMedications = () => {
   }, []);
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+    dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
     setPage(newPage);
   };
 
