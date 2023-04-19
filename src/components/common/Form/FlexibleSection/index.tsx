@@ -1,17 +1,19 @@
 import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
-import FieldWithNote from '@components/common/Form/AdvancedField';
+import { Box } from '@mui/material';
 
-import MedicalHistorySectionAddButton from '../../../MedicalBackground/components/common/MedicalHistorySectionAddButton';
+import { AdvancedFieldType, FieldWithNote, SimpleField } from '../AdvancedField';
 import FormRadio from '../Radio';
 import { FlexibleSectionTableRow } from '../types';
 
+import MedicalHistorySectionAddButton from './MedicalHistorySectionAddButton';
 import FlexibleSectionTable from './table';
 
 interface FlexibleSectionProps {
   fieldName: string;
   controlFieldName: string;
-  itemsFieldName: string;
+  itemsFieldName?: string;
+  type?: AdvancedFieldType;
   title: string;
   tableTitle: string;
   rows: FlexibleSectionTableRow[];
@@ -26,10 +28,11 @@ const FlexibleSection: FC<FlexibleSectionProps> = ({
   tableTitle,
   itemsFieldName,
   addNewItemButtonLabel,
+  type,
   initialFields,
   rows
 }) => {
-  const parentFieldName = `${fieldName}.${itemsFieldName}`;
+  const parentFieldName = itemsFieldName ? `${fieldName}.${itemsFieldName}` : fieldName; // When control & fields are in the same level
   const { control } = useFormContext();
   const { fields, remove, append, update } = useFieldArray({
     control,
@@ -62,9 +65,16 @@ const FlexibleSection: FC<FlexibleSectionProps> = ({
   };
 
   const shouldShowAddNewItemButton = isExists && addNewItemButtonLabel;
+  const isPlan = type === AdvancedFieldType.Plan;
 
   return (
-    <FieldWithNote fieldName={fieldName} fieldLabel={title} fieldComponent={<FormRadio fieldName={controlFieldName} />}>
+    <Box
+      component={isPlan ? SimpleField : FieldWithNote}
+      fieldName={fieldName}
+      fieldLabel={title}
+      fieldComponent={<FormRadio fieldName={controlFieldName} />}
+      type={type}
+    >
       {isExists &&
         fields?.map((field, index) => (
           <FlexibleSectionTable
@@ -84,7 +94,7 @@ const FlexibleSection: FC<FlexibleSectionProps> = ({
           lastFieldIndex={fields.length - 1}
         />
       )}
-    </FieldWithNote>
+    </Box>
   );
 };
 

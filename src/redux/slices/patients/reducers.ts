@@ -26,6 +26,7 @@ import {
   PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
+import { PatientPreliminaryBloodsResults } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import { IEncountersFilterOption } from 'types/patient';
@@ -405,6 +406,15 @@ const reducers = createReducer({
   },
   setIsReadyToOrderPlansUpdating(state, action: IAction<boolean>) {
     state.plans.isReadyToOrderPlansUpdating = action.payload;
+  },
+  setPatientPreliminaryBloodsResults(state, action: IAction<PatientPreliminaryBloodsResults[]>) {
+    state.plans.patientPreliminaryBloodsResults = action.payload;
+  },
+  setIsPatientPreliminaryBloodsResultsLoading(state, action: IAction<boolean>) {
+    state.plans.isCategoriesLoading = action.payload;
+  },
+  setIsCreatingPlan(state, action: IAction<boolean>) {
+    state.plans.isCreatingPlan = action.payload;
   }
 });
 

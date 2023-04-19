@@ -5,7 +5,7 @@ import {
   ConsultationFormSubTitle,
   ConsultationFormTitle,
   ConsultationTitleWithIcon
-} from '@components/Plans/components/common';
+} from '@components/common';
 import ConsultationFormRadio from '@components/Plans/components/ConslutationFormRadio/ConsultationFormRadio';
 import PartnerContent from '@components/Plans/components/PatientDetails/PartnerContent';
 import PartnerFormHeader from '@components/Plans/components/PatientDetails/PartnerHeader';

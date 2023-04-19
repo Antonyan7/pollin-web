@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConsultationFormSubTitle } from '@components/Plans/components/common';
+import { ConsultationFormSubTitle } from '@components/common';
 import { PartnerFormHeaderProps } from '@components/Plans/types';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Grid, useTheme } from '@mui/material';

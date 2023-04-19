@@ -7,6 +7,7 @@ import {
   IMarkInTransitActionReqBody,
   IOrderResultsListReqBody,
   IOrdersStatuses,
+  IPatientPreliminaryBloods,
   IResultsReqBody,
   ISpecimenCollectionData,
   ISpecimenLocations,
@@ -336,6 +337,11 @@ const resultsManager = {
         body
       )
       .then(({ data }) => data);
+  },
+  getPatientPreliminaryBloods(patientId: string) {
+    return axiosInstance.get<IPatientPreliminaryBloods, IAxiosResponse<IPatientPreliminaryBloods>>(
+      `${baseURL}/v1/profile-test-result/${patientId}/preliminary-bloods`
+    );
   }
 };
 

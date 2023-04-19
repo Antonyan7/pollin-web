@@ -14,12 +14,19 @@ export interface IMenuItem {
   items: IMenuItem[];
 }
 
-const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
+export interface SimpleMenuProps {
+  ActionButton: ({ handleClick }: { handleClick: (event: MouseEvent<HTMLElement>) => void }) => JSX.Element;
+  onItemClick: (item: IMenuItem) => void;
+  items: IMenuItem[];
+}
+
+const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick: (item: IMenuItem) => void }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -48,6 +55,10 @@ const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
           horizontal: 'left',
           vertical: 'top'
         }}
+        transformOrigin={{
+          horizontal: 'right',
+          vertical: 'top'
+        }}
         sx={(theme) => ({
           '& .MuiPaper-root': {
             borderRadius: 4,
@@ -57,7 +68,7 @@ const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
             px: paddings.leftRight16
           },
           '& .MuiMenuItem-root': {
-            borderRadius: 4
+            borderRadius: 2
           },
           '& .MuiMenuItem-root:hover': {
             background: theme.palette.primary[100]
@@ -71,7 +82,7 @@ const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
         }}
       >
         {item?.items?.map((innerItem) => (
-          <MenuItem sx={{ p: paddings.all8 }}>
+          <MenuItem sx={{ p: paddings.all8 }} onClick={() => onItemClick(innerItem)}>
             <Typography variant="body2">{innerItem.title}</Typography>
           </MenuItem>
         ))}
@@ -80,16 +91,7 @@ const SimpleMenuItem = ({ item }: { item: IMenuItem }) => {
   );
 };
 
-const SimpleMenu = ({
-  ActionButton,
-  items
-}: // TODO
-// onItemClick
-{
-  ActionButton: ({ handleClick }: { handleClick: (event: MouseEvent<HTMLElement>) => void }) => JSX.Element;
-  // onItemClick: () => void;
-  items: IMenuItem[];
-}) => {
+const SimpleMenu = ({ ActionButton, items, onItemClick }: SimpleMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -120,7 +122,7 @@ const SimpleMenu = ({
             px: paddings.leftRight16
           },
           '& .MuiMenuItem-root': {
-            borderRadius: 4
+            borderRadius: 2
           },
           '& .MuiMenuItem-root:hover': {
             background: theme.palette.primary[100]
@@ -128,7 +130,7 @@ const SimpleMenu = ({
         })}
       >
         {items.map((item) => (
-          <SimpleMenuItem item={item} />
+          <SimpleMenuItem item={item} onItemClick={onItemClick} />
         ))}
       </Menu>
     </>

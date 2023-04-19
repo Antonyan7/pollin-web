@@ -34,6 +34,7 @@ import {
   PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
+import { PatientPreliminaryBloodsResults } from '@axios/results/resultsManagerTypes';
 import { IEncountersFilterOption, IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
 
 interface IProfileProps {
@@ -126,6 +127,9 @@ export interface IPatientPlansProps {
   isReadyToOrderPlansLoading: boolean;
   isReadyToOrderPlansUpdating: boolean;
   readyToOrderPatientPlans: IReadyToOrderPatientPlan[];
+  patientPreliminaryBloodsResults: PatientPreliminaryBloodsResults[];
+  isPatientPreliminaryBloodsResultsLoading: boolean;
+  isCreatingPlan: boolean;
 }
 
 export interface ICreateMedication {

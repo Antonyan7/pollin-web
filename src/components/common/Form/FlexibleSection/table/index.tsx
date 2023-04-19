@@ -13,6 +13,7 @@ const FlexibleSectionTable: FC<FlexibleSectionTableProps> = ({ title, rows, onDe
     sx={(theme) => ({
       background: theme.palette.primary.light,
       px: paddings.leftRight16,
+      pt: paddings.top8,
       pb: paddings.bottom24,
       borderRadius: 1.5
     })}
@@ -41,6 +42,10 @@ const FlexibleSectionTable: FC<FlexibleSectionTableProps> = ({ title, rows, onDe
 
           if (item.type === FlexibleItemType.Input) {
             renderedItem = <FormInput label={item.label} fieldName={finalFieldName} key={item.fieldName} />;
+          }
+
+          if (item.type === FlexibleItemType.MultilineInput) {
+            renderedItem = <FormInput label={item.label} fieldName={finalFieldName} key={item.fieldName} multiline />;
           }
 
           if (item.type === FlexibleItemType.Dropdown) {

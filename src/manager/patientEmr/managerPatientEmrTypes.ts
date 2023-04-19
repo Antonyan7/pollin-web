@@ -1017,3 +1017,44 @@ export interface IPatientPlansCategories {
   title: string;
   items: IPatientPlanActionItem[];
 }
+
+export interface FieldWithNote {
+  note: string;
+  isEditable?: false;
+}
+
+export enum SpermSource {
+  Partner = 'Partner',
+  Donor = 'Donor'
+}
+
+export enum SpermType {
+  Fresh = 'Fresh',
+  Frozen = 'Frozen'
+}
+
+export interface IPatientPlanMedication {
+  categoryId: string;
+  medicationId: string;
+  dosage: string;
+  route: string;
+  frequency: string;
+  time?: string;
+  quantity: string;
+  refill: string;
+  refillNotes?: string;
+  doctorNotes?: string;
+}
+export interface INewPatientPlan {
+  patientId: string;
+  planTypeId: string;
+  monitoring: {
+    monitoringLocation: FieldWithNote & { value: string };
+    cycleNumber: FieldWithNote & { value: string };
+  };
+  sperm: {
+    source: FieldWithNote & { value: SpermSource | null };
+    type: FieldWithNote & { value: SpermType | null };
+  };
+  medications: IPatientPlanMedication[] | boolean;
+}

@@ -18,11 +18,11 @@ import { AddPatientMedicationFormField } from '../initialValues';
 
 const INITIAL_PAGE = 1;
 
-const DrugNameField = ({ fieldLabel }: { fieldLabel?: string }) => {
+const DrugNameField = ({ fieldLabel, fieldName }: { fieldLabel?: string; fieldName?: string }) => {
   const [t] = useTranslation();
   const drugs = useAppSelector(patientsSelector.drugs);
   const isDrugLoading = useAppSelector(patientsSelector.isDrugLoading);
-  const labelFieldName = AddPatientMedicationFormField.DragName;
+  const labelFieldName = fieldName ?? AddPatientMedicationFormField.DragName;
   const options = useMemo(() => drugs?.map((drug) => ({ id: drug.id, name: drug.title })), [drugs]);
   const drugOptions = useMemo(() => createOptionsGroupPatients(options ?? []), [options]);
   const { control } = useFormContext();

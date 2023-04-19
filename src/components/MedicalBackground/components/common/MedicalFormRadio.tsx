@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { ConsultationFormRadioGroup } from '@components/common';
 import { MedicalFormRadioProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
-import { ConsultationFormRadioGroup } from '@components/Plans/components/common';
 import { FormControlLabel, Radio, RadioGroupProps } from '@mui/material';
 import { Translation } from 'constants/translations';
 

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react';
+import React, { PropsWithChildren, ReactElement, useCallback, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DeleteTwoTone } from '@mui/icons-material';
@@ -60,12 +60,14 @@ export const FieldLabelWithNoteIcon = ({
   description,
   onClick,
   isShown,
-  fieldName
+  fieldName,
+  withoutSeparator
 }: {
-  description: string;
+  description: ReactElement;
   onClick?: () => void;
   isShown?: boolean;
   fieldName: string;
+  withoutSeparator?: boolean;
 }) => {
   const { control } = useFormContext();
   const { field } = useController({ name: `${fieldName}.note`, control });
@@ -73,7 +75,7 @@ export const FieldLabelWithNoteIcon = ({
   return (
     <Grid item container direction="row" alignItems="center" xs={12}>
       <Grid item container direction="row" alignItems="center" gap={2} xs={10}>
-        <FieldSubtitle>{description}</FieldSubtitle>
+        {description}
         <IconButton
           {...(isShown || field.value
             ? {
@@ -92,41 +94,57 @@ export const FieldLabelWithNoteIcon = ({
           <MedicalBackgroundNoteIcon />
         </IconButton>
       </Grid>
-      <Grid item xs={2}>
-        <Typography>:</Typography>
-      </Grid>
+      {!withoutSeparator && (
+        <Grid item xs={2}>
+          <Typography>:</Typography>
+        </Grid>
+      )}
     </Grid>
   );
 };
+
+export enum AdvancedFieldType {
+  Plan = 'Plan',
+  MedicalBackground = 'MedicalBackground'
+}
 
 interface AdvancedFieldProps extends PropsWithChildren {
   fieldLabel: string;
   fieldName: string;
   fieldComponent: React.ReactElement;
-  equalSeparated?: boolean;
+  type?: AdvancedFieldType;
 }
 
-const AdvancedField = ({
-  fieldLabel,
-  fieldName,
-  children,
-  fieldComponent,
-  equalSeparated = false
-}: AdvancedFieldProps) => {
+export const FieldWithNote = ({ fieldLabel, fieldName, children, fieldComponent, type }: AdvancedFieldProps) => {
   const { control } = useFormContext();
-  const { field } = useController({ name: `${fieldName}.note`, control });
+  const { field } = useController({ name: `${fieldName}.note`, control, defaultValue: '' });
   const [shouldShowNote, setShouldShowNote] = useState(!!field.value);
   const onNoteClick = useCallback(() => {
     setShouldShowNote((isShown) => !isShown);
   }, []);
 
+  const isPlanField = type === AdvancedFieldType.Plan;
+
   return (
-    <Grid container item px={paddings.leftRight32} py={paddings.topBottom16} direction="row" xs={12}>
+    <Grid
+      container
+      item
+      {...(!isPlanField
+        ? {
+            px: paddings.leftRight32,
+            py: paddings.topBottom16
+          }
+        : {
+            alignItems: shouldShowNote ? 'flex-start' : 'center'
+          })}
+      direction="row"
+      xs={12}
+    >
       <Grid
         item
         container
         direction="row"
-        xs={equalSeparated ? 6 : 5}
+        xs={isPlanField ? 6 : 5}
         alignItems="flex-start"
         flexWrap="nowrap"
         gap={1}
@@ -135,13 +153,24 @@ const AdvancedField = ({
         }}
       >
         <FieldLabelWithNoteIcon
-          description={fieldLabel}
+          withoutSeparator={isPlanField}
+          description={
+            <FieldSubtitle
+              {...(isPlanField && {
+                sx: {
+                  fontSize: (theme) => theme.typography.pxToRem(14)
+                }
+              })}
+            >
+              {fieldLabel}
+            </FieldSubtitle>
+          }
           onClick={onNoteClick}
           isShown={shouldShowNote}
           fieldName={fieldName}
         />
       </Grid>
-      <Grid item container direction="column" xs={equalSeparated ? 6 : 7} gap={2}>
+      <Grid item container direction="column" xs={isPlanField ? 6 : 7} gap={2}>
         {fieldComponent}
         {children}
         <Note onClick={onNoteClick} visible={shouldShowNote ?? false} fieldName={fieldName} />
@@ -150,4 +179,79 @@ const AdvancedField = ({
   );
 };
 
-export default AdvancedField;
+export const FieldLabel = ({
+  description,
+  withoutSeparator
+}: {
+  description: ReactElement;
+  withoutSeparator?: boolean;
+}) => (
+  <Grid item container direction="row" alignItems="center" xs={12}>
+    <Grid item container direction="row" alignItems="center" gap={2} xs={10}>
+      {description}
+    </Grid>
+    {!withoutSeparator && (
+      <Grid item xs={2}>
+        <Typography>:</Typography>
+      </Grid>
+    )}
+  </Grid>
+);
+
+export const SimpleField = ({
+  fieldLabel,
+  fieldComponent,
+  type = AdvancedFieldType.MedicalBackground,
+  children
+}: Partial<AdvancedFieldProps>) => {
+  const isPlanField = type === AdvancedFieldType.Plan;
+
+  return (
+    <Grid
+      container
+      item
+      {...(!isPlanField
+        ? {
+            px: paddings.leftRight32,
+            py: paddings.topBottom16
+          }
+        : {
+            alignItems: children ? 'flex-start' : 'center'
+          })}
+      direction="row"
+      xs={12}
+    >
+      <Grid
+        item
+        container
+        direction="row"
+        xs={isPlanField ? 6 : 5}
+        alignItems="flex-start"
+        flexWrap="nowrap"
+        gap={1}
+        sx={{
+          marginTop: margins.top10
+        }}
+      >
+        <FieldLabel
+          withoutSeparator={isPlanField}
+          description={
+            <FieldSubtitle
+              {...(isPlanField && {
+                sx: {
+                  fontSize: (theme) => theme.typography.pxToRem(14)
+                }
+              })}
+            >
+              {fieldLabel}
+            </FieldSubtitle>
+          }
+        />
+      </Grid>
+      <Grid item container direction="column" xs={isPlanField ? 6 : 7} gap={2}>
+        {fieldComponent}
+      </Grid>
+      {children && <Grid xs={12}>{children}</Grid>}
+    </Grid>
+  );
+};

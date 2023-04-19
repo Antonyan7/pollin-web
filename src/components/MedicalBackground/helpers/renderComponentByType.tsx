@@ -1,5 +1,5 @@
 import React from 'react';
-import FieldWithNote from '@components/common/Form/AdvancedField';
+import { FieldWithNote } from '@components/common/Form/AdvancedField';
 import { Dropdown, DropdownMultiple } from '@components/common/Form/Dropdown';
 import FormInput from '@components/common/Form/FormInput';
 import { FlexibleItemType, IComponentData } from '@components/common/Form/types';

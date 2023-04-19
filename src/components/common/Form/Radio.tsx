@@ -13,17 +13,25 @@ export const StyledRadioGroup = styled(RadioGroup)(() => ({
   gap: 3
 }));
 
-const FormRadio = ({ fieldName }: { fieldName: string }) => {
+const FormRadio = ({
+  fieldName,
+  firstOption,
+  secondOption
+}: {
+  fieldName: string;
+  firstOption?: string;
+  secondOption?: string;
+}) => {
   const [t] = useTranslation();
   const { control } = useFormContext();
   const { field } = useController({ name: fieldName, control });
   const { onChange, ...fieldProps } = field;
 
   const onRadioFieldChange: RadioGroupProps['onChange'] = (radioEvent) => {
-    if (radioEvent.target.value === 'true') {
-      onChange(true);
+    if (radioEvent.target.value === 'true' || radioEvent.target.value === firstOption) {
+      onChange(firstOption ?? true);
     } else {
-      onChange(false);
+      onChange(secondOption ?? false);
     }
   };
 
@@ -40,16 +48,21 @@ const FormRadio = ({ fieldName }: { fieldName: string }) => {
   );
 
   return (
-    <StyledRadioGroup {...fieldProps} value={!!radioValue} onChange={onRadioFieldChange} ref={field.ref}>
+    <StyledRadioGroup
+      {...fieldProps}
+      value={firstOption ? radioValue : !!radioValue}
+      onChange={onRadioFieldChange}
+      ref={field.ref}
+    >
       <FormControlLabel
-        value
+        value={firstOption ?? true}
         control={<Radio />}
-        label={t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES)}
+        label={firstOption ?? t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_YES)}
       />
       <FormControlLabel
-        value={false}
+        value={secondOption ?? false}
         control={<Radio />}
-        label={t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO)}
+        label={secondOption ?? t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_CONSULTATION_NO)}
       />
     </StyledRadioGroup>
   );

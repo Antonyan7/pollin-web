@@ -1,3 +1,9 @@
+import {
+  FieldWithNote,
+  IPatientPlanMedication,
+  SpermSource,
+  SpermType
+} from '@axios/patientEmr/managerPatientEmrTypes';
 import { RadioGroupProps } from '@mui/material';
 
 export enum InitialConsultationFormRadioValues {
@@ -36,4 +42,31 @@ export enum InitialConsultationFormFields {
   Vasectomy = 'Vasectomy',
   VasectomyReversal = 'VasectomyReversal',
   DifficultyErectionsEjaculations = 'DifficultyErectionsEjaculations'
+}
+
+export enum PlanPage {
+  Create = 'Create',
+  List = 'List'
+}
+
+export enum MonitoringLocation {
+  MonitoredInClinic = 'Monitored in clinic'
+}
+
+export interface IFormMedications {
+  patientId: string;
+  planTypeId: string;
+  monitoring: {
+    monitoringLocation: FieldWithNote & { value: string };
+    cycleNumber: FieldWithNote & { value: string };
+  };
+  sperm: {
+    source: FieldWithNote & { value: SpermSource | null };
+    type: FieldWithNote & { value: SpermType | null };
+  };
+  medications: {
+    categoryId: string;
+    isExists: boolean;
+    items: IPatientPlanMedication[];
+  }[];
 }

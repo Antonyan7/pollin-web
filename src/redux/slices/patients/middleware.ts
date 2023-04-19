@@ -11,6 +11,7 @@ import {
   IFertilityHistory,
   IGeneralHealthProps,
   IGenitourinaryHistory,
+  INewPatientPlan,
   IOrderPatientPlanRequestData,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
@@ -154,7 +155,10 @@ const {
   setIsBookingRequestToPatientLoading,
   setReadyToOrderPatientPlans,
   setIsReadyToOrderPlansLoading,
-  setIsReadyToOrderPlansUpdating
+  setIsReadyToOrderPlansUpdating,
+  setPatientPreliminaryBloodsResults,
+  setIsPatientPreliminaryBloodsResultsLoading,
+  setIsCreatingPlan
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1425,6 +1429,36 @@ const updatePatientGenitourinaryHistory =
     }
   };
 
+const getPatientPreliminaryBloods = (patientId: string) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsPatientPreliminaryBloodsResultsLoading(true));
+
+    const response = await API.results.getPatientPreliminaryBloods(patientId);
+
+    dispatch(setPatientPreliminaryBloodsResults(response.data.data.testResults));
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsPatientPreliminaryBloodsResultsLoading(false));
+  }
+};
+
+const createPatientPlan = (data: INewPatientPlan, successCallback?: () => void) => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsCreatingPlan(true));
+
+    const response = await API.patients.createPatientPlan(data);
+
+    if (response) {
+      successCallback?.();
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+  } finally {
+    dispatch(setIsCreatingPlan(false));
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1513,5 +1547,7 @@ export default {
   markThePlanAsActive,
   markThePlanAsCompleted,
   orderPlansToPatient,
-  getPatientPlansReadyToOrder
+  getPatientPlansReadyToOrder,
+  getPatientPreliminaryBloods,
+  createPatientPlan
 };

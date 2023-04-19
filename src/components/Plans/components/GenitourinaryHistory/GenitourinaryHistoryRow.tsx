@@ -1,5 +1,5 @@
 import React from 'react';
-import { ConsultationTitleWithIcon } from '@components/Plans/components/common';
+import { ConsultationTitleWithIcon } from '@components/common';
 import ConsultationFormRadio from '@components/Plans/components/ConslutationFormRadio/ConsultationFormRadio';
 import { GenitourinaryHistoryContentProps } from '@components/Plans/types';
 import { Grid } from '@mui/material';

@@ -1,10 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  ConsultationDivider,
-  ConsultationFormTitle,
-  ConsultationTitleWithIcon
-} from '@components/Plans/components/common';
+import { ConsultationDivider, ConsultationFormTitle, ConsultationTitleWithIcon } from '@components/common';
 import GenitourinaryHistoryRow from '@components/Plans/components/GenitourinaryHistory/GenitourinaryHistoryRow';
 import { genitourinaryHistoryValues } from '@components/Plans/helpers';
 import { InitialConsultationFormFields } from '@components/Plans/types';

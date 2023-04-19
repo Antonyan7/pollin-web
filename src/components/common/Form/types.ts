@@ -6,6 +6,7 @@ export enum FlexibleItemType {
   Section = 'Section',
   Dropdown = 'Dropdown',
   Input = 'Input',
+  MultilineInput = 'MultilineInput',
   Date = 'Date',
   MultipleSelect = 'MultipleSelect'
 }
@@ -21,7 +22,7 @@ export interface FlexibleSectionTableProps extends PropsWithChildren, GridProps 
 
 export type FlexibleSectionTableRow =
   | IFlexibleItem[]
-  | ((index: number, parentFieldName: string) => JSX.Element[] | null);
+  | ((index: number, parentFieldName: string) => JSX.Element[] | JSX.Element | null);
 
 export interface IComponentData {
   type?: FlexibleItemType;

@@ -1,10 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  ConsultationDivider,
-  ConsultationFormTitle,
-  ConsultationTitleWithIcon
-} from '@components/Plans/components/common';
+import { ConsultationDivider, ConsultationFormTitle, ConsultationTitleWithIcon } from '@components/common';
 import PatientContributionWrapper from '@components/Plans/components/PatientContribution/PatientContributionWrapper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';

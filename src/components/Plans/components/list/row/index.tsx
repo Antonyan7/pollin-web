@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { IPatientPlan, IPatientPlansStatus } from '@axios/patientEmr/managerPatientEmrTypes';
 import SeparatedLabels from '@components/SeparatedLabels';
 import { KeyboardArrowRight } from '@mui/icons-material';
-import { Chip, IconButton, Paper } from '@mui/material';
+import { Box, Chip, IconButton, Paper } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -33,7 +33,7 @@ const PlanRow: FC<PlanRowProps> = ({ plan }) => {
         px: paddings.left16
       }}
     >
-      <Stack direction="row" display="flex" justifyContent="space-between">
+      <Box display="flex" justifyContent="space-between">
         <Stack direction="row">
           <SeparatedLabels labels={[plan.title, `${status?.title} on ${plan.date}`]} />
         </Stack>
@@ -55,7 +55,7 @@ const PlanRow: FC<PlanRowProps> = ({ plan }) => {
             <KeyboardArrowRight />
           </IconButton>
         </Stack>
-      </Stack>
+      </Box>
     </Paper>
   );
 };

@@ -8,9 +8,10 @@ export interface FormInputProps {
   fieldName: string;
   label: string;
   index?: number;
+  multiline?: boolean;
 }
 
-export const FormInput: FC<FormInputProps> = ({ fieldName, label, index }) => {
+export const FormInput: FC<FormInputProps> = ({ fieldName, label, index, multiline }) => {
   const { control } = useFormContext();
   const formInputRef = useRef<HTMLInputElement>(null);
   const { field, fieldState } = useController({
@@ -32,6 +33,8 @@ export const FormInput: FC<FormInputProps> = ({ fieldName, label, index }) => {
       helperText={fieldState?.error && errorHelperText}
       error={Boolean(fieldState?.error)}
       {...field}
+      multiline={multiline}
+      minRows={2}
       value={field.value}
       ref={field.ref}
       inputRef={formInputRef}

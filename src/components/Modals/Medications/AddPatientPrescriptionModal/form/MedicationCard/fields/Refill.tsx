@@ -13,9 +13,9 @@ import { borderRadius, borders } from 'themes/themeConstants';
 
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
-const RefillField = ({ index }: { index: number }) => {
+const RefillField = ({ index, fieldName }: { index?: number; fieldName?: string }) => {
   const [t] = useTranslation();
-  const labelFieldName = `medications.${index}.refill`;
+  const labelFieldName = fieldName ?? `medications.${index}.refill`;
   const dropdownOptions = useAppSelector(patientsSelector.dropdownOptions);
   const isDropdownOptionsLoading = useAppSelector(patientsSelector.isDropdownOptionsLoading);
   const [refillDropdownOptions, setRefillDropdownOptions] = useState<IDropdownOption[]>();

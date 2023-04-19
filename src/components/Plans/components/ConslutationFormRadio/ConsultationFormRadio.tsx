@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { ConsultationFormRadioGroup } from '@components/Plans/components/common';
+import { ConsultationFormRadioGroup } from '@components/common';
 import { ConsultationFormRadioProps, InitialConsultationFormRadioValues } from '@components/Plans/types';
 import { FormControl, FormControlLabel, Radio } from '@mui/material';
 import { Translation } from 'constants/translations';

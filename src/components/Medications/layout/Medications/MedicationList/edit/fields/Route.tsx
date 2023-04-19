@@ -15,9 +15,9 @@ import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
 import { AddPatientMedicationFormField } from '../initialValues';
 
-const RouteField = ({ fieldLabel }: { fieldLabel?: string }) => {
+const RouteField = ({ fieldLabel, fieldName }: { fieldLabel?: string; fieldName?: string }) => {
   const [t] = useTranslation();
-  const labelFieldName = AddPatientMedicationFormField.Route;
+  const labelFieldName = fieldName ?? AddPatientMedicationFormField.Route;
   const dropdownOptions = useAppSelector(patientsSelector.dropdownOptions);
   const isDropdownOptionsLoading = useAppSelector(patientsSelector.isDropdownOptionsLoading);
 
@@ -64,7 +64,7 @@ const RouteField = ({ fieldLabel }: { fieldLabel?: string }) => {
         id={labelFieldName}
         options={(routeDropdownOptions as IDropdownOption[]) ?? []}
         isOptionEqualToValue={(option, value) => option.id === value.id}
-        getOptionLabel={(option) => (typeof option === 'object' ? option.title : option)}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.title ?? '' : option)}
         onChange={(_, value) => {
           if (value && typeof value === 'object' && 'id' in value) {
             onChange(value.id);

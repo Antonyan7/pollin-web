@@ -27,6 +27,7 @@ import {
   IGetPatientsRequestBody,
   IGetPatientsResponse,
   IMedicalContactInformation,
+  INewPatientPlan,
   IOrderPatientPlanRequestData,
   IPatientBackground,
   IPatientBackgroundPartners,
@@ -433,7 +434,7 @@ const patientEmrManager = {
       {
         params: {
           patientId,
-          ...(page && {
+          ...(typeof page === 'number' && {
             page
           })
         }
@@ -475,6 +476,9 @@ const patientEmrManager = {
         }
       }
     );
+  },
+  createPatientPlan(data: INewPatientPlan) {
+    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/plans`, data);
   }
 };
 

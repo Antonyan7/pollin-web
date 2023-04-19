@@ -1,10 +1,6 @@
 import { IEmptyResponse } from 'manager/common';
 import { ISortOrder, SortOrder } from 'types/patient';
-import {
-  IOrderGroup,
-  OrdersActions,
-  OrdersListItemStatus
-} from 'types/reduxTypes/ordersStateTypes';
+import { IOrderGroup, OrdersActions, OrdersListItemStatus } from 'types/reduxTypes/ordersStateTypes';
 import {
   FinalResultType,
   ISpecimensListItemShort,
@@ -151,7 +147,7 @@ export interface ITestResultsDetailsBody {
   testResults: ITestResultsDetails[];
 }
 
-export interface IAddMachineForSpecimen extends IEmptyResponse { }
+export interface IAddMachineForSpecimen extends IEmptyResponse {}
 
 export interface ISpecimenForAppointment {
   id: string;
@@ -189,7 +185,7 @@ export interface ISpecimenCollectionData {
   appointmentId: string;
   collections: ISpecimenCollection[];
 }
-export interface IAddSpecimenToTransportFolder extends IEmptyResponse { }
+export interface IAddSpecimenToTransportFolder extends IEmptyResponse {}
 
 export interface IOrdersAction {
   id: OrdersActions;
@@ -251,4 +247,13 @@ export interface IValidateOrderCreationResponse {
     title: string;
     html: string;
   };
+}
+
+export interface PatientPreliminaryBloodsResults {
+  title: string;
+  dateCompleted: string;
+  result: string;
+}
+export interface IPatientPreliminaryBloods {
+  testResults: PatientPreliminaryBloodsResults[];
 }

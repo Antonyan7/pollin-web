@@ -1,24 +1,18 @@
 import React from 'react';
 import { useWatch } from 'react-hook-form';
+import { ConsultationFormSubTitle } from '@components/common';
 import { Add } from '@mui/icons-material';
 import { Button, Grid, useTheme } from '@mui/material';
 import { margins } from 'themes/themeConstants';
 
-import { ConsultationFormSubTitle } from '.';
-
-interface MedicalHistorySectionAddButtonProps {
+interface FlexibleSectionAddButtonProps {
   onClick: () => void;
   subTitle: string;
   lastFieldIndex: number;
   fieldName: string;
 }
 
-const MedicalHistorySectionAddButton = ({
-  onClick,
-  subTitle,
-  lastFieldIndex,
-  fieldName
-}: MedicalHistorySectionAddButtonProps) => {
+const FlexibleSectionAddButton = ({ onClick, subTitle, lastFieldIndex, fieldName }: FlexibleSectionAddButtonProps) => {
   const theme = useTheme();
 
   const lastSectionItem = useWatch({ name: `${fieldName}.${lastFieldIndex}` }) ?? {};
@@ -32,7 +26,15 @@ const MedicalHistorySectionAddButton = ({
 
   return (
     <Grid item container alignItems="center" justifyContent="center">
-      <Button onClick={onClick} disabled={!isAllFieldsFilled}>
+      <Button
+        onClick={onClick}
+        disabled={!isAllFieldsFilled}
+        sx={{
+          [`.Mui-disabled`]: {
+            opacity: 0.38
+          }
+        }}
+      >
         <Add sx={{ color: theme.palette.primary.main }} />
         <ConsultationFormSubTitle
           sx={{
@@ -47,4 +49,4 @@ const MedicalHistorySectionAddButton = ({
   );
 };
 
-export default MedicalHistorySectionAddButton;
+export default FlexibleSectionAddButton;

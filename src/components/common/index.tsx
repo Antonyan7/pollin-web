@@ -29,6 +29,10 @@ export const ConsultationFormRadioGroup = styled(RadioGroup)(() => ({
   gap: 3
 }));
 
+export const FormLabel = styled(Typography)(({ theme }) => ({
+  color: theme.palette.secondary[800]
+}));
+
 export const ConsultationTitleWithIcon = ({ description }: ConsultationTitleWithIconProps) => (
   <>
     <ConsultationFormSubTitle>{description}</ConsultationFormSubTitle>
