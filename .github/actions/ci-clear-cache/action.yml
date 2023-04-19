@@ -27,6 +27,7 @@ runs:
         echo "::endgroup::"
 
         echo "::group::Clear cypress"
+        yarn install
         yarn run cypress:clear
         echo "::endgroup::"
       shell: bash
