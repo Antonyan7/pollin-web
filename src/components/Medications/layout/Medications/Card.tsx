@@ -99,7 +99,7 @@ const Card: FC<CardItem> = ({ medication, index, disableEdit }) => {
               />
             </IconButton>
             {activeItem !== index ? (
-              <IconButton onClick={handleOpen}>
+              <IconButton>
                 {open ? (
                   <KeyboardArrowUp
                     sx={{
