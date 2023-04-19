@@ -70,7 +70,7 @@ const Card: FC<CardItem> = ({ medication, index, disableEdit }) => {
         }
       }}
       title={
-        <Grid item container alignItems="center" justifyContent="space-between">
+        <Grid item container alignItems="center" justifyContent="space-between" onClick={handleOpen}>
           <Grid>
             <Typography
               sx={{
