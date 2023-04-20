@@ -16,6 +16,8 @@ import CardItem from '../Card';
 const PastMedications = () => {
   const [t] = useTranslation();
   const patientPastMedications = useAppSelector(patientsSelector.patientPastMedications);
+  const patientCurrentMedications = useAppSelector(patientsSelector.patientCurrentMedications);
+
   const isPatientPastMedicationLoading = useAppSelector(patientsSelector.isPatientPastMedicationLoading);
 
   const [page, setPage] = useState<number>(0);
@@ -23,6 +25,7 @@ const PastMedications = () => {
   const patientId = router.query.id as string;
 
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
+    dispatch(patientsMiddleware.updateCardToViewMode(-1, []));
     setPage(newPage);
   };
 
@@ -40,8 +43,13 @@ const PastMedications = () => {
           <CircularLoading />
         </Box>
       ) : (
-        patientPastMedications?.medications?.map((medication) => (
-          <CardItem key={v4()} disableEdit medication={medication} />
+        patientPastMedications?.medications?.map((medication, index) => (
+          <CardItem
+            key={v4()}
+            index={patientCurrentMedications.medications.length + index}
+            disableEdit
+            medication={medication}
+          />
         ))
       )}
       {!patientPastMedications?.medications?.length && !isPatientPastMedicationLoading ? (

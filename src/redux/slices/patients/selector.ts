@@ -191,6 +191,11 @@ const isCardInEditMode = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.isCardInEditMode
 );
+const isCardInViewMode = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isCardInViewMode
+);
+
 const prescriptionsDrugList = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.prescriptions.prescriptionsDrugList
@@ -360,6 +365,7 @@ export default {
   isMedicationCreatedLoading,
   isMedicationUpdatedLoading,
   isCardInEditMode,
+  isCardInViewMode,
   prescriptionsDrugList,
   patientMedicationState,
   currentPrescriptionUuid,

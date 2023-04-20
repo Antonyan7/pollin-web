@@ -372,6 +372,9 @@ const reducers = createReducer({
   setCardToEditMode(state, action: IAction<boolean[]>) {
     state.medicationsPrescriptions.medications.isCardInEditMode = action.payload;
   },
+  setCardToViewMode(state, action: IAction<boolean[]>) {
+    state.medicationsPrescriptions.medications.isCardInViewMode = action.payload;
+  },
   setPatientPrescriptionsListItems(state, action: IAction<PatientPrescriptionsDrugListProps[] | null>) {
     state.medicationsPrescriptions.prescriptions.prescriptionsDrugList = action.payload;
   },

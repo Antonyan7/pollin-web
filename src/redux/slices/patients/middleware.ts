@@ -146,6 +146,7 @@ const {
   setIsDownloadPrescriptionLoading,
   setIsMedicationUpdatedLoading,
   setCardToEditMode,
+  setCardToViewMode,
   setPlansList,
   setIsPlansListLoading,
   setStatusVariations,
@@ -946,6 +947,7 @@ const createPatientMedication =
         );
         dispatch(patientsMiddleware.getPatientMedications(data.patientId, Recency.Current, currentPage));
         dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
+        dispatch(patientsMiddleware.updateCardToViewMode(0, []));
       }
     } catch (error) {
       Sentry.captureException(error);
@@ -976,6 +978,18 @@ const updateCardToEditMode = (index: number, prevState: boolean[]) => (dispatch:
     newState[index] = !newState[index];
 
     dispatch(setCardToEditMode(newState));
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+};
+
+const updateCardToViewMode = (index: number, prevState: boolean[]) => (dispatch: AppDispatch) => {
+  try {
+    const newState = [...prevState];
+
+    newState[index] = !newState[index];
+
+    dispatch(setCardToViewMode(newState));
   } catch (error) {
     Sentry.captureException(error);
   }
@@ -1549,6 +1563,7 @@ export default {
   createPatientMedication,
   updatePatientMedication,
   updateCardToEditMode,
+  updateCardToViewMode,
   getPatientPrescriptions,
   getPrescriptionStatuses,
   updateFemalePregnancyInformation,

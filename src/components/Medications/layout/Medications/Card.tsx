@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react';
+import React, { FC, useCallback, useMemo } from 'react';
 import { KeyboardArrowDown, KeyboardArrowUp, ModeEditOutlined } from '@mui/icons-material';
 import { Badge, cardHeaderClasses, Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -13,18 +13,18 @@ import EditModeContent from './MedicationList/edit';
 import ViewModeContent from './MedicationList/view';
 
 const Card: FC<CardItem> = ({ medication, index, disableEdit }) => {
-  const [open, setOpen] = useState(false);
   const theme = useTheme();
 
   const isCardInEditMode = useAppSelector(patientsSelector.isCardInEditMode);
+  const isCardInViewMode = useAppSelector(patientsSelector.isCardInViewMode);
 
   const handleToggle = useCallback(() => {
-    dispatch(patientsMiddleware.updateCardToEditMode(index as number, isCardInEditMode));
+    dispatch(patientsMiddleware.updateCardToEditMode(index, isCardInEditMode));
   }, [index, isCardInEditMode]);
 
   const handleOpen = useCallback(() => {
-    setOpen((currentMode) => !currentMode);
-  }, []);
+    dispatch(patientsMiddleware.updateCardToViewMode(index, isCardInViewMode));
+  }, [index, isCardInViewMode]);
 
   const activeItem = isCardInEditMode.findIndex((item) => item === true);
   const disableEditAction = (activeItem >= 0 && activeItem !== index) || disableEdit;
@@ -100,7 +100,7 @@ const Card: FC<CardItem> = ({ medication, index, disableEdit }) => {
             </IconButton>
             {activeItem !== index ? (
               <IconButton>
-                {open ? (
+                {isCardInViewMode[index] ? (
                   <KeyboardArrowUp
                     sx={{
                       color: theme.palette.primary.main,
@@ -121,10 +121,10 @@ const Card: FC<CardItem> = ({ medication, index, disableEdit }) => {
         </Grid>
       }
     >
-      <Grid hidden={!open || isCardInEditMode[index as number]}>
+      <Grid hidden={!isCardInViewMode[index] || isCardInEditMode[index]}>
         <ViewModeContent medication={medication} />
       </Grid>
-      {isCardInEditMode[index as number] && <EditModeContent medication={medication} />}
+      {isCardInEditMode[index] && <EditModeContent medication={medication} />}
     </SubCardStyled>
   );
 };

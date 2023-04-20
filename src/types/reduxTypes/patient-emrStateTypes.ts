@@ -105,6 +105,7 @@ export interface MedicationsPrescriptionsProps {
     isPatientCurrentMedicationLoading: boolean;
     isMedicationUpdatedLoading: boolean;
     isCardInEditMode: boolean[];
+    isCardInViewMode: boolean[];
     patientMedicationState: IPatientMedicationsState | null;
   };
   prescriptions: {
