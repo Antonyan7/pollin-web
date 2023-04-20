@@ -4,20 +4,22 @@ import { AdvancedFieldType, FieldWithNote } from '@components/common/Form/Advanc
 import { StaticDropdown } from '@components/common/Form/Dropdown';
 import FormRadio from '@components/common/Form/Radio';
 import { MonitoringLocation } from '@components/Plans/types';
-import { Divider, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
-import { margins } from 'themes/themeConstants';
+import { margins, paddings } from 'themes/themeConstants';
 
 import { MedicationsForm } from './MedicationSections';
 
 const MonitoringField = () => (
-  <FieldWithNote
-    fieldName="monitoring.monitoringLocation"
-    type={AdvancedFieldType.Plan}
-    fieldLabel={t(Translation.PAGE_PATIENT_PLANS_CREATE_MONITORING)}
-    fieldComponent={<Typography>{MonitoringLocation.MonitoredInClinic}</Typography>}
-  />
+  <Grid py={paddings.topBottom16}>
+    <FieldWithNote
+      fieldName="monitoring.monitoringLocation"
+      type={AdvancedFieldType.Plan}
+      fieldLabel={t(Translation.PAGE_PATIENT_PLANS_CREATE_MONITORING)}
+      fieldComponent={<Typography mt={margins.top16}>{MonitoringLocation.MonitoredInClinic}</Typography>}
+    />
+  </Grid>
 );
 
 const Form = () => (

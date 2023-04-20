@@ -23,7 +23,7 @@ const extractDefaultValues = (patientId: string, planTypeId: string, categories:
   patientId: patientId as string,
   planTypeId: planTypeId as string,
   monitoring: {
-    monitoringLocation: { value: MonitoringLocation.MonitoredInClinic, note: '' },
+    monitoringLocation: { value: Object.keys(MonitoringLocation)[0], note: '' },
     cycleNumber: { value: '', note: '' }
   },
   sperm: {

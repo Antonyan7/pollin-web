@@ -20,9 +20,10 @@ export interface SimpleMenuProps {
   items: IMenuItem[];
 }
 
-const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick: (item: IMenuItem) => void }) => {
+const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick?: (item: IMenuItem) => void }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const isMenuItemEnabled = item.items.length > 0;
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -33,7 +34,7 @@ const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick: (
 
   return (
     <>
-      <MenuItem onClick={handleClick}>
+      <MenuItem onClick={handleClick} disabled={!isMenuItemEnabled}>
         <Grid container display="flex" direction="row" alignItems="center">
           <Grid item xs={11}>
             <Typography>{item.title}</Typography>
@@ -82,7 +83,7 @@ const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick: (
         }}
       >
         {item?.items?.map((innerItem) => (
-          <MenuItem sx={{ p: paddings.all8 }} onClick={() => onItemClick(innerItem)}>
+          <MenuItem sx={{ p: paddings.all8 }} onClick={() => onItemClick?.(innerItem)}>
             <Typography variant="body2">{innerItem.title}</Typography>
           </MenuItem>
         ))}
@@ -130,7 +131,12 @@ const SimpleMenu = ({ ActionButton, items, onItemClick }: SimpleMenuProps) => {
         })}
       >
         {items.map((item) => (
-          <SimpleMenuItem item={item} onItemClick={onItemClick} />
+          <SimpleMenuItem
+            item={item}
+            {...(item.items.length > 0 && {
+              onItemClick
+            })}
+          />
         ))}
       </Menu>
     </>
