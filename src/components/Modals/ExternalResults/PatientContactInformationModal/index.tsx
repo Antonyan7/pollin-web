@@ -8,6 +8,7 @@ import { dispatch } from '@redux/hooks';
 import { bookingMiddleware } from '@redux/slices/booking';
 import { patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { PatientInformationContext } from 'context/PatientInformationContext';
 import { margins } from 'themes/themeConstants';
@@ -34,6 +35,7 @@ const PatientContactInformationModal = (row: IPatientContactInformationModalProp
       isLoading={isPatientContactInformationLoading}
       title={patientContactInformationTitleLabel}
       onClose={onClose}
+      dataCy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECT}
     >
       <Grid>
         <DialogContent sx={{ p: 1.5 }}>

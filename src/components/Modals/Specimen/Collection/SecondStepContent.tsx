@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { CircularProgress, Grid, MenuItem, Stack, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 
 import { BaseSelectWithLoading } from '@ui-component/BaseDropdownWithLoading';
@@ -71,6 +72,7 @@ const SecondStepContent = () => {
                 isLoading={isSpecimenStorageLocationsLoading}
                 value={storageLocationIdField.value}
                 onChange={(e) => storageLocationIdField.onChange(e.target.value)}
+                data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_STORE}
                 label={t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_SELECT_STORE_LABEL)}
               >
                 {specimenStorageLocations.map((location) => (

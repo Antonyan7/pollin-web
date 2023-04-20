@@ -1,6 +1,7 @@
 import React from 'react';
 import { LocalShippingTwoTone } from '@mui/icons-material';
 import { IconFlask } from '@tabler/icons';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { OverrideIcon } from 'types';
@@ -18,6 +19,7 @@ interface SpecimensProps {
     url: string;
     icon: OverrideIcon['overrideIcon'];
     breadcrumbs: boolean;
+    dataCy?: string;
   }[];
 }
 
@@ -29,6 +31,7 @@ const Specimens: SpecimensProps = {
     {
       id: 'specimenCollection',
       title: t(Translation.PAGE_SPECIMEN_COLLECTION_TITLE),
+      dataCy: CypressIds.PAGE_SPECIMEN_COLLECTION_PAGE_NAVIGATION,
       type: 'item',
       url: '/clinic-test-results/specimen-collection',
       icon: IconFlask,

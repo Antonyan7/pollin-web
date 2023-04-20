@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { Box, Checkbox, FormControlLabel, FormGroup, Grid, Typography } from '@mui/material';
 import { patientsSelector } from '@redux/slices/patients';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { usePatientInfoContext } from 'context/PatientInformationContext';
 import { PatientInformationContextActionTypes } from 'context/types/PatientInformationContextTypes';
@@ -46,6 +47,7 @@ const CheckboxConfirming = () => {
               control={
                 <Checkbox
                   checked={patientNameChecked}
+                  data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECT_PATIENT_NAME_CHECKBOX}
                   onChange={(event) => {
                     setPatientNameChecked(event.target.checked);
                   }}
@@ -56,6 +58,7 @@ const CheckboxConfirming = () => {
             <FormControlLabel
               control={
                 <Checkbox
+                  data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECT_PATIENT_DATE_CHECKBOX}
                   checked={patientIdChecked}
                   onChange={(event) => {
                     setPatientIdChecked(event.target.checked);
@@ -69,6 +72,7 @@ const CheckboxConfirming = () => {
                 <FormControlLabel
                   control={
                     <Checkbox
+                      data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECT_PATIENT_OHIP_CHECKBOX}
                       checked={OHIPInformationChecked}
                       onChange={(event) => {
                         setOfipInformationChecked(event.target.checked);

@@ -36,13 +36,18 @@ const SpecimenCollectionHeader = () => {
           serviceProviderId={serviceProviderId}
           isLoading={isGroupedServiceProvidersLoading}
           isSpecimenCollection
-          dataCy={CypressIds.PAGE_SPECIMEN_COLLECTION_SELECT_RESOURCE}
+          dataCy={CypressIds.PAGE_SPECIMEN_COLLECTION_PAGE_RESOURCE}
           label={t(Translation.PAGE_SPECIMEN_COLLECTION_SELECT_RESOURCE)}
           onChange={onServiceProviderChange}
         />
       </Grid>
       <Grid item xs={12} sm={5}>
-        <PollinDatePickerWithTodayButton calendarDate={calendarDate} onChange={onDateChange} />
+        <PollinDatePickerWithTodayButton
+          calendarDate={calendarDate}
+          onChange={onDateChange}
+          todayDataCy={CypressIds.PAGE_SPECIMEN_COLLECTION_PAGE_TODAY_BUTTON}
+          dateDataCy={CypressIds.PAGE_SPECIMEN_COLLECTION_PAGE_DATE}
+        />
       </Grid>
       <Grid item xs={12} sm={4}>
         <SpecimenCollectionFilter />

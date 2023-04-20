@@ -154,6 +154,20 @@
   page.appointments.send.booking.request.success.message
   page.specimen.tracking.move.to.success.message
   page.specimen.tracking.mark.in.transit.success.message
+  page.specimen.collection.success.message
+  page.specimen.collection.modal.collect.button
+  page.specimen.collection.modal.collect.patient.name.checkbox
+  page.specimen.collection.modal.collect.patient.date.checkbox
+  page.specimen.collection.modal.collect.patient.ohip.checkbox
+  page.specimen.collection.modal.collect
+  page.specimen.collection.modal.back
+  page.specimen.collection.modal.collection.done
+  page.specimen.collection.modal.store
+  page.specimen.collection.page.navigation
+  page.specimen.collection.page.resource
+  page.specimen.collection.page.today.button
+  page.specimen.collection.page.date
+  page.specimen.collection.page.filter
   page.specimen.tracking.transport.list
   page.specimen.tracking.transport.list.today.button
   page.specimen.tracking.transport.list.date.picker

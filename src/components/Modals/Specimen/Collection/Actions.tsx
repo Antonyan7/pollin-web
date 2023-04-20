@@ -6,6 +6,7 @@ import { Button, DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { bookingSelector } from '@redux/slices/booking';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { AppointmentStatus } from 'types/reduxTypes/bookingStateTypes';
@@ -115,6 +116,7 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
                   px: paddings.leftRight20
                 }}
                 variant="contained"
+                data-cy={CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_BACK}
               >
                 {t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_BUTTON_BACK_LABEL)}
               </Button>
@@ -127,6 +129,11 @@ const Actions: React.FC<SpecimenCollectionModalActionsProps> = ({
                 px: paddings.leftRight24,
                 color: (theme) => theme.palette.common.white
               }}
+              data-cy={
+                isFirstStep
+                  ? CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECT_BUTTON
+                  : CypressIds.PAGE_SPECIMEN_COLLECTION_MODAL_COLLECTION_DONE
+              }
               color="primary"
               variant="contained"
               onClick={handleSpecimenCollectionConfirmation}

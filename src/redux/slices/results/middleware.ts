@@ -543,7 +543,10 @@ const submitSpecimenCollections =
             severityType: SeveritiesType.success,
             description: t(Translation.PAGE_SPECIMEN_TRACKING_MODAL_COLLECTION_COLLECT_SUCCESS_MESSAGE, {
               title: patientName
-            })
+            }),
+            renderList: {
+              dataCy: CypressIds.PAGE_SPECIMEN_COLLECTION_SUCCESS_MESSAGE
+            }
           }
         })
       );
