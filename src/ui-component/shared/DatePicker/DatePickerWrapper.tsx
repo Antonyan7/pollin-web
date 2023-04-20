@@ -19,6 +19,7 @@ const DatePickerWrapper = ({
   errorMessage,
   isError,
   dataCyId,
+  inputRef,
   ...otherProps
 }: DatePickerWrapperProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -48,6 +49,7 @@ const DatePickerWrapper = ({
       }}
       renderInput={(params) => (
         <TextField
+          inputRef={inputRef}
           disabled
           fullWidth
           {...params}

@@ -8,6 +8,7 @@ import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import { FlexibleItemType, IFlexibleItem } from '@components/common/Form/types';
 import MedicalFormRadio from '@components/MedicalBackground/components/common/MedicalFormRadio';
 import MedicalComponentWithRadioView from '@components/MedicalBackground/components/common/MedWithRadioView';
+import { isDashString } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { fertilityHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
@@ -33,7 +34,8 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
         const fieldDefaultValue = {
           [`${mappedItem.fieldName}`]: {
-            ...mappedItemProps
+            ...mappedItemProps,
+            value: isDashString(mappedItem.value) ? '' : mappedItem.value
           }
         };
 

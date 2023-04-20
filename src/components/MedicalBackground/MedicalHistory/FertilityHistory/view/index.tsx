@@ -31,7 +31,8 @@ const ViewModeContent = () => {
       {mappedItems.map((mappedItem, index) => {
         const finalValue =
           mappedItem?.componentData?.type === FlexibleItemType.Dropdown
-            ? getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)?.title
+            ? getDropdownOption(dropdownOptions, mappedItem?.componentData?.dropdownType, mappedItem?.viewValue)
+                ?.title ?? '-'
             : mappedItem?.viewValue;
 
         return (

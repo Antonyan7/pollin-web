@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { MedicalDatePickerFieldProps } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { PollinDatePickerType } from 'types/datePicker';
 
@@ -13,12 +14,14 @@ const MedicalDatePicker = ({
   onChange,
   errorHelperText,
   isError,
+  inputRef,
   ...otherProps
 }: MedicalDatePickerFieldProps) => (
   <PollinDatePicker
     type={PollinDatePickerType.Date}
     pickerConfigs={{
       ...otherProps,
+      inputRef,
       label,
       onChange,
       value,
@@ -32,7 +35,7 @@ const MedicalDatePicker = ({
 
 export const ControlledDatePicker = ({ fieldName, label, ...otherProps }: { fieldName: string; label: string }) => {
   const { control } = useFormContext();
-
+  const ref = useRef(null);
   const { field, fieldState } = useController({
     name: fieldName,
     control
@@ -40,11 +43,14 @@ export const ControlledDatePicker = ({ fieldName, label, ...otherProps }: { fiel
   const errorMessage = generateErrorMessage(label);
   const errorHelperText = fieldState?.error && errorMessage;
 
+  useScrollIntoView(ref, fieldState);
+
   return (
     <MedicalDatePicker
       label={label}
       isError={Boolean(fieldState?.error)}
       errorHelperText={errorHelperText}
+      inputRef={ref}
       {...field}
       {...otherProps}
     />

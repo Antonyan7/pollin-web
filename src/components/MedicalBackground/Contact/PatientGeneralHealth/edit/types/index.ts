@@ -1,3 +1,5 @@
+import { RefObject } from 'react';
+
 export interface MedicalFormRadioProps {
   fieldName: string;
   onChangeState?: (state: boolean) => void;
@@ -18,6 +20,7 @@ export interface MedicalDatePickerFieldProps {
   onChange: (value: React.SetStateAction<string | Date | null>) => void;
   isError?: boolean;
   errorHelperText?: string;
+  inputRef?: RefObject<HTMLInputElement>;
 }
 
 export enum GeneralHealthFormFields {

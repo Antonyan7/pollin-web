@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFemalePatientGynaecologicalHistoryProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
+import { isDashString } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { gynaecologicalHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import renderComponents from '@components/MedicalBackground/helpers/renderComponentByType';
@@ -36,7 +37,8 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
         const fieldDefaultValue = {
           [`${mappedItem.fieldName}`]: {
-            ...mappedItemProps
+            ...mappedItemProps,
+            value: isDashString(mappedItem.value) ? '' : mappedItem.value
           }
         };
 

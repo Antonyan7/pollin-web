@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
-import { getDropdownByType } from '@components/MedicalBackground/helpers';
+import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
 import { GenitourinaryFields } from '@components/MedicalBackground/MedicalHistory/MaleGenitourinaryHistory/editView/types';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -31,8 +31,10 @@ const DiagnosedConditions = () => {
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GENITOURINARY_HISTORY_FIELD_DIAGNOSED_CONDITIONS
   );
   const { onChange, value: fieldValue, ...fieldProps } = field;
-
   const conditionsOptions = getDropdownByType(dropdownOptions, DropdownOptionType.DiagnosedConditions)?.options;
+  const selected = fieldValue.items.map((item: IDropdownOption) =>
+    getDropdownOption(dropdownOptions, DropdownOptionType.DiagnosedConditions, item?.id)
+  );
   const [showAdditionalNote, setShowAdditionalNote] = useState(!!fieldValue.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
@@ -66,6 +68,7 @@ const DiagnosedConditions = () => {
         <BaseDropdownWithLoading
           isLoading={false}
           multiple
+          value={selected}
           popupIcon={<KeyboardArrowDownIcon color="primary" />}
           fullWidth
           options={conditionsOptions as IDropdownOption[]}

@@ -65,6 +65,7 @@ import Age from '../Contact/PatientBackgroundInformation/view/fields/Age';
 import CancerPatient from '../Contact/PatientBackgroundInformation/view/fields/CancerPatient';
 import Gender from '../Contact/PatientBackgroundInformation/view/fields/Gender';
 import RelationshipStatus from '../Contact/PatientBackgroundInformation/view/fields/RelationshipStatus';
+import AbnormalResults from '../MedicalHistory/MaleGenitourinaryHistory/view/fields/AbnormalResults';
 
 export const defineSingleFieldValue = (fieldType?: boolean) =>
   fieldType
@@ -157,6 +158,7 @@ export const genitourinaryRows = [
   { Component: BiologicalChildren },
   { Component: BiologicalChildrenWithCurrentPartner },
   { Component: PastSemenAnalysis },
+  { Component: AbnormalResults },
   { Component: DiagnosedConditions },
   { Component: Vasectomy },
   { Component: VasectomyReversal },
