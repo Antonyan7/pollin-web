@@ -121,7 +121,6 @@ const BaseDropdownWithLoading = <
                 color: theme.palette.primary.dark
               }
             }}
-            onKeyDown={(e) => e.preventDefault()}
             InputProps={{
               ...params.InputProps,
               endAdornment:
