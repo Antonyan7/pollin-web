@@ -4,8 +4,8 @@ import { ITestTypeItem, TestResultItemType } from '@axios/patientEmr/managerPati
 import TestHistoryHint from '@components/PatientProfile/TestHistoryHint';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { Button, Typography, useTheme } from '@mui/material';
-import { dispatch } from '@redux/hooks';
-import { patientsMiddleware } from '@redux/slices/patients';
+import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
@@ -15,9 +15,11 @@ import { ModalName } from 'types/modals';
 const TestResultItem = ({ title, type, id: testTypeId }: ITestTypeItem) => {
   const [t] = useTranslation();
   const theme = useTheme();
+  const currentPatientId = useAppSelector(patientsSelector.currentPatientId);
+
   const onViewTestResultsClick = () => {
     if (testTypeId) {
-      dispatch(patientsMiddleware.getProfileTestResultDetails(testTypeId));
+      dispatch(patientsMiddleware.getProfileTestResultDetails(currentPatientId));
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.PatientTestResultDetailsModal,
