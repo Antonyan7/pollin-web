@@ -12,4 +12,7 @@ export interface IStaffProps extends IPagination {
 export interface IStaff {
   id: string;
   name: string;
+  details: {
+    registrationNumber: string;
+  };
 }

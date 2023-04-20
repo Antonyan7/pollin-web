@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, DialogTitle, Divider, IconButton } from '@mui/material';
 import { dispatch } from '@redux/hooks';
+import { patientsMiddleware } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
@@ -12,6 +13,7 @@ const FormHeader = () => {
   const [t] = useTranslation();
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
+    dispatch(patientsMiddleware.setPatientPrescriptionsItems());
   }, []);
 
   return (

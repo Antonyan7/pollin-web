@@ -21,8 +21,23 @@ export const getMedicationInitialState = () => ({
   doctorNotes: ''
 });
 
+export const getPharmacyInitialState = {
+  name: '',
+  wholeAddress: '',
+  address: {
+    street: '',
+    unit: '',
+    city: '',
+    postalCode: '',
+    country: ''
+  },
+  faxNumber: '',
+  phoneNumber: ''
+};
+
 export const initialValues: IAddPatientPrescriptionForm = {
   type: PrescriptionTypeEnum.Pollin,
   prescriberId: '',
-  medications: [getMedicationInitialState()]
+  medications: [getMedicationInitialState()],
+  pharmacy: getPharmacyInitialState
 };

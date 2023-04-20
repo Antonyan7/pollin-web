@@ -78,6 +78,8 @@ const PrescriberDetails = () => {
     dispatch(staffMiddleware.getStaffUsers(data));
   }, [inputValue]);
 
+  const registrationNumber = staffUsers.staff.find((person) => person.name === inputValue)?.details?.registrationNumber;
+
   return (
     <Grid container item spacing={2}>
       <Grid item xs={12}>
@@ -124,7 +126,7 @@ const PrescriberDetails = () => {
           fullWidth
           disabled
           variant="outlined"
-          defaultValue={t(Translation.MODAL_PRESCRIPTIONS_PRESCRIBER_CPSO_REGISTRATION)}
+          value={registrationNumber}
           label={t(Translation.MODAL_PRESCRIPTIONS_PRESCRIBER_CPSO_REGISTRATION)}
         />
       </Grid>

@@ -5,6 +5,9 @@ import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 import { paddings } from 'themes/themeConstants';
 
+import { DateUtil } from '@utils/date/DateUtil';
+import { isDashValue } from '@utils/stringUtils';
+
 interface ViewModeContentProps {
   medication: MedicationsProps;
 }
@@ -48,7 +51,11 @@ const ViewModeContent = ({ medication }: ViewModeContentProps) => {
           :
         </Grid>
         <Grid item xs={6}>
-          {`${medication.duration.start} - ${medication.duration.end}`}
+          {medication.duration?.start && medication.duration?.end && !isDashValue(medication.duration.start)
+            ? `${DateUtil.formatDateOnly(medication.duration.start)} - ${DateUtil.formatDateOnly(
+                medication.duration.end
+              )}`
+            : '-'}
         </Grid>
       </Grid>
 

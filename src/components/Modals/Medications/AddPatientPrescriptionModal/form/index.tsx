@@ -23,9 +23,22 @@ const AddPatientPrescriptionForm = ({ setIsDirty }: { setIsDirty: (val: boolean)
   const patientName = patientProfile?.fullName;
   const { handleSubmit } = methods;
   const onSubmit = (values: IAddPatientPrescriptionForm) => {
+    const pharmacyData = values.pharmacy;
+    const pharmacy = {
+      ...pharmacyData,
+      address: {
+        ...pharmacyData.address,
+        street: pharmacyData.wholeAddress ?? pharmacyData.address.street,
+        city: pharmacyData.wholeAddress ? '' : pharmacyData.address.city
+      }
+    };
+
     const prescriptionData = {
       patientId,
-      prescription: values
+      prescription: {
+        ...values,
+        pharmacy
+      }
     };
 
     dispatch(patientsMiddleware.createPatientPrescription(prescriptionData, patientName));

@@ -540,6 +540,7 @@ export interface PrescriptionsProps extends IMedications {
 }
 export interface PrescriptionsPharmacyProps {
   name?: string;
+  wholeAddress?: string;
   address: {
     street: string;
     unit?: string;
@@ -618,6 +619,7 @@ export interface IAddPatientPrescriptionForm {
   type: PrescriptionTypeEnum;
   prescriberId: string;
   medications: PrescriptionMedicationsProps[];
+  pharmacy: PrescriptionsPharmacyProps;
 }
 export interface ICreatePatientPrescription {
   patientId: string;

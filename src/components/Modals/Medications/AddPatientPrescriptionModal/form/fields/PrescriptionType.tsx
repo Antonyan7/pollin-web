@@ -24,7 +24,7 @@ const PrescriptionType = () => {
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_TYPE)}</Typography>
       </Grid>
       <Grid ml={margins.left8}>
-        <ConsultationFormRadioGroup {...fieldProps} value={field.value} onChange={handleChange}>
+        <ConsultationFormRadioGroup {...fieldProps} onChange={handleChange}>
           <FormControlLabel
             value={PrescriptionTypeEnum.Pollin}
             control={<Radio />}

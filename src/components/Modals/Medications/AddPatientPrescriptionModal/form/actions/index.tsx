@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { PrescriptionMedicationsProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Button, Grid, Stack, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { borderRadius, paddings } from 'themes/themeConstants';
@@ -46,6 +46,7 @@ const ConfirmButton = () => {
 
   const onClose = useCallback(() => {
     if (isFormChanged) {
+      dispatch(patientsMiddleware.setPatientPrescriptionsItems());
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.ConfirmCancellationModal,
@@ -54,6 +55,7 @@ const ConfirmButton = () => {
       );
     } else {
       dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
+      dispatch(patientsMiddleware.setPatientPrescriptionsItems());
     }
   }, [isFormChanged]);
 

@@ -56,10 +56,7 @@ const CurrentMedicationsAndDrugAllergies = () => {
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_NEW_PRESCRIPTION_MEDICATION_LIST)}</Typography>
         {!prescriptionList?.length && '1.'}
         {prescriptionList?.map((prescriptionItem, prescriptionItemIndex) => (
-          <Grid container gap={1} direction="row" xs={5}>
-            <Grid xs={2.5}>{`${prescriptionItemIndex + 1}.`}</Grid>
-            <Grid>{prescriptionItem.name}</Grid>
-          </Grid>
+          <Grid>{`${prescriptionItemIndex + 1}. ${prescriptionItem.name}`}</Grid>
         ))}
       </Grid>
     </Grid>
