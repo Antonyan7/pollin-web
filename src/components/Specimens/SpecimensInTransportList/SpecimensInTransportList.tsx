@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { rowsPerPage } from 'helpers/constants';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
@@ -48,13 +49,7 @@ interface ListBodyProps {
   setSelectedRows: React.Dispatch<React.SetStateAction<TableRowCheckboxProps[]>>;
 }
 
-const ListBody = ({
-  isLoading,
-  specimensList,
-  actionVariations,
-  selectedRows,
-  setSelectedRows
-}: ListBodyProps) => {
+const ListBody = ({ isLoading, specimensList, actionVariations, selectedRows, setSelectedRows }: ListBodyProps) => {
   const selectedIds = selectedRows.map((row) => row.id);
   const numSelected = selectedIds.length;
   const isSelected = (id: string) => selectedIds.indexOf(id) !== -1;
@@ -70,6 +65,7 @@ const ListBody = ({
 
           return (
             <SpecimensInTransportListRow
+              index={index}
               row={row}
               key={row.id}
               actions={isContextMenuAvailable ? filteredSpecimenActions.actions : []}
@@ -172,6 +168,7 @@ const SpecimensInTransportList = () => {
                   sx={{ color: theme.palette.primary.main }}
                   indeterminate={numSelected > 0 && numSelected < rowsCount}
                   checked={isAllSpecimensSelected}
+                  data-cy={CypressIds.COMMON_TABLE_CHECKBOX_ALL}
                   onChange={(e) => handleSelectAllClick(e, specimensList.specimens, setSelectedRows)}
                 />
               </TableCell>

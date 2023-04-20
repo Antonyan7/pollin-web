@@ -20,8 +20,8 @@ const OrderTypes = () => {
 
     return (
       <Box>
-        {activeOrderTypes?.groups?.map((orderGroup: IOrderGroup) => (
-          <GroupItemsWrapper orderGroup={orderGroup} key={orderGroup.id} />
+        {activeOrderTypes?.groups?.map((orderGroup: IOrderGroup, index) => (
+          <GroupItemsWrapper index={index} orderGroup={orderGroup} key={orderGroup.id} />
         ))}
       </Box>
     );

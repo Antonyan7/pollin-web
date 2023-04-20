@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Checkbox, TableCell, TableRow, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { getRowLabel } from 'helpers/getPatientRowLabel';
 import { ContextMenuAction, ISpecimensInTransportListItem } from 'types/reduxTypes/resultsStateTypes';
 
@@ -12,6 +13,7 @@ import Chip from '@ui-component/patient/Chip';
 import { getStatusTitle } from '@utils/mappings';
 
 interface SpecimensInTransportListRowProps {
+  index: number;
   row: ISpecimensInTransportListItem;
   actions: ContextMenuAction[];
   isItemSelected: boolean;
@@ -20,6 +22,7 @@ interface SpecimensInTransportListRowProps {
 }
 
 export const SpecimensInTransportListRow = ({
+  index,
   row,
   actions,
   isItemSelected,
@@ -43,6 +46,7 @@ export const SpecimensInTransportListRow = ({
           inputProps={{
             'aria-labelledby': labelId
           }}
+          data-cy={`${CypressIds.COMMON_TABLE_CHECKBOX}-${index}`}
           onChange={(event) => {
             event.stopPropagation();
             onClick(event, row.id);

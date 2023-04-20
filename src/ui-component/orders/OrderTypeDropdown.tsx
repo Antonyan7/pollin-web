@@ -5,6 +5,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Stack, Typography, useTheme } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
@@ -46,6 +47,7 @@ const OrderTypeDropdown = () => {
               dispatch(ordersMiddleware.updateSelectedOrderType(value.id));
             }
           }}
+          dataCy={CypressIds.PAGE_CREATE_ORDER_ORDER_TYPE_DROPDOWN}
           options={[...orderTypeOptions]}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           getOptionLabel={(itemResource) => (typeof itemResource === 'object' ? itemResource.title : itemResource)}

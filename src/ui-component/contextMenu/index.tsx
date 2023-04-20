@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import { CircularProgress, Grid, IconButton, Menu, MenuItem } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { paddings } from 'themes/themeConstants';
 
 import { IContextActionBinding, useContextMenuAction } from '@hooks/useContextMenuAction';
@@ -13,7 +14,7 @@ interface ContextMenuProps {
 
 export const ContextMenu = ({ actionBindings, isLoading, dataCy }: ContextMenuProps) => {
   const [anchorElement, setAnchorElement] = useState<Element | ((element: Element) => Element) | null>(null);
-
+  const cypressId = dataCy ?? CypressIds.COMMON_CONTEXT_MENU;
   const handleClick = (event: React.MouseEvent) => {
     setAnchorElement(event.currentTarget);
   };
@@ -27,12 +28,7 @@ export const ContextMenu = ({ actionBindings, isLoading, dataCy }: ContextMenuPr
 
   return (
     <Grid item>
-      <IconButton
-        {...(dataCy && { 'data-cy': dataCy })}
-        size="small"
-        onClick={handleClick}
-        disabled={!actionBindings.length}
-      >
+      <IconButton data-cy={cypressId} size="small" onClick={handleClick} disabled={!actionBindings.length}>
         <MoreVertOutlinedIcon aria-controls="menu-friend-card" aria-haspopup="true" />
       </IconButton>
       <Menu

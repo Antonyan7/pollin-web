@@ -76,6 +76,7 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
     {
       id: SpecimenActionType.MoveToAnotherTransport,
       title: getActionTitleById(SpecimenActionType.MoveToAnotherTransport, actions),
+      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_TO_ANOTHER,
       actionCallback: () => {
         handleMoveToAnotherTransport();
       }
@@ -110,6 +111,7 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
     {
       id: SpecimenActionType.MoveToAllTests,
       title: getActionTitleById(SpecimenActionType.MoveToAllTests, actions),
+      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_BACK_ALL_TESTS,
       actionCallback: moveSpecimenToAllTests
     }
   ];

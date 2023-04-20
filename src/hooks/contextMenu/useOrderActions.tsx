@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { filterActionBindings, getActionTitleById } from 'helpers/contextMenu';
 import { useRouter } from 'next/router';
 import { ModalName } from 'types/modals';
@@ -36,14 +37,16 @@ const useOrderActions = (row: { id: string; status: OrdersListItemStatus }, acti
       ),
       actionCallback: () => {
         handleOrderViewEditAction();
-      }
+      },
+      dataCy: CypressIds.PAGE_ORDER_ORDERS_MENU_VIEW_OR_EDIT_ORDER
     },
     {
       id: OrdersActions.Cancel,
       title: getActionTitleById(OrdersActions.Cancel, actions),
       actionCallback: () => {
         handleOrderCancellationPopupAction();
-      }
+      },
+      dataCy: CypressIds.PAGE_ORDER_ORDERS_MENU_CANCEL_ORDER
     }
   ];
 

@@ -4,6 +4,7 @@ import { Box, Button, CircularProgress, Divider, Grid, Link, Stack, Typography, 
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
@@ -184,6 +185,7 @@ const TestResultDetails: React.FC = () => {
                 variant="contained"
                 sx={{ marginRight: margins.right8 }}
                 onClick={() => handleAttachmentDownloadClick(attachment.id)}
+                data-cy={CypressIds.PAGE_ORDER_DETAILS_BUTTON_DOWNLOAD_ATTACHED_FILE}
               >
                 {t(Translation.PAGE_PATIENT_ORDER_RESULTS_DETAILS_DOWNLOAD_ATTACHED_FILE)}
               </Button>

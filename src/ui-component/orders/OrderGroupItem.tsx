@@ -16,9 +16,10 @@ interface Props {
   groupItem: IOrderGroupItem;
   orderGroupId: string;
   paddingFactor?: number;
+  index?: string;
 }
 
-const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) => {
+const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0, index }: Props) => {
   const theme = useTheme();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -112,6 +113,7 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
           control={
             <>
               <OrderGroupCheckbox
+                index={index}
                 checkedIcon={<CheckedIcon />}
                 checkedColor={theme.palette.primary.light}
                 onChange={onSelectChange}
@@ -131,8 +133,14 @@ const OrderGroupItem = ({ groupItem, orderGroupId, paddingFactor = 0 }: Props) =
         />
       )}
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
-        {groupItem.groupItems?.map((item) => (
-          <OrderGroupItem groupItem={item} orderGroupId={orderGroupId} paddingFactor={1} key={item.id} />
+        {groupItem.groupItems?.map((item, groupItemIndex) => (
+          <OrderGroupItem
+            groupItem={item}
+            index={`${index}-${groupItemIndex}`}
+            orderGroupId={orderGroupId}
+            paddingFactor={1}
+            key={item.id}
+          />
         ))}
       </Collapse>
     </Stack>

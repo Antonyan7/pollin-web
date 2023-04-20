@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Grid, Stack, Typography } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
@@ -36,6 +37,7 @@ const Body = () => {
               color="primary"
               variant="contained"
               onClick={onClickConfirm}
+              dataCy={CypressIds.MODAL_ORDER_CREATE_ORDER_CANCEL_CHANGES_BUTTON_CONFIRM}
             >
               {t(Translation.COMMON_BUTTON_CONFIRM_LABEL)}
             </ButtonWithLoading>

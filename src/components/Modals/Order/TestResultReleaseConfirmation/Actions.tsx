@@ -4,6 +4,7 @@ import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -37,6 +38,7 @@ const Actions = ({ testResultId }: ActionsProps) => {
               color="primary"
               variant="contained"
               onClick={onClickConfirm}
+              dataCy={CypressIds.PAGE_ORDER_RESULTS_MENU_ACTION_RELEASE_TO_PATIENT}
             >
               {confirmButtonLabel}
             </ButtonWithLoading>

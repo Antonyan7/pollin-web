@@ -4,6 +4,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid, MenuItem, SelectChangeEvent, Stack, TextField, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
@@ -66,6 +67,7 @@ const Body = ({ orderId }: BodyProps) => {
           onChange={(e: SelectChangeEvent) => {
             setReasonId(e.target.value);
           }}
+          data-cy={CypressIds.MODAL_ORDER_CONFIRM_ORDER_CANCELLATION_REASON_DROPDOWN}
         >
           {cancellationReasons.reasons.map((reasonItem) => (
             <MenuItem value={reasonItem.id} key={reasonItem.title.toString()}>
@@ -108,6 +110,7 @@ const Body = ({ orderId }: BodyProps) => {
               variant="contained"
               onClick={onClickConfirm}
               disabled={!reasonId || (isOtherReasonSelected && otherReasonContent.length === 0)}
+              dataCy={CypressIds.MODAL_ORDER_CONFIRM_ORDER_CANCELLATION_BUTTON_CONFIRM}
             >
               {t(Translation.COMMON_BUTTON_CONFIRM_LABEL)}
             </ButtonWithLoading>

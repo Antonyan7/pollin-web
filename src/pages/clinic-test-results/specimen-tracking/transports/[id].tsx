@@ -8,6 +8,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 import { Box, Divider, IconButton, Link, Typography } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { resultsMiddleware, resultsSelector } from '@redux/slices/results';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
@@ -62,7 +63,11 @@ const SpecimensInTransport = () => {
 
       <Main sx={{ marginTop: margins.top16 }}>
         <Box component="span" display="flex" alignItems="center" sx={{ marginTop: 1 }}>
-          <IconButton color="primary" onClick={() => router.push('/clinic-test-results/specimen-tracking/transports')}>
+          <IconButton
+            color="primary"
+            onClick={() => router.push('/clinic-test-results/specimen-tracking/transports')}
+            data-cy={CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_BACK_TO_TRANSPORT_PAGE}
+          >
             <ArrowBackIos fontSize="small" />
           </IconButton>
           <Typography variant="h4" fontWeight={500}>
@@ -87,6 +92,7 @@ const SpecimensInTransport = () => {
             size="large"
             endIcon={<DownloadIcon />}
             onClick={() => handleDownloadClick(transportId)}
+            dataCy={CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_DOWNLOAD_MANIFEST}
           >
             {t(Translation.PAGE_SPECIMENS_TRACKING_TRANSPORTS_DOWNLOAD_MANIFEST)}
             <Link component="a" ref={downloadManifestRef} hidden href="#download" />

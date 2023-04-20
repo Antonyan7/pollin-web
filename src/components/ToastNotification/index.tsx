@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircleOutlineTwoTone, Circle, ReportTwoTone } from '@mui/icons-material';
 import CloseIcon from '@mui/icons-material/Close';
 import { Alert, Grid, IconButton, List, ListItem, Typography } from '@mui/material';
+import { CypressIds } from 'constants/cypressIds';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { viewsMiddleware, viewsSelector } from 'redux/slices/views';
 import { margins, paddings } from 'themes/themeConstants';
@@ -13,7 +14,7 @@ export const ToastNotification = React.forwardRef(() => {
   const notificationType = toastNotificationPopUp.props.severityType;
   const notificationDescription = toastNotificationPopUp.props?.description;
   const notificationRenderList = toastNotificationPopUp.props?.renderList;
-  const notificationDataCy = toastNotificationPopUp.props?.dataCy;
+  const notificationDataCy = toastNotificationPopUp.props?.dataCy ?? CypressIds.COMMON_TOAST_SUCCESS_MESSAGE;
 
   const onClose = () =>
     dispatch(
@@ -29,8 +30,9 @@ export const ToastNotification = React.forwardRef(() => {
       autoHideDuration={2000}
       onClose={onClose}
       anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      {...(notificationDataCy && { 'data-cy': notificationDataCy })}
     >
-      <div {...(notificationDataCy && { 'data-cy': notificationDataCy })}>
+      <div>
         <Alert
           variant="filled"
           severity={notificationType}

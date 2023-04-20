@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
@@ -102,6 +103,7 @@ const OrderResults = () => {
         label={filterLabel}
         filtersList={filtersList}
         loading={isFiltersLoading}
+        data-cy={CypressIds.PAGE_ORDER_RESULTS_FILER_RESULTS}
       />
 
       <TableContainer

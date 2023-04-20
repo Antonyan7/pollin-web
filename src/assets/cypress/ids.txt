@@ -52,6 +52,7 @@
   common.table.checkbox.all
   common.context.menu
   common.toast.error.message
+  common.toast.success.message
   schedule.templates.delete.icon
   page.scheduling.templates.checkbox.select.all
   page.scheduling.templates.checkbox.select
@@ -121,8 +122,26 @@
   page.order.details.comments.placeholder
   page.order.details.button.edit
   page.order.details.button.download.requisitions
+  page.order.details.button.download.attached.file
   page.order.details.button.confirm
   page.order.details.button.cancel
+  page.order.results.filer.results
+  page.order.results.context.menu
+  page.order.results.menu.action.mark.as.reviewed
+  page.order.results.menu.action.release.to.patient
+  modal.order.results.mark.as.reviewed.confirm
+  modal.order.results.release.to.patient.confirm
+  modal.order.create.order.cancel.changes.dialog
+  modal.order.create.order.cancel.changes.button.close
+  modal.order.create.order.cancel.changes.button.confirm
+  modal.order.confirm.order.cancellation.reason.dropdown
+  modal.order.confirm.order.cancellation.button.confirm
+  page.order.orders.context.menu
+  page.order.orders.menu.view.or.edit.order
+  page.order.orders.menu.cancel.order
+  page.create.order.order.type.dropdown
+  page.create.order.order.cancel.btn
+  page.create.order.order.next.btn
   page.patient.widget.test.results.button.view.test.results
   page.patient.add.addendum.back.btn
   page.patient.details.back.btn
@@ -174,6 +193,10 @@
   page.specimen.tracking.transport.list.mark.in.transit.button
   page.specimen.tracking.transport.list.tab.transports
   page.specimen.tracking.transport.list.tab.all.test
+  page.specimen.tracking.in.transport.back.to.transport.page
+  page.specimen.tracking.in.transport.download.manifest
+  page.specimen.tracking.in.transport.action.move.to.another
+  page.specimen.tracking.in.transport.action.move.back.all.tests
   page.specimen.tracking.all.test.list
   page.specimen.tracking.all.test.list.search
   page.specimen.tracking.all.test.new.transport.button

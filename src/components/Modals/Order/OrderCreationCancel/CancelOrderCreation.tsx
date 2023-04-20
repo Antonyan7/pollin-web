@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DialogContent, Grid } from '@mui/material';
 import { dispatch } from '@redux/hooks';
 import { viewsMiddleware } from '@redux/slices/views';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
@@ -18,7 +19,13 @@ const CancelOrderCreationModal = () => {
   const onClose = useCallback(() => dispatch(viewsMiddleware.closeModal(ModalName.CancelOrderCreationModal)), []);
 
   return (
-    <BaseModal isLoading={false} title={modalTitle} onClose={onClose}>
+    <BaseModal
+      dataCy={CypressIds.MODAL_ORDER_CREATE_ORDER_CANCEL_CHANGES_DIALOG}
+      isLoading={false}
+      title={modalTitle}
+      onClose={onClose}
+      closeIconDataCy={CypressIds.MODAL_ORDER_CREATE_ORDER_CANCEL_CHANGES_BUTTON_CLOSE}
+    >
       <Grid>
         <DialogContent sx={{ p: paddings.all8 }}>
           <Grid container spacing={3}>

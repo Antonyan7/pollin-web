@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { DialogActions, Grid, Stack } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
+import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
@@ -36,6 +37,7 @@ const Actions = ({ testResultId, reviewerComment }: ActionsProps) => {
               color="primary"
               variant="contained"
               onClick={onClickConfirm}
+              dataCy={CypressIds.MODAL_ORDER_RESULTS_MARK_AS_REVIEWED_CONFIRM}
             >
               {confirmButtonLabel}
             </ButtonWithLoading>

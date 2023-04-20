@@ -14,9 +14,10 @@ import OrderGroupCheckbox from './OrderGroupCheckbox';
 
 interface GroupItemsWrapperProps {
   orderGroup: IOrderGroup;
+  index?: number;
 }
 
-const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
+const GroupItemsWrapper = ({ orderGroup, index }: GroupItemsWrapperProps) => {
   const theme = useTheme();
   const editableOrderDetails = useSelector(ordersSelector.editableOrderDetails);
   const selectedOrderType = useSelector(ordersSelector.selectedOrderType);
@@ -69,6 +70,7 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
           <FormControlLabel
             control={
               <OrderGroupCheckbox
+                index={index}
                 checkedColor={theme.palette.primary.main}
                 checkedIcon={<WhiteCheckedIcon />}
                 onChange={handleAllSelection}
@@ -81,9 +83,9 @@ const GroupItemsWrapper = ({ orderGroup }: GroupItemsWrapperProps) => {
         </FormGroup>
       </Stack>
       <Stack direction="row" flexBasis={10} flexGrow={10} flexWrap="wrap">
-        {orderGroup.groupItems.map((groupItem) => (
+        {orderGroup.groupItems.map((groupItem, groupIndex) => (
           <Stack flexBasis="50%" key={groupItem.id}>
-            <OrderGroupItem groupItem={groupItem} orderGroupId={orderGroup.id} />
+            <OrderGroupItem index={`${index}-${groupIndex}`} groupItem={groupItem} orderGroupId={orderGroup.id} />
           </Stack>
         ))}
       </Stack>

@@ -1,6 +1,7 @@
 import React, { ChangeEvent } from 'react';
 import { Box, Checkbox, useTheme } from '@mui/material';
 import { CheckboxProps } from '@mui/material/Checkbox/Checkbox';
+import { CypressIds } from 'constants/cypressIds';
 
 import { LineIcon } from '@assets/icons/LineIcon';
 
@@ -10,6 +11,7 @@ interface ICheckBox extends CheckboxProps {
   onChange: (event: ChangeEvent<HTMLInputElement>, checked: boolean) => void;
   indeterminate?: boolean;
   checked?: boolean;
+  index?: number | string;
 }
 
 const OrderGroupCheckbox = ({
@@ -18,6 +20,7 @@ const OrderGroupCheckbox = ({
   onChange,
   indeterminate,
   checked,
+  index,
   ...otherProps
 }: ICheckBox) => {
   const theme = useTheme();
@@ -51,6 +54,7 @@ const OrderGroupCheckbox = ({
       color="default"
       {...otherProps}
       checked={checked}
+      data-cy={`${CypressIds.COMMON_TABLE_CHECKBOX}-${index}`}
       indeterminateIcon={
         <Box sx={checkBoxStyles.lineStyle}>
           <LineIcon />
