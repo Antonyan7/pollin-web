@@ -21,7 +21,6 @@ const DateTimePickerWrapper = ({
   errorMessage,
   isError,
   dataCyId,
-  inputRef,
   ...otherProps
 }: DateTimePickerWrapperProps) => {
   const theme = useTheme();
@@ -50,7 +49,6 @@ const DateTimePickerWrapper = ({
       }}
       renderInput={({ ...params }: TextFieldProps) => (
         <TextField
-          inputRef={inputRef}
           {...params}
           sx={{
             svg: { color: theme.palette.primary.main }

@@ -24,6 +24,16 @@ const PatientBackgroundInformation = () => {
     dispatch(patientsMiddleware.changePatientBackgroundEditButtonState());
   };
 
+  useEffect(
+    () => {
+      if (isPatientBackgroundEditButtonClicked) {
+        dispatch(patientsMiddleware.changePatientBackgroundEditButtonState());
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [router.query]
+  );
+
   return (
     <PatientMedicalBackgroundSection
       isButtonClicked={isPatientBackgroundEditButtonClicked}

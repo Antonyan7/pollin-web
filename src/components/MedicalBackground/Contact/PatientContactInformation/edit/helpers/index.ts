@@ -14,7 +14,10 @@ export const getContactInformationEmptyState = (contactInformation: IPatientCont
     ...contactInformation.preferredName,
     value: isDashString(contactInformation.preferredName.value) ? '' : contactInformation.preferredName.value
   },
-  [ContactInformationFormFields.Contribution]: contactInformation.contribution,
+  [ContactInformationFormFields.Contribution]: {
+    ...contactInformation.contribution,
+    value: isDashString(contactInformation.contribution.value) ? '' : contactInformation.contribution.value
+  },
   [ContactInformationFormFields.PrimaryAddress]: {
     ...contactInformation.primaryAddress,
     streetAddress: contactInformation.primaryAddress.streetAddress,

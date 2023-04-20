@@ -24,6 +24,16 @@ const PatientGeneralHealth = () => {
     dispatch(patientsMiddleware.changeEditButtonClickState());
   };
 
+  useEffect(
+    () => {
+      if (isGeneralHealthEditButtonClicked) {
+        dispatch(patientsMiddleware.changeEditButtonClickState());
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [router.query]
+  );
+
   return (
     <PatientMedicalBackgroundSection
       isButtonClicked={isGeneralHealthEditButtonClicked}

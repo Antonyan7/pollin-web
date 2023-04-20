@@ -14,6 +14,8 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import useCloseMedicalBackgroundFormWithChangesModal from '../../../hooks/useCloseMedicalBackgroundFormWithChangesModal';
 
 const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
@@ -63,7 +65,18 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   const { handleSubmit } = methods;
 
   const handleSave = (data: IFemalePatientMenstrualCycleHistoryProps) => {
-    dispatch(patientsMiddleware.updateFemalePatientMenstrualCycleHistory(id as string, data, onSave));
+    const { firstDayOfLastPeriod } = data;
+    const femaleMenstrualCycleData = {
+      ...data,
+      firstDayOfLastPeriod: {
+        ...firstDayOfLastPeriod,
+        value: DateUtil.convertToDateOnly(firstDayOfLastPeriod.value as string)
+      }
+    };
+
+    dispatch(
+      patientsMiddleware.updateFemalePatientMenstrualCycleHistory(id as string, femaleMenstrualCycleData, onSave)
+    );
   };
 
   return (

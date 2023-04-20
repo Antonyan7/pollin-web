@@ -24,6 +24,16 @@ const PatientContactInformation = () => {
     dispatch(patientsMiddleware.changeContactInformationEditButtonState());
   };
 
+  useEffect(
+    () => {
+      if (isContactInformationButtonClicked) {
+        dispatch(patientsMiddleware.changeContactInformationEditButtonState());
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [router.query]
+  );
+
   return (
     <PatientMedicalBackgroundSection
       isButtonClicked={isContactInformationButtonClicked}

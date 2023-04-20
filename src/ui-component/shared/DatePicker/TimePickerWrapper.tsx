@@ -15,7 +15,6 @@ const TimePickerWrapper = ({
   errorMessage,
   isError,
   dataCyId,
-  inputRef,
   ...otherProps
 }: TimePickerWrapperProps) => {
   const theme = useTheme();
@@ -52,7 +51,6 @@ const TimePickerWrapper = ({
       onChange={(date) => onChange(handleLimitationConfig(date))}
       renderInput={(params: MuiTextFieldPropsType) => (
         <TextField
-          inputRef={inputRef}
           fullWidth
           sx={{
             svg: { color: theme.palette.primary.main },

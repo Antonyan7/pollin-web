@@ -27,6 +27,16 @@ const MaleGenitourinaryHistory = () => {
     dispatch(patientsMiddleware.setEditMalePatientGenitourinaryState(!isMalePatientGenitourinaryEditButtonClicked));
   };
 
+  useEffect(
+    () => {
+      if (isMalePatientGenitourinaryEditButtonClicked) {
+        dispatch(patientsMiddleware.setEditMalePatientGenitourinaryState(false));
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [router.query]
+  );
+
   return (
     <PatientMedicalBackgroundSection
       isButtonClicked={isMalePatientGenitourinaryEditButtonClicked}

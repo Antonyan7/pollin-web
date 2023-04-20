@@ -44,12 +44,12 @@ const DatePickerWrapper = ({
       value={value}
       label={label}
       onChange={onChange}
+      inputRef={inputRef}
       components={{
         OpenPickerIcon: CalendarPopupIcon
       }}
       renderInput={(params) => (
         <TextField
-          inputRef={inputRef}
           disabled
           fullWidth
           {...params}
