@@ -18,7 +18,7 @@ const TasksList = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder | null>(null);
   const [sortField, setSortField] = useState<TasksListSortFields | null>(null);
   const [page, setPage] = useState<number>(0);
-  const [toggle, setToggle] = useState<boolean>(false);
+  const [onlyUserTasks, setOnlyUserTasks] = useState<boolean>(false);
   const { totalItems, pageSize, currentPage } = useAppSelector(tasksSelector.tasksList);
   const createdTaskId = useAppSelector(tasksSelector.createdTaskId);
   const isTaskStatusUpdated = useAppSelector(tasksSelector.isTaskStatusUpdated);
@@ -38,7 +38,7 @@ const TasksList = () => {
     const data: ITasksListReqBody = {
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {}),
-      onlyUserTasks: toggle,
+      onlyUserTasks,
       page: page + 1
     };
 
@@ -46,11 +46,16 @@ const TasksList = () => {
     dispatch(tasksMiddleware.getTasksList(data));
     dispatch(tasksMiddleware.setTaskStatusUpdate(false));
     dispatch(tasksMiddleware.clearTaskReassignState());
-  }, [page, isTaskReassigned, sortField, sortOrder, toggle, createdTaskId, isTaskStatusUpdated]);
+  }, [page, isTaskReassigned, sortField, sortOrder, onlyUserTasks, createdTaskId, isTaskStatusUpdated]);
+
+  const handleUserTasksToggle = (isOnlyUserTasks: boolean) => {
+    setOnlyUserTasks(isOnlyUserTasks);
+    setPage(0);
+  };
 
   return (
     <PatientListStyled>
-      <TaskDashboardLayout toggle={toggle} setToggle={setToggle} />
+      <TaskDashboardLayout onlyUserTasks={onlyUserTasks} handleUserTasksToggle={handleUserTasksToggle} />
       <TableContainer>
         <Table setSortField={setSortField} setSortOrder={setSortOrder} sortField={sortField} sortOrder={sortOrder} />
       </TableContainer>

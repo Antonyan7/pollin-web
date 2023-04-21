@@ -830,6 +830,7 @@
   "page.tasks.manager.modal.reassign.field.reassign": "Reassign to",
   "page.tasks.manager.modal.reassign.title": "Reassign Task",
   "page.tasks.manager.overflow.reassign": "Reassign",
+  "page.tasks.manager.switch.show.my.tasks": "Show My Tasks",
   "page.tasks.manager.toast.successful.create": "Task created and sent to",
   "page.tasks.manager.toast.successful.reassign": "Task reassigned to",
   "page.update.order.button.title": "Update Order",

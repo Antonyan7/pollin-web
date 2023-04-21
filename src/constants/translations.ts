@@ -832,6 +832,7 @@ export enum Translation {
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_FIELD_REASSIGN = 'page.tasks.manager.modal.reassign.field.reassign',
   PAGE_TASKS_MANAGER_MODAL_REASSIGN_TITLE = 'page.tasks.manager.modal.reassign.title',
   PAGE_TASKS_MANAGER_OVERFLOW_REASSIGN = 'page.tasks.manager.overflow.reassign',
+  PAGE_TASKS_MANAGER_SWITCH_SHOW_MY_TASKS = 'page.tasks.manager.switch.show.my.tasks',
   PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_CREATE = 'page.tasks.manager.toast.successful.create',
   PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_REASSIGN = 'page.tasks.manager.toast.successful.reassign',
   PAGE_UPDATE_ORDER_BUTTON_TITLE = 'page.update.order.button.title',

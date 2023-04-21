@@ -11,17 +11,17 @@ import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 
 export const TaskDashboardLayout = ({
-  toggle,
-  setToggle
+  onlyUserTasks,
+  handleUserTasksToggle
 }: {
-  toggle: boolean;
-  setToggle: (value: boolean) => void;
+  onlyUserTasks: boolean;
+  handleUserTasksToggle: (value: boolean) => void;
 }) => {
   const theme = useTheme();
   const [t] = useTranslation();
 
-  const handleChangeToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setToggle(event.target.checked);
+  const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleUserTasksToggle(event.target.checked);
   };
 
   const onCreateTask = () => {
@@ -37,7 +37,7 @@ export const TaskDashboardLayout = ({
     <Grid container justifyContent="flex-end" alignItems="center">
       <Grid item>
         <FormControlLabel
-          label="Show My Tasks"
+          label={t(Translation.PAGE_TASKS_MANAGER_SWITCH_SHOW_MY_TASKS)}
           control={
             <Switch
               sx={{
@@ -45,8 +45,8 @@ export const TaskDashboardLayout = ({
                   color: theme.palette.primary[200]
                 }
               }}
-              checked={toggle}
-              onChange={handleChangeToggle}
+              checked={onlyUserTasks}
+              onChange={handleToggle}
             />
           }
         />
