@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import API from '@axios/API';
 import patientEmrHelpers from '@axios/patientEmr/patientEmrHelpers';
@@ -14,18 +14,15 @@ import { IconBell } from '@tabler/icons';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { borders, margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
+import { ProfilePhotoStatus } from 'types/reduxTypes/patient-emrStateTypes';
 
 import AssignmentIcon from '@assets/icons/AssignmentIcon';
 import DoctorIcon from '@assets/icons/DoctorIcon';
 import { useFlags } from '@hooks/useFlagsHook';
-
-const avatarImage = '/assets/images/users';
+import { isDashValue } from '@utils/stringUtils';
 
 interface ContactListProps {
-  avatar?: string;
-  name?: string;
-  date?: string;
-  cycleStatus?: string | boolean;
   setOpen: (open: boolean) => void;
   open: boolean;
 }
@@ -77,12 +74,11 @@ const ICFormButton = () => {
 };
 
 // eslint-disable-next-line max-lines-per-function
-const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: ContactListProps) => {
+const ContactList = ({ setOpen, open }: ContactListProps) => {
   const theme = useTheme();
   const router = useRouter();
   const [t] = useTranslation();
   const { DOMAIN_MEDICAL_BACKGROUND } = useFlags();
-  const avatarProfile = avatar && `${avatarImage}/${avatar}`;
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useAppSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useAppSelector(patientsSelector.isPatientHighlightIntakeComplete);
@@ -93,6 +89,27 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
   );
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const disableOnlyMedicalBackgroundButton = isPatientHighlightIntakeComplete && !isICFormComplete;
+  const avatarPlaceholder = '/assets/images/users';
+
+  const avatarProfile = useMemo(() => {
+    if (patientProfile && patientProfile?.avatar?.status === ProfilePhotoStatus.Verified) {
+      return patientProfile.avatar?.imageURL;
+    }
+
+    return avatarPlaceholder;
+  }, [patientProfile]);
+
+  const handleAvatarClick = useCallback(() => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.ImageModal,
+        props: {
+          imgSrc: avatarProfile,
+          alt: patientProfile?.fullName
+        }
+      })
+    );
+  }, [avatarProfile, patientProfile]);
 
   const onButtonClick =
     (uuid: string): ButtonProps['onClick'] =>
@@ -105,6 +122,12 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
         dispatch(viewsMiddleware.openModal(modalParams));
       }
     };
+
+  const patientName =
+    patientProfile &&
+    `${patientProfile?.fullName} ${
+      isDashValue(patientProfile?.pronoun as string) ? '' : `(${patientProfile?.pronoun})`
+    }  - ${patientProfile?.identifier}`;
 
   const onSendIntakeButtonClick = () => {
     dispatch(patientsMiddleware.sendPatientIntakeReminder(patientId));
@@ -120,23 +143,27 @@ const ContactList = ({ avatar, name, date, cycleStatus, setOpen, open }: Contact
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} style={{ cursor: 'pointer' }}>
           <Grid container alignItems="center" sx={{ flexWrap: 'nowrap' }}>
-            <Grid item>
-              <Avatar alt={name} src={avatarProfile} sx={{ width: 60, height: 60, m: margins.all24 }} />
+            <Grid item onClick={handleAvatarClick}>
+              <Avatar
+                alt={patientProfile?.fullName}
+                src={avatarProfile}
+                sx={{ width: 60, height: 60, m: margins.all24 }}
+              />
             </Grid>
             <Grid item sm zeroMinWidth>
               <Grid container spacing={0}>
                 <Grid item xs={8}>
                   <Typography variant="h4" component="div">
-                    {name}
+                    {patientName}
                   </Typography>
                 </Grid>
                 <Grid item xs={4}>
                   <Button variant="outlined" disabled sx={{ borderRadius: '60px', height: 23 }}>
-                    {cycleStatus ? 'Active' : 'Not Active'}
+                    {patientProfile?.cycleStatus ? 'Active' : 'Not Active'}
                   </Button>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="caption">{date}</Typography>
+                  <Typography variant="caption">{patientProfile?.subTitle}</Typography>
                 </Grid>
                 <Stack gap={2} direction="row" justifyContent="center" alignItems="center" flexWrap="wrap">
                   <Stack flexShrink={0}>

@@ -8,7 +8,6 @@ import { dispatch } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector, patientsSlice } from 'redux/slices/patients';
 
 import ContactList from '@ui-component/common/ContactList';
-import { isDashValue } from '@utils/stringUtils';
 
 const PatientHighlightsView = () => {
   const theme = useTheme();
@@ -16,7 +15,6 @@ const PatientHighlightsView = () => {
   const [open, setOpen] = useState(true);
 
   const patientId = useSelector(patientsSelector.currentPatientId);
-  const patientProfile = useSelector(patientsSelector.patientProfile);
   const isPatientHighlightsLoading = useSelector(patientsSelector.isPatientHighlightsDetailsLoading);
   const patientHighlights = useSelector(patientsSelector.patientHighlights);
   const isPatientHighlightIntakeComplete = useSelector(patientsSelector.isPatientHighlightIntakeComplete);
@@ -62,16 +60,7 @@ const PatientHighlightsView = () => {
   return (
     <Paper sx={{ padding: '15px' }}>
       <Grid item xs={12}>
-        <ContactList
-          avatar={patientProfile?.avatar?.imageURL}
-          name={`${patientProfile?.fullName} ${
-            isDashValue(patientProfile?.pronoun as string) ? '' : ` (${patientProfile?.pronoun})`
-          } - ${patientProfile?.identifier ?? ''}`}
-          date={patientProfile?.subTitle}
-          setOpen={setOpen}
-          open={open}
-          cycleStatus={patientProfile?.cycleStatus}
-        />
+        <ContactList setOpen={setOpen} open={open} />
         <Collapse in={isPatientHighlightIntakeComplete && open} orientation="vertical">
           <Divider />
           <Grid container alignItems="flex-start" py="15px">
