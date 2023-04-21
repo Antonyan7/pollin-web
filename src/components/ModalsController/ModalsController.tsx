@@ -50,6 +50,9 @@ import EncountersCancelChangesModal, {
   IEncountersCancelChangesModalProps
 } from '@components/Modals/PatientEMR/Encounters/EncountersCancelChangesModal';
 import PatientPartnerModal, { PatientPartnerModalProps } from '@components/Modals/PatientPartner';
+import PlanCreationCancellation, {
+  PlanCreationCancellationModalProps
+} from '@components/Modals/Plans/PlanCreationCancellation';
 import SendPlansToPatient from '@components/Modals/Plans/SendPlansToPatient';
 import SelectMachineModal, { SelectMachineModalProps } from '@components/Modals/SelectMachineModal';
 import SpecimenCollectionModal from '@components/Modals/Specimen/Collection';
@@ -244,6 +247,10 @@ const getConfirmPrescriptionArchiveModal = (modal: IOpenedModal<ConfirmPrescript
 // Plans
 const getPatientPlansSentPlansToPatientModal = (name: string) => <SendPlansToPatient key={name} />;
 
+const getPatientPlanCreationCancellationModal = (modal: IOpenedModal<PlanCreationCancellationModalProps>) => (
+  <PlanCreationCancellation key={modal.name} swapPage={modal.props.swapPage} />
+);
+
 // dev
 const getDevToolsModal = () => <DevToolsModal key={v4()} />;
 
@@ -288,6 +295,8 @@ export const ModalsController = () => {
           // <Plans>
           case ModalName.SendPlansToPatientModal:
             return getPatientPlansSentPlansToPatientModal(modal.name);
+          case ModalName.PlanCreationCancelModal:
+            return getPatientPlanCreationCancellationModal(modal);
 
           // <EXTERNAL RESULTS>
           case ModalName.PatientContactInformation:

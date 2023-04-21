@@ -1,20 +1,21 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { IPatientPlansCategories } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
+import Title from '@components/Plans/components/createPlan/Title';
 import { IFormMedications, MonitoringLocation, PlanPage } from '@components/Plans/types';
-import { ArrowBackIos, ModeEditOutlined } from '@mui/icons-material';
-import { cardHeaderClasses, Divider, Grid, IconButton, Typography, useTheme } from '@mui/material';
-import { Stack } from '@mui/system';
+import { cardHeaderClasses, Divider, Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
-import { Translation } from 'constants/translations';
+import { viewsMiddleware } from '@redux/slices/views';
 import { useRouter } from 'next/router';
 import { borders, margins, paddings } from 'themes/themeConstants';
 
+import useStopRouteChange from '@hooks/useStopRouteChange';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import CircularLoading from '@ui-component/circular-loading';
+
+import { ModalName } from '../../../../types/modals';
 
 import Form from './form';
 import PreliminaryBloodsResults from './PreliminaryBloodsResults';
@@ -44,7 +45,6 @@ const extractDefaultValues = (patientId: string, planTypeId: string, categories:
 });
 
 const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPage) => void; planTypeId: string }) => {
-  const [t] = useTranslation();
   const theme = useTheme();
   const {
     query: { id: patientId }
@@ -55,27 +55,41 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
     defaultValues: { ...extractDefaultValues(`${patientId}`, `${planTypeId}`, categories) }
   });
 
+  const {
+    handleSubmit,
+    formState: { dirtyFields }
+  } = methods;
   const isPatientPreliminaryBloodsLoading = useAppSelector(patientsSelector.isPatientPreliminaryBloodsResultsLoading);
 
   useEffect(() => {
     dispatch(patientsMiddleware.getPatientPreliminaryBloods(patientId as string));
   }, [patientId]);
 
-  const planTitle = useMemo(() => {
-    let title = '';
-
-    categories.forEach((item) => {
-      item?.items?.forEach((innerItem) => {
-        if (innerItem.id === planTypeId) {
-          title = innerItem.title;
+  useStopRouteChange(Object.values(dirtyFields).length > 0, false, () => {
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.PlanCreationCancelModal,
+        props: {
+          swapPage: changePage
         }
-      });
-    });
+      })
+    );
+  });
 
-    return title;
-  }, [categories, planTypeId]);
-
-  const backToPlansPage = () => changePage(PlanPage.List);
+  const backToPlansPage = () => {
+    if (Object.values(dirtyFields).length > 0) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.PlanCreationCancelModal,
+          props: {
+            swapPage: changePage
+          }
+        })
+      );
+    } else {
+      changePage(PlanPage.List);
+    }
+  };
 
   const onSubmit = (data: IFormMedications) => {
     const filteredMedications = data.medications
@@ -114,63 +128,13 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
           pr: paddings.right16
         }
       }}
-      title={
-        <Grid item container alignItems="center" justifyContent="space-between">
-          <Stack
-            direction="row"
-            sx={{
-              display: 'flex',
-              alignItems: 'center'
-            }}
-          >
-            <IconButton
-              sx={{
-                color: theme.palette.primary.main
-              }}
-              onClick={() => {
-                changePage(PlanPage.List);
-              }}
-              disableRipple
-            >
-              <ArrowBackIos
-                sx={{
-                  fontSize: theme.typography.pxToRem(16)
-                }}
-              />
-            </IconButton>
-
-            <Typography
-              sx={{
-                fontWeight: 500,
-                fontSize: theme.typography.pxToRem(16),
-                color: theme.palette.secondary[800]
-              }}
-            >
-              {t(Translation.PAGE_PATIENT_PLANS_CREATE_PLAN_TITLE)}: {planTitle}
-            </Typography>
-          </Stack>
-          <Grid>
-            <IconButton disabled>
-              <ModeEditOutlined
-                sx={{
-                  color: theme.palette.primary.main,
-                  '&:hover': {
-                    cursor: 'pointer'
-                  },
-                  fontSize: theme.typography.pxToRem(24),
-                  opacity: 0.3
-                }}
-              />
-            </IconButton>
-          </Grid>
-        </Grid>
-      }
+      title={<Title changePage={changePage} planTypeId={planTypeId} />}
     >
       <Grid px={paddings.leftRight16} pb={paddings.bottom16}>
         <PreliminaryBloodsResults />
         <Divider />
         <FormProvider {...methods}>
-          <form onSubmit={methods.handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Form />
             <FormSubmit onClick={backToPlansPage} />
           </form>

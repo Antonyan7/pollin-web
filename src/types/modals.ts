@@ -57,6 +57,7 @@ export enum ModalName {
   AddPatientMedicationModal = 'AddPatientMedicationModal',
   AddPatientPrescriptionModal = 'AddPatientPrescriptionModal',
   SendPlansToPatientModal = 'SendPlansToPatientModal',
+  PlanCreationCancelModal = 'PlanCreationCancelModal',
   ConfirmCancellationModal = 'ConfirmCancellationModal'
 }
 
