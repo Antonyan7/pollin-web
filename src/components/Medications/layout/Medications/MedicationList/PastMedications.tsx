@@ -65,6 +65,7 @@ const PastMedications = () => {
       <Grid item xs={12}>
         <TablePagination
           labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}
+          rowsPerPageOptions={[patientPastMedications.pageSize, 5]}
           component="div"
           count={patientPastMedications.totalItems}
           rowsPerPage={patientPastMedications.pageSize}

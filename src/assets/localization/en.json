@@ -312,7 +312,7 @@
   "page.medications.current.list.dosage": "Dosage",
   "page.medications.current.list.duration": "Duration",
   "page.medications.current.list.frequency": "Frequency",
-  "page.medications.current.list.name": "Name",
+  "page.medications.current.list.name": "Medication Name",
   "page.medications.current.list.prescriber": "Prescriber",
   "page.medications.current.list.route": "Route",
   "page.medications.current.list.time": "Time",

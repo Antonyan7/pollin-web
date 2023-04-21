@@ -64,6 +64,7 @@ const PrescriptionsList = () => {
           rowsPerPage={patientPrescriptions.pageSize}
           page={page}
           onPageChange={handleChangePage}
+          rowsPerPageOptions={[patientPrescriptions.pageSize, 5]}
         />
       </Grid>
     </>
