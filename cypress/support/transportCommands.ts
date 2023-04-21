@@ -5,14 +5,16 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
-      AddNewTransportFolder(name: string, lab: string): Chainable<void>;
+      CreateNewTransportFolder(name: string, lab: string): Chainable<void>;
 
       AddToNewExistingTransport(specimenID: string): Chainable<void>;
+
+      GetElementText(barcodeName: string, block: (barcode: string) => void): Chainable<void>;
     }
   }
 }
 
-Cypress.Commands.add('AddNewTransportFolder', (name, lab) => {
+Cypress.Commands.add('CreateNewTransportFolder', (name, lab) => {
   cy.get(CyUtils.getSelector(CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_NAME_FIELD)).type(name);
   cy.get(CyUtils.getSelector(CypressIds.MODAL_SPECIMEN_TRACKING_ADD_NEW_TRANSPORT_DESTINATION_FIELD))
     .should('exist')
@@ -25,10 +27,6 @@ Cypress.Commands.add('AddNewTransportFolder', (name, lab) => {
 });
 
 Cypress.Commands.add('AddToNewExistingTransport', (specimenID) => {
-  cy.get(CyUtils.getSelector(CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_LIST_SEARCH))
-    .type(specimenID)
-    .realPress('{enter}');
-
   cy.get('table > tbody > tr').each((elem, index) => {
     if (elem.text().includes(specimenID)) {
       cy.wrap(elem).get(`[data-cy="${CypressIds.COMMON_TABLE_CHECKBOX}-${index}"]`).realClick();
@@ -38,4 +36,19 @@ Cypress.Commands.add('AddToNewExistingTransport', (specimenID) => {
     }
   });
 });
+
+Cypress.Commands.add('GetElementText', (barcodeName, block) => {
+  cy.get(`table > thead > tr`)
+    .children()
+    .each((element, barcodeIndex) => {
+      if (element.text().includes(barcodeName)) {
+        cy.get(`table > tbody > tr`)
+          .eq(0)
+          .children()
+          .eq(barcodeIndex)
+          .then((barcodeElement) => block(barcodeElement.text()));
+      }
+    });
+});
+
 export {};

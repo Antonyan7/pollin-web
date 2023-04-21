@@ -54,8 +54,8 @@ Cypress.Commands.add('ChooseDateAndTime', (futureDate, time) => {
     cy.get(`[data-testid="ArrowRightIcon"]`).should('exist').realClick();
   }
 
-  cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT)).contains(dateToSelect).click();
-  cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_MODAL_DIALOG_COMPONENT)).contains(time).realClick();
+  cy.get(`.MuiCalendarPicker-root`).contains(dateToSelect).click();
+  cy.get(`.MuiClockPicker-root`).contains(time).realClick();
 
   cy.get(CyUtils.getSelector(CypressIds.COMMON_TIME_PICKER_BUTTON_SAVE)).should('be.enabled').click();
 });

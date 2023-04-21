@@ -5,9 +5,7 @@ import { CyUtils } from '../../helpers/cypressIdsUtils';
 import { TemplateStatus } from '../../helpers/helpers';
 
 const startDate = addDays(new Date(), 1);
-const endDate = addDays(new Date(), 8);
-const blockStartDate = addDays(new Date(), 3);
-const blockEndDate = addDays(new Date(), 10);
+const endDate = addDays(new Date(), 15);
 const nextSaturdayDate = nextSaturday(new Date());
 const nextSundayDate = nextSunday(new Date());
 
@@ -123,11 +121,11 @@ describe('apply schedule', () => {
 
       // Choose start date
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_APPLY_DATE_START)).click();
-      cy.SelectApplyDate(blockStartDate);
+      cy.SelectApplyDate(startDate);
 
       // Choose end date
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_APPLY_DATE_END)).click();
-      cy.SelectApplyDate(blockEndDate);
+      cy.SelectApplyDate(endDate);
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_APPLY_BUTTON_APPLY)).should('be.enabled').click();
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_APPLY_ALERT_SUCCESS)).should('exist');

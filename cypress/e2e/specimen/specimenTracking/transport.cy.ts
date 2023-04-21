@@ -42,7 +42,7 @@ describe('new transport', () => {
       }
 
       cy.get(`.MuiCalendarPicker-root`).contains(dateToSelect).click();
-      cy.AddNewTransportFolder(data.new_transport_name, LabDestinations.SickKids);
+      cy.CreateNewTransportFolder(data.new_transport_name, LabDestinations.SickKids);
 
       cy.get(CyUtils.getSelector(CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_DATE_PICKER)).click();
 
