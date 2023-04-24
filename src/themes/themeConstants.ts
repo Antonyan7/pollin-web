@@ -154,7 +154,8 @@ export const paddings = {
   leftRight20: '20px',
   leftRight24: '24px',
   leftRight32: '32px',
-  leftRight36: '36px'
+  leftRight36: '36px',
+  leftRight50: '50px'
 };
 
 export const borderRadius = {

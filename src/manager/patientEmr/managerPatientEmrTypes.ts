@@ -195,6 +195,47 @@ export interface IPatientContactInformationResponse {
   information: IPatientContactInformation;
 }
 
+export interface IMedicatioItemsProps {
+  id: string;
+  title: string;
+  commonName: string;
+  dosage: string;
+  frequency: string;
+  duration: {
+    start: string;
+    end: string;
+  };
+  time?: string;
+  route: string;
+  prescriber?: string;
+}
+
+export interface IMedicationProps extends MedicalBackgroundFieldValues {
+  exists: boolean;
+  items: IMedicatioItemsProps[];
+}
+
+export interface MaleFemaleIcFormResponse {
+  patientContribution: {
+    primaryPatientContribution: ContributionProps;
+  };
+  patientBackgroundInformation: IPatientBackgroundPartners;
+  partners: null;
+  pregnancyInformation: IPreviousPregnancies;
+  menstrualCycleHistory: IFemalePatientMenstrualCycleHistoryProps;
+  gynaecologicalHistory: IFemalePatientGynaecologicalHistoryProps;
+  medication: IMedicationProps;
+  genitourinaryHistory: IGenitourinaryHistory;
+  generalHealth: IGeneralHealthProps;
+}
+
+export type IPatientICFormProps = MaleFemaleIcFormResponse;
+
+export interface IICFormResponse {
+  form: IPatientICFormProps;
+  completedOn?: string;
+}
+
 export interface ICreateEncounterNoteRequest extends IEncounterNoteRequest {
   appointmentId?: string;
 }

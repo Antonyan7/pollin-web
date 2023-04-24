@@ -43,6 +43,8 @@ import {
   IUpdateMedication
 } from 'types/reduxTypes/patient-emrStateTypes';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import slice from './slice';
 
 const {
@@ -97,6 +99,9 @@ const {
   setPatientAlertDetailsLoading,
   setIsPatientCustomAlertCreated,
   setIsAlertDeleted,
+  setPatientIcForm,
+  setPatientIcFormCompletedDate,
+  setIsGetPatientIcFormLoading,
   setGeneralHealth,
   setIsGeneralHealthLoading,
   setIsEditButtonClicked,
@@ -648,6 +653,27 @@ const resetAppointmentsList = () => async (dispatch: AppDispatch, getState: () =
   } catch (error) {
     Sentry.captureException(error);
   }
+};
+
+const getPatientIcForm = (patientId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setIsGetPatientIcFormLoading(true));
+
+  try {
+    const response = await API.patients.getPatientIcForm(patientId);
+    const completedDate = response.data.data.completedOn;
+
+    dispatch(setPatientIcForm(response.data.data.form));
+
+    if (completedDate) {
+      const formattedDate = DateUtil.formatDateOnly(completedDate);
+
+      dispatch(setPatientIcFormCompletedDate(formattedDate));
+    }
+  } catch (error) {
+    Sentry.captureException(error);
+  }
+
+  dispatch(setIsGetPatientIcFormLoading(false));
 };
 
 const getGeneralHealth = (patientId: string) => async (dispatch: AppDispatch) => {
@@ -1536,6 +1562,7 @@ export default {
   sendPatientIntakeReminder,
   cleanTestResultsHistory,
   isPatientAlertViewOpen,
+  getPatientIcForm,
   getGeneralHealth,
   changeEditButtonClickState,
   updateGeneralHealthData,

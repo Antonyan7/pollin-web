@@ -19,6 +19,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
+  IPatientICFormProps,
   IPatientMedications,
   IPatientMedicationsState,
   IPatientPlanDetails,
@@ -119,6 +120,12 @@ export interface MedicationsPrescriptionsProps {
   };
 }
 
+export interface IIcFormProps {
+  form: IPatientICFormProps | null;
+  isGetIcFormLoading: boolean;
+  completedOn: string;
+}
+
 export interface IPatientPlansProps {
   statusVariations: IPatientPlansStatus[];
   isStatusVariationsLoading: boolean;
@@ -198,6 +205,7 @@ export interface PatientEmrProps {
   isProfileTestResultDetailsLoading: boolean;
   profileTestResultDetails: ProfileTestResultDetailsItem[];
   patientProfile: PatientProfile | null;
+  icForm: IIcFormProps;
   medicalBackground: MedicalBackgroundProps;
   isPatientHighlightsLoading: boolean;
   isPatientHighlightIntakeComplete: boolean;

@@ -13,6 +13,7 @@ import {
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
+  IPatientICFormProps,
   IPatientMedications,
   IPatientMedicationsState,
   IPatientPlanDetails,
@@ -224,6 +225,15 @@ const reducers = createReducer({
   },
   setIsPatientHighlightIntakeReminderActive(state, action: IAction<boolean>) {
     state.isPatientHighlightIntakeReminderActive = action.payload;
+  },
+  setPatientIcForm(state, action: IAction<IPatientICFormProps | null>) {
+    state.icForm.form = action.payload;
+  },
+  setPatientIcFormCompletedDate(state, action: IAction<string>) {
+    state.icForm.completedOn = action.payload;
+  },
+  setIsGetPatientIcFormLoading(state, action: IAction<boolean>) {
+    state.icForm.isGetIcFormLoading = action.payload;
   },
   setGeneralHealth(state, action: IAction<IGeneralHealthProps>) {
     state.medicalBackground.contact.generalHealth = action.payload;

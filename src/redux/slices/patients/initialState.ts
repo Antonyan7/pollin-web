@@ -2,6 +2,7 @@ import { PatientAppointmentsSortField } from '@axios/booking/managerBookingTypes
 import { SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
+  IIcFormProps,
   IPatientPlansProps,
   MedicalBackgroundProps,
   MedicationsPrescriptionsProps,
@@ -75,6 +76,12 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
     isPatientPrescriptionsLoading: false,
     isDownloadPrescriptionLoading: false
   }
+});
+
+const getIcFormInitialState = (): IIcFormProps => ({
+  form: null,
+  isGetIcFormLoading: false,
+  completedOn: ''
 });
 
 const getPatientPlansInitialState = (): IPatientPlansProps => ({
@@ -186,6 +193,7 @@ export const getInitialState = (): PatientEmrProps => ({
     ohipNumber: '',
     ohipVersionCode: ''
   },
+  icForm: getIcFormInitialState(),
   medicalBackground: getMedicalBackgroundInitialState(),
   medicationsPrescriptions: getMedicationsPrescriptionsInitialState(),
   plans: getPatientPlansInitialState()

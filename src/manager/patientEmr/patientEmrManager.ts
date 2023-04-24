@@ -26,6 +26,7 @@ import {
   IGenitourinaryHistoryRes,
   IGetPatientsRequestBody,
   IGetPatientsResponse,
+  IICFormResponse,
   IMedicalContactInformation,
   INewPatientPlan,
   IOrderPatientPlanRequestData,
@@ -234,6 +235,10 @@ const patientEmrManager = {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/profile/send-intake-reminder`, {
       patientId
     });
+  },
+  // ic-form
+  getPatientIcForm(patientId: string) {
+    return axiosInstance.get<IICFormResponse, IAxiosResponse<IICFormResponse>>(`${baseURL}/v1/ic-form/${patientId}`);
   },
   // medical background
   getGeneralHealth(patientId: string) {

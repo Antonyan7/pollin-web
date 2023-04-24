@@ -89,6 +89,11 @@ const isPatientBackgroundEditButtonClicked = createSelector(
   (state) => state.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked
 );
 
+// ic-form
+const icForm = createSelector([selector], (state) => state.icForm.form);
+const isIcFormLoading = createSelector([selector], (state) => state.icForm.isGetIcFormLoading);
+const icFormCompletedOn = createSelector([selector], (state) => state.icForm.completedOn);
+
 const isPatientProfileLoading = createSelector([selector], (state) => state.isPatientProfileLoading);
 const isGeneralHealthLoading = createSelector(
   [selector],
@@ -372,6 +377,9 @@ export default {
   isPrescriptionCreationLoading,
   dropdownOptions,
   isDrugLoading,
+  icForm,
+  isIcFormLoading,
+  icFormCompletedOn,
   isGeneralHealthLoading,
   generalHealth,
   isGeneralHealthEditButtonClicked,

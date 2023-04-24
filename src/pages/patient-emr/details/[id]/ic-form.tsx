@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
+import InitialConsultationForm from '@components/ICForm';
 import { Box } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -16,6 +17,8 @@ const ICForm = () => {
   useEffect(() => {
     if (typeof currentPatientId === 'string') {
       dispatch(patientsMiddleware.getPatientProfile(currentPatientId));
+      dispatch(patientsMiddleware.getPatientIcForm(currentPatientId));
+      dispatch(patientsMiddleware.getPatientMedicalBackgroundDropdownOptions());
     }
   }, [currentPatientId]);
 
@@ -41,7 +44,7 @@ const ICForm = () => {
           ]
         }}
       />
-      <div>INITIAL CONSULTATION FORM</div>
+      <InitialConsultationForm />
     </Box>
   );
 };

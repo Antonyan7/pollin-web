@@ -27,7 +27,9 @@ const DiagnosedConditions = ({ componentIndex }: GeneralHealthComponentsProps) =
     <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
       {optionValues?.length ? (
         <Grid>
-          {optionValues.map((optionValue) => <Grid>{optionValue}</Grid>)}
+          {optionValues.map((optionValue) => (
+            <Grid key={optionValue}>{optionValue}</Grid>
+          ))}
           <RenderMappedNote note={fieldValue?.note} />
         </Grid>
       ) : (

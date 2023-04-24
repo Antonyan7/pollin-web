@@ -82,13 +82,13 @@ const ContactList = ({ setOpen, open }: ContactListProps) => {
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useAppSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useAppSelector(patientsSelector.isPatientHighlightIntakeComplete);
-  // const isICFormComplete = useAppSelector(patientsSelector.isICFormComplete);
-  const isICFormComplete = true; // TODO till data will come from backend side
+  const isICFormComplete = useAppSelector(patientsSelector.isICFormComplete);
   const isPatientHighlightIntakeReminderActive = useAppSelector(
     patientsSelector.isPatientHighlightIntakeReminderActive
   );
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const disableOnlyMedicalBackgroundButton = isPatientHighlightIntakeComplete && !isICFormComplete;
+  const disableOnlyMedicalBackgroundButton =
+    (isPatientHighlightIntakeComplete && !isICFormComplete) || !isPatientHighlightIntakeComplete;
   const avatarPlaceholder = '/assets/images/users';
 
   const avatarProfile = useMemo(() => {
