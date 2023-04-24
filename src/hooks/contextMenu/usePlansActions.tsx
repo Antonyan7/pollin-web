@@ -1,21 +1,21 @@
 import { useCallback } from 'react';
-import { PlanActions } from '@axios/patientEmr/managerPatientEmrTypes';
 import { dispatch } from '@redux/hooks';
-import { patientsMiddleware } from '@redux/slices/patients';
+import { plansMiddleware } from '@redux/slices/plans';
 import { filterActionBindings } from 'helpers/contextMenu';
+import { PlanActions } from 'types/reduxTypes/plansTypes';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 const usePlansActions = (planId: string, actions: ContextMenuAction[] = []) => {
   const markThePlanAsCancelled = useCallback(() => {
-    dispatch(patientsMiddleware.markThePlanAsCancelled({ planId }));
+    dispatch(plansMiddleware.markThePlanAsCancelled({ planId }));
   }, [planId]);
 
   const markThePlanAsActive = useCallback(() => {
-    dispatch(patientsMiddleware.markThePlanAsActive({ planId }));
+    dispatch(plansMiddleware.markThePlanAsActive({ planId }));
   }, [planId]);
 
   const markThePlanAsCompleted = useCallback(() => {
-    dispatch(patientsMiddleware.markThePlanAsCompleted({ planId }));
+    dispatch(plansMiddleware.markThePlanAsCompleted({ planId }));
   }, [planId]);
 
   const possibleActions = Object.entries(PlanActions);

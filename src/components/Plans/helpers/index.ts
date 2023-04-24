@@ -1,7 +1,7 @@
-import { IPatientPlansStatus } from '@axios/patientEmr/managerPatientEmrTypes';
 import { InitialConsultationFormFields } from '@components/Plans/types';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
+import { IPatientPlansStatus } from 'types/reduxTypes/plansTypes';
 import { v4 } from 'uuid';
 
 export const maximumAmoutOfPartners = 4;

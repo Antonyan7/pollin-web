@@ -2,7 +2,7 @@ import React, { FC, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Checkbox, FormControlLabel, FormGroup } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -18,11 +18,11 @@ interface AvailablePlansProps {
 const AvailablePlans: FC<AvailablePlansProps> = ({ handleCheck }) => {
   const router = useRouter();
   const patientId = router.query.id as string;
-  const readyToOrderPatientPlans = useAppSelector(patientsSelector.readyToOrderPatientPlans);
-  const isReadyToOrderPlansLoading = useAppSelector(patientsSelector.isReadyToOrderPlansLoading);
+  const readyToOrderPatientPlans = useAppSelector(plansSelector.readyToOrderPatientPlans);
+  const isReadyToOrderPlansLoading = useAppSelector(plansSelector.isReadyToOrderPlansLoading);
 
   useEffect(() => {
-    dispatch(patientsMiddleware.getPatientPlansReadyToOrder(patientId));
+    dispatch(plansMiddleware.getPatientPlansReadyToOrder(patientId));
   }, [patientId]);
 
   if (isReadyToOrderPlansLoading) {
@@ -40,7 +40,7 @@ const AvailablePlans: FC<AvailablePlansProps> = ({ handleCheck }) => {
 
 const SendPlansToPatient = () => {
   const [t] = useTranslation();
-  const isReadyToOrderPlansUpdating = useAppSelector(patientsSelector.isReadyToOrderPlansUpdating);
+  const isReadyToOrderPlansUpdating = useAppSelector(plansSelector.isReadyToOrderPlansUpdating);
   const [checkedPlans, setCheckedPlans] = useState<string[]>([]);
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.SendPlansToPatientModal));
@@ -58,7 +58,7 @@ const SendPlansToPatient = () => {
 
   const handleConfirm = useCallback(() => {
     dispatch(
-      patientsMiddleware.orderPlansToPatient({ patientPlans: checkedPlans.map((checkedPlan) => ({ id: checkedPlan })) })
+      plansMiddleware.orderPlansToPatient({ patientPlans: checkedPlans.map((checkedPlan) => ({ id: checkedPlan })) })
     );
     onClose();
   }, [checkedPlans, onClose]);

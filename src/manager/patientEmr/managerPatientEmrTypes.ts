@@ -1005,61 +1005,6 @@ export interface IFamilyDoctor extends MedicalBackgroundFieldValues {
   name: string;
 }
 
-export interface IPatientPlansStatus {
-  status: string;
-  title: string;
-  actions: IPatientPlanActionItem[];
-  label: {
-    textColor: string;
-    backgroundColor: string;
-  };
-}
-
-export interface IPatientPlansStatusResponse {
-  variations: IPatientPlansStatus[];
-}
-
-export interface IPlanMutation {
-  planId: string;
-}
-
-export interface IPatientPlansCategoriesAndTypesResponse {
-  categories: IPatientPlansCategories[];
-}
-
-export interface IPatientPlan {
-  id: string;
-  title: string;
-  date: string;
-  status: string;
-}
-
-interface IPlanTestResult {
-  title: string;
-  dateCompleted: string;
-  result: string;
-}
-
-interface IPlanSource {
-  source: {
-    value: string;
-    donorId: string;
-  };
-  type: {
-    value: string;
-  };
-}
-
-interface IPlanMonitoring {
-  monitoringLocation: {
-    value: string;
-  };
-  cycleNumber: {
-    value: string;
-  };
-  period: string;
-}
-
 export enum MedicationCardType {
   Prescription = 'prescription',
   Plan = 'plan'
@@ -1070,55 +1015,6 @@ export interface IMedications {
   exists: boolean;
   prescriber: string;
   medications: MedicationsProps[];
-}
-
-export interface IPatientPlanDetails {
-  patientPlan: {
-    id: string;
-    title: string;
-    date: string;
-    status: string;
-    GTPAETALS: string;
-    testResults: IPlanTestResult[];
-    sperm: IPlanSource;
-    monitoring: IPlanMonitoring;
-    medicationsByCategories: IMedications[];
-  };
-}
-
-export interface IPatientPlansListData extends IPagination {
-  isReadyToOrder: string;
-  patientPlans: IPatientPlan[];
-}
-
-export enum PlanActions {
-  MarkAsActive = 'Mark as Active',
-  MarkAsCompleted = 'Mark as Completed',
-  MarkAsCancelled = 'Cancel Plan'
-}
-
-export interface IPatientPlanActionItem {
-  id: string;
-  title: string;
-}
-
-export interface IReadyToOrderPatientPlan extends IPatientPlanActionItem {}
-
-export interface IReadyToOrderPatientPlanResponse {
-  patientPlans: IReadyToOrderPatientPlan[];
-}
-export interface IPatientPlanDetailsReq {
-  planId: string;
-}
-
-export interface IOrderPatientPlanRequestData {
-  patientPlans: { id: string }[];
-}
-
-export interface IPatientPlansCategories {
-  id: string;
-  title: string;
-  items: IPatientPlanActionItem[];
 }
 
 export interface FieldWithNote {
@@ -1134,30 +1030,4 @@ export enum SpermSource {
 export enum SpermType {
   Fresh = 'Fresh',
   Frozen = 'Frozen'
-}
-
-export interface IPatientPlanMedication {
-  categoryId: string;
-  medicationId: string;
-  dosage: string;
-  route: string;
-  frequency: string;
-  time?: string;
-  quantity: string;
-  refill: string;
-  refillNotes?: string;
-  doctorNotes?: string;
-}
-export interface INewPatientPlan {
-  patientId: string;
-  planTypeId: string;
-  monitoring: {
-    monitoringLocation: FieldWithNote & { value: string };
-    cycleNumber: FieldWithNote & { value: string };
-  };
-  sperm: {
-    source: FieldWithNote & { value: SpermSource | null };
-    type: FieldWithNote & { value: SpermType | null };
-  };
-  medications: IPatientPlanMedication[] | boolean;
 }

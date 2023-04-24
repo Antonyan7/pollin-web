@@ -3,7 +3,6 @@ import { SortOrder } from 'types/patient';
 import {
   AppointmentResponseStatus,
   IIcFormProps,
-  IPatientPlansProps,
   MedicalBackgroundProps,
   MedicationsPrescriptionsProps,
   PatientEmrProps
@@ -82,25 +81,6 @@ const getIcFormInitialState = (): IIcFormProps => ({
   form: null,
   isGetIcFormLoading: false,
   completedOn: ''
-});
-
-const getPatientPlansInitialState = (): IPatientPlansProps => ({
-  statusVariations: [],
-  isStatusVariationsLoading: false,
-  plansList: null,
-  isPlansListLoading: false,
-  categories: [],
-  isCategoriesLoading: false,
-  isReadyToOrderPlansLoading: false,
-  isReadyToOrderPlansUpdating: false,
-  readyToOrderPatientPlans: [],
-  isCreatingPlan: false,
-  isPatientPreliminaryBloodsResultsLoading: false,
-  patientPreliminaryBloodsResults: [],
-  planDetails: {
-    isPlanDetailsLoading: false,
-    details: null
-  }
 });
 
 export const getInitialState = (): PatientEmrProps => ({
@@ -195,6 +175,5 @@ export const getInitialState = (): PatientEmrProps => ({
   },
   icForm: getIcFormInitialState(),
   medicalBackground: getMedicalBackgroundInitialState(),
-  medicationsPrescriptions: getMedicationsPrescriptionsInitialState(),
-  plans: getPatientPlansInitialState()
+  medicationsPrescriptions: getMedicationsPrescriptionsInitialState()
 });

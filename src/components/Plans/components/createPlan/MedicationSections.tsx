@@ -5,14 +5,15 @@ import { AdvancedFieldType } from '@components/common/Form/AdvancedField';
 import FlexibleSection from '@components/common/Form/FlexibleSection';
 import { FlexibleItemType } from '@components/common/Form/types';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { patientsMiddleware } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { t } from 'i18next';
 
 import { FirstDynamicRow, SecondDynamicRow, ThirdDynamicRow } from './DynamicRows';
 
 export const MedicationsForm = () => {
-  const categories = useAppSelector(patientsSelector.categories);
+  const categories = useAppSelector(plansSelector.categories);
   const { control } = useFormContext();
   const { fields: medications } = useFieldArray({
     name: 'medications',

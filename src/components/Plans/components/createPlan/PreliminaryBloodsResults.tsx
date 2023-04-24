@@ -5,6 +5,7 @@ import { FormLabel } from '@components/common';
 import { Grid, Tooltip, tooltipClasses, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
@@ -45,7 +46,7 @@ const TestResult = ({ results }: { results: PatientPreliminaryBloodsResults }) =
 };
 
 const PreliminaryBloodsResults = () => {
-  const patientPreliminaryBloodsResults = useAppSelector(patientsSelector.patientPreliminaryBloodsResults);
+  const patientPreliminaryBloodsResults = useAppSelector(plansSelector.patientPreliminaryBloodsResults);
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const theme = useTheme();
 

@@ -1,11 +1,11 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientPlansCategories } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Box, Grid, Link, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
+import { IPatientPlansCategories } from 'types/reduxTypes/plansTypes';
 
 interface IPlanMedicationCardTitleProps {
   categoryId: string;
@@ -15,7 +15,7 @@ interface IPlanMedicationCardTitleProps {
 const PlanMedicationCardTitle = ({ categoryId, exists }: IPlanMedicationCardTitleProps) => {
   const theme = useTheme();
   const downloadRef = useRef<HTMLAnchorElement>(null);
-  const categories = useAppSelector(patientsSelector.categories);
+  const categories = useAppSelector(plansSelector.categories);
   const [t] = useTranslation();
 
   const categoryTitle = useMemo(() => {

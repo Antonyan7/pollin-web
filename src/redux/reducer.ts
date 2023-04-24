@@ -1,3 +1,4 @@
+import { plansSlice } from '@redux/slices/plans';
 import { resultsSlice } from '@redux/slices/results';
 import { tasksSlice } from '@redux/slices/tasks';
 import { combineReducers } from 'redux';
@@ -21,7 +22,8 @@ const reducer = combineReducers({
   results: resultsSlice.reducer,
   orders: ordersSlice.reducer,
   tasks: tasksSlice.reducer,
-  staff: staffSlice.reducer
+  staff: staffSlice.reducer,
+  plans: plansSlice.reducer
 });
 
 export default reducer;

@@ -1,10 +1,6 @@
-import {
-  FieldWithNote,
-  IPatientPlanMedication,
-  SpermSource,
-  SpermType
-} from '@axios/patientEmr/managerPatientEmrTypes';
+import { FieldWithNote, SpermSource, SpermType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { RadioGroupProps } from '@mui/material';
+import { IPatientPlanMedication } from 'types/reduxTypes/plansTypes';
 
 export enum InitialConsultationFormRadioValues {
   Yes = 'Yes',

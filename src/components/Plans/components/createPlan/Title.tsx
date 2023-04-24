@@ -5,13 +5,13 @@ import { ArrowBackIos, ModeEditOutlined } from '@mui/icons-material';
 import { Grid, IconButton, Typography, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 
 const Title = ({ changePage, planTypeId }: { changePage: (pageName: PlanPage) => void; planTypeId: string }) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const categories = useAppSelector(patientsSelector.categories);
+  const categories = useAppSelector(plansSelector.categories);
 
   const planTitle = useMemo(() => {
     let title = '';

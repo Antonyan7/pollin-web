@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { IPatientPlansCategories } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import Title from '@components/Plans/components/createPlan/Title';
 import { IFormMedications, MonitoringLocation, PlanPage } from '@components/Plans/types';
 import { cardHeaderClasses, Divider, Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { viewsMiddleware } from '@redux/slices/views';
 import { useRouter } from 'next/router';
 import { borders, margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
+import { IPatientPlansCategories } from 'types/reduxTypes/plansTypes';
 
 import useStopRouteChange from '@hooks/useStopRouteChange';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import CircularLoading from '@ui-component/circular-loading';
-
-import { ModalName } from '../../../../types/modals';
 
 import Form from './form';
 import PreliminaryBloodsResults from './PreliminaryBloodsResults';
@@ -49,7 +48,7 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
   const {
     query: { id: patientId }
   } = useRouter();
-  const categories = useAppSelector(patientsSelector.categories);
+  const categories = useAppSelector(plansSelector.categories);
 
   const methods = useForm({
     defaultValues: { ...extractDefaultValues(`${patientId}`, `${planTypeId}`, categories) }
@@ -59,10 +58,10 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
     handleSubmit,
     formState: { dirtyFields }
   } = methods;
-  const isPatientPreliminaryBloodsLoading = useAppSelector(patientsSelector.isPatientPreliminaryBloodsResultsLoading);
+  const isPatientPreliminaryBloodsLoading = useAppSelector(plansSelector.isPatientPreliminaryBloodsResultsLoading);
 
   useEffect(() => {
-    dispatch(patientsMiddleware.getPatientPreliminaryBloods(patientId as string));
+    dispatch(plansMiddleware.getPatientPreliminaryBloods(patientId as string));
   }, [patientId]);
 
   useStopRouteChange(Object.values(dirtyFields).length > 0, false, () => {
@@ -107,7 +106,7 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
       medications: filteredMedications
     };
 
-    dispatch(patientsMiddleware.createPatientPlan(newData, backToPlansPage));
+    dispatch(plansMiddleware.createPatientPlan(newData, backToPlansPage));
   };
 
   if (isPatientPreliminaryBloodsLoading) {

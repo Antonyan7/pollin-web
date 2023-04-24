@@ -11,11 +11,8 @@ import {
   IFertilityHistory,
   IGeneralHealthProps,
   IGenitourinaryHistory,
-  INewPatientPlan,
-  IOrderPatientPlanRequestData,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
-  IPlanMutation,
   IUpdateEncounterAddendumRequest,
   PatientPrescriptionsDrugListProps,
   Recency
@@ -152,21 +149,7 @@ const {
   setIsMedicationUpdatedLoading,
   setCardToEditMode,
   setCardToViewMode,
-  setPlansList,
-  setIsPlansListLoading,
-  setStatusVariations,
-  setIsStatusVariationsLoading,
-  setCategories,
-  setIsCategoriesLoading,
-  setIsBookingRequestToPatientLoading,
-  setReadyToOrderPatientPlans,
-  setIsReadyToOrderPlansLoading,
-  setIsReadyToOrderPlansUpdating,
-  setPatientPreliminaryBloodsResults,
-  setIsPatientPreliminaryBloodsResultsLoading,
-  setIsCreatingPlan,
-  setIsPatientPlanDetailsLoading,
-  setPatientPlanDetails
+  setIsBookingRequestToPatientLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1285,54 +1268,6 @@ const updatePatientBackgroundInformation =
     dispatch(setIsUpdatePatientBackgroundInformationLoading(false));
   };
 
-const getPatientPlansList = (patientId: string, page?: number) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsPlansListLoading(true));
-
-    const response = await API.patients.getPatientPlansList({ patientId, page });
-    const data = {
-      ...response.data.data,
-      totalItems: response.data.totalItems,
-      currentPage: response.data.currentPage,
-      pageSize: response.data.pageSize
-    };
-
-    dispatch(setPlansList(data));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsPlansListLoading(false));
-  }
-};
-
-const getPatientPlansStatuses = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsStatusVariationsLoading(true));
-
-    const response = await API.patients.getPatientPlansStatuses();
-
-    dispatch(setStatusVariations(response.data.data.variations));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsStatusVariationsLoading(false));
-  }
-};
-
-const getPlanCategoriesAndTypes = () => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsCategoriesLoading(true));
-
-    const response = await API.patients.getPlanCategoriesAndTypes();
-
-    dispatch(setCategories(response.data.data.categories));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsCategoriesLoading(false));
-  }
-};
-
 const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setIsBookingRequestToPatientLoading(true));
@@ -1358,92 +1293,6 @@ const sendBookingRequestToPatient = (data: ISendBookingRequestToPatientRequest) 
   }
 };
 
-const markThePlanAsCancelled = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
-  try {
-    await API.patients.markThePlanAsCancelled(data);
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
-const markThePlanAsActive = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
-  try {
-    await API.patients.markThePlanAsActive(data);
-
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
-const markThePlanAsCompleted = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
-  try {
-    await API.patients.markThePlanAsCompleted(data);
-
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-  }
-};
-
-const getPatientPlansReadyToOrder = (patientId: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsReadyToOrderPlansLoading(true));
-
-    const response = await API.patients.getPatientPlansReadyToOrder(patientId);
-
-    dispatch(setReadyToOrderPatientPlans(response.data.data.patientPlans));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsReadyToOrderPlansLoading(false));
-  }
-};
-
-const orderPlansToPatient = (data: IOrderPatientPlanRequestData) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsReadyToOrderPlansUpdating(true));
-
-    await API.patients.orderPlansToPatient(data);
-
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsReadyToOrderPlansUpdating(false));
-  }
-};
 const updatePatientGenitourinaryHistory =
   (patientId: string, genitourinaryHistory: IGenitourinaryHistory) => async (dispatch: AppDispatch) => {
     try {
@@ -1470,50 +1319,6 @@ const updatePatientGenitourinaryHistory =
       dispatch(setIsMalePatientGenitourinaryHistoryLoading(false));
     }
   };
-
-const getPatientPreliminaryBloods = (patientId: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsPatientPreliminaryBloodsResultsLoading(true));
-
-    const response = await API.results.getPatientPreliminaryBloods(patientId);
-
-    dispatch(setPatientPreliminaryBloodsResults(response.data.data.testResults));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsPatientPreliminaryBloodsResultsLoading(false));
-  }
-};
-
-const createPatientPlan = (data: INewPatientPlan, successCallback?: () => void) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsCreatingPlan(true));
-
-    const response = await API.patients.createPatientPlan(data);
-
-    if (response) {
-      successCallback?.();
-    }
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsCreatingPlan(false));
-  }
-};
-
-const getPlanDetails = (planId: string) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsPatientPlanDetailsLoading(true));
-
-    const response = await API.patients.getPatientPlanDetails(planId);
-
-    dispatch(setPatientPlanDetails(response.data.data));
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsPatientPlanDetailsLoading(false));
-  }
-};
 
 export default {
   getPatientsList,
@@ -1597,16 +1402,5 @@ export default {
   updateFemalePatientMenstrualCycleHistory,
   setEditMalePatientGenitourinaryState,
   updateFemalePatientGynaecologicalHistory,
-  getPatientPlansList,
-  getPatientPlansStatuses,
-  getPlanCategoriesAndTypes,
-  sendBookingRequestToPatient,
-  markThePlanAsCancelled,
-  markThePlanAsActive,
-  markThePlanAsCompleted,
-  orderPlansToPatient,
-  getPatientPlansReadyToOrder,
-  getPatientPreliminaryBloods,
-  createPatientPlan,
-  getPlanDetails
+  sendBookingRequestToPatient
 };

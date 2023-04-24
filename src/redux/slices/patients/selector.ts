@@ -280,28 +280,6 @@ const dropdowns = createSelector([selector], (state) => state.medicalBackground.
 
 const isDropdownsLoading = createSelector([selector], (state) => state.medicalBackground.common.isDropdownsLoading);
 
-// Patient Plans
-const statusVariations = createSelector([selector], (state) => state.plans.statusVariations);
-const isStatusVariationsLoading = createSelector([selector], (state) => state.plans.isStatusVariationsLoading);
-const plansList = createSelector([selector], (state) => state.plans.plansList);
-const isPlansListLoading = createSelector([selector], (state) => state.plans.isPlansListLoading);
-const categories = createSelector([selector], (state) => state.plans.categories);
-const isCategoriesLoading = createSelector([selector], (state) => state.plans.isCategoriesLoading);
-const readyToOrderPatientPlans = createSelector([selector], (state) => state.plans.readyToOrderPatientPlans);
-const isReadyToOrderPlansLoading = createSelector([selector], (state) => state.plans.isReadyToOrderPlansLoading);
-const isReadyToOrderPlansUpdating = createSelector([selector], (state) => state.plans.isReadyToOrderPlansUpdating);
-const patientPreliminaryBloodsResults = createSelector(
-  [selector],
-  (state) => state.plans.patientPreliminaryBloodsResults
-);
-const isPatientPreliminaryBloodsResultsLoading = createSelector(
-  [selector],
-  (state) => state.plans.isPatientPreliminaryBloodsResultsLoading
-);
-const isCreatingPlan = createSelector([selector], (state) => state.plans.isCreatingPlan);
-const planDetails = createSelector([selector], (state) => state.plans.planDetails.details?.patientPlan);
-const isPlanDetailsLoading = createSelector([selector], (state) => state.plans.planDetails.isPlanDetailsLoading);
-
 export default {
   isTestResultsHistoryLoading,
   isProfileTestResultsLoading,
@@ -409,19 +387,5 @@ export default {
   contactInformation,
   manuallyAddressForMailing,
   manuallyAddressForPrimary,
-  statusVariations,
-  isStatusVariationsLoading,
-  plansList,
-  isPlansListLoading,
-  categories,
-  isCategoriesLoading,
-  isBookingRequestToPatientLoading,
-  readyToOrderPatientPlans,
-  isReadyToOrderPlansLoading,
-  isReadyToOrderPlansUpdating,
-  patientPreliminaryBloodsResults,
-  isPatientPreliminaryBloodsResultsLoading,
-  isCreatingPlan,
-  planDetails,
-  isPlanDetailsLoading
+  isBookingRequestToPatientLoading
 };

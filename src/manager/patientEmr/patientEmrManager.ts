@@ -28,8 +28,6 @@ import {
   IGetPatientsResponse,
   IICFormResponse,
   IMedicalContactInformation,
-  INewPatientPlan,
-  IOrderPatientPlanRequestData,
   IPatientBackground,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
@@ -39,21 +37,14 @@ import {
   IPatientHighlightResponse,
   IPatientMedications,
   IPatientMedicationsState,
-  IPatientPlanDetails,
-  IPatientPlanDetailsReq,
-  IPatientPlansCategoriesAndTypesResponse,
-  IPatientPlansListData,
-  IPatientPlansStatusResponse,
   IPatientPrescriptions,
   IPatientProfileOverviewResponse,
   IPatientProfileResponse,
   IPatientsFiltersResponse,
   IPatientsListResponse,
-  IPlanMutation,
   IPrescriptionStatuses,
   IProfileTestResultDetailsResponse,
   IProfileTestResults,
-  IReadyToOrderPatientPlanResponse,
   ITestResultHistoryResponse,
   IUpdateEncounterAddendumRequest,
   IUpdateEncounterNoteRequest,
@@ -433,65 +424,8 @@ const patientEmrManager = {
       IAxiosResponse<ICreatePatientPrescriptionMedicationResponse>
     >(`${baseURL}/v1/prescriptions`, data);
   },
-
-  // Patient Plans
-  getPatientPlansList({ patientId, page }: { patientId: string; page?: number }) {
-    return axiosInstance.get<IPatientPlansListData, IAxiosResponsePaginated<IPatientPlansListData>>(
-      `${baseURL}/v1/plans`,
-      {
-        params: {
-          patientId,
-          ...(typeof page === 'number' && {
-            page
-          })
-        }
-      }
-    );
-  },
-  getPatientPlansStatuses() {
-    return axiosInstance.get<IPatientPlansStatusResponse, IAxiosResponse<IPatientPlansStatusResponse>>(
-      `${baseURL}/v1/plans/status`
-    );
-  },
-  getPlanCategoriesAndTypes() {
-    return axiosInstance.get<
-      IPatientPlansCategoriesAndTypesResponse,
-      IAxiosResponse<IPatientPlansCategoriesAndTypesResponse>
-    >(`${baseURL}/v1/plans/categories-plan-types`);
-  },
   sendBookingRequestToPatient(data: ISendBookingRequestToPatientRequest) {
     return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/patient-milestone`, data);
-  },
-  markThePlanAsCancelled(data: IPlanMutation) {
-    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-cancelled`, data);
-  },
-  markThePlanAsActive(data: IPlanMutation) {
-    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-active`, data);
-  },
-  markThePlanAsCompleted(data: IPlanMutation) {
-    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/mark-as-completed`, data);
-  },
-  orderPlansToPatient(data: IOrderPatientPlanRequestData) {
-    return axiosInstance.patch<null, IAxiosResponse<null>>(`${baseURL}/v1/plans/order`, data);
-  },
-  getPatientPlansReadyToOrder(patientId: string) {
-    return axiosInstance.get<IReadyToOrderPatientPlanResponse, IAxiosResponse<IReadyToOrderPatientPlanResponse>>(
-      `${baseURL}/v1/plans/ready-to-order`,
-      {
-        params: {
-          patientId
-        }
-      }
-    );
-  },
-  createPatientPlan(data: INewPatientPlan) {
-    return axiosInstance.post<null, IAxiosResponse<null>>(`${baseURL}/v1/plans`, data);
-  },
-  getPatientPlanDetails(planId: string) {
-    return axiosInstance.get<IPatientPlanDetailsReq, IAxiosResponse<IPatientPlanDetails>>(
-      `${baseURL}/v1/plans/${planId}`,
-      {}
-    );
   }
 };
 

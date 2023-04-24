@@ -1,15 +1,15 @@
 import * as React from 'react';
 import { FC } from 'react';
-import { IPatientPlan } from '@axios/patientEmr/managerPatientEmrTypes';
 import { findStatus } from '@components/Plans/helpers';
 import SeparatedLabels from '@components/SeparatedLabels';
 import { KeyboardArrowRight } from '@mui/icons-material';
 import { Box, Chip, IconButton, Paper } from '@mui/material';
 import { Stack } from '@mui/system';
 import { useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
+import { IPatientPlan } from 'types/reduxTypes/plansTypes';
 
 import usePlansActions from '@hooks/contextMenu/usePlansActions';
 import { ContextMenu } from '@ui-component/contextMenu';
@@ -19,7 +19,7 @@ interface PlanRowProps {
 }
 
 const PlanRow: FC<PlanRowProps> = ({ plan }) => {
-  const statusVariations = useAppSelector(patientsSelector.statusVariations);
+  const statusVariations = useAppSelector(plansSelector.statusVariations);
   const status = findStatus(statusVariations, plan.status);
   const router = useRouter();
   const { id } = router.query;

@@ -1,6 +1,5 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPatientPlan, IPatientPlansListData } from '@axios/patientEmr/managerPatientEmrTypes';
 import NoResultsFound from '@components/NoResultsFound';
 import { PlanPage } from '@components/Plans/types';
 import SimpleMenu, { IMenuItem } from '@components/SimpleMenu';
@@ -8,13 +7,15 @@ import { Add, SendTwoTone } from '@mui/icons-material';
 import { Grid, TablePagination, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { patientsSelector } from '@redux/slices/patients';
+import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { SexAtBirth } from 'types/reduxTypes/patient-emrStateTypes';
+import { IPatientPlan, IPatientPlansListData } from 'types/reduxTypes/plansTypes';
 
 import CircularLoading from '@ui-component/circular-loading';
 import { ButtonWithIcon } from '@ui-component/common/buttons';
@@ -39,12 +40,12 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
   const theme = useTheme();
   const [t] = useTranslation();
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const patientPlansList = useAppSelector(patientsSelector.plansList);
-  const categories = useAppSelector(patientsSelector.categories);
+  const patientPlansList = useAppSelector(plansSelector.plansList);
+  const categories = useAppSelector(plansSelector.categories);
   const isPatientProfileLoading = useAppSelector(patientsSelector.isPatientProfileLoading);
-  const isStatusVariationsLoading = useAppSelector(patientsSelector.isStatusVariationsLoading);
-  const isCategoriesAndTypesLoading = useAppSelector(patientsSelector.isCategoriesLoading);
-  const isPlansListLoading = useAppSelector(patientsSelector.isPlansListLoading);
+  const isStatusVariationsLoading = useAppSelector(plansSelector.isStatusVariationsLoading);
+  const isCategoriesAndTypesLoading = useAppSelector(plansSelector.isCategoriesLoading);
+  const isPlansListLoading = useAppSelector(plansSelector.isPlansListLoading);
   const {
     query: { id: patientId }
   } = useRouter();
@@ -54,14 +55,14 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
 
   useEffect(() => {
     if (patientProfile?.sexAtBirth === SexAtBirth.Female) {
-      dispatch(patientsMiddleware.getPatientPlansStatuses());
-      dispatch(patientsMiddleware.getPlanCategoriesAndTypes());
+      dispatch(plansMiddleware.getPatientPlansStatuses());
+      dispatch(plansMiddleware.getPlanCategoriesAndTypes());
     }
   }, [isPatientProfileLoading, patientId, patientProfile?.sexAtBirth]);
 
   useEffect(() => {
     if (patientProfile?.sexAtBirth === SexAtBirth.Female) {
-      dispatch(patientsMiddleware.getPatientPlansList(`${patientId}`, page));
+      dispatch(plansMiddleware.getPatientPlansList(`${patientId}`, page));
     }
   }, [page, patientId, patientProfile?.sexAtBirth]);
 

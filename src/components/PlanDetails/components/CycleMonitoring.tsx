@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Box, Divider, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
@@ -10,7 +10,7 @@ import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
 const CycleMonitoring = () => {
   const theme = useTheme();
-  const planDetails = useAppSelector(patientsSelector.planDetails);
+  const planDetails = useAppSelector(plansSelector.planDetails);
   const [t] = useTranslation();
 
   return (

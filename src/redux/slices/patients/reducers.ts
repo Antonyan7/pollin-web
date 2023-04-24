@@ -16,19 +16,13 @@ import {
   IPatientICFormProps,
   IPatientMedications,
   IPatientMedicationsState,
-  IPatientPlanDetails,
-  IPatientPlansCategories,
-  IPatientPlansListData,
-  IPatientPlansStatus,
   IPatientPrescriptions,
   IPrescriptionStatusesVariations,
   IProfileTestResults,
-  IReadyToOrderPatientPlan,
   ITestResultHistory,
   PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
-import { PatientPreliminaryBloodsResults } from '@axios/results/resultsManagerTypes';
 import { SliceCaseReducers } from '@reduxjs/toolkit/src/createSlice';
 import { IAction } from 'redux/store';
 import { IEncountersFilterOption } from 'types/patient';
@@ -388,53 +382,11 @@ const reducers = createReducer({
   setPatientPrescriptionsListItems(state, action: IAction<PatientPrescriptionsDrugListProps[] | null>) {
     state.medicationsPrescriptions.prescriptions.prescriptionsDrugList = action.payload;
   },
-  setPlansList(state, action: IAction<IPatientPlansListData | null>) {
-    state.plans.plansList = action.payload;
-  },
-  setIsPlansListLoading(state, action: IAction<boolean>) {
-    state.plans.isPlansListLoading = action.payload;
-  },
-  setStatusVariations(state, action: IAction<IPatientPlansStatus[]>) {
-    state.plans.statusVariations = action.payload;
-  },
-  setIsStatusVariationsLoading(state, action: IAction<boolean>) {
-    state.plans.isStatusVariationsLoading = action.payload;
-  },
-  setCategories(state, action: IAction<IPatientPlansCategories[]>) {
-    state.plans.categories = action.payload;
-  },
-  setIsCategoriesLoading(state, action: IAction<boolean>) {
-    state.plans.isCategoriesLoading = action.payload;
-  },
   setIsDownloadPrescriptionLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.prescriptions.isDownloadPrescriptionLoading = action.payload;
   },
   setIsBookingRequestToPatientLoading(state, action: IAction<boolean>) {
     state.isBookingRequestToPatientLoading = action.payload;
-  },
-  setReadyToOrderPatientPlans(state, action: IAction<IReadyToOrderPatientPlan[]>) {
-    state.plans.readyToOrderPatientPlans = action.payload;
-  },
-  setIsReadyToOrderPlansLoading(state, action: IAction<boolean>) {
-    state.plans.isReadyToOrderPlansLoading = action.payload;
-  },
-  setIsReadyToOrderPlansUpdating(state, action: IAction<boolean>) {
-    state.plans.isReadyToOrderPlansUpdating = action.payload;
-  },
-  setPatientPreliminaryBloodsResults(state, action: IAction<PatientPreliminaryBloodsResults[]>) {
-    state.plans.patientPreliminaryBloodsResults = action.payload;
-  },
-  setIsPatientPreliminaryBloodsResultsLoading(state, action: IAction<boolean>) {
-    state.plans.isCategoriesLoading = action.payload;
-  },
-  setIsCreatingPlan(state, action: IAction<boolean>) {
-    state.plans.isCreatingPlan = action.payload;
-  },
-  setPatientPlanDetails(state, action: IAction<IPatientPlanDetails>) {
-    state.plans.planDetails.details = action.payload;
-  },
-  setIsPatientPlanDetailsLoading(state, action: IAction<boolean>) {
-    state.plans.planDetails.isPlanDetailsLoading = action.payload;
   }
 });
 

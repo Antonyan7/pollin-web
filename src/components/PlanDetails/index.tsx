@@ -9,7 +9,7 @@ import { Circle, KeyboardArrowLeft } from '@mui/icons-material';
 import { Box, Chip, IconButton, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
@@ -24,8 +24,8 @@ const PlanDetails = () => {
   const theme = useTheme();
   const [t] = useTranslation();
   const router = useRouter();
-  const statusVariations = useAppSelector(patientsSelector.statusVariations);
-  const planDetails = useAppSelector(patientsSelector.planDetails);
+  const statusVariations = useAppSelector(plansSelector.statusVariations);
+  const planDetails = useAppSelector(plansSelector.planDetails);
   const status = findStatus(statusVariations, planDetails?.status ?? '');
   const actionBindings = usePlansActions(planDetails?.id ?? '', status?.actions);
   const planId = router.query.planId as string;
@@ -35,13 +35,13 @@ const PlanDetails = () => {
   };
 
   useEffect(() => {
-    dispatch(patientsMiddleware.getPatientPlansStatuses());
-    dispatch(patientsMiddleware.getPlanCategoriesAndTypes());
+    dispatch(plansMiddleware.getPatientPlansStatuses());
+    dispatch(plansMiddleware.getPlanCategoriesAndTypes());
   }, []);
 
   useEffect(() => {
     if (planId) {
-      dispatch(patientsMiddleware.getPlanDetails(planId));
+      dispatch(plansMiddleware.getPlanDetails(planId));
     }
   }, [planId]);
 

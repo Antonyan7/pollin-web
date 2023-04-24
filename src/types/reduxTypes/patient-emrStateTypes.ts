@@ -22,21 +22,15 @@ import {
   IPatientICFormProps,
   IPatientMedications,
   IPatientMedicationsState,
-  IPatientPlanDetails,
-  IPatientPlansCategories,
-  IPatientPlansListData,
-  IPatientPlansStatus,
   IPatientPrescriptions,
   IPrescriptionStatusesVariations,
   IProfileTestResults,
-  IReadyToOrderPatientPlan,
   ITestResultHistory,
   IUpdateEncounterNoteRequest,
   LatestTestResultType,
   PatientPrescriptionsDrugListProps,
   ProfileTestResultDetailsItem
 } from '@axios/patientEmr/managerPatientEmrTypes';
-import { PatientPreliminaryBloodsResults } from '@axios/results/resultsManagerTypes';
 import { IEncountersFilterOption, IPatientsFilterOption, PatientListFilterType, SortOrder } from 'types/patient';
 
 interface IProfileProps {
@@ -126,25 +120,6 @@ export interface IIcFormProps {
   completedOn: string;
 }
 
-export interface IPatientPlansProps {
-  statusVariations: IPatientPlansStatus[];
-  isStatusVariationsLoading: boolean;
-  categories: IPatientPlansCategories[];
-  isCategoriesLoading: boolean;
-  plansList: IPatientPlansListData | null;
-  isPlansListLoading: boolean;
-  isReadyToOrderPlansLoading: boolean;
-  isReadyToOrderPlansUpdating: boolean;
-  readyToOrderPatientPlans: IReadyToOrderPatientPlan[];
-  patientPreliminaryBloodsResults: PatientPreliminaryBloodsResults[];
-  isPatientPreliminaryBloodsResultsLoading: boolean;
-  isCreatingPlan: boolean;
-  planDetails: {
-    isPlanDetailsLoading: boolean;
-    details: IPatientPlanDetails | null;
-  };
-}
-
 export interface ICreateMedication {
   patientId: string;
   medication: {
@@ -219,7 +194,6 @@ export interface PatientEmrProps {
   profile: IProfileProps;
   currentPatientAppointmentFilterField: string;
   contactInformation: IPatientContactInformation;
-  plans: IPatientPlansProps;
 }
 
 export interface IItem {
