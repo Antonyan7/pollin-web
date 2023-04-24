@@ -5,6 +5,7 @@ import { Box, Grid, Link, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { paddings } from 'themes/themeConstants';
 
 interface IPlanMedicationCardTitleProps {
   categoryId: string;
@@ -35,7 +36,16 @@ const PlanMedicationCardTitle = ({ categoryId, exists }: IPlanMedicationCardTitl
       }}
     >
       <Grid item xs={7}>
-        <Box sx={{ fontWeight: 500, fontSize: theme.typography.pxToRem(14) }}>{categoryTitle}</Box>
+        <Box
+          sx={{
+            fontWeight: 500,
+            fontSize: theme.typography.pxToRem(14),
+            paddingLeft: paddings.left24,
+            paddingBottom: paddings.bottom8
+          }}
+        >
+          {categoryTitle}
+        </Box>
       </Grid>
 
       <Grid item xs={2}>
