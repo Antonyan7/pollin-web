@@ -15,6 +15,7 @@ export interface ITasksManager {
   priorities: ITaskPriorityOption[];
   taskDetails: ITaskDetails;
   isTaskDetailsLoading: boolean;
+  isTaskUpdating: boolean;
 }
 
 export interface ITasksDetailsProps {

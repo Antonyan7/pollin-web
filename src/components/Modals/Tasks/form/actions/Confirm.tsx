@@ -8,13 +8,18 @@ import { Translation } from 'constants/translations';
 
 import { ButtonWithLoading } from '@ui-component/common/buttons';
 
+import { useCreateOrEditModalContext } from '../../hooks/useCreateOrEditModalContext';
+
 const ConfirmButton = () => {
   const [t] = useTranslation();
   const theme = useTheme();
+  const task = useCreateOrEditModalContext();
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
   const { watch } = useFormContext();
-  const addButtonLabel = t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_ACTIONS_CREATE);
-  const isTasksCreateLoading = useAppSelector(tasksSelector.isTasksCreateLoading);
+  const label = task
+    ? t(Translation.PAGE_TASKS_MANAGER_MODAL_EDIT_TASK_BUTTON)
+    : t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_ACTIONS_CREATE);
+  const isTasksCreateLoading = useAppSelector(task ? tasksSelector.isTasksCreateLoading : tasksSelector.isTaskUpdating);
 
   useEffect(() => {
     const subscription = watch((value) => {
@@ -46,7 +51,7 @@ const ConfirmButton = () => {
           isLoading={isTasksCreateLoading}
           variant="contained"
         >
-          {addButtonLabel}
+          {label}
         </ButtonWithLoading>
       </Stack>
     </Grid>

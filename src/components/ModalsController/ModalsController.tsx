@@ -70,7 +70,7 @@ import TaskStatusUpdateModal, {
   TestResultReviewConfirmationProps
 } from '@components/Modals/TaskDashboard/TaskStatusUpdateModal';
 import ReassignTaskModal from '@components/Modals/TaskReassign';
-import CreateTaskModal from '@components/Modals/Tasks';
+import CreateOrEditTaskModal from '@components/Modals/Tasks';
 import VerifyPatientPhotoModal from '@components/Modals/VerifyPatientPhotoModal';
 import PatientLineItemsModal, {
   PatientLineItemsModalProps
@@ -91,6 +91,7 @@ import {
   IMakeTestResultReviewReq,
   IPatientContactInformationModalProps
 } from 'types/reduxTypes/resultsStateTypes';
+import { ITask } from 'types/reduxTypes/tasksStateTypes';
 import { IOpenedModal } from 'types/reduxTypes/viewsStateTypes';
 import { v4 } from 'uuid';
 
@@ -194,7 +195,11 @@ const getMoveToAnotherTransport = (modal: IOpenedModal<MoveToAnotherTransportPro
   <MoveToAnotherTransport key={modal.name} {...modal.props} />
 );
 
-const getTaskCreateModal = () => <CreateTaskModal key={v4()} />;
+const getTaskCreateModal = (modal: IOpenedModal<{ row: string }>) => <CreateOrEditTaskModal key={modal.name} />;
+
+const getTaskEditModal = (modal: IOpenedModal<{ task: ITask }>) => (
+  <CreateOrEditTaskModal task={modal?.props.task} key={modal.name} />
+);
 
 // Patient Partner confirmation (Are you want to go to profile partners profile)
 const getOrderCreationCancelModal = () => <CancelOrderCreationModal key={v4()} />;
@@ -342,7 +347,9 @@ export const ModalsController = () => {
             return getErrorModal();
           //  Task Dashboard
           case ModalName.CreateTaskModal:
-            return getTaskCreateModal();
+            return getTaskCreateModal(modal);
+          case ModalName.EditTaskModal:
+            return getTaskEditModal(modal);
           case ModalName.TaskDetailsModal:
             return getTaskDetailsModal(modal);
           case ModalName.TaskStatusUpdateModal:

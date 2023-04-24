@@ -5,21 +5,36 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
+import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
-import CreateTaskModalForm from './form';
+import { CreateOrEditModalContext } from './context/CreateOrEditModalContext';
+import { getInitialTaskValues } from './helpers/getTaskInitialValues';
+import CreateOrEditTaskModalForm from './form';
 
-const CreateTaskModal = () => {
+export interface CreateOrEditTaskModalProps {
+  task?: ITask;
+}
+
+const CreateOrEditTaskModal = ({ task }: CreateOrEditTaskModalProps) => {
+  const isEditModal = !!task;
+
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.CreateTaskModal));
-  }, []);
+    if (isEditModal) {
+      dispatch(viewsMiddleware.closeModal(ModalName.EditTaskModal));
+    } else {
+      dispatch(viewsMiddleware.closeModal(ModalName.CreateTaskModal));
+    }
+  }, [isEditModal]);
 
   return (
-    <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <CreateTaskModalForm />
-      </LocalizationProvider>
-    </Dialog>
+    <CreateOrEditModalContext.Provider value={getInitialTaskValues(task)}>
+      <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <CreateOrEditTaskModalForm taskId={task?.uuid} />
+        </LocalizationProvider>
+      </Dialog>
+    </CreateOrEditModalContext.Provider>
   );
 };
 
-export default CreateTaskModal;
+export default CreateOrEditTaskModal;

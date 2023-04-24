@@ -1,13 +1,6 @@
-export interface ICreateTaskForm {
-  taskName: string;
-  patient?: string;
-  dueDate: string;
-  description?: string;
-  priority: string;
-  assign: string;
-}
+import { ICreateOrEditTaskForm } from '../types';
 
-export const initialValues: ICreateTaskForm = {
+export const initialValues: ICreateOrEditTaskForm = {
   taskName: '',
   patient: '',
   dueDate: '',

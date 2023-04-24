@@ -34,5 +34,6 @@ export const getInitialState = (): ITasksManager => ({
     statusId: '',
     reassigningHistory: []
   },
-  isTaskDetailsLoading: false
+  isTaskDetailsLoading: false,
+  isTaskUpdating: false
 });

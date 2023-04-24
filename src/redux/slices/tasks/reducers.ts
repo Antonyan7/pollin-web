@@ -41,6 +41,9 @@ const reducers = createReducer({
   },
   setIsTaskUpdated(state, action: IAction<boolean>) {
     state.isTaskUpdated = action.payload;
+  },
+  setIsTaskUpdating(state, action: IAction<boolean>) {
+    state.isTaskUpdating = action.payload;
   }
 });
 

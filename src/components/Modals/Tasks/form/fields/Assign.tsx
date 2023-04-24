@@ -14,6 +14,8 @@ import { IPatientOption } from 'types/reduxTypes/bookingStateTypes';
 import { usePaginatedAutoCompleteScroll } from '@hooks/usePaginatedAutoCompleteScroll';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
 
+import { useCreateOrEditModalContext } from '../../hooks/useCreateOrEditModalContext';
+
 const INITIAL_PAGE = 1;
 
 const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
@@ -22,11 +24,10 @@ const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
 
   const staffUsers = useAppSelector(staffSelector.staffUsers);
   const isStaffLoading = useAppSelector(staffSelector.isStaffLoading);
-
   const { staff } = staffUsers;
   const staffOptions = useMemo(() => createOptionsGroupPatients(staff), [staff]);
-
-  const { control, register } = useFormContext();
+  const task = useCreateOrEditModalContext();
+  const { control } = useFormContext();
   const { field, fieldState } = useController({ name: labelFieldName, control });
   const { onBlur, onChange, ...fieldProps } = field;
   const { error } = fieldState;
@@ -83,7 +84,8 @@ const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
     <Grid item xs={12}>
       <BaseDropdownWithLoading
         inputValue={inputValue}
-        {...register(`${labelFieldName}`)}
+        disabled={!!task}
+        value={field.value}
         isLoading={isStaffLoading}
         ListboxProps={{
           style: {
@@ -95,7 +97,7 @@ const AssignField = ({ fieldLabel }: { fieldLabel?: string }) => {
         }}
         id={labelFieldName}
         options={staffOptions}
-        isOptionEqualToValue={(option, value) => option.item.id === value.item.id}
+        isOptionEqualToValue={(option, value) => option.item.id === value.item?.id}
         getOptionLabel={(option) => getOptionLabel(option)}
         onChange={(_, value) => {
           if (value && typeof value === 'object' && 'item' in value) {

@@ -24,17 +24,17 @@ const extractDefaultValues = (patientId: string, planTypeId: string, categories:
   patientId: patientId as string,
   planTypeId: planTypeId as string,
   monitoring: {
-    monitoringLocation: { value: Object.keys(MonitoringLocation)[0], note: '' },
-    cycleNumber: { value: '', note: '' }
+    monitoringLocation: { value: Object.keys(MonitoringLocation)[0], note: null },
+    cycleNumber: { value: '', note: null }
   },
   sperm: {
     source: {
       value: null,
-      note: ''
+      note: null
     },
     type: {
       value: null,
-      note: ''
+      note: null
     }
   },
   medications: categories.map((item) => ({
@@ -104,7 +104,7 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
 
     const newData = {
       ...data,
-      medications: filteredMedications.length ? filteredMedications : false
+      medications: filteredMedications
     };
 
     dispatch(patientsMiddleware.createPatientPlan(newData, backToPlansPage));

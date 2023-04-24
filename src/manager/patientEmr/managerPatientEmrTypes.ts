@@ -1081,8 +1081,8 @@ export interface IPatientPlansCategories {
 }
 
 export interface FieldWithNote {
-  note: string;
-  isEditable?: false;
+  note?: string | null;
+  isEditable?: boolean;
 }
 
 export enum SpermSource {

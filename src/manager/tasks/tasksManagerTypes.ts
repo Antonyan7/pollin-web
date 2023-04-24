@@ -51,14 +51,23 @@ export interface ITaskCreateReqBody {
   task: ITaskCreate;
 }
 
-export interface ITaskCreate {
+export interface ITaskEditReqBody {
+  task: ITaskEdit;
+}
+
+export interface ITaskMutation {
   name: string;
-  assigneeId: string;
   patientId?: string;
   dueDate: string;
   priorityId: string;
   description?: string;
 }
+
+export interface ITaskCreate extends ITaskMutation {
+  assigneeId: string;
+}
+
+export interface ITaskEdit extends ITaskMutation {}
 
 export enum ContextMenuAction {
   Pending = 'Pending',
@@ -66,5 +75,6 @@ export enum ContextMenuAction {
   OnHold = 'OnHold',
   Completed = 'Completed',
   Cancelled = 'Cancelled',
-  Reassign = 'Reassign'
+  Reassign = 'Reassign',
+  Edit = 'Edit'
 }

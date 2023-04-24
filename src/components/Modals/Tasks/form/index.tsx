@@ -7,31 +7,43 @@ import { tasksMiddleware } from '@redux/slices/tasks';
 import { Translation } from 'constants/translations';
 import { findAssigneeById } from 'helpers/tasks';
 
+import { useCreateOrEditModalContext } from '../hooks/useCreateOrEditModalContext';
+import { ICreateOrEditTaskForm } from '../types';
+
 import FormBody from './FormBody';
 import FormHeader from './FormHeader';
-import { ICreateTaskForm, initialValues } from './initialValues';
+import { initialValues } from './initialValues';
 
-const CreateTaskModalForm = () => {
+const CreateOrEditTaskModalForm = ({ taskId }: { taskId?: string }) => {
   const [t] = useTranslation();
   const staffUsers = useAppSelector(staffSelector.staffUsers);
+  const task = useCreateOrEditModalContext();
   const { staff } = staffUsers;
   const methods = useForm({
     mode: 'onSubmit',
-    defaultValues: initialValues
+    defaultValues: task ?? initialValues
   });
 
   const { handleSubmit } = methods;
 
-  const onSubmit = (values: ICreateTaskForm) => {
-    const assigneeName = findAssigneeById(values.assign, staff)?.name;
+  const onCreateSubmit = (values: ICreateOrEditTaskForm) => {
+    const assigneeName = findAssigneeById(values.assign ?? '', staff)?.name;
     const message = `${t(Translation.PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_CREATE)} ${assigneeName}`;
 
     dispatch(tasksMiddleware.createTask(values, message));
   };
 
+  const onEditSubmit = (values: ICreateOrEditTaskForm) => {
+    const message = `${t(Translation.PAGE_TASKS_MANAGER_TOAST_SUCCESSFUL_UPDATE)}`;
+
+    if (taskId) {
+      dispatch(tasksMiddleware.editTask(taskId, values, message));
+    }
+  };
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(task ? onEditSubmit : onCreateSubmit)}>
         <FormHeader />
         <FormBody />
       </form>
@@ -39,4 +51,4 @@ const CreateTaskModalForm = () => {
   );
 };
 
-export default CreateTaskModalForm;
+export default CreateOrEditTaskModalForm;

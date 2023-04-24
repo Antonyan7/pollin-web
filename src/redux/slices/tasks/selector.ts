@@ -13,6 +13,7 @@ const createdTaskId = createSelector([selector], (state) => state.createdTaskId)
 const tasksPrioritiesList = createSelector([selector], (state) => state.priorities);
 const isTasksCreateLoading = createSelector([selector], (state) => state.isTaskCreateLoading);
 const isTaskStatusUpdated = createSelector([selector], (state) => state.isTaskStatusUpdated);
+const isTaskUpdating = createSelector([selector], (state) => state.isTaskUpdating);
 const isTasksReassignLoading = createSelector([selector], (state) => state.isTaskReassignLoading);
 const isTaskReassigned = createSelector([selector], (state) => state.isTaskReassigned);
 
@@ -28,5 +29,6 @@ export default {
   isTaskReassigned,
   isTasksReassignLoading,
   createdTaskId,
+  isTaskUpdating,
   isTasksCreateLoading
 };

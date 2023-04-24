@@ -1,5 +1,6 @@
 import {
   ITaskCreateReqBody,
+  ITaskEditReqBody,
   ITaskReassignReqBody,
   ITasksListReqBody,
   ITasksPrioritiesResponse,
@@ -25,6 +26,9 @@ const resultsManager = {
   },
   createTask(data: ITaskCreateReqBody) {
     return axiosInstance.post<ITaskCreateProps, IAxiosResponse<ITaskCreateProps>>(`${baseURL}/v1/tasks`, data);
+  },
+  editTask(taskId: string, data: ITaskEditReqBody) {
+    return axiosInstance.put<void, IAxiosResponse<void>>(`${baseURL}/v1/tasks/${taskId}`, data);
   },
   updateTaskStatus(rowId: string, statusId: string) {
     return axiosInstance.patch<ITasksStatusesResponse, IAxiosResponse<ITasksStatusesResponse>>(

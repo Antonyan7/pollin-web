@@ -1,6 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
 import { Box } from '@mui/material';
+import { Stack } from '@mui/system';
 
 import { AdvancedFieldType, FieldWithNote, SimpleField } from '../AdvancedField';
 import FormRadio from '../Radio';
@@ -75,17 +76,20 @@ const FlexibleSection: FC<FlexibleSectionProps> = ({
       fieldComponent={<FormRadio fieldName={controlFieldName} />}
       type={type}
     >
-      {isExists &&
-        fields?.map((field, index) => (
-          <FlexibleSectionTable
-            key={field.id}
-            onDelete={handleRemove}
-            title={`${tableTitle} ${index + 1}`}
-            rows={rows}
-            parentFieldName={parentFieldName}
-            index={index}
-          />
-        ))}
+      {isExists && (
+        <Stack spacing={3}>
+          {fields?.map((field, index) => (
+            <FlexibleSectionTable
+              key={field.id}
+              onDelete={handleRemove}
+              title={`${tableTitle} ${index + 1}`}
+              rows={rows}
+              parentFieldName={parentFieldName}
+              index={index}
+            />
+          ))}
+        </Stack>
+      )}
       {shouldShowAddNewItemButton && (
         <MedicalHistorySectionAddButton
           fieldName={parentFieldName}

@@ -2,10 +2,11 @@ import API from '@axios/API';
 import {
   ContextMenuAction,
   ITaskCreateReqBody,
+  ITaskEditReqBody,
   ITaskReassignReqBody,
   ITasksListReqBody
 } from '@axios/tasks/tasksManagerTypes';
-import { ICreateTaskForm } from '@components/Modals/Tasks/form/initialValues';
+import { ICreateOrEditTaskForm } from '@components/Modals/Tasks/types';
 import { SeveritiesType } from '@components/Scheduling/types';
 import { sortOrderTransformer } from '@redux/data-transformers/sortOrderTransformer';
 import slice from '@redux/slices/tasks/slice';
@@ -27,7 +28,8 @@ const {
   setIsTaskReassignLoading,
   setTasksLoadingState,
   setTaskStatuses,
-  setIsTaskUpdated
+  setIsTaskUpdated,
+  setIsTaskUpdating
 } = slice.actions;
 
 const getTasksStatuses = () => async (dispatch: AppDispatch) => {
@@ -101,14 +103,14 @@ const clearCreatedTaskState = () => async (dispatch: AppDispatch) => {
   }
 };
 
-const createTask = (taskData: ICreateTaskForm, message: string) => async (dispatch: AppDispatch) => {
+const createTask = (taskData: ICreateOrEditTaskForm, message: string) => async (dispatch: AppDispatch) => {
   try {
     dispatch(setTaskCreateLoadingState(true));
 
     const data: ITaskCreateReqBody = {
       task: {
         name: taskData.taskName,
-        assigneeId: taskData.assign,
+        assigneeId: taskData.assign as string,
         ...(taskData.patient ? { patientId: taskData.patient } : {}),
         dueDate: taskData.dueDate,
         priorityId: taskData.priority,
@@ -135,6 +137,42 @@ const createTask = (taskData: ICreateTaskForm, message: string) => async (dispat
     dispatch(setTaskCreateLoadingState(false));
   }
 };
+
+export const editTask =
+  (taskId: string, taskData: ICreateOrEditTaskForm, message: string) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsTaskUpdating(true));
+
+      const data: ITaskEditReqBody = {
+        task: {
+          name: taskData.taskName,
+          ...(taskData.patient ? { patientId: taskData.patient } : {}),
+          dueDate: taskData.dueDate,
+          priorityId: taskData.priority,
+          ...(taskData.description ? { description: taskData.description } : {})
+        }
+      };
+
+      const response = await API.tasks.editTask(taskId, data);
+
+      if (response) {
+        dispatch(
+          viewsMiddleware.setToastNotificationPopUpState({
+            open: true,
+            props: {
+              severityType: SeveritiesType.success,
+              description: message
+            }
+          })
+        );
+        dispatch(viewsMiddleware.closeModal(ModalName.EditTaskModal));
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsTaskUpdating(false));
+    }
+  };
 
 const getTasksDetails = (taskId: string) => async (dispatch: AppDispatch) => {
   try {
@@ -220,5 +258,6 @@ export default {
   reassignTask,
   clearCreatedTaskState,
   createTask,
+  editTask,
   getTaskPriorities
 };

@@ -26,7 +26,7 @@ const PatientField = ({ label }: { label?: string }) => {
   const isLoading = useAppSelector(patientsSelector.isPatientsListLoading);
   const patientOptions = useMemo(() => createOptionsGroupPatients(patients), [patients]);
 
-  const { control, register } = useFormContext();
+  const { control } = useFormContext();
   const { field, fieldState } = useController({ name: patientIdFieldName, control });
   const { onBlur, onChange, ...fieldProps } = field;
   const { error } = fieldState;
@@ -76,7 +76,6 @@ const PatientField = ({ label }: { label?: string }) => {
     <Grid item xs={12}>
       <BaseDropdownWithLoading
         inputValue={inputValue}
-        {...register(`${patientIdFieldName}`)}
         isLoading={isLoading}
         ListboxProps={{
           style: {
@@ -108,7 +107,9 @@ const PatientField = ({ label }: { label?: string }) => {
           />
         }
         onInputChange={(event: React.SyntheticEvent, value: string) => {
-          onInputChange(event, value);
+          if (value) {
+            onInputChange(event, value);
+          }
         }}
         renderInputProps={{
           ...fieldProps,

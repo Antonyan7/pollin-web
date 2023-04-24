@@ -57,8 +57,9 @@ export enum ModalName {
   AddPatientMedicationModal = 'AddPatientMedicationModal',
   AddPatientPrescriptionModal = 'AddPatientPrescriptionModal',
   SendPlansToPatientModal = 'SendPlansToPatientModal',
-  PlanCreationCancelModal = 'PlanCreationCancelModal',
-  ConfirmCancellationModal = 'ConfirmCancellationModal'
+  ConfirmCancellationModal = 'ConfirmCancellationModal',
+  EditTaskModal = 'EditTaskModal',
+  PlanCreationCancelModal = 'PlanCreationCancelModal'
 }
 
 export enum OpenModalReason {
