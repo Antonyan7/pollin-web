@@ -18,7 +18,7 @@ import { borders } from 'themes/themeConstants';
 interface SubCardProps {
   titleProps?: OverrideProps<TypographyTypeMap<TypographyProps, 'span'>, 'span'>;
   children?: ReactNode;
-  content?: boolean;
+  cardContent?: boolean;
   className?: string;
   contentClass?: CardContentProps['className'];
   darkTitle?: boolean;
@@ -34,7 +34,7 @@ const SubCardStyled = React.forwardRef<React.ComponentRef<typeof Card>, SubCardP
     {
       children,
       className,
-      content,
+      cardContent,
       contentClass,
       darkTitle,
       secondary,
@@ -95,7 +95,7 @@ const SubCardStyled = React.forwardRef<React.ComponentRef<typeof Card>, SubCardP
           />
         )}
 
-        {/* content & header divider */}
+        {/* cardContent & header divider */}
         {title && (
           <Divider
             sx={{
@@ -105,13 +105,13 @@ const SubCardStyled = React.forwardRef<React.ComponentRef<typeof Card>, SubCardP
           />
         )}
 
-        {/* card content */}
-        {content && (
+        {/* card cardContent */}
+        {cardContent && (
           <CardContent sx={{ p: 2.5, ...contentSX }} className={contentClass ?? ''}>
             {children}
           </CardContent>
         )}
-        {!content && children}
+        {!cardContent && children}
       </Card>
     );
   }

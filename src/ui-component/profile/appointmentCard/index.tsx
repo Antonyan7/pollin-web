@@ -87,7 +87,7 @@ const AppointmentsCard = ({
     <SubCardStyled
       title={currentAppointmentType}
       secondary={appointmentType === AppointmentType.Upcoming && <ContextMenu actionBindings={actionBindings} />}
-      content={false}
+      cardContent={false}
     >
       {appointmentsList?.length ? (
         <>

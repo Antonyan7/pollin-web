@@ -44,7 +44,7 @@ const EncounterNoteThumbnail = ({ author, title, contentPreview, createdOn, id, 
           <Grid item xs={12}>
             <SubCardStyled
               title={title}
-              content
+              cardContent
               secondary={
                 <Grid container justifyContent="space-between" alignItems="center">
                   <Typography fontSize="16px" fontWeight="400">

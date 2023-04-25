@@ -35,7 +35,7 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
           {title}
         </DialogTitle>
       }
-      content={
+      modalContent={
         <Stack spacing={4} px={2.5}>
           <Grid container rowGap={1.5}>
             {/* TODO better logic for react keys TEAMA-5462 */}

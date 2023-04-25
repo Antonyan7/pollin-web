@@ -48,7 +48,7 @@ const LatestTestResults = () => {
         fontSize: theme.typography.pxToRem(14),
         color: theme.palette.secondary[800]
       }}
-      content={false}
+      cardContent={false}
     >
       {latestTestResults.length ? (
         <>

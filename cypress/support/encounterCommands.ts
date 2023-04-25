@@ -85,6 +85,8 @@ Cypress.Commands.add('EditAddendum', (type, editedNote) => {
       cy.url().should('contain', '/edit-addendum');
       cy.get(CyUtils.getSelector(CypressIds.COMMON_LOADING_INDICATOR)).should('not.exist');
 
+      // TODO: Tatevik jan Please advise if we need to have chaining or no, by new version seems like we don't need it
+      // eslint-disable-next-line cypress/unsafe-to-chain-command
       cy.get(`[id="common.text.editor.text.field"] .ql-editor`).focus().clear().type(editedNote);
 
       cy.get(CyUtils.getSelector(CypressIds.COMMON_TEXT_EDITOR_SAVE_BTN)).should('exist').click();

@@ -3,18 +3,18 @@ import { Dialog, DialogActions, DialogContent, DialogProps, DialogTitle, Stack }
 
 interface Props {
   header: React.ReactNode;
-  content: React.ReactNode;
+  modalContent: React.ReactNode;
   footer: React.ReactNode;
 }
 
-const ViewModal = ({ header, content, footer, ...props }: Props & Partial<DialogProps>) => {
+const ViewModal = ({ header, modalContent, footer, ...props }: Props & Partial<DialogProps>) => {
   const { open = true, maxWidth = 'sm', fullWidth = true, ...dialogProps } = props;
 
   return (
     <Dialog open={open} maxWidth={maxWidth} fullWidth={fullWidth} {...dialogProps}>
       <Stack px={1.5}>
         {typeof header === 'string' ? <DialogTitle>{header}</DialogTitle> : header}
-        <DialogContent>{content}</DialogContent>
+        <DialogContent>{modalContent}</DialogContent>
         <DialogActions>{footer}</DialogActions>
       </Stack>
     </Dialog>

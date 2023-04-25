@@ -22,7 +22,7 @@ const EncountersWrapper: React.FC<EncountersWrapperProps> = ({ children, title }
       </Typography>
       <SubCardStyled
         title={title}
-        content
+        cardContent
         sx={{
           outline: `${borders.solid1px} ${theme.palette.primary.light}`,
           '& > .MuiDivider-root': {

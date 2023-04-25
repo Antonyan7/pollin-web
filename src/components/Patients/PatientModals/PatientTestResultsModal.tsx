@@ -81,7 +81,7 @@ const PatientTestResultsModal = () => {
           </IconButton>
         </DialogTitle>
       }
-      content={
+      modalContent={
         <Stack spacing={4} px={paddings.leftRight20}>
           <TableContainer>
             <Table>

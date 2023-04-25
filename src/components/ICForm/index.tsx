@@ -29,7 +29,7 @@ const InitialConsultationForm = () => {
 
   return (
     <SubCardStyled
-      content
+      cardContent
       sx={{
         mt: margins.top20
       }}

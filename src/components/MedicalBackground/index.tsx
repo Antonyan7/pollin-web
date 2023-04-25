@@ -34,7 +34,7 @@ const MedicalBackgroundTabs = () => {
 
   return (
     <SubCardStyled
-      content
+      cardContent
       sx={{
         mt: margins.top20
       }}

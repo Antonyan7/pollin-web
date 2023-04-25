@@ -48,7 +48,7 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
           onClose?.();
         }
       }}
-      content={
+      modalContent={
         <Stack spacing={4} px={2.5}>
           {Object.entries(data).map(([key, values]) => (
             <Grid container key={key} rowGap={1.5}>

@@ -20,6 +20,8 @@ describe('move specimen to transport folder', () => {
       cy.GetElementText('Specimen ID', (barcode) => {
         cy.log(`Barcode is ${barcode}`);
 
+        // TODO: Tatevik jan Please advise if we need to have chaining or no, by new version seems like we don't need it
+        // eslint-disable-next-line cypress/unsafe-to-chain-command
         cy.get(CyUtils.getSelector(CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_LIST_SEARCH))
           .type(barcode)
           .realPress('{enter}');

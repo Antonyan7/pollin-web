@@ -1,10 +1,10 @@
 import React from 'react';
 import { Divider, Grid, IconButton, RadioGroup, styled, Typography } from '@mui/material';
 import { borders, margins } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
 import { isDashValue } from '@utils/stringUtils';
-import { v5 as uuidv5 } from 'uuid';
 
 export const ConsultationFormSubTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary[800],
