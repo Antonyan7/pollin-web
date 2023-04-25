@@ -75,7 +75,8 @@ const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) =
           :
         </Grid>
         <Grid item xs={6}>
-          {medicationData?.time}
+          {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
+          {medicationData?.time || '--'}
         </Grid>
       </Grid>
 

@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import PatientAlert from '@components/Patients/PatientAlert';
 import TableRowCell from '@components/Table/TableRowCell';
-import { TableRow, Typography } from '@mui/material';
+import { Avatar, TableRow, Typography } from '@mui/material';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch } from 'redux/hooks';
 import { patientsMiddleware } from 'redux/slices/patients';
+import { margins } from 'themes/themeConstants';
 import { IPatientListData } from 'types/reduxTypes/patient-emrStateTypes';
 
-import AvatarIcon from '@assets/icons/AvatarIcon';
 import Chip from '@ui-component/patient/Chip';
 import { DateUtil } from '@utils/date/DateUtil';
 import { isDashValue } from '@utils/stringUtils';
@@ -50,13 +50,7 @@ const PatientTableRow = ({ row, index }: IPatientTableRow) => {
           paddingLeft: 0
         }}
       >
-        <AvatarIcon
-          sx={{
-            mt: 1,
-            fontSize: '2rem',
-            fill: 'none'
-          }}
-        />
+        <Avatar sx={{ width: 50, height: 50, ml: margins.left8 }} src={row.imageURL} />
       </TableRowCell>
       <TableRowCell component="th" id={labelId} scope="row" sx={{ cursor: 'pointer' }}>
         <Typography

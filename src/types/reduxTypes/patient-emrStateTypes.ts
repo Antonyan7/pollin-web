@@ -322,6 +322,7 @@ export interface IPatientListData {
   dateOfBirth: string;
   cycleStatus: string;
   doctor: string;
+  imageURL?: string;
 }
 
 export interface AlertDetailsMessagesProps {

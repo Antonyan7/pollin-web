@@ -106,7 +106,7 @@ const MedicationCard = ({ data, cardType }: IMedicationCardProps) => {
                         )}
                       </IconButton>
                     </Grid>
-                    <Grid hidden={!showCard[index]} sx={{ marginTop: margins.top10 }}>
+                    <Grid xs={12} hidden={!showCard[index]} sx={{ marginTop: margins.top10 }}>
                       <ViewModeContent
                         medicationData={medication}
                         prescriber={cardType === MedicationCardType.Prescription ? data.prescriber : null}
