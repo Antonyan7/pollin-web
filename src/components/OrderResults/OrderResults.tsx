@@ -129,10 +129,10 @@ const OrderResults = () => {
           </TableHead>
 
           <TableBody>
-            {orderResultsByPatientList?.testResults?.map((row: IOrderResultsByPatientItem) => {
+            {orderResultsByPatientList?.testResults?.map((row: IOrderResultsByPatientItem, index) => {
               const actions = statuses.find((item) => item.status === row.status)?.actions ?? [];
 
-              return <OrderResultsRow row={row} key={row.id} actions={actions} />;
+              return <OrderResultsRow row={row} key={row.id} actions={actions} rowIndex={index} />;
             })}
           </TableBody>
         </Table>

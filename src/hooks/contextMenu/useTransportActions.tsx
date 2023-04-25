@@ -9,7 +9,12 @@ import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 import { ITransportRowProps } from './types';
 
-const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction[] = [], isCurrentDay?: boolean) => {
+const useTransportActions = (
+  row: ITransportRowProps,
+  actions: ContextMenuAction[] = [],
+  index?: number,
+  isCurrentDay?: boolean
+) => {
   const handleHandoffConfirmationAction = useCallback(() => {
     dispatch(
       viewsMiddleware.openModal({
@@ -28,7 +33,7 @@ const useTransportActions = (row: ITransportRowProps, actions: ContextMenuAction
       actionCallback: () => {
         handleHandoffConfirmationAction();
       },
-      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_MARK_IN_TRANSIT_BUTTON
+      dataCy: `${CypressIds.PAGE_SPECIMEN_TRACKING_TRANSPORT_LIST_MARK_IN_TRANSIT_BUTTON}-${index}`
     });
   }
 

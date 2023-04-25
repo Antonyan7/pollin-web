@@ -164,7 +164,7 @@ const AllTestsList = () => {
     return [];
   }, [selectedRows, actionVariations]);
 
-  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
+  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, -1, true);
   const inHouseSpecimensSearchPlaceholder = t(Translation.PAGE_IN_HOUSE_SPECIMENS_SEARCH_PLACEHOLDER);
   const inHouseSpecimensListEmptyMessage = t(Translation.PAGE_IN_HOUSE_SPECIMENS_LIST_EMPTY_MESSAGE);
   const showEmptyState = !isLoading && !rowsCount;

@@ -112,7 +112,7 @@ const InHouseSpecimensList = () => {
     return [];
   }, [selectedRows, actionVariations]);
 
-  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
+  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, -1, true);
   const inHouseEmptyStateLabel = t(Translation.PAGE_IN_HOUSE_EMPTY_RESULTS_LABEL);
 
   return (

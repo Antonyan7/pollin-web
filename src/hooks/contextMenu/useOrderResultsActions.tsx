@@ -7,7 +7,7 @@ import { filterActionBindings, getActionTitleById } from 'helpers/contextMenu';
 import { ModalName } from 'types/modals';
 import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
-const useOrderResultsActions = (row: { id: string }, actions: ContextMenuAction[] = []) => {
+const useOrderResultsActions = (row: { id: string }, actions: ContextMenuAction[] = [], index?: number) => {
   const handleTestResultReleaseConfirmationAction = useCallback(() => {
     dispatch(
       viewsMiddleware.openModal({
@@ -33,7 +33,7 @@ const useOrderResultsActions = (row: { id: string }, actions: ContextMenuAction[
       actionCallback: () => {
         handleTestResultReleaseConfirmationAction();
       },
-      dataCy: CypressIds.PAGE_ORDER_RESULTS_MENU_ACTION_RELEASE_TO_PATIENT
+      dataCy: `${CypressIds.PAGE_ORDER_RESULTS_MENU_ACTION_RELEASE_TO_PATIENT}-${index}`
     },
     {
       id: OrderResultActionType.Review,
@@ -41,7 +41,7 @@ const useOrderResultsActions = (row: { id: string }, actions: ContextMenuAction[
       actionCallback: () => {
         handleTestResultReviewConfirmationAction();
       },
-      dataCy: CypressIds.PAGE_ORDER_RESULTS_MENU_ACTION_MARK_AS_REVIEWED
+      dataCy: `${CypressIds.PAGE_ORDER_RESULTS_MENU_ACTION_MARK_AS_REVIEWED}-${index}`
     }
   ];
 

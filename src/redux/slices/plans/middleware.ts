@@ -163,21 +163,22 @@ const orderPlansToPatient = (data: IOrderPatientPlanRequestData) => async (dispa
   }
 };
 
-const createPatientPlan = (data: INewPatientPlan, successCallback?: () => void) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsCreatingPlan(true));
+const createPatientPlan =
+  (data: INewPatientPlan, successCallback?: (shouldRedirect?: boolean) => void) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsCreatingPlan(true));
 
-    const response = await API.plans.createPatientPlan(data);
+      const response = await API.plans.createPatientPlan(data);
 
-    if (response) {
-      successCallback?.();
+      if (response) {
+        successCallback?.(true);
+      }
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsCreatingPlan(false));
     }
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsCreatingPlan(false));
-  }
-};
+  };
 
 const getPlanDetails = (planId: string) => async (dispatch: AppDispatch) => {
   try {

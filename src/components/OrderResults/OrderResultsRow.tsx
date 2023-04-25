@@ -18,9 +18,10 @@ import { margins } from '../../themes/themeConstants';
 interface OrderResultsRowProps {
   row: IOrderResultsByPatientItem;
   actions: OrderResultAction[];
+  rowIndex?: number;
 }
 
-export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
+export const OrderResultsRow = ({ row, actions, rowIndex }: OrderResultsRowProps) => {
   const router = useRouter();
   const actionVariations = useAppSelector(ordersSelector.orderResultsStatuses);
   const { id: patientId } = router.query;
@@ -28,7 +29,7 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
     router.push(`/patient-emr/details/${patientId}/orders/results/${row.id}`);
   };
 
-  const actionBindings = useOrderResultsActions(row, actions);
+  const actionBindings = useOrderResultsActions(row, actions, rowIndex);
 
   // TODO: Will be updated after new timezone configuration
   const dateCompleted = DateUtil.formatDateOnly(row.dateCompleted);

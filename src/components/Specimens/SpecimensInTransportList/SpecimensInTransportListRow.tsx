@@ -35,7 +35,7 @@ export const SpecimensInTransportListRow = ({
 
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
-  const actionBindings = useSpecimenActions([row], actions);
+  const actionBindings = useSpecimenActions([row], actions, index);
 
   return (
     <TableRow role="checkbox" hover>
@@ -61,7 +61,7 @@ export const SpecimensInTransportListRow = ({
       </TableCell>
       <TableCell>{statusTitle}</TableCell>
       <TableCell align="left" onClick={(e) => e.stopPropagation()}>
-        <ContextMenu actionBindings={actionBindings} />
+        <ContextMenu actionBindings={actionBindings} dataCy={`${CypressIds.COMMON_CONTEXT_MENU}-${index}`} />
       </TableCell>
     </TableRow>
   );

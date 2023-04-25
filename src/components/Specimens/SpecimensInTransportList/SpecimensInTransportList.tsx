@@ -155,7 +155,7 @@ const SpecimensInTransportList = () => {
     return [];
   }, [selectedRows, actionVariations]);
 
-  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, true);
+  const actionBindings = useSpecimenActions(selectedRows as ISpecimenRowProps[], actions, -1, true);
 
   return (
     <>

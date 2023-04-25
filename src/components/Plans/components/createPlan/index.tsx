@@ -75,8 +75,8 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
     );
   });
 
-  const backToPlansPage = () => {
-    if (Object.values(dirtyFields).length > 0) {
+  const backToPlansPage = (shouldRedirect?: boolean) => {
+    if (!shouldRedirect && Object.values(dirtyFields).length > 0) {
       dispatch(
         viewsMiddleware.openModal({
           name: ModalName.PlanCreationCancelModal,

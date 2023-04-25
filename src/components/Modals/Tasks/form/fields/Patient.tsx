@@ -107,7 +107,7 @@ const PatientField = ({ label }: { label?: string }) => {
           />
         }
         onInputChange={(event: React.SyntheticEvent, value: string) => {
-          if (value) {
+          if (event) {
             onInputChange(event, value);
           }
         }}

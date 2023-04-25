@@ -101,7 +101,8 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
                 color: theme.palette.primary.main,
                 borderColor: theme.palette.primary.main,
                 opacity: 0.5
-              }
+              },
+              textTransform: 'none'
             }}
             label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
             variant="outlined"

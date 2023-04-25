@@ -11,7 +11,12 @@ import { ContextMenuAction } from 'types/reduxTypes/resultsStateTypes';
 
 import { ISpecimenRowProps } from './types';
 
-const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuAction[] = [], isBulk = false) => {
+const useSpecimenActions = (
+  rows: ISpecimenRowProps[],
+  actions: ContextMenuAction[] = [],
+  index?: number,
+  isBulk = false
+) => {
   const ids = useMemo(() => rows.map((row) => row.id), [rows]);
   const identifiers = useMemo(() => rows.map((row) => row.identifier), [rows]);
 
@@ -71,12 +76,12 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
       actionCallback: () => {
         handleMoveToTransport();
       },
-      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON
+      dataCy: `${CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON}-${index}`
     },
     {
       id: SpecimenActionType.MoveToAnotherTransport,
       title: getActionTitleById(SpecimenActionType.MoveToAnotherTransport, actions),
-      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_TO_ANOTHER,
+      dataCy: `${CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_TO_ANOTHER}-${index}`,
       actionCallback: () => {
         handleMoveToAnotherTransport();
       }
@@ -106,12 +111,12 @@ const useSpecimenActions = (rows: ISpecimenRowProps[], actions: ContextMenuActio
       id: SpecimenActionType.MoveInHouse,
       title: getActionTitleById(SpecimenActionType.MoveInHouse, actions),
       actionCallback: handleMoveToInHouse,
-      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_IN_HOUSE_BUTTON
+      dataCy: `${CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_IN_HOUSE_BUTTON}-${index}`
     },
     {
       id: SpecimenActionType.MoveToAllTests,
       title: getActionTitleById(SpecimenActionType.MoveToAllTests, actions),
-      dataCy: CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_BACK_ALL_TESTS,
+      dataCy: `${CypressIds.PAGE_SPECIMEN_TRACKING_IN_TRANSPORT_ACTION_MOVE_BACK_ALL_TESTS}-${index}`,
       actionCallback: moveSpecimenToAllTests
     }
   ];

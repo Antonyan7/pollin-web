@@ -21,7 +21,7 @@ export const TransportsListRow = ({ row, actions, index }: AllTestsRowProps) => 
   const calendarDate = useAppSelector(resultsSelector.transportListDate);
   const isCurrentDay = useMemo(() => DateUtil.isSameDate(calendarDate), [calendarDate]);
   const folderCreateDate = DateUtil.formatDateOnly(row.date);
-  const actionBindings = useTransportActions(row, actions, !isCurrentDay);
+  const actionBindings = useTransportActions(row, actions, index, !isCurrentDay);
   const actionVariations = useAppSelector(resultsSelector.transportActions);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
