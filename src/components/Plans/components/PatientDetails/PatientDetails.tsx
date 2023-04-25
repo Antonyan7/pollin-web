@@ -71,7 +71,7 @@ const PatientDetails = () => {
             <ConsultationFormSubTitle>
               {t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_PARTNER_ACCEPTED)}
             </ConsultationFormSubTitle>
-            {partnerInvitations.map((partner, partnerIndex) => (
+            {partnerInvitations.map((partner, partnerIndex: number) => (
               <SubCardStyled
                 key={partner.id}
                 title={

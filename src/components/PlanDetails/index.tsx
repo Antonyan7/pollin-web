@@ -13,7 +13,7 @@ import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
-import { v4 } from 'uuid';
+import { v5 as uuidv5 } from 'uuid';
 
 import usePlansActions from '@hooks/contextMenu/usePlansActions';
 import { ContextMenu } from '@ui-component/contextMenu';
@@ -104,8 +104,13 @@ const PlanDetails = () => {
         {t(Translation.PAGE_PATIENT_PLANS_PATIENT_DETAILS_PLAN_MEDICATIONS_TITLE)}
       </Box>
       <Box sx={{ marginTop: margins.top24 }}>
-        {planDetails?.medicationsByCategories?.map((data) => (
-          <MedicationCard key={v4()} data={data} cardType={MedicationCardType.Plan} />
+        {/* TODO better key for the card TEAMA-5463  */}
+        {planDetails?.medicationsByCategories?.map((data, index: number) => (
+          <MedicationCard
+            key={uuidv5(JSON.stringify(data).concat(index.toString()), uuidv5.URL)}
+            data={data}
+            cardType={MedicationCardType.Plan}
+          />
         ))}
       </Box>
     </Box>

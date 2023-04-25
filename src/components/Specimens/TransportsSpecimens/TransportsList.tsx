@@ -111,7 +111,7 @@ const TransportsList = () => {
 
           {!isLoading && (
             <TableBody>
-              {transportList?.folders?.map((row: ITransportListFolderProps, index) => {
+              {transportList?.folders?.map((row: ITransportListFolderProps, index: number) => {
                 const filteredActions = findCurrentAction(actionVariations, row);
 
                 return (
@@ -153,7 +153,7 @@ const TransportsList = () => {
         component="div"
         count={transportList.totalItems}
         rowsPerPage={transportList.pageSize}
-        page={transportList.currentPage - 1}
+        page={transportList.currentPage > 1 ? transportList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </>

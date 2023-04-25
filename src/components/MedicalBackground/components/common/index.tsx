@@ -4,6 +4,7 @@ import { borders, margins } from 'themes/themeConstants';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
 import { isDashValue } from '@utils/stringUtils';
+import { v5 as uuidv5 } from 'uuid';
 
 export const ConsultationFormSubTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary[800],
@@ -85,9 +86,15 @@ export const RenderFieldWithAdditionalValues = ({
 }) => (
   <Grid item container xs={7} direction="column" justifyContent="space-between">
     <Grid>{value || '-'}</Grid>
-    {additionalValues.map((fieldValue, index) =>
+    {additionalValues.map((fieldValue, index: number) =>
       fieldValue && !isDashValue(fieldValue) ? (
-        <Grid mt={!index ? margins.top16 : margins.top4}> {fieldValue}</Grid>
+        <Grid
+          key={uuidv5(JSON.stringify(fieldValue).concat(index.toString()), uuidv5.URL)}
+          mt={!index ? margins.top16 : margins.top4}
+        >
+          {' '}
+          {fieldValue}
+        </Grid>
       ) : null
     )}
     <Grid>{note ?? ''}</Grid>

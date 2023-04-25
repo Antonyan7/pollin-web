@@ -68,7 +68,7 @@ const ScheduleTemplates = () => {
           component="div"
           count={scheduleTemplates.totalItems}
           rowsPerPage={scheduleTemplates.pageSize}
-          page={page}
+          page={page > 0 ? page : 0}
           onPageChange={handleChangePage}
         />
       </ScheduleBoxWrapper>

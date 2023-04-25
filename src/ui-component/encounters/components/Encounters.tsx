@@ -70,7 +70,7 @@ const Encounters = () => {
                   component="div"
                   count={encountersList.totalItems}
                   rowsPerPage={rowsPerPage}
-                  page={page}
+                  page={page > 0 ? page : 0}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                 />

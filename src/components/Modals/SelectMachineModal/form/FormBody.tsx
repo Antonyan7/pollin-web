@@ -29,7 +29,6 @@ const FormBody = ({ specimens, actionType }: FormBodyProps) => {
   });
 
   const specimenIds = specimens.map((specimen) => specimen.id);
-  const specimenIdentifier = specimens.map((specimen) => specimen.identifier);
 
   const setModalNames = useCallback(() => {
     switch (actionType) {
@@ -92,11 +91,11 @@ const FormBody = ({ specimens, actionType }: FormBodyProps) => {
     <DialogContent sx={{ padding: `${paddings.top32} ${paddings.right32} ${paddings.bottom24} ${paddings.left32}` }}>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          {specimenIdentifier?.map((identifier) => (
-            <Typography variant="h4">
+          {specimens?.map((specimen) => (
+            <Typography key={specimen.id} variant="h4">
               {t(Translation.MODAL_CONFIRM_MACHINE_SPECIMEN_ID)}:
               <Typography variant="h5" display="inline" marginLeft={margins.left8}>
-                {identifier}
+                {specimen.identifier}
               </Typography>
             </Typography>
           ))}

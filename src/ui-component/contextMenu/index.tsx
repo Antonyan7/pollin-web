@@ -61,6 +61,7 @@ export const ContextMenu = ({ actionBindings, isLoading, dataCy }: ContextMenuPr
               {...(actionItem.dataCy && {
                 'data-cy': actionItem?.dataCy
               })}
+              key={actionItem.id}
             >
               {actionItem.title}
             </MenuItem>

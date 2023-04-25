@@ -77,7 +77,7 @@ const PendingTestResultList = () => {
         component="div"
         count={resultsList.totalItems}
         rowsPerPage={resultsList.pageSize}
-        page={resultsList.currentPage - 1}
+        page={resultsList.currentPage > 1 ? resultsList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </PatientListStyled>

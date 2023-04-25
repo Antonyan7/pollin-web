@@ -5,6 +5,7 @@ import { useAppSelector } from '@redux/hooks';
 import { plansSelector } from '@redux/slices/plans';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 
@@ -40,8 +41,9 @@ const TestResults = () => {
       </>
       <Box>
         <Box display="flex" px={paddings.leftRight16} py={paddings.topBottom16} flexDirection="column">
-          {planDetails?.testResults?.map((item, index) => (
-            <Box key={item.title} pt={paddings.top16}>
+          {/* TODO add better ID TEAMA-5463 */}
+          {planDetails?.testResults?.map((item, index: number) => (
+            <Box key={uuidv5(JSON.stringify(item).concat(index.toString()), uuidv5.URL)} pt={paddings.top16}>
               <Grid container>
                 {index % 2 === 0 ? (
                   <Grid item xs={6}>

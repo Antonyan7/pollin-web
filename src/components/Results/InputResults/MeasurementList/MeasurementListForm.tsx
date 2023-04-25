@@ -77,7 +77,7 @@ const MeasurementListForm: FC<MeasurementListFormProps> = ({ testType = '' }) =>
           </Grid>
         ) : (
           <FormProvider {...methods}>
-            {testResultsDetails.map((testResultDetails, index) => {
+            {testResultsDetails.map((testResultDetails, index: number) => {
               const currentFormFieldName = `data_${testResultDetails.id}`;
               const currentFormCommentFieldName = `${currentFormFieldName}.comment`;
               // Show specimenId only when it is available and when it is first test result;

@@ -3,6 +3,7 @@ import { DropdownOptionType } from '@axios/patientEmr/managerPatientEmrTypes';
 import { DeleteTwoTone } from '@mui/icons-material';
 import { Grid, IconButton, Typography } from '@mui/material';
 import { paddings } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 import { Dropdown } from '../../Dropdown';
 import { FormInput } from '../../FormInput';
@@ -33,7 +34,7 @@ const FlexibleSectionTable: FC<FlexibleSectionTableProps> = ({ title, rows, onDe
           return row(index as number, parentFieldName as string);
         }
 
-        return row.map((item) => {
+        return row.map((item, rowIndex: number) => {
           const rowColumnsCount = 12;
           const itemSize = Math.round(rowColumnsCount / row.length);
           const finalFieldName = parentFieldName ? `${parentFieldName}.${index}.${item.fieldName}` : item.fieldName;
@@ -59,8 +60,10 @@ const FlexibleSectionTable: FC<FlexibleSectionTableProps> = ({ title, rows, onDe
             );
           }
 
+          const hashKey = uuidv5(JSON.stringify(item).concat(rowIndex.toString()), uuidv5.URL);
+
           return (
-            <Grid item xs={itemSize} px={paddings.leftRight4} py={paddings.topBottom4}>
+            <Grid key={hashKey} item xs={itemSize} px={paddings.leftRight4} py={paddings.topBottom4}>
               {renderedItem ?? null}
             </Grid>
           );

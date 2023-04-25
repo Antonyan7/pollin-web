@@ -16,6 +16,8 @@ const Item: FC<ItemProps> = ({ title, index, value, note, isHeader, ...props }) 
   const renderedValue = Array.isArray(value)
     ? value?.map((valueItem, valueIndex) => (
         <Grid
+          // TODO better key that a value TEAMA-5498
+          key={valueItem}
           {...(valueIndex > 1 && {
             py: paddings.topBottom4
           })}

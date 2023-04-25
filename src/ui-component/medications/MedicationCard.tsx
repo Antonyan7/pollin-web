@@ -64,6 +64,7 @@ const MedicationCard = ({ data, cardType }: IMedicationCardProps) => {
                       ml: 0
                     }}
                     alignItems="center"
+                    key={medication.id}
                   >
                     <Grid item xs={11.2}>
                       <Typography variant="h5" sx={{ ml: margins.left24 }}>

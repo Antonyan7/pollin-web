@@ -1,8 +1,7 @@
 import React, { ForwardedRef, forwardRef, PropsWithChildren } from 'react';
-import { useTheme } from '@mui/material';
+import { Link as MuiLink,useTheme } from '@mui/material';
+import Link from 'next/link';
 import { LinkTarget, NavItemType } from 'types';
-
-import Link from './Link';
 
 interface ListItemLinkProps {
   item: NavItemType;
@@ -14,11 +13,13 @@ const ListItemLink = forwardRef(
     const theme = useTheme();
 
     return (
-      <Link
+      <MuiLink
+        underline="none"
+        component={Link}
+        href={`${item.url}`}
         {...props}
         sx={{ ...theme.typography.subMenuCaption, textDecoration: 'none' }}
         ref={ref}
-        href={`${item.url}`}
         target={itemTarget}
       />
     );

@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import { margins } from 'themes/themeConstants';
 import { ITestResultItem } from 'types/reduxTypes/resultsStateTypes';
 import { FinalResultChipColor } from 'types/results';
+import { v5 as uuidv5 } from 'uuid';
 
 import Chip from '@ui-component/patient/Chip';
 import { DateUtil } from '@utils/date/DateUtil';
@@ -41,8 +42,15 @@ interface TestResultDetailsItemsProps {
 
 const TestResultDetailsItems = ({ items }: TestResultDetailsItemsProps) => (
   <>
-    {items?.map((item) => (
-      <Typography component={Grid} container variant="body2" fontWeight={500} mt={margins.top16}>
+    {items?.map((item, index) => (
+      <Typography
+        component={Grid}
+        container
+        variant="body2"
+        fontWeight={500}
+        mt={margins.top16}
+        key={uuidv5(JSON.stringify(item).concat(index.toString()), uuidv5.URL)}
+      >
         <Grid item xs={12} sm={3}>
           {item.type}
         </Grid>

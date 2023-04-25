@@ -69,7 +69,7 @@ const PastMedications = () => {
           component="div"
           count={patientPastMedications.totalItems}
           rowsPerPage={patientPastMedications.pageSize}
-          page={page}
+          page={page > 0 ? page : 0}
           onPageChange={handleChangePage}
         />
       </Grid>

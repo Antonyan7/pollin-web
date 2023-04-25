@@ -32,7 +32,11 @@ const AvailablePlans: FC<AvailablePlansProps> = ({ handleCheck }) => {
   return (
     <FormGroup>
       {readyToOrderPatientPlans.map((plan) => (
-        <FormControlLabel control={<Checkbox onClick={() => handleCheck(plan.id)} />} label={plan.title} />
+        <FormControlLabel
+          key={plan.id}
+          control={<Checkbox onClick={() => handleCheck(plan.id)} />}
+          label={plan.title}
+        />
       ))}
     </FormGroup>
   );

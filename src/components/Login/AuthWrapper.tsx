@@ -3,11 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { FirebaseManager } from '@axios/firebase';
 import { Box, Button, Grid, styled, useTheme } from '@mui/material';
 import { Translation } from 'constants/translations';
-import Image from 'next/image';
 
+// import Image from 'next/image';
 import MainCard, { MainCardProps } from '@ui-component/cards/MainCard';
 
-import Svg from '../../assets/icons/GoogleIcon.svg';
+// import Svg from '../../assets/icons/GoogleIcon.svg';
 
 interface AuthLoginProps {
   accountExists: boolean;
@@ -59,7 +59,10 @@ export const AuthLogin = ({ accountExists }: AuthLoginProps) => {
           }}
         >
           <Box sx={{ mr: 2, width: 20, height: 20 }}>
-            <Image src={Svg} />
+            {/* 
+              TODO fix: TEAMA-5494
+              <Image src={Svg} alt="profile image" /> 
+            */}
           </Box>
           {accountExists ? t(Translation.GOOGLE_SIGN_IN_BUTTON) : t(Translation.GOOGLE_SIGN_UP_BUTTON)}
         </Button>

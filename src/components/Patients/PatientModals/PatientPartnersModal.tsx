@@ -38,6 +38,7 @@ const PatientPartnersModal = ({ title, data }: PatientPartnersModalProps) => {
       content={
         <Stack spacing={4} px={2.5}>
           <Grid container rowGap={1.5}>
+            {/* TODO better logic for react keys TEAMA-5462 */}
             {Object.entries(data).map(([fieldName, fieldValue]) => (
               <React.Fragment key={fieldName}>
                 <Grid item xs={4} sx={{ fontWeight: 'bold', color: theme.palette.common.black }}>

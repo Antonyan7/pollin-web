@@ -41,20 +41,26 @@ export const OrderResultsRow = ({ row, actions }: OrderResultsRowProps) => {
       <TableCell>
         {row.panelName}
         <Stack alignItems="left" justifyContent="center" marginLeft={margins.left16}>
-          {row.measurement?.length > 1 && row.measurement.map((item) => <span>{item.title}</span>)}
+          {/* TODO Better logic for keys TEAMA-5504 */}
+          {row.measurement?.length > 1 &&
+            row.measurement.map((item, index) => (
+              <span key={item.title?.concat('-', index.toString())}>{item.title}</span>
+            ))}
         </Stack>
       </TableCell>
       <TableCell>
+        {/* TODO Better logic for keys TEAMA-5504 */}
         {row.measurement?.map((measurement, index) => (
-          <span key={measurement.title.concat('-', index.toString())}>
+          <span key={measurement.title?.concat('-', index.toString())}>
             {measurement.unit}
             <br />
           </span>
         ))}
       </TableCell>
       <TableCell>
+        {/* TODO Better logic for keys TEAMA-5504 */}
         {row.measurement?.map((measurement, index) => (
-          <span key={measurement.result.concat('-', index.toString())}>
+          <span key={measurement.result?.concat('-', index.toString())}>
             {measurement.result}
             <br />
           </span>

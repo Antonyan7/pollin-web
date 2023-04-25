@@ -92,11 +92,11 @@ const SpecimenCollectionFilter = () => {
         }}
         renderTags={(specimenOptions, getSpecimenTagProps) => (
           <Box className={classes.selectedValues} onClick={onDropdownOpenClose}>
-            {specimenOptions.map((specimentOption, optionIndex) => (
+            {specimenOptions.map((specimentOption, index: number) => (
               <Chip
                 deleteIcon={<HighlightOffTwoToneIcon />}
                 label={specimentOption.title}
-                {...getSpecimenTagProps({ index: optionIndex })}
+                {...getSpecimenTagProps({ index })}
                 key={specimentOption.id}
                 className={classes.selectedValue}
               />

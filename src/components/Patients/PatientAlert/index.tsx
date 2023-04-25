@@ -86,6 +86,7 @@ const PatientAlert = ({ rowId, alertCount }: PatientAlertProps) => {
 
               {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
                 <ListItem
+                  key={message.title}
                   sx={{
                     pt: paddings.top2,
                     pl: paddings.left6,

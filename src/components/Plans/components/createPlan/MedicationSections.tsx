@@ -29,6 +29,7 @@ export const MedicationsForm = () => {
       <FormLabel>{t(Translation.PAGE_PATIENT_PLANS_CREATE_MEDICATION)}</FormLabel>
       {medications?.map((item, index) => (
         <FlexibleSection
+          key={item.id}
           title={categories[index].title}
           type={AdvancedFieldType.Plan}
           fieldName={`medications.${index}.items`}

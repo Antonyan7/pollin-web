@@ -14,6 +14,7 @@ import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { borderRadius, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 import { AlertDetailsMessagesProps, AlertDetailsProps } from 'types/reduxTypes/patient-emrStateTypes';
+import { v5 as uuidv5 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
 import { DateUtil } from '@utils/date/DateUtil';
@@ -73,8 +74,9 @@ const PatientAlertView = () => {
         <>
           {isPatientAlertViewOpen ? (
             <>
-              {patientAlertDetails.map((titleContent: AlertDetailsProps, index) => (
-                <Grid container>
+              {patientAlertDetails.map((titleContent: AlertDetailsProps, index: number) => (
+                // TODO better logic for keys: TEAMA-5515
+                <Grid container key={uuidv5(JSON.stringify(titleContent).concat(index.toString()), uuidv5.URL)}>
                   <Grid item container alignItems="center" justifyContent="center">
                     <Grid item xs={0.5}>
                       <ReportGmailerrorredIcon sx={{ color: theme.palette.warning.dark }} />
@@ -100,6 +102,7 @@ const PatientAlertView = () => {
                           </Typography>
                           {titleContent.messages.map((message: AlertDetailsMessagesProps) => (
                             <Typography
+                              key={message.title}
                               variant="subtitle2"
                               color={theme.palette.common.black}
                               marginBottom={margins.bottom8}

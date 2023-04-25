@@ -115,7 +115,7 @@ const PatientTestResultsModal = () => {
               </TableHead>
               <TableBody>
                 {testResultDetailItems?.map(
-                  ({ dateCompleted, title, unit, result, status, finalResultType, testTypeId }, index) => {
+                  ({ dateCompleted, title, unit, result, status, finalResultType, testTypeId }, index: number) => {
                     const cellChipColor = finalResultType === LatestTestResultType.Normal ? 'active' : 'inActive';
 
                     return (

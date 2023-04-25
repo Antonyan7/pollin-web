@@ -73,7 +73,7 @@ const EditEncounterNoteAddendums = () => {
 
         return (
           <>
-            <Grid item container direction="row" alignItems="center">
+            <Grid item container direction="row" alignItems="center" key={addendum.id}>
               <Typography variant="h4" sx={{ width: '130px' }}>
                 {t(Translation.PAGE_ENCOUNTERS_ADDENDUM_TITLE)}
               </Typography>
@@ -265,7 +265,9 @@ const SimpleTextEditor = ({
       </EditorWrapper>
       {mode === SimpleEditorMode.Edit_Note && <EditEncounterNoteAddendums />}
       {!!(mode === SimpleEditorMode.Edit_Addendum && secondPartAddendums?.length) &&
-        secondPartAddendums.map((addendum: AddendumsProps) => <CurrentAddendum currentAddendum={addendum} />)}
+        secondPartAddendums.map((addendum: AddendumsProps) => (
+          <CurrentAddendum currentAddendum={addendum} key={addendum.id} />
+        ))}
     </>
   );
 };

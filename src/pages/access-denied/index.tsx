@@ -39,7 +39,7 @@ const AccessDeniedContent = () => {
           }}
         >
           <Grid item>
-            <Image src={AccessDenied} />
+            <Image src={AccessDenied} alt="Access Denied" />
           </Grid>
           <Grid item>
             <Typography variant="h1">{t(Translation.PAGE_PERMISSION_ACCESS)}</Typography>

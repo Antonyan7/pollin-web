@@ -40,7 +40,7 @@ const WeekDaysField = ({ index }: IWeekdaysFieldProps) => {
     <span className="week-days schedule-inputs schedule-days-checkbox">
       <FormControl error={!!weekDayError}>
         <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-          {weekDays.map((day, indexOfDay) => (
+          {weekDays.map((day, indexOfDay: number) => (
             <FormControlLabel
               key={day}
               label={day}

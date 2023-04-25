@@ -1,15 +1,16 @@
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import MainBreadcrumb from '@components/Breadcrumb/MainBreadcrumb';
 import { Main } from '@components/common/AppointmentsContent';
-import { Link } from '@components/index';
 import PatientAlertView from '@components/Patients/PatientAlertView';
 import PatientHighlightsView from '@components/Patients/PatientHighlightsView';
 import { Tab, TabProps, Tabs, useTheme } from '@mui/material';
 import { patientListTabLinks } from 'helpers/constants';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 const allyProps = (index: number) => ({
   id: `simple-tab-${index}`,
@@ -83,11 +84,11 @@ export default ({ children }: PropsWithChildren) => {
           }}
         >
           {patientListTabLinks.map(
-            (link, linkIndex) =>
+            (link, linkIndex: number) =>
               currentPatientId && (
                 <TabWithLink
                   disabled={!link.href}
-                  key={link.linkName}
+                  key={uuidv5(JSON.stringify(link).concat(linkIndex.toString()), uuidv5.URL)}
                   component={Link}
                   href={`/patient-emr/details/${currentPatientId}/${link.href}`}
                   label={link.linkName}

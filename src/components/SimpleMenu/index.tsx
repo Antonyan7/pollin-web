@@ -82,9 +82,9 @@ const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick?: 
           }
         }}
       >
-        {item?.items?.map((innerItem) => (
-          <MenuItem sx={{ p: paddings.all8 }} onClick={() => onItemClick?.(innerItem)}>
-            <Typography variant="body2">{innerItem.title}</Typography>
+        {item?.items?.map((navigationItem) => (
+          <MenuItem key={navigationItem.id} sx={{ p: paddings.all8 }} onClick={() => onItemClick?.(navigationItem)}>
+            <Typography variant="body2">{navigationItem.title}</Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -132,6 +132,7 @@ const SimpleMenu = ({ ActionButton, items, onItemClick }: SimpleMenuProps) => {
       >
         {items.map((item) => (
           <SimpleMenuItem
+            key={item.id}
             item={item}
             {...(item.items.length > 0 && {
               onItemClick

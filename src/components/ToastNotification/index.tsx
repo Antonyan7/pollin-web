@@ -61,6 +61,7 @@ export const ToastNotification = React.forwardRef(() => {
               <List>
                 {notificationRenderList.items.map((item: string) => (
                   <ListItem
+                    key={item}
                     sx={{
                       display: 'flex',
                       alignItems: 'center',

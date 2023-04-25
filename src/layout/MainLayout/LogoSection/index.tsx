@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link as MuiLink, Typography, useTheme } from '@mui/material';
+import { Link as MuiLink,Typography, useTheme } from '@mui/material';
 import { DASHBOARD_PATH } from 'config';
+import Link from 'next/link';
 import { margins } from 'themes/themeConstants';
-
-import { Link } from '../../../components';
 
 const LogoSection = () => {
   const theme = useTheme();

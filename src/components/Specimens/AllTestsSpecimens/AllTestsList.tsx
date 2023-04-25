@@ -253,7 +253,7 @@ const AllTestsList = () => {
         component="div"
         count={specimensList.totalItems}
         rowsPerPage={specimensList.pageSize}
-        page={specimensList.currentPage - 1}
+        page={specimensList.currentPage > 1 ? specimensList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </>

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  OrderListSortFields,
-  OrdersListDataProps
-} from '@axios/results/resultsManagerTypes';
+import { OrderListSortFields, OrdersListDataProps } from '@axios/results/resultsManagerTypes';
 import { Box, CircularProgress, Grid, TableContainer, TablePagination } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
@@ -77,7 +74,7 @@ const PatientOrdersList = () => {
         component="div"
         count={ordersList.totalItems}
         rowsPerPage={ordersList.pageSize}
-        page={ordersList.currentPage - 1}
+        page={ordersList.currentPage > 1 ? ordersList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </Box>

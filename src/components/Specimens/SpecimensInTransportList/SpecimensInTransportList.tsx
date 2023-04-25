@@ -217,7 +217,7 @@ const SpecimensInTransportList = () => {
         component="div"
         count={specimensList.totalItems}
         rowsPerPage={specimensList.pageSize}
-        page={page}
+        page={page > 0 ? page : 0}
         onPageChange={handleChangePage}
       />
     </>

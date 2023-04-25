@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, DialogTitle, Grid, Stack, Typography, useTheme } from '@mui/material';
+import { v5 as uuidv5 } from 'uuid';
 
 import ViewModal from '@ui-component/Modal/ViewModal';
 
@@ -51,12 +52,11 @@ const ObjectViewModal = ({ title, data, onClose, open = true }: Props) => {
         <Stack spacing={4} px={2.5}>
           {Object.entries(data).map(([key, values]) => (
             <Grid container key={key} rowGap={1.5}>
-              {values.map((value, index) => (
-                // eslint-disable-next-line react/no-array-index-key
-                <React.Fragment key={index}>
+              {values.map((value, valuesIndex: number) => (
+                <React.Fragment key={uuidv5(JSON.stringify(value).concat(valuesIndex.toString()), uuidv5.URL)}>
                   <Grid item xs={5}>
                     <Typography fontWeight={500} color={theme.palette.common.black}>
-                      {index === 0 && `${key}:`}
+                      {valuesIndex === 0 && `${key}:`}
                     </Typography>
                   </Grid>
                   <Grid item container xs={7}>

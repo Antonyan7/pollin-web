@@ -29,7 +29,9 @@ const TableComponent = () => {
       </TableHead>
 
       <TableBody>
-        {!isTasksLoading ? appointments?.map((row: ICheckInAppointment) => <CheckInRow row={row} />) : null}
+        {!isTasksLoading
+          ? appointments?.map((row: ICheckInAppointment) => <CheckInRow key={row.id} row={row} />)
+          : null}
       </TableBody>
     </Table>
   );

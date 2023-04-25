@@ -97,7 +97,7 @@ const PatientList = () => {
         component="div"
         count={patientsList.totalItems}
         rowsPerPage={patientsList.pageSize}
-        page={patientsList.currentPage - 1}
+        page={patientsList.currentPage > 1 ? patientsList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </PatientListStyled>

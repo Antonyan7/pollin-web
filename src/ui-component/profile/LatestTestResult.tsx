@@ -20,6 +20,7 @@ import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins, paddings } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
 import Chip from '@ui-component/patient/Chip';
@@ -73,11 +74,13 @@ const LatestTestResults = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {latestTestResults?.map((latestTestResult) => {
+                {latestTestResults?.map((latestTestResult, index) => {
                   const cellChipColor = latestTestResult.result === LatestTestResultType.Normal ? 'active' : 'inActive';
+                  // TODO update key TEAMA-5461
+                  const hashKey = uuidv5(JSON.stringify(latestTestResult).concat(index.toString()), uuidv5.URL);
 
                   return (
-                    <TableRow hover key={latestTestResult.title}>
+                    <TableRow hover key={hashKey}>
                       <TableCell>
                         <Typography fontWeight={500} variant="h5">
                           {latestTestResult.title}

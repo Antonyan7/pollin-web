@@ -6,6 +6,7 @@ import { tasksSelector } from '@redux/slices/tasks';
 import { Translation } from 'constants/translations';
 import { findStatusByID } from 'helpers/tasks';
 import { margins, paddings } from 'themes/themeConstants';
+import { v5 as uuidv5 } from 'uuid';
 
 import { DateUtil } from '@utils/date/DateUtil';
 import { isDashValue } from '@utils/stringUtils';
@@ -83,8 +84,9 @@ const Body = () => {
 
       <Grid item xs={12}>
         {taskDetails.reassigningHistory &&
-          taskDetails?.reassigningHistory.map((history) => (
-            <Grid container spacing={2}>
+          taskDetails?.reassigningHistory.map((history, index) => (
+            // TODO key from API response TEAMA-5500
+            <Grid container key={uuidv5(JSON.stringify(history).concat(index.toString()), uuidv5.URL)} spacing={2}>
               <Grid item xs={12}>
                 <Divider />
               </Grid>

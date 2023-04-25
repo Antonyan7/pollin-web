@@ -6,6 +6,7 @@ import { Collapse, Divider, Grid, Paper, Typography, TypographyProps, useTheme }
 import { viewsMiddleware } from '@redux/slices/views';
 import { dispatch } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector, patientsSlice } from 'redux/slices/patients';
+import { v5 as uuidv5 } from 'uuid';
 
 import ContactList from '@ui-component/common/ContactList';
 
@@ -65,8 +66,16 @@ const PatientHighlightsView = () => {
           <Divider />
           <Grid container alignItems="flex-start" py="15px">
             {patientHighlightColumns.map((patientHighlightColumn, index) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <Grid container item xs={12} sm={4} key={index} rowGap={1.5} justifyContent="center">
+              // TODO better logic for keys TEAMA-5462
+              <Grid
+                container
+                item
+                xs={12}
+                sm={4}
+                key={uuidv5(JSON.stringify(patientHighlightColumn).concat(index.toString()), uuidv5.URL)}
+                rowGap={1.5}
+                justifyContent="center"
+              >
                 {patientHighlightColumn.map(({ uiid, title, items }) => (
                   <React.Fragment key={title}>
                     <Grid item xs={12} sm={4}>

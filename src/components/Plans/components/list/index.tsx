@@ -128,7 +128,11 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
                 component="div"
                 count={patientPlansList?.totalItems ?? 0}
                 rowsPerPage={patientPlansList?.pageSize ?? 0}
-                page={patientPlansList?.currentPage ? patientPlansList.currentPage - 1 : 0}
+                page={
+                  patientPlansList?.currentPage && patientPlansList?.currentPage > 1
+                    ? patientPlansList.currentPage - 1
+                    : 0
+                }
                 onPageChange={handleChangePage}
               />
             </>

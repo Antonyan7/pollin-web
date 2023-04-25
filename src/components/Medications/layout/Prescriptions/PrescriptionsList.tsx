@@ -62,7 +62,7 @@ const PrescriptionsList = () => {
           component="div"
           count={patientPrescriptions.totalItems}
           rowsPerPage={patientPrescriptions.pageSize}
-          page={page}
+          page={page > 0 ? page : 0}
           onPageChange={handleChangePage}
           rowsPerPageOptions={[patientPrescriptions.pageSize, 5]}
         />

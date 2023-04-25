@@ -110,6 +110,7 @@ module.exports = {
     'import/prefer-default-export': 'off',
     'react/require-default-props': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'react/jsx-key': 2,
     'jsx-a11y/label-has-associated-control': ['error', { controlComponents: ['InputStyled'] }]
   }
 };

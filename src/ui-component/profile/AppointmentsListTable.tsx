@@ -127,7 +127,7 @@ const AppointmentsListTable = () => {
         component="div"
         count={totalItems}
         rowsPerPage={pageSize}
-        page={currentPage - 1}
+        page={currentPage > 1 ? currentPage - 1 : 0}
         onPageChange={onTablePageChange}
       />
     </>

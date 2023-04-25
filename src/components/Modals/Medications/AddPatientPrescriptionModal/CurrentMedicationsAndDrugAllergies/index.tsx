@@ -38,7 +38,8 @@ const CurrentMedicationsAndDrugAllergies = () => {
         {patientMedicationState?.currentMedications.map((item, index) => {
           const currentMedicationName = ` ${index + 1}. ${item.name}`;
 
-          return <Typography>{currentMedicationName}</Typography>;
+          // TODO better key that a value TEAMA-5498
+          return <Typography key={currentMedicationName}>{currentMedicationName}</Typography>;
         })}
       </Grid>
 
@@ -48,16 +49,20 @@ const CurrentMedicationsAndDrugAllergies = () => {
         {patientMedicationState?.drugAllergies.map((item, index) => {
           const drugAllergiesName = ` ${index + 1}. ${item.name}`;
 
-          return <Typography>{drugAllergiesName.length ? drugAllergiesName : '--'}</Typography>;
+          // TODO better key that a value TEAMA-5498
+          return <Typography key={drugAllergiesName}>{drugAllergiesName.length ? drugAllergiesName : '--'}</Typography>;
         })}
       </Grid>
 
       <Grid item>
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_NEW_PRESCRIPTION_MEDICATION_LIST)}</Typography>
         {!prescriptionList?.length && '1.'}
-        {prescriptionList?.map((prescriptionItem, prescriptionItemIndex) => (
-          <Grid>{`${prescriptionItemIndex + 1}. ${prescriptionItem.name}`}</Grid>
-        ))}
+        {prescriptionList?.map((prescriptionItem, prescriptionItemIndex) => {
+          const name = `${prescriptionItemIndex + 1}. ${prescriptionItem.name}`;
+
+          // TODO better key that a value TEAMA-5498
+          return <Grid key={name}>{name}</Grid>;
+        })}
       </Grid>
     </Grid>
   );

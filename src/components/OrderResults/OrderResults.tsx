@@ -159,7 +159,7 @@ const OrderResults = () => {
         component="div"
         count={orderResultsByPatientList.totalItems}
         rowsPerPage={orderResultsByPatientList.pageSize}
-        page={orderResultsByPatientList.currentPage - 1}
+        page={orderResultsByPatientList.currentPage > 1 ? orderResultsByPatientList.currentPage - 1 : 0}
         onPageChange={handleChangePage}
       />
     </>

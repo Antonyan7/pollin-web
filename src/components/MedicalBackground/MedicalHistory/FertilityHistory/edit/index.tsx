@@ -94,6 +94,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
                       label={title}
                     />
                   }
+                  // TODO better logic for a key TEAMA-5498
                   key={fieldName}
                 />
               );
@@ -117,6 +118,7 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
                   controlFieldName={`${fieldName}.${mappedItem?.componentData?.controlFieldName}`}
                   itemsFieldName={mappedItem?.componentData?.itemsFieldName}
                   addNewItemButtonLabel={mappedItem?.componentData?.addNewItemButtonLabel}
+                  // TODO better logic for a key TEAMA-5498
                   key={fieldName}
                 />
               );
@@ -124,6 +126,8 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
             return (
               <FieldWithNote
+                // TODO better logic for a key TEAMA-5498
+                key={fieldName}
                 fieldLabel={title}
                 fieldName={fieldName}
                 fieldComponent={<MedicalFormRadio fieldName={`${fieldName}.value`} />}

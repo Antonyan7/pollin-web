@@ -90,7 +90,7 @@ const ScheduleTemplatesTable = ({ rows, isScheduleTemplatesLoading }: Props) => 
 
               return (
                 <ScheduleTemplatesRow
-                  key={`template-${row.id}`}
+                  key={row.id}
                   isItemSelected={isItemSelected}
                   row={row}
                   onClick={(e) => onClick(e, row.id)}

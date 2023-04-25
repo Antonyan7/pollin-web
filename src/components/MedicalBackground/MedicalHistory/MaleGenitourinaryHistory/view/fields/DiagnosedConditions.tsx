@@ -18,17 +18,16 @@ const DiagnosedConditions = ({ componentIndex }: GeneralHealthComponentsProps) =
   const fieldName = t(
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GENITOURINARY_HISTORY_FIELD_DIAGNOSED_CONDITIONS
   );
-  const optionValues = fieldValue?.items?.map(
-    (fieldItem) =>
-      diagnosedConditionOptions?.find((diagnosedConditionOption) => fieldItem.id === diagnosedConditionOption.id)?.title
+  const options = fieldValue?.items?.map((fieldItem) =>
+    diagnosedConditionOptions?.find((diagnosedConditionOption) => fieldItem.id === diagnosedConditionOption.id)
   );
 
   return (
     <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
-      {optionValues?.length ? (
+      {options?.length ? (
         <Grid>
-          {optionValues.map((optionValue) => (
-            <Grid key={optionValue}>{optionValue}</Grid>
+          {options.map((option) => (
+            <Grid key={option?.id}>{option?.title}</Grid>
           ))}
           <RenderMappedNote note={fieldValue?.note} />
         </Grid>

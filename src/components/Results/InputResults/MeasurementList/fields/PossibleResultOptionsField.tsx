@@ -44,6 +44,7 @@ const PossibleResultOptionsField = ({
         IconComponent={StyledKeyboardArrowDownIcon}
       >
         {resultOptions.map(({ title }: IPossibleResultOptions) => (
+          // TODO proper key TEAMA-5462
           <MenuItem key={title} value={title}>
             {title}
           </MenuItem>
