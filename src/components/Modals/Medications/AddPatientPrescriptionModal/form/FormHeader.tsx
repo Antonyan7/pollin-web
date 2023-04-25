@@ -9,12 +9,26 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-const FormHeader = () => {
+const FormHeader = ({ isDirty }: { isDirty: boolean }) => {
   const [t] = useTranslation();
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
-    dispatch(patientsMiddleware.setPatientPrescriptionsItems());
-  }, []);
+    if (isDirty) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ConfirmCancellationModal,
+          props: {
+            action: () => {
+              dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
+              dispatch(patientsMiddleware.setPatientPrescriptionsItems());
+            }
+          }
+        })
+      );
+    } else {
+      dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal));
+      dispatch(patientsMiddleware.setPatientPrescriptionsItems());
+    }
+  }, [isDirty]);
 
   return (
     <>

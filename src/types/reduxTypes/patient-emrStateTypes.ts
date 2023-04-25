@@ -99,6 +99,7 @@ export interface MedicationsPrescriptionsProps {
     patientMissingMedications: IPatientMedications;
     isPatientPastMedicationLoading: boolean;
     isPatientCurrentMedicationLoading: boolean;
+    isMedicationFieldsDirty: boolean;
     isMedicationUpdatedLoading: boolean;
     isCardInEditMode: boolean[];
     isCardInViewMode: boolean[];

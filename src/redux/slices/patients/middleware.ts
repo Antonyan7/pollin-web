@@ -89,6 +89,7 @@ const {
   setPatientContactInformationLoadingState,
   setIsPatientHighlightIntakeComplete,
   setIsICFormComplete,
+  setIsMedicationFieldsDirty,
   setIsPatientHighlightIntakeReminderActive,
   setPatientAppointmentsRequestStatus,
   setPatientAlertViewState,
@@ -228,6 +229,10 @@ const getPatientAlertDetails = (patientId: string, abortSignal?: AbortSignal) =>
   } finally {
     dispatch(setPatientAlertDetailsLoading(false));
   }
+};
+
+const isMedicationFieldsDirty = (isDirty: boolean) => (dispatch: AppDispatch) => {
+  dispatch(setIsMedicationFieldsDirty(isDirty));
 };
 
 const createPatientAlert = (patientId: string, alert: CustomAlerts) => async (dispatch: AppDispatch) => {
@@ -1346,6 +1351,7 @@ export default {
   updatePatientGenitourinaryHistory,
   getPatientRecentAppointments,
   emptyPatientRecentAppointments,
+  isMedicationFieldsDirty,
   setEncounterSearch,
   setSelectedEncounterFilters,
   getEncounterFilters,

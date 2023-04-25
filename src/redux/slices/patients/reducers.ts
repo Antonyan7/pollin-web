@@ -376,6 +376,9 @@ const reducers = createReducer({
   setIsMedicationUpdatedLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.medications.isMedicationUpdatedLoading = action.payload;
   },
+  setIsMedicationFieldsDirty(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isMedicationFieldsDirty = action.payload;
+  },
   setCardToEditMode(state, action: IAction<boolean[]>) {
     state.medicationsPrescriptions.medications.isCardInEditMode = action.payload;
   },

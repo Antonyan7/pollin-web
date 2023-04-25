@@ -38,7 +38,7 @@ const AddPatientMedicationModal = () => {
   return (
     <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0 } }}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <AddPatientMedicationForm setIsDirty={setIsDirty} />
+        <AddPatientMedicationForm isDirty={isDirty} setIsDirty={setIsDirty} />
       </LocalizationProvider>
     </Dialog>
   );

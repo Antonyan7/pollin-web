@@ -12,14 +12,15 @@ export const FormContent = ({ setIsDirty }: { setIsDirty: (val: boolean) => void
   const {
     formState: { dirtyFields }
   } = useFormContext();
+  const isDirty = Object.values(dirtyFields).length > 0;
 
   useEffect(() => {
-    setIsDirty(Object.values(dirtyFields).length > 0);
-  }, [dirtyFields, setIsDirty]);
+    setIsDirty(isDirty);
+  }, [isDirty, setIsDirty]);
 
   return (
     <MedicationsContext.Provider value={fields}>
-      <FormHeader />
+      <FormHeader isDirty={isDirty} />
       <FormBody />
     </MedicationsContext.Provider>
   );

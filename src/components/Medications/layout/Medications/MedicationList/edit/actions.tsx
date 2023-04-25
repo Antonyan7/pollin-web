@@ -25,6 +25,10 @@ const ConfirmButton = () => {
 
   const showCancelConfirmModal = Object.values(dirtyFields).length > 0;
 
+  useEffect(() => {
+    if (dirtyFields) {dispatch(patientsMiddleware.isMedicationFieldsDirty(true));}
+  }, [dirtyFields]);
+
   const onClickCancell = useCallback(() => {
     if (showCancelConfirmModal) {
       dispatch(

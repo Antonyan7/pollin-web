@@ -3,10 +3,12 @@ import { useTranslation } from 'react-i18next';
 import { Recency } from '@axios/patientEmr/managerPatientEmrTypes';
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
+import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { margins, paddings } from 'themes/themeConstants';
+import { ModalName } from 'types/modals';
 import { v4 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
@@ -23,10 +25,28 @@ const CurrentMedications = () => {
     dispatch(patientsMiddleware.getMedicationDropdownOptions());
   }, []);
 
+  const isMedicationFieldsDirty = useAppSelector(patientsSelector.isMedicationFieldsDirty);
+
   const handleChangePage = (_event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null, newPage: number) => {
-    dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
-    dispatch(patientsMiddleware.updateCardToViewMode(-1, []));
-    setPage(newPage);
+    if (isMedicationFieldsDirty) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ConfirmCancellationModal,
+          props: {
+            action: () => {
+              dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
+              dispatch(patientsMiddleware.updateCardToViewMode(-1, []));
+              dispatch(patientsMiddleware.isMedicationFieldsDirty(false));
+              setPage(newPage);
+            }
+          }
+        })
+      );
+    } else {
+      dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
+      dispatch(patientsMiddleware.updateCardToViewMode(-1, []));
+      setPage(newPage);
+    }
   };
 
   useEffect(() => {

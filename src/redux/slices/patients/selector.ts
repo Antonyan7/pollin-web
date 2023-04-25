@@ -149,6 +149,11 @@ const patientCurrentMedications = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.patientCurrentMedications
 );
+const isMedicationFieldsDirty = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isMedicationFieldsDirty
+);
+
 const patientPastMedications = createSelector(
   [selector],
   (state) => state.medicationsPrescriptions.medications.patientPastMedications
@@ -378,6 +383,7 @@ export default {
   isFemalePatientGynaecologicalHistoryDataUpdating,
   isFemalePatientGynaecologicalHistoryLoading,
   dropdowns,
+  isMedicationFieldsDirty,
   isDropdownsLoading,
   femalePregnancyInformation,
   isVerifyPatientProfilePhotoLoading,

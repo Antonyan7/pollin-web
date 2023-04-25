@@ -8,11 +8,19 @@ import { Translation } from 'constants/translations';
 import { margins } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
 
-const FormHeader = () => {
+const FormHeader = ({ isDirty }: { isDirty: boolean }) => {
   const [t] = useTranslation();
+
   const onClose = useCallback(() => {
-    dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));
-  }, []);
+    if (isDirty) {
+      dispatch(
+        viewsMiddleware.openModal({
+          name: ModalName.ConfirmCancellationModal,
+          props: { action: () => dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal)) }
+        })
+      );
+    } else {dispatch(viewsMiddleware.closeModal(ModalName.AddPatientMedicationModal));}
+  }, [isDirty]);
 
   return (
     <>
