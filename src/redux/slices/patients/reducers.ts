@@ -301,6 +301,9 @@ const reducers = createReducer({
   setIsPatientBackgroundEditButtonClicked(state, action: IAction<boolean>) {
     state.medicalBackground.contact.patientBackground.isPatientBackgroundEditButtonClicked = action.payload;
   },
+  setManuallyAddressForPharmacy(state, action: IAction<AddManuallyAddressModalProps>) {
+    state.medicalBackground.contact.patientBackground.manualAddressForPharmacy = action.payload;
+  },
   setBackgroundInformation(state, action: IAction<IPatientBackgroundPartners>) {
     state.medicalBackground.contact.patientBackground.patientBackgroundInformation = action.payload;
   },

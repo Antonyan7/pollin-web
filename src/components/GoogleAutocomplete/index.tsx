@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import PlacesAutocomplete from 'react-places-autocomplete';
@@ -16,7 +16,7 @@ interface GoogleAutocompleteProps {
 const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
-  const { control, register } = useFormContext();
+  const { control, watch, register } = useFormContext();
   const { field, fieldState } = useController({
     name: fieldName,
     control
@@ -24,10 +24,9 @@ const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
   const googleLabel = t(Translation.GOOGLE_AUTOCOMPLETE_LABEL_TITLE);
   const { onChange, onBlur, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(googleLabel);
-  const [address, setAddress] = useState<string>(fieldProps.value);
+  const address = watch(fieldName);
 
   const onPlaceChange = (placeAddress: string) => {
-    setAddress(placeAddress);
     onChange(placeAddress);
   };
 
@@ -59,9 +58,10 @@ const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
               }
             }}
             inputValue={address}
+            value={address}
             onInputChange={(_event, value) => {
               if (value) {
-                onPlaceChange(address);
+                onPlaceChange(value);
               }
             }}
             sx={{
@@ -94,8 +94,8 @@ const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
               label: googleLabel,
               helperText: fieldState?.error && errorHelperText,
               error: Boolean(fieldState?.error),
-              ...fieldProps,
               ...register(fieldName),
+              ...fieldProps,
               ...getInputProps()
             }}
           />

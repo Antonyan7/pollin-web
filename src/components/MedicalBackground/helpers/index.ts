@@ -3,6 +3,7 @@ import { DropdownOptionType, IDropdown, IDropdownOption } from '@axios/patientEm
 import CurrentOccupation from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/CurrentOccupation';
 import DateOfBirth from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/DateOfBirth';
 import FamilyPhysician from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/FamilyPhysician';
+import Pharmacy from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/Pharmacy';
 import PhysicianName from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/PhysicianName';
 import Pronouns from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/Pronouns';
 import SexAtBirth from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/fields/SexAtBirth';
@@ -150,7 +151,8 @@ export const backgroundInformationRows = [
   { Component: Age },
   { Component: CurrentOccupation },
   { Component: PhysicianName },
-  { Component: FamilyPhysician }
+  { Component: FamilyPhysician },
+  { Component: Pharmacy }
 ];
 
 export const genitourinaryRows = [

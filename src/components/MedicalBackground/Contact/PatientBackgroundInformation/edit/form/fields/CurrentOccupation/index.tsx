@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -24,6 +25,10 @@ const CurrentOccupation = () => {
     control
   });
   const errorHelperText = generateErrorMessage(fieldLabel);
+  const currentOccupationRef = useRef<HTMLInputElement>(null);
+
+  useScrollIntoView(currentOccupationRef, fieldState);
+
   const [showAdditionalNote, setShowAdditionalNote] = useState(!!currentOccupation?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
@@ -44,7 +49,7 @@ const CurrentOccupation = () => {
             fullWidth
             {...field}
             value={field.value}
-            ref={field.ref}
+            ref={currentOccupationRef}
           />
           <MedicalBackgroundNote
             onClick={onNoteClick}

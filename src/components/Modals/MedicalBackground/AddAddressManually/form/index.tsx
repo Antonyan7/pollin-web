@@ -23,8 +23,10 @@ const AddAddressManuallyModalForm = ({ mode }: AddAddressManuallyProps) => {
     (values: AddManuallyAddressModalProps) => {
       if (mode === ManuallyAddressModalMode.Primary) {
         dispatch(patientsMiddleware.changeManuallyAddressForPrimary(values));
-      } else {
+      } else if (mode === ManuallyAddressModalMode.Mailing) {
         dispatch(patientsMiddleware.changeManuallyAddressForMailing(values));
+      } else {
+        dispatch(patientsMiddleware.changeManuallyAddressForPharmacy(values));
       }
 
       onClose();

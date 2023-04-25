@@ -8,6 +8,7 @@ import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
+import { generateErrorMessage } from 'helpers/generateErrorMessage';
 import { paddings } from 'themes/themeConstants';
 import { PollinDatePickerType } from 'types/datePicker';
 
@@ -21,7 +22,7 @@ const DateOfBirth = () => {
   const { control } = useFormContext();
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
   const dateOfBirth = patientBackgroundInformation?.dateOfBirth;
-  const { field } = useController({
+  const { field, fieldState } = useController({
     name: `${BackgroundInformationFormFields.DateOfBirth}.value`,
     control
   });
@@ -30,6 +31,7 @@ const DateOfBirth = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
+  const errorHelperText = generateErrorMessage(fieldLabel);
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
@@ -43,6 +45,8 @@ const DateOfBirth = () => {
             label: t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DUE_DATE_PLACEHOLDER),
             value: field.value,
             onChange,
+            errorMessage: fieldState?.error && errorHelperText,
+            isError: Boolean(fieldState?.error),
             isLimitedByWorkingHours: false
           }}
         />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -6,6 +6,7 @@ import { ConsultationTitleWithIcon } from '@components/MedicalBackground/compone
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -27,7 +28,7 @@ const RelationshipStatus = () => {
   const relationshipStatus = patientBackgroundInformation?.relationship;
   const { control } = useFormContext();
   const { field, fieldState } = useController({
-    name: `${BackgroundInformationFormFields.PreferredPronouns}.value`,
+    name: `${BackgroundInformationFormFields.Relationship}.value`,
     control
   });
   const { onChange, onBlur, ...fieldProps } = field;
@@ -38,6 +39,9 @@ const RelationshipStatus = () => {
     fieldProps.value
   );
   const errorHelperText = generateErrorMessage(fieldLabel);
+  const relationshipStatusRef = useRef<HTMLInputElement>(null);
+
+  useScrollIntoView(relationshipStatusRef, fieldState);
 
   const onStatusChange = (value: IDropdownOption) => {
     if (value && typeof value === 'object' && 'id' in value) {
@@ -68,7 +72,8 @@ const RelationshipStatus = () => {
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
             ...fieldProps,
-            label: fieldLabel
+            label: fieldLabel,
+            ref: relationshipStatusRef
           }}
         />
         <MedicalBackgroundNote

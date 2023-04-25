@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import Diagram from '@components/MedicalBackground/components/common/Diagram';
@@ -15,25 +14,17 @@ import { margins, paddings } from 'themes/themeConstants';
 import ReferringDoctorContent from './Content';
 import Title from './Title';
 
-const FieldOHIP = () => {
+const FieldReferringDoctor = () => {
   const [t] = useTranslation();
   const label = t(
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_REFERRING_PHYSICIAN_NAME
   );
-  const { control } = useFormContext();
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
   const referringDoctor = patientBackgroundInformation?.referringDoctor;
-  const { field } = useController({
-    name: BackgroundInformationFormFields.ReferringDoctor,
-    control
-  });
-  const { onChange, value: referringDoctorInfo } = field;
+  const [isReferringDoctorFieldVisible, setIsReferringDoctorFieldVisible] = useState(Boolean(referringDoctor?.value));
   const fieldName = BackgroundInformationFormFields.ReferringDoctor;
   const onReferringDoctorChange = (state: boolean) => {
-    onChange({
-      ...referringDoctorInfo,
-      value: state
-    });
+    setIsReferringDoctorFieldVisible(state);
   };
   const [showAdditionalNote, setShowAdditionalNote] = useState(!!referringDoctor?.note);
   const onNoteClick = () => {
@@ -57,19 +48,15 @@ const FieldOHIP = () => {
         <ConsultationTitleWithIcon onClick={onNoteClick} description={label} />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        {referringDoctorInfo.isEditable ? (
-          <>
-            <Grid>
-              <MedicalFormRadio fieldName={`${fieldName}.value`} onChangeState={onReferringDoctorChange} />
-            </Grid>
-            {referringDoctorInfo.value ? (
-              <Grid>
-                <Diagram titleComponent={<Title />}>
-                  <ReferringDoctorContent />
-                </Diagram>
-              </Grid>
-            ) : null}
-          </>
+        <Grid>
+          <MedicalFormRadio fieldName={`${fieldName}.value`} onChangeState={onReferringDoctorChange} />
+        </Grid>
+        {isReferringDoctorFieldVisible ? (
+          <Grid>
+            <Diagram titleComponent={<Title />}>
+              <ReferringDoctorContent />
+            </Diagram>
+          </Grid>
         ) : null}
         <MedicalBackgroundNote
           onClick={onNoteClick}
@@ -81,4 +68,4 @@ const FieldOHIP = () => {
   );
 };
 
-export default FieldOHIP;
+export default FieldReferringDoctor;

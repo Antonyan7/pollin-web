@@ -3,6 +3,7 @@ import { Divider, Grid, IconButton, RadioGroup, styled, Typography } from '@mui/
 import { borders, margins } from 'themes/themeConstants';
 
 import MedicalBackgroundNoteIcon from '@assets/icons/MedicalBackgroundNote';
+import { isDashValue } from '@utils/stringUtils';
 
 export const ConsultationFormSubTitle = styled(Typography)(({ theme }) => ({
   color: theme.palette.secondary[800],
@@ -72,3 +73,23 @@ export const RenderSingleValueAndNote = ({ value, note }: { value?: string | num
 );
 
 export const RenderMappedNote = ({ note }: { note?: string }) => (note ? <Grid mt={margins.top16}>{note}</Grid> : null);
+
+export const RenderFieldWithAdditionalValues = ({
+  value,
+  additionalValues,
+  note
+}: {
+  value: string | number;
+  additionalValues: string[];
+  note?: string;
+}) => (
+  <Grid item container xs={7} direction="column" justifyContent="space-between">
+    <Grid>{value || '-'}</Grid>
+    {additionalValues.map((fieldValue, index) =>
+      fieldValue && !isDashValue(fieldValue) ? (
+        <Grid mt={!index ? margins.top16 : margins.top4}> {fieldValue}</Grid>
+      ) : null
+    )}
+    <Grid>{note ?? ''}</Grid>
+  </Grid>
+);

@@ -7,21 +7,32 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { Grid } from '@mui/material';
 import { Translation } from 'constants/translations';
 
-const ReferringDoctorTitle = () => {
+const PharmacyTitle = () => {
   const [t] = useTranslation();
-  const { getValues, setValue } = useFormContext();
-  const referringDoctorValue = getValues(BackgroundInformationFormFields.ReferringDoctor);
+  const { setValue, getValues } = useFormContext();
+  const pharmacyValue = getValues(BackgroundInformationFormFields.Pharmacy);
+
   const onMinusClick = () => {
-    setValue(BackgroundInformationFormFields.ReferringDoctor, {
-      ...referringDoctorValue,
-      referringDoctorName: ''
+    setValue(BackgroundInformationFormFields.Pharmacy, {
+      ...pharmacyValue,
+      pharmacyName: '',
+      address: {
+        ...pharmacyValue.address,
+        street: '',
+        city: '',
+        province: '',
+        postalCode: '',
+        phoneNumber: '',
+        faxNumber: '',
+        unit: ''
+      }
     });
   };
 
   return (
     <Grid item container justifyContent="space-between" alignItems="center">
       <ConsultationFormSubTitle>
-        {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_REFERRING_PHYSICIAN_NAME)}
+        {t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_PHARMACY)}
       </ConsultationFormSubTitle>
       <DeleteOutlineIcon
         onClick={onMinusClick}
@@ -36,4 +47,4 @@ const ReferringDoctorTitle = () => {
   );
 };
 
-export default ReferringDoctorTitle;
+export default PharmacyTitle;

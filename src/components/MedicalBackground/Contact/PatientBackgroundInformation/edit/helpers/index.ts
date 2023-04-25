@@ -1,6 +1,25 @@
-import { IPatientBackgroundPartners } from '@axios/patientEmr/managerPatientEmrTypes';
+import {
+  IFamilyDoctor,
+  IPatientBackgroundPartners,
+  IPharmacy,
+  IReferringDoctor
+} from '@axios/patientEmr/managerPatientEmrTypes';
+
+import { isDashValue } from '@utils/stringUtils';
 
 import { BackgroundInformationFormFields } from '../types';
+
+export interface IPatientBackgroundInformationForm extends Omit<IPatientBackgroundPartners, 'pharmacy'> {
+  referringDoctor: IReferringDoctor & {
+    referringDoctorName: string;
+  };
+  pharmacy: IPharmacy & {
+    pharmacyName: string;
+  };
+  familyDoctor: IFamilyDoctor & {
+    familyDoctorName: string;
+  };
+}
 
 export const getBackgroundInformationEmptyState = (backgroundInformation: IPatientBackgroundPartners) => ({
   [BackgroundInformationFormFields.SexAtBirth]: backgroundInformation?.sexAtBirth,
@@ -14,27 +33,36 @@ export const getBackgroundInformationEmptyState = (backgroundInformation: IPatie
   [BackgroundInformationFormFields.CurrentOccupation]: backgroundInformation?.currentOccupation,
   [BackgroundInformationFormFields.ReferringDoctor]: {
     ...backgroundInformation?.referringDoctor,
-    value: backgroundInformation?.referringDoctor?.value ?? false,
-    name: backgroundInformation?.referringDoctor?.name ?? ''
+    name: '',
+    referringDoctorName:
+      isDashValue(backgroundInformation?.referringDoctor?.name) || !backgroundInformation?.referringDoctor?.name
+        ? ''
+        : backgroundInformation?.referringDoctor?.name
   },
   [BackgroundInformationFormFields.FamilyDoctor]: {
     ...backgroundInformation?.familyDoctor,
-    value: backgroundInformation?.familyDoctor?.value ?? false,
-    name: backgroundInformation?.familyDoctor?.name ?? ''
+    name: '',
+    familyDoctorName:
+      isDashValue(backgroundInformation.familyDoctor?.name) || !backgroundInformation.familyDoctor?.name
+        ? ''
+        : backgroundInformation.familyDoctor?.name
   },
   [BackgroundInformationFormFields.Pharmacy]: {
     ...backgroundInformation?.pharmacy,
-    value: backgroundInformation?.pharmacy?.exists ?? false,
-    name: backgroundInformation?.pharmacy?.name ?? '',
+    name: '',
+    pharmacyName:
+      isDashValue(backgroundInformation?.pharmacy?.name) || !backgroundInformation?.pharmacy?.name
+        ? ''
+        : backgroundInformation?.pharmacy?.name,
     address: {
       ...backgroundInformation?.pharmacy?.address,
-      street: backgroundInformation?.pharmacy?.address?.street,
-      unit: backgroundInformation?.pharmacy?.address?.unit,
-      city: backgroundInformation?.pharmacy?.address?.city,
-      postalCode: backgroundInformation?.pharmacy?.address?.postalCode,
-      country: backgroundInformation?.pharmacy?.address?.country,
-      faxNumber: backgroundInformation?.pharmacy?.address?.faxNumber,
-      phoneNumber: backgroundInformation?.pharmacy?.address?.phoneNumber
+      street: backgroundInformation?.pharmacy?.address?.street ?? '',
+      unit: backgroundInformation?.pharmacy?.address?.unit ?? '',
+      city: backgroundInformation?.pharmacy?.address?.city ?? '',
+      postalCode: backgroundInformation?.pharmacy?.address?.postalCode ?? '',
+      country: 'Canada',
+      faxNumber: backgroundInformation?.pharmacy?.address?.faxNumber ?? '',
+      phoneNumber: backgroundInformation?.pharmacy?.address?.phoneNumber ?? ''
     }
   }
 });

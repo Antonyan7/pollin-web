@@ -4,6 +4,7 @@ import FieldCurrentOccupation from './CurrentOccupation';
 import FieldDateOfBirth from './DateOfBirth';
 import FieldFamilyDoctor from './FamilyPhysician';
 import FieldGender from './Gender';
+import FieldPharmacy from './Pharmacy';
 import FieldPronouns from './Pronouns';
 import FieldReferringDoctor from './ReferringDoctor';
 import RelationshipStatus from './RelationshipStatus';
@@ -17,6 +18,7 @@ export {
   FieldDateOfBirth,
   FieldFamilyDoctor,
   FieldGender,
+  FieldPharmacy,
   FieldPronouns,
   FieldReferringDoctor,
   FieldSexAtBirth,

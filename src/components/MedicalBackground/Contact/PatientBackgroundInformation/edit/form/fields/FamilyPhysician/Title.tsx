@@ -1,5 +1,5 @@
 import React from 'react';
-import { useController, useFormContext } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationFormSubTitle } from '@components/MedicalBackground/components/common';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
@@ -9,17 +9,12 @@ import { Translation } from 'constants/translations';
 
 const FamilyDoctorTitle = () => {
   const [t] = useTranslation();
-  const { control } = useFormContext();
-  const { field } = useController({
-    name: BackgroundInformationFormFields.FamilyDoctor,
-    control
-  });
-  const { onChange, value: familyDoctorValue } = field;
+  const { getValues, setValue } = useFormContext();
+  const familyDoctorValue = getValues(BackgroundInformationFormFields.FamilyDoctor);
   const onMinusClick = () => {
-    onChange({
+    setValue(BackgroundInformationFormFields.FamilyDoctor, {
       ...familyDoctorValue,
-      value: false,
-      name: ''
+      familyDoctorName: ''
     });
   };
 

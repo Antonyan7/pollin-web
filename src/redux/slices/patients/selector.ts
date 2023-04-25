@@ -128,6 +128,12 @@ const manuallyAddressForPrimary = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.manuallyAddressForPrimary
 );
+
+const manualAddressForPharmacy = createSelector(
+  [selector],
+  (state) => state.medicalBackground.contact.patientBackground.manualAddressForPharmacy
+);
+
 const manuallyAddressForMailing = createSelector(
   [selector],
   (state) => state.medicalBackground.contact.manuallyAddressForMailing
@@ -387,5 +393,6 @@ export default {
   contactInformation,
   manuallyAddressForMailing,
   manuallyAddressForPrimary,
-  isBookingRequestToPatientLoading
+  isBookingRequestToPatientLoading,
+  manualAddressForPharmacy
 };

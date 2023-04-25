@@ -99,6 +99,7 @@ const {
   setPatientIcForm,
   setPatientIcFormCompletedDate,
   setIsGetPatientIcFormLoading,
+  setManuallyAddressForPharmacy,
   setGeneralHealth,
   setIsGeneralHealthLoading,
   setIsEditButtonClicked,
@@ -1124,6 +1125,10 @@ const changeManuallyAddressForMailing = (address: AddManuallyAddressModalProps) 
   dispatch(setManuallyAddressForMailing(address));
 };
 
+const changeManuallyAddressForPharmacy = (address: AddManuallyAddressModalProps) => async (dispatch: AppDispatch) => {
+  dispatch(setManuallyAddressForPharmacy(address));
+};
+
 const getMedicalContactInformation = (patientId: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsMedicalPatientContactInformationLoading(true));
 
@@ -1250,6 +1255,7 @@ const updatePatientBackgroundInformation =
       const response = await API.patients.updatePatientBackgroundInformation(patientId, backgroundInfo);
 
       if (response) {
+        dispatch(patientsMiddleware.getPatientBackgroundInformation(patientId));
         dispatch(patientsMiddleware.changePatientBackgroundEditButtonState());
         dispatch(
           viewsMiddleware.setToastNotificationPopUpState({
@@ -1402,5 +1408,6 @@ export default {
   updateFemalePatientMenstrualCycleHistory,
   setEditMalePatientGenitourinaryState,
   updateFemalePatientGynaecologicalHistory,
-  sendBookingRequestToPatient
+  sendBookingRequestToPatient,
+  changeManuallyAddressForPharmacy
 };

@@ -11,20 +11,20 @@ import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { margins, paddings } from 'themes/themeConstants';
 
-import FamilyDoctorContent from './Content';
+import PharmacyContent from './Content';
 import Title from './Title';
 
-const FieldFamilyPhysician = () => {
+const FieldPharmacy = () => {
   const [t] = useTranslation();
-  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_FAMILY_PHYSICIAN);
+  const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_PHARMACY);
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
-  const familyDoctor = patientBackgroundInformation?.familyDoctor;
-  const [isDoctorNameVisible, setIsDoctorNameVisible] = useState(Boolean(familyDoctor?.value));
-  const fieldName = BackgroundInformationFormFields.FamilyDoctor;
-  const onFamilyDoctorChange = (state: boolean) => {
-    setIsDoctorNameVisible(state);
+  const pharmacy = patientBackgroundInformation?.pharmacy;
+  const fieldName = `${BackgroundInformationFormFields.Pharmacy}.exists`;
+  const [isPharmacyVisible, setIsPharmacyVisible] = useState(Boolean(pharmacy?.exists));
+  const onPharmacyChange = (state: boolean) => {
+    setIsPharmacyVisible(state);
   };
-  const [showAdditionalNote, setShowAdditionalNote] = useState(!!familyDoctor?.note);
+  const [showAdditionalNote, setShowAdditionalNote] = useState(!!pharmacy?.note);
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
@@ -46,24 +46,26 @@ const FieldFamilyPhysician = () => {
         <ConsultationTitleWithIcon onClick={onNoteClick} description={label} />
       </Grid>
       <Grid item container direction="column" xs={7} gap={2}>
-        <Grid>
-          <MedicalFormRadio fieldName={`${fieldName}.value`} onChangeState={onFamilyDoctorChange} />
-        </Grid>
-        {isDoctorNameVisible ? (
+        <>
           <Grid>
-            <Diagram titleComponent={<Title />}>
-              <FamilyDoctorContent />
-            </Diagram>
+            <MedicalFormRadio fieldName={fieldName} onChangeState={onPharmacyChange} />
           </Grid>
-        ) : null}
+          {isPharmacyVisible ? (
+            <Grid>
+              <Diagram titleComponent={<Title />}>
+                <PharmacyContent />
+              </Diagram>
+            </Grid>
+          ) : null}
+        </>
         <MedicalBackgroundNote
           onClick={onNoteClick}
           visible={showAdditionalNote}
-          fieldName={BackgroundInformationFormFields.FamilyDoctor}
+          fieldName={BackgroundInformationFormFields.Pharmacy}
         />
       </Grid>
     </Grid>
   );
 };
 
-export default FieldFamilyPhysician;
+export default FieldPharmacy;

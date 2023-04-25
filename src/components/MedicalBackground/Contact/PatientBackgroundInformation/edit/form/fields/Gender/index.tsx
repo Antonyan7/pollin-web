@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -7,6 +7,8 @@ import MedicalBackgroundNote from '@components/MedicalBackground/components/comm
 import OtherGender from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/form/fields/Gender/fields/Other';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
+import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -34,14 +36,13 @@ const Gender = () => {
   const genderOptions = getDropdownByType(dropdownOptions, DropdownOptionType.Gender)?.options;
   const defaultGenderValue = getDropdownOption(dropdownOptions, DropdownOptionType.Gender, fieldProps.value);
   const errorHelperText = generateErrorMessage(label);
+  const genderRef = useRef<HTMLInputElement>(null);
+
+  useScrollIntoView(genderRef, fieldState);
+
   const onGenderChange = (value?: IDropdownOption | null) => {
     if (value && typeof value === 'object' && 'id' in value) {
-      if (value.id === 'Other') {
-        setIsOther(true);
-      } else {
-        setIsOther(false);
-      }
-
+      setIsOther(value.id === 'Other');
       onChange(value.id);
     }
   };
@@ -49,6 +50,12 @@ const Gender = () => {
   const onNoteClick = () => {
     setShowAdditionalNote(!showAdditionalNote);
   };
+
+  useEffect(() => {
+    if (field.value === 'Other') {
+      setIsOther(true);
+    }
+  }, [field.value]);
 
   return (
     <Grid container item px={paddings.leftRight24} py={paddings.topBottom16} direction="row" xs={12}>
@@ -63,6 +70,7 @@ const Gender = () => {
           options={genderOptions as IDropdownOption[]}
           onChange={(_, value) => onGenderChange(value as IDropdownOption)}
           getOptionLabel={(contribution) => (typeof contribution === 'object' ? contribution.title : contribution)}
+          clearIcon={<CloseIcon onClick={() => onChange({ ...defaultGenderValue, value: '' })} fontSize="small" />}
           isOptionEqualToValue={(option, value) => option.id === value.id}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInputProps={{
@@ -70,7 +78,8 @@ const Gender = () => {
             error: Boolean(fieldState?.error),
             ...fieldProps,
             fullWidth: true,
-            label
+            label,
+            ref: genderRef
           }}
         />
         {isOther ? <OtherGender /> : null}

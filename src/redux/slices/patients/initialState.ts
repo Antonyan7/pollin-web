@@ -12,6 +12,7 @@ const getMedicalBackgroundInitialState = (): MedicalBackgroundProps => ({
   contact: {
     patientBackground: {
       patientBackgroundInformation: null,
+      manualAddressForPharmacy: null,
       isPatientBackgroundInformationLoading: false,
       isUpdatePatientBackgroundInformationLoading: false,
       isPatientBackgroundEditButtonClicked: false

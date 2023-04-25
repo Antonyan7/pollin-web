@@ -100,7 +100,56 @@ export const patientGeneralHealthValidationSchema = object({
 
 export const patientBackgroundInformationValidationSchema = object({
   [BackgroundInformationFormFields.CancerPatient]: object({ value: boolean().required() }),
-  [BackgroundInformationFormFields.CurrentOccupation]: object({ value: string().required() })
+  [BackgroundInformationFormFields.CurrentOccupation]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.SexAtBirth]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.SexualOrientation]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.PreferredPronouns]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.Relationship]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.DateOfBirth]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.Age]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.ReferringDoctor]: object({
+    value: boolean(),
+    referringDoctorName: string().when('value', {
+      is: true,
+      then: string()
+        .test('empty', 'Required', (doctorName) => doctorName?.length !== 0)
+        .required(),
+      otherwise: string().notRequired().nullable()
+    })
+  }),
+  [BackgroundInformationFormFields.FamilyDoctor]: object({
+    value: boolean(),
+    familyDoctorName: string().when('value', {
+      is: true,
+      then: string()
+        .test('empty', 'Required', (doctorName) => doctorName?.length !== 0)
+        .required(),
+      otherwise: string().notRequired().nullable()
+    })
+  }),
+  [BackgroundInformationFormFields.Pharmacy]: object({
+    exists: boolean(),
+    pharmacyName: string().when('exists', {
+      is: true,
+      then: string()
+        .test('empty', 'Required', (name) => name?.length !== 0)
+        .required(),
+      otherwise: string().notRequired().nullable()
+    }),
+    address: object().when('exists', {
+      is: true,
+      then: object({
+        street: string().required(),
+        city: string().required().notRequired().nullable(),
+        unit: string().notRequired().nullable(),
+        country: string().required(),
+        postalCode: string().notRequired().nullable(),
+        faxNumber: string().required(),
+        phoneNumber: string().required()
+      })
+    })
+  }),
+  [BackgroundInformationFormFields.Gender]: object({ value: string().required() })
 });
 
 export const patientContactInformationValidationSchema = object({

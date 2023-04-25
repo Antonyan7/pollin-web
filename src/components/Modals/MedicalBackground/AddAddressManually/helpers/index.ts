@@ -11,5 +11,6 @@ export const getInitialValues = (): AddManuallyAddressModalProps => ({
 
 export enum ManuallyAddressModalMode {
   Primary = 'Primary',
-  Mailing = 'Mailing'
+  Mailing = 'Mailing',
+  Pharmacy = 'Pharmacy'
 }

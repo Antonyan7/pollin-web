@@ -6,6 +6,7 @@ import {
   FieldDateOfBirth,
   FieldFamilyDoctor,
   FieldGender,
+  FieldPharmacy,
   FieldPronouns,
   FieldReferringDoctor,
   FieldSexAtBirth,
@@ -28,6 +29,7 @@ const PatientBackgroundInformationEditForm = () => (
     <FieldCurrentOccupation />
     <FieldReferringDoctor />
     <FieldFamilyDoctor />
+    <FieldPharmacy />
   </Grid>
 );
 
