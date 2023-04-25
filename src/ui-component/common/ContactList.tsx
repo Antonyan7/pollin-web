@@ -78,7 +78,7 @@ const ContactList = ({ setOpen, open }: ContactListProps) => {
   const theme = useTheme();
   const router = useRouter();
   const [t] = useTranslation();
-  const { DOMAIN_MEDICAL_BACKGROUND } = useFlags();
+  const { SKIP_MEDICAL_BACKGROUND_CONDITION, DOMAIN_MEDICAL_BACKGROUND } = useFlags();
   const patientId = useAppSelector(patientsSelector.currentPatientId);
   const patientHighlightHeader = useAppSelector(patientsSelector.patientHighlightHeader);
   const isPatientHighlightIntakeComplete = useAppSelector(patientsSelector.isPatientHighlightIntakeComplete);
@@ -87,8 +87,7 @@ const ContactList = ({ setOpen, open }: ContactListProps) => {
     patientsSelector.isPatientHighlightIntakeReminderActive
   );
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
-  const disableOnlyMedicalBackgroundButton =
-    (isPatientHighlightIntakeComplete && !isICFormComplete) || !isPatientHighlightIntakeComplete;
+  const disableOnlyMedicalBackgroundButton = SKIP_MEDICAL_BACKGROUND_CONDITION ? false : isICFormComplete;
   const avatarPlaceholder = '/assets/images/users';
 
   const avatarProfile = useMemo(() => {
@@ -284,7 +283,7 @@ const ContactList = ({ setOpen, open }: ContactListProps) => {
                 <ICFormButton />
               )}
             </Grid>
-            {isPatientHighlightIntakeComplete ? (
+            {isPatientHighlightIntakeComplete || SKIP_MEDICAL_BACKGROUND_CONDITION ? (
               <Grid item>
                 {DOMAIN_MEDICAL_BACKGROUND ? (
                   <Button
