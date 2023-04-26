@@ -48,7 +48,10 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
   const methods = useForm({
     defaultValues,
-    resolver: yupResolver(fertilityHistoryValidationSchema)
+    resolver: yupResolver(fertilityHistoryValidationSchema),
+    mode: 'onSubmit',
+    shouldFocusError: true,
+    criteriaMode: 'all'
   });
 
   const {

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFemalePatientGynaecologicalHistoryProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
-import { isDashString } from '@components/MedicalBackground/helpers';
+import { isDashString, nonValidProperty } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { gynaecologicalHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import renderComponents from '@components/MedicalBackground/helpers/renderComponentByType';
@@ -51,7 +51,10 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
 
   const methods = useForm({
     defaultValues,
-    resolver: yupResolver(gynaecologicalHistoryValidationSchema)
+    resolver: yupResolver(gynaecologicalHistoryValidationSchema),
+    mode: 'onSubmit',
+    shouldFocusError: true,
+    criteriaMode: 'all'
   });
 
   const {
@@ -65,10 +68,21 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   const { handleSubmit } = methods;
 
   const handleSave = (data: IFemalePatientGynaecologicalHistoryProps) => {
-    const { papTestLastDate } = data;
+    const { papTestLastDate, cervixTreatment, intercoursePain, ...otherFemaleGynaecologicalData } = data;
     const femalePatientGynaecologicalHistoryData = {
-      ...data,
-      papTestLastDate: { ...papTestLastDate, value: DateUtil.convertToDateOnly(papTestLastDate.value as string) }
+      ...otherFemaleGynaecologicalData,
+      ...(nonValidProperty(cervixTreatment?.value) ? {} : { cervixTreatment }),
+      ...(nonValidProperty(intercoursePain?.value) ? {} : { intercoursePain }),
+      ...(papTestLastDate?.value === ''
+        ? {}
+        : {
+            papTestLastDate: {
+              ...papTestLastDate,
+              isEditable: papTestLastDate?.isEditable as boolean,
+              value: DateUtil.convertToDateOnly(papTestLastDate?.value as string),
+              note: papTestLastDate?.note as string
+            }
+          })
     };
 
     dispatch(

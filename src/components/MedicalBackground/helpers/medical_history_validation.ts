@@ -108,11 +108,8 @@ export const menstrualCycleHistoryValidationSchema = object({
       value: string().required()
     })
   }),
-  firstDayOfLastPeriod: object().when('hasPeriod.value', {
-    is: true,
-    then: object({
-      value: string().required()
-    })
+  firstDayOfLastPeriod: object({
+    value: string().required().nullable()
   }),
   flow: object({
     value: string().required()
@@ -122,12 +119,6 @@ export const menstrualCycleHistoryValidationSchema = object({
   }),
   pain: object({
     value: string().required()
-  }),
-  clots: object({
-    value: boolean().required()
-  }),
-  symptoms: object({
-    value: boolean().required()
   })
 });
 
@@ -140,9 +131,6 @@ export const gynaecologicalHistoryValidationSchema = object({
   }),
   previousPapTest: object({
     value: boolean().required()
-  }),
-  papTestLastDate: object({
-    value: string().required().nullable()
   }),
   abnormalPapProcedures: object({
     items: array().of(
@@ -171,12 +159,6 @@ export const gynaecologicalHistoryValidationSchema = object({
     value: boolean().required()
   }),
   breastfeeding: object({
-    value: boolean().required()
-  }),
-  cervixTreatment: object({
-    value: boolean().required()
-  }),
-  intercoursePain: object({
     value: boolean().required()
   })
 });

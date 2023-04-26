@@ -428,8 +428,8 @@ export interface IGeneralHealthProps {
   seeingTherapist: AllegiesFieldValues;
   familyHistory: FamilyHistoryProps;
   stdHistory: AllegiesFieldValues;
-  diet: DietProps;
-  activeConsultsList: ActiveConsultsListProps;
+  diet?: DietProps;
+  activeConsultsList?: ActiveConsultsListProps;
   additionalInformation: AdditionalInformationProps;
 }
 
@@ -537,7 +537,7 @@ export interface IFemalePatientGynaecologicalHistoryProps {
   takingBirthControl: ITakingBirthControl;
   isOvulating: IIsOvulating;
   previousPapTest: IPreviousPapTest;
-  papTestLastDate: IPapTestLastDate;
+  papTestLastDate?: IPapTestLastDate;
   abnormalPap: IAbnormalPap;
   abnormalPapProcedures: IMedicalBackgroundFieldValuesWithItems;
   gynaecologicalConditions: IMedicalBackgroundFieldValuesWithItems;
@@ -545,8 +545,8 @@ export interface IFemalePatientGynaecologicalHistoryProps {
   hyperprolactinemia: IMedicalBackgroundFieldValuesWithItems;
   signsOfPOI: IMedicalBackgroundFieldValuesWithItems;
   breastfeeding: IMedicalBackgroundFieldValuesWithValue;
-  cervixTreatment: IMedicalBackgroundFieldValuesWithValue;
-  intercoursePain: IMedicalBackgroundFieldValuesWithValue;
+  cervixTreatment?: IMedicalBackgroundFieldValuesWithValue;
+  intercoursePain?: IMedicalBackgroundFieldValuesWithValue;
 }
 
 export interface IPatientMedications extends IPagination {
@@ -705,8 +705,8 @@ export interface IFemalePatientMenstrualCycleHistoryProps {
   flow: IMedicalBackgroundFieldValuesWithValue;
   daysOfBleeding: IMedicalBackgroundFieldValuesWithValue;
   pain: IMedicalBackgroundFieldValuesWithValue;
-  clots: IMedicalBackgroundFieldValuesWithValue;
-  symptoms: IMedicalBackgroundFieldValuesWithValue;
+  clots?: IMedicalBackgroundFieldValuesWithValue;
+  symptoms?: IMedicalBackgroundFieldValuesWithValue;
 }
 
 export interface IFemalePatientMenstrualCycleHistory {
@@ -942,11 +942,11 @@ export interface IGenitourinaryHistory {
   vasectomy: IVasectomy;
   vasectomyReversal: IVasectomyReversal;
   erectionDifficulties: IErectionDifficulties;
-  undescendedTesticles: IUndescendedTesticles;
-  testicularIssues: ITesticularIssues;
-  toxins: IToxins;
-  infections: IInfections;
-  genitalSurgery: IGenitalSurgery;
+  undescendedTesticles?: IUndescendedTesticles;
+  testicularIssues?: ITesticularIssues;
+  toxins?: IToxins;
+  infections?: IInfections;
+  genitalSurgery?: IGenitalSurgery;
 }
 
 export interface IPatientBackground {

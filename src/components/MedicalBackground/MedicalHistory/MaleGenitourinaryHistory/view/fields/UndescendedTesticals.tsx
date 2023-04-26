@@ -11,7 +11,7 @@ import { Translation } from 'constants/translations';
 const UndescendedTesticals = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const [t] = useTranslation();
   const medicalInfo = useAppSelector(patientsSelector.malePatientGenitourinaryHistory);
-  const fieldValue = medicalInfo?.erectionDifficulties;
+  const fieldValue = medicalInfo?.undescendedTesticles;
   const fieldName = t(
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GENITOURINARY_HISTORY_FIELD_UNDESCENDED_TESTICALS
   );

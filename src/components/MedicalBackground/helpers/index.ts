@@ -173,3 +173,5 @@ export const genitourinaryRows = [
 ];
 
 export const isDashString = (value?: string) => value === '-';
+export const isNullValue = (value?: string | boolean) => value === null;
+export const nonValidProperty = (value?: string | boolean) => isNullValue(value) || typeof value === 'undefined';

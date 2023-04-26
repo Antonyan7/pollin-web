@@ -20,14 +20,18 @@ export const getContactInformationEmptyState = (contactInformation: IPatientCont
   },
   [ContactInformationFormFields.PrimaryAddress]: {
     ...contactInformation.primaryAddress,
-    streetAddress: contactInformation.primaryAddress.streetAddress,
+    streetAddress: isDashString(contactInformation.primaryAddress.streetAddress)
+      ? ''
+      : contactInformation.primaryAddress.streetAddress,
     unitNumber: isDashString(contactInformation.primaryAddress.unitNumber)
       ? ''
       : contactInformation.primaryAddress.unitNumber
   },
   [ContactInformationFormFields.MailingAddress]: {
     ...contactInformation.mailingAddress,
-    streetAddress: contactInformation.mailingAddress.streetAddress,
+    streetAddress: isDashString(contactInformation.mailingAddress.streetAddress)
+      ? ''
+      : contactInformation.mailingAddress.streetAddress,
     unitNumber: isDashString(contactInformation.mailingAddress.unitNumber)
       ? ''
       : contactInformation.mailingAddress.unitNumber

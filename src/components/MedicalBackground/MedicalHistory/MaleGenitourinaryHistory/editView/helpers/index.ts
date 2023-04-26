@@ -38,22 +38,22 @@ export const MaleGenitourinaryHistoryEditEmptyState = (genitourinaryHistoryInfor
   },
   [GenitourinaryFields.UndescendedTesticals]: {
     ...genitourinaryHistoryInformation?.undescendedTesticles,
-    value: genitourinaryHistoryInformation?.undescendedTesticles.value
+    value: genitourinaryHistoryInformation?.undescendedTesticles?.value
   },
   [GenitourinaryFields.TesticularIssues]: {
     ...genitourinaryHistoryInformation?.testicularIssues,
-    value: genitourinaryHistoryInformation?.testicularIssues.value
+    value: genitourinaryHistoryInformation?.testicularIssues?.value
   },
   [GenitourinaryFields.Toxins]: {
     ...genitourinaryHistoryInformation?.toxins,
-    value: genitourinaryHistoryInformation?.toxins.value
+    value: genitourinaryHistoryInformation?.toxins?.value
   },
   [GenitourinaryFields.Infections]: {
     ...genitourinaryHistoryInformation?.infections,
-    value: genitourinaryHistoryInformation?.infections.value
+    value: genitourinaryHistoryInformation?.infections?.value
   },
   [GenitourinaryFields.GenitalSurgery]: {
     ...genitourinaryHistoryInformation?.genitalSurgery,
-    value: genitourinaryHistoryInformation?.genitalSurgery.value
+    value: genitourinaryHistoryInformation?.genitalSurgery?.value
   }
 });

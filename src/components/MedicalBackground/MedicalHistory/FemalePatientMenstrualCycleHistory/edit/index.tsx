@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IFemalePatientMenstrualCycleHistoryProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
-import { isDashString } from '@components/MedicalBackground/helpers';
+import { isDashString, nonValidProperty } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import { menstrualCycleHistoryValidationSchema } from '@components/MedicalBackground/helpers/medical_history_validation';
 import renderComponents from '@components/MedicalBackground/helpers/renderComponentByType';
@@ -65,18 +65,18 @@ const EditModeContent = ({ handleClose }: { handleClose: () => void }) => {
   const { handleSubmit } = methods;
 
   const handleSave = (data: IFemalePatientMenstrualCycleHistoryProps) => {
-    const { firstDayOfLastPeriod } = data;
-    const femaleMenstrualCycleData = {
-      ...data,
+    const { clots, symptoms, firstDayOfLastPeriod, ...otherMenstrualData } = data;
+    const menstrualCycleData = {
+      ...otherMenstrualData,
+      ...(nonValidProperty(clots?.value) ? {} : { clots }),
+      ...(nonValidProperty(symptoms?.value) ? {} : { symptoms }),
       firstDayOfLastPeriod: {
         ...firstDayOfLastPeriod,
         value: DateUtil.convertToDateOnly(firstDayOfLastPeriod.value as string)
       }
     };
 
-    dispatch(
-      patientsMiddleware.updateFemalePatientMenstrualCycleHistory(id as string, femaleMenstrualCycleData, onSave)
-    );
+    dispatch(patientsMiddleware.updateFemalePatientMenstrualCycleHistory(id as string, menstrualCycleData, onSave));
   };
 
   return (

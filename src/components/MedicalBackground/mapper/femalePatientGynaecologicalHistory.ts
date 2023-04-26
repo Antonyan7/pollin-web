@@ -6,9 +6,12 @@ import { FlexibleItemType } from '../../common/Form/types';
 import { createObjectWithTitle, getLabelBySelectedValue } from '../helpers/mapper';
 
 const mappingPattern = {
-  takingBirthControl: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_TAKING_BIRTH_CONTROL)
-  ),
+  takingBirthControl: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_TAKING_BIRTH_CONTROL)
+    ),
+    shouldShowDash: true
+  },
   isOvulating: createObjectWithTitle(
     t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_OVULATION)
   ),
@@ -106,18 +109,23 @@ const mappingPattern = {
       dropdownType: DropdownOptionType.SignsOfPOI
     }
   },
-  breastfeeding: createObjectWithTitle(
-    t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_BREASTFEEDING)
-  ),
+  breastfeeding: {
+    ...createObjectWithTitle(
+      t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_BREASTFEEDING)
+    ),
+    shouldShowDash: true
+  },
   cervixTreatment: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_CERVIX_TREATMENT)
-    )
+    ),
+    shouldShowDash: true
   },
   intercoursePain: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_GYNAECOLOGICAL_HISTORY_INTERCOURSE_PAIN)
-    )
+    ),
+    shouldShowDash: true
   }
 };
 

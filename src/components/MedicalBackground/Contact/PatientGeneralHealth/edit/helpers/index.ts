@@ -103,11 +103,11 @@ export const getGeneralHealthEditFormState = (generalHealthData: IGeneralHealthP
   },
   [GeneralHealthFormFields.Diet]: {
     ...generalHealthData?.diet,
-    value: isDashString(generalHealthData?.diet.value) ? '' : generalHealthData?.diet.value
+    value: isDashString(generalHealthData?.diet?.value) ? '' : generalHealthData?.diet?.value
   },
   [GeneralHealthFormFields.ActiveConsultsList]: {
     ...generalHealthData?.activeConsultsList,
-    value: generalHealthData?.activeConsultsList.value
+    value: generalHealthData?.activeConsultsList?.value
   },
   [GeneralHealthFormFields.AdditionalInformation]: {
     ...generalHealthData?.additionalInformation,

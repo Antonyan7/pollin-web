@@ -4,6 +4,7 @@ import { IGeneralHealthProps } from '@axios/patientEmr/managerPatientEmrTypes';
 import PatientGeneralHealthEditForm from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form';
 import { FormSubmit } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/form/actions';
 import { getGeneralHealthEditFormState } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/helpers';
+import { nonValidProperty } from '@components/MedicalBackground/helpers';
 import { patientGeneralHealthValidationSchema } from '@components/MedicalBackground/helpers/contact_validation';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -39,10 +40,14 @@ const PatientGeneralHealthEdit = () => {
       drugAllergies,
       foodAllergies,
       familyHistory,
+      activeConsultsList,
+      diet,
       ...otherGeneralInfo
     } = healthData;
     const generalHealthData = {
       ...otherGeneralInfo,
+      ...(diet?.value === '' ? {} : { diet }),
+      ...(nonValidProperty(activeConsultsList?.value) ? {} : { activeConsultsList }),
       medicalProblems: {
         ...medicalProblems,
         items: medicalProblems.exists ? medicalProblems.items : []

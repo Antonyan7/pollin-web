@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationFormRadioGroup } from '@components/common';
@@ -24,19 +24,8 @@ const MedicalFormRadio = ({ fieldName, onChangeState }: MedicalFormRadioProps) =
 
   const RadioValue = watch(fieldName);
 
-  useEffect(
-    () => {
-      if (field.value === null) {
-        onChange(false);
-        onChangeState?.(false);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [field.value]
-  );
-
   return (
-    <ConsultationFormRadioGroup {...fieldProps} value={!!RadioValue} onChange={onRadioFieldChange} ref={field.ref}>
+    <ConsultationFormRadioGroup {...fieldProps} value={RadioValue} onChange={onRadioFieldChange} ref={field.ref}>
       <FormControlLabel
         value
         control={<Radio />}

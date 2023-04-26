@@ -62,12 +62,14 @@ const mappingPattern = {
   clots: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_CLOTS)
-    )
+    ),
+    shouldShowDash: true
   },
   symptoms: {
     ...createObjectWithTitle(
       t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_MEDICAL_HISTORY_MENSTRUAL_CYCLE_HISTORY_SYMPTOMS)
-    )
+    ),
+    shouldShowDash: true
   }
 };
 

@@ -2,6 +2,7 @@ import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { IGenitourinaryHistory } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
+import { nonValidProperty } from '@components/MedicalBackground/helpers';
 import useCloseMedicalBackgroundFormWithChangesModal from '@components/MedicalBackground/hooks/useCloseMedicalBackgroundFormWithChangesModal';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
@@ -21,9 +22,20 @@ const MaleGenitourinaryHistoryEdit = () => {
   });
   const { handleSubmit } = methods;
 
-  const onBackgroundInformationSubmit = (values: IGenitourinaryHistory) => {
+  const onGenitourinaryHistorySubmit = (values: IGenitourinaryHistory) => {
+    const { undescendedTesticles, testicularIssues, toxins, infections, genitalSurgery, ...otherGenitourinaryData } =
+      values;
+    const genitourinaryHistoryData = {
+      ...otherGenitourinaryData,
+      ...(nonValidProperty(undescendedTesticles?.value) ? {} : { undescendedTesticles }),
+      ...(nonValidProperty(testicularIssues?.value) ? {} : { testicularIssues }),
+      ...(nonValidProperty(toxins?.value) ? {} : { toxins }),
+      ...(nonValidProperty(infections?.value) ? {} : { infections }),
+      ...(nonValidProperty(genitalSurgery?.value) ? {} : { genitalSurgery })
+    };
+
     if (typeof currentPatientId === 'string') {
-      dispatch(patientsMiddleware.updatePatientGenitourinaryHistory(currentPatientId, values));
+      dispatch(patientsMiddleware.updatePatientGenitourinaryHistory(currentPatientId, genitourinaryHistoryData));
     }
   };
   const {
@@ -42,7 +54,7 @@ const MaleGenitourinaryHistoryEdit = () => {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onBackgroundInformationSubmit)}>
+      <form onSubmit={handleSubmit(onGenitourinaryHistorySubmit)}>
         <MaleGenitourinaryEditForm />
         <FormSubmit onClick={onClose} isDisabled={!isFormChanged} />
       </form>

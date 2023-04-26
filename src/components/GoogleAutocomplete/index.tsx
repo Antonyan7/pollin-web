@@ -21,6 +21,7 @@ const GoogleAutocomplete = ({ fieldName }: GoogleAutocompleteProps) => {
     name: fieldName,
     control
   });
+
   const googleLabel = t(Translation.GOOGLE_AUTOCOMPLETE_LABEL_TITLE);
   const { onChange, onBlur, ...fieldProps } = field;
   const errorHelperText = generateErrorMessage(googleLabel);
