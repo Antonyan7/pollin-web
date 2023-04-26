@@ -1,10 +1,10 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import NoResultsFound from '@components/NoResultsFound';
 import { PlanPage } from '@components/Plans/types';
 import SimpleMenu, { IMenuItem } from '@components/SimpleMenu';
-import { Add, SendTwoTone } from '@mui/icons-material';
-import { Grid, TablePagination, useTheme } from '@mui/material';
+import { SendTwoTone } from '@mui/icons-material';
+import { Grid, TablePagination, Tooltip, tooltipClasses, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -20,21 +20,8 @@ import { IPatientPlan, IPatientPlansListData } from 'types/reduxTypes/plansTypes
 import CircularLoading from '@ui-component/circular-loading';
 import { ButtonWithIcon } from '@ui-component/common/buttons';
 
+import CreatePlanButton from './createPlanButton';
 import PlanRow from './row';
-
-const CreatePlanButton = ({ handleClick }: { handleClick: (event: MouseEvent<HTMLElement>) => void }) => {
-  const [t] = useTranslation();
-
-  return (
-    <ButtonWithIcon
-      sx={{ px: paddings.leftRight16 }}
-      label={t(Translation.PAGE_PATIENT_PLANS_CREATE_A_PLAN_BTN)}
-      variant="contained"
-      icon={<Add />}
-      handleClick={handleClick}
-    />
-  );
-};
 
 const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, planTypeId: string) => void }) => {
   const theme = useTheme();
@@ -90,26 +77,40 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
     return <NoResultsFound label={malePatientLabel} />;
   }
 
+  const isDisabledToSendPlans = !isReadyToOrder;
+
   return (
     <Grid>
       <>
         <Stack pt={paddings.top24} spacing={3} direction="row" justifyContent="flex-end">
-          <ButtonWithIcon
+          <Tooltip
             sx={{
-              px: paddings.leftRight16,
-              [`&.Mui-disabled`]: {
-                color: theme.palette.primary.main,
-                borderColor: theme.palette.primary.main,
-                opacity: 0.5
-              },
-              textTransform: 'none'
+              [`& .${tooltipClasses.tooltip}`]: {
+                color: theme.palette.secondary[800]
+              }
             }}
-            label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
-            variant="outlined"
-            disabled={!isReadyToOrder}
-            onClick={handleSendPlansToPatientClick}
-            icon={<SendTwoTone />}
-          />
+            title={isDisabledToSendPlans ? t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_TOOLTIP) : ''}
+          >
+            <span>
+              <ButtonWithIcon
+                sx={{
+                  px: paddings.leftRight16,
+                  ...(isDisabledToSendPlans && {
+                    color: theme.palette.primary.main,
+                    borderColor: theme.palette.primary.main,
+                    opacity: 0.3,
+                    cursor: 'default'
+                  }),
+                  textTransform: 'none'
+                }}
+                label={t(Translation.PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN)}
+                variant="outlined"
+                disabled={!!isDisabledToSendPlans}
+                onClick={handleSendPlansToPatientClick}
+                icon={<SendTwoTone />}
+              />
+            </span>
+          </Tooltip>
           <SimpleMenu
             onItemClick={(item) => {
               changePage(PlanPage.Create, item.id);

@@ -477,6 +477,7 @@ export enum Translation {
   PAGE_PATIENT_PLANS_PATIENT_DETAILS_VASECTOMY_REVERSAL = 'page.patient.plans.patient.details.vasectomy.reversal',
   PAGE_PATIENT_PLANS_PRIMARY_PATIENT_CONTRIBUTION = 'page.patient.plans.primary.patient.contribution',
   PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_BTN = 'page.patient.plans.send.plans.to.patient.btn',
+  PAGE_PATIENT_PLANS_SEND_PLANS_TO_PATIENT_TOOLTIP = 'page.patient.plans.send.plans.to.patient.tooltip',
   PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT = 'page.patient.plans.toast.successful.sent',
   PAGE_PATIENT_PRESCRIPTIONS_TITLE = 'page.patient.prescriptions.title',
   PAGE_PATIENT_PROFILE_APPOINTMENTS_LIST_TABLE_HEADER_APPOINTMENT = 'page.patient.profile.appointments.list.table.header.appointment',

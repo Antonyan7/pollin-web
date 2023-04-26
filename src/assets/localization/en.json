@@ -475,6 +475,7 @@
   "page.patient.plans.patient.details.vasectomy.reversal": "Vasectomy Reversal",
   "page.patient.plans.primary.patient.contribution": "Primary Patient Contribution",
   "page.patient.plans.send.plans.to.patient.btn": "Send plans to patient",
+  "page.patient.plans.send.plans.to.patient.tooltip": "Plans can’t be sent to patients when there is already an active plan.",
   "page.patient.plans.toast.successful.sent": "Plans successfully sent to Patient",
   "page.patient.prescriptions.title": "Prescriptions",
   "page.patient.profile.appointments.list.table.header.appointment": "Appointment Type",

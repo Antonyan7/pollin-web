@@ -1,8 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { PatientPreliminaryBloodsResults } from '@axios/results/resultsManagerTypes';
 import { FormLabel } from '@components/common';
-import { Grid, Tooltip, tooltipClasses, Typography, useTheme } from '@mui/material';
+import { Grid, Typography, useTheme } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 import { plansSelector } from '@redux/slices/plans';
@@ -11,41 +10,8 @@ import { paddings } from 'themes/themeConstants';
 import { v5 as uuidv5 } from 'uuid';
 
 import CircularLoading from '@ui-component/circular-loading';
-import { DateUtil } from '@utils/date/DateUtil';
 
-const TestResult = ({ results }: { results: PatientPreliminaryBloodsResults }) => {
-  const [t] = useTranslation();
-
-  return (
-    <Grid container xs={6} pt={paddings.topBottom8} gap={2}>
-      <Grid xs={5}>
-        <FormLabel
-          sx={{
-            fontSize: (theme) => theme.typography.pxToRem(14)
-          }}
-        >
-          {results.title}:
-        </FormLabel>
-      </Grid>
-
-      <Grid xs={5}>
-        <Tooltip
-          sx={{
-            [`& .${tooltipClasses.tooltip}`]: {
-              color: (theme) => theme.palette.secondary[800]
-            },
-            cursor: 'pointer'
-          }}
-          title={`${t(Translation.PAGE_PATIENT_PLANS_CREATE_DATE_COMPLETE_TOOLTIP)}: ${DateUtil.formatDateOnly(
-            results.dateCompleted
-          )}`}
-        >
-          <Typography>{results.result}</Typography>
-        </Tooltip>
-      </Grid>
-    </Grid>
-  );
-};
+import TestResult from './TestResult';
 
 const PreliminaryBloodsResults = () => {
   const patientPreliminaryBloodsResults = useAppSelector(plansSelector.patientPreliminaryBloodsResults);
