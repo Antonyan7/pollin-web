@@ -1,6 +1,7 @@
-import React, { KeyboardEvent, useCallback, useEffect, useState } from 'react';
+import React, { KeyboardEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { GroupedByTitlesProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { IOptionsProps } from '@axios/patientEmr/managerPatientEmrTypes';
+import { GroupedServiceProvidersPopper } from '@components/common/MaterialComponents';
 import { StyledOutlinedInput } from '@components/Patients/PatientFilters';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -9,11 +10,10 @@ import { BoxProps, InputAdornment, Typography, useTheme } from '@mui/material';
 import { Box, styled } from '@mui/system';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
-import { filterByUniqueCategory, reformattedFilterResults } from 'helpers/patientFilters';
 import { dispatch, useAppSelector } from 'redux/hooks';
 import { patientsMiddleware, patientsSelector } from 'redux/slices/patients';
 import { margins } from 'themes/themeConstants';
-import { IEncountersFilterOption, IEncountersReqBody } from 'types/patient';
+import { IEncountersReqBody, IPatientsFilterOption } from 'types/patient';
 
 import { useLodashThrottle } from '@hooks/useLodashThrottle';
 import BaseDropdownWithLoading from '@ui-component/BaseDropdownWithLoading';
@@ -34,11 +34,10 @@ const EncounterFilters = ({ page }: { page: number }) => {
   const searchValue = useAppSelector(patientsSelector.encountersSearchValue);
   const [isSearchInputFocused, setSearchInputFocused] = useState(false);
   const selectedEncountersFilters = useAppSelector(patientsSelector.selectedEncountersFilters);
-  const [selectedFilterResults, setSelectedFilterResults] = useState<GroupedByTitlesProps[]>([]);
+  const [selectedFilterResults, setSelectedFilterResults] = useState<IPatientsFilterOption[]>([]);
   const isEncountersFiltersLoading = useAppSelector(patientsSelector.isEncountersFiltersLoading);
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const encountersList = useAppSelector(patientsSelector.encountersList);
-
   const searchFieldPlaceholder = t(Translation.PAGE_ENCOUNTERS_LIST_SEARCH);
 
   const handleThrottleSearch = useCallback((data: IEncountersReqBody) => {
@@ -67,6 +66,18 @@ const EncounterFilters = ({ page }: { page: number }) => {
     }
   }, [patientId]);
 
+  const adaptedEncounterFilterOptions: IOptionsProps[] = useMemo(
+    () =>
+      encounterFilters?.flatMap((encounterFilter) =>
+        encounterFilter.options.map((option) => ({
+          ...option,
+          type: encounterFilter.type,
+          titleName: encounterFilter.title
+        }))
+      ) ?? [],
+    [encounterFilters]
+  );
+
   const handleSearchValueChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     const encounterSearchValue = event.target.value;
 
@@ -77,22 +88,14 @@ const EncounterFilters = ({ page }: { page: number }) => {
     dispatch(patientsMiddleware.setEncounterSearch(encounterSearchValue));
   }, []);
 
-  const onAutoCompleteChange = useCallback((value: GroupedByTitlesProps[]) => {
-    const filteredResult = filterByUniqueCategory(value);
+  const onAutoCompleteChange = useCallback((encounterFilterValues: IPatientsFilterOption[]) => {
+    const filtersWithoutTitle = encounterFilterValues.map(({ id, type }: Partial<IPatientsFilterOption>) => ({
+      id,
+      type
+    }));
 
-    setSelectedFilterResults(filteredResult);
-
-    const filteredResultOptions: IEncountersFilterOption[] = [];
-
-    filteredResult.forEach((titleProps: GroupedByTitlesProps) => {
-      const filterOption = {
-        type: titleProps.options.type,
-        id: titleProps.options.id
-      };
-
-      filteredResultOptions.push(filterOption);
-    });
-    dispatch(patientsMiddleware.setSelectedEncounterFilters(filteredResultOptions));
+    setSelectedFilterResults(encounterFilterValues);
+    dispatch(patientsMiddleware.setSelectedEncounterFilters(filtersWithoutTitle as IPatientsFilterOption[]));
   }, []);
 
   const clearSearchValue = useCallback(() => {
@@ -150,19 +153,22 @@ const EncounterFilters = ({ page }: { page: number }) => {
         fullWidth
         multiple
         isLoading={isEncountersFiltersLoading}
-        options={reformattedFilterResults(encounterFilters as [])}
-        groupBy={(option) => option.options.type as string}
-        getOptionLabel={(option) => (typeof option === 'object' ? option.options.title ?? '' : option)}
-        isOptionEqualToValue={(option, value) => option.options.id === value.options.id}
-        value={[...selectedFilterResults]}
-        onChange={(_, selectedOption) => {
-          onAutoCompleteChange(
-            selectedOption.filter((option): option is GroupedByTitlesProps => typeof option === 'object')
-          );
-        }}
+        options={adaptedEncounterFilterOptions}
+        PopperComponent={GroupedServiceProvidersPopper}
+        groupBy={(option) => option.titleName as string}
+        getOptionLabel={(option) => (typeof option === 'object' ? option.title ?? '' : option)}
+        isOptionEqualToValue={(option, value) => option.id === value.id}
+        onChange={(_event, filters) => onAutoCompleteChange(filters as IPatientsFilterOption[])}
         data-cy={CypressIds.PAGE_PATIENT_ENCOUNTERS_FILTER}
         popupIcon={<KeyboardArrowDownIcon sx={{ color: theme.palette.primary.main }} />}
         clearIcon={<CloseIcon onClick={() => onAutoCompleteChange([])} fontSize="small" />}
+        getOptionDisabled={(option) => {
+          if (option && selectedFilterResults.length > 0) {
+            return !!selectedFilterResults?.find((selectedFilterResult) => selectedFilterResult.type === option.type);
+          }
+
+          return false;
+        }}
         renderInputProps={{
           label: t(Translation.PAGE_PATIENT_LIST_FIELD_FILTERS)
         }}

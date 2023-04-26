@@ -16,7 +16,8 @@ import EncountersEmptyState from './EncountersEmptyState';
 const Encounters = () => {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const { t } = useTranslation();
+  const [t] = useTranslation();
+  const selectedEncountersFilters = useAppSelector(patientsSelector.selectedEncountersFilters);
   const isEncountersListLoading = useAppSelector(patientsSelector.isEncountersListLoading);
   const encountersList: IEncounterList = useAppSelector(patientsSelector.encountersList);
 
@@ -40,6 +41,10 @@ const Encounters = () => {
   useEffect(() => {
     dispatch(patientsMiddleware.getEncountersTypes());
   }, []);
+
+  useEffect(() => {
+    setPage(0);
+  }, [selectedEncountersFilters]);
 
   return (
     <>
