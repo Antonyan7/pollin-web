@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MedicationCardType } from '@axios/patientEmr/managerPatientEmrTypes';
-import { Box, Grid, TablePagination } from '@mui/material';
+import { Box, Grid, TablePagination, useTheme } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
@@ -24,6 +24,7 @@ const PrescriptionsList = () => {
 
   const isPatientPrescriptionsLoading = useAppSelector(patientsSelector.isPatientPrescriptionsLoading);
   const patientPrescriptions = useAppSelector(patientsSelector.patientPrescriptions);
+  const theme = useTheme();
 
   useEffect(() => {
     if (patientId) {
@@ -51,7 +52,16 @@ const PrescriptionsList = () => {
         ))
       )}
       {!patientPrescriptions?.prescriptions?.length && !isPatientPrescriptionsLoading ? (
-        <Grid container justifyContent="center" sx={{ fontSize: '15px', margin: margins.all12 }}>
+        <Grid
+          container
+          justifyContent="center"
+          sx={{
+            fontSize: theme.typography.pxToRem(15),
+            margin: margins.all12,
+            color: theme.palette.common.black,
+            fontWeight: 500
+          }}
+        >
           {t(Translation.PAGE_PRESCRIPTIONS_EMPTY_LIST)}
         </Grid>
       ) : null}

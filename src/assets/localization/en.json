@@ -317,7 +317,7 @@
   "page.medications.current.list.route": "Route",
   "page.medications.current.list.time": "Time",
   "page.medications.current.list.title": "Current medication list",
-  "page.medications.empty.list": "No Mediactions have been added yet",
+  "page.medications.empty.list": "No medications have been added yet",
   "page.medications.past.empty.list": "This patient does not have any past medications yet.",
   "page.medications.past.list.title": "Past medication list",
   "page.order.details.button.cancel": "Cancel",

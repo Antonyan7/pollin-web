@@ -120,7 +120,7 @@ const ViewModeContent = ({ medication }: ViewModeContentProps) => {
           :
         </Grid>
         <Grid item xs={6}>
-          {medication.prescriber ?? 'N/A'}
+          {medication.prescriber ?? '--'}
         </Grid>
       </Grid>
     </Grid>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Recency } from '@axios/patientEmr/managerPatientEmrTypes';
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination, Typography, useTheme } from '@mui/material';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
@@ -57,6 +57,7 @@ const CurrentMedications = () => {
 
   const patientCurrentMedications = useAppSelector(patientsSelector.patientCurrentMedications);
   const isPatientCurrentMedicationLoading = useAppSelector(patientsSelector.isPatientCurrentMedicationLoading);
+  const theme = useTheme();
 
   return (
     <>
@@ -73,7 +74,16 @@ const CurrentMedications = () => {
         ))
       )}
       {!patientCurrentMedications?.medications?.length && !isPatientCurrentMedicationLoading ? (
-        <Grid container justifyContent="center" sx={{ fontSize: '15px', margin: margins.all12 }}>
+        <Grid
+          container
+          justifyContent="center"
+          sx={{
+            fontSize: theme.typography.pxToRem(15),
+            margin: margins.all12,
+            color: theme.palette.common.black,
+            fontWeight: 500
+          }}
+        >
           {t(Translation.PAGE_MEDICATIONS_CURRENT_EMPTY_LIST)}
         </Grid>
       ) : null}

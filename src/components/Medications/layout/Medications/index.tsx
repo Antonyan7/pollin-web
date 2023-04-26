@@ -50,7 +50,10 @@ const Medications = () => {
 
       {emptyState ? (
         <Grid container justifyContent="center" alignItems="center" spacing={2} direction="column">
-          <Grid item sx={{ fontSize: theme.typography.pxToRem(15) }}>
+          <Grid
+            item
+            sx={{ fontSize: theme.typography.pxToRem(15), color: theme.palette.common.black, fontWeight: 500 }}
+          >
             {t(Translation.PAGE_MEDICATIONS_EMPTY_LIST)}
           </Grid>
           <Grid item>
