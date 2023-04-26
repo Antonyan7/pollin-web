@@ -34,7 +34,7 @@ const CurrentMedicationsAndDrugAllergies = () => {
     <Grid container spacing={3}>
       <Grid item>
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_CURRENT_MEDICATION)}</Typography>
-        {!patientMedicationState?.currentMedications.length && '--'}
+        {!patientMedicationState?.currentMedications.length && '-'}
         {patientMedicationState?.currentMedications.map((item, index) => {
           const currentMedicationName = ` ${index + 1}. ${item.name}`;
 
@@ -45,12 +45,12 @@ const CurrentMedicationsAndDrugAllergies = () => {
 
       <Grid item>
         <Typography variant="h5">{t(Translation.MODAL_PRESCRIPTIONS_DRUG_ALLERGIES)}</Typography>
-        {!patientMedicationState?.drugAllergies.length && '--'}
+        {!patientMedicationState?.drugAllergies.length && '-'}
         {patientMedicationState?.drugAllergies.map((item, index) => {
           const drugAllergiesName = ` ${index + 1}. ${item.name}`;
 
           // TODO better key that a value TEAMA-5498
-          return <Typography key={drugAllergiesName}>{drugAllergiesName.length ? drugAllergiesName : '--'}</Typography>;
+          return <Typography key={drugAllergiesName}>{drugAllergiesName.length ? drugAllergiesName : '-'}</Typography>;
         })}
       </Grid>
 

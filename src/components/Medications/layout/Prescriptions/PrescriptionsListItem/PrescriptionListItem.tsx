@@ -76,7 +76,7 @@ const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) =
         </Grid>
         <Grid item xs={6}>
           {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {medicationData?.time || '--'}
+          {medicationData?.time || '-'}
         </Grid>
       </Grid>
 
@@ -129,7 +129,7 @@ const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) =
         </Grid>
         <Grid item xs={6}>
           {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {medicationData?.refillNotes || '--'}
+          {medicationData?.refillNotes || '-'}
         </Grid>
       </Grid>
       <Grid container item xs={12}>
@@ -141,7 +141,7 @@ const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) =
         </Grid>
         <Grid item xs={6}>
           {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-          {medicationData?.doctorNotes || '--'}
+          {medicationData?.doctorNotes || '-'}
         </Grid>
       </Grid>
       <Grid container item xs={12}>
@@ -152,7 +152,7 @@ const ViewModeContent = ({ medicationData, prescriber }: ViewModeContentProps) =
           :
         </Grid>
         <Grid item xs={6}>
-          {prescriber ?? medicationData?.prescriber ?? '--'}
+          {prescriber ?? medicationData?.prescriber ?? '-'}
         </Grid>
       </Grid>
     </Grid>
