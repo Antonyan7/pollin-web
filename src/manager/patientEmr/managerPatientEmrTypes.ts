@@ -313,14 +313,16 @@ export interface IProfileTestResultDetailsReqBody {
 
 export interface ProfileTestResultDetailsItem {
   dateCompleted: string;
-  title: string;
-  unit: string;
+  measurement: MeasurementProps[];
   testTypeId?: string;
-  result: string;
   status: string;
   finalResultType: string;
 }
-
+export interface MeasurementProps {
+  title: string;
+  unit: string;
+  result: string;
+}
 export interface IProfileTestResultDetailsResponse {
   testResults: ProfileTestResultDetailsItem[];
 }

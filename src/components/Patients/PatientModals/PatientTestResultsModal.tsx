@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { Fragment, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { LatestTestResultType } from '@axios/patientEmr/managerPatientEmrTypes';
 import TestHistoryHint from '@components/PatientProfile/TestHistoryHint';
@@ -25,6 +25,7 @@ import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
 import { margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
+import { v4 } from 'uuid';
 
 import ViewModal from '@ui-component/Modal/ViewModal';
 import Chip from '@ui-component/patient/Chip';
@@ -115,26 +116,30 @@ const PatientTestResultsModal = () => {
               </TableHead>
               <TableBody>
                 {testResultDetailItems?.map(
-                  ({ dateCompleted, title, unit, result, status, finalResultType, testTypeId }, index: number) => {
+                  ({ dateCompleted, measurement, status, finalResultType, testTypeId }, index) => {
                     const cellChipColor = finalResultType === LatestTestResultType.Normal ? 'active' : 'inActive';
 
                     return (
                       // eslint-disable-next-line react/no-array-index-key
                       <TableRow hover key={index}>
                         <TableCell>{DateUtil.formatDateOnly(dateCompleted)}</TableCell>
-                        <TableCell>{title}</TableCell>
-                        <TableCell>{unit}</TableCell>
-                        <TableCell>
-                          {testTypeId ? (
-                            <TestHistoryHint testResultId={testTypeId}>
-                              <Typography component="span" sx={{ '&:hover': { textDecoration: 'underline' } }}>
-                                {result}
-                              </Typography>
-                            </TestHistoryHint>
-                          ) : (
-                            result
-                          )}
-                        </TableCell>
+                        {measurement.map((data) => (
+                          <Fragment key={v4()}>
+                            <TableCell>{data.title}</TableCell>
+                            <TableCell>{data.unit}</TableCell>
+                            <TableCell>
+                              {testTypeId ? (
+                                <TestHistoryHint testResultId={testTypeId}>
+                                  <Typography component="span" sx={{ '&:hover': { textDecoration: 'underline' } }}>
+                                    {data.result}
+                                  </Typography>
+                                </TestHistoryHint>
+                              ) : (
+                                data.result
+                              )}
+                            </TableCell>
+                          </Fragment>
+                        ))}
                         <TableCell>{status}</TableCell>
                         <TableCell>
                           <Chip chipColor={cellChipColor} label={finalResultType} />
