@@ -151,7 +151,9 @@ const {
   setIsMedicationUpdatedLoading,
   setCardToEditMode,
   setCardToViewMode,
-  setIsBookingRequestToPatientLoading
+  setIsBookingRequestToPatientLoading,
+  setMedicationCategories,
+  setIsMedicationCategoriesLoading
 } = slice.actions;
 
 const cleanPatientList = () => async (dispatch: AppDispatch) => {
@@ -1331,6 +1333,20 @@ const updatePatientGenitourinaryHistory =
     }
   };
 
+const getMedicationCategories = () => async (dispatch: AppDispatch) => {
+  try {
+    dispatch(setIsMedicationCategoriesLoading(true));
+
+    const response = await API.patients.getMedicationCategories();
+
+    dispatch(setMedicationCategories(response.data.data.categories));
+    dispatch(setIsMedicationCategoriesLoading(false));
+  } catch (error) {
+    Sentry.captureException(error);
+    dispatch(setIsMedicationCategoriesLoading(false));
+  }
+};
+
 export default {
   getPatientsList,
   verifyPatientProfilePhoto,
@@ -1415,5 +1431,6 @@ export default {
   setEditMalePatientGenitourinaryState,
   updateFemalePatientGynaecologicalHistory,
   sendBookingRequestToPatient,
-  changeManuallyAddressForPharmacy
+  changeManuallyAddressForPharmacy,
+  getMedicationCategories
 };

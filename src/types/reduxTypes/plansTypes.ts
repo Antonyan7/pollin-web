@@ -128,8 +128,8 @@ export interface INewPatientPlan {
     cycleNumber: FieldWithNote & { value: string };
   };
   sperm: {
-    source: FieldWithNote & { value: SpermSource | null };
-    type: FieldWithNote & { value: SpermType | null };
+    source: FieldWithNote & { value: SpermSource | string };
+    type: FieldWithNote & { value: SpermType | string };
   };
   medications: IPatientPlanMedication[] | boolean;
 }

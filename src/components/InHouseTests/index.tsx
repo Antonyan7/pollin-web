@@ -144,7 +144,7 @@ const InHouseSpecimensList = () => {
             </TableHead>
             {!isLoading && (
               <TableBody>
-                {specimensList?.specimens?.map((row: ISpecimensListItem) => {
+                {specimensList?.specimens?.map((row: ISpecimensListItem, index) => {
                   const filteredSpecimenAction = findCurrentAction(actionVariations, row);
                   const isItemSelected = isSelected(row.id);
                   const isContextMenuAvailable = filteredSpecimenAction && numSelected < 2;
@@ -153,6 +153,7 @@ const InHouseSpecimensList = () => {
                     <SpecimenListRow
                       row={row}
                       key={row.id}
+                      index={index}
                       actions={isContextMenuAvailable ? filteredSpecimenAction.actions : []}
                       isItemSelected={isItemSelected}
                       onClick={(e) =>

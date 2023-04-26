@@ -30,4 +30,5 @@ export interface SpecimenListRowProps {
   actions: ContextMenuAction[];
   isItemSelected: boolean;
   onClick: (event: React.ChangeEvent<HTMLInputElement>, name: string) => void;
+  index: number;
 }

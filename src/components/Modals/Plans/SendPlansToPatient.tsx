@@ -46,6 +46,8 @@ const SendPlansToPatient = () => {
   const [t] = useTranslation();
   const isReadyToOrderPlansUpdating = useAppSelector(plansSelector.isReadyToOrderPlansUpdating);
   const [checkedPlans, setCheckedPlans] = useState<string[]>([]);
+  const router = useRouter();
+  const patientId = router.query.id as string;
   const onClose = useCallback(() => {
     dispatch(viewsMiddleware.closeModal(ModalName.SendPlansToPatientModal));
   }, []);
@@ -62,10 +64,12 @@ const SendPlansToPatient = () => {
 
   const handleConfirm = useCallback(() => {
     dispatch(
-      plansMiddleware.orderPlansToPatient({ patientPlans: checkedPlans.map((checkedPlan) => ({ id: checkedPlan })) })
+      plansMiddleware.orderPlansToPatient(patientId, {
+        patientPlans: checkedPlans.map((checkedPlan) => ({ id: checkedPlan }))
+      })
     );
     onClose();
-  }, [checkedPlans, onClose]);
+  }, [checkedPlans, onClose, patientId]);
 
   return (
     <StaticModal

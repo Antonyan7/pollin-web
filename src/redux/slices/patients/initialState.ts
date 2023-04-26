@@ -66,7 +66,9 @@ const getMedicationsPrescriptionsInitialState = (): MedicationsPrescriptionsProp
     isCardInEditMode: [false],
     isCardInViewMode: [false],
     isPatientCurrentMedicationLoading: false,
-    isPatientPastMedicationLoading: false
+    isPatientPastMedicationLoading: false,
+    medicationCategories: [],
+    isMedicationCategoriesLoading: false
   },
   prescriptions: {
     prescriptionsDrugList: null,

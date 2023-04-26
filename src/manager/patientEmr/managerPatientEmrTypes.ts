@@ -565,6 +565,14 @@ export interface IPrescriptionStatusesVariations {
   actions: ContextMenuAction[];
 }
 
+export interface IMedicationCategory {
+  id: string;
+  title: string;
+}
+export interface IMedicationCategoriesData {
+  categories: IMedicationCategory[];
+}
+
 export enum IPrescriptionStatusesActions {
   Download = 'Download',
   MarkAsDispensed = 'MarkAsDispensed',

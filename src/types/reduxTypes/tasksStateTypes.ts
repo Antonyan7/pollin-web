@@ -58,6 +58,7 @@ export interface ITask {
   description: string;
   statusId: string;
   priorityId: string;
+  overdueDays?: number;
 }
 
 export interface IAssignee {

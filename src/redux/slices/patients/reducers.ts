@@ -10,6 +10,7 @@ import {
   IFertilityHistoryProps,
   IGeneralHealthProps,
   IGenitourinaryHistory,
+  IMedicationCategory,
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
@@ -390,6 +391,12 @@ const reducers = createReducer({
   },
   setIsDownloadPrescriptionLoading(state, action: IAction<boolean>) {
     state.medicationsPrescriptions.prescriptions.isDownloadPrescriptionLoading = action.payload;
+  },
+  setMedicationCategories(state, action: IAction<IMedicationCategory[]>) {
+    state.medicationsPrescriptions.medications.medicationCategories = action.payload;
+  },
+  setIsMedicationCategoriesLoading(state, action: IAction<boolean>) {
+    state.medicationsPrescriptions.medications.isMedicationCategoriesLoading = action.payload;
   },
   setIsBookingRequestToPatientLoading(state, action: IAction<boolean>) {
     state.isBookingRequestToPatientLoading = action.payload;

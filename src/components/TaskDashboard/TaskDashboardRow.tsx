@@ -1,11 +1,12 @@
 import React from 'react';
-import { TableCell, TableRow } from '@mui/material';
+import { Grid, TableCell, TableRow } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
 import { tasksSelector } from '@redux/slices/tasks';
 import { viewsMiddleware } from '@redux/slices/views';
 import { ModalName } from 'types/modals';
 import { ITask } from 'types/reduxTypes/tasksStateTypes';
 
+import OverdueIcon from '@assets/icons/OverdueIcon';
 import useTaskDashboardActions from '@hooks/contextMenu/useTaskDashboardActions';
 import { ContextMenu } from '@ui-component/contextMenu';
 import Chip from '@ui-component/patient/Chip';
@@ -29,11 +30,25 @@ const TaskDashboardRow = ({ row }: { row: ITask }) => {
     );
   };
 
+  const isOverdue = row.overdueDays;
+
   return (
     <TableRow tabIndex={-1} key={row.uuid} onClick={handleRowClick}>
       <TableCell sx={{ textDecoration: 'underline', cursor: 'pointer' }}>{row.name}</TableCell>
       <TableCell>{row.patient?.name}</TableCell>
-      <TableCell align="left">{DateUtil.formatDateOnly(row.dueDate)}</TableCell>
+      <TableCell align="left">
+        <Grid
+          sx={{
+            display: 'flex',
+            gap: 1,
+            ...(isOverdue && {
+              color: (theme) => theme.palette.error.main
+            })
+          }}
+        >
+          {isOverdue && <OverdueIcon />} {DateUtil.formatDateOnly(row.dueDate)}
+        </Grid>
+      </TableCell>
       <TableCell align="left">{priority?.title}</TableCell>
       <TableCell align="center">{row.assignee?.name}</TableCell>
       <TableCell align="center">

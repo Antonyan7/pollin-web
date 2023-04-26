@@ -13,6 +13,7 @@ import { IPatientPlan } from 'types/reduxTypes/plansTypes';
 
 import usePlansActions from '@hooks/contextMenu/usePlansActions';
 import { ContextMenu } from '@ui-component/contextMenu';
+import { DateUtil } from '@utils/date/DateUtil';
 
 interface PlanRowProps {
   plan: IPatientPlan;
@@ -36,7 +37,7 @@ const PlanRow: FC<PlanRowProps> = ({ plan }) => {
     >
       <Box display="flex" justifyContent="space-between">
         <Stack direction="row">
-          <SeparatedLabels labels={[plan.title, `${status?.title} on ${plan.date}`]} />
+          <SeparatedLabels labels={[plan.title, `${status?.title} on ${DateUtil.formatDateOnly(plan.date)}`]} />
         </Stack>
         <Stack direction="row">
           <Chip

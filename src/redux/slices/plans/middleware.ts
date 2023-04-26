@@ -88,9 +88,10 @@ const getPatientPlansReadyToOrder = (patientId: string) => async (dispatch: AppD
   }
 };
 
-const markThePlanAsCancelled = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
+const markThePlanAsCancelled = (patientId: string, data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.plans.markThePlanAsCancelled(data);
+    dispatch(getPatientPlansList(patientId));
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: true,
@@ -105,10 +106,10 @@ const markThePlanAsCancelled = (data: IPlanMutation) => async (dispatch: AppDisp
   }
 };
 
-const markThePlanAsActive = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
+const markThePlanAsActive = (patientId: string, data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.plans.markThePlanAsActive(data);
-
+    dispatch(getPatientPlansList(patientId));
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: true,
@@ -123,10 +124,10 @@ const markThePlanAsActive = (data: IPlanMutation) => async (dispatch: AppDispatc
   }
 };
 
-const markThePlanAsCompleted = (data: IPlanMutation) => async (dispatch: AppDispatch) => {
+const markThePlanAsCompleted = (patientId: string, data: IPlanMutation) => async (dispatch: AppDispatch) => {
   try {
     await API.plans.markThePlanAsCompleted(data);
-
+    dispatch(getPatientPlansList(patientId));
     dispatch(
       viewsMiddleware.setToastNotificationPopUpState({
         open: true,
@@ -141,27 +142,28 @@ const markThePlanAsCompleted = (data: IPlanMutation) => async (dispatch: AppDisp
   }
 };
 
-const orderPlansToPatient = (data: IOrderPatientPlanRequestData) => async (dispatch: AppDispatch) => {
-  try {
-    dispatch(setIsReadyToOrderPlansUpdating(true));
+const orderPlansToPatient =
+  (patientId: string, data: IOrderPatientPlanRequestData) => async (dispatch: AppDispatch) => {
+    try {
+      dispatch(setIsReadyToOrderPlansUpdating(true));
 
-    await API.plans.orderPlansToPatient(data);
-
-    dispatch(
-      viewsMiddleware.setToastNotificationPopUpState({
-        open: true,
-        props: {
-          severityType: SeveritiesType.success,
-          description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
-        }
-      })
-    );
-  } catch (error) {
-    Sentry.captureException(error);
-  } finally {
-    dispatch(setIsReadyToOrderPlansUpdating(false));
-  }
-};
+      await API.plans.orderPlansToPatient(data);
+      dispatch(getPatientPlansList(patientId));
+      dispatch(
+        viewsMiddleware.setToastNotificationPopUpState({
+          open: true,
+          props: {
+            severityType: SeveritiesType.success,
+            description: t(Translation.PAGE_PATIENT_PLANS_TOAST_SUCCESSFUL_SENT)
+          }
+        })
+      );
+    } catch (error) {
+      Sentry.captureException(error);
+    } finally {
+      dispatch(setIsReadyToOrderPlansUpdating(false));
+    }
+  };
 
 const createPatientPlan =
   (data: INewPatientPlan, successCallback?: (shouldRedirect?: boolean) => void) => async (dispatch: AppDispatch) => {

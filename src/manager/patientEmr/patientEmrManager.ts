@@ -28,6 +28,7 @@ import {
   IGetPatientsResponse,
   IICFormResponse,
   IMedicalContactInformation,
+  IMedicationCategoriesData,
   IPatientBackground,
   IPatientBackgroundPartners,
   IPatientContactInformationProps,
@@ -347,6 +348,11 @@ const patientEmrManager = {
       page,
       ...(categoryId && { categoryId })
     });
+  },
+  getMedicationCategories() {
+    return axiosInstance.get<IMedicationCategoriesData, IAxiosResponse<IMedicationCategoriesData>>(
+      `${baseURL}/v1/medications/categories`
+    );
   },
   getPatientMedicationsState(patientId: string) {
     return axiosInstance.get<IPatientMedicationsState, IAxiosResponse<IPatientMedicationsState>>(

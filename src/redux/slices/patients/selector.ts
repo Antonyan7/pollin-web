@@ -225,6 +225,15 @@ const isPrescriptionCreationLoading = createSelector(
   (state) => state.medicationsPrescriptions.prescriptions.isPrescriptionCreationLoading
 );
 
+const medicationCategories = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.medicationCategories
+);
+const isMedicationCategoriesLoading = createSelector(
+  [selector],
+  (state) => state.medicationsPrescriptions.medications.isMedicationCategoriesLoading
+);
+
 /* Medical History */
 const fertilityHistory = createSelector([selector], (state) => state.medicalBackground.medicalHistory.fertilityHistory);
 const isFertilityHistoryDataUpdating = createSelector(
@@ -400,5 +409,7 @@ export default {
   manuallyAddressForMailing,
   manuallyAddressForPrimary,
   isBookingRequestToPatientLoading,
-  manualAddressForPharmacy
+  manualAddressForPharmacy,
+  medicationCategories,
+  isMedicationCategoriesLoading
 };

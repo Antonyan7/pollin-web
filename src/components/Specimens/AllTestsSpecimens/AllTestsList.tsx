@@ -8,9 +8,7 @@ import { headCellsData } from '@components/Specimens/AllTestsSpecimens/AllTestsH
 import { AllTestsRow } from '@components/Specimens/AllTestsSpecimens/AllTestsRow';
 import { HeadCell } from '@components/Table/HeadCell';
 import {
-  Box,
   Checkbox,
-  CircularProgress,
   Table,
   TableBody,
   TableCell,
@@ -28,7 +26,6 @@ import { Translation } from 'constants/translations';
 import { rowsPerPage } from 'helpers/constants';
 import findCurrentAction from 'helpers/findCurrentAction';
 import { handleSelectAllClick, onCheckboxClick } from 'helpers/handleCheckboxClick';
-import { margins } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import {
   ContextMenuAction,
@@ -38,6 +35,7 @@ import {
 
 import { ISpecimenRowProps } from '@hooks/contextMenu/types';
 import useSpecimenActions from '@hooks/contextMenu/useSpecimenActions';
+import CircularLoading from '@ui-component/circular-loading';
 import ResultsTableRowToolbar from '@ui-component/EnhancedTableToolbar/ResultsTableRowToolbar';
 
 // eslint-disable-next-line max-lines-per-function
@@ -235,18 +233,7 @@ const AllTestsList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isLoading ? (
-        <Box
-          sx={{
-            display: 'grid',
-            justifyContent: 'center',
-            alignItems: 'center',
-            marginTop: margins.top16
-          }}
-        >
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : null}
+      {isLoading && <CircularLoading />}
       {showEmptyState ? <NoResultsFound label={inHouseSpecimensListEmptyMessage} /> : null}
       <TablePagination
         labelRowsPerPage={`${t(Translation.COMMON_PAGINATION_ROWS_COUNT)} :`}

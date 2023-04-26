@@ -16,6 +16,7 @@ import {
   IFertilityHistoryProps,
   IGeneralHealthProps,
   IGenitourinaryHistory,
+  IMedicationCategory,
   IPatientBackgroundPartners,
   IPatientContactInformation,
   IPatientContactInformationProps,
@@ -104,6 +105,8 @@ export interface MedicationsPrescriptionsProps {
     isCardInEditMode: boolean[];
     isCardInViewMode: boolean[];
     patientMedicationState: IPatientMedicationsState | null;
+    medicationCategories: IMedicationCategory[];
+    isMedicationCategoriesLoading: boolean;
   };
   prescriptions: {
     prescriptionsDrugList: PatientPrescriptionsDrugListProps[] | null;

@@ -29,7 +29,6 @@ const PlanDetails = () => {
   const status = findStatus(statusVariations, planDetails?.status ?? '');
   const actionBindings = usePlansActions(planDetails?.id ?? '', status?.actions);
   const planId = router.query.planId as string;
-
   const onBackClick = () => {
     router.back();
   };

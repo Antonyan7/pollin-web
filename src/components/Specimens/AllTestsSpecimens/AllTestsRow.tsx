@@ -28,7 +28,7 @@ export const AllTestsRow = ({ row, actions, isItemSelected, onClick, labelId, in
 
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
-  const actionBindings = useSpecimenActions([row], actions);
+  const actionBindings = useSpecimenActions([row], actions, index);
 
   return (
     <TableRow role="checkbox" hover key={row.id}>

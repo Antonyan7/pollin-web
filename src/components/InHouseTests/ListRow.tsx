@@ -15,7 +15,7 @@ import { getStatusTitle } from '@utils/mappings';
 
 import { SpecimenListRowProps } from './types';
 
-const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenListRowProps) => {
+const SpecimenListRow = ({ row, actions, onClick, isItemSelected, index }: SpecimenListRowProps) => {
   const [t] = useTranslation();
   const theme = useTheme();
   const actionVariations = useAppSelector(resultsSelector.specimenActions);
@@ -23,7 +23,7 @@ const SpecimenListRow = ({ row, actions, onClick, isItemSelected }: SpecimenList
   const chipColors = useChipColor(row.age);
   const statusTitle = getStatusTitle(actionVariations, row.status);
 
-  const actionBindings = useSpecimenActions([row], actions);
+  const actionBindings = useSpecimenActions([row], actions, index);
 
   return (
     <TableRow

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
+import { IMedicationCategory } from '@axios/patientEmr/managerPatientEmrTypes';
 import FormSubmit from '@components/common/Form/Footer/FormSubmit';
 import Title from '@components/Plans/components/createPlan/Title';
 import { IFormMedications, MonitoringLocation, PlanPage } from '@components/Plans/types';
 import { cardHeaderClasses, Divider, Grid, useTheme } from '@mui/material';
 import { dispatch, useAppSelector } from '@redux/hooks';
+import { patientsSelector } from '@redux/slices/patients';
 import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { viewsMiddleware } from '@redux/slices/views';
 import { useRouter } from 'next/router';
 import { borders, margins, paddings } from 'themes/themeConstants';
 import { ModalName } from 'types/modals';
-import { IPatientPlansCategories } from 'types/reduxTypes/plansTypes';
 
 import useStopRouteChange from '@hooks/useStopRouteChange';
 import SubCardStyled from '@ui-component/cards/SubCardStyled';
@@ -19,7 +20,9 @@ import CircularLoading from '@ui-component/circular-loading';
 import Form from './form';
 import PreliminaryBloodsResults from './PreliminaryBloodsResults';
 
-const extractDefaultValues = (patientId: string, planTypeId: string, categories: IPatientPlansCategories[]) => ({
+const requiredFields = ['type', 'source', 'cycleNumber'];
+
+const extractDefaultValues = (patientId: string, planTypeId: string, categories: IMedicationCategory[]) => ({
   patientId: patientId as string,
   planTypeId: planTypeId as string,
   monitoring: {
@@ -28,11 +31,11 @@ const extractDefaultValues = (patientId: string, planTypeId: string, categories:
   },
   sperm: {
     source: {
-      value: null,
+      value: '',
       note: null
     },
     type: {
-      value: null,
+      value: '',
       note: null
     }
   },
@@ -48,7 +51,7 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
   const {
     query: { id: patientId }
   } = useRouter();
-  const categories = useAppSelector(plansSelector.categories);
+  const categories = useAppSelector(patientsSelector.medicationCategories);
 
   const methods = useForm({
     defaultValues: { ...extractDefaultValues(`${patientId}`, `${planTypeId}`, categories) }
@@ -113,6 +116,12 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
     return <CircularLoading />;
   }
 
+  const filledFields = Object.values(dirtyFields)
+    .map((item) => Object.keys(item))
+    .flat();
+
+  const areAllRequiredFieldsFilled = requiredFields.every((item) => filledFields.includes(item));
+
   return (
     <SubCardStyled
       sx={{
@@ -135,7 +144,7 @@ const CreatePlan = ({ changePage, planTypeId }: { changePage: (pageName: PlanPag
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Form />
-            <FormSubmit onClick={backToPlansPage} />
+            <FormSubmit onClick={backToPlansPage} isDisabled={!areAllRequiredFieldsFilled} />
           </form>
         </FormProvider>
       </Grid>

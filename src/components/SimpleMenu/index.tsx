@@ -39,10 +39,10 @@ const SimpleMenuItem = ({ item, onItemClick }: { item: IMenuItem; onItemClick?: 
           <Grid item xs={11}>
             <Typography>{item.title}</Typography>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={1} display="flex">
             <ArrowForwardIos
               sx={{
-                fontSize: (theme) => theme.typography.pxToRem(16),
+                fontSize: (theme) => theme.typography.pxToRem(14),
                 color: (theme) => theme.palette.primary.main
               }}
             />

@@ -3,8 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { IOrderResultsListReqBody, OrderResultsSortFields } from '@axios/results/resultsManagerTypes';
 import { HeadCell } from '@components/Table/HeadCell';
 import {
-  Box,
-  CircularProgress,
   Divider,
   Grid,
   Table,
@@ -22,10 +20,12 @@ import { ordersMiddleware, ordersSelector } from '@redux/slices/orders';
 import { CypressIds } from 'constants/cypressIds';
 import { Translation } from 'constants/translations';
 import { useRouter } from 'next/router';
-import { margins, paddings } from 'themes/themeConstants';
+import { paddings } from 'themes/themeConstants';
 import { IHeadCell, SortOrder } from 'types/patient';
 import { IOrderResultsByPatientItem } from 'types/reduxTypes/ordersStateTypes';
 import { IOrderResultsFilterOptions } from 'types/results';
+
+import CircularLoading from '@ui-component/circular-loading';
 
 import EmrOrdersAndResultsTabs from '../../layout/PatientOrdersAndResultsLayout';
 
@@ -137,11 +137,7 @@ const OrderResults = () => {
           </TableBody>
         </Table>
       </TableContainer>
-      {isOrderResultsByPatientListLoading ? (
-        <Box sx={{ display: 'grid', justifyContent: 'center', alignItems: 'center', marginTop: margins.top16 }}>
-          <CircularProgress sx={{ margin: margins.auto }} />
-        </Box>
-      ) : null}
+      {isOrderResultsByPatientListLoading && <CircularLoading />}
       {!isOrderResultsByPatientListLoading && orderResultsByPatientList.totalItems === 0 ? (
         <>
           <Grid container justifyContent="center" padding={paddings.all20}>

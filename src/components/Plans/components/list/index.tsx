@@ -7,7 +7,7 @@ import { SendTwoTone } from '@mui/icons-material';
 import { Grid, TablePagination, Tooltip, tooltipClasses, useTheme } from '@mui/material';
 import { Stack } from '@mui/system';
 import { dispatch, useAppSelector } from '@redux/hooks';
-import { patientsSelector } from '@redux/slices/patients';
+import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { plansMiddleware, plansSelector } from '@redux/slices/plans';
 import { viewsMiddleware } from '@redux/slices/views';
 import { Translation } from 'constants/translations';
@@ -44,6 +44,7 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
     if (patientProfile?.sexAtBirth === SexAtBirth.Female) {
       dispatch(plansMiddleware.getPatientPlansStatuses());
       dispatch(plansMiddleware.getPlanCategoriesAndTypes());
+      dispatch(patientsMiddleware.getMedicationCategories());
     }
   }, [isPatientProfileLoading, patientId, patientProfile?.sexAtBirth]);
 
@@ -98,7 +99,7 @@ const PatientPlansList = ({ changePage }: { changePage: (pageName: PlanPage, pla
                   ...(isDisabledToSendPlans && {
                     color: theme.palette.primary.main,
                     borderColor: theme.palette.primary.main,
-                    opacity: 0.3,
+                    opacity: 0.5,
                     cursor: 'default'
                   }),
                   textTransform: 'none'
