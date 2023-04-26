@@ -6,25 +6,25 @@ import { Translation } from '../../constants/translations';
 
 export const headCellsData = (t: TFunction) => [
   {
-    id: TasksManagement.Task,
+    id: TasksManagement.TaskName,
     label: t(Translation.PAGE_TASKS_MANAGER_CELLS_TASK),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
-    id: TasksManagement.Patient,
+    id: TasksManagement.PatientName,
     label: t(Translation.PAGE_TASKS_MANAGER_CELLS_PATIENT),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: false
+    isSortable: true
   },
   {
     id: TasksManagement.Due,
     label: t(Translation.PAGE_TASKS_MANAGER_CELLS_DUE),
     align: 'left',
     paddingLeft: paddings.left0,
-    isSortable: true
+    isSortable: false
   },
   {
     id: TasksManagement.Priority,
@@ -38,7 +38,7 @@ export const headCellsData = (t: TFunction) => [
     label: t(Translation.PAGE_TASKS_MANAGER_CELLS_ASSIGNEE),
     align: 'center',
     paddingLeft: paddings.left20,
-    isSortable: false
+    isSortable: true
   },
   {
     id: TasksManagement.Status,

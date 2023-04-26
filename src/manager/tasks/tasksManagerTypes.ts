@@ -4,8 +4,14 @@ export interface ITasksListReqBody {
   page: number;
   sortByField?: TasksListSortFields;
   sortOrder?: SortOrder;
-  onlyUserTasks?: boolean;
+  // TODO: TEAMA-5355
+  // filter: ITaskFilter[];
 }
+
+// interface ITaskFilter {
+//   id: TaskFilter;
+//   title: string;
+// }
 
 export interface ITaskReassignReqBody {
   staffUserId: string;

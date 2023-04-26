@@ -38,8 +38,14 @@ const TasksList = () => {
     const data: ITasksListReqBody = {
       ...(sortField ? { sortByField: sortField } : {}),
       ...(sortOrder ? { sortOrder } : {}),
-      onlyUserTasks,
       page: page + 1
+      // TODO: TEAMA-5355
+      // filter: [
+      //   {
+      //     id: TaskFilter.Assignee,
+      //     title: 'title'
+      //   }
+      // ]
     };
 
     dispatch(tasksMiddleware.clearCreatedTaskState());

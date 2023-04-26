@@ -6,13 +6,13 @@ import { Translation } from '../../constants/translations';
 
 export const headCellsData = (t: TFunction) => [
   {
-    id: TasksManagement.Task,
+    id: TasksManagement.TaskName,
     label: t(Translation.PAGE_PATIENT_CHECK_IN_TABLE_HEADER_NAME),
     align: 'left',
     paddingLeft: paddings.left0
   },
   {
-    id: TasksManagement.Patient,
+    id: TasksManagement.PatientName,
     label: t(Translation.PAGE_PATIENT_CHECK_IN_TABLE_HEADER_APPOINTMENT_TIME),
     align: 'left',
     paddingLeft: paddings.left0

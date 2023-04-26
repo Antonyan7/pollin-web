@@ -10,6 +10,7 @@ import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 import { v5 as uuidv5 } from 'uuid';
 
+import CircularLoading from '@ui-component/circular-loading';
 import { DateUtil } from '@utils/date/DateUtil';
 
 const TestResult = ({ results }: { results: PatientPreliminaryBloodsResults }) => {
@@ -48,10 +49,15 @@ const TestResult = ({ results }: { results: PatientPreliminaryBloodsResults }) =
 
 const PreliminaryBloodsResults = () => {
   const patientPreliminaryBloodsResults = useAppSelector(plansSelector.patientPreliminaryBloodsResults);
+  const isPatientPreliminaryBloodsLoading = useAppSelector(plansSelector.isPatientPreliminaryBloodsResultsLoading);
   const patientProfile = useAppSelector(patientsSelector.patientProfile);
   const theme = useTheme();
 
   const [t] = useTranslation();
+
+  if (isPatientPreliminaryBloodsLoading) {
+    return <CircularLoading />;
+  }
 
   return (
     <>
@@ -65,6 +71,7 @@ const PreliminaryBloodsResults = () => {
         {t(Translation.PAGE_PATIENT_PLANS_CREATE_PLAN_PRELIMINARY_BLOODS)}
       </FormLabel>
       <Grid container>
+        {patientPreliminaryBloodsResults?.length === 0 && '--'}
         {/* TODO Use uuid TEAMA-5463 */}
         <Grid item xs={6}>
           {patientPreliminaryBloodsResults?.slice(0, 5)?.map((item, index) => (
@@ -77,6 +84,7 @@ const PreliminaryBloodsResults = () => {
             <TestResult results={item} key={uuidv5(JSON.stringify(item).concat(index.toString()), uuidv5.URL)} />
           ))}
         </Grid>
+
         <Grid item container xs={12} py={paddings.topBottom24}>
           <Grid item xs={6}>
             <FormLabel>{t(Translation.PAGE_PATIENT_PLANS_CREATE_GTPAETALS)}:</FormLabel>
