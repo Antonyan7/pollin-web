@@ -29,6 +29,10 @@ const Medications = () => {
       dispatch(patientsMiddleware.getPatientMedications(patientId, Recency.Current, 1));
       dispatch(patientsMiddleware.getPatientMedications(patientId, Recency.Past, 1));
     }
+
+    dispatch(patientsMiddleware.updateCardToViewMode(-1, []));
+    dispatch(patientsMiddleware.updateCardToEditMode(-1, []));
+    dispatch(patientsMiddleware.isMedicationFieldsDirty(false));
   }, [patientId]);
 
   const handleOnClick = () => {

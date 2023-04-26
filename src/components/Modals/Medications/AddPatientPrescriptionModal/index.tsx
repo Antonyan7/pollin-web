@@ -7,6 +7,8 @@ import { dispatch } from 'redux/hooks';
 import { viewsMiddleware } from 'redux/slices/views';
 import { ModalName } from 'types/modals';
 
+import useStopRouteChange from '@hooks/useStopRouteChange';
+
 import AddPatientMedicationForm from './form';
 
 const AddPatientPrescriptionModal = () => {
@@ -30,6 +32,15 @@ const AddPatientPrescriptionModal = () => {
       dispatch(patientsMiddleware.setPatientPrescriptionsItems());
     }
   }, [isDirty]);
+
+  useStopRouteChange(isDirty, false, () =>
+    dispatch(
+      viewsMiddleware.openModal({
+        name: ModalName.ConfirmCancellationModal,
+        props: { action: () => dispatch(viewsMiddleware.closeModal(ModalName.AddPatientPrescriptionModal)) }
+      })
+    )
+  );
 
   return (
     <Dialog open onClose={onClose} maxWidth="sm" fullWidth sx={{ '& .MuiDialog-paper': { p: 0, minWidth: '700px' } }}>
