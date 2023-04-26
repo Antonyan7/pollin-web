@@ -31,8 +31,9 @@ Cypress.Commands.add('AddToNewExistingTransport', (specimenID) => {
     if (elem.text().includes(specimenID)) {
       cy.wrap(elem).get(`[data-cy="${CypressIds.COMMON_TABLE_CHECKBOX}-${index}"]`).realClick();
       cy.wrap(elem).get(`[data-cy="${CypressIds.COMMON_CONTEXT_MENU}-${index}"]`).realClick();
-
-      cy.get(CyUtils.getSelector(CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON)).click();
+      cy.wrap(elem)
+        .get(`[data-cy="${CypressIds.PAGE_SPECIMEN_TRACKING_ALL_TEST_NEW_TRANSPORT_BUTTON}-${index}"]`)
+        .click();
     }
   });
 });

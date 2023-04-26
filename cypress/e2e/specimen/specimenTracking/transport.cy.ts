@@ -18,8 +18,8 @@ describe('new transport', () => {
 
   beforeEach(() => {
     cy.visit('/clinic-test-results/specimen-tracking/transports');
+    cy.get(CyUtils.getSelector(CypressIds.COMMON_LOADING_INDICATOR)).should('not.exist');
     cy.url().should('include', '/clinic-test-results/specimen-tracking/transports');
-    cy.get(CyUtils.getSelector(CypressIds.PAGE_SCHEDULING_TEMPLATES_LOADING_INDICATOR)).should('not.exist');
   });
 
   it(`should verify create new transport folder`, () => {
