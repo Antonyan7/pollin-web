@@ -2,7 +2,8 @@ import React, { useEffect, useMemo } from 'react';
 import { FlexibleItemType } from '@components/common/Form/types';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
-import { getDropdownByType } from '@components/MedicalBackground/helpers';
+import { MedicalFormRadioValues } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { getDropdownByType, isNullValue } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientGynaecologicalHistory';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -50,6 +51,11 @@ const ViewModeContent = () => {
             (item: { id: string }) =>
               mappedItemOptions?.find((mappedItemValue) => mappedItemValue.id === item.id)?.title
           );
+        } else if (mappedItem?.componentData?.type === FlexibleItemType.Radio) {
+          const shouldShowViewValue =
+            mappedItem?.viewValue !== MedicalFormRadioValues.No && !isNullValue(mappedItem?.value);
+
+          finalValue = shouldShowViewValue ? mappedItem.viewValue : '-';
         } else {
           finalValue = mappedItem?.viewValue;
         }

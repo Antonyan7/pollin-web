@@ -4,7 +4,8 @@ import { FlexibleItemType } from '@components/common/Form/types';
 import Item from '@components/MedicalBackground/components/common/Item';
 import CardContentWrapper from '@components/MedicalBackground/components/styled/CartContent';
 import NOT_APPLICABLE from '@components/MedicalBackground/constants';
-import { getDropdownOption } from '@components/MedicalBackground/helpers';
+import { MedicalFormRadioValues } from '@components/MedicalBackground/Contact/PatientGeneralHealth/edit/types';
+import { getDropdownOption, isNullValue } from '@components/MedicalBackground/helpers';
 import { mapObjectByPattern } from '@components/MedicalBackground/helpers/mapper';
 import mappingPattern from '@components/MedicalBackground/mapper/femalePatientMenstrualCycleHistory';
 import { dispatch, useAppSelector } from '@redux/hooks';
@@ -57,6 +58,9 @@ const ViewModeContent = () => {
             finalValue = isDashValue(mappedItem?.viewValue)
               ? mappedItem?.viewValue
               : DateUtil.formatDateOnly(mappedItem?.viewValue);
+            break;
+          case FlexibleItemType.Radio:
+            finalValue = !(MedicalFormRadioValues.No && isNullValue(mappedItem?.value)) ? mappedItem.viewValue : '-';
             break;
           default:
             finalValue = mappedItem?.viewValue;

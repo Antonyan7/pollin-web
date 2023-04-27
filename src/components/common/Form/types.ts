@@ -8,7 +8,8 @@ export enum FlexibleItemType {
   Input = 'Input',
   MultilineInput = 'MultilineInput',
   Date = 'Date',
-  MultipleSelect = 'MultipleSelect'
+  MultipleSelect = 'MultipleSelect',
+  Radio = 'Radio'
 }
 
 export interface FlexibleSectionTableProps extends PropsWithChildren, GridProps {
