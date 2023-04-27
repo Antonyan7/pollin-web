@@ -35,7 +35,7 @@ describe('Cancel Appointments', () => {
         cy.SelectDate(futureDate).then(() => {
           cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_LOADING_INDICATOR)).should('not.exist');
           cy.get(CyUtils.getSelector(CypressIds.COMMON_FULL_CALENDAR_COMPONENT)).should('contain', StatusesEnum.Booked);
-          cy.contains(StatusesEnum.Booked).click({ force: true });
+          cy.contains(data.e2e_patient).click({ force: true });
           cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_CLOSE_ICON)).should('exist');
           cy.get(CyUtils.getSelector(CypressIds.MODAL_APPOINTMENTS_EDIT_BUTTON_CANCEL)).should('be.enabled').click();
 
