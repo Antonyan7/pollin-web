@@ -126,7 +126,7 @@ const PrescriberDetails = () => {
           fullWidth
           disabled
           variant="outlined"
-          value={registrationNumber}
+          value={inputValue ? registrationNumber : ''}
           label={t(Translation.MODAL_PRESCRIPTIONS_PRESCRIBER_CPSO_REGISTRATION)}
         />
       </Grid>
