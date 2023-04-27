@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -7,7 +7,6 @@ import MedicalBackgroundNote from '@components/MedicalBackground/components/comm
 import OtherGender from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/form/fields/Gender/fields/Other';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
@@ -28,7 +27,10 @@ const Gender = () => {
   const label = t(Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_GENDER);
   const [isOther, setIsOther] = useState<boolean>(false);
   const { control } = useFormContext();
-  const { field, fieldState } = useController({
+  const {
+    field: { ref, ...field },
+    fieldState
+  } = useController({
     name: `${BackgroundInformationFormFields.Gender}.value`,
     control
   });
@@ -36,9 +38,6 @@ const Gender = () => {
   const genderOptions = getDropdownByType(dropdownOptions, DropdownOptionType.Gender)?.options;
   const defaultGenderValue = getDropdownOption(dropdownOptions, DropdownOptionType.Gender, fieldProps.value);
   const errorHelperText = generateErrorMessage(label);
-  const genderRef = useRef<HTMLInputElement>(null);
-
-  useScrollIntoView(genderRef, fieldState);
 
   const onGenderChange = (value?: IDropdownOption | null) => {
     if (value && typeof value === 'object' && 'id' in value) {
@@ -77,9 +76,9 @@ const Gender = () => {
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
             ...fieldProps,
+            inputRef: ref,
             fullWidth: true,
-            label,
-            ref: genderRef
+            label
           }}
         />
         {isOther ? <OtherGender /> : null}

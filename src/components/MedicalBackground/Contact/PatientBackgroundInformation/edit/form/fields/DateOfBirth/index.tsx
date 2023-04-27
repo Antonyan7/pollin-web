@@ -13,6 +13,7 @@ import { paddings } from 'themes/themeConstants';
 import { PollinDatePickerType } from 'types/datePicker';
 
 import PollinDatePicker from '@ui-component/shared/DatePicker/PollinDatePicker';
+import { DateUtil } from '@utils/date/DateUtil';
 
 const DateOfBirth = () => {
   const [t] = useTranslation();
@@ -45,6 +46,7 @@ const DateOfBirth = () => {
             label: t(Translation.PAGE_TASKS_MANAGER_MODAL_CREATE_PATIENT_DUE_DATE_PLACEHOLDER),
             value: field.value,
             onChange,
+            maxDate: DateUtil.representInClinicDate(new Date()),
             errorMessage: fieldState?.error && errorHelperText,
             isError: Boolean(fieldState?.error),
             isLimitedByWorkingHours: false

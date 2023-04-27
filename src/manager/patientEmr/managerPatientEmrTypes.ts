@@ -963,6 +963,7 @@ export interface ICancerPatient extends MedicalBackgroundFieldValues {
 
 export interface IGender extends MedicalBackgroundFieldValues {
   value: string;
+  other: string;
 }
 
 export interface ISexualOrientation extends MedicalBackgroundFieldValues {
@@ -974,7 +975,7 @@ export interface IPreferredPronouns extends MedicalBackgroundFieldValues {
 }
 
 export interface IRelationship extends MedicalBackgroundFieldValues {
-  value: string;
+  value: string | null;
 }
 
 export interface IDateOfBirth extends MedicalBackgroundFieldValues {

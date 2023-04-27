@@ -80,11 +80,12 @@ export const RenderFieldWithAdditionalValues = ({
   additionalValues,
   note
 }: {
-  value: string | number;
+  value?: string | number;
   additionalValues: string[];
   note?: string;
 }) => (
   <Grid item container xs={7} direction="column" justifyContent="space-between">
+    {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
     <Grid>{value || '-'}</Grid>
     {additionalValues.map((fieldValue, index: number) =>
       fieldValue && !isDashValue(fieldValue) ? (

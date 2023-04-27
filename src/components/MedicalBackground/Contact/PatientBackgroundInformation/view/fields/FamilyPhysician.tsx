@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { RenderSingleValueAndNote } from '@components/MedicalBackground/components/common';
+import { RenderFieldWithAdditionalValues } from '@components/MedicalBackground/components/common';
 import FieldWrapper from '@components/MedicalBackground/components/common/FieldWrapper';
 import { getYesNoDash } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/view/helper';
 import { GeneralHealthComponentsProps } from '@components/MedicalBackground/helpers';
@@ -15,10 +15,15 @@ const FamilyPhysician = ({ componentIndex }: GeneralHealthComponentsProps) => {
   const fieldName = t(
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_FAMILY_PHYSICIAN
   );
+  const doctorName = [fieldValue?.name ?? ''];
 
   return (
     <FieldWrapper fieldName={fieldName} componentIndex={componentIndex} hasNote={!!fieldValue?.note}>
-      <RenderSingleValueAndNote value={getYesNoDash(fieldValue?.value)} note={fieldValue?.note} />
+      <RenderFieldWithAdditionalValues
+        value={getYesNoDash(fieldValue?.value)}
+        additionalValues={doctorName}
+        note={fieldValue?.note}
+      />
     </FieldWrapper>
   );
 };

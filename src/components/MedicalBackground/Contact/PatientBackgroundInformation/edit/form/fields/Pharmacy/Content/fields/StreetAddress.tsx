@@ -9,7 +9,7 @@ import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
 
 const StreetAddress = () => {
-  const { setValue } = useFormContext();
+  const { setValue, getValues } = useFormContext();
   const fieldName = `${BackgroundInformationFormFields.Pharmacy}.address.street`;
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
   const pharmacy = patientBackgroundInformation?.pharmacy;
@@ -20,7 +20,7 @@ const StreetAddress = () => {
       const fullAddress = getFullAddress(manualAddressInfo as AddressProps);
 
       setValue(`${BackgroundInformationFormFields.Pharmacy}.address`, {
-        ...pharmacy?.address,
+        ...getValues(`${BackgroundInformationFormFields.Pharmacy}.address`),
         street: fullAddress,
         city: manualAddressInfo?.city,
         unit: manualAddressInfo?.unitNumber,
@@ -28,6 +28,7 @@ const StreetAddress = () => {
         postalCode: manualAddressInfo?.postalCode
       });
     }
+    //  eslint-disable-next-line react-hooks/exhaustive-deps
   }, [manualAddressInfo, pharmacy?.address, setValue]);
 
   return (

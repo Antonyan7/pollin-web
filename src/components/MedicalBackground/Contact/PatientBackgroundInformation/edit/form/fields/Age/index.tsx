@@ -10,6 +10,8 @@ import { patientsSelector } from '@redux/slices/patients';
 import { Translation } from 'constants/translations';
 import { paddings } from 'themes/themeConstants';
 
+import { isDashValue } from '@utils/stringUtils';
+
 const Age = () => {
   const [t] = useTranslation();
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
@@ -32,7 +34,9 @@ const Age = () => {
       </Grid>
       <Grid item container direction="column" gap={2} xs={7} pt={paddings.top12}>
         <Typography>
-          {field?.value} {t(Translation.PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS)}
+          {!isDashValue(field?.value)
+            ? `${field?.value} ${t(Translation.PAGE_PATIENT_CHECK_IN_VERIFY_MODAL_YEARS)}`
+            : field?.value}
         </Typography>
         <MedicalBackgroundNote
           onClick={onNoteClick}

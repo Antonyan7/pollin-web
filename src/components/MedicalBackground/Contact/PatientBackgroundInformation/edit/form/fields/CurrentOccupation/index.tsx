@@ -1,10 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { ConsultationTitleWithIcon } from '@components/MedicalBackground/components/common';
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
 import { Grid, TextField } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
 import { patientsSelector } from '@redux/slices/patients';
@@ -19,15 +18,12 @@ const CurrentOccupation = () => {
   );
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
   const currentOccupation = patientBackgroundInformation?.currentOccupation;
-  const { control } = useFormContext();
+  const { control, register } = useFormContext();
   const { field, fieldState } = useController({
     name: `${BackgroundInformationFormFields.CurrentOccupation}.value`,
     control
   });
   const errorHelperText = generateErrorMessage(fieldLabel);
-  const currentOccupationRef = useRef<HTMLInputElement>(null);
-
-  useScrollIntoView(currentOccupationRef, fieldState);
 
   const [showAdditionalNote, setShowAdditionalNote] = useState(!!currentOccupation?.note);
   const onNoteClick = () => {
@@ -48,8 +44,8 @@ const CurrentOccupation = () => {
             color="primary"
             fullWidth
             {...field}
+            {...register(`${BackgroundInformationFormFields.CurrentOccupation}.value`)}
             value={field.value}
-            ref={currentOccupationRef}
           />
           <MedicalBackgroundNote
             onClick={onNoteClick}

@@ -104,7 +104,7 @@ export const patientBackgroundInformationValidationSchema = object({
   [BackgroundInformationFormFields.SexAtBirth]: object({ value: string().required() }),
   [BackgroundInformationFormFields.SexualOrientation]: object({ value: string().required() }),
   [BackgroundInformationFormFields.PreferredPronouns]: object({ value: string().required() }),
-  [BackgroundInformationFormFields.Relationship]: object({ value: string().required() }),
+  [BackgroundInformationFormFields.Relationship]: object({ value: string().notRequired().nullable() }),
   [BackgroundInformationFormFields.DateOfBirth]: object({ value: string().required() }),
   [BackgroundInformationFormFields.Age]: object({ value: string().required() }),
   [BackgroundInformationFormFields.ReferringDoctor]: object({

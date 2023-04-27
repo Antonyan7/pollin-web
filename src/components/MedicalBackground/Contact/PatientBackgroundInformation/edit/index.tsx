@@ -13,6 +13,8 @@ import { dispatch, useAppSelector } from '@redux/hooks';
 import { patientsMiddleware, patientsSelector } from '@redux/slices/patients';
 import { useRouter } from 'next/router';
 
+import { DateUtil } from '@utils/date/DateUtil';
+
 import PatientBackgroundInformationEditForm from './form';
 
 const PatientBackgroundInformationEdit = () => {
@@ -39,8 +41,13 @@ const PatientBackgroundInformationEdit = () => {
       const { referringDoctorName, ...referringDoctorRest } = values.referringDoctor;
       const { familyDoctorName, ...familyDoctorRest } = values.familyDoctor;
       const { pharmacyName, ...pharmacyRest } = values.pharmacy;
+      const dateOfBirth = values.dateOfBirth.value;
       const patientBackgroundValues = {
         ...values,
+        dateOfBirth: {
+          ...values.dateOfBirth,
+          value: DateUtil.convertToDateOnly(dateOfBirth)
+        },
         referringDoctor: {
           ...referringDoctorRest,
           name: values.referringDoctor.value ? values.referringDoctor.referringDoctorName : ''

@@ -12,7 +12,10 @@ const UnitNumber = () => {
     Translation.PAGE_PATIENT_PROFILE_MEDICAL_BACKGROUND_CONTACT_BACKGROUND_INFORMATION_PHARMACY_FIELDS_UNIT_NUMBER
   );
   const { control } = useFormContext();
-  const { field, fieldState } = useController({
+  const {
+    field: { ref, ...field },
+    fieldState
+  } = useController({
     name: `${BackgroundInformationFormFields.Pharmacy}.address.unit`,
     control
   });
@@ -27,8 +30,8 @@ const UnitNumber = () => {
         helperText={fieldState?.error && errorHelperText}
         error={Boolean(fieldState?.error)}
         {...field}
+        inputRef={ref}
         value={field.value}
-        ref={field.ref}
       />
     </Grid>
   );

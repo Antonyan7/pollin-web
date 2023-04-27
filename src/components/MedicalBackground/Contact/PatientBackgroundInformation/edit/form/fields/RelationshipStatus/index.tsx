@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { DropdownOptionType, IDropdownOption } from '@axios/patientEmr/managerPatientEmrTypes';
@@ -6,7 +6,7 @@ import { ConsultationTitleWithIcon } from '@components/MedicalBackground/compone
 import MedicalBackgroundNote from '@components/MedicalBackground/components/common/MedicalBackgroundNote';
 import { BackgroundInformationFormFields } from '@components/MedicalBackground/Contact/PatientBackgroundInformation/edit/types';
 import { getDropdownByType, getDropdownOption } from '@components/MedicalBackground/helpers';
-import useScrollIntoView from '@components/MedicalBackground/hooks/useScrollIntoView';
+import CloseIcon from '@mui/icons-material/Close';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Grid } from '@mui/material';
 import { useAppSelector } from '@redux/hooks';
@@ -27,21 +27,21 @@ const RelationshipStatus = () => {
   const patientBackgroundInformation = useAppSelector(patientsSelector.patientBackgroundInformation);
   const relationshipStatus = patientBackgroundInformation?.relationship;
   const { control } = useFormContext();
-  const { field, fieldState } = useController({
+  const {
+    field: { ref, ...field },
+    fieldState
+  } = useController({
     name: `${BackgroundInformationFormFields.Relationship}.value`,
     control
   });
   const { onChange, onBlur, ...fieldProps } = field;
   const genderOptions = getDropdownByType(dropdownOptions, DropdownOptionType.RelationshipStatus)?.options;
-  const defaultGenderValue = getDropdownOption(
+  const defaultRelationshipValue = getDropdownOption(
     dropdownOptions,
     DropdownOptionType.RelationshipStatus,
     fieldProps.value
   );
   const errorHelperText = generateErrorMessage(fieldLabel);
-  const relationshipStatusRef = useRef<HTMLInputElement>(null);
-
-  useScrollIntoView(relationshipStatusRef, fieldState);
 
   const onStatusChange = (value: IDropdownOption) => {
     if (value && typeof value === 'object' && 'id' in value) {
@@ -62,18 +62,19 @@ const RelationshipStatus = () => {
         <BaseDropdownWithLoading
           fullWidth
           isLoading={isDropdownsLoading}
-          defaultValue={defaultGenderValue}
+          defaultValue={defaultRelationshipValue}
           options={genderOptions as IDropdownOption[]}
           onChange={(_, value) => onStatusChange(value as IDropdownOption)}
           getOptionLabel={(contribution) => (typeof contribution === 'object' ? contribution.title : contribution)}
           isOptionEqualToValue={(option, value) => option.id === value.id}
+          clearIcon={<CloseIcon onClick={() => onChange(null)} fontSize="small" />}
           popupIcon={<KeyboardArrowDownIcon />}
           renderInputProps={{
             helperText: fieldState?.error && errorHelperText,
             error: Boolean(fieldState?.error),
             ...fieldProps,
-            label: fieldLabel,
-            ref: relationshipStatusRef
+            inputRef: ref,
+            label: fieldLabel
           }}
         />
         <MedicalBackgroundNote
