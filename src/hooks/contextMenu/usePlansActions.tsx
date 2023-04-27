@@ -21,23 +21,23 @@ const usePlansActions = (planId: string, actions: ContextMenuAction[] = []) => {
     dispatch(plansMiddleware.markThePlanAsCompleted(patientId, { planId }));
   }, [patientId, planId]);
 
-  const possibleActions = Object.values(PlanActions);
+  const possibleActions = Object.entries(PlanActions);
 
-  const actionBindings = possibleActions.map((action) => {
-    if (action === PlanActions.MarkAsCancelled) {
+  const actionBindings = possibleActions.map(([id, title]) => {
+    if (title === PlanActions.MarkAsCancelled) {
       return {
-        id: action,
-        title: action,
+        id,
+        title,
         actionCallback: () => {
           markThePlanAsCancelled();
         }
       };
     }
 
-    if (action === PlanActions.MarkAsActive) {
+    if (title === PlanActions.MarkAsActive) {
       return {
-        id: action,
-        title: action,
+        id,
+        title,
         actionCallback: () => {
           markThePlanAsActive();
         }
@@ -45,8 +45,8 @@ const usePlansActions = (planId: string, actions: ContextMenuAction[] = []) => {
     }
 
     return {
-      id: action,
-      title: action,
+      id,
+      title,
       actionCallback: () => {
         markThePlanAsCompleted();
       }

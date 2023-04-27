@@ -32,7 +32,7 @@ const plansManager = {
   },
   getPatientPlansStatuses() {
     return axiosInstance.get<IPatientPlansStatusResponse, IAxiosResponse<IPatientPlansStatusResponse>>(
-      `${baseURL}/v1/plans/status`
+      `${baseURL}/v1/plans/statuses`
     );
   },
   getPlanCategoriesAndTypes() {
