@@ -63,7 +63,7 @@
     "date-fns": "^2.29.3",
     "date-fns-tz": "^1.3.8",
     "eslint-config-next": "13.3.0",
-    "firebase": "^9.20.0",
+    "firebase": "^11.6.0",
     "framer-motion": "^7.10.3",
     "html-react-parser": "^3.0.16",
     "i18next": "^22.4.15",
